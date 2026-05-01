@@ -280,11 +280,11 @@ export const PARTY_NODES = [
   },
   {
     id: "alignment_spire_finale",
-    name: "Alignment Spire Finale",
+    name: "Outer Alignment Finale",
     nodeType: "Boss Gate",
     arenaId: "alignment_spire_finale",
-    objectiveFlavor: "Final Alignment",
-    routeBiome: "alien_god_injunction",
+    objectiveFlavor: "Final Eval",
+    routeBiome: "outer_alignment_corrupted_grid",
     campaignAct: 1,
     campaignTier: 7,
     campaignCriticalPath: true,
@@ -295,8 +295,8 @@ export const PARTY_NODES = [
     rewardId: "alignment_spire_route_capstone",
     rewardName: "Alignment Spire Capstone",
     rewardRenown: 8,
-    completionTitle: "ALIGNMENT SPIRE BREACHED",
-    completionSubtitle: "The Act I route now reaches the Alien God Intelligence's first court."
+    completionTitle: "OUTER ALIGNMENT SURVIVED",
+    completionSubtitle: "Final eval failed to complete the party. The route profile remembers why."
   }
 ];
 

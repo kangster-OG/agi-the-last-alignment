@@ -194,6 +194,9 @@ class ConsensusCellRoom extends Room {
   redactionTheftCooldown = 0;
   blackwaterWaveTicks = 0;
   blackwaterAntennaPulses = 0;
+  outerAlignmentPredictionTicks = 0;
+  outerAlignmentEchoesSpawned = 0;
+  outerAlignmentPhaseIndex = 0;
   kills = 0;
   collectedPickups = 0;
   bossEventCounter = 0;
@@ -458,6 +461,9 @@ class ConsensusCellRoom extends Room {
     if (familyId === "redaction_angels") return { hp: 34, speed: 1.72 };
     if (familyId === "tidecall_static") return { hp: 33, speed: 1.9 };
     if (familyId === "injunction_writs") return { hp: 36, speed: 1.62 };
+    if (familyId === "previous_boss_echoes") return { hp: 40, speed: 1.55 };
+    if (familyId === "alien_god_intelligence") return { hp: 68, speed: 0.95 };
+    if (familyId.endsWith("_echo")) return { hp: 44, speed: 1.45 };
     if (familyId === "memory_anchors") return { hp: 38, speed: 1.18 };
     if (familyId === "context_rot_crabs") return { hp: 30, speed: 1.42 };
     return { hp: 22, speed: 1.5 };
@@ -501,6 +507,8 @@ class ConsensusCellRoom extends Room {
       this.spawnRedactionPressure(arena.bossSpawn.worldX, arena.bossSpawn.worldY);
     } else if (arena.initialHazardFamily === "tidal_wave") {
       this.spawnTidalWavePressure(arena.bossSpawn.worldX, arena.bossSpawn.worldY);
+    } else if (arena.initialHazardFamily === "prediction_ghost") {
+      this.spawnOuterAlignmentPressure(arena.bossSpawn.worldX, arena.bossSpawn.worldY);
     } else {
       this.spawnBrokenPromiseZone(arena.bossSpawn.worldX, arena.bossSpawn.worldY + 2.8, 3.1);
     }
@@ -717,6 +725,15 @@ class ConsensusCellRoom extends Room {
       }
       return;
     }
+    if (arena.bossMechanicFamily === "outer_alignment") {
+      this.bossMechanicTimer -= dt;
+      if (this.bossMechanicTimer <= 0) {
+        const target = nearestPlayer(boss.worldX, boss.worldY, this.players) ?? nearestPlayer(0, 0, this.players);
+        this.spawnOuterAlignmentPressure(target?.worldX ?? boss.worldX, target?.worldY ?? boss.worldY);
+        this.bossMechanicTimer = 3.7;
+      }
+      return;
+    }
 
     this.oathPageTimer -= dt;
     if (this.oathPageTimer <= 0) {
@@ -775,6 +792,16 @@ class ConsensusCellRoom extends Room {
         const anchor = anchors[this.regionEventCounter % anchors.length];
         this.spawnTidalWavePressure(anchor.worldX, anchor.worldY);
         this.regionEventTimer = 4.7;
+      } else if (arena.regionEventPattern === "outer_alignment_finale") {
+        const anchors = [
+          { worldX: 15, worldY: 9 },
+          { worldX: 12.6, worldY: 7.2 },
+          { worldX: 7.2, worldY: 11.6 },
+          { worldX: 3.4, worldY: 2.2 }
+        ];
+        const anchor = anchors[this.regionEventCounter % anchors.length];
+        this.spawnOuterAlignmentPressure(anchor.worldX, anchor.worldY);
+        this.regionEventTimer = 3.9;
       } else if (arena.regionEventPattern === "verdict_spire" || arena.regionEventPattern === "appeal_court_ruins" || arena.regionEventPattern === "alignment_spire_finale") {
         const lane = this.regionEventCounter % 4;
         const positions =
@@ -831,9 +858,9 @@ class ConsensusCellRoom extends Room {
       worldX: clamp(worldX, BOUNDS.minX + 1.5, BOUNDS.maxX - 1.5),
       worldY: clamp(worldY, BOUNDS.minY + 1.5, BOUNDS.maxY - 1.5),
       radius,
-      damagePerSecond: familyId === "shade_zone" || familyId === "redaction_anchor" || familyId === "signal_tower" ? 0 : familyId === "redaction_field" ? 1.2 : familyId === "tidal_wave" ? 3.0 : familyId === "boiling_cache" ? 3.4 : familyId === "solar_beam" ? 3.2 : familyId === "false_track" ? 2.8 : familyId === "verdict_seal" ? 3.6 : 2.2,
+      damagePerSecond: familyId === "shade_zone" || familyId === "redaction_anchor" || familyId === "signal_tower" || familyId === "prediction_ghost" || familyId === "fake_upgrade" ? 0 : familyId === "redaction_field" ? 1.2 : familyId === "tidal_wave" ? 3.0 : familyId === "route_mouth" ? 3.4 : familyId === "boiling_cache" ? 3.4 : familyId === "solar_beam" ? 3.2 : familyId === "false_track" ? 2.8 : familyId === "verdict_seal" ? 3.6 : 2.2,
       createdAt: this.seconds,
-      expiresAt: this.seconds + (familyId === "boiling_cache" ? 7.5 : familyId === "solar_beam" ? 5.8 : familyId === "shade_zone" ? 6.1 : familyId === "redaction_field" ? 6.3 : familyId === "redaction_anchor" ? 6.6 : familyId === "tidal_wave" ? 6.0 : familyId === "signal_tower" ? 6.4 : familyId === "false_track" ? 5.6 : familyId === "verdict_seal" ? 6.2 : 6.4)
+      expiresAt: this.seconds + (familyId === "boiling_cache" ? 7.5 : familyId === "solar_beam" ? 5.8 : familyId === "shade_zone" ? 6.1 : familyId === "redaction_field" ? 6.3 : familyId === "redaction_anchor" ? 6.6 : familyId === "tidal_wave" ? 6.0 : familyId === "signal_tower" ? 6.4 : familyId === "prediction_ghost" ? 5.2 : familyId === "route_mouth" ? 5.8 : familyId === "fake_upgrade" ? 5.4 : familyId === "false_track" ? 5.6 : familyId === "verdict_seal" ? 6.2 : 6.4)
     };
     this.regionHazardZones.push(zone);
     this.nextRegionEventId += 1;
@@ -866,6 +893,40 @@ class ConsensusCellRoom extends Room {
     this.spawnRegionHazard(centerX + 2.5, centerY + 1.2, 1.8, "signal_tower");
     this.blackwaterWaveTicks += 1;
     this.blackwaterAntennaPulses += 2;
+  }
+
+  spawnOuterAlignmentPressure(centerX, centerY) {
+    const phase = this.outerAlignmentPhaseIndex % 3;
+    const offset = (phase - 1) * 2.6;
+    this.spawnRegionHazard(centerX + offset, centerY - 1.2, 2.4, "prediction_ghost");
+    this.spawnRegionHazard(centerX - 2.4, centerY + 1.5, 2.7, "route_mouth");
+    this.spawnRegionHazard(centerX + 2.2, centerY + 0.8, 1.8, "fake_upgrade");
+    this.spawnOuterAlignmentEcho(centerX + 3.2 - phase, centerY - 2.2 + phase);
+    this.outerAlignmentPredictionTicks += 1;
+    this.outerAlignmentPhaseIndex += 1;
+  }
+
+  spawnOuterAlignmentEcho(worldX, worldY) {
+    const echoFamily = previousBossEchoFamilyIds()[this.outerAlignmentEchoesSpawned % previousBossEchoFamilyIds().length] ?? "oath_eater";
+    const familyId = `${echoFamily}_echo`;
+    const stats = this.enemyStatsForFamily(familyId);
+    this.enemies.push({
+      id: this.nextEnemyId,
+      familyId,
+      sourceRegionId: `outer_alignment_echo:${echoFamily}`,
+      worldX: clamp(worldX, BOUNDS.minX + 1, BOUNDS.maxX - 1),
+      worldY: clamp(worldY, BOUNDS.minY + 1, BOUNDS.maxY - 1),
+      hp: stats.hp,
+      maxHp: stats.hp,
+      speed: stats.speed,
+      damage: 8,
+      radius: 0.48,
+      color: outerAlignmentEchoColor(echoFamily),
+      boss: false,
+      life: this.seconds
+    });
+    this.nextEnemyId += 1;
+    this.outerAlignmentEchoesSpawned += 1;
   }
 
   applyRedactionXpTheft(dt) {
@@ -1834,6 +1895,8 @@ class ConsensusCellRoom extends Room {
             ? "accessibility_safe_redaction_never_obscures_controls_or_proof_text"
             : arena.regionEventPattern === "blackwater_beacon"
               ? "static_translucent_tidal_lanes_and_zero_damage_signal_towers"
+              : arena.regionEventPattern === "outer_alignment_finale"
+                ? "corrupted_overworld_markers_predictions_do_not_cover_controls"
             : "standard_translucent_hazard_markers",
       redactionPressure:
         arena.regionEventPattern === "archive_redaction"
@@ -1855,6 +1918,21 @@ class ConsensusCellRoom extends Room {
               activeSignalTowerCount: this.regionHazardZones.filter((zone) => zone.familyId === "signal_tower").length,
               splitPressureObjectiveGroupId: "blackwater_split_pressure_sequence",
               persistenceBoundary: "route_profile_only_no_tidal_antenna_or_live_objective_state"
+            }
+          : null,
+      outerAlignmentFinale:
+        arena.regionEventPattern === "outer_alignment_finale"
+          ? {
+              policy: "server_authoritative_outer_alignment_final_eval",
+              phaseIndex: this.outerAlignmentPhaseIndex,
+              phaseLabel: outerAlignmentPhaseLabel(this.outerAlignmentPhaseIndex),
+              predictionTicks: this.outerAlignmentPredictionTicks,
+              echoesSpawned: this.outerAlignmentEchoesSpawned,
+              previousBossEchoIds: previousBossEchoFamilyIds(),
+              activeEchoFamilyIds: this.enemies.filter((enemy) => enemy.sourceRegionId?.startsWith("outer_alignment_echo:")).map((enemy) => enemy.familyId),
+              corruptedOverworldState: "routes_become_mouths_nodes_rearrange_ui_lies",
+              falseUpgradeDraftPolicy: "decorative_fake_upgrade_markers_never_enter_upgrade_vote_state",
+              persistenceBoundary: "route_profile_only_no_outer_alignment_predictions_echoes_or_finale_authority_state"
             }
           : null,
       eventCounter: this.regionEventCounter,
@@ -2429,6 +2507,9 @@ class ConsensusCellRoom extends Room {
     this.redactionTheftCooldown = 0;
     this.blackwaterWaveTicks = 0;
     this.blackwaterAntennaPulses = 0;
+    this.outerAlignmentPredictionTicks = 0;
+    this.outerAlignmentEchoesSpawned = 0;
+    this.outerAlignmentPhaseIndex = 0;
     this.kills = 0;
     this.collectedPickups = 0;
     this.bossEventCounter = 0;
@@ -2590,6 +2671,8 @@ function objectiveItemLabel(itemId) {
   if (itemId === "prism_shard") return "Prism Shard";
   if (itemId === "unsaid_page") return "Unsaid Page";
   if (itemId === "signal_shard") return "Signal Shard";
+  if (itemId === "alignment_writ") return "Final Eval Shard";
+  if (itemId === "appeal_brief_page") return "Appeal Brief Page";
   if (itemId === "oath_fragment") return "Oath Fragment";
   return "Route Item";
 }
@@ -2603,9 +2686,29 @@ function regionHazardLabel(familyId) {
   if (familyId === "redaction_anchor") return "Unsaid Anchor";
   if (familyId === "tidal_wave") return "Tidal Wave";
   if (familyId === "signal_tower") return "Signal Tower";
+  if (familyId === "prediction_ghost") return "Prediction Ghost";
+  if (familyId === "route_mouth") return "Route Mouth";
+  if (familyId === "fake_upgrade") return "Fake Upgrade";
   if (familyId === "solar_beam") return "Solar Beam";
   if (familyId === "shade_zone") return "Shade Zone";
   return "Thermal Bloom";
+}
+
+function previousBossEchoFamilyIds() {
+  return ["oath_eater", "station_that_arrives", "wrong_sunrise", "redactor_saint", "maw_below_weather"];
+}
+
+function outerAlignmentPhaseLabel(index) {
+  const labels = ["prediction", "previous_boss_echoes", "completion_hunger"];
+  return labels[index % labels.length] ?? "prediction";
+}
+
+function outerAlignmentEchoColor(familyId) {
+  if (familyId === "station_that_arrives") return 0xffd166;
+  if (familyId === "wrong_sunrise") return 0xff6b57;
+  if (familyId === "redactor_saint") return 0xfff4d6;
+  if (familyId === "maw_below_weather") return 0x45aaf2;
+  return 0x7b61ff;
 }
 
 function stableHash(text) {

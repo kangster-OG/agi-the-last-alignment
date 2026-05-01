@@ -247,6 +247,16 @@ export class OverworldState implements GameState {
       graphics.circle(p.screenX, p.screenY - 45, 9).fill(cluster.accent).stroke({ color: palette.ink, width: 2 });
       return;
     }
+    if (cluster.kind === "route_mouth") {
+      graphics
+        .ellipse(p.screenX, p.screenY - 22, 28, 12)
+        .fill({ color: cluster.color, alpha: 0.92 })
+        .stroke({ color: cluster.accent, width: 3, alpha: 0.9 });
+      graphics.rect(p.screenX - 18, p.screenY - 27, 7, 5).fill(0xfff4d6);
+      graphics.rect(p.screenX - 3, p.screenY - 29, 7, 5).fill(0xfff4d6);
+      graphics.rect(p.screenX + 12, p.screenY - 27, 7, 5).fill(0xfff4d6);
+      return;
+    }
     if (cluster.kind === "memory_shard") {
       graphics
         .poly([p.screenX, p.screenY - 48, p.screenX + 11, p.screenY - 20, p.screenX, p.screenY - 8, p.screenX - 11, p.screenY - 20])
@@ -274,7 +284,7 @@ export class OverworldState implements GameState {
       const graphics = new Graphics();
       graphics.ellipse(p.screenX, p.screenY + 2, 58, 18).fill({ color: completed ? palette.mint : available ? palette.lemon : 0x232936, alpha: completed ? 0.28 : 0.18 });
       if (art) {
-        const sprite = new Sprite(art.alignmentGridNodes[node.visualKind === "archive" || node.visualKind === "beacon" ? "cache" : node.visualKind]);
+        const sprite = new Sprite(art.alignmentGridNodes[node.visualKind === "archive" || node.visualKind === "beacon" ? "cache" : node.visualKind === "finale" ? "spire" : node.visualKind]);
         sprite.anchor.set(0.5, 0.86);
         sprite.scale.set(selected ? 1.08 : 1);
         sprite.position.set(p.screenX, p.screenY + 4);
@@ -326,6 +336,14 @@ export class OverworldState implements GameState {
       graphics.rect(x - 5, y - 112, 10, 54).fill(0x202833);
       graphics.circle(x, y - 118, 13).fill(roof).stroke({ color: palette.ink, width: 3 });
       graphics.rect(x - 18, y - 86, 36, 8).fill(0xffd166).stroke({ color: palette.ink, width: 2 });
+    } else if (node.visualKind === "finale") {
+      graphics.rect(x - 48, y - 48, 96, 30).fill(0x1b1028).stroke({ color: stroke, width: strokeWidth });
+      graphics
+        .poly([x - 36, y - 48, x, y - 96, x + 36, y - 48, x + 18, y - 36, x, y - 70, x - 18, y - 36])
+        .fill({ color: primary, alpha: 0.96 })
+        .stroke({ color: palette.ink, width: 3 });
+      graphics.circle(x, y - 78, 12).fill(roof).stroke({ color: palette.ink, width: 3 });
+      graphics.rect(x - 26, y - 30, 52, 7).fill(0xff5d57).stroke({ color: palette.ink, width: 2 });
     } else {
       graphics.rect(x - 48, y - 52, 96, 36).fill(primary).stroke({ color: stroke, width: strokeWidth });
       graphics.rect(x - 36, y - 78, 72, 26).fill(roof).stroke({ color: palette.ink, width: 3 });
@@ -473,6 +491,7 @@ function nodeColor(node: AlignmentGridNode): number {
   if (node.visualKind === "cache") return 0x45aaf2;
   if (node.visualKind === "archive") return 0xfff4d6;
   if (node.visualKind === "beacon") return 0x64e0b4;
+  if (node.visualKind === "finale") return 0xff5d57;
   return 0x3a3f4b;
 }
 

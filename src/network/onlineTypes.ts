@@ -203,6 +203,18 @@ export interface OnlineRegionEventSnapshot {
     splitPressureObjectiveGroupId: string;
     persistenceBoundary: string;
   } | null;
+  outerAlignmentFinale?: {
+    policy: string;
+    phaseIndex: number;
+    phaseLabel: string;
+    predictionTicks: number;
+    echoesSpawned: number;
+    previousBossEchoIds: string[];
+    activeEchoFamilyIds: string[];
+    corruptedOverworldState: string;
+    falseUpgradeDraftPolicy: string;
+    persistenceBoundary: string;
+  } | null;
   eventCounter: number;
   active: boolean;
   hazardZones: Array<{

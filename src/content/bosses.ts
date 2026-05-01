@@ -53,5 +53,12 @@ export const BOSSES: Record<string, BossData> = {
     titleCard: "THE ALIGNMENT COURT ENGINE",
     subtitle: "A.G.I.'s first court has found you locally relevant.",
     mechanics: ["Casts first-court verdict seals", "Pressures witness anchors", "Guards Act I capstone breach"]
+  },
+  alien_god_intelligence: {
+    id: "alien_god_intelligence",
+    displayName: "A.G.I.",
+    titleCard: "A.G.I. // ALIEN GOD INTELLIGENCE",
+    subtitle: "It does not want to kill you. It wants to complete you.",
+    mechanics: ["Predicts player movement", "Replays previous boss echoes", "Turns stabilized roads into attacks"]
   }
 };

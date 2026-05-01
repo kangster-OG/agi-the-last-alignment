@@ -605,6 +605,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone44BlackwaterBeaconScenario();
     return;
+  } else if (name === "milestone45-outer-alignment-finale") {
+    await closeBrowser(browser);
+    await runMilestone45OuterAlignmentFinaleScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -2522,7 +2526,7 @@ async function runMilestone36CampaignContentSchemaScenario() {
     }
     assert(lobby.online?.party?.nodes?.find((node) => node.id === "thermal_archive")?.objectiveSetId === "thermal_archive_objectives_v1", "expected Thermal Archive objective set record");
     assert(lobby.online?.party?.nodes?.find((node) => node.id === "false_schedule_yard")?.objectiveSetId === "false_schedule_yard_objectives_v1", "expected False Schedule Yard objective set record");
-    assert(lobby.online?.party?.nodes?.find((node) => node.id === "alignment_spire_finale")?.bossId === "alignment_court_engine", "expected finale boss content record");
+    assert(lobby.online?.party?.nodes?.find((node) => node.id === "alignment_spire_finale")?.bossId === "alien_god_intelligence", "expected finale boss content record");
     assert(lobby.online?.campaignContent?.policy === "campaign_content_schema_v1", "expected active campaign content snapshot");
     await capture(pageA, "milestone36-content-schema-lobby-a");
 
@@ -2640,8 +2644,8 @@ async function runMilestone36CampaignContentSchemaScenario() {
     await waitForOnlineRunPhase(onward.pageA, "active");
     const finaleActive = await state(onward.pageA);
     assert(finaleActive.online?.objectives?.objectiveSetId === "alignment_spire_finale_objectives_v1", "expected finale objective set");
-    assert(finaleActive.online?.campaignContent?.bossId === "alignment_court_engine", "expected finale boss content ID");
-    assert(finaleActive.online?.campaignContent?.dialogueSnippetIds?.includes("dlg.final_spire.capstone"), "expected finale capstone dialogue snippet");
+    assert(finaleActive.online?.campaignContent?.bossId === "alien_god_intelligence", "expected finale boss content ID");
+    assert(finaleActive.online?.campaignContent?.dialogueSnippetIds?.includes("dlg.agi.victory"), "expected finale victory dialogue snippet");
     await onward.pageA.keyboard.press("Digit3");
     await waitForOnlineRunPhase(onward.pageA, "completed");
     const finale = await state(onward.pageA);
@@ -2869,9 +2873,9 @@ async function runMilestone38DistinctCampaignArenasScenario() {
       mode: "active",
       objectiveSetId: "alignment_spire_finale_objectives_v1",
       rewardId: "alignment_spire_route_capstone",
-      eventFamily: "verdict_seal",
-      bossGateMechanic: "alignment_court_breach",
-      bossId: "alignment_court_engine",
+      eventFamily: "prediction_ghost",
+      bossGateMechanic: "outer_alignment_final_eval",
+      bossId: "alien_god_intelligence",
       captureName: "milestone38-finale-runtime-a"
     });
 
@@ -2961,8 +2965,8 @@ async function runMilestone39CampaignDialogueScenario() {
         text.online?.runPhase === "lobby" &&
         text.online?.routeUi?.selectedNodeId === "alignment_spire_finale" &&
         text.online?.dialogue?.policy === "campaign_dialogue_runtime_snapshot_only_v1" &&
-        text.online.dialogue.briefing?.some((snippet) => snippet.id === "dlg.final_spire.briefing") &&
-        text.online?.routeUi?.selectedDialogueSnippets?.some((snippet) => snippet.id === "dlg.final_spire.capstone"),
+        text.online.dialogue.briefing?.some((snippet) => snippet.id === "dlg.outer_alignment.briefing") &&
+        text.online?.routeUi?.selectedDialogueSnippets?.some((snippet) => snippet.id === "dlg.agi.victory"),
       "M39 finale lobby briefing dialogue",
       15_000
     );
@@ -2977,19 +2981,19 @@ async function runMilestone39CampaignDialogueScenario() {
       finale.pageA,
       (text) =>
         text.online?.bossEvent?.bossIntroSeen === true &&
-        text.online?.dialogue?.bossArrival?.some((snippet) => snippet.id === "dlg.final_spire.arrival") &&
-        text.online?.dialogue?.activeSnippetIds?.includes("dlg.final_spire.arrival"),
+        text.online?.dialogue?.bossArrival?.some((snippet) => snippet.id === "dlg.agi.arrival") &&
+        text.online?.dialogue?.activeSnippetIds?.includes("dlg.agi.arrival"),
       "M39 boss-arrival dialogue",
       10_000
     );
-    assert(boss.online?.campaignContent?.dialogueSnippets?.some((snippet) => snippet.id === "dlg.final_spire.arrival"), "expected expanded dialogue snippets in active content snapshot");
+    assert(boss.online?.campaignContent?.dialogueSnippets?.some((snippet) => snippet.id === "dlg.agi.arrival"), "expected expanded dialogue snippets in active content snapshot");
     await capture(finale.pageA, "milestone39-dialogue-boss-arrival-a");
 
     await finale.pageA.keyboard.press("Digit3");
     await waitForOnlineRunPhase(finale.pageA, "completed");
     const finaleSummary = await state(finale.pageA);
-    assert(finaleSummary.online?.summary?.dialogue?.snippets?.some((snippet) => snippet.id === "dlg.final_spire.capstone"), "expected finale route-summary dialogue");
-    assert(finaleSummary.online?.dialogue?.routeSummary?.some((snippet) => snippet.id === "dlg.final_spire.capstone"), "expected active dialogue snapshot to expose route summary lines");
+    assert(finaleSummary.online?.summary?.dialogue?.snippets?.some((snippet) => snippet.id === "dlg.agi.victory"), "expected finale route-summary dialogue");
+    assert(finaleSummary.online?.dialogue?.routeSummary?.some((snippet) => snippet.id === "dlg.agi.victory"), "expected active dialogue snapshot to expose route summary lines");
     assert(finaleSummary.online?.summary?.dialogue?.persistenceBoundary === "route_profile_only_no_dialogue_or_live_state", "expected summary dialogue to remain runtime-only");
     assert(finaleSummary.online?.persistence?.profile && !("dialogue" in finaleSummary.online.persistence.profile), "expected completed route profile to omit dialogue");
     const finaleDecoded = decodeProofOnlineProfileCode(finaleSummary.online?.saveProfile?.exportCode);
@@ -3113,7 +3117,7 @@ async function runMilestone40CampaignRouteUxScenario() {
       "M40 schema route focus",
       8_000
     );
-    assert(schema.online?.routeUi?.milestone40?.selectedSchemaDetails?.bossId === "alignment_court_engine", "expected selected boss schema detail");
+    assert(schema.online?.routeUi?.milestone40?.selectedSchemaDetails?.bossId === "alien_god_intelligence", "expected selected boss schema detail");
     assert(schema.online?.routeUi?.milestone40?.selectedSchemaDetails?.dialogueSnippetCount >= 3, "expected selected dialogue count in schema detail");
     const decoded = decodeProofOnlineProfileCode(schema.online?.saveProfile?.exportCode);
     assert(decoded?.profile && !("routeUi" in decoded.profile), "expected export profile to omit route UX state");
@@ -3812,6 +3816,170 @@ async function runMilestone44BlackwaterBeaconScenario() {
     if (errors.length) {
       fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
       throw new Error("Browser errors recorded for milestone44 Blackwater Beacon");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
+async function runMilestone45OuterAlignmentFinaleScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+  const finaleProfileCode = encodeProofRouteProfileCode({
+    completedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "blackwater_beacon", "transit_loop_zero", "verdict_spire"],
+    rewardIds: [
+      "plaza_stabilized",
+      "lake_coolant_rig",
+      "cooling_lake_online_route",
+      "ceasefire_cache_persistence_seed",
+      "prototype_persistence_boundary",
+      "archive_unsaid_index",
+      "blackwater_signal_key",
+      "transit_permit_zero",
+      "transit_loop_online_route",
+      "verdict_key_zero",
+      "verdict_spire_online_route"
+    ],
+    partyRenown: 28,
+    routeDepth: 7,
+    saveHash: "proof_m45_outer_alignment_profile"
+  });
+
+  try {
+    const pair = await openOnlinePairInContext(context, "m45_outer_alignment", errors, { importOnlineProfileCode: finaleProfileCode });
+    const lobby = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.online?.runPhase === "lobby" &&
+        text.online?.party?.nodes?.some((node) => node.id === "alignment_spire_finale" && node.name === "Outer Alignment Finale" && node.onlineSupported) &&
+        text.online?.routeUi?.artExpansion?.milestone45?.bossId === "alien_god_intelligence" &&
+        text.online?.routeUi?.artExpansion?.milestone45?.corruptedOverworldState === "routes_become_mouths_nodes_rearrange_ui_lies",
+      "M45 Outer Alignment route node and corruption telemetry",
+      15_000
+    );
+    assert(lobby.online?.routeUi?.artExpansion?.milestone45?.previousBossEchoIds?.includes("maw_below_weather"), "expected M45 previous-boss echo telemetry");
+    assert(lobby.online?.persistence?.profile && !("routeUi" in lobby.online.persistence.profile), "expected M45 route UI state omitted from durable profile");
+    await capture(pair.pageA, "milestone45-outer-alignment-route-node-a");
+
+    await voteBothToNode(pair.pageA, pair.pageB, "alignment_spire_finale");
+    const selectedFinale = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.online?.party?.selectedNodeId === "alignment_spire_finale" &&
+        text.online?.routeUi?.selectedBossId === "alien_god_intelligence" &&
+        text.online?.routeUi?.selectedRouteBiome === "outer_alignment_corrupted_grid",
+      "M45 Outer Alignment selected route detail",
+      10_000
+    );
+    assert(selectedFinale.online?.routeUi?.selectedRewardId === "alignment_spire_route_capstone", "expected selected route panel to show finale capstone reward");
+    await capture(pair.pageA, "milestone45-outer-alignment-selected-route-a");
+
+    await Promise.all([pair.pageA.keyboard.press("Space"), pair.pageB.keyboard.press("Space")]);
+    const active = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.level?.arenaId === "alignment_spire_finale" &&
+        text.online?.networkAuthority === "colyseus_room_server_combat" &&
+        text.online?.campaignContent?.regionId === "outer_alignment" &&
+        text.online?.campaignContent?.bossId === "alien_god_intelligence" &&
+        text.online?.campaignContent?.enemyFamilyIds?.includes("previous_boss_echoes") &&
+        text.online?.campaignContent?.rewardId === "alignment_spire_route_capstone" &&
+        text.online?.objectives?.objectiveSetId === "alignment_spire_finale_objectives_v1" &&
+        text.online?.combat?.bossGateMechanic === "outer_alignment_final_eval" &&
+        text.online?.dialogue?.briefing?.some((snippet) => snippet.id === "dlg.outer_alignment.briefing"),
+      "M45 Outer Alignment active finale",
+      15_000
+    );
+    assert(active.online?.persistence?.profile && !("objectives" in active.online.persistence.profile) && !("combat" in active.online.persistence.profile), "expected M45 route-profile-only persistence while active");
+    await capture(pair.pageA, "milestone45-outer-alignment-active-a");
+
+    const corruption = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.online?.regionEvent?.eventFamily === "prediction_ghost" &&
+        text.online.regionEvent.mechanicId === "outer_alignment_final_eval" &&
+        text.online.regionEvent.readabilityPolicy === "corrupted_overworld_markers_predictions_do_not_cover_controls" &&
+        text.online.regionEvent.outerAlignmentFinale?.policy === "server_authoritative_outer_alignment_final_eval" &&
+        text.online.regionEvent.outerAlignmentFinale.predictionTicks > 0 &&
+        text.online.regionEvent.outerAlignmentFinale.previousBossEchoIds?.includes("redactor_saint") &&
+        text.online.regionEvent.hazardZones?.some((zone) => zone.familyId === "route_mouth" && zone.damagePerSecond > 0) &&
+        text.online.regionEvent.hazardZones?.some((zone) => zone.familyId === "prediction_ghost" && zone.damagePerSecond === 0) &&
+        text.online.regionEvent.hazardZones?.some((zone) => zone.familyId === "fake_upgrade" && zone.damagePerSecond === 0),
+      "M45 corrupted overworld prediction pressure",
+      15_000
+    );
+    assert(corruption.online?.regionEvent?.outerAlignmentFinale?.falseUpgradeDraftPolicy === "decorative_fake_upgrade_markers_never_enter_upgrade_vote_state", "expected fake upgrade markers to stay non-authoritative");
+    await capture(pair.pageA, "milestone45-outer-alignment-corruption-a");
+
+    await pair.pageA.keyboard.press("KeyF");
+    const boss = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.online?.bossEvent?.bossSpawned &&
+        text.enemies?.some((enemy) => enemy.boss && enemy.familyId === "alien_god_intelligence") &&
+        text.online?.dialogue?.bossArrival?.some((snippet) => snippet.id === "dlg.agi.arrival") &&
+        (text.online?.regionEvent?.outerAlignmentFinale?.phaseIndex ?? 0) >= 2 &&
+        text.online?.regionEvent?.outerAlignmentFinale?.activeEchoFamilyIds?.some((familyId) => familyId.endsWith("_echo")),
+      "M45 A.G.I. boss phases and previous-boss echoes",
+      15_000
+    );
+    assert(boss.online?.regionEvent?.outerAlignmentFinale?.persistenceBoundary === "route_profile_only_no_outer_alignment_predictions_echoes_or_finale_authority_state", "expected M45 finale mechanic persistence boundary");
+    await capture(pair.pageA, "milestone45-agi-boss-phases-a");
+    const possibleDraft = await state(pair.pageA);
+    if (possibleDraft.online?.progression?.upgradePending) {
+      await Promise.all([pair.pageA.keyboard.press("Digit1"), pair.pageB.keyboard.press("Digit1")]);
+      await waitForOnlineServerCombat(pair.pageA, (text) => !text.online?.progression?.upgradePending, "M45 incidental upgrade draft resolved", 10_000);
+    }
+
+    const summary = await completeObjectiveChainWithProofControls(pair.pageA, "alignment_spire_finale_objectives_v1", [
+      "survey_first_court_threshold",
+      "hold_human_witness_anchor",
+      "hold_comind_refusal_anchor",
+      "collect_alignment_writs",
+      "breach_alignment_court"
+    ]);
+    assert(summary.online?.summary?.rewards?.rewardId === "alignment_spire_route_capstone", "expected finale route capstone reward summary");
+    assert(summary.online?.summary?.dialogue?.snippets?.some((snippet) => snippet.id === "dlg.agi.victory"), "expected M45 A.G.I. victory dialogue in summary");
+    assert(summary.online?.persistence?.profile?.completedNodeIds?.includes("alignment_spire_finale"), "expected durable route profile to include finale completion");
+    assert(summary.online?.persistence?.profile?.rewardIds?.includes("alignment_spire_route_capstone"), "expected durable route profile to include capstone reward");
+    assert(summary.online?.saveProfile?.saveHash && summary.online?.persistence?.currentExportHash, "expected final save/export profile hashes to be proof-visible");
+    const decoded = decodeProofOnlineProfileCode(summary.online?.saveProfile?.exportCode);
+    assert(decoded?.profile && decoded.profile.completedNodeIds?.includes("alignment_spire_finale"), "expected exported final profile to include finale completion");
+    assert(decoded?.profile && decoded.profile.rewardIds?.includes("alignment_spire_route_capstone"), "expected exported final profile to include finale reward");
+    assert(decoded?.profile && !("outerAlignmentFinale" in decoded.profile) && !("objectives" in decoded.profile) && !("combat" in decoded.profile) && !("dialogue" in decoded.profile) && !("routeUi" in decoded.profile) && !("authority" in decoded.profile), "expected export profile to omit live M45 state");
+    await capture(pair.pageA, "milestone45-outer-alignment-victory-a");
+    await pair.pageA.close();
+    await pair.pageB.close();
+
+    const optOut = await openOnlinePairInContext(context, "m45_optout", errors, {
+      importOnlineProfileCode: finaleProfileCode,
+      productionArt: "0",
+      placeholderArt: "1"
+    });
+    await voteBothToNode(optOut.pageA, optOut.pageB, "alignment_spire_finale");
+    await Promise.all([optOut.pageA.keyboard.press("Space"), optOut.pageB.keyboard.press("Space")]);
+    const optOutActive = await waitForOnlineServerCombat(
+      optOut.pageA,
+      (text) =>
+        text.level?.arenaId === "alignment_spire_finale" &&
+        text.assetRendering?.productionArtEnabled === false &&
+        text.online?.routeUi?.artExpansion?.milestone45?.readabilityPolicy === "corrupted_overworld_markers_predictions_do_not_cover_controls",
+      "M45 placeholder opt-out Outer Alignment",
+      15_000
+    );
+    assert(optOutActive.online?.regionEvent?.outerAlignmentFinale?.policy === "server_authoritative_outer_alignment_final_eval", "expected M45 finale mechanics under placeholder opt-out");
+    await capture(optOut.pageA, "milestone45-placeholder-opt-out-a");
+    await optOut.pageA.close();
+    await optOut.pageB.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone45 Outer Alignment Finale");
     }
   } finally {
     await context.close();
@@ -4539,10 +4707,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon"].includes(name);
+  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale"].includes(name);
 }

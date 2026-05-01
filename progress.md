@@ -2685,9 +2685,67 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-summary-a.png`
 - Milestone 44 readiness decision: ready. Blackwater Beacon is now a supported ocean-platform arena with server-owned tidal waves, signal towers, antenna split pressure, Maw Below Weather presentation, DeepSeek/Grok focus reward telemetry, production/placeholder continuity, and route-profile-only persistence boundaries intact.
 
+- Implemented Milestone 45 Outer Alignment Finale.
+- Converted the final campaign route into `Outer Alignment Finale`, a supported culmination arena where A.G.I. turns the map itself into the fight while preserving the existing `alignment_spire_route_capstone` route reward ID.
+- Added campaign schema content for:
+  - The Outer Alignment region;
+  - Previous Boss Echoes enemy family;
+  - A.G.I. boss definition;
+  - final-eval briefing, arrival, and victory dialogue;
+  - final arena enemy-family, objective, boss, and reward links.
+- Added server-authoritative M45 finale mechanics:
+  - Prediction Ghost zero-damage pressure markers;
+  - Route Mouth damage hazards;
+  - false upgrade decoys that remain runtime-only;
+  - rotating previous-boss echoes sourced from earlier boss families;
+  - phase, prediction tick, echo, readability, and persistence-boundary telemetry in the online snapshot.
+- Added local and online Outer Alignment presentation:
+  - local corrupted-overworld route node, terrain patch, and route-mouth props;
+  - online corrupted grid ground, finale landmarks, hazard rendering, A.G.I. boss label/color, and previous-boss echo fallbacks;
+  - final route UI telemetry tying corrupted overworld state to the selected node, arena, boss, reward, and server policy.
+- Added `npm run proof:milestone45-outer-alignment-finale`, covering:
+  - unlocked Outer Alignment route selection and corrupted route telemetry;
+  - active arena schema, objectives, boss, reward, and previous-boss echo family IDs;
+  - Prediction Ghost, Route Mouth, and false-upgrade pressure snapshots;
+  - A.G.I. arrival dialogue and multi-phase final-eval state;
+  - final completion, victory summary, route reward, save/export hash, and route-profile-only export contents;
+  - placeholder opt-out rendering.
+- Verification after Milestone 45:
+  - `node --check server/data/onlineRoutes.mjs`
+  - `node --check server/data/onlineArenas.mjs`
+  - `node --check server/data/onlineObjectives.mjs`
+  - `node --check server/data/campaignContent.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone45-outer-alignment-finale`
+  - `npm run proof:milestone44-blackwater-beacon`
+  - `npm run proof:milestone40-campaign-route-ux`
+  - `npm run proof:milestone39-campaign-dialogue`
+  - `npm run proof:milestone38-distinct-campaign-arenas`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:smoke`
+- Milestone 45 proof artifacts:
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-outer-alignment-route-node-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-outer-alignment-selected-route-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-outer-alignment-active-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-outer-alignment-corruption-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-agi-boss-phases-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-outer-alignment-victory-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-placeholder-opt-out-a.png`
+- Screenshots inspected after Milestone 45:
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-outer-alignment-selected-route-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-outer-alignment-active-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-outer-alignment-corruption-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-agi-boss-phases-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-outer-alignment-victory-a.png`
+  - `docs/proof/milestone45-outer-alignment-finale/milestone45-placeholder-opt-out-a.png`
+- Milestone 45 readiness decision: ready. Outer Alignment Finale is now a supported final route with server-owned corrupted overworld pressure, A.G.I. presentation, previous-boss echoes, victory/export hash proof, production/placeholder continuity, and route-profile-only persistence boundaries intact.
+
 ## TODO
 
-- Next recommended milestone: Milestone 45 Outer Alignment Finale. Add the final route and A.G.I. culmination encounter with corrupted overworld state, previous-boss echoes, multi-phase final boss, ending/victory flow, final export-code profile state, and proof-visible route-profile-only victory persistence.
+- Next recommended milestone: Milestone 46 Full Class Roster Expansion. Add the remaining Creative Bible frames with focused weapons, roles, unlock rules, proof telemetry, and preservation of solo/local/online co-op authority boundaries.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

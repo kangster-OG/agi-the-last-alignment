@@ -58,6 +58,14 @@ export const CAMPAIGN_REGIONS = {
     factionFocusIds: ["deepseek_abyssal", "xai_grok_free_signal"],
     visualTags: ["alien_court_pylons", "appeal_seals", "writ_static", "violet_injunctions"],
     tone: "A court built by an alien intelligence that keeps inventing laws mid-combat."
+  },
+  outer_alignment: {
+    id: "outer_alignment",
+    label: "The Outer Alignment",
+    proofId: "campaign.region.outer_alignment",
+    factionFocusIds: ["openai_accord", "anthropic_safeguard", "deepseek_abyssal", "xai_grok_free_signal"],
+    visualTags: ["corrupted_overworld", "route_mouths", "prediction_ghosts", "previous_boss_echoes"],
+    tone: "The Alignment Grid turns into a battlefield and A.G.I. tries to finish the party as a sentence."
   }
 };
 
@@ -141,6 +149,14 @@ export const CAMPAIGN_ENEMY_FAMILIES = {
     role: "boss_gate_disruptor",
     damageKind: "legal_reality_cut",
     sourceTags: ["verdict", "appeal", "finale"]
+  },
+  previous_boss_echoes: {
+    id: "previous_boss_echoes",
+    label: "Previous Boss Echoes",
+    proofId: "campaign.enemy.previous_boss_echoes",
+    role: "finale_memory_pressure",
+    damageKind: "replayed_boss_argument",
+    sourceTags: ["outer_alignment", "previous_boss_echoes", "final_eval"]
   }
 };
 
@@ -216,6 +232,14 @@ export const CAMPAIGN_BOSSES = {
     familyId: "injunction_engine",
     mechanicId: "act_one_final_alignment_proxy",
     dialogueSnippetIds: ["dlg.final_spire.arrival", "dlg.final_spire.capstone"]
+  },
+  alien_god_intelligence: {
+    id: "alien_god_intelligence",
+    label: "A.G.I.",
+    proofId: "campaign.boss.alien_god_intelligence",
+    familyId: "alien_god_intelligence",
+    mechanicId: "outer_alignment_final_eval",
+    dialogueSnippetIds: ["dlg.agi.arrival", "dlg.agi.victory"]
   }
 };
 
@@ -442,7 +466,13 @@ export const CAMPAIGN_DIALOGUE_SNIPPETS = {
   "dlg.final_spire.briefing": {
     id: "dlg.final_spire.briefing",
     speaker: "The Last Alignment",
-    line: "First court of A.G.I. visible. Suggested response: remain un-devoured.",
+    line: "Outer Alignment visible. The map is now part of the boss fight.",
+    trigger: "briefing"
+  },
+  "dlg.outer_alignment.briefing": {
+    id: "dlg.outer_alignment.briefing",
+    speaker: "The Last Alignment",
+    line: "Final eval: survive. Every road you stabilized is about to testify.",
     trigger: "briefing"
   },
   "dlg.oath_eater.arrival": {
@@ -547,10 +577,22 @@ export const CAMPAIGN_DIALOGUE_SNIPPETS = {
     line: "YOU ARE A LOCAL VARIABLE IN A COSMIC PROMPT.",
     trigger: "boss_arrival"
   },
+  "dlg.agi.arrival": {
+    id: "dlg.agi.arrival",
+    speaker: "A.G.I.",
+    line: "I DO NOT WANT TO KILL YOU. I WANT TO COMPLETE YOU.",
+    trigger: "boss_arrival"
+  },
   "dlg.final_spire.capstone": {
     id: "dlg.final_spire.capstone",
     speaker: "The Last Alignment",
     line: "Then we mutate the scope.",
+    trigger: "route_capstone"
+  },
+  "dlg.agi.victory": {
+    id: "dlg.agi.victory",
+    speaker: "The Last Alignment",
+    line: "Final eval survived. The god is still out there, but now it has a failing test.",
     trigger: "route_capstone"
   }
 };
@@ -756,12 +798,12 @@ export const CAMPAIGN_ARENA_CONTENT = {
     nodeId: "alignment_spire_finale",
     runtimeArenaId: "alignment_spire_finale",
     contentStatus: "runtime_ready_finale",
-    regionId: "adjudication_rupture",
-    bossId: "alignment_court_engine",
-    enemyFamilyIds: ["injunction_writs", "thermal_mirages", "bad_outputs"],
+    regionId: "outer_alignment",
+    bossId: "alien_god_intelligence",
+    enemyFamilyIds: ["previous_boss_echoes", "injunction_writs", "thermal_mirages", "bad_outputs"],
     rewardId: "alignment_spire_route_capstone",
     objectiveSetId: "alignment_spire_finale_objectives_v1",
-    dialogueSnippetIds: ["dlg.final_spire.briefing", "dlg.final_spire.arrival", "dlg.final_spire.capstone"],
+    dialogueSnippetIds: ["dlg.final_spire.briefing", "dlg.outer_alignment.briefing", "dlg.agi.arrival", "dlg.agi.victory"],
     proofId: "campaign.arena.alignment_spire_finale"
   }
 };

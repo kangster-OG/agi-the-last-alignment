@@ -16,7 +16,7 @@ export interface AlignmentGridNode {
   theme: string;
   arenaId: string;
   unlocks: string[];
-  visualKind: "plaza" | "relay" | "lake" | "camp" | "transit" | "cache" | "spire" | "sunfield" | "archive" | "beacon";
+  visualKind: "plaza" | "relay" | "lake" | "camp" | "transit" | "cache" | "spire" | "sunfield" | "archive" | "beacon" | "finale";
   regionLabel: string;
   compactLabel?: string;
   labelOffsetX?: number;
@@ -51,7 +51,7 @@ export interface AlignmentGridPropCluster {
   spacingY: number;
   color: number;
   accent: number;
-  kind: "barricade" | "tower" | "tent" | "server_buoy" | "rail_sign" | "memory_shard" | "verdict_pylon" | "solar_mirror" | "redaction_stack" | "antenna";
+  kind: "barricade" | "tower" | "tent" | "server_buoy" | "rail_sign" | "memory_shard" | "verdict_pylon" | "solar_mirror" | "redaction_stack" | "antenna" | "route_mouth";
 }
 
 export interface AlignmentGridMap {
@@ -294,15 +294,15 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     },
     {
       id: "alignment_spire_finale",
-      name: "Alignment Spire Finale",
+      name: "Outer Alignment Finale",
       nodeType: "Boss Gate",
       worldX: 15,
       worldY: 9,
-      theme: "first visible court of the Alien God Intelligence",
-      arenaId: "verdict_spire",
+      theme: "corrupted overworld where A.G.I. turns roads into attacks",
+      arenaId: "alignment_spire_finale",
       unlocks: [],
-      visualKind: "spire",
-      regionLabel: "Final Alignment",
+      visualKind: "finale",
+      regionLabel: "Outer Alignment",
       compactLabel: "FINALE",
       labelOffsetX: 6,
       labelOffsetY: -14
@@ -562,7 +562,8 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     { id: "glass_sunfield", minX: 4, maxX: 10, minY: 6, maxY: 12, colorA: 0x5a5746, colorB: 0x3f4952 },
     { id: "redaction_archive", minX: -1, maxX: 4, minY: -1, maxY: 4, colorA: 0x2c3141, colorB: 0x111820 },
     { id: "archive_field", minX: -12, maxX: 0, minY: 0, maxY: 4, colorA: 0x3f3756, colorB: 0x332d49 },
-    { id: "verdict_field", minX: 8, maxX: 16, minY: 1, maxY: 11, colorA: 0x4a4652, colorB: 0x393743 }
+    { id: "verdict_field", minX: 8, maxX: 16, minY: 1, maxY: 11, colorA: 0x4a4652, colorB: 0x393743 },
+    { id: "outer_alignment_corruption", minX: 12, maxX: 17, minY: 7, maxY: 13, colorA: 0x1b1028, colorB: 0x291337 }
   ],
   propClusters: [
     { id: "plaza_barricades", worldX: -7.8, worldY: -3.8, rows: 2, cols: 5, spacingX: 1.2, spacingY: 1.1, color: 0x6b5147, accent: 0xff5d57, kind: "barricade" },
@@ -580,7 +581,8 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     { id: "memorial_shards", worldX: -11.0, worldY: 2.4, rows: 2, cols: 3, spacingX: 1.1, spacingY: 1.1, color: 0x332d49, accent: 0xff5d57, kind: "memory_shard" },
     { id: "forge_towers", worldX: 3.3, worldY: 3.1, rows: 2, cols: 3, spacingX: 1.1, spacingY: 1.1, color: 0x273a46, accent: 0x64e0b4, kind: "tower" },
     { id: "verdict_pylons", worldX: 12.0, worldY: 6.6, rows: 2, cols: 4, spacingX: 1.2, spacingY: 1.2, color: 0x393743, accent: 0xfff4d6, kind: "verdict_pylon" },
-    { id: "appeal_pylons", worldX: 14.1, worldY: 1.3, rows: 2, cols: 3, spacingX: 1.1, spacingY: 1.1, color: 0x393743, accent: 0x7b61ff, kind: "verdict_pylon" }
+    { id: "appeal_pylons", worldX: 14.1, worldY: 1.3, rows: 2, cols: 3, spacingX: 1.1, spacingY: 1.1, color: 0x393743, accent: 0x7b61ff, kind: "verdict_pylon" },
+    { id: "outer_alignment_mouths", worldX: 15.1, worldY: 9.0, rows: 2, cols: 4, spacingX: 1.1, spacingY: 1.0, color: 0x1b1028, accent: 0xff5d57, kind: "route_mouth" }
   ]
 };
 

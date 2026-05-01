@@ -470,16 +470,16 @@ export const ONLINE_ARENAS = {
   },
   alignment_spire_finale: {
     id: "alignment_spire_finale",
-    mapId: "alignment_spire_finale_online_first_court",
-    label: "Alignment Spire Finale",
-    regionLabel: "Outer Alignment First Court",
+    mapId: "outer_alignment_finale_online_corrupted_grid",
+    label: "Outer Alignment Finale",
+    regionLabel: "Outer Alignment",
     targetSeconds: 84,
     bossSeconds: 27,
-    bossFamilyId: "injunction_engine",
-    bossLabel: "The Alignment Court Engine",
+    bossFamilyId: "alien_god_intelligence",
+    bossLabel: "A.G.I.",
     bossSpawn: { worldX: 12.6, worldY: 7.2 },
-    completionTitle: "FIRST COURT BREACHED",
-    completionSubtitle: "The Last Alignment remained un-devoured long enough to leave a route.",
+    completionTitle: "OUTER ALIGNMENT SURVIVED",
+    completionSubtitle: "Final eval failed to complete the party. The route profile remembers why.",
     rewardId: "alignment_spire_route_capstone",
     rewardName: "Alignment Spire Capstone",
     rewardRenown: 8,
@@ -489,16 +489,16 @@ export const ONLINE_ARENAS = {
     bossColor: 0xfff4d6,
     bossDamage: 15,
     bossRadius: 1.02,
-    bossMechanicFamily: "verdict",
-    bossGateMechanic: "alignment_court_breach",
-    initialHazardFamily: "verdict_seal",
-    regionEventFamily: "verdict_seal",
-    regionEventPattern: "alignment_spire_finale",
+    bossMechanicFamily: "outer_alignment",
+    bossGateMechanic: "outer_alignment_final_eval",
+    initialHazardFamily: "prediction_ghost",
+    regionEventFamily: "prediction_ghost",
+    regionEventPattern: "outer_alignment_finale",
     spawnRegions: [
       { id: "alignment_spire_injunction_writs", worldX: 24, worldY: 10, radius: 5.8, startsAtSeconds: 0.5, color: 0xfff4d6, familyId: "injunction_writs" },
       { id: "alignment_spire_thermal_mirages", worldX: 13, worldY: 24, radius: 5.2, startsAtSeconds: 5, color: 0x64e0b4, familyId: "thermal_mirages" },
       { id: "alignment_spire_bad_outputs", worldX: -14, worldY: 18, radius: 5.4, startsAtSeconds: 10, color: 0x4c5362, familyId: "bad_outputs" },
-      { id: "alignment_spire_refusal_writs", worldX: 4, worldY: -20, radius: 5.3, startsAtSeconds: 14, color: 0x7b61ff, familyId: "injunction_writs" }
+      { id: "outer_alignment_previous_boss_echoes", worldX: 4, worldY: -20, radius: 5.3, startsAtSeconds: 14, color: 0x7b61ff, familyId: "previous_boss_echoes" }
     ]
   }
 };

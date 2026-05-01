@@ -406,12 +406,13 @@ export class OnlineCoopState implements GameState {
     const redactionFamily = archiveUnsaid;
     const blackwaterFamily = blackwaterBeacon;
     const memoryFamily = memoryCache || memoryBranch;
-    const verdictFamily = verdictSpire || appealCourt || alignmentFinale;
+    const outerAlignmentFamily = alignmentFinale;
+    const verdictFamily = verdictSpire || appealCourt;
     const bg = new Graphics();
-    bg.rect(-4200, -3600, 8400, 7200).fill(coolingFamily ? 0x10212b : transitFamily ? 0x17151e : solarFamily ? 0x171a20 : redactionFamily ? 0x10141d : blackwaterFamily ? 0x0d1c28 : memoryFamily ? 0x171b28 : verdictFamily ? 0x161720 : 0x141922);
+    bg.rect(-4200, -3600, 8400, 7200).fill(coolingFamily ? 0x10212b : transitFamily ? 0x17151e : solarFamily ? 0x171a20 : redactionFamily ? 0x10141d : blackwaterFamily ? 0x0d1c28 : memoryFamily ? 0x171b28 : outerAlignmentFamily ? 0x100817 : verdictFamily ? 0x161720 : 0x141922);
     game.layers.background.addChild(bg);
 
-    if (!coolingFamily && !transitFamily && !solarFamily && !redactionFamily && !blackwaterFamily && !memoryFamily && !verdictFamily && !this.drawTextureGroundIfEnabled(game)) {
+    if (!coolingFamily && !transitFamily && !solarFamily && !redactionFamily && !blackwaterFamily && !memoryFamily && !outerAlignmentFamily && !verdictFamily && !this.drawTextureGroundIfEnabled(game)) {
       const ground = new Graphics();
       for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
         for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
@@ -476,6 +477,19 @@ export class OnlineCoopState implements GameState {
           const waterFoam = Math.abs((x + y - 2) % 5) <= 1;
           const color = platform ? ((x + y) % 2 === 0 ? 0x3b4f5d : 0x314452) : antennaLane ? 0x203849 : waterFoam ? 0x164d61 : 0x0f2b3b;
           drawIsoDiamond(ground, x, y, color, platform ? 0xffd166 : antennaLane ? 0x45aaf2 : 0x0b2330);
+        }
+      }
+      game.layers.ground.addChild(ground);
+    }
+    if (outerAlignmentFamily) {
+      const ground = new Graphics();
+      for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
+        for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
+          const mouthRoad = Math.abs((x + y - 3) % 7) <= 1;
+          const predictionGrid = Math.abs((x - y + 2) % 6) <= 1;
+          const courtShard = x > 8 && x < 16 && y > 4 && y < 12;
+          const color = mouthRoad ? 0x2b1220 : predictionGrid ? 0x271638 : courtShard ? ((x + y) % 2 === 0 ? 0x4a4652 : 0x393743) : 0x120b1a;
+          drawIsoDiamond(ground, x, y, color, mouthRoad ? 0xff5d57 : predictionGrid ? 0x7b61ff : 0xfff4d6);
         }
       }
       game.layers.ground.addChild(ground);
@@ -557,12 +571,19 @@ export class OnlineCoopState implements GameState {
               { id: "persistence_seed", label: arenaId === "guardrail_forge" ? "Forge Alloy" : "Persistence Seed", worldX: arenaId === "guardrail_forge" ? 2 : -5, worldY: 4, radius: 1.3, color: 0x7b61ff, accent: 0x64e0b4 },
               { id: "archive_switchback", label: arenaId === "model_war_memorial" ? "Casualty Ledger" : arenaId === "guardrail_forge" ? "Calibration Clamp" : "Archive Switchback", worldX: arenaId === "model_war_memorial" ? -9 : arenaId === "guardrail_forge" ? 5 : -1, worldY: arenaId === "model_war_memorial" ? 1 : arenaId === "guardrail_forge" ? 1 : 0, radius: 1.5, color: 0x31475d, accent: 0xfff4d6 }
             ]
+          : outerAlignmentFamily
+            ? [
+                { id: "verdict_spire", label: "Outer Alignment", worldX: 12.6, worldY: 7.2, radius: 2.8, color: 0x1b1028, accent: 0xff5d57 },
+                { id: "prediction_ghost", label: "Prediction Ghost", worldX: 15.8, worldY: 10.6, radius: 1.8, color: 0x7b61ff, accent: 0xfff4d6 },
+                { id: "route_mouth", label: "Road May Become Teeth", worldX: 7.2, worldY: 11.6, radius: 2.0, color: 0x2b1220, accent: 0xff5d57 },
+                { id: "alien_god_intelligence", label: "A.G.I.", worldX: 3.4, worldY: 2.2, radius: 2.0, color: 0xfff4d6, accent: 0x45aaf2 }
+              ]
           : verdictFamily
             ? [
-                { id: "verdict_spire", label: alignmentFinale ? "Alignment Spire" : appealCourt ? "Appeal Court Ruins" : "Verdict Spire", worldX: alignmentFinale ? 12.6 : appealCourt ? 14 : 10.6, worldY: alignmentFinale ? 7.2 : appealCourt ? 1 : 5.2, radius: 2.6, color: 0xfff4d6, accent: 0x64e0b4 },
-                { id: "verdict_seal", label: alignmentFinale ? "First Court Seal" : appealCourt ? "Court Record" : "Verdict Seal", worldX: alignmentFinale ? 7.2 : 6.0, worldY: alignmentFinale ? 11.6 : 9.4, radius: 2.0, color: 0xffd166, accent: 0x7b61ff },
-                { id: "appeal_gate", label: alignmentFinale ? "Witness Anchor" : appealCourt ? "Amicus Anchor" : "Appeal Gate", worldX: 14.3, worldY: alignmentFinale ? 8.2 : 8.2, radius: 1.7, color: 0x4a4652, accent: 0xff5d57 },
-                { id: "injunction_engine", label: alignmentFinale ? "Alignment Court" : "Injunction Engine", worldX: alignmentFinale ? 3.4 : 2.6, worldY: alignmentFinale ? 2.2 : 1.2, radius: 1.7, color: 0x64e0b4, accent: 0xffd166 }
+                { id: "verdict_spire", label: appealCourt ? "Appeal Court Ruins" : "Verdict Spire", worldX: appealCourt ? 14 : 10.6, worldY: appealCourt ? 1 : 5.2, radius: 2.6, color: 0xfff4d6, accent: 0x64e0b4 },
+                { id: "verdict_seal", label: appealCourt ? "Court Record" : "Verdict Seal", worldX: 6.0, worldY: 9.4, radius: 2.0, color: 0xffd166, accent: 0x7b61ff },
+                { id: "appeal_gate", label: appealCourt ? "Amicus Anchor" : "Appeal Gate", worldX: 14.3, worldY: 8.2, radius: 1.7, color: 0x4a4652, accent: 0xff5d57 },
+                { id: "injunction_engine", label: "Injunction Engine", worldX: 2.6, worldY: 1.2, radius: 1.7, color: 0x64e0b4, accent: 0xffd166 }
               ]
         : this.map.landmarks;
     for (const landmark of landmarksForArena) {
@@ -614,6 +635,14 @@ export class OnlineCoopState implements GameState {
                         ? routeExpansionArt.routeBiomeLandmarks.thermal_buoy
                         : routeArt && blackwaterFamily
                           ? routeArt.routeLandmarks.route_pylon
+                    : routeExpansionArt && outerAlignmentFamily && (landmark.id === "prediction_ghost" || landmark.id === "route_mouth")
+                      ? routeExpansionArt.routeBiomeLandmarks.verdict_writ_pylon
+                      : verdictArt && outerAlignmentFamily && landmark.id === "verdict_spire"
+                        ? verdictArt.verdictLandmarks.verdict_spire
+                        : verdictArt && outerAlignmentFamily && landmark.id === "alien_god_intelligence"
+                          ? verdictArt.verdictLandmarks.injunction_engine
+                          : routeArt && outerAlignmentFamily
+                            ? routeArt.routeLandmarks.route_pylon
                     : routeExpansionArt && verdictFamily && (landmark.id === "verdict_seal" || landmark.id === "appeal_gate")
                       ? routeExpansionArt.routeBiomeLandmarks.verdict_writ_pylon
                       : verdictArt && verdictFamily && landmark.id === "verdict_spire"
@@ -1604,6 +1633,18 @@ ${focus.focusDescription}`,
           serverMechanicPolicy: "server_authoritative_tidal_waves_signal_towers_and_split_pressure",
           readabilityPolicy: "static_translucent_tidal_lanes_and_zero_damage_signal_towers",
           persistenceBoundary: "route_profile_only_no_tidal_antenna_live_objectives_combat_or_authority_state"
+        },
+        milestone45: {
+          set: "milestone45_outer_alignment_finale",
+          nodeId: "alignment_spire_finale",
+          arenaId: "alignment_spire_finale",
+          bossId: "alien_god_intelligence",
+          rewardId: "alignment_spire_route_capstone",
+          corruptedOverworldState: "routes_become_mouths_nodes_rearrange_ui_lies",
+          previousBossEchoIds: ["oath_eater", "station_that_arrives", "wrong_sunrise", "redactor_saint", "maw_below_weather"],
+          serverMechanicPolicy: "server_authoritative_predictions_echoes_and_final_eval_victory",
+          readabilityPolicy: "corrupted_overworld_markers_predictions_do_not_cover_controls",
+          persistenceBoundary: "route_profile_only_no_outer_alignment_predictions_echoes_or_finale_authority_state"
         }
       },
       routeDepth: persistence?.profile.routeDepth ?? party.completedNodeIds.length,
@@ -1822,10 +1863,10 @@ ${focus.focusDescription}`,
     const routeExpansionArt = this.onlineRouteExpansionArt(game);
     for (const zone of regionEvent.hazardZones) {
       const p = worldToIso(zone.worldX, zone.worldY);
-      const color = zone.familyId === "boiling_cache" ? palette.tomato : zone.familyId === "false_track" || zone.familyId === "solar_beam" ? palette.lemon : zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" ? palette.mint : zone.familyId === "redaction_field" ? 0xfff4d6 : zone.familyId === "tidal_wave" ? 0x45aaf2 : 0x45aaf2;
-      const labelFill = zone.familyId === "boiling_cache" ? "#ff5d57" : zone.familyId === "false_track" || zone.familyId === "solar_beam" ? "#ffd166" : zone.familyId === "verdict_seal" || zone.familyId === "redaction_field" ? "#fff4d6" : zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" ? "#64e0b4" : "#45aaf2";
+      const color = zone.familyId === "boiling_cache" ? palette.tomato : zone.familyId === "false_track" || zone.familyId === "solar_beam" ? palette.lemon : zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" || zone.familyId === "prediction_ghost" || zone.familyId === "fake_upgrade" ? palette.mint : zone.familyId === "redaction_field" ? 0xfff4d6 : zone.familyId === "route_mouth" ? 0xff5d57 : zone.familyId === "tidal_wave" ? 0x45aaf2 : 0x45aaf2;
+      const labelFill = zone.familyId === "boiling_cache" || zone.familyId === "route_mouth" ? "#ff5d57" : zone.familyId === "false_track" || zone.familyId === "solar_beam" ? "#ffd166" : zone.familyId === "verdict_seal" || zone.familyId === "redaction_field" ? "#fff4d6" : zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" || zone.familyId === "prediction_ghost" || zone.familyId === "fake_upgrade" ? "#64e0b4" : "#45aaf2";
       const hazardColor = zone.familyId === "verdict_seal" ? 0xfff4d6 : color;
-      const zoneAlpha = zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" ? 0.1 : zone.familyId === "solar_beam" || zone.familyId === "redaction_field" || zone.familyId === "tidal_wave" ? 0.11 : zone.familyId === "verdict_seal" ? 0.12 : 0.14;
+      const zoneAlpha = zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" || zone.familyId === "prediction_ghost" || zone.familyId === "fake_upgrade" ? 0.1 : zone.familyId === "solar_beam" || zone.familyId === "redaction_field" || zone.familyId === "tidal_wave" || zone.familyId === "route_mouth" ? 0.11 : zone.familyId === "verdict_seal" ? 0.12 : 0.14;
       const markerFrame = hazardFrameForZone(zone.familyId);
       if (routeExpansionArt && markerFrame) {
         this.drawProductionEffectSprite(`online-hazard:${zone.familyId}:${zone.id}`, routeExpansionArt.hazardMarkers[markerFrame], zone.worldX, zone.worldY, Math.max(0.72, Math.min(1.45, zone.radius * 0.28)), 0.72, zone.worldX + zone.worldY + 0.02);
@@ -1836,7 +1877,7 @@ ${focus.focusDescription}`,
         .stroke({ color: hazardColor, width: 3, alpha: 0.68 });
       this.entityGraphics
         .ellipse(p.screenX, p.screenY + 6, zone.radius * 18, zone.radius * 7)
-        .stroke({ color: zone.familyId === "verdict_seal" || zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" ? palette.mint : palette.lemon, width: 1, alpha: 0.62 });
+        .stroke({ color: zone.familyId === "verdict_seal" || zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" || zone.familyId === "prediction_ghost" || zone.familyId === "fake_upgrade" ? palette.mint : palette.lemon, width: 1, alpha: 0.62 });
       const label = new Text({
         text: zone.label.toUpperCase(),
         style: { ...fontStyle, fontSize: 10, fill: labelFill }
@@ -1897,6 +1938,7 @@ function onlineBossDisplayName(familyId: string): string {
   if (familyId === "wrong_sunrise") return "THE WRONG SUNRISE";
   if (familyId === "redactor_saint") return "THE REDACTOR SAINT";
   if (familyId === "maw_below_weather") return "THE MAW BELOW WEATHER";
+  if (familyId === "alien_god_intelligence") return "A.G.I.";
   return "THE OATH-EATER";
 }
 
@@ -1904,6 +1946,7 @@ function onlineBossDisplayColor(familyId: string): string {
   if (familyId === "thermal_oracle" || familyId === "maw_below_weather") return "#45aaf2";
   if (familyId === "injunction_engine" || familyId === "redactor_saint") return "#fff4d6";
   if (familyId === "wrong_sunrise") return "#ff6b57";
+  if (familyId === "alien_god_intelligence") return "#ff5d57";
   return "#ffd166";
 }
 
@@ -1999,6 +2042,8 @@ function onlineThreatTextureFor(
   if (enemy.boss && enemy.familyId === "wrong_sunrise") return { texture: textures.thermal_oracle, scale: 1.24 };
   if (enemy.boss && enemy.familyId === "redactor_saint") return { texture: textures.shard_lurker, scale: 1.24 };
   if (enemy.boss && enemy.familyId === "maw_below_weather") return { texture: textures.thermal_oracle, scale: 1.25 };
+  if (enemy.boss && enemy.familyId === "alien_god_intelligence") return { texture: textures.injunction_engine, scale: 1.34 };
+  if (enemy.sourceRegionId?.startsWith("outer_alignment_echo:") || enemy.familyId.endsWith("_echo") || enemy.familyId === "previous_boss_echoes") return { texture: textures.shard_lurker, scale: 0.84 };
   if (enemy.sourceRegionId?.includes("injunction_writs") || enemy.familyId === "injunction_writs") return { texture: textures.verdict_writ, scale: 0.82 };
   if (enemy.sourceRegionId?.includes("sunfield") || enemy.familyId === "solar_reflections") return { texture: textures.false_track, scale: 0.76 };
   if (enemy.sourceRegionId?.includes("archive") || enemy.familyId === "redaction_angels") return { texture: textures.shard_lurker, scale: 0.78 };
@@ -2032,6 +2077,9 @@ function hazardFrameForZone(familyId: string): Milestone28HazardFrame | null {
   if (familyId === "redaction_anchor") return "route_stable";
   if (familyId === "tidal_wave") return "boiling_cache";
   if (familyId === "signal_tower") return "route_stable";
+  if (familyId === "prediction_ghost") return "route_stable";
+  if (familyId === "route_mouth") return "verdict_seal";
+  if (familyId === "fake_upgrade") return "ready_ping";
   return null;
 }
 
@@ -2080,7 +2128,7 @@ function shortNodeName(name: string): string {
   if (name === "Archive Of Unsaid Things" || name === "archive_of_unsaid_things") return "Archive";
   if (name === "Blackwater Beacon" || name === "blackwater_beacon") return "Blackwater";
   if (name === "Appeal Court Ruins" || name === "appeal_court_ruins") return "Appeal";
-  if (name === "Alignment Spire Finale" || name === "alignment_spire_finale") return "Finale";
+  if (name === "Alignment Spire Finale" || name === "Outer Alignment Finale" || name === "alignment_spire_finale") return "Finale";
   return name.split(" ")[0] ?? name;
 }
 
@@ -2135,7 +2183,7 @@ function arenaLabel(arenaId: string): string {
   if (arenaId === "blackwater_beacon") return "BLACKWATER BEACON";
   if (arenaId === "verdict_spire") return "VERDICT SPIRE";
   if (arenaId === "appeal_court_ruins") return "APPEAL COURT RUINS";
-  if (arenaId === "alignment_spire_finale") return "ALIGNMENT SPIRE FINALE";
+  if (arenaId === "alignment_spire_finale") return "OUTER ALIGNMENT FINALE";
   if (arenaId === "memory_cache_001") return "CEASEFIRE CACHE";
   if (arenaId === "model_war_memorial") return "MODEL WAR MEMORIAL";
   if (arenaId === "guardrail_forge") return "GUARDRAIL FORGE";

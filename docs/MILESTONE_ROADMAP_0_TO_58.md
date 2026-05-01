@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-44 are complete. Milestone 45 is next.
+Current repo status as of May 1, 2026: Milestones 0-45 are complete. Milestone 46 is next.
 
 ## Non-Negotiable Continuity
 
@@ -482,21 +482,28 @@ Readiness: complete.
 
 ### M45: Outer Alignment Finale
 
-Goal: add the final route and A.G.I. culmination encounter.
+Delivered the final route and A.G.I. culmination encounter.
 
-Expected scope:
+Implemented:
 
-- corrupted overworld state;
-- previous-boss echoes;
-- multi-phase final boss;
-- ending/victory flow;
-- final export-code profile state.
+- Outer Alignment campaign region, local route node, corrupted grid terrain, route-mouth prop clusters, and online arena presentation;
+- A.G.I. boss content with final-eval arrival/victory dialogue and campaign schema telemetry;
+- server-authoritative Outer Alignment pressure with Prediction Ghosts, Route Mouth hazards, false upgrade decoys, rotating previous-boss echoes, and phase telemetry;
+- final route objective/reward completion with `alignment_spire_route_capstone` preserved for compatibility;
+- proof-visible victory summary, save/export hash telemetry, and route-profile-only persistence boundary checks;
+- production-art default continuity and placeholder opt-out rendering.
 
-Proof expectations:
+Proof coverage:
 
-- final completion writes only durable route-profile fields;
-- victory summary and final profile hash are proof-visible;
-- no cloud/account implication.
+- `npm run proof:milestone45-outer-alignment-finale`
+- `npm run proof:milestone44-blackwater-beacon`
+- `npm run proof:milestone40-campaign-route-ux`
+- `npm run proof:milestone39-campaign-dialogue`
+- `npm run proof:milestone38-distinct-campaign-arenas`
+- `npm run proof:milestone36-campaign-content-schema`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M46: Full Class Roster Expansion
 
