@@ -226,6 +226,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runNetworkScenario();
     return;
+  } else if (name === "campaign-full") {
+    await closeBrowser(browser);
+    await runCampaignFullScenario();
+    return;
   } else if (name === "milestone10-art") {
     await page.goto(`${url}?assetPreview=milestone10_runtime_set`, { waitUntil: "domcontentloaded" });
     await page.waitForFunction(() => typeof window.render_game_to_text === "function");
@@ -648,6 +652,10 @@ async function runScenario(name) {
   } else if (name === "milestone55-online-robustness") {
     await closeBrowser(browser);
     await runMilestone55OnlineRobustnessScenario();
+    return;
+  } else if (name === "milestone56-quality-lock") {
+    await closeBrowser(browser);
+    await runMilestone56QualityLockScenario();
     return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
@@ -4855,6 +4863,137 @@ async function runMilestone55OnlineRobustnessScenario() {
   }
 }
 
+async function runCampaignFullScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+  const fullCampaignNodes = [
+    "armistice_plaza",
+    "model_war_memorial",
+    "cooling_lake_nine",
+    "thermal_archive",
+    "memory_cache_001",
+    "guardrail_forge",
+    "archive_of_unsaid_things",
+    "blackwater_beacon",
+    "transit_loop_zero",
+    "false_schedule_yard",
+    "glass_sunfield",
+    "appeal_court_ruins",
+    "verdict_spire",
+    "alignment_spire_finale"
+  ];
+
+  try {
+    const pair = await openOnlinePairInContext(context, "campaign_full", errors, {
+      resetOnlinePersistence: "1",
+      roomCode: "CAMPAIGN_FULL"
+    });
+    const clean = await state(pair.pageA);
+    assert(clean.qualityGate?.policy === "milestone56_proof_performance_compatibility_accessibility_lock", "expected M56 quality gate in clean campaign proof");
+    assert(clean.online?.persistence?.profile?.completedNodeIds?.length === 0, "expected clean campaign profile");
+    await capture(pair.pageA, "campaign-full-clean-lobby");
+
+    let finalState = clean;
+    for (const nodeId of fullCampaignNodes) {
+      finalState = await completeOnlineNodeForProof(pair.pageA, pair.pageB, nodeId);
+      assert(finalState.online?.persistence?.profile?.completedNodeIds?.includes(nodeId), `expected ${nodeId} completed in full campaign proof`);
+      assert(finalState.online?.summary?.nodeId === nodeId, `expected ${nodeId} completion summary`);
+      if (nodeId === "blackwater_beacon") await capture(pair.pageA, "campaign-full-blackwater-checkpoint");
+      if (nodeId !== fullCampaignNodes[fullCampaignNodes.length - 1]) {
+        await pair.pageA.keyboard.press("Space");
+        await waitForOnlineRunPhase(pair.pageA, "lobby");
+        await waitForOnlineRunPhase(pair.pageB, "lobby");
+      }
+    }
+
+    await capture(pair.pageA, "campaign-full-finale-complete");
+    assert(finalState.online?.summary?.nodeId === "alignment_spire_finale", "expected full campaign proof to finish finale");
+    assert(finalState.online?.summary?.rewards?.rewardId === "alignment_spire_route_capstone", "expected finale capstone reward");
+    assert(finalState.online?.persistence?.profile?.completedNodeIds?.length >= fullCampaignNodes.length, "expected full campaign route completion count");
+    assert(finalState.online?.persistence?.profile?.rewardIds?.includes("appeal_court_brief"), "expected branch reward preserved in full campaign profile");
+    assert(finalState.online?.persistence?.profile?.rewardIds?.includes("alignment_spire_route_capstone"), "expected finale reward preserved in full campaign profile");
+    assert((finalState.performance?.activeEntities ?? 999) < 260, "expected final summary active entity budget");
+    const decoded = decodeProofOnlineProfileCode(finalState.online?.saveProfile?.exportCode);
+    assert(decoded?.profile?.completedNodeIds?.includes("alignment_spire_finale"), "expected full campaign export code to include finale completion");
+    assert(decoded?.profile && !("objectives" in decoded.profile) && !("combat" in decoded.profile) && !("buildKit" in decoded.profile), "expected full campaign export profile to omit live state");
+    assert(decoded?.profile && !("qualityGate" in decoded.profile) && !("deployment" in decoded.profile) && !("feedback" in decoded.profile), "expected full campaign export profile to omit runtime quality/deployment/feedback state");
+
+    await pair.pageA.close();
+    await pair.pageB.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for campaign-full");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
+async function runMilestone56QualityLockScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 960, height: 540 } });
+  const errors = [];
+  try {
+    const page = await context.newPage();
+    page.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    page.on("pageerror", (error) => errors.push(String(error)));
+    await page.goto(`${url}?audio=0&reducedFlash=1&screenShake=0`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    const menu = await state(page);
+    assert(menu.qualityGate?.policy === "milestone56_proof_performance_compatibility_accessibility_lock", "expected M56 quality gate");
+    assert(menu.qualityGate?.proofHooks?.renderGameToText === true && menu.qualityGate?.proofHooks?.advanceTime === true, "expected deterministic proof hooks visible");
+    assert(menu.feedback?.accessibility?.reducedFlash === true && menu.feedback?.accessibility?.screenShake === false, "expected reduced-flash and no-shake settings");
+    assert(menu.qualityGate?.accessibility?.maxReducedFlashAlpha === 0.08, "expected M56 reduced-flash alpha budget");
+    await capture(page, "milestone56-small-viewport-menu");
+
+    await enterArena(page);
+    await advanceRunHandlingDrafts(page, 65_000);
+    await chooseDraftIfNeeded(page);
+    await capture(page, "milestone56-long-session-budget");
+    const longRun = await state(page);
+    assert(longRun.qualityGate?.performanceBudgets?.localActiveEntitiesMax === 260, "expected local entity budget in M56 quality gate");
+    assert((longRun.performance?.activeEntities ?? 999) <= longRun.qualityGate.performanceBudgets.localActiveEntitiesMax, "expected long-session active entities within budget");
+    assert((longRun.feedback?.accessibility?.maxTransientParticlesPerFrame ?? 99) <= 36, "expected reduced-flash transient particle cap");
+    assert(longRun.qualityGate?.compatibility?.laptopViewport === "960x540", "expected laptop viewport compatibility policy");
+    await page.close();
+
+    const pair = await openOnlinePairInContext(context, "m56_quality", errors, {
+      resetOnlinePersistence: "1",
+      roomCode: "M56_QA",
+      audio: "0",
+      reducedFlash: "1",
+      screenShake: "0"
+    });
+    const online = await state(pair.pageA);
+    assert(online.qualityGate?.performanceBudgets?.onlineSnapshotEnemyMax === 24, "expected online snapshot enemy cap in M56 gate");
+    assert(online.online?.deployment?.policy === "milestone55_online_robustness_deployment_1_0", "expected deployment telemetry retained under M56");
+    assert(online.online?.robustness?.persistenceBoundary?.includes("no_live_objectives"), "expected M56 online persistence boundary");
+    await capture(pair.pageA, "milestone56-online-compatibility-lock");
+    await pair.pageA.close();
+    await pair.pageB.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone56 quality lock");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
 async function runMilestone47FactionBurstsScenario() {
   const browser = await chromium.launch({
     headless: true,
@@ -5589,6 +5728,14 @@ async function completeOnlineNodeWithProofControls(pageA, pageB, nodeId) {
   );
 }
 
+async function completeOnlineNodeForProof(pageA, pageB, nodeId) {
+  const completed = await completeOnlineNodeWithProofControls(pageA, pageB, nodeId);
+  assert(completed.online?.networkAuthority === "colyseus_room_server_combat", `expected ${nodeId} to remain server authoritative`);
+  assert(completed.online?.persistence?.profile && !("objectives" in completed.online.persistence.profile), `expected ${nodeId} profile to omit objective state`);
+  assert(completed.online?.persistence?.profile && !("buildKit" in completed.online.persistence.profile), `expected ${nodeId} profile to omit build-kit state`);
+  return completed;
+}
+
 async function waitForFeedback(page, predicate, label, timeoutMs = 10_000) {
   const start = Date.now();
   let latest = null;
@@ -5930,10 +6077,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "milestone55-online-robustness"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "campaign-full", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "milestone55-online-robustness", "milestone56-quality-lock"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "milestone55-online-robustness"].includes(name);
+  return ["network", "campaign-full", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "milestone55-online-robustness", "milestone56-quality-lock"].includes(name);
 }

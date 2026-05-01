@@ -72,8 +72,8 @@
   "upgrades": [],
   "objective": "Move independently in the shared Consensus Cell.",
   "performance": {
-    "entitiesAllocated": 4,
-    "activeEntities": 4,
+    "entitiesAllocated": 2,
+    "activeEntities": 2,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -132,11 +132,11 @@
       ]
     },
     "accessibility": {
-      "reducedFlash": false,
-      "screenShake": true,
-      "maxFlashAlpha": 0.18,
-      "hitPauseMs": 18,
-      "maxTransientParticlesPerFrame": 72
+      "reducedFlash": true,
+      "screenShake": false,
+      "maxFlashAlpha": 0.08,
+      "hitPauseMs": 0,
+      "maxTransientParticlesPerFrame": 36
     },
     "counters": {
       "ui": 1,
@@ -144,19 +144,14 @@
       "pickup": 0,
       "boss_warning": 0,
       "music": 0,
-      "objective": 1,
+      "objective": 0,
       "summary": 0
     },
     "recentCues": [
       {
-        "id": "online.objective_tick",
-        "kind": "objective",
-        "atMs": 31050
-      },
-      {
         "id": "ui.enter_online_coop",
         "kind": "ui",
-        "atMs": 1417
+        "atMs": 789
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -271,32 +266,30 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "e4y8SRS5A",
-    "worldX": 0,
-    "worldY": 0,
-    "hp": 140,
-    "maxHp": 140,
+    "sessionId": "1BtnLbEzF",
+    "worldX": -1.6,
+    "worldY": 1.1,
+    "hp": 176,
+    "maxHp": 176,
     "xp": 0,
     "level": 1
   },
   "online": {
     "status": "joined",
-    "serverUrl": "ws://127.0.0.1:2625",
+    "serverUrl": "ws://127.0.0.1:2626",
     "serverUrlSource": "query.coopServer",
-    "roomId": "-_zXfPCER",
-    "roomCode": "M55_MAIN",
-    "sessionId": "e4y8SRS5A",
+    "roomId": "g4iyKhXfp",
+    "roomCode": "M56_QA",
+    "sessionId": "1BtnLbEzF",
     "lastError": "",
-    "reconnectKey": "5_main_a",
+    "reconnectKey": "uality_a",
     "reconnect": {
       "policy": "session_storage_reconnect_key_slot_reclaim",
       "slotTtlSeconds": 45,
-      "connectedCount": 1,
-      "disconnectedCount": 1,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
       "reclaimedPlayerCount": 0,
-      "disconnectedPlayerIds": [
-        "player_1_5_main_b"
-      ]
+      "disconnectedPlayerIds": []
     },
     "lifecycle": {
       "schemaBacked": true,
@@ -312,25 +305,25 @@
       "playerPresenceCount": 2,
       "upgradeVoteCount": 0,
       "recompileDownedCount": 0,
-      "connectedCount": 1,
-      "disconnectedCount": 1,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
       "completedNodeCount": 0,
       "unlockedNodeCount": 1
     },
     "deployment": {
       "policy": "milestone55_online_robustness_deployment_1_0",
-      "roomCode": "M55_MAIN",
+      "roomCode": "M56_QA",
       "joinMode": "join_or_create_filtered_by_room_code",
       "healthPath": "/healthz",
       "staticDistEnabled": false,
       "tickRate": 30,
       "clientInputHz": 20,
       "maxClients": 4,
-      "port": 2625,
+      "port": 2626,
       "host": "0.0.0.0",
       "reconnectGraceSeconds": 45,
-      "connectedCount": 1,
-      "disconnectedCount": 1,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
       "latencyTolerance": {
         "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
         "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
@@ -341,11 +334,11 @@
     },
     "robustness": {
       "policy": "milestone55_online_robustness_deployment_1_0",
-      "roomCode": "M55_MAIN",
+      "roomCode": "M56_QA",
       "joinMode": "colyseus_join_or_create_filtered_by_room_code",
-      "serverUrl": "ws://127.0.0.1:2625",
+      "serverUrl": "ws://127.0.0.1:2626",
       "serverUrlSource": "query.coopServer",
-      "reconnectKey": "5_main_a",
+      "reconnectKey": "uality_a",
       "reconnectGraceSeconds": 45,
       "inputSendHz": 20,
       "serverTickRate": 30,
@@ -354,18 +347,18 @@
       "persistenceBoundary": "no_live_objectives_combat_build_kits_cooldowns_recompile_dialogue_route_focus_or_authority_import_export",
       "deployment": {
         "policy": "milestone55_online_robustness_deployment_1_0",
-        "roomCode": "M55_MAIN",
+        "roomCode": "M56_QA",
         "joinMode": "join_or_create_filtered_by_room_code",
         "healthPath": "/healthz",
         "staticDistEnabled": false,
         "tickRate": 30,
         "clientInputHz": 20,
         "maxClients": 4,
-        "port": 2625,
+        "port": 2626,
         "host": "0.0.0.0",
         "reconnectGraceSeconds": 45,
-        "connectedCount": 1,
-        "disconnectedCount": 1,
+        "connectedCount": 2,
+        "disconnectedCount": 0,
         "latencyTolerance": {
           "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
           "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
@@ -381,20 +374,20 @@
       "foundStoredProfile": false,
       "draftHash": "fnv1a_4a54a00e",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo4NzF9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjozNH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
       "importCodeHash": "",
-      "lastAction": "export_code_ready"
+      "lastAction": "reset_query_applied"
     },
     "saveProfile": {
       "surface": "milestone30_save_profile_export_codes",
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo4NzF9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
-      "shortExportCode": "AGI1_eyJwb2xp...c3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjozNH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -411,7 +404,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 871
+        "savedAtTick": 34
       },
       "saveHash": "fnv1a_4a54a00e",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -829,7 +822,7 @@
           "factionRuleCount": 8,
           "upgradeSeedRuleCount": 7,
           "objectiveBudgetCount": 14,
-          "activePartySize": 1,
+          "activePartySize": 2,
           "xpThresholds": [
             5,
             12,
@@ -1050,25 +1043,25 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 871,
-    "seconds": 1.17,
+    "tick": 34,
+    "seconds": 0,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
-    "runPhase": "active",
-    "readyCount": 2,
-    "connectedCount": 1,
+    "runPhase": "lobby",
+    "readyCount": 0,
+    "connectedCount": 2,
     "downedCount": 0,
     "combat": {
       "kills": 0,
       "collectedPickups": 0,
-      "authoritativeProjectiles": 3,
+      "authoritativeProjectiles": 0,
       "authoritativePickups": 0,
       "bossGateMechanic": "broken_promise"
     },
     "combatArt": {
-      "pressure": 0.06,
+      "pressure": 0,
       "phase": "opening",
-      "projectileCount": 3,
+      "projectileCount": 0,
       "pickupCount": 0,
       "bossEventActive": false
     },
@@ -1283,13 +1276,11 @@
       "nodeId": "armistice_plaza",
       "objectiveSetId": "armistice_plaza_objectives_v1",
       "label": "Armistice Plaza Objective Chain",
-      "phase": "active",
-      "currentObjectiveId": "calibrate_vanguard_relay",
-      "currentGroupId": "calibrate_reality_relays",
-      "hint": "Split the cell and hold both relays.",
-      "completedObjectiveIds": [
-        "survey_treaty_monument"
-      ],
+      "phase": "intro",
+      "currentObjectiveId": "survey_treaty_monument",
+      "currentGroupId": "survey_treaty_monument",
+      "hint": "Reach the Treaty Monument and verify reality still accepts the plaza.",
+      "completedObjectiveIds": [],
       "failedObjectiveIds": [],
       "completionReason": "",
       "instances": [
@@ -1302,20 +1293,18 @@
           "worldY": 3,
           "radius": 3.2,
           "active": false,
-          "complete": true,
-          "progress": 1.2,
+          "complete": false,
+          "progress": 0,
           "required": 1.2,
           "heldBySessionIds": [],
           "heldByLabels": [],
-          "heldByRoles": [
-            "runner"
-          ],
+          "heldByRoles": [],
           "preferredRoles": [
             "runner",
             "support"
           ],
-          "roleMatched": true,
-          "roleAssistMultiplier": 1.16,
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
           "runtimeArtId": "prop.objective.regroup_beacon_v1",
           "routeFlavor": "survey_chain",
           "runtimeArtReady": true,
@@ -1331,7 +1320,7 @@
           "worldX": -8.5,
           "worldY": 5.5,
           "radius": 2.75,
-          "active": true,
+          "active": false,
           "complete": false,
           "progress": 0,
           "required": 2.4,
@@ -1359,7 +1348,7 @@
           "worldX": 8.2,
           "worldY": -5.8,
           "radius": 2.75,
-          "active": true,
+          "active": false,
           "complete": false,
           "progress": 0,
           "required": 2.4,
@@ -1443,7 +1432,7 @@
       "arenaId": "armistice_plaza",
       "active": false,
       "phase": "inactive",
-      "requiredAnchors": 2,
+      "requiredAnchors": 0,
       "heldAnchorCount": 0,
       "splitHoldSeconds": 0,
       "splitRequiredSeconds": 2.4,
@@ -1454,37 +1443,10 @@
       "recompileRequiredSeconds": 2.33,
       "baseRecompileRequiredSeconds": 2.4,
       "recompileSpeedMultiplier": 1,
-      "anchors": [
-        {
-          "id": "plaza_vanguard_relay",
-          "label": "Vanguard Relay",
-          "role": "split",
-          "worldX": -8.5,
-          "worldY": 5.5,
-          "radius": 2.75,
-          "heldBySessionId": null,
-          "heldByLabel": null,
-          "heldSeconds": 0,
-          "requiredSeconds": 2.4,
-          "complete": false
-        },
-        {
-          "id": "treaty_cover_post",
-          "label": "Treaty Cover Post",
-          "role": "cover",
-          "worldX": 8.2,
-          "worldY": -5.8,
-          "radius": 2.75,
-          "heldBySessionId": null,
-          "heldByLabel": null,
-          "heldSeconds": 0,
-          "requiredSeconds": 2.4,
-          "complete": false
-        }
-      ],
+      "anchors": [],
       "playerRoles": [
         {
-          "sessionId": "e4y8SRS5A",
+          "sessionId": "2_uZvVzZM",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1493,13 +1455,13 @@
           "connected": true
         },
         {
-          "sessionId": "_pNUDAPpJ",
+          "sessionId": "1BtnLbEzF",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
           "role": "runner",
           "downed": false,
-          "connected": false
+          "connected": true
         }
       ]
     },
@@ -1517,6 +1479,7 @@
       "currentComboId": null,
       "currentComboName": null,
       "participatingFactionIds": [
+        "openai_accord",
         "openai_accord"
       ],
       "activeCombo": null,
@@ -1607,7 +1570,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 871
+        "savedAtTick": 34
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -2297,7 +2260,7 @@
       },
       "scaling": {
         "policy": "solo_local_online_scaling_1_0",
-        "activePartySize": 1,
+        "activePartySize": 2,
         "solo": {
           "enemyBudgetScale": 0.82,
           "revivePressure": "disabled_until_ally_present",
@@ -2415,7 +2378,7 @@
         "hit": 0,
         "pickup": 0,
         "boss_warning": 0,
-        "objective": 1,
+        "objective": 0,
         "burst": 0,
         "summary": 0
       }
@@ -2450,7 +2413,8 @@
         "reviveHpBonus": 0,
         "guardDamageReduction": 0,
         "sourceLabels": [
-          "P1"
+          "P1",
+          "P2"
         ]
       },
       "active": false,
@@ -2558,20 +2522,20 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "e4y8SRS5A",
-          "playerId": "player_0_5_main_a",
+          "sessionId": "2_uZvVzZM",
+          "playerId": "player_0_uality_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
-          "ready": true,
+          "ready": false,
           "connectionState": "connected"
         },
         {
-          "sessionId": "_pNUDAPpJ",
-          "playerId": "player_1_5_main_b",
+          "sessionId": "1BtnLbEzF",
+          "playerId": "player_1_uality_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
-          "ready": true,
-          "connectionState": "disconnected"
+          "ready": false,
+          "connectionState": "connected"
         }
       ],
       "voteCounts": {
@@ -4651,7 +4615,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 871
+          "savedAtTick": 34
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -5341,7 +5305,7 @@
         },
         "scaling": {
           "policy": "solo_local_online_scaling_1_0",
-          "activePartySize": 1,
+          "activePartySize": 2,
           "solo": {
             "enemyBudgetScale": 0.82,
             "revivePressure": "disabled_until_ally_present",
@@ -5442,8 +5406,8 @@
   },
   "players": [
     {
-      "sessionId": "e4y8SRS5A",
-      "playerId": "player_0_5_main_a",
+      "sessionId": "2_uZvVzZM",
+      "playerId": "player_0_uality_b",
       "slot": 0,
       "label": "P1",
       "classId": "accord_striker",
@@ -5507,7 +5471,7 @@
       "maxHp": 140,
       "xp": 0,
       "level": 1,
-      "ready": true,
+      "ready": false,
       "votedNodeId": "armistice_plaza",
       "connectionState": "connected",
       "connected": true,
@@ -5517,12 +5481,12 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": true,
-      "inputSequence": 14
+      "isLocal": false,
+      "inputSequence": 0
     },
     {
-      "sessionId": "_pNUDAPpJ",
-      "playerId": "player_1_5_main_b",
+      "sessionId": "1BtnLbEzF",
+      "playerId": "player_1_uality_a",
       "slot": 1,
       "label": "P2",
       "classId": "accord_striker",
@@ -5586,18 +5550,18 @@
       "maxHp": 176,
       "xp": 0,
       "level": 1,
-      "ready": true,
+      "ready": false,
       "votedNodeId": "armistice_plaza",
-      "connectionState": "disconnected",
-      "connected": false,
+      "connectionState": "connected",
+      "connected": true,
       "reconnectCount": 0,
-      "disconnectedFor": 0.66,
+      "disconnectedFor": 0,
       "downed": false,
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": false,
-      "inputSequence": 2
+      "isLocal": true,
+      "inputSequence": 0
     }
   ],
   "overworld": null,
@@ -5612,13 +5576,13 @@
       "maxY": 30
     },
     "networkAuthority": "colyseus_room_server_combat",
-    "runPhase": "active",
-    "sharedArenaStarted": true,
+    "runPhase": "lobby",
+    "sharedArenaStarted": false,
     "partyReady": {
-      "readyCount": 1,
+      "readyCount": 0,
       "playerCount": 2,
-      "connectedCount": 1,
-      "allReady": true
+      "connectedCount": 2,
+      "allReady": false
     },
     "party": {
       "location": "alignment_grid",
@@ -5721,20 +5685,20 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "e4y8SRS5A",
-          "playerId": "player_0_5_main_a",
+          "sessionId": "2_uZvVzZM",
+          "playerId": "player_0_uality_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
-          "ready": true,
+          "ready": false,
           "connectionState": "connected"
         },
         {
-          "sessionId": "_pNUDAPpJ",
-          "playerId": "player_1_5_main_b",
+          "sessionId": "1BtnLbEzF",
+          "playerId": "player_1_uality_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
-          "ready": true,
-          "connectionState": "disconnected"
+          "ready": false,
+          "connectionState": "connected"
         }
       ],
       "voteCounts": {
@@ -7814,7 +7778,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 871
+          "savedAtTick": 34
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -8504,7 +8468,7 @@
         },
         "scaling": {
           "policy": "solo_local_online_scaling_1_0",
-          "activePartySize": 1,
+          "activePartySize": 2,
           "solo": {
             "enemyBudgetScale": 0.82,
             "revivePressure": "disabled_until_ally_present",
@@ -8631,7 +8595,8 @@
         "reviveHpBonus": 0,
         "guardDamageReduction": 0,
         "sourceLabels": [
-          "P1"
+          "P1",
+          "P2"
         ]
       },
       "active": false,
@@ -8682,7 +8647,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 871
+        "savedAtTick": 34
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -9372,7 +9337,7 @@
       },
       "scaling": {
         "policy": "solo_local_online_scaling_1_0",
-        "activePartySize": 1,
+        "activePartySize": 2,
         "solo": {
           "enemyBudgetScale": 0.82,
           "revivePressure": "disabled_until_ally_present",
@@ -9490,7 +9455,7 @@
         "hit": 0,
         "pickup": 0,
         "boss_warning": 0,
-        "objective": 1,
+        "objective": 0,
         "burst": 0,
         "summary": 0
       }
@@ -9572,57 +9537,7 @@
       "activeTreatyCharge": null
     }
   },
-  "enemies": [
-    {
-      "id": 1,
-      "familyId": "bad_outputs",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -20.94,
-      "worldY": 20.28,
-      "hp": 22,
-      "boss": false
-    },
-    {
-      "id": 2,
-      "familyId": "bad_outputs",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -26.38,
-      "worldY": 19.16,
-      "hp": 22,
-      "boss": false
-    }
-  ],
+  "enemies": [],
   "pickups": [],
-  "projectiles": [
-    {
-      "id": 1,
-      "ownerSessionId": "e4y8SRS5A",
-      "worldX": -6.59,
-      "worldY": 6.39,
-      "velocityX": -6.61,
-      "velocityY": 6.4,
-      "life": 0.25,
-      "label": "refusal shard"
-    },
-    {
-      "id": 2,
-      "ownerSessionId": "_pNUDAPpJ",
-      "worldX": -7.44,
-      "worldY": 6.89,
-      "velocityX": -6.54,
-      "velocityY": 6.48,
-      "life": 0.36,
-      "label": "refusal shard"
-    },
-    {
-      "id": 3,
-      "ownerSessionId": "e4y8SRS5A",
-      "worldX": -2.29,
-      "worldY": 2.21,
-      "velocityX": -6.61,
-      "velocityY": 6.4,
-      "life": 0.9,
-      "label": "refusal shard"
-    }
-  ]
+  "projectiles": []
 }

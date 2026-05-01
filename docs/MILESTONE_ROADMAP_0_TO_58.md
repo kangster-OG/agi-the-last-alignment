@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-55 are complete. Milestone 56 is next.
+Current repo status as of May 1, 2026: Milestones 0-56 are complete. Milestone 57 is next.
 
 ## Non-Negotiable Continuity
 
@@ -758,28 +758,26 @@ Readiness: complete.
 
 Goal: finish the technical quality gate before release candidate.
 
-Expected scope:
+Implemented:
 
-- proof helper refactors;
-- direct proof-message helpers;
-- flaky wait cleanup;
-- `proof:campaign-full`;
-- render layer optimization;
-- object pools;
-- snapshot-size control;
-- laptop/mobile browser compatibility;
-- memory/long-session stability;
-- input remapping where practical;
-- readable text scaling;
-- colorblind-safe route/objective states;
-- reduced-flash options;
-- pause/help/onboarding screens.
+- added proof-visible `qualityGate` telemetry to `render_game_to_text()`;
+- added runtime-only performance, compatibility, accessibility, proof-hook, and persistence-boundary budgets;
+- added `docs/QUALITY_LOCK.md`;
+- added `npm run proof:campaign-full`, covering a clean online profile through every supported campaign node to the Outer Alignment finale;
+- added `npm run proof:milestone56-quality-lock`, covering compact viewport, reduced flash, no-shake settings, long-session entity budget, and online compatibility telemetry;
+- added a shared `completeOnlineNodeForProof` helper to keep campaign completion assertions consistent;
+- preserved production-art defaults, placeholder opt-outs, server authority, route-profile-only export/import, M55 deployment telemetry, and M54 feedback/accessibility controls.
 
-Proof expectations:
+Proof coverage:
 
-- full campaign proof from clean profile to final completion passes;
-- long-session performance proof stays within budget;
-- accessibility options are proof-visible.
+- `npm run proof:campaign-full`
+- `npm run proof:milestone56-quality-lock`
+- `npm run proof:milestone55-online-robustness`
+- `npm run proof:milestone52-progression-balance`
+- `npm run proof:smoke`
+- `npm run proof:assets`
+
+Readiness: complete.
 
 ### M57: Release Candidate Packaging
 

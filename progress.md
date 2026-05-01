@@ -3259,9 +3259,72 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone55-online-robustness/milestone55-rejoined-slot.png`
 - Milestone 55 readiness decision: ready. Room-code isolation, reconnect reclaim, export-code boundaries, health checks, and hosted static-dist server mode are proofed.
 
+- Implemented Milestone 56 Proof, Performance, Compatibility, And Accessibility Lock.
+- Added proof-visible M56 quality telemetry to `render_game_to_text()`:
+  - policy `milestone56_proof_performance_compatibility_accessibility_lock`;
+  - release-blocking flag;
+  - proof hook visibility for `render_game_to_text` and `advanceTime`;
+  - local active-entity budget;
+  - online snapshot caps for enemies/projectiles/pickups;
+  - desktop/laptop/mobile viewport policy;
+  - reduced-flash/no-shake query contract;
+  - color/label route objective policy;
+  - runtime-only persistence boundary.
+- Added `docs/QUALITY_LOCK.md` as the release-gate runbook for M56.
+- Added `npm run proof:campaign-full`, covering a clean online route profile through every supported online campaign node:
+  - `armistice_plaza`;
+  - `model_war_memorial`;
+  - `cooling_lake_nine`;
+  - `thermal_archive`;
+  - `memory_cache_001`;
+  - `guardrail_forge`;
+  - `archive_of_unsaid_things`;
+  - `blackwater_beacon`;
+  - `transit_loop_zero`;
+  - `false_schedule_yard`;
+  - `glass_sunfield`;
+  - `appeal_court_ruins`;
+  - `verdict_spire`;
+  - `alignment_spire_finale`.
+- Added `npm run proof:milestone56-quality-lock`, covering:
+  - compact 960x540 viewport menu capture;
+  - reduced-flash and no-shake settings visibility;
+  - long-session local entity budget;
+  - online compatibility/deployment telemetry retention;
+  - route-profile-only persistence boundaries.
+- Added `completeOnlineNodeForProof` to centralize server-authority and export-boundary assertions for campaign proof completions.
+- Preserved non-negotiable boundaries:
+  - solo/local/online remain available;
+  - server authority remains intact for online combat/objectives/rewards/reconnect/route progression;
+  - runtime production art and placeholder opt-outs remain unchanged;
+  - `render_game_to_text()` and `advanceTime()` remain proof-visible;
+  - export/import remains route-profile-only and omits quality telemetry, deployment, feedback, combat, objectives, build kits, cooldowns, pets, role pressure, Recompile, dialogue, route focus, portal params, and authority state.
+- Verification after Milestone 56:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:campaign-full`
+  - `npm run proof:milestone56-quality-lock`
+  - `npm run proof:milestone55-online-robustness`
+  - `npm run proof:milestone52-progression-balance`
+  - `npm run proof:smoke`
+  - `npm run proof:assets`
+- Milestone 56 proof artifacts:
+  - `docs/proof/campaign-full/campaign-full-clean-lobby.png`
+  - `docs/proof/campaign-full/campaign-full-blackwater-checkpoint.png`
+  - `docs/proof/campaign-full/campaign-full-finale-complete.png`
+  - `docs/proof/milestone56-quality-lock/milestone56-small-viewport-menu.png`
+  - `docs/proof/milestone56-quality-lock/milestone56-long-session-budget.png`
+  - `docs/proof/milestone56-quality-lock/milestone56-online-compatibility-lock.png`
+- Screenshots inspected after Milestone 56:
+  - `docs/proof/milestone56-quality-lock/milestone56-small-viewport-menu.png`
+  - `docs/proof/milestone56-quality-lock/milestone56-long-session-budget.png`
+  - `docs/proof/campaign-full/campaign-full-finale-complete.png`
+- Milestone 56 readiness decision: ready. Full campaign proof, reduced-flash visibility, compact viewport, long-session budget, and online compatibility telemetry are release-gate proofed.
+
 ## TODO
 
-- Next recommended milestone: Milestone 56 Proof, Performance, Compatibility, And Accessibility Lock. Finish the technical quality gate with proof helper cleanup, campaign proof coverage, render/performance checks, compatibility, and accessibility lock.
+- Next recommended milestone: Milestone 57 Release Candidate Packaging. Package the free browser-playable 1.0 candidate, refresh README/release notes, add required VibeJam widget, and prepare the final deploy/submission path.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

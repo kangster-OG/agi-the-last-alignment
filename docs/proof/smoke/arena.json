@@ -145,6 +145,42 @@
     "activeEntities": 8,
     "fpsTarget": 60
   },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
   "feedback": {
     "policy": "audio_juice_feel_1_0_runtime_only",
     "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
@@ -184,7 +220,7 @@
       {
         "id": "ui.enter_build_select",
         "kind": "ui",
-        "atMs": 1327
+        "atMs": 1076
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -438,9 +474,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 103,
+          "tick": 102,
           "playerId": "p1",
-          "sequence": 103,
+          "sequence": 102,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -449,8 +485,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 103,
-        "seconds": 1.72,
+        "tick": 102,
+        "seconds": 1.7,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -539,8 +575,8 @@
             "id": 1,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": 5.66,
-            "worldY": 3.91,
+            "worldX": 5.68,
+            "worldY": 3.92,
             "hp": 4,
             "boss": false
           },
@@ -548,7 +584,7 @@
             "id": 2,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": -7.87,
+            "worldX": -7.9,
             "worldY": -0.26,
             "hp": 22,
             "boss": false
@@ -557,8 +593,8 @@
             "id": 5,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -26.36,
-            "worldY": 20.46,
+            "worldX": -26.38,
+            "worldY": 20.47,
             "hp": 22,
             "boss": false
           },
@@ -566,8 +602,8 @@
             "id": 6,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -20.81,
-            "worldY": 16.49,
+            "worldX": -20.83,
+            "worldY": 16.5,
             "hp": 22,
             "boss": false
           }
@@ -576,14 +612,14 @@
         "projectiles": [
           {
             "id": 3,
-            "worldX": 1.98,
-            "worldY": 1.37,
+            "worldX": 1.86,
+            "worldY": 1.29,
             "pierce": 1
           },
           {
             "id": 4,
-            "worldX": 4.78,
-            "worldY": 3.3,
+            "worldX": 4.66,
+            "worldY": 3.22,
             "pierce": 1
           }
         ]
@@ -604,7 +640,7 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 1.72,
+    "seconds": 1.7,
     "kills": 0,
     "bossSpawned": false,
     "bossDefeated": false
@@ -615,8 +651,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": 5.66,
-      "worldY": 3.91,
+      "worldX": 5.68,
+      "worldY": 3.92,
       "hp": 4,
       "boss": false
     },
@@ -625,7 +661,7 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": -7.87,
+      "worldX": -7.9,
       "worldY": -0.26,
       "hp": 22,
       "boss": false
@@ -635,8 +671,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -26.36,
-      "worldY": 20.46,
+      "worldX": -26.38,
+      "worldY": 20.47,
       "hp": 22,
       "boss": false
     },
@@ -645,8 +681,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -20.81,
-      "worldY": 16.49,
+      "worldX": -20.83,
+      "worldY": 16.5,
       "hp": 22,
       "boss": false
     }
@@ -654,14 +690,14 @@
   "pickups": [],
   "projectiles": [
     {
-      "worldX": 1.98,
-      "worldY": 1.37,
+      "worldX": 1.86,
+      "worldY": 1.29,
       "pierce": 1,
       "label": "refusal shard"
     },
     {
-      "worldX": 4.78,
-      "worldY": 3.3,
+      "worldX": 4.66,
+      "worldY": 3.22,
       "pierce": 1,
       "label": "refusal shard"
     }
