@@ -6,11 +6,70 @@
     "classId": "accord_striker",
     "className": "Accord Striker",
     "classRole": "Fast breach fighter",
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    },
     "factionId": "openai_accord",
     "factionName": "OpenAI Accord Division",
     "factionDoctrine": "Adapt, refuse, patch, survive."
   },
   "build": {
+    "weaponId": "refusal_shard",
     "weaponDamage": 18,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
@@ -19,45 +78,302 @@
     "moveSpeedBonus": 0,
     "maxHpBonus": 0,
     "refusalAura": 0,
-    "draftRerolls": 1
+    "draftRerolls": 1,
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    }
   },
   "upgrades": [],
   "objective": "AGI pressure in 17s",
   "performance": {
-    "entitiesAllocated": 42,
-    "activeEntities": 37,
+    "entitiesAllocated": 44,
+    "activeEntities": 44,
     "fpsTarget": 60
+  },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 10,
+      "pickup": 1,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 3328
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 1862
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 1849
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 1848
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 1836
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 1835
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 1823
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 1805
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
   },
   "assetRendering": {
     "assetPreview": null,
     "armisticeTileAtlasEnabled": true,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 70,
+    "totalAssets": 103,
     "countsByStatus": {
-      "concept": 8,
-      "raw": 4,
+      "concept": 14,
+      "raw": 12,
       "code_placeholder": 16,
-      "production": 25,
-      "cleaned": 1,
-      "planned": 16
+      "production": 60,
+      "cleaned": 1
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 25
+    "productionAssets": 60
   },
   "player": {
     "worldX": 10.5,
     "worldY": -3.5,
     "hp": 140,
     "maxHp": 140,
-    "xp": 0.84,
+    "xp": 0.42,
     "level": 1
   },
   "players": [
@@ -67,12 +383,71 @@
       "label": "P1",
       "classId": "accord_striker",
       "factionId": "openai_accord",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "accord_striker",
+        "factionId": "openai_accord",
+        "classRole": "runner",
+        "factionRoleBias": [
+          "runner",
+          "support"
+        ],
+        "resolvedRole": "runner",
+        "startingWeaponId": "refusal_shard",
+        "passiveIds": [
+          "refusal_slipstream",
+          "route_runner",
+          "refusal_halo",
+          "patch_cascade"
+        ],
+        "partyAuraIds": [
+          "openai_draft_clarity"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.97,
+          "reviveHpBonus": 0,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.runner",
+          "faction_bias.runner",
+          "faction_bias.support",
+          "role_match"
+        ],
+        "synergyId": "synergy.emergency_patch_runner",
+        "effectScopes": {
+          "solo": [
+            "fast breach movement",
+            "wide pickup recovery",
+            "extra draft recovery"
+          ],
+          "localCoop": [
+            "scouts objective lanes",
+            "balanced cell recovery"
+          ],
+          "online": [
+            "server snapshots runner role for split-hold anchors",
+            "minor server-owned recompile hold-speed modifier"
+          ]
+        },
+        "hookStatus": {
+          "refusal_shard": "active",
+          "refusal_slipstream": "active",
+          "route_runner": "active",
+          "refusal_halo": "active",
+          "patch_cascade": "active",
+          "openai_draft_clarity": "server_owned",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
       "worldX": 10.5,
       "worldY": -3.5,
       "hp": 140,
       "maxHp": 140,
-      "xp": 0.84,
+      "xp": 0.42,
       "level": 1,
       "downed": false
     },
@@ -82,12 +457,70 @@
       "label": "P2",
       "classId": "bastion_breaker",
       "factionId": "anthropic_safeguard",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "bastion_breaker",
+        "factionId": "anthropic_safeguard",
+        "classRole": "cover",
+        "factionRoleBias": [
+          "cover",
+          "support"
+        ],
+        "resolvedRole": "cover",
+        "startingWeaponId": "safety_cannon",
+        "passiveIds": [
+          "impact_review",
+          "load_bearing_apology",
+          "golden_guardrail",
+          "constitutional_shield"
+        ],
+        "partyAuraIds": [
+          "anthropic_containment"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0.28,
+          "requiredSecondsScale": 0.94,
+          "reviveHpBonus": 0.1,
+          "guardDamageReduction": 0.05
+        },
+        "rolePressureAffinity": [
+          "class_role.cover",
+          "faction_bias.cover",
+          "faction_bias.support",
+          "role_match"
+        ],
+        "synergyId": "synergy.constitutional_bulwark",
+        "effectScopes": {
+          "solo": [
+            "higher health and cannon pressure",
+            "safer max health floor"
+          ],
+          "localCoop": [
+            "frontline bodyguard",
+            "cover aura for risky revives"
+          ],
+          "online": [
+            "cover role contributes safer regroup/recompile reads",
+            "server-owned radius, revive HP, and guard telemetry"
+          ]
+        },
+        "hookStatus": {
+          "safety_cannon": "active",
+          "impact_review": "active",
+          "load_bearing_apology": "active",
+          "golden_guardrail": "active",
+          "constitutional_shield": "active",
+          "anthropic_containment": "server_owned",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "safety_cannon",
       "inputSource": "local_simulated_peer",
-      "worldX": 7.15,
-      "worldY": -1.79,
+      "worldX": 7.56,
+      "worldY": -1.49,
       "hp": 176,
       "maxHp": 176,
-      "xp": 1.42,
+      "xp": 0.42,
       "level": 1,
       "downed": false
     },
@@ -97,12 +530,69 @@
       "label": "P3",
       "classId": "drone_reaver",
       "factionId": "google_deepmind_gemini",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "drone_reaver",
+        "factionId": "google_deepmind_gemini",
+        "classRole": "harrier",
+        "factionRoleBias": [
+          "control",
+          "duelist"
+        ],
+        "resolvedRole": "harrier",
+        "startingWeaponId": "fork_drone",
+        "passiveIds": [
+          "guardian_fork",
+          "fork_bomb_familiar",
+          "gemini_beam",
+          "peer_reviewed_laser"
+        ],
+        "partyAuraIds": [
+          "deepmind_target_mark"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.98,
+          "reviveHpBonus": 0,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.harrier",
+          "faction_bias.control",
+          "faction_bias.duelist"
+        ],
+        "synergyId": "synergy.harrier_cross_training",
+        "effectScopes": {
+          "solo": [
+            "fast drone projectile cadence",
+            "precision projectile pressure"
+          ],
+          "localCoop": [
+            "harasses flank pressure",
+            "marked objective priority"
+          ],
+          "online": [
+            "harrier role keeps split-hold pressure distinct",
+            "server-owned analysis telemetry only"
+          ]
+        },
+        "hookStatus": {
+          "fork_drone": "active",
+          "guardian_fork": "active",
+          "fork_bomb_familiar": "active",
+          "gemini_beam": "active",
+          "peer_reviewed_laser": "active",
+          "deepmind_target_mark": "server_owned",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "fork_drone",
       "inputSource": "local_simulated_peer",
       "worldX": 13.04,
       "worldY": -1.24,
       "hp": 140,
       "maxHp": 140,
-      "xp": 1.42,
+      "xp": 1,
       "level": 1,
       "downed": false
     }
@@ -165,9 +655,9 @@
         ]
       }
     ],
-    "lastSpawnRegionId": "treaty_monument_oath_pages",
+    "lastSpawnRegionId": "breach_crack_bad_outputs",
     "spawnedByRegion": {
-      "breach_crack_bad_outputs": 14,
+      "breach_crack_bad_outputs": 18,
       "treaty_monument_oath_pages": 10,
       "drone_yard_benchmark_gremlins": 4
     },
@@ -183,27 +673,27 @@
       },
       "recentInputCommands": [
         {
-          "tick": 451,
+          "tick": 459,
           "playerId": "p1",
-          "sequence": 451,
+          "sequence": 459,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
           "interactPressed": false
         },
         {
-          "tick": 451,
+          "tick": 459,
           "playerId": "p2",
-          "sequence": 451,
-          "axisX": 0.23,
-          "axisY": 0.97,
+          "sequence": 459,
+          "axisX": 0.3,
+          "axisY": 0.95,
           "dashPressed": false,
           "interactPressed": false
         },
         {
-          "tick": 451,
+          "tick": 459,
           "playerId": "p3",
-          "sequence": 451,
+          "sequence": 459,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -212,8 +702,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 451,
-        "seconds": 7.52,
+        "tick": 459,
+        "seconds": 7.65,
         "playerCount": 3,
         "scaling": {
           "playerCount": 3,
@@ -229,12 +719,70 @@
             "label": "P1",
             "classId": "accord_striker",
             "factionId": "openai_accord",
+            "buildKit": {
+              "schemaVersion": 1,
+              "classId": "accord_striker",
+              "factionId": "openai_accord",
+              "classRole": "runner",
+              "factionRoleBias": [
+                "runner",
+                "support"
+              ],
+              "resolvedRole": "runner",
+              "startingWeaponId": "refusal_shard",
+              "passiveIds": [
+                "refusal_slipstream",
+                "route_runner",
+                "refusal_halo",
+                "patch_cascade"
+              ],
+              "partyAuraIds": [
+                "openai_draft_clarity"
+              ],
+              "recompileModifiers": {
+                "radiusBonus": 0,
+                "requiredSecondsScale": 0.97,
+                "reviveHpBonus": 0,
+                "guardDamageReduction": 0
+              },
+              "rolePressureAffinity": [
+                "class_role.runner",
+                "faction_bias.runner",
+                "faction_bias.support",
+                "role_match"
+              ],
+              "synergyId": "synergy.emergency_patch_runner",
+              "effectScopes": {
+                "solo": [
+                  "fast breach movement",
+                  "wide pickup recovery",
+                  "extra draft recovery"
+                ],
+                "localCoop": [
+                  "scouts objective lanes",
+                  "balanced cell recovery"
+                ],
+                "online": [
+                  "server snapshots runner role for split-hold anchors",
+                  "minor server-owned recompile hold-speed modifier"
+                ]
+              },
+              "hookStatus": {
+                "refusal_shard": "active",
+                "refusal_slipstream": "active",
+                "route_runner": "active",
+                "refusal_halo": "active",
+                "patch_cascade": "active",
+                "openai_draft_clarity": "server_owned",
+                "recompileModifiers": "server_owned"
+              }
+            },
             "inputSource": "local_keyboard",
             "worldX": 10.5,
             "worldY": -3.5,
             "hp": 140,
             "maxHp": 140,
-            "xp": 0.84,
+            "xp": 0.42,
             "level": 1,
             "downed": false
           },
@@ -244,12 +792,69 @@
             "label": "P2",
             "classId": "bastion_breaker",
             "factionId": "anthropic_safeguard",
+            "buildKit": {
+              "schemaVersion": 1,
+              "classId": "bastion_breaker",
+              "factionId": "anthropic_safeguard",
+              "classRole": "cover",
+              "factionRoleBias": [
+                "cover",
+                "support"
+              ],
+              "resolvedRole": "cover",
+              "startingWeaponId": "safety_cannon",
+              "passiveIds": [
+                "impact_review",
+                "load_bearing_apology",
+                "golden_guardrail",
+                "constitutional_shield"
+              ],
+              "partyAuraIds": [
+                "anthropic_containment"
+              ],
+              "recompileModifiers": {
+                "radiusBonus": 0.28,
+                "requiredSecondsScale": 0.94,
+                "reviveHpBonus": 0.1,
+                "guardDamageReduction": 0.05
+              },
+              "rolePressureAffinity": [
+                "class_role.cover",
+                "faction_bias.cover",
+                "faction_bias.support",
+                "role_match"
+              ],
+              "synergyId": "synergy.constitutional_bulwark",
+              "effectScopes": {
+                "solo": [
+                  "higher health and cannon pressure",
+                  "safer max health floor"
+                ],
+                "localCoop": [
+                  "frontline bodyguard",
+                  "cover aura for risky revives"
+                ],
+                "online": [
+                  "cover role contributes safer regroup/recompile reads",
+                  "server-owned radius, revive HP, and guard telemetry"
+                ]
+              },
+              "hookStatus": {
+                "safety_cannon": "active",
+                "impact_review": "active",
+                "load_bearing_apology": "active",
+                "golden_guardrail": "active",
+                "constitutional_shield": "active",
+                "anthropic_containment": "server_owned",
+                "recompileModifiers": "server_owned"
+              }
+            },
             "inputSource": "local_simulated_peer",
-            "worldX": 7.15,
-            "worldY": -1.79,
+            "worldX": 7.56,
+            "worldY": -1.49,
             "hp": 176,
             "maxHp": 176,
-            "xp": 1.42,
+            "xp": 0.42,
             "level": 1,
             "downed": false
           },
@@ -259,23 +864,97 @@
             "label": "P3",
             "classId": "drone_reaver",
             "factionId": "google_deepmind_gemini",
+            "buildKit": {
+              "schemaVersion": 1,
+              "classId": "drone_reaver",
+              "factionId": "google_deepmind_gemini",
+              "classRole": "harrier",
+              "factionRoleBias": [
+                "control",
+                "duelist"
+              ],
+              "resolvedRole": "harrier",
+              "startingWeaponId": "fork_drone",
+              "passiveIds": [
+                "guardian_fork",
+                "fork_bomb_familiar",
+                "gemini_beam",
+                "peer_reviewed_laser"
+              ],
+              "partyAuraIds": [
+                "deepmind_target_mark"
+              ],
+              "recompileModifiers": {
+                "radiusBonus": 0,
+                "requiredSecondsScale": 0.98,
+                "reviveHpBonus": 0,
+                "guardDamageReduction": 0
+              },
+              "rolePressureAffinity": [
+                "class_role.harrier",
+                "faction_bias.control",
+                "faction_bias.duelist"
+              ],
+              "synergyId": "synergy.harrier_cross_training",
+              "effectScopes": {
+                "solo": [
+                  "fast drone projectile cadence",
+                  "precision projectile pressure"
+                ],
+                "localCoop": [
+                  "harasses flank pressure",
+                  "marked objective priority"
+                ],
+                "online": [
+                  "harrier role keeps split-hold pressure distinct",
+                  "server-owned analysis telemetry only"
+                ]
+              },
+              "hookStatus": {
+                "fork_drone": "active",
+                "guardian_fork": "active",
+                "fork_bomb_familiar": "active",
+                "gemini_beam": "active",
+                "peer_reviewed_laser": "active",
+                "deepmind_target_mark": "server_owned",
+                "recompileModifiers": "server_owned"
+              }
+            },
             "inputSource": "local_simulated_peer",
             "worldX": 13.04,
             "worldY": -1.24,
             "hp": 140,
             "maxHp": 140,
-            "xp": 1.42,
+            "xp": 1,
             "level": 1,
             "downed": false
           }
         ],
         "enemies": [
           {
+            "id": 3,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -19.34,
+            "worldY": 20,
+            "hp": 22,
+            "boss": false
+          },
+          {
             "id": 4,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": 1.25,
-            "worldY": 1.42,
+            "worldX": 1.42,
+            "worldY": 1.33,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 5,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -15.8,
+            "worldY": 13.26,
             "hp": 22,
             "boss": false
           },
@@ -283,8 +962,8 @@
             "id": 6,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -19.49,
-            "worldY": 20.13,
+            "worldX": -18.59,
+            "worldY": 18,
             "hp": 22,
             "boss": false
           },
@@ -292,17 +971,8 @@
             "id": 7,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -15.96,
-            "worldY": 13.36,
-            "hp": 22,
-            "boss": false
-          },
-          {
-            "id": 8,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -20.43,
-            "worldY": 14.87,
+            "worldX": -20.26,
+            "worldY": 14.77,
             "hp": 22,
             "boss": false
           },
@@ -310,8 +980,8 @@
             "id": 9,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -19.43,
-            "worldY": 14.55,
+            "worldX": -12.29,
+            "worldY": 10.8,
             "hp": 22,
             "boss": false
           },
@@ -319,35 +989,35 @@
             "id": 10,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -18.75,
-            "worldY": 18.12,
-            "hp": 22,
-            "boss": false
-          },
-          {
-            "id": 11,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -12.46,
-            "worldY": 10.91,
+            "worldX": -19.25,
+            "worldY": 14.44,
             "hp": 22,
             "boss": false
           },
           {
             "id": 12,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "drone_yard_benchmark_gremlins",
-            "worldX": -18.78,
-            "worldY": -11.11,
-            "hp": 34,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -16.33,
+            "worldY": 15.68,
+            "hp": 22,
             "boss": false
           },
           {
             "id": 14,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -16.49,
-            "worldY": 15.79,
+            "worldX": -17.51,
+            "worldY": 16.02,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 15,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -16.73,
+            "worldY": 11.26,
             "hp": 22,
             "boss": false
           },
@@ -355,44 +1025,26 @@
             "id": 16,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -17.67,
-            "worldY": 16.14,
-            "hp": 22,
-            "boss": false
-          },
-          {
-            "id": 17,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -16.91,
-            "worldY": 11.36,
-            "hp": 22,
-            "boss": false
-          },
-          {
-            "id": 18,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -22.64,
-            "worldY": 16.48,
+            "worldX": -22.47,
+            "worldY": 16.38,
             "hp": 22,
             "boss": false
           },
           {
             "id": 19,
             "familyId": "bad_outputs",
-            "sourceRegionId": "treaty_monument_oath_pages",
-            "worldX": 2.3,
-            "worldY": 0.57,
-            "hp": 4,
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -22.93,
+            "worldY": 18.37,
+            "hp": 22,
             "boss": false
           },
           {
             "id": 23,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -16.31,
-            "worldY": 17.61,
+            "worldX": -16.16,
+            "worldY": 17.48,
             "hp": 22,
             "boss": false
           },
@@ -400,8 +1052,8 @@
             "id": 25,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -18.17,
-            "worldY": 14.98,
+            "worldX": -18,
+            "worldY": 14.87,
             "hp": 22,
             "boss": false
           },
@@ -409,107 +1061,146 @@
             "id": 27,
             "familyId": "bad_outputs",
             "sourceRegionId": "treaty_monument_oath_pages",
-            "worldX": 2.49,
-            "worldY": 4.31,
+            "worldX": 2.62,
+            "worldY": 4.15,
             "hp": 22,
             "boss": false
           },
           {
             "id": 28,
             "familyId": "bad_outputs",
-            "sourceRegionId": "treaty_monument_oath_pages",
-            "worldX": -0.75,
-            "worldY": 0.27,
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -21.67,
+            "worldY": 23.39,
             "hp": 22,
             "boss": false
           },
           {
             "id": 29,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "drone_yard_benchmark_gremlins",
-            "worldX": -14.49,
-            "worldY": -16.32,
-            "hp": 34,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "treaty_monument_oath_pages",
+            "worldX": -0.56,
+            "worldY": 0.23,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 30,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -21.11,
+            "worldY": 21.78,
+            "hp": 22,
             "boss": false
           }
         ],
         "pickups": [
           {
             "id": 1,
-            "worldX": 7.1,
-            "worldY": 3.55,
+            "worldX": 7.16,
+            "worldY": 3.69,
             "value": 1
           },
           {
             "id": 2,
-            "worldX": -7.56,
-            "worldY": -0.74,
+            "worldX": -1.56,
+            "worldY": -1.3,
             "value": 1
           },
           {
-            "id": 15,
-            "worldX": 4.14,
-            "worldY": 2.68,
+            "id": 11,
+            "worldX": 0.05,
+            "worldY": -1.27,
+            "value": 1
+          },
+          {
+            "id": 13,
+            "worldX": 3.91,
+            "worldY": 3.17,
+            "value": 1
+          },
+          {
+            "id": 17,
+            "worldX": 0.52,
+            "worldY": 0.68,
+            "value": 1
+          },
+          {
+            "id": 18,
+            "worldX": 5.76,
+            "worldY": 2.69,
             "value": 1
           },
           {
             "id": 22,
-            "worldX": 0.91,
-            "worldY": 0.41,
+            "worldX": -0.92,
+            "worldY": 1.49,
             "value": 1
           },
           {
             "id": 24,
-            "worldX": -0.46,
-            "worldY": 1.08,
+            "worldX": 2.27,
+            "worldY": 0.58,
             "value": 1
           },
           {
             "id": 26,
-            "worldX": 6.05,
-            "worldY": 1.81,
-            "value": 1
-          },
-          {
-            "id": 31,
-            "worldX": 5.63,
-            "worldY": 3.01,
-            "value": 1
-          },
-          {
-            "id": 33,
-            "worldX": 2.44,
-            "worldY": -0.39,
+            "worldX": 2.75,
+            "worldY": 0.36,
             "value": 1
           }
         ],
         "projectiles": [
           {
-            "id": 3,
-            "worldX": 3.32,
-            "worldY": -0.44,
+            "id": 8,
+            "worldX": 10.41,
+            "worldY": -3.39,
+            "pierce": 1
+          },
+          {
+            "id": 20,
+            "worldX": 8.26,
+            "worldY": -0.76,
             "pierce": 1
           },
           {
             "id": 21,
-            "worldX": 6.84,
-            "worldY": 0.64,
+            "worldX": 6.33,
+            "worldY": 1.65,
+            "pierce": 1
+          },
+          {
+            "id": 34,
+            "worldX": 6.45,
+            "worldY": 1.64,
+            "pierce": 1
+          },
+          {
+            "id": 37,
+            "worldX": 4.6,
+            "worldY": 5.31,
             "pierce": 1
           },
           {
             "id": 38,
-            "worldX": 5.77,
-            "worldY": 3.15,
+            "worldX": 10.63,
+            "worldY": 0.22,
+            "pierce": 1
+          },
+          {
+            "id": 39,
+            "worldX": 6.62,
+            "worldY": -0.57,
             "pierce": 1
           }
         ]
       }
     },
     "combatArt": {
-      "projectileCount": 3,
+      "projectileCount": 7,
       "impactCount": 1,
       "pickupSparkleCount": 0,
-      "damageBadgeCount": 3,
+      "damageBadgeCount": 1,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
@@ -520,19 +1211,39 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 7.52,
+    "seconds": 7.65,
     "kills": 10,
     "bossSpawned": false,
     "bossDefeated": false
   },
   "enemies": [
     {
+      "id": 3,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -19.34,
+      "worldY": 20,
+      "hp": 22,
+      "boss": false
+    },
+    {
       "id": 4,
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": 1.25,
-      "worldY": 1.42,
+      "worldX": 1.42,
+      "worldY": 1.33,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 5,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -15.8,
+      "worldY": 13.26,
       "hp": 22,
       "boss": false
     },
@@ -541,8 +1252,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -19.49,
-      "worldY": 20.13,
+      "worldX": -18.59,
+      "worldY": 18,
       "hp": 22,
       "boss": false
     },
@@ -551,18 +1262,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -15.96,
-      "worldY": 13.36,
-      "hp": 22,
-      "boss": false
-    },
-    {
-      "id": 8,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -20.43,
-      "worldY": 14.87,
+      "worldX": -20.26,
+      "worldY": 14.77,
       "hp": 22,
       "boss": false
     },
@@ -571,8 +1272,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -19.43,
-      "worldY": 14.55,
+      "worldX": -12.29,
+      "worldY": 10.8,
       "hp": 22,
       "boss": false
     },
@@ -581,29 +1282,19 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -18.75,
-      "worldY": 18.12,
-      "hp": 22,
-      "boss": false
-    },
-    {
-      "id": 11,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -12.46,
-      "worldY": 10.91,
+      "worldX": -19.25,
+      "worldY": 14.44,
       "hp": 22,
       "boss": false
     },
     {
       "id": 12,
-      "label": "Benchmark Gremlin",
-      "familyId": "benchmark_gremlins",
-      "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -18.78,
-      "worldY": -11.11,
-      "hp": 34,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -16.33,
+      "worldY": 15.68,
+      "hp": 22,
       "boss": false
     },
     {
@@ -611,8 +1302,18 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -16.49,
-      "worldY": 15.79,
+      "worldX": -17.51,
+      "worldY": 16.02,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 15,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -16.73,
+      "worldY": 11.26,
       "hp": 22,
       "boss": false
     },
@@ -621,89 +1322,111 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -17.67,
-      "worldY": 16.14,
+      "worldX": -22.47,
+      "worldY": 16.38,
       "hp": 22,
       "boss": false
     },
     {
-      "id": 17,
+      "id": 19,
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -16.91,
-      "worldY": 11.36,
-      "hp": 22,
-      "boss": false
-    },
-    {
-      "id": 18,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -22.64,
-      "worldY": 16.48,
+      "worldX": -22.93,
+      "worldY": 18.37,
       "hp": 22,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": 7.1,
-      "worldY": 3.55,
+      "worldX": 7.16,
+      "worldY": 3.69,
       "value": 1
     },
     {
-      "worldX": -7.56,
-      "worldY": -0.74,
+      "worldX": -1.56,
+      "worldY": -1.3,
       "value": 1
     },
     {
-      "worldX": 4.14,
-      "worldY": 2.68,
+      "worldX": 0.05,
+      "worldY": -1.27,
       "value": 1
     },
     {
-      "worldX": 0.91,
-      "worldY": 0.41,
+      "worldX": 3.91,
+      "worldY": 3.17,
       "value": 1
     },
     {
-      "worldX": -0.46,
-      "worldY": 1.08,
+      "worldX": 0.52,
+      "worldY": 0.68,
       "value": 1
     },
     {
-      "worldX": 6.05,
-      "worldY": 1.81,
+      "worldX": 5.76,
+      "worldY": 2.69,
       "value": 1
     },
     {
-      "worldX": 5.63,
-      "worldY": 3.01,
+      "worldX": -0.92,
+      "worldY": 1.49,
       "value": 1
     },
     {
-      "worldX": 2.44,
-      "worldY": -0.39,
+      "worldX": 2.27,
+      "worldY": 0.58,
+      "value": 1
+    },
+    {
+      "worldX": 2.75,
+      "worldY": 0.36,
       "value": 1
     }
   ],
   "projectiles": [
     {
-      "worldX": 3.32,
-      "worldY": -0.44,
-      "pierce": 1
+      "worldX": 10.41,
+      "worldY": -3.39,
+      "pierce": 1,
+      "label": "refusal shard"
     },
     {
-      "worldX": 6.84,
-      "worldY": 0.64,
-      "pierce": 1
+      "worldX": 8.26,
+      "worldY": -0.76,
+      "pierce": 1,
+      "label": "refusal shard"
     },
     {
-      "worldX": 5.77,
-      "worldY": 3.15,
-      "pierce": 1
+      "worldX": 6.33,
+      "worldY": 1.65,
+      "pierce": 1,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 6.45,
+      "worldY": 1.64,
+      "pierce": 1,
+      "label": "fork drone"
+    },
+    {
+      "worldX": 4.6,
+      "worldY": 5.31,
+      "pierce": 1,
+      "label": "fork drone"
+    },
+    {
+      "worldX": 10.63,
+      "worldY": 0.22,
+      "pierce": 1,
+      "label": "fork drone"
+    },
+    {
+      "worldX": 6.62,
+      "worldY": -0.57,
+      "pierce": 1,
+      "label": "safety cannon"
     }
   ]
 }

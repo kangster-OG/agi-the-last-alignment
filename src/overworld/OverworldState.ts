@@ -70,6 +70,7 @@ export class OverworldState implements GameState {
   }
 
   render(game: Game): void {
+    game.camera.zoom = 1;
     game.camera.follow(
       clamp(this.worldX, ALIGNMENT_GRID_MAP.bounds.minX + 2, ALIGNMENT_GRID_MAP.bounds.maxX - 2),
       clamp(this.worldY, ALIGNMENT_GRID_MAP.bounds.minY + 2, ALIGNMENT_GRID_MAP.bounds.maxY - 2),

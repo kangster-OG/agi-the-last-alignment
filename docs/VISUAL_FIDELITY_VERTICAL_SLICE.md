@@ -37,10 +37,23 @@ The first pass is code-native scene composition in `src/level/LevelRunState.ts`:
 
 This is not the final art answer. It is the visual scaffold that lets later PixelLab tile/prop sets land into a composed scene instead of a debug grid.
 
+## PixelLab-Backed Asset Pass
+
+The second pass rebuilds the starter Armistice runtime atlas and set pieces from the committed PixelLab M50/M51 raw batches:
+
+- `assets/tiles/armistice_plaza/ground_atlas.png`
+- `assets/props/armistice_plaza/treaty_monument.png`
+- `assets/props/armistice_plaza/barricade_corridor_set.png`
+- `assets/props/armistice_plaza/crashed_drone_yard_wreck.png`
+- `assets/props/armistice_plaza/emergency_alignment_terminal.png`
+- `assets/props/armistice_plaza/cosmic_breach_crack.png`
+
+The builder is `scripts/assets/build-armistice-visual-slice-assets.py`. It preserves existing runtime dimensions, import paths, and opt-out behavior while making the arena look less like a repeated proof grid.
+
 ## Next Art Passes
 
-1. Replace the Armistice ground atlas with a PixelLab/cleaned set that has less uniform grid repetition and stronger terrain transitions.
-2. Generate larger isometric set pieces for treaty hall ruins, barricade walls, drone wrecks, terminal banks, and AGI breach matter.
-3. Add a normal-play UI mode that softens proof labels while keeping telemetry available in proof/dev modes.
+1. Add a normal-play UI mode that softens proof labels while keeping telemetry available in proof/dev modes.
+2. Build a second terrain atlas with real biome-transition tiles, not only per-tile texture variation.
+3. Generate larger isometric set pieces for treaty hall ruins and foreground silhouettes.
 4. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
 5. Port the same visual-composition helpers into the online arena renderer once the solo slice reads well.

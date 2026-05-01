@@ -3438,3 +3438,13 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - docs/proof/visual-fidelity-slice/armistice-first-slice-action.json
   - docs/proof/visual-fidelity-slice/visual-slice-metrics.txt
 - Immediate next visual fidelity work: replace the Armistice ground atlas with a less grid-dominant PixelLab/cleaned set, generate larger set pieces for treaty hall ruins/barricade walls/drone wrecks/terminal banks/AGI breach matter, soften proof-like labels in normal play, upgrade boss/dialogue presentation, then port the composition pass to the online arena renderer after solo reads well.
+- Continued the Visual Fidelity Vertical Slice with a PixelLab-backed Armistice asset pass. Added scripts/assets/build-armistice-visual-slice-assets.py to derive the existing Armistice ground atlas, Treaty Monument, Barricade Corridor, Crashed Drone Yard, Emergency Alignment Terminal, and Cosmic Breach Crack runtime PNGs from the committed M50/M51 PixelLab raw batches while preserving import paths, dimensions, and opt-out behavior.
+- Added a slight solo-arena camera zoom to reduce empty-field presentation and reset overworld zoom when returning to the Alignment Grid.
+- Updated asset_manifest.json and ART_PROVENANCE.md so the Armistice runtime atlas/props now reference the PixelLab-backed visual-slice provenance keys.
+- Playwright visual asset-pass artifacts:
+  - docs/proof/visual-fidelity-slice/reference-previous-next-arena.png
+  - docs/proof/visual-fidelity-slice/armistice-pixellab-asset-pass-action.png
+  - docs/proof/visual-fidelity-slice/armistice-pixellab-asset-pass-action.json
+  - docs/proof/visual-fidelity-slice/armistice-assets-after.png
+  - docs/proof/visual-fidelity-slice/visual-slice-next-metrics.txt
+- Current visual read: asset density and prop silhouettes are substantially better, but the tile-by-tile ground grid is now the obvious next bottleneck. Next pass should add larger terrain chunks/transition overlays or reduce per-tile repetition rather than adding more small decals.

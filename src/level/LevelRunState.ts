@@ -297,6 +297,7 @@ export class LevelRunState implements GameState {
   render(game: Game): void {
     this.ensureStaticArena(game);
     this.clearDynamicLayers(game);
+    game.camera.zoom = 1.12;
     game.camera.follow(
       clamp(this.player.worldX, this.map.bounds.minX + 2, this.map.bounds.maxX - 2),
       clamp(this.player.worldY, this.map.bounds.minY + 2, this.map.bounds.maxY - 2),
