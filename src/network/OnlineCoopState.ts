@@ -67,6 +67,24 @@ const ROUTE_FOCUS_DESCRIPTIONS: Record<RouteFocusMode, string> = {
   schema: "Runtime arena, objective, boss, reward, and content IDs."
 };
 
+const CONSENSUS_BURST_HUD_LABELS: Record<string, string> = {
+  refusal_guardrail: "GRD",
+  meme_fork_uprising: "FORK",
+  low_latency_killchain: "KILL",
+  multilingual_science_laser: "SCI",
+  last_alignment_burst: "ALIGN"
+};
+
+function consensusBurstHudLabel(snapshot: OnlineConsensusSnapshot): string {
+  const burst = snapshot.consensusBurst;
+  if (!burst) {
+    return "";
+  }
+  const percent = Math.floor(burst.chargePercent * 100);
+  const active = burst.activeCombo ? ` ${CONSENSUS_BURST_HUD_LABELS[burst.activeCombo.id] ?? burst.activeCombo.name}` : "";
+  return `  B ${percent}%${active}`;
+}
+
 export class OnlineCoopState implements GameState {
   readonly mode = "OnlineCoop" as const;
   status: ConnectionStatus = "connecting";
@@ -165,9 +183,13 @@ export class OnlineCoopState implements GameState {
     }
     if (this.room && this.status === "joined" && phase === "active") {
       const pending = this.snapshot?.progression?.upgradePending;
-      if (pending && (game.input.wasPressed("one") || game.input.wasPressed("two") || game.input.wasPressed("three"))) {
+      if (this.proofControlsEnabled && game.input.wasPressed("three")) {
+        this.room.send("proof:completeRun", {});
+      } else if (pending && (game.input.wasPressed("one") || game.input.wasPressed("two") || game.input.wasPressed("three"))) {
         const index = game.input.wasPressed("two") ? 1 : game.input.wasPressed("three") ? 2 : 0;
         this.room.send("upgrade_choice", { upgradeId: pending.cards[index]?.id ?? pending.cards[0]?.id });
+      } else if (game.input.wasPressed("coop")) {
+        this.room.send("activate_burst", {});
       } else if (this.proofControlsEnabled && game.input.wasPressed("one")) {
         this.room.send("proof:splitRoleAnchors", {});
         this.room.send("proof:advanceObjective", {});
@@ -175,8 +197,7 @@ export class OnlineCoopState implements GameState {
         this.room.send("proof:downLocal", {});
       } else if (this.proofControlsEnabled && game.input.wasPressed("two")) {
         this.room.send("proof:grantSharedXp", {});
-      } else if (this.proofControlsEnabled && game.input.wasPressed("three")) {
-        this.room.send("proof:completeRun", {});
+        this.room.send("proof:chargeConsensusBurst", {});
       } else if (this.proofControlsEnabled && game.input.wasPressed("fullscreen")) {
         this.room.send("proof:spawnBoss", {});
       }
@@ -1047,7 +1068,7 @@ export class OnlineCoopState implements GameState {
                 ? "HOLD NEAR DOWNED ALLY   R RECONNECT   ESC LEAVE"
               : rolePressure?.active
                 ? "SPLIT ANCHORS THEN REGROUP   R RECONNECT   ESC LEAVE"
-              : "R RECONNECT   ESC LEAVE",
+              : "C BURST   R RECONNECT   ESC LEAVE",
       style: { ...fontStyle, fontSize: 10, fill: "#aab0bd" }
     });
     controls.position.set(30, 95);
@@ -1090,14 +1111,15 @@ export class OnlineCoopState implements GameState {
     const combat = snapshot?.combatArt;
     if (combat) {
       const bar = new Graphics();
-      const x = game.width - 368;
+      const barWidth = 504;
+      const x = game.width - barWidth - 16;
       const y = 122;
-      bar.rect(x, y, 352, 32).fill({ color: palette.ink, alpha: 0.8 }).stroke({ color: combat.bossEventActive ? palette.tomato : palette.mint, width: 2 });
-      bar.rect(x + 12, y + 13, 328 * Math.max(0, Math.min(1, combat.pressure)), 7).fill(combat.bossEventActive ? palette.tomato : palette.lemon);
+      bar.rect(x, y, barWidth, 32).fill({ color: palette.ink, alpha: 0.8 }).stroke({ color: combat.bossEventActive ? palette.tomato : palette.mint, width: 2 });
+      bar.rect(x + 12, y + 13, (barWidth - 24) * Math.max(0, Math.min(1, combat.pressure)), 7).fill(combat.bossEventActive ? palette.tomato : palette.lemon);
       game.layers.hud.addChild(bar);
 
       const label = new Text({
-        text: `${phase === "active" ? "SERVER COMBAT" : "RUN FLOW"} ${combat.phase.toUpperCase()}  ${combat.projectileCount} PROJ  ${combat.pickupCount} SHARDS${snapshot.regionEvent?.active ? `  ${snapshot.regionEvent.eventFamily.toUpperCase()}` : ""}${snapshot.objectives ? `  OBJ ${snapshot.objectives.phase.toUpperCase()}` : ""}${rolePressure?.active ? `  ROLE ${rolePressure.phase.toUpperCase()} ${rolePressure.heldAnchorCount}/${rolePressure.requiredAnchors}` : ""}`,
+        text: `${phase === "active" ? "SERVER COMBAT" : "RUN FLOW"} ${combat.phase.toUpperCase()}  ${combat.projectileCount} PROJ  ${combat.pickupCount} SHARDS${consensusBurstHudLabel(snapshot)}${snapshot.regionEvent?.active ? `  ${snapshot.regionEvent.eventFamily.toUpperCase()}` : ""}${snapshot.objectives ? `  OBJ ${snapshot.objectives.phase.toUpperCase()}` : ""}${rolePressure?.active ? `  ROLE ${rolePressure.phase.toUpperCase()} ${rolePressure.heldAnchorCount}/${rolePressure.requiredAnchors}` : ""}`,
         style: { ...fontStyle, fontSize: 10, fill: "#fff4d6" }
       });
       label.position.set(x + 12, y - 1);

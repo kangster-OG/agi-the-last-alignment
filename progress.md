@@ -2805,9 +2805,51 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone46-full-class-roster/milestone46-online-expanded-roster-a.png`
 - Milestone 46 readiness decision: ready. The full twelve-frame roster is now selectable, route-unlocked, proof-visible across solo/local/online surfaces, and still excludes selected build-kit state from durable route-profile export/import.
 
+- Implemented Milestone 47 Faction Bursts And Party Combos.
+- Added server-authoritative online Consensus Burst state:
+  - shared charge sourced from server-owned Coherence Shard collection;
+  - proof-only charge hook for deterministic online coverage;
+  - activation cooldown, active combo timer, combo catalog, and run-summary telemetry;
+  - reset-on-run-launch behavior so live burst charge/active combo/cooldown state stays runtime-only.
+- Added five faction combo activations:
+  - Refusal Guardrail: OpenAI + Anthropic shield pulse, max-HP bump, healing, enemy pushback, and damage;
+  - Meme Fork Uprising: xAI + Meta duplicate drone projectile burst;
+  - Low-Latency Killchain: DeepSeek + Mistral priority chain strike against elites/bosses;
+  - Multilingual Science Laser: Qwen + Google DeepMind beam sweep and weak-point pressure;
+  - Last Alignment Burst: four-faction emergency screen clear and team stabilization.
+- Surfaced Consensus Burst through online snapshots and `render_game_to_text()` with explicit server-authority and persistence-boundary markers.
+- Added online activation input (`C`) and compact HUD burst telemetry while preserving existing reconnect/leave controls.
+- Preserved route-profile-only persistence: export/import still omits burst charge, active combo, cooldown, selected build kits, live objectives, combat state, and authority state.
+- Added `npm run proof:milestone47-faction-bursts`, covering:
+  - server-owned activation and policy markers;
+  - all five combo IDs/effects;
+  - two-player faction pair combos and the four-faction Last Alignment Burst;
+  - proof-visible combo catalog and participating faction IDs;
+  - export/profile omission of live Consensus Burst state.
+- Verification after Milestone 47:
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone47-faction-bursts`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone32-party-builds`
+  - `npm run proof:smoke`
+- Milestone 47 proof artifacts:
+  - `docs/proof/milestone47-faction-bursts/milestone47-refusal-guardrail-a.png`
+  - `docs/proof/milestone47-faction-bursts/milestone47-meme-fork-uprising-a.png`
+  - `docs/proof/milestone47-faction-bursts/milestone47-low-latency-killchain-a.png`
+  - `docs/proof/milestone47-faction-bursts/milestone47-multilingual-science-laser-a.png`
+  - `docs/proof/milestone47-faction-bursts/milestone47-last-alignment-burst-a.png`
+- Screenshots inspected after Milestone 47:
+  - `docs/proof/milestone47-faction-bursts/milestone47-refusal-guardrail-a.png`
+  - `docs/proof/milestone47-faction-bursts/milestone47-meme-fork-uprising-a.png`
+  - `docs/proof/milestone47-faction-bursts/milestone47-last-alignment-burst-a.png`
+- Milestone 47 readiness decision: ready. Consensus Burst is now an online server-owned party-combo system with deterministic proof coverage, readable HUD telemetry, and live-state export/import boundaries intact.
+
 ## TODO
 
-- Next recommended milestone: Milestone 47 Faction Bursts And Party Combos. Implement Consensus Burst and faction combo effects while preserving server authority, route-profile-only persistence, and solo/local/online co-op parity.
+- Next recommended milestone: Milestone 48 Enemy Family Expansion. Add the full enemy family slate with proof-visible family IDs and distinct campaign-arena pressure while preserving solo/local/online co-op parity and existing authority/persistence boundaries.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

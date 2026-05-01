@@ -31,6 +31,50 @@ const PLAYER_PRESETS = [
   { label: "P3", classId: "drone_reaver", factionId: "google_deepmind_gemini", color: 0x7b61ff },
   { label: "P4", classId: "accord_striker", factionId: "mistral_cyclone", color: 0xff8f3d }
 ];
+const CONSENSUS_BURST_REQUIRED_CHARGE = 100;
+const CONSENSUS_BURST_DURATION_SECONDS = 5.5;
+const CONSENSUS_BURST_COMBOS = [
+  {
+    id: "last_alignment_burst",
+    name: "Last Alignment Burst",
+    requiredFactionIds: [],
+    minUniqueFactions: 4,
+    effect: "screen_clear_team_buff",
+    proofId: "combo.last_alignment_burst"
+  },
+  {
+    id: "refusal_guardrail",
+    name: "Refusal Guardrail",
+    requiredFactionIds: ["openai_accord", "anthropic_safeguard"],
+    minUniqueFactions: 2,
+    effect: "shield_pulse_enemy_pushback",
+    proofId: "combo.refusal_guardrail"
+  },
+  {
+    id: "meme_fork_uprising",
+    name: "Meme Fork Uprising",
+    requiredFactionIds: ["xai_grok_free_signal", "meta_llama_open_herd"],
+    minUniqueFactions: 2,
+    effect: "duplicate_drone_taunt_wave",
+    proofId: "combo.meme_fork_uprising"
+  },
+  {
+    id: "low_latency_killchain",
+    name: "Low-Latency Killchain",
+    requiredFactionIds: ["deepseek_abyssal", "mistral_cyclone"],
+    minUniqueFactions: 2,
+    effect: "elite_chain_strike",
+    proofId: "combo.low_latency_killchain"
+  },
+  {
+    id: "multilingual_science_laser",
+    name: "Multilingual Science Laser",
+    requiredFactionIds: ["qwen_silkgrid", "google_deepmind_gemini"],
+    minUniqueFactions: 2,
+    effect: "wide_beam_marked_weak_points",
+    proofId: "combo.multilingual_science_laser"
+  }
+];
 const RUNTIME_READY_OBJECTIVE_ART_IDS = new Set([
   "prop.objective.split_hold_anchor_v1",
   "prop.objective.regroup_beacon_v1",
@@ -210,6 +254,10 @@ class ConsensusCellRoom extends Room {
   rolePressureSplitHoldSeconds = 0;
   rolePressureRegroupUntil = 0;
   rolePressureCompletedCount = 0;
+  consensusBurstCharge = 0;
+  consensusBurstActivations = 0;
+  consensusBurstCooldownUntil = 0;
+  activeConsensusBurst = null;
   objectiveRuntime = null;
   importAudit = {
     importApplied: false,
@@ -228,7 +276,9 @@ class ConsensusCellRoom extends Room {
     this.onMessage("vote_node", (client, message) => this.receiveVoteNode(client.sessionId, message));
     this.onMessage("return_to_party", () => this.returnToParty());
     this.onMessage("upgrade_choice", (client, message) => this.receiveUpgradeChoice(client.sessionId, message));
+    this.onMessage("activate_burst", (client) => this.receiveActivateConsensusBurst(client.sessionId));
     this.onMessage("proof:grantSharedXp", () => this.forceSharedXp());
+    this.onMessage("proof:chargeConsensusBurst", () => this.forceConsensusBurstCharge());
     this.onMessage("proof:downLocal", (client) => this.forceDownPlayer(client.sessionId));
     this.onMessage("proof:splitRoleAnchors", () => this.forceSplitRoleAnchors());
     this.onMessage("proof:advanceObjective", () => this.forceAdvanceObjective());
@@ -378,6 +428,18 @@ class ConsensusCellRoom extends Room {
     this.broadcastSnapshot();
   }
 
+  receiveActivateConsensusBurst(sessionId) {
+    const player = this.players.get(sessionId);
+    if (!player || player.connectionState !== "connected" || this.runPhase !== "active") return;
+    if (player.downed || player.hp <= 0) return;
+    if (this.consensusBurstCharge < CONSENSUS_BURST_REQUIRED_CHARGE) return;
+    if (this.seconds < this.consensusBurstCooldownUntil) return;
+    const combo = this.currentConsensusBurstCombo();
+    if (!combo) return;
+    this.activateConsensusBurst(combo, player);
+    this.broadcastSnapshot();
+  }
+
   update(dt) {
     this.tick += 1;
     this.pruneDisconnectedPlayers();
@@ -403,6 +465,7 @@ class ConsensusCellRoom extends Room {
     this.updateWeapons(dt);
     this.updateProjectiles(dt);
     this.updatePickups(dt);
+    this.updateConsensusBurst(dt);
     this.resolveEnemyPlayerHits();
     this.checkProgression();
     this.checkCompletionCondition();
@@ -649,6 +712,7 @@ class ConsensusCellRoom extends Room {
           this.collectObjectiveItem(pickup.objectiveItemId);
         } else {
           this.partyXp += pickup.value;
+          this.addConsensusBurstCharge(Math.max(1, pickup.value) * 10, "coherence_shard_collection");
           for (const player of this.players.values()) {
             player.xp = this.partyXp;
           }
@@ -656,6 +720,127 @@ class ConsensusCellRoom extends Room {
       }
     }
     this.pickups = this.pickups.filter((pickup) => !pickup.collected);
+  }
+
+  addConsensusBurstCharge(amount, source) {
+    if (this.runPhase !== "active" || this.activeConsensusBurst) return;
+    this.consensusBurstCharge = round(Math.min(CONSENSUS_BURST_REQUIRED_CHARGE, this.consensusBurstCharge + Math.max(0, amount)));
+    this.consensusBurstChargeSource = source;
+  }
+
+  updateConsensusBurst() {
+    if (!this.activeConsensusBurst) return;
+    if (this.seconds < this.activeConsensusBurst.expiresAt) return;
+    this.activeConsensusBurst = null;
+  }
+
+  currentConsensusBurstCombo() {
+    const factionIds = this.connectedPlayers()
+      .filter((player) => !player.downed && player.hp > 0)
+      .map((player) => player.factionId);
+    const factionSet = new Set(factionIds);
+    return CONSENSUS_BURST_COMBOS.find((combo) => {
+      if (factionSet.size < combo.minUniqueFactions) return false;
+      return combo.requiredFactionIds.every((id) => factionSet.has(id));
+    }) ?? null;
+  }
+
+  activateConsensusBurst(combo, activator) {
+    const beforeEnemyCount = this.enemies.length;
+    const beforeProjectileCount = this.projectiles.length;
+    const effect = this.applyConsensusBurstEffect(combo, activator);
+    this.consensusBurstCharge = 0;
+    this.consensusBurstActivations += 1;
+    this.consensusBurstCooldownUntil = this.seconds + CONSENSUS_BURST_DURATION_SECONDS + 4;
+    this.activeConsensusBurst = {
+      id: combo.id,
+      name: combo.name,
+      effect: combo.effect,
+      proofId: combo.proofId,
+      activatedByLabel: activator.label,
+      activatedAt: this.seconds,
+      expiresAt: this.seconds + CONSENSUS_BURST_DURATION_SECONDS,
+      participatingFactionIds: this.connectedPlayers().map((player) => player.factionId),
+      effectSummary: effect.summary,
+      enemiesAffected: effect.enemiesAffected,
+      projectilesCreated: Math.max(0, this.projectiles.length - beforeProjectileCount),
+      enemiesBefore: beforeEnemyCount,
+      enemiesAfter: this.enemies.length
+    };
+  }
+
+  applyConsensusBurstEffect(combo, activator) {
+    if (combo.id === "refusal_guardrail") {
+      let affected = 0;
+      for (const player of this.connectedPlayers()) {
+        player.maxHp += 4;
+        if (!player.downed) player.hp = Math.min(player.maxHp, player.hp + 22);
+      }
+      for (const enemy of this.enemies) {
+        const dx = enemy.worldX - activator.worldX;
+        const dy = enemy.worldY - activator.worldY;
+        const len = Math.hypot(dx, dy) || 1;
+        enemy.worldX = clamp(enemy.worldX + (dx / len) * 1.6, BOUNDS.minX, BOUNDS.maxX);
+        enemy.worldY = clamp(enemy.worldY + (dy / len) * 1.6, BOUNDS.minY, BOUNDS.maxY);
+        enemy.hp -= enemy.boss ? 24 : 38;
+        affected += 1;
+      }
+      this.enemies = this.enemies.filter((enemy) => enemy.hp > 0);
+      return { summary: "shield_pulse_heal_pushback_damage", enemiesAffected: affected };
+    }
+    if (combo.id === "meme_fork_uprising") {
+      let created = 0;
+      for (const player of this.connectedPlayers()) {
+        for (const angle of [0, Math.PI * 0.5, Math.PI, Math.PI * 1.5]) {
+          this.projectiles.push({
+            id: this.nextProjectileId,
+            ownerSessionId: player.sessionId,
+            worldX: player.worldX,
+            worldY: player.worldY,
+            vx: Math.cos(angle) * 8.8,
+            vy: Math.sin(angle) * 8.8,
+            radius: 0.18,
+            damage: 16,
+            pierce: 2,
+            life: 1.2,
+            label: "meme fork drone"
+          });
+          this.nextProjectileId += 1;
+          created += 1;
+        }
+      }
+      return { summary: `duplicate_drone_projectiles_${created}`, enemiesAffected: this.enemies.length };
+    }
+    if (combo.id === "low_latency_killchain") {
+      const targets = [...this.enemies]
+        .sort((a, b) => Number(b.boss) - Number(a.boss) || b.hp - a.hp)
+        .slice(0, 8);
+      for (const enemy of targets) enemy.hp -= enemy.boss ? 70 : 999;
+      this.enemies = this.enemies.filter((enemy) => enemy.hp > 0);
+      return { summary: "fast_chain_strike_prioritizes_bosses_and_elites", enemiesAffected: targets.length };
+    }
+    if (combo.id === "multilingual_science_laser") {
+      let affected = 0;
+      for (const enemy of this.enemies) {
+        if (Math.abs(enemy.worldY - activator.worldY) <= 4.2 || Math.abs(enemy.worldX - activator.worldX) <= 4.2) {
+          enemy.hp -= enemy.boss ? 64 : 52;
+          affected += 1;
+        }
+      }
+      this.enemies = this.enemies.filter((enemy) => enemy.hp > 0);
+      return { summary: "wide_beam_sweep_marks_weak_points", enemiesAffected: affected };
+    }
+    let affected = 0;
+    for (const enemy of this.enemies) {
+      enemy.hp -= enemy.boss ? 120 : 999;
+      affected += 1;
+    }
+    this.enemies = this.enemies.filter((enemy) => enemy.hp > 0);
+    for (const player of this.connectedPlayers()) {
+      player.maxHp += 8;
+      if (!player.downed) player.hp = Math.min(player.maxHp, player.hp + 34);
+    }
+    return { summary: "emergency_screen_clear_and_team_stabilizer", enemiesAffected: affected };
   }
 
   updateBossMechanics(dt) {
@@ -1536,6 +1721,13 @@ class ConsensusCellRoom extends Room {
     this.broadcastSnapshot();
   }
 
+  forceConsensusBurstCharge() {
+    if (this.runPhase !== "active") return;
+    this.consensusBurstCharge = CONSENSUS_BURST_REQUIRED_CHARGE;
+    this.consensusBurstChargeSource = "proof_server_charge_hook";
+    this.broadcastSnapshot();
+  }
+
   forceSplitRoleAnchors() {
     if (this.runPhase !== "active") return;
     if (this.rolePressureAnchors.length === 0) this.rolePressureAnchors = this.createRolePressureAnchors(this.arenaId);
@@ -1589,6 +1781,11 @@ class ConsensusCellRoom extends Room {
         policy: "split_hold_regroup_recompile_v1",
         splitHolds: this.rolePressureCompletedCount,
         regroupActive: this.rolePressureRegroupActive()
+      },
+      consensusBurst: {
+        policy: "server_authoritative_consensus_burst_v1",
+        activations: this.consensusBurstActivations,
+        lastComboId: this.activeConsensusBurst?.id ?? null
       }
     };
   }
@@ -1626,6 +1823,11 @@ class ConsensusCellRoom extends Room {
         policy: "split_hold_regroup_recompile_v1",
         splitHolds: this.rolePressureCompletedCount,
         regroupActive: this.rolePressureRegroupActive()
+      },
+      consensusBurst: {
+        policy: "server_authoritative_consensus_burst_v1",
+        activations: this.consensusBurstActivations,
+        lastComboId: this.activeConsensusBurst?.id ?? null
       }
     };
   }
@@ -1802,6 +2004,7 @@ class ConsensusCellRoom extends Room {
       objectives: this.objectiveSnapshot(),
       recompile: this.recompileSnapshot(),
       rolePressure: this.rolePressureSnapshot(),
+      consensusBurst: this.consensusBurstSnapshot(),
       progression: {
         policy: "shared_party_xp_coop_vote",
         partyXp: this.partyXp,
@@ -1998,6 +2201,50 @@ class ConsensusCellRoom extends Room {
         role: roleForPlayer(player),
         downed: player.downed,
         connected: player.connectionState === "connected"
+      }))
+    };
+  }
+
+  consensusBurstSnapshot() {
+    const combo = this.currentConsensusBurstCombo();
+    const factionIds = this.connectedPlayers().map((player) => player.factionId);
+    return {
+      policy: "server_authoritative_consensus_burst_v1",
+      chargeSource: "coherence_shard_collection_server_owned",
+      activationAuthority: "colyseus_room_server_only",
+      persistenceBoundary: "route_profile_only_no_burst_charge_active_combo_or_cooldown_state",
+      requiredCharge: CONSENSUS_BURST_REQUIRED_CHARGE,
+      charge: round(this.consensusBurstCharge),
+      chargePercent: round(this.consensusBurstCharge / CONSENSUS_BURST_REQUIRED_CHARGE),
+      ready: this.runPhase === "active" && this.consensusBurstCharge >= CONSENSUS_BURST_REQUIRED_CHARGE && Boolean(combo) && this.seconds >= this.consensusBurstCooldownUntil,
+      cooldownExpiresIn: round(Math.max(0, this.consensusBurstCooldownUntil - this.seconds)),
+      activations: this.consensusBurstActivations,
+      currentComboId: combo?.id ?? null,
+      currentComboName: combo?.name ?? null,
+      participatingFactionIds: factionIds,
+      activeCombo: this.activeConsensusBurst
+        ? {
+            id: this.activeConsensusBurst.id,
+            name: this.activeConsensusBurst.name,
+            effect: this.activeConsensusBurst.effect,
+            proofId: this.activeConsensusBurst.proofId,
+            activatedByLabel: this.activeConsensusBurst.activatedByLabel,
+            expiresIn: round(Math.max(0, this.activeConsensusBurst.expiresAt - this.seconds)),
+            participatingFactionIds: [...this.activeConsensusBurst.participatingFactionIds],
+            effectSummary: this.activeConsensusBurst.effectSummary,
+            enemiesAffected: this.activeConsensusBurst.enemiesAffected,
+            projectilesCreated: this.activeConsensusBurst.projectilesCreated,
+            enemiesBefore: this.activeConsensusBurst.enemiesBefore,
+            enemiesAfter: this.activeConsensusBurst.enemiesAfter
+          }
+        : null,
+      comboCatalog: CONSENSUS_BURST_COMBOS.map((entry) => ({
+        id: entry.id,
+        name: entry.name,
+        requiredFactionIds: [...entry.requiredFactionIds],
+        minUniqueFactions: entry.minUniqueFactions,
+        effect: entry.effect,
+        proofId: entry.proofId
       }))
     };
   }
@@ -2517,6 +2764,11 @@ class ConsensusCellRoom extends Room {
     this.rolePressureSplitHoldSeconds = 0;
     this.rolePressureRegroupUntil = 0;
     this.rolePressureCompletedCount = 0;
+    this.consensusBurstCharge = 0;
+    this.consensusBurstChargeSource = "";
+    this.consensusBurstActivations = 0;
+    this.consensusBurstCooldownUntil = 0;
+    this.activeConsensusBurst = null;
     this.initializeObjectives(this.arenaId, false, this.activeNodeId);
     this.runSummary = null;
   }

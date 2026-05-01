@@ -319,6 +319,7 @@ export function renderGameToText(game: Game): string {
 	          regionEvent: snapshot?.regionEvent ?? null,
           objectives: snapshot?.objectives ?? null,
           rolePressure: snapshot?.rolePressure ?? null,
+          consensusBurst: snapshot?.consensusBurst ?? null,
           rewards: snapshot?.rewards ?? null,
           persistence: snapshot?.persistence ?? null,
           progression: snapshot?.progression ?? null,

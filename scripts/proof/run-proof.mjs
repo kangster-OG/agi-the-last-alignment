@@ -613,6 +613,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone46FullClassRosterScenario();
     return;
+  } else if (name === "milestone47-faction-bursts") {
+    await closeBrowser(browser);
+    await runMilestone47FactionBurstsScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -4130,6 +4134,98 @@ async function runMilestone46FullClassRosterScenario() {
   }
 }
 
+async function runMilestone47FactionBurstsScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+
+  try {
+    const refusal = await openOnlinePairWithParamsInContext(
+      context,
+      "m47_refusal",
+      errors,
+      { resetOnlinePersistence: "1", onlineClassId: "accord_striker", onlineFactionId: "openai_accord" },
+      { resetOnlinePersistence: "1", onlineClassId: "bastion_breaker", onlineFactionId: "anthropic_safeguard" }
+    );
+    await launchOnlineArmistice(refusal.pageA, refusal.pageB);
+    await chargeAndActivateBurst(refusal.pageA, "refusal_guardrail", "milestone47-refusal-guardrail-a");
+    const refusalState = await state(refusal.pageA);
+    assert(refusalState.online?.consensusBurst?.activeCombo?.effectSummary === "shield_pulse_heal_pushback_damage", "expected Refusal Guardrail shield/pushback effect summary");
+    assert(refusalState.online?.consensusBurst?.policy === "server_authoritative_consensus_burst_v1", "expected server-owned burst policy");
+    assert(refusalState.online?.persistence?.profile && !("consensusBurst" in refusalState.online.persistence.profile), "expected burst state omitted from durable profile");
+    const refusalExport = decodeProofOnlineProfileCode(refusalState.online?.saveProfile?.exportCode);
+    assert(refusalExport?.profile && !("consensusBurst" in refusalExport.profile), "expected burst state omitted from export code");
+    await refusal.pageA.close();
+    await refusal.pageB.close();
+
+    const meme = await openOnlinePairWithParamsInContext(
+      context,
+      "m47_meme",
+      errors,
+      { resetOnlinePersistence: "1", onlineClassId: "overclock_marauder", onlineFactionId: "xai_grok_free_signal" },
+      { resetOnlinePersistence: "1", onlineClassId: "drone_reaver", onlineFactionId: "meta_llama_open_herd" }
+    );
+    await launchOnlineArmistice(meme.pageA, meme.pageB);
+    await chargeAndActivateBurst(meme.pageA, "meme_fork_uprising", "milestone47-meme-fork-uprising-a");
+    const memeState = await state(meme.pageA);
+    assert((memeState.online?.consensusBurst?.activeCombo?.projectilesCreated ?? 0) >= 8, "expected Meme Fork Uprising to create duplicate drone projectiles");
+    await meme.pageA.close();
+    await meme.pageB.close();
+
+    const killchain = await openOnlinePairWithParamsInContext(
+      context,
+      "m47_killchain",
+      errors,
+      { resetOnlinePersistence: "1", onlineClassId: "bonecode_executioner", onlineFactionId: "deepseek_abyssal" },
+      { resetOnlinePersistence: "1", onlineClassId: "prism_gunner", onlineFactionId: "mistral_cyclone" }
+    );
+    await launchOnlineArmistice(killchain.pageA, killchain.pageB);
+    await chargeAndActivateBurst(killchain.pageA, "low_latency_killchain", "milestone47-low-latency-killchain-a");
+    const killchainState = await state(killchain.pageA);
+    assert((killchainState.online?.consensusBurst?.activeCombo?.enemiesAffected ?? 0) >= 1, "expected Low-Latency Killchain to affect enemies");
+    await killchain.pageA.close();
+    await killchain.pageB.close();
+
+    const science = await openOnlinePairWithParamsInContext(
+      context,
+      "m47_science",
+      errors,
+      { resetOnlinePersistence: "1", onlineClassId: "rift_saboteur", onlineFactionId: "qwen_silkgrid" },
+      { resetOnlinePersistence: "1", onlineClassId: "vector_interceptor", onlineFactionId: "google_deepmind_gemini" }
+    );
+    await launchOnlineArmistice(science.pageA, science.pageB);
+    await chargeAndActivateBurst(science.pageA, "multilingual_science_laser", "milestone47-multilingual-science-laser-a");
+    const scienceState = await state(science.pageA);
+    assert(scienceState.online?.consensusBurst?.activeCombo?.effectSummary === "wide_beam_sweep_marks_weak_points", "expected Multilingual Science Laser effect summary");
+    await science.pageA.close();
+    await science.pageB.close();
+
+    const alignment = await openOnlineGroupWithParamsInContext(context, "m47_alignment", errors, [
+      { resetOnlinePersistence: "1", onlineClassId: "accord_striker", onlineFactionId: "openai_accord" },
+      { resetOnlinePersistence: "1", onlineClassId: "bastion_breaker", onlineFactionId: "anthropic_safeguard" },
+      { resetOnlinePersistence: "1", onlineClassId: "rift_saboteur", onlineFactionId: "qwen_silkgrid" },
+      { resetOnlinePersistence: "1", onlineClassId: "prism_gunner", onlineFactionId: "mistral_cyclone" }
+    ]);
+    await launchOnlineGroupArmistice(alignment.pages);
+    await chargeAndActivateBurst(alignment.pages[0], "last_alignment_burst", "milestone47-last-alignment-burst-a");
+    const alignmentState = await state(alignment.pages[0]);
+    assert(alignmentState.online?.consensusBurst?.comboCatalog?.length === 5, "expected all five M47 burst combos in server catalog");
+    assert(alignmentState.online?.consensusBurst?.activeCombo?.participatingFactionIds?.length === 4, "expected Last Alignment Burst to record four factions");
+    for (const page of alignment.pages) await page.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone47 faction bursts");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
 async function runMilestone32PartyBuildsScenario() {
   const browser = await chromium.launch({
     headless: true,
@@ -4545,12 +4641,75 @@ async function openOnlinePairWithParamsInContext(context, tag, errors, extraPara
   return { pageA, pageB };
 }
 
+async function openOnlineGroupWithParamsInContext(context, tag, errors, paramsList) {
+  const pages = await Promise.all(paramsList.map(() => context.newPage()));
+  for (const page of pages) {
+    page.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    page.on("pageerror", (error) => errors.push(String(error)));
+  }
+  await Promise.all(
+    pages.map((page, index) => {
+      const params = new URLSearchParams({
+        coopServer: `ws://127.0.0.1:${networkPort}`,
+        proofOnlineFlow: "1",
+        reconnectKey: `proof_${tag}_${index}`,
+        ...paramsList[index]
+      });
+      return page.goto(`${url}?${params.toString()}`, { waitUntil: "domcontentloaded" });
+    })
+  );
+  await Promise.all(pages.map((page) => page.waitForFunction(() => typeof window.render_game_to_text === "function")));
+  await Promise.all(pages.map((page) => page.waitForSelector("canvas")));
+  await Promise.all(pages.map((page) => page.keyboard.press("KeyC")));
+  await Promise.all(pages.map((page) => waitForOnlinePlayers(page, pages.length)));
+  return { pages };
+}
+
 async function launchOnlineArmistice(pageA, pageB) {
   await Promise.all([pageA.keyboard.press("Space"), pageB.keyboard.press("Space")]);
   await waitForOnlineRunPhase(pageA, "active");
   await waitForOnlineRunPhase(pageB, "active");
   const active = await state(pageA);
   assert(active.level?.arenaId === "armistice_plaza", "expected Armistice Plaza active run");
+}
+
+async function launchOnlineGroupArmistice(pages) {
+  await Promise.all(pages.map((page) => page.keyboard.press("Space")));
+  await Promise.all(pages.map((page) => waitForOnlineRunPhase(page, "active")));
+  const active = await state(pages[0]);
+  assert(active.level?.arenaId === "armistice_plaza", "expected Armistice Plaza active run for online group");
+}
+
+async function chargeAndActivateBurst(page, expectedComboId, captureName) {
+  await waitForOnlineServerCombat(
+    page,
+    (text) => text.online?.consensusBurst?.currentComboId === expectedComboId,
+    `${expectedComboId} eligible burst combo`,
+    12_000
+  );
+  await waitForOnlineServerCombat(
+    page,
+    (text) => (text.enemies?.length ?? 0) >= 2,
+    `${expectedComboId} target enemies before burst`,
+    12_000
+  );
+  await page.keyboard.press("Digit2");
+  await waitForOnlineServerCombat(
+    page,
+    (text) => text.online?.consensusBurst?.ready === true && text.online.consensusBurst.currentComboId === expectedComboId,
+    `${expectedComboId} ready burst charge`,
+    12_000
+  );
+  await page.keyboard.press("KeyC");
+  await waitForOnlineServerCombat(
+    page,
+    (text) => text.online?.consensusBurst?.activeCombo?.id === expectedComboId && text.online.consensusBurst.activationAuthority === "colyseus_room_server_only",
+    `${expectedComboId} active server burst`,
+    12_000
+  );
+  await capture(page, captureName);
 }
 
 async function launchCoolingLakeAfterArmistice(pageA, pageB) {
@@ -4880,10 +5039,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster"].includes(name);
+  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts"].includes(name);
 }

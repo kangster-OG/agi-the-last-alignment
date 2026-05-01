@@ -141,6 +141,7 @@ export interface OnlineConsensusSnapshot {
   regionEvent?: OnlineRegionEventSnapshot;
   objectives?: OnlineObjectivesSnapshot;
   rolePressure?: OnlineRolePressureSnapshot;
+  consensusBurst?: OnlineConsensusBurstSnapshot;
   recompile?: OnlineRecompileSnapshot;
   progression?: OnlineProgressionSnapshot;
   lifecycle?: OnlineLifecycleSnapshot;
@@ -306,6 +307,44 @@ export interface OnlineRolePressureSnapshot {
     role: string;
     downed: boolean;
     connected: boolean;
+  }>;
+}
+
+export interface OnlineConsensusBurstSnapshot {
+  policy: "server_authoritative_consensus_burst_v1";
+  chargeSource: "coherence_shard_collection_server_owned";
+  activationAuthority: "colyseus_room_server_only";
+  persistenceBoundary: "route_profile_only_no_burst_charge_active_combo_or_cooldown_state";
+  requiredCharge: number;
+  charge: number;
+  chargePercent: number;
+  ready: boolean;
+  cooldownExpiresIn: number;
+  activations: number;
+  currentComboId: string | null;
+  currentComboName: string | null;
+  participatingFactionIds: string[];
+  activeCombo: null | {
+    id: string;
+    name: string;
+    effect: string;
+    proofId: string;
+    activatedByLabel: string;
+    expiresIn: number;
+    participatingFactionIds: string[];
+    effectSummary: string;
+    enemiesAffected: number;
+    projectilesCreated: number;
+    enemiesBefore: number;
+    enemiesAfter: number;
+  };
+  comboCatalog: Array<{
+    id: string;
+    name: string;
+    requiredFactionIds: string[];
+    minUniqueFactions: number;
+    effect: string;
+    proofId: string;
   }>;
 }
 

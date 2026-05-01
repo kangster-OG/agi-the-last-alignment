@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-46 are complete. Milestone 47 is next.
+Current repo status as of May 1, 2026: Milestones 0-47 are complete. Milestone 48 is next.
 
 ## Non-Negotiable Continuity
 
@@ -531,19 +531,26 @@ Readiness: complete.
 
 Goal: implement Consensus Burst and faction combo effects.
 
-Expected scope:
+Delivered scope:
 
-- Refusal Guardrail;
-- Meme Fork Uprising;
-- Low-Latency Killchain;
-- Multilingual Science Laser;
-- Last Alignment Burst;
-- server-authored online combo state.
+- Added server-authoritative online Consensus Burst state with shard-driven charge, activation cooldown, active combo timers, proof-visible combo catalog, and reset-on-run-launch boundaries.
+- Added five faction combo effects:
+  - Refusal Guardrail for OpenAI + Anthropic shield pulse, healing, pushback, and damage;
+  - Meme Fork Uprising for xAI + Meta duplicate drone projectile bursts;
+  - Low-Latency Killchain for DeepSeek + Mistral fast priority chain strikes;
+  - Multilingual Science Laser for Qwen + Google DeepMind beam sweeps and weak-point pressure;
+  - Last Alignment Burst for four-faction emergency screen clear and team stabilization.
+- Mirrored Consensus Burst telemetry into online snapshots and `render_game_to_text()` without adding burst charge, cooldown, active combo, or live authority state to route-profile export/import.
+- Added online activation input and compact HUD telemetry for burst charge and active combo state.
 
-Proof expectations:
+Proof coverage:
 
-- combo activation is server-owned online;
-- export/import omits burst charge and active combo state.
+- `npm run proof:milestone47-faction-bursts`
+- `npm run proof:milestone18-coop-progression`
+- `npm run proof:milestone32-party-builds`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M48: Enemy Family Expansion
 
