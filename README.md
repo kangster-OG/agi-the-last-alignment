@@ -46,6 +46,12 @@ VITE_CONSENSUS_URL=wss://your-consensus-cell-server.example.com npm run build
 
 The submitted default path is production-art-on, free-to-play, browser-playable, and requires no login/signup. No login or signup is required. Persistence is browser-local/export-code only and stores route profile data, not live combat, objectives, build kits, cooldowns, role pressure, Recompile state, dialogue, route focus, portal params, or authority state.
 
+Stable public URL:
+
+```text
+https://kangster-og.github.io/agi-the-last-alignment/
+```
+
 The required Vibe Jam widget is included in `index.html`:
 
 ```html
@@ -82,6 +88,7 @@ npm run proof:campaign-full
 npm run proof:milestone56-quality-lock
 npm run proof:milestone55-online-robustness
 npm run proof:smoke
+PUBLIC_GAME_URL=https://kangster-og.github.io/agi-the-last-alignment/ npm run proof:milestone58-launch
 ```
 
 Proof screenshots and JSON states are written to `docs/proof/`.

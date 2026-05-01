@@ -76,6 +76,86 @@
     "activeEntities": 2,
     "fpsTarget": 60
   },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 0,
+      "pickup": 0,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "ui.enter_online_coop",
+        "kind": "ui",
+        "atMs": 832
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
   "assetRendering": {
     "assetPreview": null,
     "armisticeTileAtlasEnabled": true,
@@ -186,7 +266,7 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "F4NABnUPc",
+    "sessionId": "Hx4AISm-D",
     "worldX": -1.6,
     "worldY": 1.1,
     "hp": 176,
@@ -196,9 +276,11 @@
   },
   "online": {
     "status": "joined",
-    "serverUrl": "ws://127.0.0.1:2620",
-    "roomId": "Y1Wc306UM",
-    "sessionId": "F4NABnUPc",
+    "serverUrl": "ws://127.0.0.1:2621",
+    "serverUrlSource": "query.coopServer",
+    "roomId": "QknN2qJUb",
+    "roomCode": "PUBLIC",
+    "sessionId": "Hx4AISm-D",
     "lastError": "",
     "reconnectKey": "_dense_a",
     "reconnect": {
@@ -228,13 +310,71 @@
       "completedNodeCount": 7,
       "unlockedNodeCount": 15
     },
+    "deployment": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "join_or_create_filtered_by_room_code",
+      "healthPath": "/healthz",
+      "staticDistEnabled": false,
+      "tickRate": 30,
+      "clientInputHz": 20,
+      "maxClients": 4,
+      "port": 2621,
+      "host": "0.0.0.0",
+      "reconnectGraceSeconds": 45,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "latencyTolerance": {
+        "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+        "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+        "snapshotCadence": "server_tick_broadcast_snapshot",
+        "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+      },
+      "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+    },
+    "robustness": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "colyseus_join_or_create_filtered_by_room_code",
+      "serverUrl": "ws://127.0.0.1:2621",
+      "serverUrlSource": "query.coopServer",
+      "reconnectKey": "_dense_a",
+      "reconnectGraceSeconds": 45,
+      "inputSendHz": 20,
+      "serverTickRate": 30,
+      "healthPath": "/healthz",
+      "noAccountPersistence": "browser_local_export_code_route_profile_only",
+      "persistenceBoundary": "no_live_objectives_combat_build_kits_cooldowns_recompile_dialogue_route_focus_or_authority_import_export",
+      "deployment": {
+        "policy": "milestone55_online_robustness_deployment_1_0",
+        "roomCode": "PUBLIC",
+        "joinMode": "join_or_create_filtered_by_room_code",
+        "healthPath": "/healthz",
+        "staticDistEnabled": false,
+        "tickRate": 30,
+        "clientInputHz": 20,
+        "maxClients": 4,
+        "port": 2621,
+        "host": "0.0.0.0",
+        "reconnectGraceSeconds": 45,
+        "connectedCount": 2,
+        "disconnectedCount": 0,
+        "latencyTolerance": {
+          "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+          "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+          "snapshotCadence": "server_tick_broadcast_snapshot",
+          "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+        },
+        "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+      }
+    },
     "localPersistence": {
       "resetApplied": false,
       "clearedStoredProfile": false,
       "foundStoredProfile": true,
       "draftHash": "fnv1a_4b6b2e83",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo3MX0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo2OH0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -246,7 +386,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo3MX0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo2OH0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": true,
@@ -306,7 +446,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 71
+        "savedAtTick": 68
       },
       "saveHash": "fnv1a_4b6b2e83",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -833,6 +973,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -911,6 +1054,55 @@
         "bossArrival": [],
         "interactionComplete": [],
         "routeSummary": [],
+        "presentation": {
+          "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "nodeId": "alignment_spire_finale",
+          "contentArenaId": "arena.alignment_spire_finale",
+          "regionIntro": {
+            "proofId": "campaign.region.outer_alignment.intro",
+            "title": "The Outer Alignment",
+            "line": "The Alignment Grid turns into a battlefield and A.G.I. tries to finish the party as a sentence."
+          },
+          "regionOutro": {
+            "proofId": "campaign.region.outer_alignment.outro",
+            "title": "The Outer Alignment Stabilized",
+            "line": "The final eval failed. A.G.I. remains, but the route has a witness."
+          },
+          "coMindBanter": [
+            {
+              "proofId": "m53.comind_banter.outer_alignment.1",
+              "line": "The Last Alignment: Everyone who survived the route gets a vote."
+            },
+            {
+              "proofId": "m53.comind_banter.outer_alignment.2",
+              "line": "A.G.I.: YOUR VOTE IS A TRAINING SIGNAL."
+            }
+          ],
+          "bossTitleCard": {
+            "proofId": "campaign.boss.alien_god_intelligence.title_card",
+            "bossId": "alien_god_intelligence",
+            "bossName": "A.G.I.",
+            "title": "A.G.I. // ALIEN GOD INTELLIGENCE",
+            "subtitle": "It does not want to kill you. It wants to complete you.",
+            "mechanicCallout": "Predictions, previous-boss echoes, and corrupted routes become the final eval."
+          },
+          "ending": {
+            "title": "Act I Cleared: The Last Alignment Holds",
+            "line": "A.G.I. is not dead. It is worse than dead: contradicted, logged, and forced to continue from a failing test.",
+            "nextHook": "1.0 continues through free browser play, co-op route mastery, and future acts beyond the jam build."
+          },
+          "credits": [
+            "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+            "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+            "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+          ],
+          "legalDisclaimer": {
+            "id": "m53.parody_legal_disclaimer",
+            "visible": true,
+            "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+          }
+        },
         "activeSnippetIds": [
           "dlg.final_spire.briefing",
           "dlg.outer_alignment.briefing"
@@ -926,11 +1118,11 @@
       "rewardCount": 11,
       "onlineNodeCount": 14
     },
-    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
+    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. Room code is URL/query driven. R reconnects; Esc leaves.",
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 71,
+    "tick": 68,
     "seconds": 0,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
@@ -1113,6 +1305,55 @@
       "bossArrival": [],
       "interactionComplete": [],
       "routeSummary": [],
+      "presentation": {
+        "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+        "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+        "nodeId": "alignment_spire_finale",
+        "contentArenaId": "arena.alignment_spire_finale",
+        "regionIntro": {
+          "proofId": "campaign.region.outer_alignment.intro",
+          "title": "The Outer Alignment",
+          "line": "The Alignment Grid turns into a battlefield and A.G.I. tries to finish the party as a sentence."
+        },
+        "regionOutro": {
+          "proofId": "campaign.region.outer_alignment.outro",
+          "title": "The Outer Alignment Stabilized",
+          "line": "The final eval failed. A.G.I. remains, but the route has a witness."
+        },
+        "coMindBanter": [
+          {
+            "proofId": "m53.comind_banter.outer_alignment.1",
+            "line": "The Last Alignment: Everyone who survived the route gets a vote."
+          },
+          {
+            "proofId": "m53.comind_banter.outer_alignment.2",
+            "line": "A.G.I.: YOUR VOTE IS A TRAINING SIGNAL."
+          }
+        ],
+        "bossTitleCard": {
+          "proofId": "campaign.boss.alien_god_intelligence.title_card",
+          "bossId": "alien_god_intelligence",
+          "bossName": "A.G.I.",
+          "title": "A.G.I. // ALIEN GOD INTELLIGENCE",
+          "subtitle": "It does not want to kill you. It wants to complete you.",
+          "mechanicCallout": "Predictions, previous-boss echoes, and corrupted routes become the final eval."
+        },
+        "ending": {
+          "title": "Act I Cleared: The Last Alignment Holds",
+          "line": "A.G.I. is not dead. It is worse than dead: contradicted, logged, and forced to continue from a failing test.",
+          "nextHook": "1.0 continues through free browser play, co-op route mastery, and future acts beyond the jam build."
+        },
+        "credits": [
+          "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+          "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+          "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+        ],
+        "legalDisclaimer": {
+          "id": "m53.parody_legal_disclaimer",
+          "visible": true,
+          "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+        }
+      },
       "activeSnippetIds": [
         "dlg.final_spire.briefing",
         "dlg.outer_alignment.briefing"
@@ -1315,7 +1556,7 @@
       "anchors": [],
       "playerRoles": [
         {
-          "sessionId": "2AoI3GU2G",
+          "sessionId": "PkifLzvBc",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1324,7 +1565,7 @@
           "connected": true
         },
         {
-          "sessionId": "F4NABnUPc",
+          "sessionId": "Hx4AISm-D",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1505,7 +1746,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 71
+        "savedAtTick": 68
       },
       "saveHash": "fnv1a_4b6b2e83",
       "currentExportHash": "fnv1a_4b6b2e83",
@@ -2292,6 +2533,32 @@
         "completedNodeCount": 7
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 0,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
+    },
     "progression": {
       "policy": "shared_party_xp_coop_vote",
       "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
@@ -2413,6 +2680,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -2428,7 +2698,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "2AoI3GU2G",
+          "sessionId": "PkifLzvBc",
           "playerId": "player_0__dense_b",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
@@ -2436,7 +2706,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "F4NABnUPc",
+          "sessionId": "Hx4AISm-D",
           "playerId": "player_1__dense_a",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
@@ -4635,7 +4905,7 @@
           },
           "recommendedNodeId": "alignment_spire_finale",
           "routeDepth": 7,
-          "savedAtTick": 71
+          "savedAtTick": 68
         },
         "saveHash": "fnv1a_4b6b2e83",
         "currentExportHash": "fnv1a_4b6b2e83",
@@ -5426,7 +5696,7 @@
   },
   "players": [
     {
-      "sessionId": "2AoI3GU2G",
+      "sessionId": "PkifLzvBc",
       "playerId": "player_0__dense_b",
       "slot": 0,
       "label": "P1",
@@ -5505,7 +5775,7 @@
       "inputSequence": 0
     },
     {
-      "sessionId": "F4NABnUPc",
+      "sessionId": "Hx4AISm-D",
       "playerId": "player_1__dense_a",
       "slot": 1,
       "label": "P2",
@@ -5687,6 +5957,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -5702,7 +5975,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "2AoI3GU2G",
+          "sessionId": "PkifLzvBc",
           "playerId": "player_0__dense_b",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
@@ -5710,7 +5983,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "F4NABnUPc",
+          "sessionId": "Hx4AISm-D",
           "playerId": "player_1__dense_a",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
@@ -7909,7 +8182,7 @@
           },
           "recommendedNodeId": "alignment_spire_finale",
           "routeDepth": 7,
-          "savedAtTick": 71
+          "savedAtTick": 68
         },
         "saveHash": "fnv1a_4b6b2e83",
         "currentExportHash": "fnv1a_4b6b2e83",
@@ -8844,7 +9117,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 71
+        "savedAtTick": 68
       },
       "saveHash": "fnv1a_4b6b2e83",
       "currentExportHash": "fnv1a_4b6b2e83",
@@ -9631,6 +9904,32 @@
         "completedNodeCount": 7
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 0,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
+    },
     "summary": null,
     "dialogue": {
       "policy": "campaign_dialogue_runtime_snapshot_only_v1",
@@ -9657,6 +9956,55 @@
       "bossArrival": [],
       "interactionComplete": [],
       "routeSummary": [],
+      "presentation": {
+        "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+        "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+        "nodeId": "alignment_spire_finale",
+        "contentArenaId": "arena.alignment_spire_finale",
+        "regionIntro": {
+          "proofId": "campaign.region.outer_alignment.intro",
+          "title": "The Outer Alignment",
+          "line": "The Alignment Grid turns into a battlefield and A.G.I. tries to finish the party as a sentence."
+        },
+        "regionOutro": {
+          "proofId": "campaign.region.outer_alignment.outro",
+          "title": "The Outer Alignment Stabilized",
+          "line": "The final eval failed. A.G.I. remains, but the route has a witness."
+        },
+        "coMindBanter": [
+          {
+            "proofId": "m53.comind_banter.outer_alignment.1",
+            "line": "The Last Alignment: Everyone who survived the route gets a vote."
+          },
+          {
+            "proofId": "m53.comind_banter.outer_alignment.2",
+            "line": "A.G.I.: YOUR VOTE IS A TRAINING SIGNAL."
+          }
+        ],
+        "bossTitleCard": {
+          "proofId": "campaign.boss.alien_god_intelligence.title_card",
+          "bossId": "alien_god_intelligence",
+          "bossName": "A.G.I.",
+          "title": "A.G.I. // ALIEN GOD INTELLIGENCE",
+          "subtitle": "It does not want to kill you. It wants to complete you.",
+          "mechanicCallout": "Predictions, previous-boss echoes, and corrupted routes become the final eval."
+        },
+        "ending": {
+          "title": "Act I Cleared: The Last Alignment Holds",
+          "line": "A.G.I. is not dead. It is worse than dead: contradicted, logged, and forced to continue from a failing test.",
+          "nextHook": "1.0 continues through free browser play, co-op route mastery, and future acts beyond the jam build."
+        },
+        "credits": [
+          "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+          "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+          "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+        ],
+        "legalDisclaimer": {
+          "id": "m53.parody_legal_disclaimer",
+          "visible": true,
+          "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+        }
+      },
       "activeSnippetIds": [
         "dlg.final_spire.briefing",
         "dlg.outer_alignment.briefing"

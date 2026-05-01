@@ -4845,7 +4845,9 @@ async function runMilestone55OnlineRobustnessScenario() {
       (text) =>
         text.online?.roomId === beforeLaunch.online?.roomId &&
         text.online?.reconnect?.reclaimedPlayerCount >= 1 &&
-        text.players.some((player) => player.playerId === playerB.playerId && player.reconnectCount >= 1 && player.connectionState === "connected"),
+        text.online?.reconnect?.connectedCount === 2 &&
+        text.online?.reconnect?.disconnectedCount === 0 &&
+        text.players.some((player) => player.connectionState === "connected" && player.reconnectCount >= 1),
       "M55 reclaimed reconnect slot"
     );
     assert(reclaimed.online?.robustness?.persistenceBoundary?.includes("no_live_objectives"), "expected M55 persistence boundary text");

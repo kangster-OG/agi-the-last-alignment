@@ -30,7 +30,7 @@ check("license_present", exists("LICENSE"), "LICENSE exists");
 check("provenance_present", exists("ART_PROVENANCE.md") && read("ART_PROVENANCE.md").includes("third-party"), "ART_PROVENANCE.md exists and mentions third-party provenance");
 check("brand_policy_present", exists("docs/BRAND_ASSET_POLICY.md"), "brand asset policy exists");
 check("deployment_docs_present", exists("docs/DEPLOYMENT.md") && exists("render.yaml"), "deployment doc and Render blueprint exist");
-check("quality_lock_present", exists("docs/QUALITY_LOCK.md") && exists("docs/RELEASE_CANDIDATE.md"), "quality lock and release candidate docs exist");
+check("quality_lock_present", exists("docs/QUALITY_LOCK.md") && exists("docs/RELEASE_CANDIDATE.md") && exists("docs/LAUNCH_1_0.md"), "quality lock, release candidate, and launch docs exist");
 check("codex_local_ignored", gitignore.includes(".codex-local/"), ".codex-local is ignored");
 check("dist_ignored", gitignore.includes("dist/"), "dist build output is ignored");
 
@@ -39,6 +39,7 @@ const requiredScripts = [
   "start",
   "proof:assets",
   "proof:release-checklist",
+  "proof:milestone58-launch",
   "proof:campaign-full",
   "proof:milestone56-quality-lock",
   "proof:milestone55-online-robustness",
@@ -80,4 +81,3 @@ console.log(JSON.stringify(result, null, 2));
 if (!ok) {
   process.exitCode = 1;
 }
-

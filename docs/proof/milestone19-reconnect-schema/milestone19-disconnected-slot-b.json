@@ -76,6 +76,42 @@
     "activeEntities": 6,
     "fpsTarget": 60
   },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
   "feedback": {
     "policy": "audio_juice_feel_1_0_runtime_only",
     "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
@@ -115,12 +151,12 @@
       {
         "id": "online.objective_tick",
         "kind": "objective",
-        "atMs": 3743
+        "atMs": 4037
       },
       {
         "id": "ui.enter_online_coop",
         "kind": "ui",
-        "atMs": 1149
+        "atMs": 1082
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -235,7 +271,7 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "5gEaAajYk",
+    "sessionId": "IVQ0tiEpn",
     "worldX": -1.6,
     "worldY": 1.1,
     "hp": 176,
@@ -245,11 +281,11 @@
   },
   "online": {
     "status": "joined",
-    "serverUrl": "ws://127.0.0.1:2588",
+    "serverUrl": "ws://127.0.0.1:2589",
     "serverUrlSource": "query.coopServer",
-    "roomId": "DmOnupOqV",
+    "roomId": "WZQy23YL-",
     "roomCode": "PUBLIC",
-    "sessionId": "5gEaAajYk",
+    "sessionId": "IVQ0tiEpn",
     "lastError": "",
     "reconnectKey": "player_b",
     "reconnect": {
@@ -290,7 +326,7 @@
       "tickRate": 30,
       "clientInputHz": 20,
       "maxClients": 4,
-      "port": 2588,
+      "port": 2589,
       "host": "0.0.0.0",
       "reconnectGraceSeconds": 45,
       "connectedCount": 1,
@@ -307,7 +343,7 @@
       "policy": "milestone55_online_robustness_deployment_1_0",
       "roomCode": "PUBLIC",
       "joinMode": "colyseus_join_or_create_filtered_by_room_code",
-      "serverUrl": "ws://127.0.0.1:2588",
+      "serverUrl": "ws://127.0.0.1:2589",
       "serverUrlSource": "query.coopServer",
       "reconnectKey": "player_b",
       "reconnectGraceSeconds": 45,
@@ -325,7 +361,7 @@
         "tickRate": 30,
         "clientInputHz": 20,
         "maxClients": 4,
-        "port": 2588,
+        "port": 2589,
         "host": "0.0.0.0",
         "reconnectGraceSeconds": 45,
         "connectedCount": 1,
@@ -345,7 +381,7 @@
       "foundStoredProfile": false,
       "draftHash": "fnv1a_4a54a00e",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjoxMTR9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjoxMTJ9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -357,7 +393,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjoxMTR9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjoxMTJ9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "shortExportCode": "AGI1_eyJwb2xp...c3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -375,7 +411,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 114
+        "savedAtTick": 112
       },
       "saveHash": "fnv1a_4a54a00e",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -1014,8 +1050,8 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 114,
-    "seconds": 2.15,
+    "tick": 112,
+    "seconds": 1.97,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "active",
@@ -1030,7 +1066,7 @@
       "bossGateMechanic": "broken_promise"
     },
     "combatArt": {
-      "pressure": 0.11,
+      "pressure": 0.1,
       "phase": "opening",
       "projectileCount": 3,
       "pickupCount": 0,
@@ -1448,7 +1484,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "32VQAhDul",
+          "sessionId": "lbmAg2ZMY",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1457,7 +1493,7 @@
           "connected": false
         },
         {
-          "sessionId": "5gEaAajYk",
+          "sessionId": "IVQ0tiEpn",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1571,7 +1607,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 114
+        "savedAtTick": 112
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -2399,7 +2435,7 @@
       "upgradePending": {
         "id": "shared_patch_1",
         "level": 2,
-        "readyAt": 0.278,
+        "readyAt": 0.31300000000000006,
         "policy": "shared_party_xp_coop_vote",
         "cards": [
           {
@@ -2423,10 +2459,10 @@
         ],
         "votes": [
           {
-            "sessionId": "32VQAhDul",
+            "sessionId": "lbmAg2ZMY",
             "label": "P1",
             "upgradeId": "refusal_halo",
-            "votedAt": 0.59
+            "votedAt": 0.38
           }
         ],
         "voteCounts": {
@@ -2436,8 +2472,8 @@
         },
         "requiredVotes": 2,
         "eligibleVoterIds": [
-          "32VQAhDul",
-          "5gEaAajYk"
+          "lbmAg2ZMY",
+          "IVQ0tiEpn"
         ],
         "leadingCardId": "refusal_halo"
       },
@@ -2578,7 +2614,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "32VQAhDul",
+          "sessionId": "lbmAg2ZMY",
           "playerId": "player_0_player_a",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -2586,7 +2622,7 @@
           "connectionState": "disconnected"
         },
         {
-          "sessionId": "5gEaAajYk",
+          "sessionId": "IVQ0tiEpn",
           "playerId": "player_1_player_b",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -4671,7 +4707,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 114
+          "savedAtTick": 112
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -5462,7 +5498,7 @@
   },
   "players": [
     {
-      "sessionId": "32VQAhDul",
+      "sessionId": "lbmAg2ZMY",
       "playerId": "player_0_player_a",
       "slot": 0,
       "label": "P1",
@@ -5538,10 +5574,10 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": false,
-      "inputSequence": 12
+      "inputSequence": 11
     },
     {
-      "sessionId": "5gEaAajYk",
+      "sessionId": "IVQ0tiEpn",
       "playerId": "player_1_player_b",
       "slot": 1,
       "label": "P2",
@@ -5741,7 +5777,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "32VQAhDul",
+          "sessionId": "lbmAg2ZMY",
           "playerId": "player_0_player_a",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -5749,7 +5785,7 @@
           "connectionState": "disconnected"
         },
         {
-          "sessionId": "5gEaAajYk",
+          "sessionId": "IVQ0tiEpn",
           "playerId": "player_1_player_b",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -7834,7 +7870,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 114
+          "savedAtTick": 112
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -8637,7 +8673,7 @@
       "upgradePending": {
         "id": "shared_patch_1",
         "level": 2,
-        "readyAt": 0.278,
+        "readyAt": 0.31300000000000006,
         "policy": "shared_party_xp_coop_vote",
         "cards": [
           {
@@ -8661,10 +8697,10 @@
         ],
         "votes": [
           {
-            "sessionId": "32VQAhDul",
+            "sessionId": "lbmAg2ZMY",
             "label": "P1",
             "upgradeId": "refusal_halo",
-            "votedAt": 0.59
+            "votedAt": 0.38
           }
         ],
         "voteCounts": {
@@ -8674,8 +8710,8 @@
         },
         "requiredVotes": 2,
         "eligibleVoterIds": [
-          "32VQAhDul",
-          "5gEaAajYk"
+          "lbmAg2ZMY",
+          "IVQ0tiEpn"
         ],
         "leadingCardId": "refusal_halo"
       },
@@ -8746,7 +8782,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 114
+        "savedAtTick": 112
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -9641,8 +9677,8 @@
       "id": 1,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -19.91,
-      "worldY": 19.24,
+      "worldX": -20.1,
+      "worldY": 19.43,
       "hp": 22,
       "boss": false
     },
@@ -9650,8 +9686,8 @@
       "id": 2,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -25.2,
-      "worldY": 18.3,
+      "worldX": -25.41,
+      "worldY": 18.46,
       "hp": 22,
       "boss": false
     },
@@ -9659,8 +9695,8 @@
       "id": 3,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -26.28,
-      "worldY": 20.22,
+      "worldX": -26.49,
+      "worldY": 20.38,
       "hp": 22,
       "boss": false
     },
@@ -9668,8 +9704,8 @@
       "id": 4,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -19.9,
-      "worldY": 15.5,
+      "worldX": -20.1,
+      "worldY": 15.67,
       "hp": 22,
       "boss": false
     }
@@ -9677,33 +9713,33 @@
   "pickups": [],
   "projectiles": [
     {
+      "id": 3,
+      "ownerSessionId": "lbmAg2ZMY",
+      "worldX": -7.74,
+      "worldY": 7.49,
+      "velocityX": -6.61,
+      "velocityY": 6.4,
+      "life": 0.08,
+      "label": "refusal shard"
+    },
+    {
       "id": 4,
-      "ownerSessionId": "5gEaAajYk",
-      "worldX": -9.54,
-      "worldY": 8.97,
+      "ownerSessionId": "IVQ0tiEpn",
+      "worldX": -8.34,
+      "worldY": 7.78,
       "velocityX": -6.54,
       "velocityY": 6.47,
-      "life": 0.03,
+      "life": 0.22,
       "label": "refusal shard"
     },
     {
       "id": 5,
-      "ownerSessionId": "32VQAhDul",
-      "worldX": -5.28,
-      "worldY": 4.11,
-      "velocityX": -7.26,
-      "velocityY": 5.66,
-      "life": 0.52,
-      "label": "refusal shard"
-    },
-    {
-      "id": 6,
-      "ownerSessionId": "5gEaAajYk",
-      "worldX": -5.61,
-      "worldY": 4.25,
+      "ownerSessionId": "IVQ0tiEpn",
+      "worldX": -4.34,
+      "worldY": 3.26,
       "velocityX": -7.23,
       "velocityY": 5.69,
-      "life": 0.7,
+      "life": 0.87,
       "label": "refusal shard"
     }
   ]

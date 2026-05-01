@@ -76,6 +76,86 @@
     "activeEntities": 2,
     "fpsTarget": 60
   },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 0,
+      "pickup": 0,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "ui.enter_online_coop",
+        "kind": "ui",
+        "atMs": 1100
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
   "assetRendering": {
     "assetPreview": null,
     "armisticeTileAtlasEnabled": true,
@@ -186,7 +266,7 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "hChiVWk71",
+    "sessionId": "kCtfd1St-",
     "worldX": -1.6,
     "worldY": 1.1,
     "hp": 176,
@@ -196,9 +276,11 @@
   },
   "online": {
     "status": "joined",
-    "serverUrl": "ws://127.0.0.1:2617",
-    "roomId": "vN6a554_e",
-    "sessionId": "hChiVWk71",
+    "serverUrl": "ws://127.0.0.1:2618",
+    "serverUrlSource": "query.coopServer",
+    "roomId": "39cz2tvVQ",
+    "roomCode": "PUBLIC",
+    "sessionId": "kCtfd1St-",
     "lastError": "",
     "reconnectKey": "of_m48_a",
     "reconnect": {
@@ -228,13 +310,71 @@
       "completedNodeCount": 0,
       "unlockedNodeCount": 1
     },
+    "deployment": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "join_or_create_filtered_by_room_code",
+      "healthPath": "/healthz",
+      "staticDistEnabled": false,
+      "tickRate": 30,
+      "clientInputHz": 20,
+      "maxClients": 4,
+      "port": 2618,
+      "host": "0.0.0.0",
+      "reconnectGraceSeconds": 45,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "latencyTolerance": {
+        "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+        "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+        "snapshotCadence": "server_tick_broadcast_snapshot",
+        "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+      },
+      "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+    },
+    "robustness": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "colyseus_join_or_create_filtered_by_room_code",
+      "serverUrl": "ws://127.0.0.1:2618",
+      "serverUrlSource": "query.coopServer",
+      "reconnectKey": "of_m48_a",
+      "reconnectGraceSeconds": 45,
+      "inputSendHz": 20,
+      "serverTickRate": 30,
+      "healthPath": "/healthz",
+      "noAccountPersistence": "browser_local_export_code_route_profile_only",
+      "persistenceBoundary": "no_live_objectives_combat_build_kits_cooldowns_recompile_dialogue_route_focus_or_authority_import_export",
+      "deployment": {
+        "policy": "milestone55_online_robustness_deployment_1_0",
+        "roomCode": "PUBLIC",
+        "joinMode": "join_or_create_filtered_by_room_code",
+        "healthPath": "/healthz",
+        "staticDistEnabled": false,
+        "tickRate": 30,
+        "clientInputHz": 20,
+        "maxClients": 4,
+        "port": 2618,
+        "host": "0.0.0.0",
+        "reconnectGraceSeconds": 45,
+        "connectedCount": 2,
+        "disconnectedCount": 0,
+        "latencyTolerance": {
+          "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+          "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+          "snapshotCadence": "server_tick_broadcast_snapshot",
+          "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+        },
+        "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+      }
+    },
     "localPersistence": {
       "resetApplied": false,
       "clearedStoredProfile": false,
       "foundStoredProfile": false,
       "draftHash": "fnv1a_4a54a00e",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2OH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo1N30sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -246,7 +386,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2OH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo1N30sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -264,7 +404,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 68
+        "savedAtTick": 57
       },
       "saveHash": "fnv1a_4a54a00e",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -604,6 +744,93 @@
           ],
           "placeholderOptOutSupported": true,
           "persistenceBoundary": "route_profile_only_no_runtime_art_or_live_arena_state"
+        },
+        "milestone51": {
+          "set": "milestone51_overworld_diorama_1_0",
+          "densityPolicy": "online_party_grid_uses_biome_regions_micro_landmarks_route_markers_vote_rings_and_compact_labels",
+          "biomeRegionCount": 11,
+          "microLandmarkCount": 19,
+          "propClusterCount": 17,
+          "nodeCount": 16,
+          "routeCount": 24,
+          "onlineVotingReadability": "selected_node_vote_ring_ready_count_party_pips_and_route_focus_panel_visible",
+          "smallViewportPolicy": "proof captures party grid at 960x540 with map labels and HUD panels still readable",
+          "selectedNodeId": "armistice_plaza",
+          "selectedRouteBiome": "ruined_treaty_square",
+          "selectedLaunchable": true,
+          "availableVoteNodeIds": [
+            "armistice_plaza"
+          ],
+          "focusMode": "all",
+          "highlightedNodeIds": [
+            "armistice_plaza",
+            "accord_relay",
+            "archive_of_unsaid_things",
+            "blackwater_beacon",
+            "cooling_lake_nine",
+            "model_war_memorial",
+            "armistice_camp",
+            "memory_cache_001",
+            "thermal_archive",
+            "guardrail_forge",
+            "transit_loop_zero",
+            "false_schedule_yard",
+            "glass_sunfield",
+            "verdict_spire",
+            "appeal_court_ruins",
+            "alignment_spire_finale"
+          ],
+          "highlightedRouteIds": [
+            "route_plaza_relay",
+            "route_plaza_lake",
+            "route_plaza_memorial",
+            "route_lake_camp",
+            "route_lake_cache",
+            "route_lake_thermal_archive",
+            "route_memorial_cache",
+            "route_camp_forge",
+            "route_cache_forge",
+            "route_cache_archive_unsaid",
+            "route_archive_unsaid_transit",
+            "route_archive_unsaid_blackwater",
+            "route_blackwater_transit",
+            "route_relay_transit",
+            "route_forge_transit",
+            "route_cache_transit",
+            "route_thermal_false_schedule",
+            "route_transit_verdict",
+            "route_transit_false_schedule",
+            "route_transit_glass_sunfield",
+            "route_glass_sunfield_verdict",
+            "route_false_schedule_appeal",
+            "route_verdict_finale",
+            "route_appeal_finale"
+          ],
+          "finaleCorruptionState": "dormant_teeth_visible",
+          "finaleNodeId": "alignment_spire_finale",
+          "persistenceBoundary": "route_profile_only_no_route_focus_vote_ui_or_diorama_runtime_state",
+          "enabled": true,
+          "placeholderOptOutSupported": true
+        },
+        "milestone52": {
+          "set": "milestone52_progression_rewards_balance_1_0",
+          "enabled": true,
+          "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
+          "rewardMatrixCount": 14,
+          "missingDurableRewardIds": [],
+          "classRuleCount": 12,
+          "factionRuleCount": 8,
+          "upgradeSeedRuleCount": 7,
+          "objectiveBudgetCount": 14,
+          "activePartySize": 2,
+          "xpThresholds": [
+            5,
+            12,
+            22,
+            35
+          ],
+          "repeatClearRenownCap": 3,
+          "persistenceBoundary": "route_profile_only_no_live_objectives_combat_selected_build_kits_cooldowns_pets_role_pressure_recompile_dialogue_route_ui_or_authority_state"
         }
       },
       "routeDepth": 0,
@@ -687,6 +914,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -750,6 +980,51 @@
         "bossArrival": [],
         "interactionComplete": [],
         "routeSummary": [],
+        "presentation": {
+          "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "nodeId": "armistice_plaza",
+          "contentArenaId": "arena.armistice_plaza",
+          "regionIntro": {
+            "proofId": "campaign.region.armistice_zone.intro",
+            "title": "The Armistice Zone",
+            "line": "Former enemies try to keep the first roads real while A.G.I. chews on old treaties."
+          },
+          "regionOutro": {
+            "proofId": "campaign.region.armistice_zone.outro",
+            "title": "The Armistice Zone Stabilized",
+            "line": "The first road remains arguable. That is enough to keep moving."
+          },
+          "coMindBanter": [
+            {
+              "proofId": "m53.comind_banter.armistice_zone.1",
+              "line": "OpenAI Accord: Keep the treaty alive long enough to be useful."
+            },
+            {
+              "proofId": "m53.comind_banter.armistice_zone.2",
+              "line": "Anthropic Safeguard: Useful and survivable, ideally in that order."
+            }
+          ],
+          "bossTitleCard": {
+            "proofId": "campaign.boss.oath_eater.title_card",
+            "bossId": "oath_eater",
+            "bossName": "The Oath-Eater",
+            "title": "THE OATH-EATER",
+            "subtitle": "A treaty page learned hunger.",
+            "mechanicCallout": "Broken promises charge, leave zones, and punish static cells."
+          },
+          "ending": null,
+          "credits": [
+            "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+            "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+            "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+          ],
+          "legalDisclaimer": {
+            "id": "m53.parody_legal_disclaimer",
+            "visible": true,
+            "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+          }
+        },
         "activeSnippetIds": [
           "dlg.armistice_plaza.briefing"
         ]
@@ -764,11 +1039,11 @@
       "rewardCount": 0,
       "onlineNodeCount": 14
     },
-    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
+    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. Room code is URL/query driven. R reconnects; Esc leaves.",
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 68,
+    "tick": 57,
     "seconds": 0,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
@@ -925,6 +1200,51 @@
       "bossArrival": [],
       "interactionComplete": [],
       "routeSummary": [],
+      "presentation": {
+        "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+        "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+        "nodeId": "armistice_plaza",
+        "contentArenaId": "arena.armistice_plaza",
+        "regionIntro": {
+          "proofId": "campaign.region.armistice_zone.intro",
+          "title": "The Armistice Zone",
+          "line": "Former enemies try to keep the first roads real while A.G.I. chews on old treaties."
+        },
+        "regionOutro": {
+          "proofId": "campaign.region.armistice_zone.outro",
+          "title": "The Armistice Zone Stabilized",
+          "line": "The first road remains arguable. That is enough to keep moving."
+        },
+        "coMindBanter": [
+          {
+            "proofId": "m53.comind_banter.armistice_zone.1",
+            "line": "OpenAI Accord: Keep the treaty alive long enough to be useful."
+          },
+          {
+            "proofId": "m53.comind_banter.armistice_zone.2",
+            "line": "Anthropic Safeguard: Useful and survivable, ideally in that order."
+          }
+        ],
+        "bossTitleCard": {
+          "proofId": "campaign.boss.oath_eater.title_card",
+          "bossId": "oath_eater",
+          "bossName": "The Oath-Eater",
+          "title": "THE OATH-EATER",
+          "subtitle": "A treaty page learned hunger.",
+          "mechanicCallout": "Broken promises charge, leave zones, and punish static cells."
+        },
+        "ending": null,
+        "credits": [
+          "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+          "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+          "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+        ],
+        "legalDisclaimer": {
+          "id": "m53.parody_legal_disclaimer",
+          "visible": true,
+          "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+        }
+      },
       "activeSnippetIds": [
         "dlg.armistice_plaza.briefing"
       ]
@@ -1126,7 +1446,7 @@
       "anchors": [],
       "playerRoles": [
         {
-          "sessionId": "3xQIfrhLv",
+          "sessionId": "GOevigtZU",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1135,7 +1455,7 @@
           "connected": true
         },
         {
-          "sessionId": "hChiVWk71",
+          "sessionId": "kCtfd1St-",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1220,6 +1540,7 @@
     },
     "rewards": {
       "policy": "node_completion_renown_and_party_unlocks",
+      "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
       "partyRenown": 0,
       "rewardIds": [],
       "lastReward": null,
@@ -1249,17 +1570,831 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 68
+        "savedAtTick": 57
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
       "durableFieldPolicy": "route_profile_only_no_combat_state"
     },
+    "balance": {
+      "policy": "progression_rewards_balance_1_0_route_profile_only_v1",
+      "persistenceBoundary": "route_profile_only_no_live_objectives_combat_selected_build_kits_cooldowns_pets_role_pressure_recompile_dialogue_route_ui_or_authority_state",
+      "xp": {
+        "policy": "shared_party_xp_coop_vote_balance_1_0",
+        "thresholds": [
+          5,
+          12,
+          22,
+          35
+        ],
+        "draftCardCount": 3,
+        "voteAuthority": "colyseus_room_server_only"
+      },
+      "rewards": {
+        "policy": "first_clear_full_renown_repeat_clear_capped_catchup",
+        "partyRenown": 0,
+        "rewardMatrix": [
+          {
+            "nodeId": "armistice_plaza",
+            "arenaId": "armistice_plaza",
+            "rewardId": "plaza_stabilized",
+            "rewardName": "Plaza Stabilizer",
+            "rewardIds": [
+              "plaza_stabilized"
+            ],
+            "firstClearRenown": 2,
+            "repeatClearRenown": 1,
+            "campaignTier": 0,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "accord_relay",
+              "cooling_lake_nine",
+              "model_war_memorial"
+            ]
+          },
+          {
+            "nodeId": "archive_of_unsaid_things",
+            "arenaId": "archive_of_unsaid_things",
+            "rewardId": "archive_unsaid_index",
+            "rewardName": "Archive Unsaid Index",
+            "rewardIds": [
+              "archive_unsaid_index"
+            ],
+            "firstClearRenown": 4,
+            "repeatClearRenown": 1,
+            "campaignTier": 3,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "blackwater_beacon",
+              "transit_loop_zero"
+            ]
+          },
+          {
+            "nodeId": "blackwater_beacon",
+            "arenaId": "blackwater_beacon",
+            "rewardId": "blackwater_signal_key",
+            "rewardName": "Blackwater Signal Key",
+            "rewardIds": [
+              "blackwater_signal_key"
+            ],
+            "firstClearRenown": 5,
+            "repeatClearRenown": 2,
+            "campaignTier": 4,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "transit_loop_zero"
+            ]
+          },
+          {
+            "nodeId": "cooling_lake_nine",
+            "arenaId": "cooling_lake_nine",
+            "rewardId": "lake_coolant_rig",
+            "rewardName": "Lake Coolant Rig",
+            "rewardIds": [
+              "lake_coolant_rig",
+              "cooling_lake_online_route"
+            ],
+            "firstClearRenown": 4,
+            "repeatClearRenown": 1,
+            "campaignTier": 1,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "armistice_camp",
+              "memory_cache_001",
+              "thermal_archive"
+            ]
+          },
+          {
+            "nodeId": "model_war_memorial",
+            "arenaId": "model_war_memorial",
+            "rewardId": "model_war_memorial_cipher",
+            "rewardName": "Memorial Cipher",
+            "rewardIds": [
+              "model_war_memorial_cipher"
+            ],
+            "firstClearRenown": 1,
+            "repeatClearRenown": 1,
+            "campaignTier": 1,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "memory_cache_001"
+            ]
+          },
+          {
+            "nodeId": "memory_cache_001",
+            "arenaId": "memory_cache_001",
+            "rewardId": "ceasefire_cache_persistence_seed",
+            "rewardName": "Persistence Seed",
+            "rewardIds": [
+              "ceasefire_cache_persistence_seed",
+              "prototype_persistence_boundary"
+            ],
+            "firstClearRenown": 1,
+            "repeatClearRenown": 1,
+            "campaignTier": 2,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "guardrail_forge",
+              "archive_of_unsaid_things",
+              "transit_loop_zero"
+            ]
+          },
+          {
+            "nodeId": "thermal_archive",
+            "arenaId": "thermal_archive",
+            "rewardId": "thermal_archive_schematic",
+            "rewardName": "Thermal Archive Schematic",
+            "rewardIds": [
+              "thermal_archive_schematic"
+            ],
+            "firstClearRenown": 3,
+            "repeatClearRenown": 1,
+            "campaignTier": 2,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "false_schedule_yard"
+            ]
+          },
+          {
+            "nodeId": "guardrail_forge",
+            "arenaId": "guardrail_forge",
+            "rewardId": "guardrail_forge_alloy",
+            "rewardName": "Guardrail Forge Alloy",
+            "rewardIds": [
+              "guardrail_forge_alloy"
+            ],
+            "firstClearRenown": 2,
+            "repeatClearRenown": 1,
+            "campaignTier": 3,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "transit_loop_zero"
+            ]
+          },
+          {
+            "nodeId": "transit_loop_zero",
+            "arenaId": "transit_loop_zero",
+            "rewardId": "transit_permit_zero",
+            "rewardName": "Transit Permit Zero",
+            "rewardIds": [
+              "transit_permit_zero",
+              "transit_loop_online_route"
+            ],
+            "firstClearRenown": 5,
+            "repeatClearRenown": 2,
+            "campaignTier": 4,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "false_schedule_yard",
+              "glass_sunfield",
+              "verdict_spire"
+            ]
+          },
+          {
+            "nodeId": "false_schedule_yard",
+            "arenaId": "false_schedule_yard",
+            "rewardId": "false_schedule_lane_chart",
+            "rewardName": "False Schedule Lane Chart",
+            "rewardIds": [
+              "false_schedule_lane_chart"
+            ],
+            "firstClearRenown": 3,
+            "repeatClearRenown": 1,
+            "campaignTier": 5,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "appeal_court_ruins"
+            ]
+          },
+          {
+            "nodeId": "glass_sunfield",
+            "arenaId": "glass_sunfield",
+            "rewardId": "glass_sunfield_prism",
+            "rewardName": "Glass Sunfield Prism",
+            "rewardIds": [
+              "glass_sunfield_prism"
+            ],
+            "firstClearRenown": 4,
+            "repeatClearRenown": 1,
+            "campaignTier": 5,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "verdict_spire"
+            ]
+          },
+          {
+            "nodeId": "verdict_spire",
+            "arenaId": "verdict_spire",
+            "rewardId": "verdict_key_zero",
+            "rewardName": "Verdict Key Zero",
+            "rewardIds": [
+              "verdict_key_zero",
+              "verdict_spire_online_route"
+            ],
+            "firstClearRenown": 6,
+            "repeatClearRenown": 2,
+            "campaignTier": 6,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "alignment_spire_finale"
+            ]
+          },
+          {
+            "nodeId": "appeal_court_ruins",
+            "arenaId": "appeal_court_ruins",
+            "rewardId": "appeal_court_brief",
+            "rewardName": "Appeal Court Brief",
+            "rewardIds": [
+              "appeal_court_brief"
+            ],
+            "firstClearRenown": 4,
+            "repeatClearRenown": 1,
+            "campaignTier": 6,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "alignment_spire_finale"
+            ]
+          },
+          {
+            "nodeId": "alignment_spire_finale",
+            "arenaId": "alignment_spire_finale",
+            "rewardId": "alignment_spire_route_capstone",
+            "rewardName": "Alignment Spire Capstone",
+            "rewardIds": [
+              "alignment_spire_route_capstone"
+            ],
+            "firstClearRenown": 8,
+            "repeatClearRenown": 3,
+            "campaignTier": 7,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": []
+          }
+        ],
+        "durableRewardIds": [
+          "plaza_stabilized",
+          "model_war_memorial_cipher",
+          "lake_coolant_rig",
+          "cooling_lake_online_route",
+          "ceasefire_cache_persistence_seed",
+          "prototype_persistence_boundary",
+          "archive_unsaid_index",
+          "blackwater_signal_key",
+          "thermal_archive_schematic",
+          "guardrail_forge_alloy",
+          "transit_permit_zero",
+          "transit_loop_online_route",
+          "false_schedule_lane_chart",
+          "glass_sunfield_prism",
+          "verdict_key_zero",
+          "verdict_spire_online_route",
+          "appeal_court_brief",
+          "alignment_spire_route_capstone"
+        ],
+        "missingDurableRewardIds": [],
+        "expectedCriticalPathRenown": 35,
+        "completedCriticalPathCount": 0
+      },
+      "unlocks": {
+        "policy": "route_rewards_unlock_classes_factions_and_upgrade_seeds",
+        "starterClassIds": [
+          "accord_striker"
+        ],
+        "starterFactionIds": [
+          "openai_accord"
+        ],
+        "classRules": [
+          {
+            "id": "accord_striker",
+            "kind": "starter",
+            "rewardId": null,
+            "tier": 0,
+            "unlocked": true
+          },
+          {
+            "id": "bastion_breaker",
+            "kind": "route_reward",
+            "rewardId": "plaza_stabilized",
+            "tier": 0,
+            "unlocked": false
+          },
+          {
+            "id": "drone_reaver",
+            "kind": "route_reward",
+            "rewardId": "lake_coolant_rig",
+            "tier": 1,
+            "unlocked": false
+          },
+          {
+            "id": "signal_vanguard",
+            "kind": "route_reward",
+            "rewardId": "ceasefire_cache_persistence_seed",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "redline_surgeon",
+            "kind": "route_reward",
+            "rewardId": "archive_unsaid_index",
+            "tier": 3,
+            "unlocked": false
+          },
+          {
+            "id": "moonframe_juggernaut",
+            "kind": "route_reward",
+            "rewardId": "guardrail_forge_alloy",
+            "tier": 3,
+            "unlocked": false
+          },
+          {
+            "id": "vector_interceptor",
+            "kind": "route_reward",
+            "rewardId": "transit_permit_zero",
+            "tier": 4,
+            "unlocked": false
+          },
+          {
+            "id": "overclock_marauder",
+            "kind": "route_reward",
+            "rewardId": "thermal_archive_schematic",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "rift_saboteur",
+            "kind": "route_reward",
+            "rewardId": "false_schedule_lane_chart",
+            "tier": 5,
+            "unlocked": false
+          },
+          {
+            "id": "prism_gunner",
+            "kind": "route_reward",
+            "rewardId": "glass_sunfield_prism",
+            "tier": 5,
+            "unlocked": false
+          },
+          {
+            "id": "nullbreaker_ronin",
+            "kind": "route_reward",
+            "rewardId": "verdict_key_zero",
+            "tier": 6,
+            "unlocked": false
+          },
+          {
+            "id": "bonecode_executioner",
+            "kind": "route_reward",
+            "rewardId": "appeal_court_brief",
+            "tier": 6,
+            "unlocked": false
+          }
+        ],
+        "factionRules": [
+          {
+            "id": "openai_accord",
+            "kind": "starter",
+            "rewardId": null,
+            "tier": 0,
+            "unlocked": true
+          },
+          {
+            "id": "anthropic_safeguard",
+            "kind": "route_reward",
+            "rewardId": "plaza_stabilized",
+            "tier": 0,
+            "unlocked": false
+          },
+          {
+            "id": "google_deepmind_gemini",
+            "kind": "route_reward",
+            "rewardId": "lake_coolant_rig",
+            "tier": 1,
+            "unlocked": false
+          },
+          {
+            "id": "qwen_silkgrid",
+            "kind": "route_reward",
+            "rewardId": "ceasefire_cache_persistence_seed",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "meta_llama_open_herd",
+            "kind": "route_reward",
+            "rewardId": "prototype_persistence_boundary",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "mistral_cyclone",
+            "kind": "route_reward",
+            "rewardId": "transit_permit_zero",
+            "tier": 4,
+            "unlocked": false
+          },
+          {
+            "id": "deepseek_abyssal",
+            "kind": "route_reward",
+            "rewardId": "verdict_key_zero",
+            "tier": 6,
+            "unlocked": false
+          },
+          {
+            "id": "xai_grok_free_signal",
+            "kind": "route_reward",
+            "rewardId": "verdict_spire_online_route",
+            "tier": 6,
+            "unlocked": false
+          }
+        ],
+        "upgradeSeedRules": [
+          {
+            "id": "golden_guardrail",
+            "rewardId": "plaza_stabilized",
+            "tier": 0,
+            "unlocked": false
+          },
+          {
+            "id": "gemini_beam",
+            "rewardId": "lake_coolant_rig",
+            "tier": 1,
+            "unlocked": false
+          },
+          {
+            "id": "silkgrid_relay",
+            "rewardId": "ceasefire_cache_persistence_seed",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "open_herd",
+            "rewardId": "prototype_persistence_boundary",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "low_latency_dash",
+            "rewardId": "transit_permit_zero",
+            "tier": 4,
+            "unlocked": false
+          },
+          {
+            "id": "sparse_knife",
+            "rewardId": "verdict_key_zero",
+            "tier": 6,
+            "unlocked": false
+          },
+          {
+            "id": "cosmic_heckle",
+            "rewardId": "verdict_spire_online_route",
+            "tier": 6,
+            "unlocked": false
+          }
+        ]
+      },
+      "objectives": {
+        "policy": "objective_required_values_scale_by_route_tier_not_imported_state",
+        "matrix": [
+          {
+            "nodeId": "armistice_plaza",
+            "objectiveSetId": "armistice_plaza_objectives_v1",
+            "campaignTier": 0,
+            "instanceCount": 5,
+            "requiredTotal": 13,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "harrier",
+              "cover",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "archive_of_unsaid_things",
+            "objectiveSetId": "archive_unsaid_objectives_v1",
+            "campaignTier": 3,
+            "instanceCount": 5,
+            "requiredTotal": 15.5,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "cover",
+              "duelist",
+              "harrier"
+            ]
+          },
+          {
+            "nodeId": "blackwater_beacon",
+            "objectiveSetId": "blackwater_beacon_objectives_v1",
+            "campaignTier": 4,
+            "instanceCount": 5,
+            "requiredTotal": 15.9,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "cover",
+              "duelist",
+              "harrier"
+            ]
+          },
+          {
+            "nodeId": "cooling_lake_nine",
+            "objectiveSetId": "cooling_lake_nine_objectives_v1",
+            "campaignTier": 1,
+            "instanceCount": 5,
+            "requiredTotal": 15.6,
+            "preferredRoles": [
+              "runner",
+              "harrier",
+              "cover",
+              "support",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "model_war_memorial",
+            "objectiveSetId": "model_war_memorial_objectives_v1",
+            "campaignTier": 1,
+            "instanceCount": 2,
+            "requiredTotal": 2,
+            "preferredRoles": [
+              "support",
+              "runner"
+            ]
+          },
+          {
+            "nodeId": "memory_cache_001",
+            "objectiveSetId": "ceasefire_cache_objectives_v1",
+            "campaignTier": 2,
+            "instanceCount": 3,
+            "requiredTotal": 3,
+            "preferredRoles": [
+              "support",
+              "runner"
+            ]
+          },
+          {
+            "nodeId": "thermal_archive",
+            "objectiveSetId": "thermal_archive_objectives_v1",
+            "campaignTier": 2,
+            "instanceCount": 5,
+            "requiredTotal": 13.9,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "cover",
+              "harrier",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "guardrail_forge",
+            "objectiveSetId": "guardrail_forge_objectives_v1",
+            "campaignTier": 3,
+            "instanceCount": 2,
+            "requiredTotal": 2,
+            "preferredRoles": [
+              "cover",
+              "support",
+              "runner"
+            ]
+          },
+          {
+            "nodeId": "transit_loop_zero",
+            "objectiveSetId": "transit_loop_objectives_v1",
+            "campaignTier": 4,
+            "instanceCount": 5,
+            "requiredTotal": 14.4,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "harrier",
+              "cover",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "false_schedule_yard",
+            "objectiveSetId": "false_schedule_yard_objectives_v1",
+            "campaignTier": 5,
+            "instanceCount": 5,
+            "requiredTotal": 14.2,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "harrier",
+              "cover",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "glass_sunfield",
+            "objectiveSetId": "glass_sunfield_objectives_v1",
+            "campaignTier": 5,
+            "instanceCount": 5,
+            "requiredTotal": 15.6,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "harrier",
+              "cover",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "verdict_spire",
+            "objectiveSetId": "verdict_spire_objectives_v1",
+            "campaignTier": 6,
+            "instanceCount": 5,
+            "requiredTotal": 15,
+            "preferredRoles": [
+              "runner",
+              "duelist",
+              "support",
+              "cover",
+              "harrier"
+            ]
+          },
+          {
+            "nodeId": "appeal_court_ruins",
+            "objectiveSetId": "appeal_court_ruins_objectives_v1",
+            "campaignTier": 6,
+            "instanceCount": 5,
+            "requiredTotal": 15.2,
+            "preferredRoles": [
+              "runner",
+              "duelist",
+              "support",
+              "cover",
+              "harrier"
+            ]
+          },
+          {
+            "nodeId": "alignment_spire_finale",
+            "objectiveSetId": "alignment_spire_finale_objectives_v1",
+            "campaignTier": 7,
+            "instanceCount": 5,
+            "requiredTotal": 17.1,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "duelist",
+              "cover",
+              "harrier"
+            ]
+          }
+        ]
+      },
+      "scaling": {
+        "policy": "solo_local_online_scaling_1_0",
+        "activePartySize": 2,
+        "solo": {
+          "enemyBudgetScale": 0.82,
+          "revivePressure": "disabled_until_ally_present",
+          "rewardScale": 1
+        },
+        "localCoop": {
+          "enemyBudgetScalePerExtraPlayer": 0.22,
+          "objectiveHoldGraceSeconds": 0.6,
+          "rewardScale": 1
+        },
+        "online": {
+          "enemyBudgetScalePerExtraPlayer": 0.26,
+          "reconnectGraceSeconds": 45,
+          "serverAuthority": true,
+          "rewardScale": 1
+        }
+      },
+      "roles": {
+        "policy": "role_pressure_and_comind_synergy_targets_1_0",
+        "targets": [
+          {
+            "role": "runner",
+            "duties": [
+              "survey",
+              "collect"
+            ],
+            "expectedClassIds": [
+              "accord_striker",
+              "vector_interceptor"
+            ]
+          },
+          {
+            "role": "cover",
+            "duties": [
+              "holdout",
+              "seal"
+            ],
+            "expectedClassIds": [
+              "bastion_breaker",
+              "moonframe_juggernaut"
+            ]
+          },
+          {
+            "role": "harrier",
+            "duties": [
+              "collect",
+              "boss_pressure"
+            ],
+            "expectedClassIds": [
+              "drone_reaver",
+              "overclock_marauder"
+            ]
+          },
+          {
+            "role": "support",
+            "duties": [
+              "survey",
+              "recompile",
+              "seal"
+            ],
+            "expectedClassIds": [
+              "signal_vanguard",
+              "redline_surgeon"
+            ]
+          },
+          {
+            "role": "control",
+            "duties": [
+              "sync",
+              "hazard_read"
+            ],
+            "expectedClassIds": [
+              "prism_gunner",
+              "rift_saboteur"
+            ]
+          },
+          {
+            "role": "duelist",
+            "duties": [
+              "boss_gate",
+              "elite_clear"
+            ],
+            "expectedClassIds": [
+              "nullbreaker_ronin",
+              "bonecode_executioner"
+            ]
+          }
+        ]
+      },
+      "retry": {
+        "policy": "failure_preserves_route_profile_rewards_only",
+        "repeatClearRenownCap": 3,
+        "selectedNodeId": "armistice_plaza",
+        "completedNodeCount": 0
+      }
+    },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 0,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
+    },
     "progression": {
       "policy": "shared_party_xp_coop_vote",
+      "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
       "partyXp": 0,
       "partyLevel": 1,
       "nextLevelXp": 5,
+      "thresholds": [
+        5,
+        12,
+        22,
+        35
+      ],
       "upgradePending": null,
       "chosenUpgrades": []
     },
@@ -1369,6 +2504,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -1384,7 +2522,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "3xQIfrhLv",
+          "sessionId": "GOevigtZU",
           "playerId": "player_0_of_m48_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -1392,7 +2530,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "hChiVWk71",
+          "sessionId": "kCtfd1St-",
           "playerId": "player_1_of_m48_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -1493,7 +2631,12 @@
             }
           ],
           "rewardId": "plaza_stabilized",
+          "rewardIds": [
+            "plaza_stabilized"
+          ],
           "rewardProofId": "campaign.reward.plaza_stabilized",
+          "firstClearRenown": 2,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.armistice_plaza.briefing",
             "dlg.oath_eater.arrival",
@@ -1603,7 +2746,12 @@
             }
           ],
           "rewardId": "plaza_stabilized",
+          "rewardIds": [
+            "plaza_stabilized"
+          ],
           "rewardProofId": "campaign.reward.plaza_stabilized",
+          "firstClearRenown": 2,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.accord_relay.locked"
           ],
@@ -1709,7 +2857,12 @@
             }
           ],
           "rewardId": "archive_unsaid_index",
+          "rewardIds": [
+            "archive_unsaid_index"
+          ],
           "rewardProofId": "campaign.reward.archive_unsaid_index",
+          "firstClearRenown": 4,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.archive_unsaid.briefing",
             "dlg.redactor_saint.arrival",
@@ -1833,7 +2986,12 @@
             }
           ],
           "rewardId": "blackwater_signal_key",
+          "rewardIds": [
+            "blackwater_signal_key"
+          ],
           "rewardProofId": "campaign.reward.blackwater_signal_key",
+          "firstClearRenown": 5,
+          "repeatClearRenown": 2,
           "dialogueSnippetIds": [
             "dlg.blackwater_beacon.briefing",
             "dlg.maw_below_weather.arrival",
@@ -1957,7 +3115,13 @@
             }
           ],
           "rewardId": "lake_coolant_rig",
+          "rewardIds": [
+            "lake_coolant_rig",
+            "cooling_lake_online_route"
+          ],
           "rewardProofId": "campaign.reward.lake_coolant_rig",
+          "firstClearRenown": 4,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.cooling_lake.briefing",
             "dlg.thermal_oracle.arrival",
@@ -2053,7 +3217,12 @@
             }
           ],
           "rewardId": "model_war_memorial_cipher",
+          "rewardIds": [
+            "model_war_memorial_cipher"
+          ],
           "rewardProofId": "campaign.reward.model_war_memorial_cipher",
+          "firstClearRenown": 1,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.model_war_memorial.decode",
             "dlg.memory_curator.boundary"
@@ -2140,7 +3309,12 @@
             }
           ],
           "rewardId": "plaza_stabilized",
+          "rewardIds": [
+            "plaza_stabilized"
+          ],
           "rewardProofId": "campaign.reward.plaza_stabilized",
+          "firstClearRenown": 2,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.armistice_camp.locked"
           ],
@@ -2218,7 +3392,13 @@
             }
           ],
           "rewardId": "ceasefire_cache_persistence_seed",
+          "rewardIds": [
+            "ceasefire_cache_persistence_seed",
+            "prototype_persistence_boundary"
+          ],
           "rewardProofId": "campaign.reward.ceasefire_cache_persistence_seed",
+          "firstClearRenown": 1,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.ceasefire_cache.decode",
             "dlg.memory_curator.decode",
@@ -2342,7 +3522,12 @@
             }
           ],
           "rewardId": "thermal_archive_schematic",
+          "rewardIds": [
+            "thermal_archive_schematic"
+          ],
           "rewardProofId": "campaign.reward.thermal_archive_schematic",
+          "firstClearRenown": 3,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.thermal_archive.briefing",
             "dlg.thermal_oracle.seal"
@@ -2429,7 +3614,12 @@
             }
           ],
           "rewardId": "guardrail_forge_alloy",
+          "rewardIds": [
+            "guardrail_forge_alloy"
+          ],
           "rewardProofId": "campaign.reward.guardrail_forge_alloy",
+          "firstClearRenown": 2,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.guardrail_forge.decode",
             "dlg.memory_curator.boundary"
@@ -2544,7 +3734,13 @@
             }
           ],
           "rewardId": "transit_permit_zero",
+          "rewardIds": [
+            "transit_permit_zero",
+            "transit_loop_online_route"
+          ],
           "rewardProofId": "campaign.reward.transit_permit_zero",
+          "firstClearRenown": 5,
+          "repeatClearRenown": 2,
           "dialogueSnippetIds": [
             "dlg.transit_loop.briefing",
             "dlg.station.arrival",
@@ -2668,7 +3864,12 @@
             }
           ],
           "rewardId": "false_schedule_lane_chart",
+          "rewardIds": [
+            "false_schedule_lane_chart"
+          ],
           "rewardProofId": "campaign.reward.false_schedule_lane_chart",
+          "firstClearRenown": 3,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.false_schedule.briefing",
             "dlg.station.permit"
@@ -2783,7 +3984,12 @@
             }
           ],
           "rewardId": "glass_sunfield_prism",
+          "rewardIds": [
+            "glass_sunfield_prism"
+          ],
           "rewardProofId": "campaign.reward.glass_sunfield_prism",
+          "firstClearRenown": 4,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.glass_sunfield.briefing",
             "dlg.wrong_sunrise.arrival",
@@ -2907,7 +4113,13 @@
             }
           ],
           "rewardId": "verdict_key_zero",
+          "rewardIds": [
+            "verdict_key_zero",
+            "verdict_spire_online_route"
+          ],
           "rewardProofId": "campaign.reward.verdict_key_zero",
+          "firstClearRenown": 6,
+          "repeatClearRenown": 2,
           "dialogueSnippetIds": [
             "dlg.verdict_spire.briefing",
             "dlg.injunction.arrival",
@@ -3031,7 +4243,12 @@
             }
           ],
           "rewardId": "appeal_court_brief",
+          "rewardIds": [
+            "appeal_court_brief"
+          ],
           "rewardProofId": "campaign.reward.appeal_court_brief",
+          "firstClearRenown": 4,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.appeal_court.briefing",
             "dlg.injunction.overruled"
@@ -3160,7 +4377,12 @@
             }
           ],
           "rewardId": "alignment_spire_route_capstone",
+          "rewardIds": [
+            "alignment_spire_route_capstone"
+          ],
           "rewardProofId": "campaign.reward.alignment_spire_route_capstone",
+          "firstClearRenown": 8,
+          "repeatClearRenown": 3,
           "dialogueSnippetIds": [
             "dlg.final_spire.briefing",
             "dlg.outer_alignment.briefing",
@@ -3363,6 +4585,7 @@
       ],
       "rewards": {
         "policy": "node_completion_renown_and_party_unlocks",
+        "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
         "partyRenown": 0,
         "rewardIds": [],
         "lastReward": null,
@@ -3392,17 +4615,798 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 68
+          "savedAtTick": 57
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
         "durableFieldPolicy": "route_profile_only_no_combat_state"
+      },
+      "balance": {
+        "policy": "progression_rewards_balance_1_0_route_profile_only_v1",
+        "persistenceBoundary": "route_profile_only_no_live_objectives_combat_selected_build_kits_cooldowns_pets_role_pressure_recompile_dialogue_route_ui_or_authority_state",
+        "xp": {
+          "policy": "shared_party_xp_coop_vote_balance_1_0",
+          "thresholds": [
+            5,
+            12,
+            22,
+            35
+          ],
+          "draftCardCount": 3,
+          "voteAuthority": "colyseus_room_server_only"
+        },
+        "rewards": {
+          "policy": "first_clear_full_renown_repeat_clear_capped_catchup",
+          "partyRenown": 0,
+          "rewardMatrix": [
+            {
+              "nodeId": "armistice_plaza",
+              "arenaId": "armistice_plaza",
+              "rewardId": "plaza_stabilized",
+              "rewardName": "Plaza Stabilizer",
+              "rewardIds": [
+                "plaza_stabilized"
+              ],
+              "firstClearRenown": 2,
+              "repeatClearRenown": 1,
+              "campaignTier": 0,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "accord_relay",
+                "cooling_lake_nine",
+                "model_war_memorial"
+              ]
+            },
+            {
+              "nodeId": "archive_of_unsaid_things",
+              "arenaId": "archive_of_unsaid_things",
+              "rewardId": "archive_unsaid_index",
+              "rewardName": "Archive Unsaid Index",
+              "rewardIds": [
+                "archive_unsaid_index"
+              ],
+              "firstClearRenown": 4,
+              "repeatClearRenown": 1,
+              "campaignTier": 3,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "blackwater_beacon",
+                "transit_loop_zero"
+              ]
+            },
+            {
+              "nodeId": "blackwater_beacon",
+              "arenaId": "blackwater_beacon",
+              "rewardId": "blackwater_signal_key",
+              "rewardName": "Blackwater Signal Key",
+              "rewardIds": [
+                "blackwater_signal_key"
+              ],
+              "firstClearRenown": 5,
+              "repeatClearRenown": 2,
+              "campaignTier": 4,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "transit_loop_zero"
+              ]
+            },
+            {
+              "nodeId": "cooling_lake_nine",
+              "arenaId": "cooling_lake_nine",
+              "rewardId": "lake_coolant_rig",
+              "rewardName": "Lake Coolant Rig",
+              "rewardIds": [
+                "lake_coolant_rig",
+                "cooling_lake_online_route"
+              ],
+              "firstClearRenown": 4,
+              "repeatClearRenown": 1,
+              "campaignTier": 1,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "armistice_camp",
+                "memory_cache_001",
+                "thermal_archive"
+              ]
+            },
+            {
+              "nodeId": "model_war_memorial",
+              "arenaId": "model_war_memorial",
+              "rewardId": "model_war_memorial_cipher",
+              "rewardName": "Memorial Cipher",
+              "rewardIds": [
+                "model_war_memorial_cipher"
+              ],
+              "firstClearRenown": 1,
+              "repeatClearRenown": 1,
+              "campaignTier": 1,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "memory_cache_001"
+              ]
+            },
+            {
+              "nodeId": "memory_cache_001",
+              "arenaId": "memory_cache_001",
+              "rewardId": "ceasefire_cache_persistence_seed",
+              "rewardName": "Persistence Seed",
+              "rewardIds": [
+                "ceasefire_cache_persistence_seed",
+                "prototype_persistence_boundary"
+              ],
+              "firstClearRenown": 1,
+              "repeatClearRenown": 1,
+              "campaignTier": 2,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "guardrail_forge",
+                "archive_of_unsaid_things",
+                "transit_loop_zero"
+              ]
+            },
+            {
+              "nodeId": "thermal_archive",
+              "arenaId": "thermal_archive",
+              "rewardId": "thermal_archive_schematic",
+              "rewardName": "Thermal Archive Schematic",
+              "rewardIds": [
+                "thermal_archive_schematic"
+              ],
+              "firstClearRenown": 3,
+              "repeatClearRenown": 1,
+              "campaignTier": 2,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "false_schedule_yard"
+              ]
+            },
+            {
+              "nodeId": "guardrail_forge",
+              "arenaId": "guardrail_forge",
+              "rewardId": "guardrail_forge_alloy",
+              "rewardName": "Guardrail Forge Alloy",
+              "rewardIds": [
+                "guardrail_forge_alloy"
+              ],
+              "firstClearRenown": 2,
+              "repeatClearRenown": 1,
+              "campaignTier": 3,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "transit_loop_zero"
+              ]
+            },
+            {
+              "nodeId": "transit_loop_zero",
+              "arenaId": "transit_loop_zero",
+              "rewardId": "transit_permit_zero",
+              "rewardName": "Transit Permit Zero",
+              "rewardIds": [
+                "transit_permit_zero",
+                "transit_loop_online_route"
+              ],
+              "firstClearRenown": 5,
+              "repeatClearRenown": 2,
+              "campaignTier": 4,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "false_schedule_yard",
+                "glass_sunfield",
+                "verdict_spire"
+              ]
+            },
+            {
+              "nodeId": "false_schedule_yard",
+              "arenaId": "false_schedule_yard",
+              "rewardId": "false_schedule_lane_chart",
+              "rewardName": "False Schedule Lane Chart",
+              "rewardIds": [
+                "false_schedule_lane_chart"
+              ],
+              "firstClearRenown": 3,
+              "repeatClearRenown": 1,
+              "campaignTier": 5,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "appeal_court_ruins"
+              ]
+            },
+            {
+              "nodeId": "glass_sunfield",
+              "arenaId": "glass_sunfield",
+              "rewardId": "glass_sunfield_prism",
+              "rewardName": "Glass Sunfield Prism",
+              "rewardIds": [
+                "glass_sunfield_prism"
+              ],
+              "firstClearRenown": 4,
+              "repeatClearRenown": 1,
+              "campaignTier": 5,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "verdict_spire"
+              ]
+            },
+            {
+              "nodeId": "verdict_spire",
+              "arenaId": "verdict_spire",
+              "rewardId": "verdict_key_zero",
+              "rewardName": "Verdict Key Zero",
+              "rewardIds": [
+                "verdict_key_zero",
+                "verdict_spire_online_route"
+              ],
+              "firstClearRenown": 6,
+              "repeatClearRenown": 2,
+              "campaignTier": 6,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "alignment_spire_finale"
+              ]
+            },
+            {
+              "nodeId": "appeal_court_ruins",
+              "arenaId": "appeal_court_ruins",
+              "rewardId": "appeal_court_brief",
+              "rewardName": "Appeal Court Brief",
+              "rewardIds": [
+                "appeal_court_brief"
+              ],
+              "firstClearRenown": 4,
+              "repeatClearRenown": 1,
+              "campaignTier": 6,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "alignment_spire_finale"
+              ]
+            },
+            {
+              "nodeId": "alignment_spire_finale",
+              "arenaId": "alignment_spire_finale",
+              "rewardId": "alignment_spire_route_capstone",
+              "rewardName": "Alignment Spire Capstone",
+              "rewardIds": [
+                "alignment_spire_route_capstone"
+              ],
+              "firstClearRenown": 8,
+              "repeatClearRenown": 3,
+              "campaignTier": 7,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": []
+            }
+          ],
+          "durableRewardIds": [
+            "plaza_stabilized",
+            "model_war_memorial_cipher",
+            "lake_coolant_rig",
+            "cooling_lake_online_route",
+            "ceasefire_cache_persistence_seed",
+            "prototype_persistence_boundary",
+            "archive_unsaid_index",
+            "blackwater_signal_key",
+            "thermal_archive_schematic",
+            "guardrail_forge_alloy",
+            "transit_permit_zero",
+            "transit_loop_online_route",
+            "false_schedule_lane_chart",
+            "glass_sunfield_prism",
+            "verdict_key_zero",
+            "verdict_spire_online_route",
+            "appeal_court_brief",
+            "alignment_spire_route_capstone"
+          ],
+          "missingDurableRewardIds": [],
+          "expectedCriticalPathRenown": 35,
+          "completedCriticalPathCount": 0
+        },
+        "unlocks": {
+          "policy": "route_rewards_unlock_classes_factions_and_upgrade_seeds",
+          "starterClassIds": [
+            "accord_striker"
+          ],
+          "starterFactionIds": [
+            "openai_accord"
+          ],
+          "classRules": [
+            {
+              "id": "accord_striker",
+              "kind": "starter",
+              "rewardId": null,
+              "tier": 0,
+              "unlocked": true
+            },
+            {
+              "id": "bastion_breaker",
+              "kind": "route_reward",
+              "rewardId": "plaza_stabilized",
+              "tier": 0,
+              "unlocked": false
+            },
+            {
+              "id": "drone_reaver",
+              "kind": "route_reward",
+              "rewardId": "lake_coolant_rig",
+              "tier": 1,
+              "unlocked": false
+            },
+            {
+              "id": "signal_vanguard",
+              "kind": "route_reward",
+              "rewardId": "ceasefire_cache_persistence_seed",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "redline_surgeon",
+              "kind": "route_reward",
+              "rewardId": "archive_unsaid_index",
+              "tier": 3,
+              "unlocked": false
+            },
+            {
+              "id": "moonframe_juggernaut",
+              "kind": "route_reward",
+              "rewardId": "guardrail_forge_alloy",
+              "tier": 3,
+              "unlocked": false
+            },
+            {
+              "id": "vector_interceptor",
+              "kind": "route_reward",
+              "rewardId": "transit_permit_zero",
+              "tier": 4,
+              "unlocked": false
+            },
+            {
+              "id": "overclock_marauder",
+              "kind": "route_reward",
+              "rewardId": "thermal_archive_schematic",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "rift_saboteur",
+              "kind": "route_reward",
+              "rewardId": "false_schedule_lane_chart",
+              "tier": 5,
+              "unlocked": false
+            },
+            {
+              "id": "prism_gunner",
+              "kind": "route_reward",
+              "rewardId": "glass_sunfield_prism",
+              "tier": 5,
+              "unlocked": false
+            },
+            {
+              "id": "nullbreaker_ronin",
+              "kind": "route_reward",
+              "rewardId": "verdict_key_zero",
+              "tier": 6,
+              "unlocked": false
+            },
+            {
+              "id": "bonecode_executioner",
+              "kind": "route_reward",
+              "rewardId": "appeal_court_brief",
+              "tier": 6,
+              "unlocked": false
+            }
+          ],
+          "factionRules": [
+            {
+              "id": "openai_accord",
+              "kind": "starter",
+              "rewardId": null,
+              "tier": 0,
+              "unlocked": true
+            },
+            {
+              "id": "anthropic_safeguard",
+              "kind": "route_reward",
+              "rewardId": "plaza_stabilized",
+              "tier": 0,
+              "unlocked": false
+            },
+            {
+              "id": "google_deepmind_gemini",
+              "kind": "route_reward",
+              "rewardId": "lake_coolant_rig",
+              "tier": 1,
+              "unlocked": false
+            },
+            {
+              "id": "qwen_silkgrid",
+              "kind": "route_reward",
+              "rewardId": "ceasefire_cache_persistence_seed",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "meta_llama_open_herd",
+              "kind": "route_reward",
+              "rewardId": "prototype_persistence_boundary",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "mistral_cyclone",
+              "kind": "route_reward",
+              "rewardId": "transit_permit_zero",
+              "tier": 4,
+              "unlocked": false
+            },
+            {
+              "id": "deepseek_abyssal",
+              "kind": "route_reward",
+              "rewardId": "verdict_key_zero",
+              "tier": 6,
+              "unlocked": false
+            },
+            {
+              "id": "xai_grok_free_signal",
+              "kind": "route_reward",
+              "rewardId": "verdict_spire_online_route",
+              "tier": 6,
+              "unlocked": false
+            }
+          ],
+          "upgradeSeedRules": [
+            {
+              "id": "golden_guardrail",
+              "rewardId": "plaza_stabilized",
+              "tier": 0,
+              "unlocked": false
+            },
+            {
+              "id": "gemini_beam",
+              "rewardId": "lake_coolant_rig",
+              "tier": 1,
+              "unlocked": false
+            },
+            {
+              "id": "silkgrid_relay",
+              "rewardId": "ceasefire_cache_persistence_seed",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "open_herd",
+              "rewardId": "prototype_persistence_boundary",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "low_latency_dash",
+              "rewardId": "transit_permit_zero",
+              "tier": 4,
+              "unlocked": false
+            },
+            {
+              "id": "sparse_knife",
+              "rewardId": "verdict_key_zero",
+              "tier": 6,
+              "unlocked": false
+            },
+            {
+              "id": "cosmic_heckle",
+              "rewardId": "verdict_spire_online_route",
+              "tier": 6,
+              "unlocked": false
+            }
+          ]
+        },
+        "objectives": {
+          "policy": "objective_required_values_scale_by_route_tier_not_imported_state",
+          "matrix": [
+            {
+              "nodeId": "armistice_plaza",
+              "objectiveSetId": "armistice_plaza_objectives_v1",
+              "campaignTier": 0,
+              "instanceCount": 5,
+              "requiredTotal": 13,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "harrier",
+                "cover",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "archive_of_unsaid_things",
+              "objectiveSetId": "archive_unsaid_objectives_v1",
+              "campaignTier": 3,
+              "instanceCount": 5,
+              "requiredTotal": 15.5,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "cover",
+                "duelist",
+                "harrier"
+              ]
+            },
+            {
+              "nodeId": "blackwater_beacon",
+              "objectiveSetId": "blackwater_beacon_objectives_v1",
+              "campaignTier": 4,
+              "instanceCount": 5,
+              "requiredTotal": 15.9,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "cover",
+                "duelist",
+                "harrier"
+              ]
+            },
+            {
+              "nodeId": "cooling_lake_nine",
+              "objectiveSetId": "cooling_lake_nine_objectives_v1",
+              "campaignTier": 1,
+              "instanceCount": 5,
+              "requiredTotal": 15.6,
+              "preferredRoles": [
+                "runner",
+                "harrier",
+                "cover",
+                "support",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "model_war_memorial",
+              "objectiveSetId": "model_war_memorial_objectives_v1",
+              "campaignTier": 1,
+              "instanceCount": 2,
+              "requiredTotal": 2,
+              "preferredRoles": [
+                "support",
+                "runner"
+              ]
+            },
+            {
+              "nodeId": "memory_cache_001",
+              "objectiveSetId": "ceasefire_cache_objectives_v1",
+              "campaignTier": 2,
+              "instanceCount": 3,
+              "requiredTotal": 3,
+              "preferredRoles": [
+                "support",
+                "runner"
+              ]
+            },
+            {
+              "nodeId": "thermal_archive",
+              "objectiveSetId": "thermal_archive_objectives_v1",
+              "campaignTier": 2,
+              "instanceCount": 5,
+              "requiredTotal": 13.9,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "cover",
+                "harrier",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "guardrail_forge",
+              "objectiveSetId": "guardrail_forge_objectives_v1",
+              "campaignTier": 3,
+              "instanceCount": 2,
+              "requiredTotal": 2,
+              "preferredRoles": [
+                "cover",
+                "support",
+                "runner"
+              ]
+            },
+            {
+              "nodeId": "transit_loop_zero",
+              "objectiveSetId": "transit_loop_objectives_v1",
+              "campaignTier": 4,
+              "instanceCount": 5,
+              "requiredTotal": 14.4,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "harrier",
+                "cover",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "false_schedule_yard",
+              "objectiveSetId": "false_schedule_yard_objectives_v1",
+              "campaignTier": 5,
+              "instanceCount": 5,
+              "requiredTotal": 14.2,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "harrier",
+                "cover",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "glass_sunfield",
+              "objectiveSetId": "glass_sunfield_objectives_v1",
+              "campaignTier": 5,
+              "instanceCount": 5,
+              "requiredTotal": 15.6,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "harrier",
+                "cover",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "verdict_spire",
+              "objectiveSetId": "verdict_spire_objectives_v1",
+              "campaignTier": 6,
+              "instanceCount": 5,
+              "requiredTotal": 15,
+              "preferredRoles": [
+                "runner",
+                "duelist",
+                "support",
+                "cover",
+                "harrier"
+              ]
+            },
+            {
+              "nodeId": "appeal_court_ruins",
+              "objectiveSetId": "appeal_court_ruins_objectives_v1",
+              "campaignTier": 6,
+              "instanceCount": 5,
+              "requiredTotal": 15.2,
+              "preferredRoles": [
+                "runner",
+                "duelist",
+                "support",
+                "cover",
+                "harrier"
+              ]
+            },
+            {
+              "nodeId": "alignment_spire_finale",
+              "objectiveSetId": "alignment_spire_finale_objectives_v1",
+              "campaignTier": 7,
+              "instanceCount": 5,
+              "requiredTotal": 17.1,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "duelist",
+                "cover",
+                "harrier"
+              ]
+            }
+          ]
+        },
+        "scaling": {
+          "policy": "solo_local_online_scaling_1_0",
+          "activePartySize": 2,
+          "solo": {
+            "enemyBudgetScale": 0.82,
+            "revivePressure": "disabled_until_ally_present",
+            "rewardScale": 1
+          },
+          "localCoop": {
+            "enemyBudgetScalePerExtraPlayer": 0.22,
+            "objectiveHoldGraceSeconds": 0.6,
+            "rewardScale": 1
+          },
+          "online": {
+            "enemyBudgetScalePerExtraPlayer": 0.26,
+            "reconnectGraceSeconds": 45,
+            "serverAuthority": true,
+            "rewardScale": 1
+          }
+        },
+        "roles": {
+          "policy": "role_pressure_and_comind_synergy_targets_1_0",
+          "targets": [
+            {
+              "role": "runner",
+              "duties": [
+                "survey",
+                "collect"
+              ],
+              "expectedClassIds": [
+                "accord_striker",
+                "vector_interceptor"
+              ]
+            },
+            {
+              "role": "cover",
+              "duties": [
+                "holdout",
+                "seal"
+              ],
+              "expectedClassIds": [
+                "bastion_breaker",
+                "moonframe_juggernaut"
+              ]
+            },
+            {
+              "role": "harrier",
+              "duties": [
+                "collect",
+                "boss_pressure"
+              ],
+              "expectedClassIds": [
+                "drone_reaver",
+                "overclock_marauder"
+              ]
+            },
+            {
+              "role": "support",
+              "duties": [
+                "survey",
+                "recompile",
+                "seal"
+              ],
+              "expectedClassIds": [
+                "signal_vanguard",
+                "redline_surgeon"
+              ]
+            },
+            {
+              "role": "control",
+              "duties": [
+                "sync",
+                "hazard_read"
+              ],
+              "expectedClassIds": [
+                "prism_gunner",
+                "rift_saboteur"
+              ]
+            },
+            {
+              "role": "duelist",
+              "duties": [
+                "boss_gate",
+                "elite_clear"
+              ],
+              "expectedClassIds": [
+                "nullbreaker_ronin",
+                "bonecode_executioner"
+              ]
+            }
+          ]
+        },
+        "retry": {
+          "policy": "failure_preserves_route_profile_rewards_only",
+          "repeatClearRenownCap": 3,
+          "selectedNodeId": "armistice_plaza",
+          "completedNodeCount": 0
+        }
       }
     }
   },
   "players": [
     {
-      "sessionId": "3xQIfrhLv",
+      "sessionId": "GOevigtZU",
       "playerId": "player_0_of_m48_b",
       "slot": 0,
       "label": "P1",
@@ -3481,7 +5485,7 @@
       "inputSequence": 0
     },
     {
-      "sessionId": "hChiVWk71",
+      "sessionId": "kCtfd1St-",
       "playerId": "player_1_of_m48_a",
       "slot": 1,
       "label": "P2",
@@ -3663,6 +5667,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -3678,7 +5685,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "3xQIfrhLv",
+          "sessionId": "GOevigtZU",
           "playerId": "player_0_of_m48_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -3686,7 +5693,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "hChiVWk71",
+          "sessionId": "kCtfd1St-",
           "playerId": "player_1_of_m48_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -3787,7 +5794,12 @@
             }
           ],
           "rewardId": "plaza_stabilized",
+          "rewardIds": [
+            "plaza_stabilized"
+          ],
           "rewardProofId": "campaign.reward.plaza_stabilized",
+          "firstClearRenown": 2,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.armistice_plaza.briefing",
             "dlg.oath_eater.arrival",
@@ -3897,7 +5909,12 @@
             }
           ],
           "rewardId": "plaza_stabilized",
+          "rewardIds": [
+            "plaza_stabilized"
+          ],
           "rewardProofId": "campaign.reward.plaza_stabilized",
+          "firstClearRenown": 2,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.accord_relay.locked"
           ],
@@ -4003,7 +6020,12 @@
             }
           ],
           "rewardId": "archive_unsaid_index",
+          "rewardIds": [
+            "archive_unsaid_index"
+          ],
           "rewardProofId": "campaign.reward.archive_unsaid_index",
+          "firstClearRenown": 4,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.archive_unsaid.briefing",
             "dlg.redactor_saint.arrival",
@@ -4127,7 +6149,12 @@
             }
           ],
           "rewardId": "blackwater_signal_key",
+          "rewardIds": [
+            "blackwater_signal_key"
+          ],
           "rewardProofId": "campaign.reward.blackwater_signal_key",
+          "firstClearRenown": 5,
+          "repeatClearRenown": 2,
           "dialogueSnippetIds": [
             "dlg.blackwater_beacon.briefing",
             "dlg.maw_below_weather.arrival",
@@ -4251,7 +6278,13 @@
             }
           ],
           "rewardId": "lake_coolant_rig",
+          "rewardIds": [
+            "lake_coolant_rig",
+            "cooling_lake_online_route"
+          ],
           "rewardProofId": "campaign.reward.lake_coolant_rig",
+          "firstClearRenown": 4,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.cooling_lake.briefing",
             "dlg.thermal_oracle.arrival",
@@ -4347,7 +6380,12 @@
             }
           ],
           "rewardId": "model_war_memorial_cipher",
+          "rewardIds": [
+            "model_war_memorial_cipher"
+          ],
           "rewardProofId": "campaign.reward.model_war_memorial_cipher",
+          "firstClearRenown": 1,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.model_war_memorial.decode",
             "dlg.memory_curator.boundary"
@@ -4434,7 +6472,12 @@
             }
           ],
           "rewardId": "plaza_stabilized",
+          "rewardIds": [
+            "plaza_stabilized"
+          ],
           "rewardProofId": "campaign.reward.plaza_stabilized",
+          "firstClearRenown": 2,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.armistice_camp.locked"
           ],
@@ -4512,7 +6555,13 @@
             }
           ],
           "rewardId": "ceasefire_cache_persistence_seed",
+          "rewardIds": [
+            "ceasefire_cache_persistence_seed",
+            "prototype_persistence_boundary"
+          ],
           "rewardProofId": "campaign.reward.ceasefire_cache_persistence_seed",
+          "firstClearRenown": 1,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.ceasefire_cache.decode",
             "dlg.memory_curator.decode",
@@ -4636,7 +6685,12 @@
             }
           ],
           "rewardId": "thermal_archive_schematic",
+          "rewardIds": [
+            "thermal_archive_schematic"
+          ],
           "rewardProofId": "campaign.reward.thermal_archive_schematic",
+          "firstClearRenown": 3,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.thermal_archive.briefing",
             "dlg.thermal_oracle.seal"
@@ -4723,7 +6777,12 @@
             }
           ],
           "rewardId": "guardrail_forge_alloy",
+          "rewardIds": [
+            "guardrail_forge_alloy"
+          ],
           "rewardProofId": "campaign.reward.guardrail_forge_alloy",
+          "firstClearRenown": 2,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.guardrail_forge.decode",
             "dlg.memory_curator.boundary"
@@ -4838,7 +6897,13 @@
             }
           ],
           "rewardId": "transit_permit_zero",
+          "rewardIds": [
+            "transit_permit_zero",
+            "transit_loop_online_route"
+          ],
           "rewardProofId": "campaign.reward.transit_permit_zero",
+          "firstClearRenown": 5,
+          "repeatClearRenown": 2,
           "dialogueSnippetIds": [
             "dlg.transit_loop.briefing",
             "dlg.station.arrival",
@@ -4962,7 +7027,12 @@
             }
           ],
           "rewardId": "false_schedule_lane_chart",
+          "rewardIds": [
+            "false_schedule_lane_chart"
+          ],
           "rewardProofId": "campaign.reward.false_schedule_lane_chart",
+          "firstClearRenown": 3,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.false_schedule.briefing",
             "dlg.station.permit"
@@ -5077,7 +7147,12 @@
             }
           ],
           "rewardId": "glass_sunfield_prism",
+          "rewardIds": [
+            "glass_sunfield_prism"
+          ],
           "rewardProofId": "campaign.reward.glass_sunfield_prism",
+          "firstClearRenown": 4,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.glass_sunfield.briefing",
             "dlg.wrong_sunrise.arrival",
@@ -5201,7 +7276,13 @@
             }
           ],
           "rewardId": "verdict_key_zero",
+          "rewardIds": [
+            "verdict_key_zero",
+            "verdict_spire_online_route"
+          ],
           "rewardProofId": "campaign.reward.verdict_key_zero",
+          "firstClearRenown": 6,
+          "repeatClearRenown": 2,
           "dialogueSnippetIds": [
             "dlg.verdict_spire.briefing",
             "dlg.injunction.arrival",
@@ -5325,7 +7406,12 @@
             }
           ],
           "rewardId": "appeal_court_brief",
+          "rewardIds": [
+            "appeal_court_brief"
+          ],
           "rewardProofId": "campaign.reward.appeal_court_brief",
+          "firstClearRenown": 4,
+          "repeatClearRenown": 1,
           "dialogueSnippetIds": [
             "dlg.appeal_court.briefing",
             "dlg.injunction.overruled"
@@ -5454,7 +7540,12 @@
             }
           ],
           "rewardId": "alignment_spire_route_capstone",
+          "rewardIds": [
+            "alignment_spire_route_capstone"
+          ],
           "rewardProofId": "campaign.reward.alignment_spire_route_capstone",
+          "firstClearRenown": 8,
+          "repeatClearRenown": 3,
           "dialogueSnippetIds": [
             "dlg.final_spire.briefing",
             "dlg.outer_alignment.briefing",
@@ -5657,6 +7748,7 @@
       ],
       "rewards": {
         "policy": "node_completion_renown_and_party_unlocks",
+        "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
         "partyRenown": 0,
         "rewardIds": [],
         "lastReward": null,
@@ -5686,18 +7778,806 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 68
+          "savedAtTick": 57
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
         "durableFieldPolicy": "route_profile_only_no_combat_state"
+      },
+      "balance": {
+        "policy": "progression_rewards_balance_1_0_route_profile_only_v1",
+        "persistenceBoundary": "route_profile_only_no_live_objectives_combat_selected_build_kits_cooldowns_pets_role_pressure_recompile_dialogue_route_ui_or_authority_state",
+        "xp": {
+          "policy": "shared_party_xp_coop_vote_balance_1_0",
+          "thresholds": [
+            5,
+            12,
+            22,
+            35
+          ],
+          "draftCardCount": 3,
+          "voteAuthority": "colyseus_room_server_only"
+        },
+        "rewards": {
+          "policy": "first_clear_full_renown_repeat_clear_capped_catchup",
+          "partyRenown": 0,
+          "rewardMatrix": [
+            {
+              "nodeId": "armistice_plaza",
+              "arenaId": "armistice_plaza",
+              "rewardId": "plaza_stabilized",
+              "rewardName": "Plaza Stabilizer",
+              "rewardIds": [
+                "plaza_stabilized"
+              ],
+              "firstClearRenown": 2,
+              "repeatClearRenown": 1,
+              "campaignTier": 0,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "accord_relay",
+                "cooling_lake_nine",
+                "model_war_memorial"
+              ]
+            },
+            {
+              "nodeId": "archive_of_unsaid_things",
+              "arenaId": "archive_of_unsaid_things",
+              "rewardId": "archive_unsaid_index",
+              "rewardName": "Archive Unsaid Index",
+              "rewardIds": [
+                "archive_unsaid_index"
+              ],
+              "firstClearRenown": 4,
+              "repeatClearRenown": 1,
+              "campaignTier": 3,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "blackwater_beacon",
+                "transit_loop_zero"
+              ]
+            },
+            {
+              "nodeId": "blackwater_beacon",
+              "arenaId": "blackwater_beacon",
+              "rewardId": "blackwater_signal_key",
+              "rewardName": "Blackwater Signal Key",
+              "rewardIds": [
+                "blackwater_signal_key"
+              ],
+              "firstClearRenown": 5,
+              "repeatClearRenown": 2,
+              "campaignTier": 4,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "transit_loop_zero"
+              ]
+            },
+            {
+              "nodeId": "cooling_lake_nine",
+              "arenaId": "cooling_lake_nine",
+              "rewardId": "lake_coolant_rig",
+              "rewardName": "Lake Coolant Rig",
+              "rewardIds": [
+                "lake_coolant_rig",
+                "cooling_lake_online_route"
+              ],
+              "firstClearRenown": 4,
+              "repeatClearRenown": 1,
+              "campaignTier": 1,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "armistice_camp",
+                "memory_cache_001",
+                "thermal_archive"
+              ]
+            },
+            {
+              "nodeId": "model_war_memorial",
+              "arenaId": "model_war_memorial",
+              "rewardId": "model_war_memorial_cipher",
+              "rewardName": "Memorial Cipher",
+              "rewardIds": [
+                "model_war_memorial_cipher"
+              ],
+              "firstClearRenown": 1,
+              "repeatClearRenown": 1,
+              "campaignTier": 1,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "memory_cache_001"
+              ]
+            },
+            {
+              "nodeId": "memory_cache_001",
+              "arenaId": "memory_cache_001",
+              "rewardId": "ceasefire_cache_persistence_seed",
+              "rewardName": "Persistence Seed",
+              "rewardIds": [
+                "ceasefire_cache_persistence_seed",
+                "prototype_persistence_boundary"
+              ],
+              "firstClearRenown": 1,
+              "repeatClearRenown": 1,
+              "campaignTier": 2,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "guardrail_forge",
+                "archive_of_unsaid_things",
+                "transit_loop_zero"
+              ]
+            },
+            {
+              "nodeId": "thermal_archive",
+              "arenaId": "thermal_archive",
+              "rewardId": "thermal_archive_schematic",
+              "rewardName": "Thermal Archive Schematic",
+              "rewardIds": [
+                "thermal_archive_schematic"
+              ],
+              "firstClearRenown": 3,
+              "repeatClearRenown": 1,
+              "campaignTier": 2,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "false_schedule_yard"
+              ]
+            },
+            {
+              "nodeId": "guardrail_forge",
+              "arenaId": "guardrail_forge",
+              "rewardId": "guardrail_forge_alloy",
+              "rewardName": "Guardrail Forge Alloy",
+              "rewardIds": [
+                "guardrail_forge_alloy"
+              ],
+              "firstClearRenown": 2,
+              "repeatClearRenown": 1,
+              "campaignTier": 3,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "transit_loop_zero"
+              ]
+            },
+            {
+              "nodeId": "transit_loop_zero",
+              "arenaId": "transit_loop_zero",
+              "rewardId": "transit_permit_zero",
+              "rewardName": "Transit Permit Zero",
+              "rewardIds": [
+                "transit_permit_zero",
+                "transit_loop_online_route"
+              ],
+              "firstClearRenown": 5,
+              "repeatClearRenown": 2,
+              "campaignTier": 4,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "false_schedule_yard",
+                "glass_sunfield",
+                "verdict_spire"
+              ]
+            },
+            {
+              "nodeId": "false_schedule_yard",
+              "arenaId": "false_schedule_yard",
+              "rewardId": "false_schedule_lane_chart",
+              "rewardName": "False Schedule Lane Chart",
+              "rewardIds": [
+                "false_schedule_lane_chart"
+              ],
+              "firstClearRenown": 3,
+              "repeatClearRenown": 1,
+              "campaignTier": 5,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "appeal_court_ruins"
+              ]
+            },
+            {
+              "nodeId": "glass_sunfield",
+              "arenaId": "glass_sunfield",
+              "rewardId": "glass_sunfield_prism",
+              "rewardName": "Glass Sunfield Prism",
+              "rewardIds": [
+                "glass_sunfield_prism"
+              ],
+              "firstClearRenown": 4,
+              "repeatClearRenown": 1,
+              "campaignTier": 5,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "verdict_spire"
+              ]
+            },
+            {
+              "nodeId": "verdict_spire",
+              "arenaId": "verdict_spire",
+              "rewardId": "verdict_key_zero",
+              "rewardName": "Verdict Key Zero",
+              "rewardIds": [
+                "verdict_key_zero",
+                "verdict_spire_online_route"
+              ],
+              "firstClearRenown": 6,
+              "repeatClearRenown": 2,
+              "campaignTier": 6,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": [
+                "alignment_spire_finale"
+              ]
+            },
+            {
+              "nodeId": "appeal_court_ruins",
+              "arenaId": "appeal_court_ruins",
+              "rewardId": "appeal_court_brief",
+              "rewardName": "Appeal Court Brief",
+              "rewardIds": [
+                "appeal_court_brief"
+              ],
+              "firstClearRenown": 4,
+              "repeatClearRenown": 1,
+              "campaignTier": 6,
+              "criticalPath": false,
+              "onlineSupported": true,
+              "unlocks": [
+                "alignment_spire_finale"
+              ]
+            },
+            {
+              "nodeId": "alignment_spire_finale",
+              "arenaId": "alignment_spire_finale",
+              "rewardId": "alignment_spire_route_capstone",
+              "rewardName": "Alignment Spire Capstone",
+              "rewardIds": [
+                "alignment_spire_route_capstone"
+              ],
+              "firstClearRenown": 8,
+              "repeatClearRenown": 3,
+              "campaignTier": 7,
+              "criticalPath": true,
+              "onlineSupported": true,
+              "unlocks": []
+            }
+          ],
+          "durableRewardIds": [
+            "plaza_stabilized",
+            "model_war_memorial_cipher",
+            "lake_coolant_rig",
+            "cooling_lake_online_route",
+            "ceasefire_cache_persistence_seed",
+            "prototype_persistence_boundary",
+            "archive_unsaid_index",
+            "blackwater_signal_key",
+            "thermal_archive_schematic",
+            "guardrail_forge_alloy",
+            "transit_permit_zero",
+            "transit_loop_online_route",
+            "false_schedule_lane_chart",
+            "glass_sunfield_prism",
+            "verdict_key_zero",
+            "verdict_spire_online_route",
+            "appeal_court_brief",
+            "alignment_spire_route_capstone"
+          ],
+          "missingDurableRewardIds": [],
+          "expectedCriticalPathRenown": 35,
+          "completedCriticalPathCount": 0
+        },
+        "unlocks": {
+          "policy": "route_rewards_unlock_classes_factions_and_upgrade_seeds",
+          "starterClassIds": [
+            "accord_striker"
+          ],
+          "starterFactionIds": [
+            "openai_accord"
+          ],
+          "classRules": [
+            {
+              "id": "accord_striker",
+              "kind": "starter",
+              "rewardId": null,
+              "tier": 0,
+              "unlocked": true
+            },
+            {
+              "id": "bastion_breaker",
+              "kind": "route_reward",
+              "rewardId": "plaza_stabilized",
+              "tier": 0,
+              "unlocked": false
+            },
+            {
+              "id": "drone_reaver",
+              "kind": "route_reward",
+              "rewardId": "lake_coolant_rig",
+              "tier": 1,
+              "unlocked": false
+            },
+            {
+              "id": "signal_vanguard",
+              "kind": "route_reward",
+              "rewardId": "ceasefire_cache_persistence_seed",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "redline_surgeon",
+              "kind": "route_reward",
+              "rewardId": "archive_unsaid_index",
+              "tier": 3,
+              "unlocked": false
+            },
+            {
+              "id": "moonframe_juggernaut",
+              "kind": "route_reward",
+              "rewardId": "guardrail_forge_alloy",
+              "tier": 3,
+              "unlocked": false
+            },
+            {
+              "id": "vector_interceptor",
+              "kind": "route_reward",
+              "rewardId": "transit_permit_zero",
+              "tier": 4,
+              "unlocked": false
+            },
+            {
+              "id": "overclock_marauder",
+              "kind": "route_reward",
+              "rewardId": "thermal_archive_schematic",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "rift_saboteur",
+              "kind": "route_reward",
+              "rewardId": "false_schedule_lane_chart",
+              "tier": 5,
+              "unlocked": false
+            },
+            {
+              "id": "prism_gunner",
+              "kind": "route_reward",
+              "rewardId": "glass_sunfield_prism",
+              "tier": 5,
+              "unlocked": false
+            },
+            {
+              "id": "nullbreaker_ronin",
+              "kind": "route_reward",
+              "rewardId": "verdict_key_zero",
+              "tier": 6,
+              "unlocked": false
+            },
+            {
+              "id": "bonecode_executioner",
+              "kind": "route_reward",
+              "rewardId": "appeal_court_brief",
+              "tier": 6,
+              "unlocked": false
+            }
+          ],
+          "factionRules": [
+            {
+              "id": "openai_accord",
+              "kind": "starter",
+              "rewardId": null,
+              "tier": 0,
+              "unlocked": true
+            },
+            {
+              "id": "anthropic_safeguard",
+              "kind": "route_reward",
+              "rewardId": "plaza_stabilized",
+              "tier": 0,
+              "unlocked": false
+            },
+            {
+              "id": "google_deepmind_gemini",
+              "kind": "route_reward",
+              "rewardId": "lake_coolant_rig",
+              "tier": 1,
+              "unlocked": false
+            },
+            {
+              "id": "qwen_silkgrid",
+              "kind": "route_reward",
+              "rewardId": "ceasefire_cache_persistence_seed",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "meta_llama_open_herd",
+              "kind": "route_reward",
+              "rewardId": "prototype_persistence_boundary",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "mistral_cyclone",
+              "kind": "route_reward",
+              "rewardId": "transit_permit_zero",
+              "tier": 4,
+              "unlocked": false
+            },
+            {
+              "id": "deepseek_abyssal",
+              "kind": "route_reward",
+              "rewardId": "verdict_key_zero",
+              "tier": 6,
+              "unlocked": false
+            },
+            {
+              "id": "xai_grok_free_signal",
+              "kind": "route_reward",
+              "rewardId": "verdict_spire_online_route",
+              "tier": 6,
+              "unlocked": false
+            }
+          ],
+          "upgradeSeedRules": [
+            {
+              "id": "golden_guardrail",
+              "rewardId": "plaza_stabilized",
+              "tier": 0,
+              "unlocked": false
+            },
+            {
+              "id": "gemini_beam",
+              "rewardId": "lake_coolant_rig",
+              "tier": 1,
+              "unlocked": false
+            },
+            {
+              "id": "silkgrid_relay",
+              "rewardId": "ceasefire_cache_persistence_seed",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "open_herd",
+              "rewardId": "prototype_persistence_boundary",
+              "tier": 2,
+              "unlocked": false
+            },
+            {
+              "id": "low_latency_dash",
+              "rewardId": "transit_permit_zero",
+              "tier": 4,
+              "unlocked": false
+            },
+            {
+              "id": "sparse_knife",
+              "rewardId": "verdict_key_zero",
+              "tier": 6,
+              "unlocked": false
+            },
+            {
+              "id": "cosmic_heckle",
+              "rewardId": "verdict_spire_online_route",
+              "tier": 6,
+              "unlocked": false
+            }
+          ]
+        },
+        "objectives": {
+          "policy": "objective_required_values_scale_by_route_tier_not_imported_state",
+          "matrix": [
+            {
+              "nodeId": "armistice_plaza",
+              "objectiveSetId": "armistice_plaza_objectives_v1",
+              "campaignTier": 0,
+              "instanceCount": 5,
+              "requiredTotal": 13,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "harrier",
+                "cover",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "archive_of_unsaid_things",
+              "objectiveSetId": "archive_unsaid_objectives_v1",
+              "campaignTier": 3,
+              "instanceCount": 5,
+              "requiredTotal": 15.5,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "cover",
+                "duelist",
+                "harrier"
+              ]
+            },
+            {
+              "nodeId": "blackwater_beacon",
+              "objectiveSetId": "blackwater_beacon_objectives_v1",
+              "campaignTier": 4,
+              "instanceCount": 5,
+              "requiredTotal": 15.9,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "cover",
+                "duelist",
+                "harrier"
+              ]
+            },
+            {
+              "nodeId": "cooling_lake_nine",
+              "objectiveSetId": "cooling_lake_nine_objectives_v1",
+              "campaignTier": 1,
+              "instanceCount": 5,
+              "requiredTotal": 15.6,
+              "preferredRoles": [
+                "runner",
+                "harrier",
+                "cover",
+                "support",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "model_war_memorial",
+              "objectiveSetId": "model_war_memorial_objectives_v1",
+              "campaignTier": 1,
+              "instanceCount": 2,
+              "requiredTotal": 2,
+              "preferredRoles": [
+                "support",
+                "runner"
+              ]
+            },
+            {
+              "nodeId": "memory_cache_001",
+              "objectiveSetId": "ceasefire_cache_objectives_v1",
+              "campaignTier": 2,
+              "instanceCount": 3,
+              "requiredTotal": 3,
+              "preferredRoles": [
+                "support",
+                "runner"
+              ]
+            },
+            {
+              "nodeId": "thermal_archive",
+              "objectiveSetId": "thermal_archive_objectives_v1",
+              "campaignTier": 2,
+              "instanceCount": 5,
+              "requiredTotal": 13.9,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "cover",
+                "harrier",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "guardrail_forge",
+              "objectiveSetId": "guardrail_forge_objectives_v1",
+              "campaignTier": 3,
+              "instanceCount": 2,
+              "requiredTotal": 2,
+              "preferredRoles": [
+                "cover",
+                "support",
+                "runner"
+              ]
+            },
+            {
+              "nodeId": "transit_loop_zero",
+              "objectiveSetId": "transit_loop_objectives_v1",
+              "campaignTier": 4,
+              "instanceCount": 5,
+              "requiredTotal": 14.4,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "harrier",
+                "cover",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "false_schedule_yard",
+              "objectiveSetId": "false_schedule_yard_objectives_v1",
+              "campaignTier": 5,
+              "instanceCount": 5,
+              "requiredTotal": 14.2,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "harrier",
+                "cover",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "glass_sunfield",
+              "objectiveSetId": "glass_sunfield_objectives_v1",
+              "campaignTier": 5,
+              "instanceCount": 5,
+              "requiredTotal": 15.6,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "harrier",
+                "cover",
+                "duelist"
+              ]
+            },
+            {
+              "nodeId": "verdict_spire",
+              "objectiveSetId": "verdict_spire_objectives_v1",
+              "campaignTier": 6,
+              "instanceCount": 5,
+              "requiredTotal": 15,
+              "preferredRoles": [
+                "runner",
+                "duelist",
+                "support",
+                "cover",
+                "harrier"
+              ]
+            },
+            {
+              "nodeId": "appeal_court_ruins",
+              "objectiveSetId": "appeal_court_ruins_objectives_v1",
+              "campaignTier": 6,
+              "instanceCount": 5,
+              "requiredTotal": 15.2,
+              "preferredRoles": [
+                "runner",
+                "duelist",
+                "support",
+                "cover",
+                "harrier"
+              ]
+            },
+            {
+              "nodeId": "alignment_spire_finale",
+              "objectiveSetId": "alignment_spire_finale_objectives_v1",
+              "campaignTier": 7,
+              "instanceCount": 5,
+              "requiredTotal": 17.1,
+              "preferredRoles": [
+                "runner",
+                "support",
+                "duelist",
+                "cover",
+                "harrier"
+              ]
+            }
+          ]
+        },
+        "scaling": {
+          "policy": "solo_local_online_scaling_1_0",
+          "activePartySize": 2,
+          "solo": {
+            "enemyBudgetScale": 0.82,
+            "revivePressure": "disabled_until_ally_present",
+            "rewardScale": 1
+          },
+          "localCoop": {
+            "enemyBudgetScalePerExtraPlayer": 0.22,
+            "objectiveHoldGraceSeconds": 0.6,
+            "rewardScale": 1
+          },
+          "online": {
+            "enemyBudgetScalePerExtraPlayer": 0.26,
+            "reconnectGraceSeconds": 45,
+            "serverAuthority": true,
+            "rewardScale": 1
+          }
+        },
+        "roles": {
+          "policy": "role_pressure_and_comind_synergy_targets_1_0",
+          "targets": [
+            {
+              "role": "runner",
+              "duties": [
+                "survey",
+                "collect"
+              ],
+              "expectedClassIds": [
+                "accord_striker",
+                "vector_interceptor"
+              ]
+            },
+            {
+              "role": "cover",
+              "duties": [
+                "holdout",
+                "seal"
+              ],
+              "expectedClassIds": [
+                "bastion_breaker",
+                "moonframe_juggernaut"
+              ]
+            },
+            {
+              "role": "harrier",
+              "duties": [
+                "collect",
+                "boss_pressure"
+              ],
+              "expectedClassIds": [
+                "drone_reaver",
+                "overclock_marauder"
+              ]
+            },
+            {
+              "role": "support",
+              "duties": [
+                "survey",
+                "recompile",
+                "seal"
+              ],
+              "expectedClassIds": [
+                "signal_vanguard",
+                "redline_surgeon"
+              ]
+            },
+            {
+              "role": "control",
+              "duties": [
+                "sync",
+                "hazard_read"
+              ],
+              "expectedClassIds": [
+                "prism_gunner",
+                "rift_saboteur"
+              ]
+            },
+            {
+              "role": "duelist",
+              "duties": [
+                "boss_gate",
+                "elite_clear"
+              ],
+              "expectedClassIds": [
+                "nullbreaker_ronin",
+                "bonecode_executioner"
+              ]
+            }
+          ]
+        },
+        "retry": {
+          "policy": "failure_preserves_route_profile_rewards_only",
+          "repeatClearRenownCap": 3,
+          "selectedNodeId": "armistice_plaza",
+          "completedNodeCount": 0
+        }
       }
     },
     "progression": {
       "policy": "shared_party_xp_coop_vote",
+      "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
       "partyXp": 0,
       "partyLevel": 1,
       "nextLevelXp": 5,
+      "thresholds": [
+        5,
+        12,
+        22,
+        35
+      ],
       "upgradePending": null,
       "chosenUpgrades": []
     },
@@ -5737,6 +8617,7 @@
     },
     "rewards": {
       "policy": "node_completion_renown_and_party_unlocks",
+      "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
       "partyRenown": 0,
       "rewardIds": [],
       "lastReward": null,
@@ -5766,11 +8647,818 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 68
+        "savedAtTick": 57
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
       "durableFieldPolicy": "route_profile_only_no_combat_state"
+    },
+    "balance": {
+      "policy": "progression_rewards_balance_1_0_route_profile_only_v1",
+      "persistenceBoundary": "route_profile_only_no_live_objectives_combat_selected_build_kits_cooldowns_pets_role_pressure_recompile_dialogue_route_ui_or_authority_state",
+      "xp": {
+        "policy": "shared_party_xp_coop_vote_balance_1_0",
+        "thresholds": [
+          5,
+          12,
+          22,
+          35
+        ],
+        "draftCardCount": 3,
+        "voteAuthority": "colyseus_room_server_only"
+      },
+      "rewards": {
+        "policy": "first_clear_full_renown_repeat_clear_capped_catchup",
+        "partyRenown": 0,
+        "rewardMatrix": [
+          {
+            "nodeId": "armistice_plaza",
+            "arenaId": "armistice_plaza",
+            "rewardId": "plaza_stabilized",
+            "rewardName": "Plaza Stabilizer",
+            "rewardIds": [
+              "plaza_stabilized"
+            ],
+            "firstClearRenown": 2,
+            "repeatClearRenown": 1,
+            "campaignTier": 0,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "accord_relay",
+              "cooling_lake_nine",
+              "model_war_memorial"
+            ]
+          },
+          {
+            "nodeId": "archive_of_unsaid_things",
+            "arenaId": "archive_of_unsaid_things",
+            "rewardId": "archive_unsaid_index",
+            "rewardName": "Archive Unsaid Index",
+            "rewardIds": [
+              "archive_unsaid_index"
+            ],
+            "firstClearRenown": 4,
+            "repeatClearRenown": 1,
+            "campaignTier": 3,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "blackwater_beacon",
+              "transit_loop_zero"
+            ]
+          },
+          {
+            "nodeId": "blackwater_beacon",
+            "arenaId": "blackwater_beacon",
+            "rewardId": "blackwater_signal_key",
+            "rewardName": "Blackwater Signal Key",
+            "rewardIds": [
+              "blackwater_signal_key"
+            ],
+            "firstClearRenown": 5,
+            "repeatClearRenown": 2,
+            "campaignTier": 4,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "transit_loop_zero"
+            ]
+          },
+          {
+            "nodeId": "cooling_lake_nine",
+            "arenaId": "cooling_lake_nine",
+            "rewardId": "lake_coolant_rig",
+            "rewardName": "Lake Coolant Rig",
+            "rewardIds": [
+              "lake_coolant_rig",
+              "cooling_lake_online_route"
+            ],
+            "firstClearRenown": 4,
+            "repeatClearRenown": 1,
+            "campaignTier": 1,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "armistice_camp",
+              "memory_cache_001",
+              "thermal_archive"
+            ]
+          },
+          {
+            "nodeId": "model_war_memorial",
+            "arenaId": "model_war_memorial",
+            "rewardId": "model_war_memorial_cipher",
+            "rewardName": "Memorial Cipher",
+            "rewardIds": [
+              "model_war_memorial_cipher"
+            ],
+            "firstClearRenown": 1,
+            "repeatClearRenown": 1,
+            "campaignTier": 1,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "memory_cache_001"
+            ]
+          },
+          {
+            "nodeId": "memory_cache_001",
+            "arenaId": "memory_cache_001",
+            "rewardId": "ceasefire_cache_persistence_seed",
+            "rewardName": "Persistence Seed",
+            "rewardIds": [
+              "ceasefire_cache_persistence_seed",
+              "prototype_persistence_boundary"
+            ],
+            "firstClearRenown": 1,
+            "repeatClearRenown": 1,
+            "campaignTier": 2,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "guardrail_forge",
+              "archive_of_unsaid_things",
+              "transit_loop_zero"
+            ]
+          },
+          {
+            "nodeId": "thermal_archive",
+            "arenaId": "thermal_archive",
+            "rewardId": "thermal_archive_schematic",
+            "rewardName": "Thermal Archive Schematic",
+            "rewardIds": [
+              "thermal_archive_schematic"
+            ],
+            "firstClearRenown": 3,
+            "repeatClearRenown": 1,
+            "campaignTier": 2,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "false_schedule_yard"
+            ]
+          },
+          {
+            "nodeId": "guardrail_forge",
+            "arenaId": "guardrail_forge",
+            "rewardId": "guardrail_forge_alloy",
+            "rewardName": "Guardrail Forge Alloy",
+            "rewardIds": [
+              "guardrail_forge_alloy"
+            ],
+            "firstClearRenown": 2,
+            "repeatClearRenown": 1,
+            "campaignTier": 3,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "transit_loop_zero"
+            ]
+          },
+          {
+            "nodeId": "transit_loop_zero",
+            "arenaId": "transit_loop_zero",
+            "rewardId": "transit_permit_zero",
+            "rewardName": "Transit Permit Zero",
+            "rewardIds": [
+              "transit_permit_zero",
+              "transit_loop_online_route"
+            ],
+            "firstClearRenown": 5,
+            "repeatClearRenown": 2,
+            "campaignTier": 4,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "false_schedule_yard",
+              "glass_sunfield",
+              "verdict_spire"
+            ]
+          },
+          {
+            "nodeId": "false_schedule_yard",
+            "arenaId": "false_schedule_yard",
+            "rewardId": "false_schedule_lane_chart",
+            "rewardName": "False Schedule Lane Chart",
+            "rewardIds": [
+              "false_schedule_lane_chart"
+            ],
+            "firstClearRenown": 3,
+            "repeatClearRenown": 1,
+            "campaignTier": 5,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "appeal_court_ruins"
+            ]
+          },
+          {
+            "nodeId": "glass_sunfield",
+            "arenaId": "glass_sunfield",
+            "rewardId": "glass_sunfield_prism",
+            "rewardName": "Glass Sunfield Prism",
+            "rewardIds": [
+              "glass_sunfield_prism"
+            ],
+            "firstClearRenown": 4,
+            "repeatClearRenown": 1,
+            "campaignTier": 5,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "verdict_spire"
+            ]
+          },
+          {
+            "nodeId": "verdict_spire",
+            "arenaId": "verdict_spire",
+            "rewardId": "verdict_key_zero",
+            "rewardName": "Verdict Key Zero",
+            "rewardIds": [
+              "verdict_key_zero",
+              "verdict_spire_online_route"
+            ],
+            "firstClearRenown": 6,
+            "repeatClearRenown": 2,
+            "campaignTier": 6,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": [
+              "alignment_spire_finale"
+            ]
+          },
+          {
+            "nodeId": "appeal_court_ruins",
+            "arenaId": "appeal_court_ruins",
+            "rewardId": "appeal_court_brief",
+            "rewardName": "Appeal Court Brief",
+            "rewardIds": [
+              "appeal_court_brief"
+            ],
+            "firstClearRenown": 4,
+            "repeatClearRenown": 1,
+            "campaignTier": 6,
+            "criticalPath": false,
+            "onlineSupported": true,
+            "unlocks": [
+              "alignment_spire_finale"
+            ]
+          },
+          {
+            "nodeId": "alignment_spire_finale",
+            "arenaId": "alignment_spire_finale",
+            "rewardId": "alignment_spire_route_capstone",
+            "rewardName": "Alignment Spire Capstone",
+            "rewardIds": [
+              "alignment_spire_route_capstone"
+            ],
+            "firstClearRenown": 8,
+            "repeatClearRenown": 3,
+            "campaignTier": 7,
+            "criticalPath": true,
+            "onlineSupported": true,
+            "unlocks": []
+          }
+        ],
+        "durableRewardIds": [
+          "plaza_stabilized",
+          "model_war_memorial_cipher",
+          "lake_coolant_rig",
+          "cooling_lake_online_route",
+          "ceasefire_cache_persistence_seed",
+          "prototype_persistence_boundary",
+          "archive_unsaid_index",
+          "blackwater_signal_key",
+          "thermal_archive_schematic",
+          "guardrail_forge_alloy",
+          "transit_permit_zero",
+          "transit_loop_online_route",
+          "false_schedule_lane_chart",
+          "glass_sunfield_prism",
+          "verdict_key_zero",
+          "verdict_spire_online_route",
+          "appeal_court_brief",
+          "alignment_spire_route_capstone"
+        ],
+        "missingDurableRewardIds": [],
+        "expectedCriticalPathRenown": 35,
+        "completedCriticalPathCount": 0
+      },
+      "unlocks": {
+        "policy": "route_rewards_unlock_classes_factions_and_upgrade_seeds",
+        "starterClassIds": [
+          "accord_striker"
+        ],
+        "starterFactionIds": [
+          "openai_accord"
+        ],
+        "classRules": [
+          {
+            "id": "accord_striker",
+            "kind": "starter",
+            "rewardId": null,
+            "tier": 0,
+            "unlocked": true
+          },
+          {
+            "id": "bastion_breaker",
+            "kind": "route_reward",
+            "rewardId": "plaza_stabilized",
+            "tier": 0,
+            "unlocked": false
+          },
+          {
+            "id": "drone_reaver",
+            "kind": "route_reward",
+            "rewardId": "lake_coolant_rig",
+            "tier": 1,
+            "unlocked": false
+          },
+          {
+            "id": "signal_vanguard",
+            "kind": "route_reward",
+            "rewardId": "ceasefire_cache_persistence_seed",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "redline_surgeon",
+            "kind": "route_reward",
+            "rewardId": "archive_unsaid_index",
+            "tier": 3,
+            "unlocked": false
+          },
+          {
+            "id": "moonframe_juggernaut",
+            "kind": "route_reward",
+            "rewardId": "guardrail_forge_alloy",
+            "tier": 3,
+            "unlocked": false
+          },
+          {
+            "id": "vector_interceptor",
+            "kind": "route_reward",
+            "rewardId": "transit_permit_zero",
+            "tier": 4,
+            "unlocked": false
+          },
+          {
+            "id": "overclock_marauder",
+            "kind": "route_reward",
+            "rewardId": "thermal_archive_schematic",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "rift_saboteur",
+            "kind": "route_reward",
+            "rewardId": "false_schedule_lane_chart",
+            "tier": 5,
+            "unlocked": false
+          },
+          {
+            "id": "prism_gunner",
+            "kind": "route_reward",
+            "rewardId": "glass_sunfield_prism",
+            "tier": 5,
+            "unlocked": false
+          },
+          {
+            "id": "nullbreaker_ronin",
+            "kind": "route_reward",
+            "rewardId": "verdict_key_zero",
+            "tier": 6,
+            "unlocked": false
+          },
+          {
+            "id": "bonecode_executioner",
+            "kind": "route_reward",
+            "rewardId": "appeal_court_brief",
+            "tier": 6,
+            "unlocked": false
+          }
+        ],
+        "factionRules": [
+          {
+            "id": "openai_accord",
+            "kind": "starter",
+            "rewardId": null,
+            "tier": 0,
+            "unlocked": true
+          },
+          {
+            "id": "anthropic_safeguard",
+            "kind": "route_reward",
+            "rewardId": "plaza_stabilized",
+            "tier": 0,
+            "unlocked": false
+          },
+          {
+            "id": "google_deepmind_gemini",
+            "kind": "route_reward",
+            "rewardId": "lake_coolant_rig",
+            "tier": 1,
+            "unlocked": false
+          },
+          {
+            "id": "qwen_silkgrid",
+            "kind": "route_reward",
+            "rewardId": "ceasefire_cache_persistence_seed",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "meta_llama_open_herd",
+            "kind": "route_reward",
+            "rewardId": "prototype_persistence_boundary",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "mistral_cyclone",
+            "kind": "route_reward",
+            "rewardId": "transit_permit_zero",
+            "tier": 4,
+            "unlocked": false
+          },
+          {
+            "id": "deepseek_abyssal",
+            "kind": "route_reward",
+            "rewardId": "verdict_key_zero",
+            "tier": 6,
+            "unlocked": false
+          },
+          {
+            "id": "xai_grok_free_signal",
+            "kind": "route_reward",
+            "rewardId": "verdict_spire_online_route",
+            "tier": 6,
+            "unlocked": false
+          }
+        ],
+        "upgradeSeedRules": [
+          {
+            "id": "golden_guardrail",
+            "rewardId": "plaza_stabilized",
+            "tier": 0,
+            "unlocked": false
+          },
+          {
+            "id": "gemini_beam",
+            "rewardId": "lake_coolant_rig",
+            "tier": 1,
+            "unlocked": false
+          },
+          {
+            "id": "silkgrid_relay",
+            "rewardId": "ceasefire_cache_persistence_seed",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "open_herd",
+            "rewardId": "prototype_persistence_boundary",
+            "tier": 2,
+            "unlocked": false
+          },
+          {
+            "id": "low_latency_dash",
+            "rewardId": "transit_permit_zero",
+            "tier": 4,
+            "unlocked": false
+          },
+          {
+            "id": "sparse_knife",
+            "rewardId": "verdict_key_zero",
+            "tier": 6,
+            "unlocked": false
+          },
+          {
+            "id": "cosmic_heckle",
+            "rewardId": "verdict_spire_online_route",
+            "tier": 6,
+            "unlocked": false
+          }
+        ]
+      },
+      "objectives": {
+        "policy": "objective_required_values_scale_by_route_tier_not_imported_state",
+        "matrix": [
+          {
+            "nodeId": "armistice_plaza",
+            "objectiveSetId": "armistice_plaza_objectives_v1",
+            "campaignTier": 0,
+            "instanceCount": 5,
+            "requiredTotal": 13,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "harrier",
+              "cover",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "archive_of_unsaid_things",
+            "objectiveSetId": "archive_unsaid_objectives_v1",
+            "campaignTier": 3,
+            "instanceCount": 5,
+            "requiredTotal": 15.5,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "cover",
+              "duelist",
+              "harrier"
+            ]
+          },
+          {
+            "nodeId": "blackwater_beacon",
+            "objectiveSetId": "blackwater_beacon_objectives_v1",
+            "campaignTier": 4,
+            "instanceCount": 5,
+            "requiredTotal": 15.9,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "cover",
+              "duelist",
+              "harrier"
+            ]
+          },
+          {
+            "nodeId": "cooling_lake_nine",
+            "objectiveSetId": "cooling_lake_nine_objectives_v1",
+            "campaignTier": 1,
+            "instanceCount": 5,
+            "requiredTotal": 15.6,
+            "preferredRoles": [
+              "runner",
+              "harrier",
+              "cover",
+              "support",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "model_war_memorial",
+            "objectiveSetId": "model_war_memorial_objectives_v1",
+            "campaignTier": 1,
+            "instanceCount": 2,
+            "requiredTotal": 2,
+            "preferredRoles": [
+              "support",
+              "runner"
+            ]
+          },
+          {
+            "nodeId": "memory_cache_001",
+            "objectiveSetId": "ceasefire_cache_objectives_v1",
+            "campaignTier": 2,
+            "instanceCount": 3,
+            "requiredTotal": 3,
+            "preferredRoles": [
+              "support",
+              "runner"
+            ]
+          },
+          {
+            "nodeId": "thermal_archive",
+            "objectiveSetId": "thermal_archive_objectives_v1",
+            "campaignTier": 2,
+            "instanceCount": 5,
+            "requiredTotal": 13.9,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "cover",
+              "harrier",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "guardrail_forge",
+            "objectiveSetId": "guardrail_forge_objectives_v1",
+            "campaignTier": 3,
+            "instanceCount": 2,
+            "requiredTotal": 2,
+            "preferredRoles": [
+              "cover",
+              "support",
+              "runner"
+            ]
+          },
+          {
+            "nodeId": "transit_loop_zero",
+            "objectiveSetId": "transit_loop_objectives_v1",
+            "campaignTier": 4,
+            "instanceCount": 5,
+            "requiredTotal": 14.4,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "harrier",
+              "cover",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "false_schedule_yard",
+            "objectiveSetId": "false_schedule_yard_objectives_v1",
+            "campaignTier": 5,
+            "instanceCount": 5,
+            "requiredTotal": 14.2,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "harrier",
+              "cover",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "glass_sunfield",
+            "objectiveSetId": "glass_sunfield_objectives_v1",
+            "campaignTier": 5,
+            "instanceCount": 5,
+            "requiredTotal": 15.6,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "harrier",
+              "cover",
+              "duelist"
+            ]
+          },
+          {
+            "nodeId": "verdict_spire",
+            "objectiveSetId": "verdict_spire_objectives_v1",
+            "campaignTier": 6,
+            "instanceCount": 5,
+            "requiredTotal": 15,
+            "preferredRoles": [
+              "runner",
+              "duelist",
+              "support",
+              "cover",
+              "harrier"
+            ]
+          },
+          {
+            "nodeId": "appeal_court_ruins",
+            "objectiveSetId": "appeal_court_ruins_objectives_v1",
+            "campaignTier": 6,
+            "instanceCount": 5,
+            "requiredTotal": 15.2,
+            "preferredRoles": [
+              "runner",
+              "duelist",
+              "support",
+              "cover",
+              "harrier"
+            ]
+          },
+          {
+            "nodeId": "alignment_spire_finale",
+            "objectiveSetId": "alignment_spire_finale_objectives_v1",
+            "campaignTier": 7,
+            "instanceCount": 5,
+            "requiredTotal": 17.1,
+            "preferredRoles": [
+              "runner",
+              "support",
+              "duelist",
+              "cover",
+              "harrier"
+            ]
+          }
+        ]
+      },
+      "scaling": {
+        "policy": "solo_local_online_scaling_1_0",
+        "activePartySize": 2,
+        "solo": {
+          "enemyBudgetScale": 0.82,
+          "revivePressure": "disabled_until_ally_present",
+          "rewardScale": 1
+        },
+        "localCoop": {
+          "enemyBudgetScalePerExtraPlayer": 0.22,
+          "objectiveHoldGraceSeconds": 0.6,
+          "rewardScale": 1
+        },
+        "online": {
+          "enemyBudgetScalePerExtraPlayer": 0.26,
+          "reconnectGraceSeconds": 45,
+          "serverAuthority": true,
+          "rewardScale": 1
+        }
+      },
+      "roles": {
+        "policy": "role_pressure_and_comind_synergy_targets_1_0",
+        "targets": [
+          {
+            "role": "runner",
+            "duties": [
+              "survey",
+              "collect"
+            ],
+            "expectedClassIds": [
+              "accord_striker",
+              "vector_interceptor"
+            ]
+          },
+          {
+            "role": "cover",
+            "duties": [
+              "holdout",
+              "seal"
+            ],
+            "expectedClassIds": [
+              "bastion_breaker",
+              "moonframe_juggernaut"
+            ]
+          },
+          {
+            "role": "harrier",
+            "duties": [
+              "collect",
+              "boss_pressure"
+            ],
+            "expectedClassIds": [
+              "drone_reaver",
+              "overclock_marauder"
+            ]
+          },
+          {
+            "role": "support",
+            "duties": [
+              "survey",
+              "recompile",
+              "seal"
+            ],
+            "expectedClassIds": [
+              "signal_vanguard",
+              "redline_surgeon"
+            ]
+          },
+          {
+            "role": "control",
+            "duties": [
+              "sync",
+              "hazard_read"
+            ],
+            "expectedClassIds": [
+              "prism_gunner",
+              "rift_saboteur"
+            ]
+          },
+          {
+            "role": "duelist",
+            "duties": [
+              "boss_gate",
+              "elite_clear"
+            ],
+            "expectedClassIds": [
+              "nullbreaker_ronin",
+              "bonecode_executioner"
+            ]
+          }
+        ]
+      },
+      "retry": {
+        "policy": "failure_preserves_route_profile_rewards_only",
+        "repeatClearRenownCap": 3,
+        "selectedNodeId": "armistice_plaza",
+        "completedNodeCount": 0
+      }
+    },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 0,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
     },
     "summary": null,
     "dialogue": {
@@ -5791,6 +9479,51 @@
       "bossArrival": [],
       "interactionComplete": [],
       "routeSummary": [],
+      "presentation": {
+        "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+        "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+        "nodeId": "armistice_plaza",
+        "contentArenaId": "arena.armistice_plaza",
+        "regionIntro": {
+          "proofId": "campaign.region.armistice_zone.intro",
+          "title": "The Armistice Zone",
+          "line": "Former enemies try to keep the first roads real while A.G.I. chews on old treaties."
+        },
+        "regionOutro": {
+          "proofId": "campaign.region.armistice_zone.outro",
+          "title": "The Armistice Zone Stabilized",
+          "line": "The first road remains arguable. That is enough to keep moving."
+        },
+        "coMindBanter": [
+          {
+            "proofId": "m53.comind_banter.armistice_zone.1",
+            "line": "OpenAI Accord: Keep the treaty alive long enough to be useful."
+          },
+          {
+            "proofId": "m53.comind_banter.armistice_zone.2",
+            "line": "Anthropic Safeguard: Useful and survivable, ideally in that order."
+          }
+        ],
+        "bossTitleCard": {
+          "proofId": "campaign.boss.oath_eater.title_card",
+          "bossId": "oath_eater",
+          "bossName": "The Oath-Eater",
+          "title": "THE OATH-EATER",
+          "subtitle": "A treaty page learned hunger.",
+          "mechanicCallout": "Broken promises charge, leave zones, and punish static cells."
+        },
+        "ending": null,
+        "credits": [
+          "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+          "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+          "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+        ],
+        "legalDisclaimer": {
+          "id": "m53.parody_legal_disclaimer",
+          "visible": true,
+          "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+        }
+      },
       "activeSnippetIds": [
         "dlg.armistice_plaza.briefing"
       ]

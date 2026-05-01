@@ -143,13 +143,175 @@
     "activeEntities": 3,
     "fpsTarget": 60
   },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 0,
+      "pickup": 0,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "ui.enter_build_select",
+        "kind": "ui",
+        "atMs": 748
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
   "assetRendering": {
     "assetPreview": null,
     "armisticeTileAtlasEnabled": true,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
     "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
     "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
@@ -157,18 +319,18 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 88,
+    "totalAssets": 94,
     "countsByStatus": {
       "concept": 14,
       "raw": 4,
       "code_placeholder": 16,
-      "production": 37,
+      "production": 43,
       "cleaned": 1,
       "planned": 16
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 37
+    "productionAssets": 43
   },
   "player": {
     "worldX": 0,
@@ -297,9 +459,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 30,
+          "tick": 29,
           "playerId": "p1",
-          "sequence": 30,
+          "sequence": 29,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -308,8 +470,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 30,
-        "seconds": 0.5,
+        "tick": 29,
+        "seconds": 0.48,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -397,8 +559,8 @@
             "id": 1,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": 7.16,
-            "worldY": 4.95,
+            "worldX": 7.18,
+            "worldY": 4.96,
             "hp": 22,
             "boss": false
           },
@@ -406,7 +568,7 @@
             "id": 2,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": -9.69,
+            "worldX": -9.72,
             "worldY": -0.32,
             "hp": 22,
             "boss": false
@@ -416,8 +578,8 @@
         "projectiles": [
           {
             "id": 3,
-            "worldX": 1.91,
-            "worldY": 1.32,
+            "worldX": 1.75,
+            "worldY": 1.21,
             "pierce": 4
           }
         ]
@@ -438,7 +600,7 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 0.5,
+    "seconds": 0.48,
     "kills": 0,
     "bossSpawned": false,
     "bossDefeated": false
@@ -449,8 +611,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": 7.16,
-      "worldY": 4.95,
+      "worldX": 7.18,
+      "worldY": 4.96,
       "hp": 22,
       "boss": false
     },
@@ -459,7 +621,7 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": -9.69,
+      "worldX": -9.72,
       "worldY": -0.32,
       "hp": 22,
       "boss": false
@@ -468,8 +630,8 @@
   "pickups": [],
   "projectiles": [
     {
-      "worldX": 1.91,
-      "worldY": 1.32,
+      "worldX": 1.75,
+      "worldY": 1.21,
       "pierce": 4,
       "label": "prism cannon"
     }

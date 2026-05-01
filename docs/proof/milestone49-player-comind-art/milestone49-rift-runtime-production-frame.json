@@ -143,6 +143,86 @@
     "activeEntities": 2,
     "fpsTarget": 60
   },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 0,
+      "pickup": 0,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "ui.enter_build_select",
+        "kind": "ui",
+        "atMs": 1150
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
   "assetRendering": {
     "assetPreview": null,
     "armisticeTileAtlasEnabled": true,
@@ -389,9 +469,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 74,
+          "tick": 71,
           "playerId": "p1",
-          "sequence": 74,
+          "sequence": 71,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -400,8 +480,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 74,
-        "seconds": 1.23,
+        "tick": 71,
+        "seconds": 1.18,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -489,8 +569,8 @@
             "id": 1,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": 6.25,
-            "worldY": 4.32,
+            "worldX": 6.31,
+            "worldY": 4.36,
             "hp": 22,
             "boss": false
           },
@@ -498,7 +578,7 @@
             "id": 2,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": -8.6,
+            "worldX": -8.67,
             "worldY": -0.29,
             "hp": 22,
             "boss": false
@@ -523,7 +603,7 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 1.23,
+    "seconds": 1.18,
     "kills": 0,
     "bossSpawned": false,
     "bossDefeated": false
@@ -534,8 +614,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": 6.25,
-      "worldY": 4.32,
+      "worldX": 6.31,
+      "worldY": 4.36,
       "hp": 22,
       "boss": false
     },
@@ -544,7 +624,7 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": -8.6,
+      "worldX": -8.67,
       "worldY": -0.29,
       "hp": 22,
       "boss": false

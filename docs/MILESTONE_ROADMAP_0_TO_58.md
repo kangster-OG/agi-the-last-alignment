@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-57 are complete. Milestone 58 is next.
+Current repo status as of May 1, 2026: Milestones 0-58 are complete. The 1.0 launch candidate is public on GitHub Pages and ready for Vibe Jam submission if the submission form accepts the static-hosted URL.
 
 ## Non-Negotiable Continuity
 
@@ -806,20 +806,30 @@ Readiness: complete.
 
 Goal: ship the free browser-playable 1.0.
 
-Expected scope:
+Implemented:
 
-- public browser build;
-- full campaign route;
-- online co-op;
-- production-art defaults;
-- export-code persistence;
-- documented known limitations.
+- public browser build deployed to `https://kangster-og.github.io/agi-the-last-alignment/`;
+- full campaign route retained and re-proofed through finale completion;
+- online Colyseus co-op retained in source, local proof suite, and Render single-service Blueprint;
+- production-art defaults and placeholder opt-outs retained;
+- export-code route-profile persistence retained;
+- `docs/LAUNCH_1_0.md` added with public URL, launch scope, known limitations, and final gate commands;
+- Vite production assets switched to relative paths for stable GitHub Pages subpath hosting;
+- `npm run proof:milestone58-launch` added to verify deployed HTML, widget, no-login load, proof hooks, visible canvas pixels, and solo arena launch;
+- Render deployment attempted but blocked by missing authenticated Render account/API/CLI in the local environment, so the committed `render.yaml` remains the preferred WebSocket-capable deployment path.
 
-Proof expectations:
+Proof coverage:
 
-- launch build is reproducible;
-- known limitations are documented;
-- no account/cloud persistence is implied unless explicitly implemented by a future product decision.
+- `npm run build`
+- `npm run proof:assets`
+- `npm run proof:release-checklist`
+- M43-M56 milestone proof sweep
+- `npm run proof:milestone19-reconnect-schema`
+- `npm run proof:campaign-full`
+- `npm run proof:smoke`
+- `PUBLIC_GAME_URL=https://kangster-og.github.io/agi-the-last-alignment/ npm run proof:milestone58-launch`
+
+Readiness: complete.
 
 ## Interface And Proof Additions Still Expected
 

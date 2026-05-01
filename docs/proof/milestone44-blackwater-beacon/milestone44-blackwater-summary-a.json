@@ -72,9 +72,124 @@
   "upgrades": [],
   "objective": "Move independently in the shared Consensus Cell.",
   "performance": {
-    "entitiesAllocated": 17,
-    "activeEntities": 17,
+    "entitiesAllocated": 15,
+    "activeEntities": 15,
     "fpsTarget": 60
+  },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 0,
+      "pickup": 0,
+      "boss_warning": 1,
+      "music": 1,
+      "objective": 4,
+      "summary": 1
+    },
+    "recentCues": [
+      {
+        "id": "online.objective_tick",
+        "kind": "objective",
+        "atMs": 8757
+      },
+      {
+        "id": "online.objective_tick",
+        "kind": "objective",
+        "atMs": 8492
+      },
+      {
+        "id": "online.objective_tick",
+        "kind": "objective",
+        "atMs": 8030
+      },
+      {
+        "id": "online.objective_tick",
+        "kind": "objective",
+        "atMs": 7649
+      },
+      {
+        "id": "online.summary_stinger",
+        "kind": "summary",
+        "atMs": 7564
+      },
+      {
+        "id": "music.blackwater_beacon.boss",
+        "kind": "music",
+        "atMs": 6324
+      },
+      {
+        "id": "online.blackwater_beacon.boss_warning",
+        "kind": "boss_warning",
+        "atMs": 6324
+      },
+      {
+        "id": "ui.enter_online_coop",
+        "kind": "ui",
+        "atMs": 569
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
   },
   "assetRendering": {
     "assetPreview": null,
@@ -186,19 +301,21 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "tQ9CIRPzg",
-    "worldX": 3.4,
-    "worldY": -6.2,
-    "hp": 151,
-    "maxHp": 154,
+    "sessionId": "sIyh5Jlqu",
+    "worldX": 8.2,
+    "worldY": -2.4,
+    "hp": 190,
+    "maxHp": 190,
     "xp": 10,
     "level": 2
   },
   "online": {
     "status": "joined",
-    "serverUrl": "ws://127.0.0.1:2613",
-    "roomId": "pASXehOZU",
-    "sessionId": "tQ9CIRPzg",
+    "serverUrl": "ws://127.0.0.1:2614",
+    "serverUrlSource": "query.coopServer",
+    "roomId": "-q0w5yeUz",
+    "roomCode": "PUBLIC",
+    "sessionId": "sIyh5Jlqu",
     "lastError": "",
     "reconnectKey": "kwater_a",
     "reconnect": {
@@ -228,13 +345,71 @@
       "completedNodeCount": 5,
       "unlockedNodeCount": 11
     },
+    "deployment": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "join_or_create_filtered_by_room_code",
+      "healthPath": "/healthz",
+      "staticDistEnabled": false,
+      "tickRate": 30,
+      "clientInputHz": 20,
+      "maxClients": 4,
+      "port": 2614,
+      "host": "0.0.0.0",
+      "reconnectGraceSeconds": 45,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "latencyTolerance": {
+        "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+        "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+        "snapshotCadence": "server_tick_broadcast_snapshot",
+        "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+      },
+      "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+    },
+    "robustness": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "colyseus_join_or_create_filtered_by_room_code",
+      "serverUrl": "ws://127.0.0.1:2614",
+      "serverUrlSource": "query.coopServer",
+      "reconnectKey": "kwater_a",
+      "reconnectGraceSeconds": 45,
+      "inputSendHz": 20,
+      "serverTickRate": 30,
+      "healthPath": "/healthz",
+      "noAccountPersistence": "browser_local_export_code_route_profile_only",
+      "persistenceBoundary": "no_live_objectives_combat_build_kits_cooldowns_recompile_dialogue_route_focus_or_authority_import_export",
+      "deployment": {
+        "policy": "milestone55_online_robustness_deployment_1_0",
+        "roomCode": "PUBLIC",
+        "joinMode": "join_or_create_filtered_by_room_code",
+        "healthPath": "/healthz",
+        "staticDistEnabled": false,
+        "tickRate": 30,
+        "clientInputHz": 20,
+        "maxClients": 4,
+        "port": 2614,
+        "host": "0.0.0.0",
+        "reconnectGraceSeconds": 45,
+        "connectedCount": 2,
+        "disconnectedCount": 0,
+        "latencyTolerance": {
+          "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+          "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+          "snapshotCadence": "server_tick_broadcast_snapshot",
+          "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+        },
+        "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+      }
+    },
     "localPersistence": {
       "resetApplied": false,
       "clearedStoredProfile": false,
       "foundStoredProfile": true,
       "draftHash": "fnv1a_44de0c3f",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTQ0X2JsYWNrd2F0ZXJfYmVhY29uX3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6NCwiaW1wb3J0ZWRSZXdhcmRDb3VudCI6NiwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNDRfYmxhY2t3YXRlcl9iZWFjb25fcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6NCwicmV3YXJkQ291bnQiOjZ9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiJdLCJyZXdhcmRJZHMiOlsicGxhemFfc3RhYmlsaXplZCIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIiwiY2Vhc2VmaXJlX2NhY2hlX3BlcnNpc3RlbmNlX3NlZWQiLCJwcm90b3R5cGVfcGVyc2lzdGVuY2VfYm91bmRhcnkiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSJdLCJwYXJ0eVJlbm93biI6MTksIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MSwiY29vbGluZ19sYWtlX25pbmUiOjEsIm1lbW9yeV9jYWNoZV8wMDEiOjEsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyI6MSwiYmxhY2t3YXRlcl9iZWFjb24iOjF9LCJyZWNvbW1lbmRlZE5vZGVJZCI6InRyYW5zaXRfbG9vcF96ZXJvIiwicm91dGVEZXB0aCI6NSwic2F2ZWRBdFRpY2siOjI5MH0sInNhdmVIYXNoIjoiZm52MWFfNDRkZTBjM2YiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzQ0ZGUwYzNmIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTQ0X2JsYWNrd2F0ZXJfYmVhY29uX3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6NCwiaW1wb3J0ZWRSZXdhcmRDb3VudCI6NiwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNDRfYmxhY2t3YXRlcl9iZWFjb25fcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6NCwicmV3YXJkQ291bnQiOjZ9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiJdLCJyZXdhcmRJZHMiOlsicGxhemFfc3RhYmlsaXplZCIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIiwiY2Vhc2VmaXJlX2NhY2hlX3BlcnNpc3RlbmNlX3NlZWQiLCJwcm90b3R5cGVfcGVyc2lzdGVuY2VfYm91bmRhcnkiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSJdLCJwYXJ0eVJlbm93biI6MTksIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MSwiY29vbGluZ19sYWtlX25pbmUiOjEsIm1lbW9yeV9jYWNoZV8wMDEiOjEsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyI6MSwiYmxhY2t3YXRlcl9iZWFjb24iOjF9LCJyZWNvbW1lbmRlZE5vZGVJZCI6InRyYW5zaXRfbG9vcF96ZXJvIiwicm91dGVEZXB0aCI6NSwic2F2ZWRBdFRpY2siOjI3Mn0sInNhdmVIYXNoIjoiZm52MWFfNDRkZTBjM2YiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzQ0ZGUwYzNmIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -246,7 +421,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTQ0X2JsYWNrd2F0ZXJfYmVhY29uX3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6NCwiaW1wb3J0ZWRSZXdhcmRDb3VudCI6NiwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNDRfYmxhY2t3YXRlcl9iZWFjb25fcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6NCwicmV3YXJkQ291bnQiOjZ9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiJdLCJyZXdhcmRJZHMiOlsicGxhemFfc3RhYmlsaXplZCIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIiwiY2Vhc2VmaXJlX2NhY2hlX3BlcnNpc3RlbmNlX3NlZWQiLCJwcm90b3R5cGVfcGVyc2lzdGVuY2VfYm91bmRhcnkiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSJdLCJwYXJ0eVJlbm93biI6MTksIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MSwiY29vbGluZ19sYWtlX25pbmUiOjEsIm1lbW9yeV9jYWNoZV8wMDEiOjEsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyI6MSwiYmxhY2t3YXRlcl9iZWFjb24iOjF9LCJyZWNvbW1lbmRlZE5vZGVJZCI6InRyYW5zaXRfbG9vcF96ZXJvIiwicm91dGVEZXB0aCI6NSwic2F2ZWRBdFRpY2siOjI5MH0sInNhdmVIYXNoIjoiZm52MWFfNDRkZTBjM2YiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzQ0ZGUwYzNmIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTQ0X2JsYWNrd2F0ZXJfYmVhY29uX3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6NCwiaW1wb3J0ZWRSZXdhcmRDb3VudCI6NiwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNDRfYmxhY2t3YXRlcl9iZWFjb25fcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6NCwicmV3YXJkQ291bnQiOjZ9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiJdLCJyZXdhcmRJZHMiOlsicGxhemFfc3RhYmlsaXplZCIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIiwiY2Vhc2VmaXJlX2NhY2hlX3BlcnNpc3RlbmNlX3NlZWQiLCJwcm90b3R5cGVfcGVyc2lzdGVuY2VfYm91bmRhcnkiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSJdLCJwYXJ0eVJlbm93biI6MTksIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MSwiY29vbGluZ19sYWtlX25pbmUiOjEsIm1lbW9yeV9jYWNoZV8wMDEiOjEsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyI6MSwiYmxhY2t3YXRlcl9iZWFjb24iOjF9LCJyZWNvbW1lbmRlZE5vZGVJZCI6InRyYW5zaXRfbG9vcF96ZXJvIiwicm91dGVEZXB0aCI6NSwic2F2ZWRBdFRpY2siOjI3Mn0sInNhdmVIYXNoIjoiZm52MWFfNDRkZTBjM2YiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzQ0ZGUwYzNmIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": true,
@@ -294,7 +469,7 @@
         },
         "recommendedNodeId": "transit_loop_zero",
         "routeDepth": 5,
-        "savedAtTick": 290
+        "savedAtTick": 272
       },
       "saveHash": "fnv1a_44de0c3f",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -958,12 +1133,12 @@
       "rewardCount": 7,
       "onlineNodeCount": 14
     },
-    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
+    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. Room code is URL/query driven. R reconnects; Esc leaves.",
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 290,
-    "seconds": 27.83,
+    "tick": 272,
+    "seconds": 27.45,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "completed",
@@ -973,14 +1148,14 @@
     "combat": {
       "kills": 0,
       "collectedPickups": 0,
-      "authoritativeProjectiles": 0,
+      "authoritativeProjectiles": 1,
       "authoritativePickups": 0,
       "bossGateMechanic": "blackwater_tidal_weather"
     },
     "combatArt": {
       "pressure": 1,
       "phase": "boss_active",
-      "projectileCount": 0,
+      "projectileCount": 1,
       "pickupCount": 0,
       "bossEventActive": false
     },
@@ -1218,7 +1393,7 @@
           "worldX": 4.8,
           "worldY": -6.4,
           "radius": 2.85,
-          "expiresIn": 3.17,
+          "expiresIn": 3.55,
           "damagePerSecond": 3
         },
         {
@@ -1228,7 +1403,7 @@
           "worldX": 2.3,
           "worldY": -3.6,
           "radius": 1.8,
-          "expiresIn": 3.57,
+          "expiresIn": 3.95,
           "damagePerSecond": 0
         },
         {
@@ -1238,7 +1413,7 @@
           "worldX": 7.3,
           "worldY": -3.6,
           "radius": 1.8,
-          "expiresIn": 3.57,
+          "expiresIn": 3.95,
           "damagePerSecond": 0
         },
         {
@@ -1248,7 +1423,7 @@
           "worldX": 2.4,
           "worldY": -1.6,
           "radius": 2.85,
-          "expiresIn": 3.89,
+          "expiresIn": 4.28,
           "damagePerSecond": 3
         },
         {
@@ -1258,7 +1433,7 @@
           "worldX": -2.5,
           "worldY": 1.2,
           "radius": 1.8,
-          "expiresIn": 4.29,
+          "expiresIn": 4.68,
           "damagePerSecond": 0
         },
         {
@@ -1268,7 +1443,7 @@
           "worldX": 2.5,
           "worldY": 1.2,
           "radius": 1.8,
-          "expiresIn": 4.29,
+          "expiresIn": 4.68,
           "damagePerSecond": 0
         }
       ]
@@ -1422,7 +1597,7 @@
           "progress": 4.2,
           "required": 4.2,
           "heldBySessionIds": [
-            "tQ9CIRPzg"
+            "Qshaz2ZN5"
           ],
           "heldByLabels": [
             "P1"
@@ -1470,7 +1645,7 @@
           "worldX": 3.4,
           "worldY": -6.2,
           "radius": 2.75,
-          "heldBySessionId": "tQ9CIRPzg",
+          "heldBySessionId": "Qshaz2ZN5",
           "heldByLabel": "P1",
           "heldSeconds": 1.14,
           "requiredSeconds": 2.4,
@@ -1483,7 +1658,7 @@
           "worldX": 8.2,
           "worldY": -2.4,
           "radius": 2.75,
-          "heldBySessionId": "3Hx-folfC",
+          "heldBySessionId": "sIyh5Jlqu",
           "heldByLabel": "P2",
           "heldSeconds": 1.14,
           "requiredSeconds": 2.4,
@@ -1492,7 +1667,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "tQ9CIRPzg",
+          "sessionId": "Qshaz2ZN5",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1501,7 +1676,7 @@
           "connected": true
         },
         {
-          "sessionId": "3Hx-folfC",
+          "sessionId": "sIyh5Jlqu",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1680,7 +1855,7 @@
         },
         "recommendedNodeId": "transit_loop_zero",
         "routeDepth": 5,
-        "savedAtTick": 290
+        "savedAtTick": 272
       },
       "saveHash": "fnv1a_44de0c3f",
       "currentExportHash": "fnv1a_44de0c3f",
@@ -2467,6 +2642,32 @@
         "completedNodeCount": 5
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 1,
+        "objective": 5,
+        "burst": 0,
+        "summary": 1
+      }
+    },
     "progression": {
       "policy": "shared_party_xp_coop_vote",
       "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
@@ -2513,7 +2714,7 @@
       "subtitle": "The antenna points at the sky again, which feels like progress.",
       "nodeId": "blackwater_beacon",
       "arenaId": "blackwater_beacon",
-      "seconds": 27.83,
+      "seconds": 27.45,
       "kills": 0,
       "collectedPickups": 0,
       "partyXp": 10,
@@ -2748,7 +2949,7 @@
             "progress": 4.2,
             "required": 4.2,
             "heldBySessionIds": [
-              "tQ9CIRPzg"
+              "Qshaz2ZN5"
             ],
             "heldByLabels": [
               "P1"
@@ -2884,16 +3085,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "tQ9CIRPzg",
-          "playerId": "player_0_kwater_a",
+          "sessionId": "Qshaz2ZN5",
+          "playerId": "player_0_kwater_b",
           "label": "P1",
           "nodeId": "blackwater_beacon",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "3Hx-folfC",
-          "playerId": "player_1_kwater_b",
+          "sessionId": "sIyh5Jlqu",
+          "playerId": "player_1_kwater_a",
           "label": "P2",
           "nodeId": "blackwater_beacon",
           "ready": true,
@@ -5075,7 +5276,7 @@
           },
           "recommendedNodeId": "transit_loop_zero",
           "routeDepth": 5,
-          "savedAtTick": 290
+          "savedAtTick": 272
         },
         "saveHash": "fnv1a_44de0c3f",
         "currentExportHash": "fnv1a_44de0c3f",
@@ -5866,8 +6067,8 @@
   },
   "players": [
     {
-      "sessionId": "tQ9CIRPzg",
-      "playerId": "player_0_kwater_a",
+      "sessionId": "Qshaz2ZN5",
+      "playerId": "player_0_kwater_b",
       "slot": 0,
       "label": "P1",
       "classId": "accord_striker",
@@ -5927,7 +6128,7 @@
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 151,
+      "hp": 137,
       "maxHp": 154,
       "xp": 10,
       "level": 2,
@@ -5941,12 +6142,12 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": true,
-      "inputSequence": 58
+      "isLocal": false,
+      "inputSequence": 50
     },
     {
-      "sessionId": "3Hx-folfC",
-      "playerId": "player_1_kwater_b",
+      "sessionId": "sIyh5Jlqu",
+      "playerId": "player_1_kwater_a",
       "slot": 1,
       "label": "P2",
       "classId": "accord_striker",
@@ -6020,8 +6221,8 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": false,
-      "inputSequence": 57
+      "isLocal": true,
+      "inputSequence": 51
     }
   ],
   "overworld": null,
@@ -6145,16 +6346,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "tQ9CIRPzg",
-          "playerId": "player_0_kwater_a",
+          "sessionId": "Qshaz2ZN5",
+          "playerId": "player_0_kwater_b",
           "label": "P1",
           "nodeId": "blackwater_beacon",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "3Hx-folfC",
-          "playerId": "player_1_kwater_b",
+          "sessionId": "sIyh5Jlqu",
+          "playerId": "player_1_kwater_a",
           "label": "P2",
           "nodeId": "blackwater_beacon",
           "ready": true,
@@ -8336,7 +8537,7 @@
           },
           "recommendedNodeId": "transit_loop_zero",
           "routeDepth": 5,
-          "savedAtTick": 290
+          "savedAtTick": 272
         },
         "saveHash": "fnv1a_44de0c3f",
         "currentExportHash": "fnv1a_44de0c3f",
@@ -9188,7 +9389,7 @@
           "worldX": 4.8,
           "worldY": -6.4,
           "radius": 2.85,
-          "expiresIn": 3.17,
+          "expiresIn": 3.55,
           "damagePerSecond": 3
         },
         {
@@ -9198,7 +9399,7 @@
           "worldX": 2.3,
           "worldY": -3.6,
           "radius": 1.8,
-          "expiresIn": 3.57,
+          "expiresIn": 3.95,
           "damagePerSecond": 0
         },
         {
@@ -9208,7 +9409,7 @@
           "worldX": 7.3,
           "worldY": -3.6,
           "radius": 1.8,
-          "expiresIn": 3.57,
+          "expiresIn": 3.95,
           "damagePerSecond": 0
         },
         {
@@ -9218,7 +9419,7 @@
           "worldX": 2.4,
           "worldY": -1.6,
           "radius": 2.85,
-          "expiresIn": 3.89,
+          "expiresIn": 4.28,
           "damagePerSecond": 3
         },
         {
@@ -9228,7 +9429,7 @@
           "worldX": -2.5,
           "worldY": 1.2,
           "radius": 1.8,
-          "expiresIn": 4.29,
+          "expiresIn": 4.68,
           "damagePerSecond": 0
         },
         {
@@ -9238,7 +9439,7 @@
           "worldX": 2.5,
           "worldY": 1.2,
           "radius": 1.8,
-          "expiresIn": 4.29,
+          "expiresIn": 4.68,
           "damagePerSecond": 0
         }
       ]
@@ -9339,7 +9540,7 @@
         },
         "recommendedNodeId": "transit_loop_zero",
         "routeDepth": 5,
-        "savedAtTick": 290
+        "savedAtTick": 272
       },
       "saveHash": "fnv1a_44de0c3f",
       "currentExportHash": "fnv1a_44de0c3f",
@@ -10126,6 +10327,32 @@
         "completedNodeCount": 5
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 1,
+        "objective": 5,
+        "burst": 0,
+        "summary": 1
+      }
+    },
     "summary": {
       "outcome": "completed",
       "reason": "blackwater_signal_tuned",
@@ -10133,7 +10360,7 @@
       "subtitle": "The antenna points at the sky again, which feels like progress.",
       "nodeId": "blackwater_beacon",
       "arenaId": "blackwater_beacon",
-      "seconds": 27.83,
+      "seconds": 27.45,
       "kills": 0,
       "collectedPickups": 0,
       "partyXp": 10,
@@ -10368,7 +10595,7 @@
             "progress": 4.2,
             "required": 4.2,
             "heldBySessionIds": [
-              "tQ9CIRPzg"
+              "Qshaz2ZN5"
             ],
             "heldByLabels": [
               "P1"
@@ -10502,17 +10729,17 @@
       "id": 7,
       "familyId": "maw_below_weather",
       "sourceRegionId": "blackwater_beacon_boss_gate",
-      "worldX": 3.54,
-      "worldY": -4.74,
-      "hp": 406,
+      "worldX": 3.67,
+      "worldY": -4.98,
+      "hp": 494,
       "boss": true
     },
     {
       "id": 1,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 12.21,
-      "worldY": -9.15,
+      "worldX": 13.18,
+      "worldY": -10.06,
       "hp": 33,
       "boss": false
     },
@@ -10520,8 +10747,8 @@
       "id": 2,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 7.12,
-      "worldY": -9.55,
+      "worldX": 8.02,
+      "worldY": -10.6,
       "hp": 33,
       "boss": false
     },
@@ -10529,8 +10756,8 @@
       "id": 3,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 8.22,
-      "worldY": -10.13,
+      "worldX": 9.16,
+      "worldY": -11.19,
       "hp": 33,
       "boss": false
     },
@@ -10538,8 +10765,8 @@
       "id": 4,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 15.2,
-      "worldY": -15.01,
+      "worldX": 16.18,
+      "worldY": -15.98,
       "hp": 33,
       "boss": false
     },
@@ -10547,8 +10774,8 @@
       "id": 5,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 14.86,
-      "worldY": -17.35,
+      "worldX": 15.85,
+      "worldY": -18.36,
       "hp": 33,
       "boss": false
     },
@@ -10556,8 +10783,8 @@
       "id": 6,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 13.47,
-      "worldY": -10.95,
+      "worldX": 14.43,
+      "worldY": -11.88,
       "hp": 33,
       "boss": false
     },
@@ -10565,8 +10792,8 @@
       "id": 8,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 15.94,
-      "worldY": -16.08,
+      "worldX": 17.79,
+      "worldY": -16.06,
       "hp": 33,
       "boss": false
     },
@@ -10574,8 +10801,8 @@
       "id": 9,
       "familyId": "prompt_leeches",
       "sourceRegionId": "blackwater_prompt_leeches",
-      "worldX": -7.09,
-      "worldY": -8.83,
+      "worldX": -10.32,
+      "worldY": -10.63,
       "hp": 18,
       "boss": false
     },
@@ -10583,8 +10810,8 @@
       "id": 10,
       "familyId": "prompt_leeches",
       "sourceRegionId": "blackwater_prompt_leeches",
-      "worldX": -6.41,
-      "worldY": -10.69,
+      "worldX": -9.57,
+      "worldY": -11.29,
       "hp": 18,
       "boss": false
     },
@@ -10592,8 +10819,8 @@
       "id": 11,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 11.14,
-      "worldY": -16.6,
+      "worldX": 13.91,
+      "worldY": -20.33,
       "hp": 33,
       "boss": false
     },
@@ -10601,12 +10828,23 @@
       "id": 12,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 11.8,
-      "worldY": -15.25,
+      "worldX": 13.05,
+      "worldY": -19.45,
       "hp": 33,
       "boss": false
     }
   ],
   "pickups": [],
-  "projectiles": []
+  "projectiles": [
+    {
+      "id": 16,
+      "ownerSessionId": "sIyh5Jlqu",
+      "worldX": 4.81,
+      "worldY": -4.09,
+      "velocityX": -8.23,
+      "velocityY": -4.11,
+      "life": 0.84,
+      "label": "refusal shard"
+    }
+  ]
 }

@@ -76,6 +76,42 @@
     "activeEntities": 14,
     "fpsTarget": 60
   },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
   "feedback": {
     "policy": "audio_juice_feel_1_0_runtime_only",
     "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
@@ -104,8 +140,8 @@
     },
     "counters": {
       "ui": 1,
-      "hit": 5,
-      "pickup": 4,
+      "hit": 6,
+      "pickup": 3,
       "boss_warning": 0,
       "music": 0,
       "objective": 1,
@@ -113,44 +149,44 @@
     },
     "recentCues": [
       {
-        "id": "online.pickup_chime",
-        "kind": "pickup",
-        "atMs": 10090
+        "id": "online.weapon_hit",
+        "kind": "hit",
+        "atMs": 9721
       },
       {
         "id": "online.weapon_hit",
         "kind": "hit",
-        "atMs": 9917
+        "atMs": 9684
       },
       {
         "id": "online.weapon_hit",
         "kind": "hit",
-        "atMs": 9606
-      },
-      {
-        "id": "online.weapon_hit",
-        "kind": "hit",
-        "atMs": 9538
+        "atMs": 9510
       },
       {
         "id": "online.summary_stinger",
         "kind": "summary",
-        "atMs": 9066
-      },
-      {
-        "id": "online.pickup_chime",
-        "kind": "pickup",
-        "atMs": 8515
+        "atMs": 8833
       },
       {
         "id": "online.weapon_hit",
         "kind": "hit",
-        "atMs": 8424
+        "atMs": 8609
       },
       {
         "id": "online.pickup_chime",
         "kind": "pickup",
-        "atMs": 8150
+        "atMs": 8228
+      },
+      {
+        "id": "online.weapon_hit",
+        "kind": "hit",
+        "atMs": 7989
+      },
+      {
+        "id": "online.pickup_chime",
+        "kind": "pickup",
+        "atMs": 7954
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -265,21 +301,21 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "rhkod3T4q",
+    "sessionId": "humeLhiLs",
     "worldX": 0,
     "worldY": 0,
     "hp": 154,
     "maxHp": 154,
-    "xp": 16,
+    "xp": 15,
     "level": 3
   },
   "online": {
     "status": "joined",
-    "serverUrl": "ws://127.0.0.1:2588",
+    "serverUrl": "ws://127.0.0.1:2589",
     "serverUrlSource": "query.coopServer",
-    "roomId": "DmOnupOqV",
+    "roomId": "WZQy23YL-",
     "roomCode": "PUBLIC",
-    "sessionId": "rhkod3T4q",
+    "sessionId": "humeLhiLs",
     "lastError": "",
     "reconnectKey": "player_a",
     "reconnect": {
@@ -318,7 +354,7 @@
       "tickRate": 30,
       "clientInputHz": 20,
       "maxClients": 4,
-      "port": 2588,
+      "port": 2589,
       "host": "0.0.0.0",
       "reconnectGraceSeconds": 45,
       "connectedCount": 2,
@@ -335,7 +371,7 @@
       "policy": "milestone55_online_robustness_deployment_1_0",
       "roomCode": "PUBLIC",
       "joinMode": "colyseus_join_or_create_filtered_by_room_code",
-      "serverUrl": "ws://127.0.0.1:2588",
+      "serverUrl": "ws://127.0.0.1:2589",
       "serverUrlSource": "query.coopServer",
       "reconnectKey": "player_a",
       "reconnectGraceSeconds": 45,
@@ -353,7 +389,7 @@
         "tickRate": 30,
         "clientInputHz": 20,
         "maxClients": 4,
-        "port": 2588,
+        "port": 2589,
         "host": "0.0.0.0",
         "reconnectGraceSeconds": 45,
         "connectedCount": 2,
@@ -373,7 +409,7 @@
       "foundStoredProfile": true,
       "draftHash": "fnv1a_d74d7465",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6NDM4fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6NDMzfSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -385,7 +421,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6NDM4fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6NDMzfSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
       "shortExportCode": "AGI1_eyJwb2xp...3N0YXRlIn0",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -412,7 +448,7 @@
         },
         "recommendedNodeId": "cooling_lake_nine",
         "routeDepth": 1,
-        "savedAtTick": 438
+        "savedAtTick": 433
       },
       "saveHash": "fnv1a_d74d7465",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -1062,8 +1098,8 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 438,
-    "seconds": 12.59,
+    "tick": 433,
+    "seconds": 12.14,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "completed",
@@ -1072,16 +1108,16 @@
     "downedCount": 0,
     "combat": {
       "kills": 14,
-      "collectedPickups": 6,
-      "authoritativeProjectiles": 2,
-      "authoritativePickups": 8,
+      "collectedPickups": 5,
+      "authoritativeProjectiles": 3,
+      "authoritativePickups": 9,
       "bossGateMechanic": "broken_promise"
     },
     "combatArt": {
-      "pressure": 0.63,
+      "pressure": 0.61,
       "phase": "horde",
-      "projectileCount": 2,
-      "pickupCount": 8,
+      "projectileCount": 3,
+      "pickupCount": 9,
       "bossEventActive": false
     },
     "campaignContent": {
@@ -1505,7 +1541,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "5gEaAajYk",
+          "sessionId": "IVQ0tiEpn",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1514,7 +1550,7 @@
           "connected": true
         },
         {
-          "sessionId": "rhkod3T4q",
+          "sessionId": "humeLhiLs",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1658,7 +1694,7 @@
         },
         "recommendedNodeId": "cooling_lake_nine",
         "routeDepth": 1,
-        "savedAtTick": 438
+        "savedAtTick": 433
       },
       "saveHash": "fnv1a_d74d7465",
       "currentExportHash": "fnv1a_d74d7465",
@@ -2464,7 +2500,7 @@
       },
       "counters": {
         "hit": 14,
-        "pickup": 6,
+        "pickup": 5,
         "boss_warning": 0,
         "objective": 1,
         "burst": 0,
@@ -2474,7 +2510,7 @@
     "progression": {
       "policy": "shared_party_xp_coop_vote",
       "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
-      "partyXp": 16,
+      "partyXp": 15,
       "partyLevel": 3,
       "nextLevelXp": 22,
       "thresholds": [
@@ -2518,10 +2554,10 @@
       "subtitle": "Online Consensus Cell kept the road real.",
       "nodeId": "armistice_plaza",
       "arenaId": "armistice_plaza",
-      "seconds": 12.59,
+      "seconds": 12.14,
       "kills": 14,
-      "collectedPickups": 6,
-      "partyXp": 16,
+      "collectedPickups": 5,
+      "partyXp": 15,
       "partyLevel": 3,
       "chosenUpgrades": [
         "refusal_halo",
@@ -2878,7 +2914,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "5gEaAajYk",
+          "sessionId": "IVQ0tiEpn",
           "playerId": "player_1_player_b",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -2886,7 +2922,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "rhkod3T4q",
+          "sessionId": "humeLhiLs",
           "playerId": "player_0_player_a",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -5010,7 +5046,7 @@
           },
           "recommendedNodeId": "cooling_lake_nine",
           "routeDepth": 1,
-          "savedAtTick": 438
+          "savedAtTick": 433
         },
         "saveHash": "fnv1a_d74d7465",
         "currentExportHash": "fnv1a_d74d7465",
@@ -5801,7 +5837,7 @@
   },
   "players": [
     {
-      "sessionId": "5gEaAajYk",
+      "sessionId": "IVQ0tiEpn",
       "playerId": "player_1_player_b",
       "slot": 1,
       "label": "P2",
@@ -5864,7 +5900,7 @@
       "facing": "south",
       "hp": 185,
       "maxHp": 190,
-      "xp": 16,
+      "xp": 15,
       "level": 3,
       "ready": true,
       "votedNodeId": "armistice_plaza",
@@ -5877,10 +5913,10 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": false,
-      "inputSequence": 160
+      "inputSequence": 156
     },
     {
-      "sessionId": "rhkod3T4q",
+      "sessionId": "humeLhiLs",
       "playerId": "player_0_player_a",
       "slot": 0,
       "label": "P1",
@@ -5943,7 +5979,7 @@
       "facing": "south",
       "hp": 154,
       "maxHp": 154,
-      "xp": 16,
+      "xp": 15,
       "level": 3,
       "ready": true,
       "votedNodeId": "armistice_plaza",
@@ -5956,7 +5992,7 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": true,
-      "inputSequence": 20
+      "inputSequence": 19
     }
   ],
   "overworld": null,
@@ -6080,7 +6116,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "5gEaAajYk",
+          "sessionId": "IVQ0tiEpn",
           "playerId": "player_1_player_b",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -6088,7 +6124,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "rhkod3T4q",
+          "sessionId": "humeLhiLs",
           "playerId": "player_0_player_a",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -8212,7 +8248,7 @@
           },
           "recommendedNodeId": "cooling_lake_nine",
           "routeDepth": 1,
-          "savedAtTick": 438
+          "savedAtTick": 433
         },
         "saveHash": "fnv1a_d74d7465",
         "currentExportHash": "fnv1a_d74d7465",
@@ -9003,7 +9039,7 @@
     "progression": {
       "policy": "shared_party_xp_coop_vote",
       "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
-      "partyXp": 16,
+      "partyXp": 15,
       "partyLevel": 3,
       "nextLevelXp": 22,
       "thresholds": [
@@ -9113,7 +9149,7 @@
         },
         "recommendedNodeId": "cooling_lake_nine",
         "routeDepth": 1,
-        "savedAtTick": 438
+        "savedAtTick": 433
       },
       "saveHash": "fnv1a_d74d7465",
       "currentExportHash": "fnv1a_d74d7465",
@@ -9919,7 +9955,7 @@
       },
       "counters": {
         "hit": 14,
-        "pickup": 6,
+        "pickup": 5,
         "boss_warning": 0,
         "objective": 1,
         "burst": 0,
@@ -9933,10 +9969,10 @@
       "subtitle": "Online Consensus Cell kept the road real.",
       "nodeId": "armistice_plaza",
       "arenaId": "armistice_plaza",
-      "seconds": 12.59,
+      "seconds": 12.14,
       "kills": 14,
-      "collectedPickups": 6,
-      "partyXp": 16,
+      "collectedPickups": 5,
+      "partyXp": 15,
       "partyLevel": 3,
       "chosenUpgrades": [
         "refusal_halo",
@@ -10282,8 +10318,8 @@
       "id": 1,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -8.78,
-      "worldY": 8.21,
+      "worldX": -9.26,
+      "worldY": 8.69,
       "hp": 22,
       "boss": false
     },
@@ -10291,8 +10327,8 @@
       "id": 2,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -12.54,
-      "worldY": 9.07,
+      "worldX": -13.08,
+      "worldY": 9.47,
       "hp": 22,
       "boss": false
     },
@@ -10300,26 +10336,17 @@
       "id": 3,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -13.9,
-      "worldY": 10.63,
+      "worldX": -14.43,
+      "worldY": 11.04,
       "hp": 22,
-      "boss": false
-    },
-    {
-      "id": 12,
-      "familyId": "benchmark_gremlins",
-      "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -8.43,
-      "worldY": -2.61,
-      "hp": 16,
       "boss": false
     },
     {
       "id": 14,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -17.67,
-      "worldY": 12.55,
+      "worldX": -18.18,
+      "worldY": 12.91,
       "hp": 22,
       "boss": false
     },
@@ -10327,8 +10354,8 @@
       "id": 15,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -19.48,
-      "worldY": 14.04,
+      "worldX": -20.01,
+      "worldY": 14.39,
       "hp": 22,
       "boss": false
     },
@@ -10336,8 +10363,8 @@
       "id": 18,
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -14.29,
-      "worldY": -6.12,
+      "worldX": -15.02,
+      "worldY": -6.53,
       "hp": 34,
       "boss": false
     },
@@ -10345,8 +10372,8 @@
       "id": 19,
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -14.27,
-      "worldY": -6.29,
+      "worldX": -15.02,
+      "worldY": -6.73,
       "hp": 34,
       "boss": false
     },
@@ -10354,8 +10381,8 @@
       "id": 20,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -20.48,
-      "worldY": 15.18,
+      "worldX": -21.01,
+      "worldY": 15.58,
       "hp": 22,
       "boss": false
     },
@@ -10363,8 +10390,8 @@
       "id": 21,
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -16.7,
-      "worldY": -12.17,
+      "worldX": -17.33,
+      "worldY": -12.73,
       "hp": 34,
       "boss": false
     },
@@ -10372,8 +10399,8 @@
       "id": 24,
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -19.55,
-      "worldY": -9.9,
+      "worldX": -20.25,
+      "worldY": -10.32,
       "hp": 34,
       "boss": false
     },
@@ -10381,81 +10408,106 @@
       "id": 25,
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -19.64,
-      "worldY": -9.78,
+      "worldX": -20.6,
+      "worldY": -10.34,
       "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 26,
+      "familyId": "bad_outputs",
+      "sourceRegionId": "treaty_monument_oath_pages",
+      "worldX": 0.49,
+      "worldY": -1.46,
+      "hp": 22,
       "boss": false
     }
   ],
   "pickups": [
     {
       "id": 1,
-      "worldX": 0.88,
-      "worldY": 4.06,
+      "worldX": 0.89,
+      "worldY": 4.07,
       "value": 1
     },
     {
       "id": 6,
-      "worldX": 1.83,
-      "worldY": 1.37,
+      "worldX": 1.81,
+      "worldY": 1.34,
       "value": 1
     },
     {
       "id": 8,
-      "worldX": 2.88,
-      "worldY": 2.44,
+      "worldX": 2.97,
+      "worldY": 2.54,
       "value": 1
     },
     {
       "id": 9,
-      "worldX": 3.04,
+      "worldX": 3.09,
       "worldY": 1.62,
       "value": 1
     },
     {
       "id": 10,
-      "worldX": -10.57,
-      "worldY": 8.16,
+      "worldX": -10.6,
+      "worldY": 8.19,
       "value": 1
     },
     {
       "id": 11,
-      "worldX": 2.9,
-      "worldY": 3.04,
+      "worldX": 2.94,
+      "worldY": 2.99,
       "value": 1
     },
     {
       "id": 12,
-      "worldX": 2.72,
-      "worldY": 1.98,
+      "worldX": 2.98,
+      "worldY": 2.16,
       "value": 1
     },
     {
       "id": 13,
-      "worldX": -9.53,
-      "worldY": -3.61,
+      "worldX": -9.72,
+      "worldY": -3.32,
+      "value": 2
+    },
+    {
+      "id": 14,
+      "worldX": -9.8,
+      "worldY": -3.72,
       "value": 2
     }
   ],
   "projectiles": [
     {
       "id": 23,
-      "ownerSessionId": "5gEaAajYk",
-      "worldX": 8.58,
-      "worldY": 3.57,
-      "velocityX": 8.94,
-      "velocityY": 2.17,
-      "life": 0.11,
+      "ownerSessionId": "IVQ0tiEpn",
+      "worldX": 4.89,
+      "worldY": 2.7,
+      "velocityX": 8.93,
+      "velocityY": 2.2,
+      "life": 0.52,
+      "label": "refusal shard"
+    },
+    {
+      "id": 24,
+      "ownerSessionId": "humeLhiLs",
+      "worldX": -2.31,
+      "worldY": 2.17,
+      "velocityX": -6.7,
+      "velocityY": 6.3,
+      "life": 0.91,
       "label": "refusal shard"
     },
     {
       "id": 25,
-      "ownerSessionId": "5gEaAajYk",
-      "worldX": 1.04,
-      "worldY": -2.43,
-      "velocityX": 5.5,
-      "velocityY": -7.37,
-      "life": 0.77,
+      "ownerSessionId": "IVQ0tiEpn",
+      "worldX": -1.19,
+      "worldY": 0.59,
+      "velocityX": 5.78,
+      "velocityY": -7.16,
+      "life": 1.18,
       "label": "refusal shard"
     }
   ]

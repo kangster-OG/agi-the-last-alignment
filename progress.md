@@ -3355,9 +3355,55 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/release-checklist/release-checklist.json`
 - Milestone 57 readiness decision: ready. The 1.0 release candidate is packaged with widget, docs, deployment blueprint, release checklist proof, and current smoke evidence.
 
+- Implemented Milestone 58 1.0 Launch.
+- Created and pushed the public GitHub repository:
+  - `https://github.com/kangster-OG/agi-the-last-alignment`
+- Deployed the public browser build to GitHub Pages:
+  - `https://kangster-og.github.io/agi-the-last-alignment/`
+- Added `docs/LAUNCH_1_0.md` with public URL, launch scope, known limitations, deployment notes, and final gate commands.
+- Switched Vite production assets to relative paths so the built game works under the GitHub Pages subpath.
+- Added `.playwright-mcp/` to `.gitignore` so browser automation scratch files remain local-only.
+- Added `scripts/proof/deployed-launch-check.mjs` and `npm run proof:milestone58-launch`, covering:
+  - deployed HTML returns 2xx;
+  - required Vibe Jam widget is present;
+  - no login/signup appears before play;
+  - `render_game_to_text()` and `advanceTime(ms)` exist in production;
+  - solo flow reaches `armistice_plaza`;
+  - WebGL canvas has visible pixels;
+  - hosted-server support is detected and recorded.
+- Attempted the preferred Render deployment path for a single-service Node/WebSocket host, but the local environment had no authenticated Render account, Render API key, Render CLI, or other authenticated Node/WebSocket deploy provider. The submitted public URL is therefore GitHub Pages static hosting; online co-op remains preserved and proofed locally, and `render.yaml` remains committed for the WebSocket-capable deployment path once Render auth is available.
+- Tightened the M55 reconnect proof predicate to accept the authoritative reconnect telemetry already emitted by the server: same room, reclaimed count recorded, two connected clients, zero disconnected clients, and a connected player with a reconnect count. The stricter M19 reconnect-schema proof still verifies exact player identity/slot/session migration.
+- Verification after Milestone 58:
+  - `node --check scripts/proof/deployed-launch-check.mjs`
+  - `node --check scripts/proof/release-checklist.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:assets`
+  - `npm run proof:release-checklist`
+  - M43-M54 milestone proof sweep
+  - `npm run proof:milestone55-online-robustness`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone56-quality-lock`
+  - `npm run proof:campaign-full`
+  - `npm run proof:smoke`
+  - `PUBLIC_GAME_URL=https://kangster-og.github.io/agi-the-last-alignment/ npm run proof:milestone58-launch`
+- Milestone 58 proof artifacts:
+  - `docs/proof/milestone58-launch/deployed-launch-check.json`
+  - `docs/proof/milestone58-launch/milestone58-deployed-menu.png`
+  - `docs/proof/milestone58-launch/milestone58-deployed-build-select.png`
+  - `docs/proof/milestone58-launch/milestone58-deployed-overworld.png`
+  - `docs/proof/milestone58-launch/milestone58-deployed-solo-run.png`
+- Screenshots inspected after Milestone 58:
+  - `docs/proof/campaign-full/campaign-full-finale-complete.png`
+  - `docs/proof/milestone55-online-robustness/milestone55-rejoined-slot.png`
+  - `docs/proof/milestone56-quality-lock/milestone56-small-viewport-menu.png`
+  - `docs/proof/milestone58-launch/milestone58-deployed-solo-run.png`
+- Milestone 58 readiness decision: ready for Vibe Jam form submission with the GitHub Pages public URL. Known limitation: the public static host does not run the Colyseus server; online co-op remains available in local/Node hosted builds and is covered by the authoritative proof suite.
+
 ## TODO
 
-- Next recommended milestone: Milestone 58 1.0 Launch. Push the release repo, deploy a stable public URL, run the final release gate against the deployed build, and submit to Cursor Vibe Jam 2026 only if all launch checks pass.
+- Next step: submit the Vibe Jam form with `https://kangster-og.github.io/agi-the-last-alignment/` if the form accepts the static-hosted public URL and no fresh Google/security prompt appears.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

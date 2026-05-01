@@ -3,7 +3,7 @@
 > node server/consensusCellServer.mjs
 
 ℹ️  optional .env file not found: .env.development, .env
-Consensus Cell Colyseus server listening on ws://127.0.0.1:2614
+Consensus Cell Colyseus server listening on ws://0.0.0.0:2615
 
    ___      _                                    ___   _ _____
   / __\___ | |_   _ ___  ___ _   _ ___   __   __/ _ \ / |___  |
@@ -18,3 +18,12 @@ Consensus Cell Colyseus server listening on ws://127.0.0.1:2614
 🌟 Give us a star on GitHub → https://github.com/colyseus/colyseus
 ☁️  Deploy and scale your project on Colyseus Cloud → https://cloud.colyseus.io
 
+Error [ERR_HTTP_HEADERS_SENT]: Cannot remove headers after they are sent to the client
+    at ServerResponse.removeHeader (node:_http_outgoing:793:11)
+    at file:///Users/donghokang/Documents/New%20project%205/node_modules/@colyseus/better-call/dist/adapters/node/request.mjs:81:46
+    at Array.forEach (<anonymous>)
+    at setResponse (file:///Users/donghokang/Documents/New%20project%205/node_modules/@colyseus/better-call/dist/adapters/node/request.mjs:81:24)
+    at file:///Users/donghokang/Documents/New%20project%205/node_modules/@colyseus/better-call/dist/node.mjs:7:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  code: 'ERR_HTTP_HEADERS_SENT'
+}
