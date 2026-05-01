@@ -30,11 +30,13 @@ Consensus Cell mode supports 1-4 online players through a Colyseus authoritative
 npm run server:coop
 ```
 
-The browser defaults to `ws://<current-host>:2567`. For shared rooms:
+In Vite local dev, the browser defaults to `ws://<current-host>:2567`. For shared rooms:
 
 ```text
 ?roomCode=TEAM123
 ```
+
+Hosted single-service builds use the current page origin for WebSockets by default. Local Vite dev still uses port `2567`.
 
 For hosted/split deployments, set:
 

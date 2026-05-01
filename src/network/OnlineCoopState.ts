@@ -122,7 +122,7 @@ export class OnlineCoopState implements GameState {
   roomCode = roomCodeForSession();
   sessionId = "";
   serverUrl = "";
-  serverUrlSource = "same-origin-port";
+  serverUrlSource = "auto";
   snapshot: OnlineConsensusSnapshot | null = null;
   lastError = "";
   reconnectKey = reconnectKeyForTab();
@@ -2643,9 +2643,18 @@ function onlineServerConfig(): { url: string; source: string } {
   const env = (import.meta as unknown as { env?: Record<string, string | undefined> }).env;
   const configured = env?.VITE_CONSENSUS_URL;
   if (configured) return { url: normalizeWebsocketUrl(configured), source: "env.VITE_CONSENSUS_URL" };
-  const port = params.get("coopPort") ?? env?.VITE_CONSENSUS_PORT ?? "2567";
   const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-  return { url: `${protocol}//${window.location.hostname || "127.0.0.1"}:${port}`, source: "same-origin-port" };
+  const hostname = window.location.hostname || "127.0.0.1";
+  const configuredPort = params.get("coopPort") ?? env?.VITE_CONSENSUS_PORT;
+  if (configuredPort) return { url: `${protocol}//${hostname}:${configuredPort}`, source: "configured-port" };
+
+  const localDevPorts = new Set(["5173", "5174", "5175", "5176"]);
+  const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
+  if (isLocalHost && localDevPorts.has(window.location.port)) {
+    return { url: `${protocol}//${hostname}:2567`, source: "vite-dev-default-port" };
+  }
+
+  return { url: `${protocol}//${window.location.host || hostname}`, source: "same-origin" };
 }
 
 function normalizeWebsocketUrl(value: string): string {

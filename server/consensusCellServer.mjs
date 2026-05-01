@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Room, Server, WebSocketTransport } from "colyseus";
 import { ArraySchema, MapSchema, Schema, defineTypes } from "@colyseus/schema";
+import express from "express";
 import {
   CAMPAIGN_DIALOGUE_PERSISTENCE_BOUNDARY,
   CAMPAIGN_DIALOGUE_PRESENTATION_POLICY,
@@ -3165,26 +3166,25 @@ function serveStaticFile(requestUrl, response) {
   fs.createReadStream(filePath).pipe(response);
 }
 
-const httpServer = http.createServer((request, response) => {
-  const parsed = new URL(request.url ?? "/", "http://127.0.0.1");
-  if (parsed.pathname.startsWith("/matchmake")) {
-    return;
-  }
-  if (parsed.pathname === "/healthz") {
-    response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-    response.end(
-      JSON.stringify({
-        ok: true,
-        service: "agi-consensus-cell",
-        policy: DEPLOYMENT_POLICY,
-        maxClients: 4,
-        tickRate: TICK_RATE,
-        clientInputHz: CLIENT_INPUT_HZ,
-        staticDistEnabled: SERVE_STATIC_DIST
-      })
-    );
-    return;
-  }
+const app = express();
+
+app.get("/healthz", (_request, response) => {
+  response.setHeader("content-type", "application/json; charset=utf-8");
+  response.setHeader("cache-control", "no-store");
+  response.end(
+    JSON.stringify({
+      ok: true,
+      service: "agi-consensus-cell",
+      policy: DEPLOYMENT_POLICY,
+      maxClients: 4,
+      tickRate: TICK_RATE,
+      clientInputHz: CLIENT_INPUT_HZ,
+      staticDistEnabled: SERVE_STATIC_DIST
+    })
+  );
+});
+
+app.use((request, response) => {
   if (SERVE_STATIC_DIST) {
     serveStaticFile(request.url, response);
     return;
@@ -3192,6 +3192,8 @@ const httpServer = http.createServer((request, response) => {
   response.writeHead(200, { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" });
   response.end("AGI: The Last Alignment Consensus Cell server. Health: /healthz");
 });
+
+const httpServer = http.createServer(app);
 
 const gameServer = new Server({
   transport: new WebSocketTransport({ server: httpServer })

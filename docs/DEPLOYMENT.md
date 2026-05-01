@@ -17,6 +17,8 @@ Use this when the host supports a long-running Node process and WebSockets on th
 SERVE_STATIC_DIST=1 npm start
 ```
 
+In this mode the browser uses the current page origin for online co-op WebSockets unless `?coopServer=...` or `VITE_CONSENSUS_URL` overrides it. This is the preferred path for Render-style Node services.
+
 Environment:
 
 - `PORT`: public web process port supplied by the host.
@@ -61,4 +63,3 @@ Players with the same room code join the same Consensus Cell. Different room cod
 ## Persistence Boundary
 
 No login, signup, cloud save, or account state is required. Export/import remains route-profile-only via the `AGI1_` code. Room code, reconnect key, live combat, objectives, selected build kits, cooldowns, pets, role pressure, Recompile state, dialogue state, route UI focus, portal params, and authority state are not exported or imported.
-
