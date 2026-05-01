@@ -2894,9 +2894,49 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/smoke/arena.png`
 - Milestone 48 readiness decision: ready. The full enemy-family slate is schema-visible, live server-spawned in representative arenas, distinct across campaign pressure signatures, and still compatible with production-art defaults and placeholder fallback.
 
+- Implemented Milestone 49 Production Player And Co-Mind Art Pass.
+- Added original transparent production atlases:
+  - `assets/sprites/players/class_roster_m49.png` with 12 classes, 4 directions, and 3 frames per direction;
+  - `assets/ui/comind_modules_m49.png` with 8 abstract co-mind module icons;
+  - `assets/ui/role_chips_m49.png` with 6 build-role chips;
+  - `assets/portraits/comind_portraits_m49.png` with 8 co-mind portrait/module cards.
+- Wired Milestone 49 class frames into solo/local runtime player rendering and online Colyseus player rendering, with Milestone 12/11 fallbacks preserved.
+- Updated the loadout screen so production art defaults show class sprites, role chips, co-mind modules, and selected co-mind portrait art; placeholder mode still uses the legacy geometric markers.
+- Added M49 art telemetry to `render_game_to_text()` while preserving the existing `productionArtSet: "milestone14_combat_art_parity"` compatibility label for older proofs.
+- Updated `assets/asset_manifest.json` and `ART_PROVENANCE.md` for the four new runtime atlases. PixelLab was not used in this pass because the authenticated Chrome profile was locked; no PixelLab credits were spent and no credentials or profiles were touched.
+- Added `npm run proof:milestone49-player-comind-art`, covering:
+  - full unlocked roster/co-mind production-art default;
+  - selected Rift Saboteur + Qwen loadout art;
+  - local runtime production player frame rendering;
+  - placeholder opt-out safety.
+- Verification after Milestone 49:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `node -e "JSON.parse(require('fs').readFileSync('assets/asset_manifest.json','utf8'))"`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:assets`
+  - `npm run proof:milestone49-player-comind-art`
+  - `npm run proof:milestone46-full-class-roster`
+  - `npm run proof:smoke`
+- Milestone 49 proof artifacts:
+  - `docs/proof/milestone49-player-comind-art/milestone49-full-roster-comind-art-default.png`
+  - `docs/proof/milestone49-player-comind-art/milestone49-rift-qwen-loadout-art.png`
+  - `docs/proof/milestone49-player-comind-art/milestone49-rift-runtime-production-frame.png`
+  - `docs/proof/milestone49-player-comind-art/milestone49-placeholder-opt-out-safe.png`
+- Screenshots inspected after Milestone 49:
+  - `docs/proof/milestone49-player-comind-art/milestone49-full-roster-comind-art-default.png`
+  - `docs/proof/milestone49-player-comind-art/milestone49-rift-qwen-loadout-art.png`
+  - `docs/proof/milestone49-player-comind-art/milestone49-rift-runtime-production-frame.png`
+  - `docs/proof/milestone49-player-comind-art/milestone49-placeholder-opt-out-safe.png`
+  - `docs/proof/smoke/build-select.png`
+  - `docs/proof/smoke/arena.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-full-roster-matrix.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-online-expanded-roster-a.png`
+- Milestone 49 readiness decision: ready. Playable frames and co-mind presentation now have manifest/provenance-backed production-art defaults, online/local rendering uses the new class roster atlas, and placeholder opt-out remains safe.
+
 ## TODO
 
-- Next recommended milestone: Milestone 49 Production Player And Co-Mind Art Pass. Produce cleaned PixelLab/manual atlases for playable frames and co-mind presentation while preserving production-art defaults, placeholder opt-outs, manifest/provenance rules, and deterministic proof coverage.
+- Next recommended milestone: Milestone 50 Production Arena And Boss Art Pass. Produce cleaned terrain, prop, hazard, enemy, and boss atlases for all eight campaign encounters while preserving runtime art manifest/provenance rules and placeholder opt-outs.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

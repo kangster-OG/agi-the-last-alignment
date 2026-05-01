@@ -621,6 +621,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone48EnemyFamilyExpansionScenario();
     return;
+  } else if (name === "milestone49-player-comind-art") {
+    await closeBrowser(browser);
+    await runMilestone49PlayerCoMindArtScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -4138,6 +4142,93 @@ async function runMilestone46FullClassRosterScenario() {
   }
 }
 
+async function runMilestone49PlayerCoMindArtScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+  const watchPage = (page) => {
+    page.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    page.on("pageerror", (error) => errors.push(String(error)));
+  };
+
+  try {
+    const full = await context.newPage();
+    watchPage(full);
+    await full.goto(url, { waitUntil: "domcontentloaded" });
+    await full.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await full.waitForSelector("canvas");
+    await writeM46RouteProfile(full, {
+      rewardIds: m46FullRosterRewardIds(),
+      completedNodeIds: m46FullRosterNodeIds(),
+      saveHash: "proof_m49_full_art_roster_profile"
+    });
+    await full.reload({ waitUntil: "domcontentloaded" });
+    await full.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await full.waitForSelector("canvas");
+    await full.keyboard.press("Enter");
+    await full.waitForTimeout(1000);
+    await capture(full, "milestone49-full-roster-comind-art-default");
+    const roster = await state(full);
+    const artCoverage = roster.buildSelection?.artCoverage;
+    assert(roster.mode === "BuildSelect", "expected M49 build-select proof state");
+    assert(roster.assetRendering?.productionArtSet === "milestone14_combat_art_parity", "expected existing production art set compatibility label");
+    assert(roster.assetRendering?.playerFrameArtSet === "milestone49_class_roster_and_comind_modules", "expected M49 player/co-mind art label");
+    assert(roster.assets?.productionAssets >= 28, "expected production asset count to include M49 atlases");
+    assert(artCoverage?.classFrameCount === 144, "expected twelve classes times four directions times three frames");
+    assert(artCoverage?.classAtlasIds?.length === 12, "expected all twelve class atlas IDs");
+    assert(artCoverage?.factionModuleIds?.length === 8, "expected all eight co-mind module IDs");
+    assert(artCoverage?.roleChipIds?.length === 6, "expected all six role chips");
+    assert(roster.buildSelection?.availableClasses?.every((entry) => entry.unlocked), "expected full route profile to unlock every playable frame");
+    assert(roster.buildSelection?.availableFactions?.every((entry) => entry.unlocked), "expected full route profile to unlock every co-mind");
+
+    await selectBuildOption(full, "class", "rift_saboteur");
+    await selectBuildOption(full, "faction", "qwen_silkgrid");
+    await full.waitForTimeout(400);
+    await capture(full, "milestone49-rift-qwen-loadout-art");
+    const selected = await state(full);
+    assert(selected.selectedBuild?.classId === "rift_saboteur", "expected selected M49 class art sample");
+    assert(selected.selectedBuild?.factionId === "qwen_silkgrid", "expected selected M49 co-mind art sample");
+    await pressUntilMode(full, "Enter", "LevelRun", 8);
+    await full.waitForTimeout(700);
+    await capture(full, "milestone49-rift-runtime-production-frame");
+    const run = await state(full);
+    assert(run.mode === "LevelRun", "expected M49 runtime production-frame proof");
+    assert(run.players?.[0]?.classId === "rift_saboteur", "expected local runtime to preserve selected class under M49 art");
+    assert(run.assetRendering?.playerFrameArtSet === "milestone49_class_roster_and_comind_modules", "expected runtime M49 art set label");
+    await full.close();
+
+    const placeholder = await context.newPage();
+    watchPage(placeholder);
+    await placeholder.goto(`${url}?productionArt=0&placeholderArt=1`, { waitUntil: "domcontentloaded" });
+    await placeholder.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await placeholder.waitForSelector("canvas");
+    await placeholder.evaluate(() => window.localStorage.removeItem("agi:last_alignment:online_progression:v1"));
+    await placeholder.keyboard.press("Enter");
+    await placeholder.waitForTimeout(500);
+    await capture(placeholder, "milestone49-placeholder-opt-out-safe");
+    const optOut = await state(placeholder);
+    assert(optOut.mode === "BuildSelect", "expected placeholder opt-out build-select state");
+    assert(optOut.assetRendering?.productionArtEnabled === false, "expected production art disabled by placeholder opt-out");
+    assert(optOut.assetRendering?.productionArtSet === "placeholder_safe_opt_out", "expected placeholder production-art compatibility label");
+    assert(optOut.assetRendering?.playerFrameArtSet === "placeholder_safe_opt_out", "expected M49 player art to honor placeholder opt-out");
+    assert(optOut.buildSelection?.artCoverage?.placeholderOptOutPreserved === true, "expected M49 art coverage to report placeholder preservation");
+    await placeholder.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone49 player co-mind art");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
 async function runMilestone47FactionBurstsScenario() {
   const browser = await chromium.launch({
     headless: true,
@@ -5149,7 +5240,7 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art"];
   return Math.max(0, names.indexOf(name));
 }
 

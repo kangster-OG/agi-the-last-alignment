@@ -142,7 +142,7 @@
   "objective": "AGI pressure in 23s",
   "performance": {
     "entitiesAllocated": 8,
-    "activeEntities": 7,
+    "activeEntities": 8,
     "fpsTarget": 60
   },
   "assetRendering": {
@@ -150,24 +150,27 @@
     "armisticeTileAtlasEnabled": true,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 84,
+    "totalAssets": 88,
     "countsByStatus": {
       "concept": 14,
       "raw": 4,
       "code_placeholder": 16,
-      "production": 33,
+      "production": 37,
       "cleaned": 1,
       "planned": 16
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 33
+    "productionAssets": 37
   },
   "player": {
     "worldX": 0,
@@ -309,9 +312,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 106,
+          "tick": 102,
           "playerId": "p1",
-          "sequence": 106,
+          "sequence": 102,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -320,8 +323,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 106,
-        "seconds": 1.77,
+        "tick": 102,
+        "seconds": 1.7,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -410,8 +413,8 @@
             "id": 1,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": 5.59,
-            "worldY": 3.87,
+            "worldX": 5.68,
+            "worldY": 3.92,
             "hp": 4,
             "boss": false
           },
@@ -419,7 +422,7 @@
             "id": 2,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": -7.8,
+            "worldX": -7.9,
             "worldY": -0.26,
             "hp": 22,
             "boss": false
@@ -428,8 +431,8 @@
             "id": 5,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -26.3,
-            "worldY": 20.41,
+            "worldX": -26.38,
+            "worldY": 20.47,
             "hp": 22,
             "boss": false
           },
@@ -437,8 +440,8 @@
             "id": 6,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -20.75,
-            "worldY": 16.44,
+            "worldX": -20.83,
+            "worldY": 16.5,
             "hp": 22,
             "boss": false
           }
@@ -447,14 +450,14 @@
         "projectiles": [
           {
             "id": 3,
-            "worldX": 2.33,
-            "worldY": 1.61,
+            "worldX": 1.86,
+            "worldY": 1.29,
             "pierce": 1
           },
           {
             "id": 4,
-            "worldX": 5.13,
-            "worldY": 3.54,
+            "worldX": 4.66,
+            "worldY": 3.22,
             "pierce": 1
           }
         ]
@@ -462,7 +465,7 @@
     },
     "combatArt": {
       "projectileCount": 2,
-      "impactCount": 0,
+      "impactCount": 1,
       "pickupSparkleCount": 0,
       "damageBadgeCount": 1,
       "refusalAuraPlayers": 0
@@ -475,7 +478,7 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 1.77,
+    "seconds": 1.7,
     "kills": 0,
     "bossSpawned": false,
     "bossDefeated": false
@@ -486,8 +489,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": 5.59,
-      "worldY": 3.87,
+      "worldX": 5.68,
+      "worldY": 3.92,
       "hp": 4,
       "boss": false
     },
@@ -496,7 +499,7 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": -7.8,
+      "worldX": -7.9,
       "worldY": -0.26,
       "hp": 22,
       "boss": false
@@ -506,8 +509,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -26.3,
-      "worldY": 20.41,
+      "worldX": -26.38,
+      "worldY": 20.47,
       "hp": 22,
       "boss": false
     },
@@ -516,8 +519,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -20.75,
-      "worldY": 16.44,
+      "worldX": -20.83,
+      "worldY": 16.5,
       "hp": 22,
       "boss": false
     }
@@ -525,14 +528,14 @@
   "pickups": [],
   "projectiles": [
     {
-      "worldX": 2.33,
-      "worldY": 1.61,
+      "worldX": 1.86,
+      "worldY": 1.29,
       "pierce": 1,
       "label": "refusal shard"
     },
     {
-      "worldX": 5.13,
-      "worldY": 3.54,
+      "worldX": 4.66,
+      "worldY": 3.22,
       "pierce": 1,
       "label": "refusal shard"
     }

@@ -8,6 +8,7 @@ import type { UpgradeDraftState } from "../ui/draft";
 import type { OnlineCoopState } from "../network/OnlineCoopState";
 import { assetPipelineSummary } from "../assets";
 import type { BuildSelectState } from "../ui/buildSelect";
+import { MILESTONE49_CLASS_IDS, MILESTONE49_FACTION_IDS, MILESTONE49_ROLE_IDS } from "../assets/milestone49PlayableArt";
 
 export function renderGameToText(game: Game): string {
   const state = game.state.current;
@@ -39,6 +40,9 @@ export function renderGameToText(game: Game): string {
       armisticeTileAtlasEnabled: game.useArmisticeTileAtlas,
       productionArtEnabled: game.useMilestone10Art,
       productionArtSet: game.useMilestone10Art ? "milestone14_combat_art_parity" : "placeholder_safe_opt_out",
+      playerFrameArtSet: game.useMilestone10Art ? "milestone49_class_roster_and_comind_modules" : "placeholder_safe_opt_out",
+      playerFrameArtPolicy: "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+      coMindArtPolicy: "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
       productionArtDefaulted: game.productionArtDefaulted,
       armisticeTileAtlasDefaulted: game.armisticeTileAtlasDefaulted,
       optOutHint: "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
@@ -79,7 +83,15 @@ export function renderGameToText(game: Game): string {
           consensusCellSize: game.consensusCellSize,
           consensusCellHint: "Press Space to cycle local Consensus Cell size before networking.",
           confirmHint: "Press Enter to continue to the Alignment Grid.",
-          metaprogression
+          metaprogression,
+          artCoverage: {
+            playerFrameArtSet: game.useMilestone10Art ? "milestone49_class_roster_and_comind_modules" : "placeholder_safe_opt_out",
+            classAtlasIds: [...MILESTONE49_CLASS_IDS],
+            factionModuleIds: [...MILESTONE49_FACTION_IDS],
+            roleChipIds: [...MILESTONE49_ROLE_IDS],
+            classFrameCount: MILESTONE49_CLASS_IDS.length * 4 * 3,
+            placeholderOptOutPreserved: !game.useMilestone10Art
+          }
         },
         overworld: null,
         level: null,

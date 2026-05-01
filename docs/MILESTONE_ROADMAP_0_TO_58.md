@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-48 are complete. Milestone 49 is next.
+Current repo status as of May 1, 2026: Milestones 0-49 are complete. Milestone 50 is next.
 
 ## Non-Negotiable Continuity
 
@@ -591,6 +591,24 @@ Proof expectations:
 
 - production-art defaults render all playable frames;
 - placeholder mode remains safe and complete.
+
+Implementation completed:
+
+- Added original transparent production PNG atlases for all twelve playable class frames, all eight abstract co-mind modules, six role chips, and eight co-mind portrait/module cards.
+- Wired the M49 class atlas into local LevelRun and online Colyseus player rendering while preserving the existing Milestone 12/11 fallback path.
+- Updated the loadout UI to render class frames, role chips, co-mind modules, and selected co-mind portrait cards by default when production art is enabled.
+- Preserved the placeholder opt-out path with legacy geometric class/faction markers under `?productionArt=0` / `?placeholderArt=1`.
+- Updated asset manifest and provenance records for the four runtime atlases; no official logos or third-party brand marks are used in the M49 runtime art.
+- Added proof-visible M49 art coverage telemetry without changing the existing `productionArtSet` compatibility label expected by earlier proofs.
+
+Proof coverage:
+
+- `npm run proof:assets`
+- `npm run proof:milestone49-player-comind-art`
+- `npm run proof:milestone46-full-class-roster`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M50: Production Arena And Boss Art Pass
 

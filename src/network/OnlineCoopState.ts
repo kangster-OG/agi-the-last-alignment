@@ -17,6 +17,7 @@ import { addArmisticeTileSprite, armisticeTileKeyForTerrain, getArmisticeGroundA
 import { milestone11EnemyTextureFor } from "../assets/milestone11Art";
 import { getMilestone12ArtTextures, loadMilestone12Art, milestone12NetworkPlayerTexture } from "../assets/milestone12Art";
 import { getMilestone14ArtTextures, loadMilestone14Art } from "../assets/milestone14Art";
+import { getMilestone49PlayableArtTextures, loadMilestone49PlayableArt, milestone49NetworkPlayerTextureFor } from "../assets/milestone49PlayableArt";
 import { placeWorldSprite, type PlayerFacing } from "../assets/milestone10Art";
 import { getMilestone25RouteArtTextures, loadMilestone25RouteArt } from "../assets/milestone25Art";
 import { getMilestone26VerdictArtTextures, loadMilestone26VerdictArt } from "../assets/milestone26Art";
@@ -1442,7 +1443,7 @@ ${focus.focusDescription}`,
     const combatTextures = getMilestone14ArtTextures();
     if (!textures && !this.requestedProductionArtLoad) {
       this.requestedProductionArtLoad = true;
-      void loadMilestone12Art().then(() => {
+      void Promise.all([loadMilestone12Art(), loadMilestone49PlayableArt()]).then(() => {
         if (game.state.current !== this) return;
         this.staticSceneKey = "";
         this.staticSceneSignature = "";
@@ -1797,7 +1798,11 @@ ${focus.focusDescription}`,
     const p = worldToIso(player.worldX, player.worldY);
     this.entityGraphics.ellipse(p.screenX, p.screenY + 7, 17, 6).stroke({ color: player.color, width: 2, alpha: 0.75 });
     const moving = Math.hypot(player.velocityX ?? 0, player.velocityY ?? 0) > 0.03;
-    const texture = milestone12NetworkPlayerTexture(player.slot, playerFacing(player), moving, this.snapshot?.seconds ?? 0, art);
+    const milestone49Art = getMilestone49PlayableArtTextures();
+    const facing = playerFacing(player);
+    const texture = milestone49Art
+      ? milestone49NetworkPlayerTextureFor(player.classId, facing, moving, this.snapshot?.seconds ?? 0, milestone49Art)
+      : milestone12NetworkPlayerTexture(player.slot, facing, moving, this.snapshot?.seconds ?? 0, art);
     this.drawProductionWorldSprite(`player:${player.sessionId}`, texture, player.worldX, player.worldY, 1.16, 0.9);
   }
 

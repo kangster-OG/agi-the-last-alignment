@@ -1,11 +1,20 @@
-import { Graphics, Text } from "pixi.js";
+import { Graphics, Sprite, Text } from "pixi.js";
 import { fontStyle, palette } from "../core/Assets";
 import type { Game } from "../core/Game";
 import type { GameState } from "../core/StateMachine";
 import { clearAllLayers } from "../render/layers";
-import { COMBAT_CLASSES, FACTIONS } from "../content";
+import { COMBAT_CLASSES, FACTIONS, resolveBuildKit } from "../content";
 import { CONSENSUS_CELL_MAX_PLAYERS, clampConsensusCellSize } from "../sim/consensusCell";
 import { BUILD_CLASS_IDS, BUILD_FACTION_IDS, isClassUnlocked, isFactionUnlocked, readOnlineMetaProgression, type OnlineMetaProgression } from "../metaprogression/onlineMetaProgression";
+import {
+  getMilestone49PlayableArtTextures,
+  loadMilestone49PlayableArt,
+  milestone49CoMindModuleTexture,
+  milestone49CoMindPortraitTexture,
+  milestone49NetworkPlayerTextureFor,
+  milestone49RoleChipTexture,
+  type Milestone49PlayableArtTextures
+} from "../assets/milestone49PlayableArt";
 
 const CLASS_IDS: string[] = [...BUILD_CLASS_IDS];
 const FACTION_IDS: string[] = [...BUILD_FACTION_IDS];
@@ -15,6 +24,7 @@ export class BuildSelectState implements GameState {
   private classIndex = 0;
   private factionIndex = 0;
   private metaprogression: OnlineMetaProgression = readOnlineMetaProgression();
+  private requestedMilestone49ArtLoad = false;
 
   enter(game: Game): void {
     this.metaprogression = readOnlineMetaProgression();
@@ -72,8 +82,9 @@ export class BuildSelectState implements GameState {
     subtitle.position.set(game.width / 2, 108);
     game.layers.hud.addChild(subtitle);
 
-    this.drawClassPanel(game);
-    this.drawFactionPanel(game);
+    const milestone49Art = this.milestone49Art(game);
+    this.drawClassPanel(game, milestone49Art);
+    this.drawFactionPanel(game, milestone49Art);
     this.drawSummary(game);
   }
 
@@ -88,7 +99,20 @@ export class BuildSelectState implements GameState {
     return this.metaprogression;
   }
 
-  private drawClassPanel(game: Game): void {
+  private milestone49Art(game: Game): Milestone49PlayableArtTextures | null {
+    if (!game.useMilestone10Art) return null;
+    const textures = getMilestone49PlayableArtTextures();
+    if (!textures && !this.requestedMilestone49ArtLoad) {
+      this.requestedMilestone49ArtLoad = true;
+      void loadMilestone49PlayableArt().then(() => {
+        if (game.state.current !== this) return;
+        this.render(game);
+      });
+    }
+    return textures;
+  }
+
+  private drawClassPanel(game: Game, milestone49Art: Milestone49PlayableArtTextures | null): void {
     const x = 70;
     const y = 155;
     const header = new Text({
@@ -115,19 +139,38 @@ export class BuildSelectState implements GameState {
       g.rect(left, top, cardWidth, 62)
         .fill(selected ? 0x263d44 : unlocked ? 0x202633 : 0x171c25)
         .stroke({ color: selected ? palette.mint : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.72 });
-      g.rect(left + 12, top + 14, 30, 34).fill(selected ? palette.blue : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
+      if (!milestone49Art) {
+        g.rect(left + 12, top + 14, 30, 34).fill(selected ? palette.blue : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
+      }
       game.layers.hud.addChild(g);
+
+      if (milestone49Art) {
+        const sprite = new Sprite(milestone49NetworkPlayerTextureFor(id, "south", false, 0, milestone49Art));
+        sprite.anchor.set(0.5, 0.88);
+        sprite.scale.set(0.9);
+        sprite.alpha = unlocked ? 1 : 0.35;
+        sprite.position.set(left + 28, top + 51);
+        game.layers.hud.addChild(sprite);
+
+        const roleId = resolveBuildKit(id, game.selectedFactionId).resolvedRole;
+        const chip = new Sprite(milestone49RoleChipTexture(roleId, milestone49Art));
+        chip.anchor.set(0.5);
+        chip.scale.set(0.72);
+        chip.alpha = unlocked ? 1 : 0.42;
+        chip.position.set(left + cardWidth - 27, top + 31);
+        game.layers.hud.addChild(chip);
+      }
 
       const text = new Text({
         text: `${index + 1}. ${combatClass.displayName}${unlocked ? "" : "  LOCKED"}\n${combatClass.role} // ${unlocked ? combatClass.mechanicalIdentity : entry?.requirementLabel ?? "Route reward required"}`,
-        style: { ...fontStyle, fontSize: 10, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: 188 }
+        style: { ...fontStyle, fontSize: 10, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: milestone49Art ? 160 : 188 }
       });
       text.position.set(left + 52, top + 10);
       game.layers.hud.addChild(text);
     });
   }
 
-  private drawFactionPanel(game: Game): void {
+  private drawFactionPanel(game: Game, milestone49Art: Milestone49PlayableArtTextures | null): void {
     const x = game.width - 590;
     const y = 155;
     const header = new Text({
@@ -136,6 +179,14 @@ export class BuildSelectState implements GameState {
     });
     header.position.set(x, y - 42);
     game.layers.hud.addChild(header);
+
+    if (milestone49Art) {
+      const portrait = new Sprite(milestone49CoMindPortraitTexture(FACTION_IDS[this.factionIndex] ?? FACTION_IDS[0], milestone49Art));
+      portrait.anchor.set(0.5);
+      portrait.scale.set(0.5);
+      portrait.position.set(x + 476, y - 32);
+      game.layers.hud.addChild(portrait);
+    }
 
     FACTION_IDS.forEach((id, index) => {
       const faction = FACTIONS[id];
@@ -147,8 +198,19 @@ export class BuildSelectState implements GameState {
       g.rect(x, top, 520, 42)
         .fill(selected ? 0x3a3327 : unlocked ? 0x202633 : 0x171c25)
         .stroke({ color: selected ? palette.lemon : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.72 });
-      g.circle(x + 32, top + 21, 13).fill(selected ? factionColor(id) : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
+      if (!milestone49Art) {
+        g.circle(x + 32, top + 21, 13).fill(selected ? factionColor(id) : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
+      }
       game.layers.hud.addChild(g);
+
+      if (milestone49Art) {
+        const module = new Sprite(milestone49CoMindModuleTexture(id, milestone49Art));
+        module.anchor.set(0.5);
+        module.scale.set(0.44);
+        module.alpha = unlocked ? 1 : 0.38;
+        module.position.set(x + 32, top + 21);
+        game.layers.hud.addChild(module);
+      }
 
       const text = new Text({
         text: `${faction.shortName} Co-Mind${unlocked ? "" : "  LOCKED"} // ${unlocked ? faction.doctrine : entry?.requirementLabel ?? "Route reward required"}`,

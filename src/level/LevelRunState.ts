@@ -33,6 +33,7 @@ import {
 } from "../assets/milestone11Art";
 import { getMilestone12ArtTextures, loadMilestone12Art, milestone12PlayerTextureFor } from "../assets/milestone12Art";
 import { getMilestone14ArtTextures, impactFrameForLife, loadMilestone14Art, pickupFrameForLife } from "../assets/milestone14Art";
+import { getMilestone49PlayableArtTextures, loadMilestone49PlayableArt, milestone49PlayerTextureFor } from "../assets/milestone49PlayableArt";
 import { drawHud } from "../ui/hud";
 import { BOSSES, COMBAT_CLASSES, FACTIONS, SYSTEM_MESSAGES, resolveBuildKit } from "../content";
 import { ARMISTICE_PLAZA_MAP, type LandmarkDefinition, type LevelMapDefinition, type PropClusterDefinition } from "./armisticePlazaMap";
@@ -633,7 +634,7 @@ export class LevelRunState implements GameState {
     const textures = getMilestone11ArtTextures();
     if (!textures && !this.requestedProductionArtLoad) {
       this.requestedProductionArtLoad = true;
-      void Promise.all([loadMilestone11Art(), loadMilestone12Art(), loadMilestone14Art()]).then(() => {
+      void Promise.all([loadMilestone11Art(), loadMilestone12Art(), loadMilestone14Art(), loadMilestone49PlayableArt()]).then(() => {
         if (game.state.current !== this) return;
         this.staticArenaDrawn = false;
         this.render(game);
@@ -1034,8 +1035,11 @@ export class LevelRunState implements GameState {
       this.drawProductionEffectSprite(`aura:${runtime.id}`, combatArt.combatEffects.refusalAura, runtime.player.worldX, runtime.player.worldY, 1.7 + runtime.build.refusalAura * 0.22, 0.58, runtime.player.worldX + runtime.player.worldY - 0.02);
     }
     this.entityGraphics.ellipse(p.screenX, p.screenY + 7, 17, 6).stroke({ color: runtime.color, width: 2, alpha: 0.75 });
+    const milestone49Art = getMilestone49PlayableArtTextures();
     const milestone12Art = getMilestone12ArtTextures();
-    const texture = milestone12Art
+    const texture = milestone49Art
+      ? milestone49PlayerTextureFor(runtime.classId, runtime.player, this.seconds + runtime.slot * 0.17, milestone49Art)
+      : milestone12Art
       ? milestone12PlayerTextureFor(runtime.player, runtime.slot, this.seconds + runtime.slot * 0.17, milestone12Art)
       : milestone11PlayerTextureFor(runtime.player, this.seconds + runtime.slot * 0.17, art);
     this.drawProductionWorldSprite(`player:${runtime.id}`, texture, runtime.player.worldX, runtime.player.worldY, 1.16, 0.9);
