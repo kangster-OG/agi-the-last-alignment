@@ -7,7 +7,7 @@ import { drawIsoDiamond } from "../iso/tilemap";
 import { clearLayer } from "../render/layers";
 import { drawPixelPerson } from "../render/sprites";
 import { GAME_TITLE } from "../content/uiText";
-import { ALIGNMENT_GRID_MAP, type AlignmentGridNode, type AlignmentGridPropCluster, type AlignmentGridRoute, type AlignmentGridTerrainPatch } from "./alignmentGridMap";
+import { ALIGNMENT_GRID_MAP, type AlignmentGridMicroLandmark, type AlignmentGridNode, type AlignmentGridPropCluster, type AlignmentGridRoute, type AlignmentGridTerrainPatch } from "./alignmentGridMap";
 import { MAP_GRAPH } from "./mapGraph";
 import { isNodeAvailable, nearestNode } from "./levelNodes";
 import { getMilestone12ArtTextures, loadMilestone12Art, milestone12NetworkPlayerTexture, type RouteSigilState } from "../assets/milestone12Art";
@@ -100,7 +100,10 @@ export class OverworldState implements GameState {
       label: route.label,
       from: route.from,
       to: route.to,
-      state: this.routeState(route, game)
+      state: this.routeState(route, game),
+      checkpointCount: route.checkpoints.length,
+      routeTexture: routeBiomeTexture(route),
+      finaleCorruption: route.to === "alignment_spire_finale" || route.from === "alignment_spire_finale"
     }));
   }
 
@@ -118,6 +121,31 @@ export class OverworldState implements GameState {
       }
     }
     return { ...best, distance: round(bestDistance) };
+  }
+
+  dioramaInfo(game: Game) {
+    const stableRoutes = this.routeStates(game).filter((route) => route.state === "stable");
+    const availableNodes = ALIGNMENT_GRID_MAP.nodes.filter((node) => this.isNodeAvailable(node, game));
+    const completedFinale = game.completedNodes.has("alignment_spire_finale");
+    const finaleAvailable = availableNodes.some((node) => node.id === "alignment_spire_finale");
+    return {
+      set: "milestone51_overworld_diorama_1_0",
+      densityPolicy: "dense_isometric_biome_regions_micro_landmarks_route_labels_and_animated_route_state",
+      mapId: ALIGNMENT_GRID_MAP.id,
+      nodeCount: ALIGNMENT_GRID_MAP.nodes.length,
+      routeCount: ALIGNMENT_GRID_MAP.routes.length,
+      biomeRegionCount: ALIGNMENT_GRID_MAP.biomeRegions.length,
+      microLandmarkCount: ALIGNMENT_GRID_MAP.microLandmarks.length,
+      propClusterCount: ALIGNMENT_GRID_MAP.propClusters.length,
+      stableRouteCount: stableRoutes.length,
+      availableNodeCount: availableNodes.length,
+      regionLabels: ALIGNMENT_GRID_MAP.biomeRegions.map((region) => region.label),
+      microLandmarkKinds: [...new Set(ALIGNMENT_GRID_MAP.microLandmarks.map((landmark) => landmark.kind))],
+      routeReadabilityPolicy: "roads use dark underlay, state color, midpoint sigils, compact labels, and pulse markers without covering node labels",
+      unlockRevealPolicy: "sealed nodes stay visible as dim silhouettes; available and completed nodes gain full labels",
+      partyVotingPolicy: "online lobby keeps party tokens, vote pips, selected-node labels, and route focus telemetry visible",
+      finaleCorruptionState: completedFinale ? "contained" : finaleAvailable ? "active_reachable" : "dormant_teeth_visible"
+    };
   }
 
   private isNodeAvailable(node: AlignmentGridNode, game: Game): boolean {
@@ -187,10 +215,24 @@ export class OverworldState implements GameState {
 
   private drawProps(game: Game): void {
     const props = new Graphics();
+    this.drawBiomeLabels(game, props);
     for (const cluster of ALIGNMENT_GRID_MAP.propClusters) {
       this.drawPropCluster(props, cluster);
     }
+    for (const landmark of ALIGNMENT_GRID_MAP.microLandmarks) {
+      this.drawMicroLandmark(props, landmark);
+    }
     game.layers.propsBehind.addChild(props);
+  }
+
+  private drawBiomeLabels(game: Game, graphics: Graphics): void {
+    for (const region of ALIGNMENT_GRID_MAP.biomeRegions) {
+      const p = worldToIso(region.labelWorldX, region.labelWorldY);
+      graphics
+        .ellipse(p.screenX, p.screenY + 2, 74, 20)
+        .fill({ color: region.colorA, alpha: 0.16 })
+        .stroke({ color: region.accent, width: 2, alpha: 0.38 });
+    }
   }
 
   private drawPropCluster(graphics: Graphics, cluster: AlignmentGridPropCluster): void {
@@ -274,6 +316,58 @@ export class OverworldState implements GameState {
     graphics.rect(p.screenX - 18, p.screenY - 34, 36, 6).fill(cluster.accent);
   }
 
+  private drawMicroLandmark(graphics: Graphics, landmark: AlignmentGridMicroLandmark): void {
+    const p = worldToIso(landmark.worldX, landmark.worldY);
+    graphics.ellipse(p.screenX, p.screenY + 3, 17, 7).fill({ color: palette.shadow, alpha: 0.28 });
+    if (landmark.kind === "mirror") {
+      graphics.rect(p.screenX - 3, p.screenY - 28, 6, 24).fill(0x202833);
+      graphics
+        .poly([p.screenX - 12, p.screenY - 34, p.screenX + 13, p.screenY - 30, p.screenX + 9, p.screenY - 16, p.screenX - 14, p.screenY - 20])
+        .fill(landmark.color)
+        .stroke({ color: landmark.accent, width: 2, alpha: 0.82 });
+      return;
+    }
+    if (landmark.kind === "antenna" || landmark.kind === "cable_knot") {
+      graphics.rect(p.screenX - 3, p.screenY - 36, 6, 30).fill(0x202833);
+      graphics.circle(p.screenX, p.screenY - 38, landmark.kind === "antenna" ? 9 : 7).fill(landmark.accent).stroke({ color: palette.ink, width: 2 });
+      graphics.rect(p.screenX - 13, p.screenY - 11, 26, 8).fill(landmark.color).stroke({ color: palette.ink, width: 2 });
+      return;
+    }
+    if (landmark.kind === "buoy" || landmark.kind === "train_marker" || landmark.kind === "court_writ") {
+      graphics.rect(p.screenX - 12, p.screenY - 26, 24, 19).fill(landmark.color).stroke({ color: palette.ink, width: 2 });
+      graphics.rect(p.screenX - 8, p.screenY - 32, 16, 6).fill(landmark.accent).stroke({ color: palette.ink, width: 1 });
+      return;
+    }
+    if (landmark.kind === "redaction") {
+      graphics.rect(p.screenX - 14, p.screenY - 32, 28, 25).fill(landmark.color).stroke({ color: landmark.accent, width: 2, alpha: 0.74 });
+      graphics.rect(p.screenX - 10, p.screenY - 25, 20, 4).fill(0xfff4d6);
+      graphics.rect(p.screenX - 8, p.screenY - 16, 16, 4).fill(0x596270);
+      return;
+    }
+    if (landmark.kind === "teeth") {
+      graphics
+        .ellipse(p.screenX, p.screenY - 12, 19, 9)
+        .fill({ color: landmark.color, alpha: 0.94 })
+        .stroke({ color: landmark.accent, width: 2, alpha: 0.9 });
+      graphics.rect(p.screenX - 10, p.screenY - 16, 5, 5).fill(0xfff4d6);
+      graphics.rect(p.screenX + 1, p.screenY - 17, 5, 5).fill(0xfff4d6);
+      graphics.rect(p.screenX + 10, p.screenY - 15, 5, 5).fill(0xfff4d6);
+      return;
+    }
+    if (landmark.kind === "campfire") {
+      graphics
+        .poly([p.screenX - 13, p.screenY - 8, p.screenX, p.screenY - 29, p.screenX + 13, p.screenY - 8])
+        .fill(landmark.color)
+        .stroke({ color: palette.ink, width: 2 });
+      graphics.circle(p.screenX, p.screenY - 16, 5).fill(landmark.accent);
+      return;
+    }
+    graphics
+      .poly([p.screenX, p.screenY - 34, p.screenX + 9, p.screenY - 15, p.screenX, p.screenY - 6, p.screenX - 9, p.screenY - 15])
+      .fill({ color: landmark.accent, alpha: 0.86 })
+      .stroke({ color: palette.ink, width: 2 });
+  }
+
   private drawNodes(game: Game): void {
     const art = this.productionArt(game);
     for (const node of ALIGNMENT_GRID_MAP.nodes) {
@@ -294,7 +388,47 @@ export class OverworldState implements GameState {
         this.drawNodeBuilding(graphics, node, p.screenX, p.screenY, available, completed, selected);
       }
       game.layers.entities.addChild(graphics);
-      this.drawNodeLabel(game, node, p.screenX, p.screenY, available, completed, selected, Boolean(art));
+    this.drawNodeLabel(game, node, p.screenX, p.screenY, available, completed, selected, Boolean(art));
+    }
+    this.drawBiomeRegionLabels(game);
+    this.drawAnimatedRouteState(game);
+  }
+
+  private drawBiomeRegionLabels(game: Game): void {
+    for (const region of ALIGNMENT_GRID_MAP.biomeRegions) {
+      const p = worldToIso(region.labelWorldX, region.labelWorldY);
+      const label = new Text({
+        text: region.label.toUpperCase(),
+        style: { ...fontStyle, fontSize: 9, fill: "#aab0bd", align: "center" }
+      });
+      label.anchor.set(0.5);
+      label.position.set(p.screenX, p.screenY - 12);
+      game.layers.floatingText.addChild(label);
+    }
+  }
+
+  private drawAnimatedRouteState(game: Game): void {
+    const pulse = (Math.sin(this.seconds * 3.2) + 1) * 0.5;
+    const routeStates = this.routeStates(game);
+    for (const route of ALIGNMENT_GRID_MAP.routes) {
+      const state = routeStates.find((candidate) => candidate.id === route.id)?.state ?? "locked";
+      if (state === "locked") continue;
+      const midpoint = routeMidpoint(route);
+      const p = worldToIso(midpoint.worldX, midpoint.worldY);
+      const color = state === "stable" ? palette.mint : palette.lemon;
+      const alpha = state === "stable" ? 0.28 + pulse * 0.16 : 0.18 + pulse * 0.22;
+      const marker = new Graphics();
+      marker.ellipse(p.screenX, p.screenY - 7, 18 + pulse * 8, 7 + pulse * 3).stroke({ color, width: state === "stable" ? 2 : 3, alpha });
+      game.layers.floatingText.addChild(marker);
+      const selectedAdjacent = route.from === this.selectedId || route.to === this.selectedId;
+      if (!selectedAdjacent) continue;
+      const label = new Text({
+        text: `${route.label.toUpperCase()} // ${state.toUpperCase()}`,
+        style: { ...fontStyle, fontSize: 9, fill: state === "stable" ? "#64e0b4" : "#ffd166", align: "center" }
+      });
+      label.anchor.set(0.5);
+      label.position.set(p.screenX, p.screenY - 28);
+      game.layers.floatingText.addChild(label);
     }
   }
 
@@ -507,6 +641,22 @@ function distanceToSegment(px: number, py: number, ax: number, ay: number, bx: n
   const x = ax + t * dx;
   const y = ay + t * dy;
   return Math.hypot(px - x, py - y);
+}
+
+function routeMidpoint(route: AlignmentGridRoute): { worldX: number; worldY: number } {
+  const points = route.checkpoints;
+  if (points.length > 0) return points[Math.floor(points.length / 2)];
+  const from = ALIGNMENT_GRID_MAP.nodes.find((node) => node.id === route.from);
+  const to = ALIGNMENT_GRID_MAP.nodes.find((node) => node.id === route.to);
+  if (!from || !to) return { worldX: 0, worldY: 0 };
+  return { worldX: (from.worldX + to.worldX) / 2, worldY: (from.worldY + to.worldY) / 2 };
+}
+
+function routeBiomeTexture(route: AlignmentGridRoute): string {
+  const to = ALIGNMENT_GRID_MAP.nodes.find((node) => node.id === route.to);
+  const from = ALIGNMENT_GRID_MAP.nodes.find((node) => node.id === route.from);
+  const region = ALIGNMENT_GRID_MAP.biomeRegions.find((candidate) => candidate.id === to?.regionLabel || candidate.label === to?.regionLabel || candidate.label === from?.regionLabel);
+  return region?.routeTexture ?? "causeway";
 }
 
 function clamp(value: number, min: number, max: number): number {

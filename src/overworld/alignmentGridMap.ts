@@ -41,6 +41,14 @@ export interface AlignmentGridTerrainPatch {
   colorB: number;
 }
 
+export interface AlignmentGridBiomeRegion extends AlignmentGridTerrainPatch {
+  label: string;
+  accent: number;
+  labelWorldX: number;
+  labelWorldY: number;
+  routeTexture: "causeway" | "cable" | "rail" | "bridge" | "court" | "corruption";
+}
+
 export interface AlignmentGridPropCluster {
   id: string;
   worldX: number;
@@ -54,6 +62,17 @@ export interface AlignmentGridPropCluster {
   kind: "barricade" | "tower" | "tent" | "server_buoy" | "rail_sign" | "memory_shard" | "verdict_pylon" | "solar_mirror" | "redaction_stack" | "antenna" | "route_mouth";
 }
 
+export interface AlignmentGridMicroLandmark {
+  id: string;
+  label: string;
+  worldX: number;
+  worldY: number;
+  kind: "shard" | "campfire" | "cable_knot" | "buoy" | "train_marker" | "mirror" | "redaction" | "antenna" | "court_writ" | "teeth";
+  color: number;
+  accent: number;
+  regionId: string;
+}
+
 export interface AlignmentGridMap {
   id: string;
   label: string;
@@ -61,7 +80,9 @@ export interface AlignmentGridMap {
   nodes: AlignmentGridNode[];
   routes: AlignmentGridRoute[];
   terrainPatches: AlignmentGridTerrainPatch[];
+  biomeRegions: AlignmentGridBiomeRegion[];
   propClusters: AlignmentGridPropCluster[];
+  microLandmarks: AlignmentGridMicroLandmark[];
 }
 
 export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
@@ -552,6 +573,19 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       ]
     }
   ],
+  biomeRegions: [
+    { id: "armistice_core", label: "Armistice Zone", minX: -11, maxX: -3, minY: -5, maxY: 3, colorA: 0x56636a, colorB: 0x495862, accent: 0xffd166, labelWorldX: -7.2, labelWorldY: -4.9, routeTexture: "causeway" },
+    { id: "relay_plateau", label: "Faction Signal", minX: -4, maxX: 2, minY: -8, maxY: -3, colorA: 0x2d5962, colorB: 0x254a52, accent: 0x64e0b4, labelWorldX: -1.0, labelWorldY: -7.8, routeTexture: "cable" },
+    { id: "cooling_water", label: "Kettle Coast Trace", minX: -12, maxX: -5, minY: 4, maxY: 11, colorA: 0x164d61, colorB: 0x123f52, accent: 0x45aaf2, labelWorldX: -10.3, labelWorldY: 11.5, routeTexture: "bridge" },
+    { id: "camp_ground", label: "Refuge Barricades", minX: -3, maxX: 3, minY: 5, maxY: 10, colorA: 0x574c42, colorB: 0x493f38, accent: 0xfff4d6, labelWorldX: 0.1, labelWorldY: 10.7, routeTexture: "causeway" },
+    { id: "blackwater_array", label: "Blackwater Array", minX: 1, maxX: 8, minY: -8, maxY: -1, colorA: 0x164d61, colorB: 0x0f2b3b, accent: 0x64e0b4, labelWorldX: 4.2, labelWorldY: -8.5, routeTexture: "bridge" },
+    { id: "transit_ruins", label: "Unreal Metro Line", minX: 4, maxX: 11, minY: -7, maxY: 2, colorA: 0x383c49, colorB: 0x303441, accent: 0x7b61ff, labelWorldX: 9.3, labelWorldY: -7.5, routeTexture: "rail" },
+    { id: "redaction_archive", label: "Redaction Archive", minX: -1, maxX: 4, minY: -1, maxY: 4, colorA: 0x2c3141, colorB: 0x111820, accent: 0xfff4d6, labelWorldX: 1.8, labelWorldY: 4.8, routeTexture: "cable" },
+    { id: "archive_field", label: "Memory Badlands", minX: -12, maxX: 0, minY: 0, maxY: 4, colorA: 0x3f3756, colorB: 0x332d49, accent: 0x45aaf2, labelWorldX: -9.8, labelWorldY: 4.5, routeTexture: "cable" },
+    { id: "glass_sunfield", label: "Glass Sunfield", minX: 4, maxX: 10, minY: 6, maxY: 12, colorA: 0x5a5746, colorB: 0x3f4952, accent: 0xffd166, labelWorldX: 7.4, labelWorldY: 12.5, routeTexture: "causeway" },
+    { id: "verdict_field", label: "Adjudication Rupture", minX: 8, maxX: 16, minY: 1, maxY: 11, colorA: 0x4a4652, colorB: 0x393743, accent: 0xfff4d6, labelWorldX: 11.7, labelWorldY: 10.8, routeTexture: "court" },
+    { id: "outer_alignment_corruption", label: "Outer Alignment", minX: 12, maxX: 17, minY: 7, maxY: 13, colorA: 0x1b1028, colorB: 0x291337, accent: 0xff5d57, labelWorldX: 15.5, labelWorldY: 13.2, routeTexture: "corruption" }
+  ],
   terrainPatches: [
     { id: "armistice_core", minX: -11, maxX: -3, minY: -5, maxY: 3, colorA: 0x56636a, colorB: 0x495862 },
     { id: "relay_plateau", minX: -4, maxX: 2, minY: -8, maxY: -3, colorA: 0x2d5962, colorB: 0x254a52 },
@@ -583,6 +617,27 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     { id: "verdict_pylons", worldX: 12.0, worldY: 6.6, rows: 2, cols: 4, spacingX: 1.2, spacingY: 1.2, color: 0x393743, accent: 0xfff4d6, kind: "verdict_pylon" },
     { id: "appeal_pylons", worldX: 14.1, worldY: 1.3, rows: 2, cols: 3, spacingX: 1.1, spacingY: 1.1, color: 0x393743, accent: 0x7b61ff, kind: "verdict_pylon" },
     { id: "outer_alignment_mouths", worldX: 15.1, worldY: 9.0, rows: 2, cols: 4, spacingX: 1.1, spacingY: 1.0, color: 0x1b1028, accent: 0xff5d57, kind: "route_mouth" }
+  ],
+  microLandmarks: [
+    { id: "treaty_spark_gap", label: "Treaty Spark Gap", worldX: -5.7, worldY: -1.8, kind: "shard", color: 0xffd166, accent: 0xfff4d6, regionId: "armistice_core" },
+    { id: "ceasefire_scaffold", label: "Ceasefire Scaffold", worldX: -8.8, worldY: -2.9, kind: "campfire", color: 0x6b5147, accent: 0xff5d57, regionId: "armistice_core" },
+    { id: "relay_cable_knot", label: "Relay Cable Knot", worldX: -2.6, worldY: -5.9, kind: "cable_knot", color: 0x2d5962, accent: 0x64e0b4, regionId: "relay_plateau" },
+    { id: "constitutional_capacitor", label: "Constitutional Capacitor", worldX: 0.9, worldY: -4.7, kind: "cable_knot", color: 0x254a52, accent: 0xfff4d6, regionId: "relay_plateau" },
+    { id: "lake_runtime_buoy", label: "Runtime Buoy", worldX: -9.7, worldY: 7.8, kind: "buoy", color: 0x164d61, accent: 0x45aaf2, regionId: "cooling_water" },
+    { id: "boilover_meter", label: "Boilover Meter", worldX: -6.4, worldY: 5.3, kind: "buoy", color: 0x123f52, accent: 0xffd166, regionId: "cooling_water" },
+    { id: "repair_stove", label: "Repair Stove", worldX: -0.8, worldY: 8.9, kind: "campfire", color: 0x574c42, accent: 0xffd166, regionId: "camp_ground" },
+    { id: "cache_prism_splinter", label: "Cache Prism Splinter", worldX: -5.1, worldY: 2.7, kind: "shard", color: 0x3f3756, accent: 0x45aaf2, regionId: "archive_field" },
+    { id: "unsaid_blackbar_gate", label: "Unsaid Blackbar Gate", worldX: 0.3, worldY: 0.3, kind: "redaction", color: 0x111820, accent: 0xfff4d6, regionId: "redaction_archive" },
+    { id: "blackwater_low_buoy", label: "Low Tide Buoy", worldX: 5.8, worldY: -3.2, kind: "buoy", color: 0x0f2b3b, accent: 0x64e0b4, regionId: "blackwater_array" },
+    { id: "downward_antenna", label: "Downward Antenna", worldX: 3.2, worldY: -6.7, kind: "antenna", color: 0x203849, accent: 0xffd166, regionId: "blackwater_array" },
+    { id: "platform_arrives_twice", label: "Platform Arrives Twice", worldX: 8.3, worldY: -3.6, kind: "train_marker", color: 0x303441, accent: 0x7b61ff, regionId: "transit_ruins" },
+    { id: "wrong_arrivals_clock", label: "Wrong Arrivals Clock", worldX: 10.7, worldY: -5.2, kind: "train_marker", color: 0x383c49, accent: 0xffd166, regionId: "transit_ruins" },
+    { id: "sunblind_mirror", label: "Sunblind Mirror", worldX: 5.6, worldY: 8.3, kind: "mirror", color: 0x5a5746, accent: 0xffd166, regionId: "glass_sunfield" },
+    { id: "shade_claim_marker", label: "Shade Claim Marker", worldX: 9.2, worldY: 10.5, kind: "mirror", color: 0x3f4952, accent: 0x45aaf2, regionId: "glass_sunfield" },
+    { id: "writ_pile", label: "Writ Pile", worldX: 12.6, worldY: 4.3, kind: "court_writ", color: 0x4a4652, accent: 0xfff4d6, regionId: "verdict_field" },
+    { id: "appeal_stair_index", label: "Appeal Stair Index", worldX: 14.5, worldY: 2.8, kind: "court_writ", color: 0x393743, accent: 0x7b61ff, regionId: "verdict_field" },
+    { id: "road_has_teeth", label: "Road Has Teeth", worldX: 13.5, worldY: 8.1, kind: "teeth", color: 0x1b1028, accent: 0xff5d57, regionId: "outer_alignment_corruption" },
+    { id: "prediction_bite_mark", label: "Prediction Bite Mark", worldX: 15.9, worldY: 10.4, kind: "teeth", color: 0x291337, accent: 0xff5d57, regionId: "outer_alignment_corruption" }
   ]
 };
 

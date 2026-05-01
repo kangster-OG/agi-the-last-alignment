@@ -629,6 +629,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone50ArenaBossArtScenario();
     return;
+  } else if (name === "milestone51-overworld-diorama") {
+    await closeBrowser(browser);
+    await runMilestone51OverworldDioramaScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -4322,6 +4326,112 @@ async function runMilestone50ArenaBossArtScenario() {
   }
 }
 
+async function runMilestone51OverworldDioramaScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const desktopContext = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const smallContext = await browser.newContext({ viewport: { width: 960, height: 540 } });
+  const errors = [];
+  const watchPage = (page) => {
+    page.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    page.on("pageerror", (error) => errors.push(String(error)));
+  };
+
+  try {
+    const local = await desktopContext.newPage();
+    watchPage(local);
+    await local.goto(url, { waitUntil: "domcontentloaded" });
+    await local.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await local.waitForSelector("canvas");
+    await pressUntilMode(local, "Enter", "OverworldMap", 8);
+    await local.waitForTimeout(600);
+    await capture(local, "milestone51-local-diorama-desktop");
+    const localState = await state(local);
+    assert(localState.mode === "OverworldMap", "expected local Alignment Grid overworld");
+    assert(localState.overworld?.diorama?.set === "milestone51_overworld_diorama_1_0", "expected M51 local diorama telemetry");
+    assert(localState.overworld?.diorama?.biomeRegionCount >= 10, "expected dense biome regions");
+    assert(localState.overworld?.diorama?.microLandmarkCount >= 18, "expected dense micro landmarks");
+    assert(localState.overworld?.diorama?.regionLabels?.includes("Outer Alignment"), "expected Outer Alignment region label");
+    assert(localState.overworld?.routes?.some((route) => route.finaleCorruption === true), "expected finale corruption routes in local route telemetry");
+
+    const smallLocal = await smallContext.newPage();
+    watchPage(smallLocal);
+    await smallLocal.goto(url, { waitUntil: "domcontentloaded" });
+    await smallLocal.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await smallLocal.waitForSelector("canvas");
+    await pressUntilMode(smallLocal, "Enter", "OverworldMap", 8);
+    await smallLocal.waitForTimeout(600);
+    await capture(smallLocal, "milestone51-local-diorama-small");
+    const smallLocalState = await state(smallLocal);
+    assert(smallLocalState.overworld?.diorama?.routeReadabilityPolicy?.includes("pulse"), "expected route readability policy for smaller viewport");
+    await local.close();
+    await smallLocal.close();
+
+    const dense = await openOnlinePairInContext(desktopContext, "m51_dense", errors, { importOnlineProfileCode: milestone37DenseRouteProfileCode() });
+    const lobby = await waitForOnlineServerCombat(
+      dense.pageA,
+      (text) =>
+        text.online?.runPhase === "lobby" &&
+        text.online?.routeUi?.artExpansion?.milestone51?.set === "milestone51_overworld_diorama_1_0" &&
+        text.online.routeUi.artExpansion.milestone51.microLandmarkCount >= 18 &&
+        text.online.routeUi.artExpansion.milestone51.finaleCorruptionState === "reachable_teeth_active",
+      "M51 online party-grid diorama telemetry",
+      15_000
+    );
+    assert(lobby.online?.routeUi?.artExpansion?.milestone51?.onlineVotingReadability?.includes("vote_ring"), "expected M51 vote-ring readability policy");
+    assert(lobby.online?.routeUi?.artExpansion?.milestone51?.persistenceBoundary === "route_profile_only_no_route_focus_vote_ui_or_diorama_runtime_state", "expected M51 route-profile-only boundary");
+    await capture(dense.pageA, "milestone51-online-party-diorama-desktop");
+    await voteBothToNode(dense.pageA, dense.pageB, "alignment_spire_finale");
+    await waitForOnlineServerCombat(dense.pageA, (text) => text.online?.party?.selectedNodeId === "alignment_spire_finale", "M51 finale vote selection", 8_000);
+    await capture(dense.pageA, "milestone51-online-vote-ring-finale");
+    const voted = await state(dense.pageA);
+    assert(voted.online?.party?.selectedNodeId === "alignment_spire_finale", "expected finale selected after party vote");
+    assert(voted.online?.routeUi?.artExpansion?.milestone51?.selectedLaunchable === true, "expected selected finale launchable in M51 telemetry");
+    await dense.pageA.close();
+    await dense.pageB.close();
+
+    const smallPair = await openOnlinePairInContext(smallContext, "m51_small", errors, { importOnlineProfileCode: milestone37DenseRouteProfileCode() });
+    await waitForOnlineServerCombat(
+      smallPair.pageA,
+      (text) => text.online?.routeUi?.artExpansion?.milestone51?.smallViewportPolicy?.includes("960x540"),
+      "M51 small viewport route readability",
+      15_000
+    );
+    await capture(smallPair.pageA, "milestone51-online-party-diorama-small");
+    await smallPair.pageA.close();
+    await smallPair.pageB.close();
+
+    const optOut = await openOnlinePairInContext(desktopContext, "m51_optout", errors, {
+      importOnlineProfileCode: milestone37DenseRouteProfileCode(),
+      productionArt: "0",
+      placeholderArt: "1"
+    });
+    const optOutLobby = await waitForOnlineServerCombat(
+      optOut.pageA,
+      (text) => text.online?.routeUi?.artExpansion?.milestone51?.placeholderOptOutSupported === true && text.assetRendering?.productionArtEnabled === false,
+      "M51 placeholder opt-out route telemetry",
+      12_000
+    );
+    assert(optOutLobby.online?.routeUi?.artExpansion?.milestone51?.enabled === true, "expected M51 diorama telemetry under placeholder opt-out");
+    await capture(optOut.pageA, "milestone51-placeholder-opt-out-safe");
+    await optOut.pageA.close();
+    await optOut.pageB.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone51 overworld diorama");
+    }
+  } finally {
+    await desktopContext.close();
+    await smallContext.close();
+    await closeBrowser(browser);
+  }
+}
+
 async function runMilestone47FactionBurstsScenario() {
   const browser = await chromium.launch({
     headless: true,
@@ -5333,10 +5443,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone50-arena-boss-art"].includes(name);
+  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone50-arena-boss-art", "milestone51-overworld-diorama"].includes(name);
 }

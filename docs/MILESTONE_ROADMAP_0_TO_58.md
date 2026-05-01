@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-50 are complete. Milestone 51 is next.
+Current repo status as of May 1, 2026: Milestones 0-51 are complete. Milestone 52 is next.
 
 ## Non-Negotiable Continuity
 
@@ -636,20 +636,23 @@ Readiness: complete.
 
 Goal: make the Alignment Grid feel like a true miniature world.
 
-Expected scope:
+Implemented:
 
-- denser landmarks;
-- readable roads;
-- region biomes;
-- animated route states;
-- unlock reveals;
-- party voting polish;
-- campaign finale corruption state.
+- added named biome regions, dense micro-landmarks, and richer terrain identity across the Alignment Grid;
+- added local overworld route-state pulse markers, adjacent route labels, biome labels, and proof-visible diorama telemetry;
+- added online party-grid biome/micro-landmark rendering, vote rings, ready counts, and M51 route UI telemetry;
+- exposed finale corruption state as dormant, reachable teeth, or contained without persisting live UI state;
+- preserved route-profile-only persistence boundaries and placeholder opt-out behavior.
 
-Proof expectations:
+Proof coverage:
 
-- overworld proof captures dense readable route states on desktop and smaller viewports;
-- online party voting remains clear.
+- `npm run proof:milestone51-overworld-diorama`
+- `npm run proof:overworld`
+- `npm run proof:milestone40-campaign-route-ux`
+- `npm run proof:milestone50-arena-boss-art`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M52: Progression, Rewards, And Balance 1.0
 

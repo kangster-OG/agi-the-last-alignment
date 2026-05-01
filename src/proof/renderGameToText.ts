@@ -143,6 +143,7 @@ export function renderGameToText(game: Game): string {
           })),
           routes: overworld.routeStates(game),
           nearestRoute: overworld.nearestRoute(game),
+          diorama: overworld.dioramaInfo(game),
           enterHint: "Move near an unlocked node and press E or Enter."
         },
         level: null,

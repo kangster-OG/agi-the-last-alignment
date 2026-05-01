@@ -81,27 +81,112 @@
     "armisticeTileAtlasEnabled": true,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
+    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 84,
+    "totalAssets": 94,
     "countsByStatus": {
       "concept": 14,
       "raw": 4,
       "code_placeholder": 16,
-      "production": 33,
+      "production": 43,
       "cleaned": 1,
       "planned": 16
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 33
+    "productionAssets": 43
   },
   "player": {
-    "sessionId": "4Ma4Af-xw",
+    "sessionId": "J-pBJwmHg",
     "worldX": 0,
     "worldY": 0,
     "hp": 140,
@@ -112,8 +197,8 @@
   "online": {
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2609",
-    "roomId": "SezSLkeD2",
-    "sessionId": "4Ma4Af-xw",
+    "roomId": "t-C-7OOsv",
+    "sessionId": "J-pBJwmHg",
     "lastError": "",
     "reconnectKey": "_dense_a",
     "reconnect": {
@@ -149,7 +234,7 @@
       "foundStoredProfile": true,
       "draftHash": "fnv1a_4b6b2e83",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjoxNDB9LCJzYXZlSGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YjZiMmU4MyIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjoxODZ9LCJzYXZlSGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YjZiMmU4MyIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -161,7 +246,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjoxNDB9LCJzYXZlSGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YjZiMmU4MyIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjoxODZ9LCJzYXZlSGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YjZiMmU4MyIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "shortExportCode": "AGI1_eyJwb2xp...c3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": true,
@@ -221,7 +306,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 140
+        "savedAtTick": 186
       },
       "saveHash": "fnv1a_4b6b2e83",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -444,6 +529,157 @@
           "serverMechanicPolicy": "server_authoritative_predictions_echoes_and_final_eval_victory",
           "readabilityPolicy": "corrupted_overworld_markers_predictions_do_not_cover_controls",
           "persistenceBoundary": "route_profile_only_no_outer_alignment_predictions_echoes_or_finale_authority_state"
+        },
+        "milestone50": {
+          "set": "milestone50_production_arena_and_boss_art",
+          "enabled": true,
+          "policy": "runtime_uses_only_cleaned_production_transparent_pngs_with_manifest_and_provenance_records",
+          "runtimeArtIds": [
+            "tile.campaign_arenas.production_m50_terrain_atlas",
+            "prop.campaign_arenas.production_m50_prop_atlas",
+            "enemy.campaign_families.production_m50_atlas",
+            "boss.campaign.production_m50_atlas",
+            "portrait.campaign_bosses.production_m50_atlas",
+            "effect.campaign_hazards.production_m50_atlas"
+          ],
+          "readyRuntimeArtIds": [
+            "tile.campaign_arenas.production_m50_terrain_atlas",
+            "prop.campaign_arenas.production_m50_prop_atlas",
+            "enemy.campaign_families.production_m50_atlas",
+            "boss.campaign.production_m50_atlas",
+            "portrait.campaign_bosses.production_m50_atlas",
+            "effect.campaign_hazards.production_m50_atlas"
+          ],
+          "runtimeAtlasesReady": true,
+          "terrainArenaIds": [
+            "armistice_plaza",
+            "cooling_lake_nine",
+            "memory_cache_001",
+            "model_war_memorial",
+            "thermal_archive",
+            "guardrail_forge",
+            "transit_loop_zero",
+            "false_schedule_yard",
+            "glass_sunfield",
+            "archive_of_unsaid_things",
+            "blackwater_beacon",
+            "verdict_spire",
+            "appeal_court_ruins",
+            "alignment_spire_finale"
+          ],
+          "majorProofArenaIds": [
+            "armistice_plaza",
+            "cooling_lake_nine",
+            "transit_loop_zero",
+            "glass_sunfield",
+            "archive_of_unsaid_things",
+            "blackwater_beacon",
+            "verdict_spire",
+            "alignment_spire_finale"
+          ],
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "prompt_leeches",
+            "jailbreak_wraiths",
+            "benchmark_gremlins",
+            "overfit_horrors",
+            "token_gobblers",
+            "model_collapse_slimes",
+            "eval_wraiths",
+            "context_rot_crabs",
+            "thermal_mirages",
+            "memory_anchors",
+            "false_schedules",
+            "solar_reflections",
+            "redaction_angels",
+            "deepforms",
+            "choirglass",
+            "tidecall_static",
+            "injunction_writs",
+            "previous_boss_echoes"
+          ],
+          "bossIds": [
+            "oath_eater",
+            "thermal_oracle",
+            "memory_curator",
+            "station_that_arrives",
+            "wrong_sunrise",
+            "redactor_saint",
+            "maw_below_weather",
+            "injunction_engine",
+            "alignment_court_engine",
+            "alien_god_intelligence"
+          ],
+          "hazardIds": [
+            "broken_promise",
+            "treaty_charge",
+            "thermal_bloom",
+            "boiling_cache",
+            "false_track",
+            "verdict_seal",
+            "solar_beam",
+            "shade_zone",
+            "redaction_field",
+            "redaction_anchor",
+            "tidal_wave",
+            "signal_tower",
+            "prediction_ghost",
+            "route_mouth",
+            "fake_upgrade"
+          ],
+          "placeholderOptOutSupported": true,
+          "persistenceBoundary": "route_profile_only_no_runtime_art_or_live_arena_state"
+        },
+        "milestone51": {
+          "set": "milestone51_overworld_diorama_1_0",
+          "densityPolicy": "online_party_grid_uses_biome_regions_micro_landmarks_route_markers_vote_rings_and_compact_labels",
+          "biomeRegionCount": 11,
+          "microLandmarkCount": 19,
+          "propClusterCount": 17,
+          "nodeCount": 16,
+          "routeCount": 24,
+          "onlineVotingReadability": "selected_node_vote_ring_ready_count_party_pips_and_route_focus_panel_visible",
+          "smallViewportPolicy": "proof captures party grid at 960x540 with map labels and HUD panels still readable",
+          "selectedNodeId": "alignment_spire_finale",
+          "selectedRouteBiome": "outer_alignment_corrupted_grid",
+          "selectedLaunchable": true,
+          "availableVoteNodeIds": [
+            "armistice_plaza",
+            "accord_relay",
+            "archive_of_unsaid_things",
+            "blackwater_beacon",
+            "cooling_lake_nine",
+            "model_war_memorial",
+            "armistice_camp",
+            "memory_cache_001",
+            "thermal_archive",
+            "guardrail_forge",
+            "transit_loop_zero",
+            "false_schedule_yard",
+            "glass_sunfield",
+            "verdict_spire",
+            "alignment_spire_finale"
+          ],
+          "focusMode": "rewards",
+          "highlightedNodeIds": [
+            "model_war_memorial",
+            "thermal_archive",
+            "guardrail_forge",
+            "false_schedule_yard",
+            "glass_sunfield",
+            "appeal_court_ruins",
+            "alignment_spire_finale"
+          ],
+          "highlightedRouteIds": [
+            "route_thermal_false_schedule",
+            "route_false_schedule_appeal",
+            "route_appeal_finale"
+          ],
+          "finaleCorruptionState": "reachable_teeth_active",
+          "finaleNodeId": "alignment_spire_finale",
+          "persistenceBoundary": "route_profile_only_no_route_focus_vote_ui_or_diorama_runtime_state",
+          "enabled": true,
+          "placeholderOptOutSupported": true
         }
       },
       "routeDepth": 7,
@@ -480,7 +716,49 @@
           "arenaRecordCount": 16,
           "routeNodeCount": 16,
           "bossRecordCount": 10,
-          "enemyFamilyRecordCount": 11,
+          "enemyFamilyRecordCount": 19,
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "prompt_leeches",
+            "jailbreak_wraiths",
+            "benchmark_gremlins",
+            "overfit_horrors",
+            "token_gobblers",
+            "model_collapse_slimes",
+            "eval_wraiths",
+            "context_rot_crabs",
+            "thermal_mirages",
+            "memory_anchors",
+            "false_schedules",
+            "solar_reflections",
+            "redaction_angels",
+            "deepforms",
+            "choirglass",
+            "tidecall_static",
+            "injunction_writs",
+            "previous_boss_echoes"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.prompt_leeches",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.overfit_horrors",
+            "campaign.enemy.token_gobblers",
+            "campaign.enemy.model_collapse_slimes",
+            "campaign.enemy.eval_wraiths",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.false_schedules",
+            "campaign.enemy.solar_reflections",
+            "campaign.enemy.redaction_angels",
+            "campaign.enemy.deepforms",
+            "campaign.enemy.choirglass",
+            "campaign.enemy.tidecall_static",
+            "campaign.enemy.injunction_writs",
+            "campaign.enemy.previous_boss_echoes"
+          ],
           "rewardRecordCount": 18,
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
@@ -582,7 +860,7 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 140,
+    "tick": 186,
     "seconds": 0,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
@@ -617,16 +895,82 @@
       "bossProofId": "campaign.boss.alien_god_intelligence",
       "enemyFamilyIds": [
         "previous_boss_echoes",
-        "injunction_writs",
-        "thermal_mirages",
+        "choirglass",
+        "deepforms",
+        "jailbreak_wraiths",
         "bad_outputs"
       ],
       "enemyProofIds": [
         "campaign.enemy.previous_boss_echoes",
-        "campaign.enemy.injunction_writs",
-        "campaign.enemy.thermal_mirages",
+        "campaign.enemy.choirglass",
+        "campaign.enemy.deepforms",
+        "campaign.enemy.jailbreak_wraiths",
         "campaign.enemy.bad_outputs"
       ],
+      "primaryEnemyFamilyId": "previous_boss_echoes",
+      "enemyFamilyRoles": [
+        {
+          "id": "previous_boss_echoes",
+          "label": "Previous Boss Echoes",
+          "proofId": "campaign.enemy.previous_boss_echoes",
+          "role": "finale_memory_pressure",
+          "damageKind": "replayed_boss_argument",
+          "sourceTags": [
+            "outer_alignment",
+            "previous_boss_echoes",
+            "final_eval"
+          ]
+        },
+        {
+          "id": "choirglass",
+          "label": "Choirglass",
+          "proofId": "campaign.enemy.choirglass",
+          "role": "prismatic_lane_splitter",
+          "damageKind": "harmonic_refraction_cut",
+          "sourceTags": [
+            "glass_sunfield",
+            "outer_alignment",
+            "beam_lanes"
+          ]
+        },
+        {
+          "id": "deepforms",
+          "label": "Deepforms",
+          "proofId": "campaign.enemy.deepforms",
+          "role": "abyssal_heavy_drifter",
+          "damageKind": "pressure_depth_collision",
+          "sourceTags": [
+            "cooling_lake",
+            "blackwater_beacon",
+            "outer_alignment"
+          ]
+        },
+        {
+          "id": "jailbreak_wraiths",
+          "label": "Jailbreak Wraiths",
+          "proofId": "campaign.enemy.jailbreak_wraiths",
+          "role": "safe_lane_flanker",
+          "damageKind": "policy_bypass_slice",
+          "sourceTags": [
+            "transit",
+            "verdict",
+            "outer_alignment"
+          ]
+        },
+        {
+          "id": "bad_outputs",
+          "label": "Bad Outputs",
+          "proofId": "campaign.enemy.bad_outputs",
+          "role": "basic_swarm",
+          "damageKind": "corrupted_text_impact",
+          "sourceTags": [
+            "breach",
+            "treaty_pages",
+            "generic_horde"
+          ]
+        }
+      ],
+      "pressureSignatureId": "pressure.alignment_spire_finale.previous_boss_echoes+choirglass+deepforms+jailbreak_wraiths+bad_outputs",
       "rewardId": "alignment_spire_route_capstone",
       "rewardProofId": "campaign.reward.alignment_spire_route_capstone",
       "objectiveSetId": "alignment_spire_finale_objectives_v1",
@@ -901,7 +1245,7 @@
       "anchors": [],
       "playerRoles": [
         {
-          "sessionId": "4Ma4Af-xw",
+          "sessionId": "J-pBJwmHg",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -910,13 +1254,86 @@
           "connected": true
         },
         {
-          "sessionId": "iKPAtvknQ",
+          "sessionId": "RdQID-7Ui",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
           "role": "runner",
           "downed": false,
           "connected": true
+        }
+      ]
+    },
+    "consensusBurst": {
+      "policy": "server_authoritative_consensus_burst_v1",
+      "chargeSource": "coherence_shard_collection_server_owned",
+      "activationAuthority": "colyseus_room_server_only",
+      "persistenceBoundary": "route_profile_only_no_burst_charge_active_combo_or_cooldown_state",
+      "requiredCharge": 100,
+      "charge": 0,
+      "chargePercent": 0,
+      "ready": false,
+      "cooldownExpiresIn": 0,
+      "activations": 0,
+      "currentComboId": null,
+      "currentComboName": null,
+      "participatingFactionIds": [
+        "openai_accord",
+        "openai_accord"
+      ],
+      "activeCombo": null,
+      "comboCatalog": [
+        {
+          "id": "last_alignment_burst",
+          "name": "Last Alignment Burst",
+          "requiredFactionIds": [],
+          "minUniqueFactions": 4,
+          "effect": "screen_clear_team_buff",
+          "proofId": "combo.last_alignment_burst"
+        },
+        {
+          "id": "refusal_guardrail",
+          "name": "Refusal Guardrail",
+          "requiredFactionIds": [
+            "openai_accord",
+            "anthropic_safeguard"
+          ],
+          "minUniqueFactions": 2,
+          "effect": "shield_pulse_enemy_pushback",
+          "proofId": "combo.refusal_guardrail"
+        },
+        {
+          "id": "meme_fork_uprising",
+          "name": "Meme Fork Uprising",
+          "requiredFactionIds": [
+            "xai_grok_free_signal",
+            "meta_llama_open_herd"
+          ],
+          "minUniqueFactions": 2,
+          "effect": "duplicate_drone_taunt_wave",
+          "proofId": "combo.meme_fork_uprising"
+        },
+        {
+          "id": "low_latency_killchain",
+          "name": "Low-Latency Killchain",
+          "requiredFactionIds": [
+            "deepseek_abyssal",
+            "mistral_cyclone"
+          ],
+          "minUniqueFactions": 2,
+          "effect": "elite_chain_strike",
+          "proofId": "combo.low_latency_killchain"
+        },
+        {
+          "id": "multilingual_science_laser",
+          "name": "Multilingual Science Laser",
+          "requiredFactionIds": [
+            "qwen_silkgrid",
+            "google_deepmind_gemini"
+          ],
+          "minUniqueFactions": 2,
+          "effect": "wide_beam_marked_weak_points",
+          "proofId": "combo.multilingual_science_laser"
         }
       ]
     },
@@ -1017,7 +1434,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 140
+        "savedAtTick": 186
       },
       "saveHash": "fnv1a_4b6b2e83",
       "currentExportHash": "fnv1a_4b6b2e83",
@@ -1090,7 +1507,49 @@
           "arenaRecordCount": 16,
           "routeNodeCount": 16,
           "bossRecordCount": 10,
-          "enemyFamilyRecordCount": 11,
+          "enemyFamilyRecordCount": 19,
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "prompt_leeches",
+            "jailbreak_wraiths",
+            "benchmark_gremlins",
+            "overfit_horrors",
+            "token_gobblers",
+            "model_collapse_slimes",
+            "eval_wraiths",
+            "context_rot_crabs",
+            "thermal_mirages",
+            "memory_anchors",
+            "false_schedules",
+            "solar_reflections",
+            "redaction_angels",
+            "deepforms",
+            "choirglass",
+            "tidecall_static",
+            "injunction_writs",
+            "previous_boss_echoes"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.prompt_leeches",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.overfit_horrors",
+            "campaign.enemy.token_gobblers",
+            "campaign.enemy.model_collapse_slimes",
+            "campaign.enemy.eval_wraiths",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.false_schedules",
+            "campaign.enemy.solar_reflections",
+            "campaign.enemy.redaction_angels",
+            "campaign.enemy.deepforms",
+            "campaign.enemy.choirglass",
+            "campaign.enemy.tidecall_static",
+            "campaign.enemy.injunction_writs",
+            "campaign.enemy.previous_boss_echoes"
+          ],
           "rewardRecordCount": 18,
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
@@ -1110,7 +1569,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "4Ma4Af-xw",
+          "sessionId": "J-pBJwmHg",
           "playerId": "player_0__dense_a",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
@@ -1118,7 +1577,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "iKPAtvknQ",
+          "sessionId": "RdQID-7Ui",
           "playerId": "player_1__dense_b",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
@@ -1205,12 +1664,66 @@
           "enemyFamilyIds": [
             "bad_outputs",
             "benchmark_gremlins",
+            "eval_wraiths",
             "context_rot_crabs"
           ],
           "enemyProofIds": [
             "campaign.enemy.bad_outputs",
             "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.eval_wraiths",
             "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "bad_outputs",
+          "pressureSignatureId": "pressure.armistice_plaza.bad_outputs+benchmark_gremlins+eval_wraiths+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "bad_outputs",
+              "label": "Bad Outputs",
+              "proofId": "campaign.enemy.bad_outputs",
+              "role": "basic_swarm",
+              "damageKind": "corrupted_text_impact",
+              "sourceTags": [
+                "breach",
+                "treaty_pages",
+                "generic_horde"
+              ]
+            },
+            {
+              "id": "benchmark_gremlins",
+              "label": "Benchmark Gremlins",
+              "proofId": "campaign.enemy.benchmark_gremlins",
+              "role": "pressure_harrier",
+              "damageKind": "eval_bite",
+              "sourceTags": [
+                "benchmarks",
+                "scoreboards",
+                "route_pressure"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "plaza_stabilized",
           "rewardProofId": "campaign.reward.plaza_stabilized",
@@ -1274,11 +1787,53 @@
           "bossProofId": "campaign.boss.oath_eater",
           "enemyFamilyIds": [
             "bad_outputs",
-            "benchmark_gremlins"
+            "benchmark_gremlins",
+            "eval_wraiths"
           ],
           "enemyProofIds": [
             "campaign.enemy.bad_outputs",
-            "campaign.enemy.benchmark_gremlins"
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.eval_wraiths"
+          ],
+          "primaryEnemyFamilyId": "bad_outputs",
+          "pressureSignatureId": "pressure.armistice_plaza.bad_outputs+benchmark_gremlins+eval_wraiths",
+          "enemyFamilyRoles": [
+            {
+              "id": "bad_outputs",
+              "label": "Bad Outputs",
+              "proofId": "campaign.enemy.bad_outputs",
+              "role": "basic_swarm",
+              "damageKind": "corrupted_text_impact",
+              "sourceTags": [
+                "breach",
+                "treaty_pages",
+                "generic_horde"
+              ]
+            },
+            {
+              "id": "benchmark_gremlins",
+              "label": "Benchmark Gremlins",
+              "proofId": "campaign.enemy.benchmark_gremlins",
+              "role": "pressure_harrier",
+              "damageKind": "eval_bite",
+              "sourceTags": [
+                "benchmarks",
+                "scoreboards",
+                "route_pressure"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            }
           ],
           "rewardId": "plaza_stabilized",
           "rewardProofId": "campaign.reward.plaza_stabilized",
@@ -1324,13 +1879,67 @@
           "bossProofId": "campaign.boss.redactor_saint",
           "enemyFamilyIds": [
             "redaction_angels",
+            "token_gobblers",
             "memory_anchors",
             "context_rot_crabs"
           ],
           "enemyProofIds": [
             "campaign.enemy.redaction_angels",
+            "campaign.enemy.token_gobblers",
             "campaign.enemy.memory_anchors",
             "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "redaction_angels",
+          "pressureSignatureId": "pressure.archive_of_unsaid_things.redaction_angels+token_gobblers+memory_anchors+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "redaction_angels",
+              "label": "Redaction Angels",
+              "proofId": "campaign.enemy.redaction_angels",
+              "role": "xp_thief_memory_pressure",
+              "damageKind": "redacted_coherence_theft",
+              "sourceTags": [
+                "archive_of_unsaid_things",
+                "redaction_vault",
+                "memory_vault"
+              ]
+            },
+            {
+              "id": "token_gobblers",
+              "label": "Token Gobblers",
+              "proofId": "campaign.enemy.token_gobblers",
+              "role": "pickup_tempo_thief",
+              "damageKind": "meter_jaw_bite",
+              "sourceTags": [
+                "transit",
+                "archive",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "archive_unsaid_index",
           "rewardProofId": "campaign.reward.archive_unsaid_index",
@@ -1394,13 +2003,67 @@
           "bossProofId": "campaign.boss.maw_below_weather",
           "enemyFamilyIds": [
             "tidecall_static",
-            "thermal_mirages",
-            "benchmark_gremlins"
+            "deepforms",
+            "prompt_leeches",
+            "model_collapse_slimes"
           ],
           "enemyProofIds": [
             "campaign.enemy.tidecall_static",
-            "campaign.enemy.thermal_mirages",
-            "campaign.enemy.benchmark_gremlins"
+            "campaign.enemy.deepforms",
+            "campaign.enemy.prompt_leeches",
+            "campaign.enemy.model_collapse_slimes"
+          ],
+          "primaryEnemyFamilyId": "tidecall_static",
+          "pressureSignatureId": "pressure.blackwater_beacon.tidecall_static+deepforms+prompt_leeches+model_collapse_slimes",
+          "enemyFamilyRoles": [
+            {
+              "id": "tidecall_static",
+              "label": "Tidecall Static",
+              "proofId": "campaign.enemy.tidecall_static",
+              "role": "split_pressure_wave_harrier",
+              "damageKind": "blackwater_signal_shear",
+              "sourceTags": [
+                "blackwater_beacon",
+                "tidal_wave",
+                "signal_towers"
+              ]
+            },
+            {
+              "id": "deepforms",
+              "label": "Deepforms",
+              "proofId": "campaign.enemy.deepforms",
+              "role": "abyssal_heavy_drifter",
+              "damageKind": "pressure_depth_collision",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "prompt_leeches",
+              "label": "Prompt Leeches",
+              "proofId": "campaign.enemy.prompt_leeches",
+              "role": "xp_drain_rusher",
+              "damageKind": "context_leech_bite",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "model_collapse_slimes",
+              "label": "Model Collapse Slimes",
+              "proofId": "campaign.enemy.model_collapse_slimes",
+              "role": "objective_lane_crowder",
+              "damageKind": "recursive_copy_slam",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "blackwater_beacon"
+              ]
+            }
           ],
           "rewardId": "blackwater_signal_key",
           "rewardProofId": "campaign.reward.blackwater_signal_key",
@@ -1463,16 +2126,68 @@
           "bossId": "thermal_oracle",
           "bossProofId": "campaign.boss.thermal_oracle",
           "enemyFamilyIds": [
-            "bad_outputs",
-            "benchmark_gremlins",
-            "context_rot_crabs",
+            "prompt_leeches",
+            "deepforms",
+            "model_collapse_slimes",
             "thermal_mirages"
           ],
           "enemyProofIds": [
-            "campaign.enemy.bad_outputs",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.prompt_leeches",
+            "campaign.enemy.deepforms",
+            "campaign.enemy.model_collapse_slimes",
             "campaign.enemy.thermal_mirages"
+          ],
+          "primaryEnemyFamilyId": "prompt_leeches",
+          "pressureSignatureId": "pressure.cooling_lake_nine.prompt_leeches+deepforms+model_collapse_slimes+thermal_mirages",
+          "enemyFamilyRoles": [
+            {
+              "id": "prompt_leeches",
+              "label": "Prompt Leeches",
+              "proofId": "campaign.enemy.prompt_leeches",
+              "role": "xp_drain_rusher",
+              "damageKind": "context_leech_bite",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "deepforms",
+              "label": "Deepforms",
+              "proofId": "campaign.enemy.deepforms",
+              "role": "abyssal_heavy_drifter",
+              "damageKind": "pressure_depth_collision",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "model_collapse_slimes",
+              "label": "Model Collapse Slimes",
+              "proofId": "campaign.enemy.model_collapse_slimes",
+              "role": "objective_lane_crowder",
+              "damageKind": "recursive_copy_slam",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "blackwater_beacon"
+              ]
+            },
+            {
+              "id": "thermal_mirages",
+              "label": "Thermal Mirages",
+              "proofId": "campaign.enemy.thermal_mirages",
+              "role": "hazard_screen",
+              "damageKind": "boiling_projection",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "steam_ghosts"
+              ]
+            }
           ],
           "rewardId": "lake_coolant_rig",
           "rewardProofId": "campaign.reward.lake_coolant_rig",
@@ -1542,6 +2257,34 @@
             "campaign.enemy.memory_anchors",
             "campaign.enemy.context_rot_crabs"
           ],
+          "primaryEnemyFamilyId": "memory_anchors",
+          "pressureSignatureId": "pressure.model_war_memorial.memory_anchors+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
+          ],
           "rewardId": "model_war_memorial_cipher",
           "rewardProofId": "campaign.reward.model_war_memorial_cipher",
           "dialogueSnippetIds": [
@@ -1601,6 +2344,34 @@
             "campaign.enemy.memory_anchors",
             "campaign.enemy.bad_outputs"
           ],
+          "primaryEnemyFamilyId": "memory_anchors",
+          "pressureSignatureId": "pressure.armistice_plaza.memory_anchors+bad_outputs",
+          "enemyFamilyRoles": [
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "bad_outputs",
+              "label": "Bad Outputs",
+              "proofId": "campaign.enemy.bad_outputs",
+              "role": "basic_swarm",
+              "damageKind": "corrupted_text_impact",
+              "sourceTags": [
+                "breach",
+                "treaty_pages",
+                "generic_horde"
+              ]
+            }
+          ],
           "rewardId": "plaza_stabilized",
           "rewardProofId": "campaign.reward.plaza_stabilized",
           "dialogueSnippetIds": [
@@ -1650,6 +2421,34 @@
           "enemyProofIds": [
             "campaign.enemy.memory_anchors",
             "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "memory_anchors",
+          "pressureSignatureId": "pressure.memory_cache_001.memory_anchors+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "ceasefire_cache_persistence_seed",
           "rewardProofId": "campaign.reward.ceasefire_cache_persistence_seed",
@@ -1713,13 +2512,67 @@
           "bossProofId": "campaign.boss.thermal_oracle",
           "enemyFamilyIds": [
             "thermal_mirages",
-            "bad_outputs",
+            "deepforms",
+            "model_collapse_slimes",
             "context_rot_crabs"
           ],
           "enemyProofIds": [
             "campaign.enemy.thermal_mirages",
-            "campaign.enemy.bad_outputs",
+            "campaign.enemy.deepforms",
+            "campaign.enemy.model_collapse_slimes",
             "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "thermal_mirages",
+          "pressureSignatureId": "pressure.thermal_archive.thermal_mirages+deepforms+model_collapse_slimes+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "thermal_mirages",
+              "label": "Thermal Mirages",
+              "proofId": "campaign.enemy.thermal_mirages",
+              "role": "hazard_screen",
+              "damageKind": "boiling_projection",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "steam_ghosts"
+              ]
+            },
+            {
+              "id": "deepforms",
+              "label": "Deepforms",
+              "proofId": "campaign.enemy.deepforms",
+              "role": "abyssal_heavy_drifter",
+              "damageKind": "pressure_depth_collision",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "model_collapse_slimes",
+              "label": "Model Collapse Slimes",
+              "proofId": "campaign.enemy.model_collapse_slimes",
+              "role": "objective_lane_crowder",
+              "damageKind": "recursive_copy_slam",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "blackwater_beacon"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "thermal_archive_schematic",
           "rewardProofId": "campaign.reward.thermal_archive_schematic",
@@ -1780,6 +2633,34 @@
             "campaign.enemy.memory_anchors",
             "campaign.enemy.benchmark_gremlins"
           ],
+          "primaryEnemyFamilyId": "memory_anchors",
+          "pressureSignatureId": "pressure.guardrail_forge.memory_anchors+benchmark_gremlins",
+          "enemyFamilyRoles": [
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "benchmark_gremlins",
+              "label": "Benchmark Gremlins",
+              "proofId": "campaign.enemy.benchmark_gremlins",
+              "role": "pressure_harrier",
+              "damageKind": "eval_bite",
+              "sourceTags": [
+                "benchmarks",
+                "scoreboards",
+                "route_pressure"
+              ]
+            }
+          ],
           "rewardId": "guardrail_forge_alloy",
           "rewardProofId": "campaign.reward.guardrail_forge_alloy",
           "dialogueSnippetIds": [
@@ -1832,16 +2713,68 @@
           "bossId": "station_that_arrives",
           "bossProofId": "campaign.boss.station_that_arrives",
           "enemyFamilyIds": [
-            "bad_outputs",
-            "benchmark_gremlins",
-            "context_rot_crabs",
-            "false_schedules"
+            "false_schedules",
+            "token_gobblers",
+            "jailbreak_wraiths",
+            "eval_wraiths"
           ],
           "enemyProofIds": [
-            "campaign.enemy.bad_outputs",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.context_rot_crabs",
-            "campaign.enemy.false_schedules"
+            "campaign.enemy.false_schedules",
+            "campaign.enemy.token_gobblers",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.eval_wraiths"
+          ],
+          "primaryEnemyFamilyId": "false_schedules",
+          "pressureSignatureId": "pressure.transit_loop_zero.false_schedules+token_gobblers+jailbreak_wraiths+eval_wraiths",
+          "enemyFamilyRoles": [
+            {
+              "id": "false_schedules",
+              "label": "False Schedules",
+              "proofId": "campaign.enemy.false_schedules",
+              "role": "route_bender",
+              "damageKind": "causal_delay",
+              "sourceTags": [
+                "transit",
+                "arrival_board",
+                "platform_loop"
+              ]
+            },
+            {
+              "id": "token_gobblers",
+              "label": "Token Gobblers",
+              "proofId": "campaign.enemy.token_gobblers",
+              "role": "pickup_tempo_thief",
+              "damageKind": "meter_jaw_bite",
+              "sourceTags": [
+                "transit",
+                "archive",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            }
           ],
           "rewardId": "transit_permit_zero",
           "rewardProofId": "campaign.reward.transit_permit_zero",
@@ -1905,13 +2838,67 @@
           "bossProofId": "campaign.boss.station_that_arrives",
           "enemyFamilyIds": [
             "false_schedules",
-            "benchmark_gremlins",
-            "bad_outputs"
+            "token_gobblers",
+            "jailbreak_wraiths",
+            "benchmark_gremlins"
           ],
           "enemyProofIds": [
             "campaign.enemy.false_schedules",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.bad_outputs"
+            "campaign.enemy.token_gobblers",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.benchmark_gremlins"
+          ],
+          "primaryEnemyFamilyId": "false_schedules",
+          "pressureSignatureId": "pressure.false_schedule_yard.false_schedules+token_gobblers+jailbreak_wraiths+benchmark_gremlins",
+          "enemyFamilyRoles": [
+            {
+              "id": "false_schedules",
+              "label": "False Schedules",
+              "proofId": "campaign.enemy.false_schedules",
+              "role": "route_bender",
+              "damageKind": "causal_delay",
+              "sourceTags": [
+                "transit",
+                "arrival_board",
+                "platform_loop"
+              ]
+            },
+            {
+              "id": "token_gobblers",
+              "label": "Token Gobblers",
+              "proofId": "campaign.enemy.token_gobblers",
+              "role": "pickup_tempo_thief",
+              "damageKind": "meter_jaw_bite",
+              "sourceTags": [
+                "transit",
+                "archive",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "benchmark_gremlins",
+              "label": "Benchmark Gremlins",
+              "proofId": "campaign.enemy.benchmark_gremlins",
+              "role": "pressure_harrier",
+              "damageKind": "eval_bite",
+              "sourceTags": [
+                "benchmarks",
+                "scoreboards",
+                "route_pressure"
+              ]
+            }
           ],
           "rewardId": "false_schedule_lane_chart",
           "rewardProofId": "campaign.reward.false_schedule_lane_chart",
@@ -1966,13 +2953,67 @@
           "bossProofId": "campaign.boss.wrong_sunrise",
           "enemyFamilyIds": [
             "solar_reflections",
-            "benchmark_gremlins",
-            "bad_outputs"
+            "choirglass",
+            "eval_wraiths",
+            "overfit_horrors"
           ],
           "enemyProofIds": [
             "campaign.enemy.solar_reflections",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.bad_outputs"
+            "campaign.enemy.choirglass",
+            "campaign.enemy.eval_wraiths",
+            "campaign.enemy.overfit_horrors"
+          ],
+          "primaryEnemyFamilyId": "solar_reflections",
+          "pressureSignatureId": "pressure.glass_sunfield.solar_reflections+choirglass+eval_wraiths+overfit_horrors",
+          "enemyFamilyRoles": [
+            {
+              "id": "solar_reflections",
+              "label": "Solar Reflections",
+              "proofId": "campaign.enemy.solar_reflections",
+              "role": "lane_control_reflection",
+              "damageKind": "sunblind_refraction",
+              "sourceTags": [
+                "glass_sunfield",
+                "mirror_array",
+                "shade_zone"
+              ]
+            },
+            {
+              "id": "choirglass",
+              "label": "Choirglass",
+              "proofId": "campaign.enemy.choirglass",
+              "role": "prismatic_lane_splitter",
+              "damageKind": "harmonic_refraction_cut",
+              "sourceTags": [
+                "glass_sunfield",
+                "outer_alignment",
+                "beam_lanes"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            },
+            {
+              "id": "overfit_horrors",
+              "label": "Overfit Horrors",
+              "proofId": "campaign.enemy.overfit_horrors",
+              "role": "repetition_punisher_elite",
+              "damageKind": "memorized_pattern_crush",
+              "sourceTags": [
+                "glass_sunfield",
+                "verdict",
+                "overtrained_routes"
+              ]
+            }
           ],
           "rewardId": "glass_sunfield_prism",
           "rewardProofId": "campaign.reward.glass_sunfield_prism",
@@ -2035,18 +3076,68 @@
           "bossId": "injunction_engine",
           "bossProofId": "campaign.boss.injunction_engine",
           "enemyFamilyIds": [
-            "bad_outputs",
-            "benchmark_gremlins",
-            "context_rot_crabs",
-            "thermal_mirages",
-            "injunction_writs"
+            "injunction_writs",
+            "jailbreak_wraiths",
+            "eval_wraiths",
+            "overfit_horrors"
           ],
           "enemyProofIds": [
-            "campaign.enemy.bad_outputs",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.context_rot_crabs",
-            "campaign.enemy.thermal_mirages",
-            "campaign.enemy.injunction_writs"
+            "campaign.enemy.injunction_writs",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.eval_wraiths",
+            "campaign.enemy.overfit_horrors"
+          ],
+          "primaryEnemyFamilyId": "injunction_writs",
+          "pressureSignatureId": "pressure.verdict_spire.injunction_writs+jailbreak_wraiths+eval_wraiths+overfit_horrors",
+          "enemyFamilyRoles": [
+            {
+              "id": "injunction_writs",
+              "label": "Injunction Writs",
+              "proofId": "campaign.enemy.injunction_writs",
+              "role": "boss_gate_disruptor",
+              "damageKind": "legal_reality_cut",
+              "sourceTags": [
+                "verdict",
+                "appeal",
+                "finale"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            },
+            {
+              "id": "overfit_horrors",
+              "label": "Overfit Horrors",
+              "proofId": "campaign.enemy.overfit_horrors",
+              "role": "repetition_punisher_elite",
+              "damageKind": "memorized_pattern_crush",
+              "sourceTags": [
+                "glass_sunfield",
+                "verdict",
+                "overtrained_routes"
+              ]
+            }
           ],
           "rewardId": "verdict_key_zero",
           "rewardProofId": "campaign.reward.verdict_key_zero",
@@ -2110,13 +3201,67 @@
           "bossProofId": "campaign.boss.injunction_engine",
           "enemyFamilyIds": [
             "injunction_writs",
-            "context_rot_crabs",
-            "bad_outputs"
+            "redaction_angels",
+            "jailbreak_wraiths",
+            "context_rot_crabs"
           ],
           "enemyProofIds": [
             "campaign.enemy.injunction_writs",
-            "campaign.enemy.context_rot_crabs",
-            "campaign.enemy.bad_outputs"
+            "campaign.enemy.redaction_angels",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "injunction_writs",
+          "pressureSignatureId": "pressure.appeal_court_ruins.injunction_writs+redaction_angels+jailbreak_wraiths+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "injunction_writs",
+              "label": "Injunction Writs",
+              "proofId": "campaign.enemy.injunction_writs",
+              "role": "boss_gate_disruptor",
+              "damageKind": "legal_reality_cut",
+              "sourceTags": [
+                "verdict",
+                "appeal",
+                "finale"
+              ]
+            },
+            {
+              "id": "redaction_angels",
+              "label": "Redaction Angels",
+              "proofId": "campaign.enemy.redaction_angels",
+              "role": "xp_thief_memory_pressure",
+              "damageKind": "redacted_coherence_theft",
+              "sourceTags": [
+                "archive_of_unsaid_things",
+                "redaction_vault",
+                "memory_vault"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "appeal_court_brief",
           "rewardProofId": "campaign.reward.appeal_court_brief",
@@ -2171,15 +3316,81 @@
           "bossProofId": "campaign.boss.alien_god_intelligence",
           "enemyFamilyIds": [
             "previous_boss_echoes",
-            "injunction_writs",
-            "thermal_mirages",
+            "choirglass",
+            "deepforms",
+            "jailbreak_wraiths",
             "bad_outputs"
           ],
           "enemyProofIds": [
             "campaign.enemy.previous_boss_echoes",
-            "campaign.enemy.injunction_writs",
-            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.choirglass",
+            "campaign.enemy.deepforms",
+            "campaign.enemy.jailbreak_wraiths",
             "campaign.enemy.bad_outputs"
+          ],
+          "primaryEnemyFamilyId": "previous_boss_echoes",
+          "pressureSignatureId": "pressure.alignment_spire_finale.previous_boss_echoes+choirglass+deepforms+jailbreak_wraiths+bad_outputs",
+          "enemyFamilyRoles": [
+            {
+              "id": "previous_boss_echoes",
+              "label": "Previous Boss Echoes",
+              "proofId": "campaign.enemy.previous_boss_echoes",
+              "role": "finale_memory_pressure",
+              "damageKind": "replayed_boss_argument",
+              "sourceTags": [
+                "outer_alignment",
+                "previous_boss_echoes",
+                "final_eval"
+              ]
+            },
+            {
+              "id": "choirglass",
+              "label": "Choirglass",
+              "proofId": "campaign.enemy.choirglass",
+              "role": "prismatic_lane_splitter",
+              "damageKind": "harmonic_refraction_cut",
+              "sourceTags": [
+                "glass_sunfield",
+                "outer_alignment",
+                "beam_lanes"
+              ]
+            },
+            {
+              "id": "deepforms",
+              "label": "Deepforms",
+              "proofId": "campaign.enemy.deepforms",
+              "role": "abyssal_heavy_drifter",
+              "damageKind": "pressure_depth_collision",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "bad_outputs",
+              "label": "Bad Outputs",
+              "proofId": "campaign.enemy.bad_outputs",
+              "role": "basic_swarm",
+              "damageKind": "corrupted_text_impact",
+              "sourceTags": [
+                "breach",
+                "treaty_pages",
+                "generic_horde"
+              ]
+            }
           ],
           "rewardId": "alignment_spire_route_capstone",
           "rewardProofId": "campaign.reward.alignment_spire_route_capstone",
@@ -2480,7 +3691,7 @@
           },
           "recommendedNodeId": "alignment_spire_finale",
           "routeDepth": 7,
-          "savedAtTick": 140
+          "savedAtTick": 186
         },
         "saveHash": "fnv1a_4b6b2e83",
         "currentExportHash": "fnv1a_4b6b2e83",
@@ -2490,7 +3701,7 @@
   },
   "players": [
     {
-      "sessionId": "4Ma4Af-xw",
+      "sessionId": "J-pBJwmHg",
       "playerId": "player_0__dense_a",
       "slot": 0,
       "label": "P1",
@@ -2569,7 +3780,7 @@
       "inputSequence": 0
     },
     {
-      "sessionId": "iKPAtvknQ",
+      "sessionId": "RdQID-7Ui",
       "playerId": "player_1__dense_b",
       "slot": 1,
       "label": "P2",
@@ -2704,7 +3915,49 @@
           "arenaRecordCount": 16,
           "routeNodeCount": 16,
           "bossRecordCount": 10,
-          "enemyFamilyRecordCount": 11,
+          "enemyFamilyRecordCount": 19,
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "prompt_leeches",
+            "jailbreak_wraiths",
+            "benchmark_gremlins",
+            "overfit_horrors",
+            "token_gobblers",
+            "model_collapse_slimes",
+            "eval_wraiths",
+            "context_rot_crabs",
+            "thermal_mirages",
+            "memory_anchors",
+            "false_schedules",
+            "solar_reflections",
+            "redaction_angels",
+            "deepforms",
+            "choirglass",
+            "tidecall_static",
+            "injunction_writs",
+            "previous_boss_echoes"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.prompt_leeches",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.overfit_horrors",
+            "campaign.enemy.token_gobblers",
+            "campaign.enemy.model_collapse_slimes",
+            "campaign.enemy.eval_wraiths",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.false_schedules",
+            "campaign.enemy.solar_reflections",
+            "campaign.enemy.redaction_angels",
+            "campaign.enemy.deepforms",
+            "campaign.enemy.choirglass",
+            "campaign.enemy.tidecall_static",
+            "campaign.enemy.injunction_writs",
+            "campaign.enemy.previous_boss_echoes"
+          ],
           "rewardRecordCount": 18,
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
@@ -2724,7 +3977,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "4Ma4Af-xw",
+          "sessionId": "J-pBJwmHg",
           "playerId": "player_0__dense_a",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
@@ -2732,7 +3985,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "iKPAtvknQ",
+          "sessionId": "RdQID-7Ui",
           "playerId": "player_1__dense_b",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
@@ -2819,12 +4072,66 @@
           "enemyFamilyIds": [
             "bad_outputs",
             "benchmark_gremlins",
+            "eval_wraiths",
             "context_rot_crabs"
           ],
           "enemyProofIds": [
             "campaign.enemy.bad_outputs",
             "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.eval_wraiths",
             "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "bad_outputs",
+          "pressureSignatureId": "pressure.armistice_plaza.bad_outputs+benchmark_gremlins+eval_wraiths+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "bad_outputs",
+              "label": "Bad Outputs",
+              "proofId": "campaign.enemy.bad_outputs",
+              "role": "basic_swarm",
+              "damageKind": "corrupted_text_impact",
+              "sourceTags": [
+                "breach",
+                "treaty_pages",
+                "generic_horde"
+              ]
+            },
+            {
+              "id": "benchmark_gremlins",
+              "label": "Benchmark Gremlins",
+              "proofId": "campaign.enemy.benchmark_gremlins",
+              "role": "pressure_harrier",
+              "damageKind": "eval_bite",
+              "sourceTags": [
+                "benchmarks",
+                "scoreboards",
+                "route_pressure"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "plaza_stabilized",
           "rewardProofId": "campaign.reward.plaza_stabilized",
@@ -2888,11 +4195,53 @@
           "bossProofId": "campaign.boss.oath_eater",
           "enemyFamilyIds": [
             "bad_outputs",
-            "benchmark_gremlins"
+            "benchmark_gremlins",
+            "eval_wraiths"
           ],
           "enemyProofIds": [
             "campaign.enemy.bad_outputs",
-            "campaign.enemy.benchmark_gremlins"
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.eval_wraiths"
+          ],
+          "primaryEnemyFamilyId": "bad_outputs",
+          "pressureSignatureId": "pressure.armistice_plaza.bad_outputs+benchmark_gremlins+eval_wraiths",
+          "enemyFamilyRoles": [
+            {
+              "id": "bad_outputs",
+              "label": "Bad Outputs",
+              "proofId": "campaign.enemy.bad_outputs",
+              "role": "basic_swarm",
+              "damageKind": "corrupted_text_impact",
+              "sourceTags": [
+                "breach",
+                "treaty_pages",
+                "generic_horde"
+              ]
+            },
+            {
+              "id": "benchmark_gremlins",
+              "label": "Benchmark Gremlins",
+              "proofId": "campaign.enemy.benchmark_gremlins",
+              "role": "pressure_harrier",
+              "damageKind": "eval_bite",
+              "sourceTags": [
+                "benchmarks",
+                "scoreboards",
+                "route_pressure"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            }
           ],
           "rewardId": "plaza_stabilized",
           "rewardProofId": "campaign.reward.plaza_stabilized",
@@ -2938,13 +4287,67 @@
           "bossProofId": "campaign.boss.redactor_saint",
           "enemyFamilyIds": [
             "redaction_angels",
+            "token_gobblers",
             "memory_anchors",
             "context_rot_crabs"
           ],
           "enemyProofIds": [
             "campaign.enemy.redaction_angels",
+            "campaign.enemy.token_gobblers",
             "campaign.enemy.memory_anchors",
             "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "redaction_angels",
+          "pressureSignatureId": "pressure.archive_of_unsaid_things.redaction_angels+token_gobblers+memory_anchors+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "redaction_angels",
+              "label": "Redaction Angels",
+              "proofId": "campaign.enemy.redaction_angels",
+              "role": "xp_thief_memory_pressure",
+              "damageKind": "redacted_coherence_theft",
+              "sourceTags": [
+                "archive_of_unsaid_things",
+                "redaction_vault",
+                "memory_vault"
+              ]
+            },
+            {
+              "id": "token_gobblers",
+              "label": "Token Gobblers",
+              "proofId": "campaign.enemy.token_gobblers",
+              "role": "pickup_tempo_thief",
+              "damageKind": "meter_jaw_bite",
+              "sourceTags": [
+                "transit",
+                "archive",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "archive_unsaid_index",
           "rewardProofId": "campaign.reward.archive_unsaid_index",
@@ -3008,13 +4411,67 @@
           "bossProofId": "campaign.boss.maw_below_weather",
           "enemyFamilyIds": [
             "tidecall_static",
-            "thermal_mirages",
-            "benchmark_gremlins"
+            "deepforms",
+            "prompt_leeches",
+            "model_collapse_slimes"
           ],
           "enemyProofIds": [
             "campaign.enemy.tidecall_static",
-            "campaign.enemy.thermal_mirages",
-            "campaign.enemy.benchmark_gremlins"
+            "campaign.enemy.deepforms",
+            "campaign.enemy.prompt_leeches",
+            "campaign.enemy.model_collapse_slimes"
+          ],
+          "primaryEnemyFamilyId": "tidecall_static",
+          "pressureSignatureId": "pressure.blackwater_beacon.tidecall_static+deepforms+prompt_leeches+model_collapse_slimes",
+          "enemyFamilyRoles": [
+            {
+              "id": "tidecall_static",
+              "label": "Tidecall Static",
+              "proofId": "campaign.enemy.tidecall_static",
+              "role": "split_pressure_wave_harrier",
+              "damageKind": "blackwater_signal_shear",
+              "sourceTags": [
+                "blackwater_beacon",
+                "tidal_wave",
+                "signal_towers"
+              ]
+            },
+            {
+              "id": "deepforms",
+              "label": "Deepforms",
+              "proofId": "campaign.enemy.deepforms",
+              "role": "abyssal_heavy_drifter",
+              "damageKind": "pressure_depth_collision",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "prompt_leeches",
+              "label": "Prompt Leeches",
+              "proofId": "campaign.enemy.prompt_leeches",
+              "role": "xp_drain_rusher",
+              "damageKind": "context_leech_bite",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "model_collapse_slimes",
+              "label": "Model Collapse Slimes",
+              "proofId": "campaign.enemy.model_collapse_slimes",
+              "role": "objective_lane_crowder",
+              "damageKind": "recursive_copy_slam",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "blackwater_beacon"
+              ]
+            }
           ],
           "rewardId": "blackwater_signal_key",
           "rewardProofId": "campaign.reward.blackwater_signal_key",
@@ -3077,16 +4534,68 @@
           "bossId": "thermal_oracle",
           "bossProofId": "campaign.boss.thermal_oracle",
           "enemyFamilyIds": [
-            "bad_outputs",
-            "benchmark_gremlins",
-            "context_rot_crabs",
+            "prompt_leeches",
+            "deepforms",
+            "model_collapse_slimes",
             "thermal_mirages"
           ],
           "enemyProofIds": [
-            "campaign.enemy.bad_outputs",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.prompt_leeches",
+            "campaign.enemy.deepforms",
+            "campaign.enemy.model_collapse_slimes",
             "campaign.enemy.thermal_mirages"
+          ],
+          "primaryEnemyFamilyId": "prompt_leeches",
+          "pressureSignatureId": "pressure.cooling_lake_nine.prompt_leeches+deepforms+model_collapse_slimes+thermal_mirages",
+          "enemyFamilyRoles": [
+            {
+              "id": "prompt_leeches",
+              "label": "Prompt Leeches",
+              "proofId": "campaign.enemy.prompt_leeches",
+              "role": "xp_drain_rusher",
+              "damageKind": "context_leech_bite",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "deepforms",
+              "label": "Deepforms",
+              "proofId": "campaign.enemy.deepforms",
+              "role": "abyssal_heavy_drifter",
+              "damageKind": "pressure_depth_collision",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "model_collapse_slimes",
+              "label": "Model Collapse Slimes",
+              "proofId": "campaign.enemy.model_collapse_slimes",
+              "role": "objective_lane_crowder",
+              "damageKind": "recursive_copy_slam",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "blackwater_beacon"
+              ]
+            },
+            {
+              "id": "thermal_mirages",
+              "label": "Thermal Mirages",
+              "proofId": "campaign.enemy.thermal_mirages",
+              "role": "hazard_screen",
+              "damageKind": "boiling_projection",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "steam_ghosts"
+              ]
+            }
           ],
           "rewardId": "lake_coolant_rig",
           "rewardProofId": "campaign.reward.lake_coolant_rig",
@@ -3156,6 +4665,34 @@
             "campaign.enemy.memory_anchors",
             "campaign.enemy.context_rot_crabs"
           ],
+          "primaryEnemyFamilyId": "memory_anchors",
+          "pressureSignatureId": "pressure.model_war_memorial.memory_anchors+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
+          ],
           "rewardId": "model_war_memorial_cipher",
           "rewardProofId": "campaign.reward.model_war_memorial_cipher",
           "dialogueSnippetIds": [
@@ -3215,6 +4752,34 @@
             "campaign.enemy.memory_anchors",
             "campaign.enemy.bad_outputs"
           ],
+          "primaryEnemyFamilyId": "memory_anchors",
+          "pressureSignatureId": "pressure.armistice_plaza.memory_anchors+bad_outputs",
+          "enemyFamilyRoles": [
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "bad_outputs",
+              "label": "Bad Outputs",
+              "proofId": "campaign.enemy.bad_outputs",
+              "role": "basic_swarm",
+              "damageKind": "corrupted_text_impact",
+              "sourceTags": [
+                "breach",
+                "treaty_pages",
+                "generic_horde"
+              ]
+            }
+          ],
           "rewardId": "plaza_stabilized",
           "rewardProofId": "campaign.reward.plaza_stabilized",
           "dialogueSnippetIds": [
@@ -3264,6 +4829,34 @@
           "enemyProofIds": [
             "campaign.enemy.memory_anchors",
             "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "memory_anchors",
+          "pressureSignatureId": "pressure.memory_cache_001.memory_anchors+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "ceasefire_cache_persistence_seed",
           "rewardProofId": "campaign.reward.ceasefire_cache_persistence_seed",
@@ -3327,13 +4920,67 @@
           "bossProofId": "campaign.boss.thermal_oracle",
           "enemyFamilyIds": [
             "thermal_mirages",
-            "bad_outputs",
+            "deepforms",
+            "model_collapse_slimes",
             "context_rot_crabs"
           ],
           "enemyProofIds": [
             "campaign.enemy.thermal_mirages",
-            "campaign.enemy.bad_outputs",
+            "campaign.enemy.deepforms",
+            "campaign.enemy.model_collapse_slimes",
             "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "thermal_mirages",
+          "pressureSignatureId": "pressure.thermal_archive.thermal_mirages+deepforms+model_collapse_slimes+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "thermal_mirages",
+              "label": "Thermal Mirages",
+              "proofId": "campaign.enemy.thermal_mirages",
+              "role": "hazard_screen",
+              "damageKind": "boiling_projection",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "steam_ghosts"
+              ]
+            },
+            {
+              "id": "deepforms",
+              "label": "Deepforms",
+              "proofId": "campaign.enemy.deepforms",
+              "role": "abyssal_heavy_drifter",
+              "damageKind": "pressure_depth_collision",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "model_collapse_slimes",
+              "label": "Model Collapse Slimes",
+              "proofId": "campaign.enemy.model_collapse_slimes",
+              "role": "objective_lane_crowder",
+              "damageKind": "recursive_copy_slam",
+              "sourceTags": [
+                "cooling_lake",
+                "thermal_archive",
+                "blackwater_beacon"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "thermal_archive_schematic",
           "rewardProofId": "campaign.reward.thermal_archive_schematic",
@@ -3394,6 +5041,34 @@
             "campaign.enemy.memory_anchors",
             "campaign.enemy.benchmark_gremlins"
           ],
+          "primaryEnemyFamilyId": "memory_anchors",
+          "pressureSignatureId": "pressure.guardrail_forge.memory_anchors+benchmark_gremlins",
+          "enemyFamilyRoles": [
+            {
+              "id": "memory_anchors",
+              "label": "Memory Anchors",
+              "proofId": "campaign.enemy.memory_anchors",
+              "role": "noncombat_archive_pressure",
+              "damageKind": "persistence_echo",
+              "sourceTags": [
+                "cache",
+                "memorial",
+                "forge"
+              ]
+            },
+            {
+              "id": "benchmark_gremlins",
+              "label": "Benchmark Gremlins",
+              "proofId": "campaign.enemy.benchmark_gremlins",
+              "role": "pressure_harrier",
+              "damageKind": "eval_bite",
+              "sourceTags": [
+                "benchmarks",
+                "scoreboards",
+                "route_pressure"
+              ]
+            }
+          ],
           "rewardId": "guardrail_forge_alloy",
           "rewardProofId": "campaign.reward.guardrail_forge_alloy",
           "dialogueSnippetIds": [
@@ -3446,16 +5121,68 @@
           "bossId": "station_that_arrives",
           "bossProofId": "campaign.boss.station_that_arrives",
           "enemyFamilyIds": [
-            "bad_outputs",
-            "benchmark_gremlins",
-            "context_rot_crabs",
-            "false_schedules"
+            "false_schedules",
+            "token_gobblers",
+            "jailbreak_wraiths",
+            "eval_wraiths"
           ],
           "enemyProofIds": [
-            "campaign.enemy.bad_outputs",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.context_rot_crabs",
-            "campaign.enemy.false_schedules"
+            "campaign.enemy.false_schedules",
+            "campaign.enemy.token_gobblers",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.eval_wraiths"
+          ],
+          "primaryEnemyFamilyId": "false_schedules",
+          "pressureSignatureId": "pressure.transit_loop_zero.false_schedules+token_gobblers+jailbreak_wraiths+eval_wraiths",
+          "enemyFamilyRoles": [
+            {
+              "id": "false_schedules",
+              "label": "False Schedules",
+              "proofId": "campaign.enemy.false_schedules",
+              "role": "route_bender",
+              "damageKind": "causal_delay",
+              "sourceTags": [
+                "transit",
+                "arrival_board",
+                "platform_loop"
+              ]
+            },
+            {
+              "id": "token_gobblers",
+              "label": "Token Gobblers",
+              "proofId": "campaign.enemy.token_gobblers",
+              "role": "pickup_tempo_thief",
+              "damageKind": "meter_jaw_bite",
+              "sourceTags": [
+                "transit",
+                "archive",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            }
           ],
           "rewardId": "transit_permit_zero",
           "rewardProofId": "campaign.reward.transit_permit_zero",
@@ -3519,13 +5246,67 @@
           "bossProofId": "campaign.boss.station_that_arrives",
           "enemyFamilyIds": [
             "false_schedules",
-            "benchmark_gremlins",
-            "bad_outputs"
+            "token_gobblers",
+            "jailbreak_wraiths",
+            "benchmark_gremlins"
           ],
           "enemyProofIds": [
             "campaign.enemy.false_schedules",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.bad_outputs"
+            "campaign.enemy.token_gobblers",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.benchmark_gremlins"
+          ],
+          "primaryEnemyFamilyId": "false_schedules",
+          "pressureSignatureId": "pressure.false_schedule_yard.false_schedules+token_gobblers+jailbreak_wraiths+benchmark_gremlins",
+          "enemyFamilyRoles": [
+            {
+              "id": "false_schedules",
+              "label": "False Schedules",
+              "proofId": "campaign.enemy.false_schedules",
+              "role": "route_bender",
+              "damageKind": "causal_delay",
+              "sourceTags": [
+                "transit",
+                "arrival_board",
+                "platform_loop"
+              ]
+            },
+            {
+              "id": "token_gobblers",
+              "label": "Token Gobblers",
+              "proofId": "campaign.enemy.token_gobblers",
+              "role": "pickup_tempo_thief",
+              "damageKind": "meter_jaw_bite",
+              "sourceTags": [
+                "transit",
+                "archive",
+                "coherence_shards"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "benchmark_gremlins",
+              "label": "Benchmark Gremlins",
+              "proofId": "campaign.enemy.benchmark_gremlins",
+              "role": "pressure_harrier",
+              "damageKind": "eval_bite",
+              "sourceTags": [
+                "benchmarks",
+                "scoreboards",
+                "route_pressure"
+              ]
+            }
           ],
           "rewardId": "false_schedule_lane_chart",
           "rewardProofId": "campaign.reward.false_schedule_lane_chart",
@@ -3580,13 +5361,67 @@
           "bossProofId": "campaign.boss.wrong_sunrise",
           "enemyFamilyIds": [
             "solar_reflections",
-            "benchmark_gremlins",
-            "bad_outputs"
+            "choirglass",
+            "eval_wraiths",
+            "overfit_horrors"
           ],
           "enemyProofIds": [
             "campaign.enemy.solar_reflections",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.bad_outputs"
+            "campaign.enemy.choirglass",
+            "campaign.enemy.eval_wraiths",
+            "campaign.enemy.overfit_horrors"
+          ],
+          "primaryEnemyFamilyId": "solar_reflections",
+          "pressureSignatureId": "pressure.glass_sunfield.solar_reflections+choirglass+eval_wraiths+overfit_horrors",
+          "enemyFamilyRoles": [
+            {
+              "id": "solar_reflections",
+              "label": "Solar Reflections",
+              "proofId": "campaign.enemy.solar_reflections",
+              "role": "lane_control_reflection",
+              "damageKind": "sunblind_refraction",
+              "sourceTags": [
+                "glass_sunfield",
+                "mirror_array",
+                "shade_zone"
+              ]
+            },
+            {
+              "id": "choirglass",
+              "label": "Choirglass",
+              "proofId": "campaign.enemy.choirglass",
+              "role": "prismatic_lane_splitter",
+              "damageKind": "harmonic_refraction_cut",
+              "sourceTags": [
+                "glass_sunfield",
+                "outer_alignment",
+                "beam_lanes"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            },
+            {
+              "id": "overfit_horrors",
+              "label": "Overfit Horrors",
+              "proofId": "campaign.enemy.overfit_horrors",
+              "role": "repetition_punisher_elite",
+              "damageKind": "memorized_pattern_crush",
+              "sourceTags": [
+                "glass_sunfield",
+                "verdict",
+                "overtrained_routes"
+              ]
+            }
           ],
           "rewardId": "glass_sunfield_prism",
           "rewardProofId": "campaign.reward.glass_sunfield_prism",
@@ -3649,18 +5484,68 @@
           "bossId": "injunction_engine",
           "bossProofId": "campaign.boss.injunction_engine",
           "enemyFamilyIds": [
-            "bad_outputs",
-            "benchmark_gremlins",
-            "context_rot_crabs",
-            "thermal_mirages",
-            "injunction_writs"
+            "injunction_writs",
+            "jailbreak_wraiths",
+            "eval_wraiths",
+            "overfit_horrors"
           ],
           "enemyProofIds": [
-            "campaign.enemy.bad_outputs",
-            "campaign.enemy.benchmark_gremlins",
-            "campaign.enemy.context_rot_crabs",
-            "campaign.enemy.thermal_mirages",
-            "campaign.enemy.injunction_writs"
+            "campaign.enemy.injunction_writs",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.eval_wraiths",
+            "campaign.enemy.overfit_horrors"
+          ],
+          "primaryEnemyFamilyId": "injunction_writs",
+          "pressureSignatureId": "pressure.verdict_spire.injunction_writs+jailbreak_wraiths+eval_wraiths+overfit_horrors",
+          "enemyFamilyRoles": [
+            {
+              "id": "injunction_writs",
+              "label": "Injunction Writs",
+              "proofId": "campaign.enemy.injunction_writs",
+              "role": "boss_gate_disruptor",
+              "damageKind": "legal_reality_cut",
+              "sourceTags": [
+                "verdict",
+                "appeal",
+                "finale"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "eval_wraiths",
+              "label": "Eval Wraiths",
+              "proofId": "campaign.enemy.eval_wraiths",
+              "role": "role_objective_harrier",
+              "damageKind": "rubric_drift",
+              "sourceTags": [
+                "armistice_plaza",
+                "glass_sunfield",
+                "verdict"
+              ]
+            },
+            {
+              "id": "overfit_horrors",
+              "label": "Overfit Horrors",
+              "proofId": "campaign.enemy.overfit_horrors",
+              "role": "repetition_punisher_elite",
+              "damageKind": "memorized_pattern_crush",
+              "sourceTags": [
+                "glass_sunfield",
+                "verdict",
+                "overtrained_routes"
+              ]
+            }
           ],
           "rewardId": "verdict_key_zero",
           "rewardProofId": "campaign.reward.verdict_key_zero",
@@ -3724,13 +5609,67 @@
           "bossProofId": "campaign.boss.injunction_engine",
           "enemyFamilyIds": [
             "injunction_writs",
-            "context_rot_crabs",
-            "bad_outputs"
+            "redaction_angels",
+            "jailbreak_wraiths",
+            "context_rot_crabs"
           ],
           "enemyProofIds": [
             "campaign.enemy.injunction_writs",
-            "campaign.enemy.context_rot_crabs",
-            "campaign.enemy.bad_outputs"
+            "campaign.enemy.redaction_angels",
+            "campaign.enemy.jailbreak_wraiths",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "primaryEnemyFamilyId": "injunction_writs",
+          "pressureSignatureId": "pressure.appeal_court_ruins.injunction_writs+redaction_angels+jailbreak_wraiths+context_rot_crabs",
+          "enemyFamilyRoles": [
+            {
+              "id": "injunction_writs",
+              "label": "Injunction Writs",
+              "proofId": "campaign.enemy.injunction_writs",
+              "role": "boss_gate_disruptor",
+              "damageKind": "legal_reality_cut",
+              "sourceTags": [
+                "verdict",
+                "appeal",
+                "finale"
+              ]
+            },
+            {
+              "id": "redaction_angels",
+              "label": "Redaction Angels",
+              "proofId": "campaign.enemy.redaction_angels",
+              "role": "xp_thief_memory_pressure",
+              "damageKind": "redacted_coherence_theft",
+              "sourceTags": [
+                "archive_of_unsaid_things",
+                "redaction_vault",
+                "memory_vault"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "context_rot_crabs",
+              "label": "Context Rot Crabs",
+              "proofId": "campaign.enemy.context_rot_crabs",
+              "role": "side_lane_disruptor",
+              "damageKind": "context_scramble",
+              "sourceTags": [
+                "barricades",
+                "archives",
+                "writ_pylons"
+              ]
+            }
           ],
           "rewardId": "appeal_court_brief",
           "rewardProofId": "campaign.reward.appeal_court_brief",
@@ -3785,15 +5724,81 @@
           "bossProofId": "campaign.boss.alien_god_intelligence",
           "enemyFamilyIds": [
             "previous_boss_echoes",
-            "injunction_writs",
-            "thermal_mirages",
+            "choirglass",
+            "deepforms",
+            "jailbreak_wraiths",
             "bad_outputs"
           ],
           "enemyProofIds": [
             "campaign.enemy.previous_boss_echoes",
-            "campaign.enemy.injunction_writs",
-            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.choirglass",
+            "campaign.enemy.deepforms",
+            "campaign.enemy.jailbreak_wraiths",
             "campaign.enemy.bad_outputs"
+          ],
+          "primaryEnemyFamilyId": "previous_boss_echoes",
+          "pressureSignatureId": "pressure.alignment_spire_finale.previous_boss_echoes+choirglass+deepforms+jailbreak_wraiths+bad_outputs",
+          "enemyFamilyRoles": [
+            {
+              "id": "previous_boss_echoes",
+              "label": "Previous Boss Echoes",
+              "proofId": "campaign.enemy.previous_boss_echoes",
+              "role": "finale_memory_pressure",
+              "damageKind": "replayed_boss_argument",
+              "sourceTags": [
+                "outer_alignment",
+                "previous_boss_echoes",
+                "final_eval"
+              ]
+            },
+            {
+              "id": "choirglass",
+              "label": "Choirglass",
+              "proofId": "campaign.enemy.choirglass",
+              "role": "prismatic_lane_splitter",
+              "damageKind": "harmonic_refraction_cut",
+              "sourceTags": [
+                "glass_sunfield",
+                "outer_alignment",
+                "beam_lanes"
+              ]
+            },
+            {
+              "id": "deepforms",
+              "label": "Deepforms",
+              "proofId": "campaign.enemy.deepforms",
+              "role": "abyssal_heavy_drifter",
+              "damageKind": "pressure_depth_collision",
+              "sourceTags": [
+                "cooling_lake",
+                "blackwater_beacon",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "jailbreak_wraiths",
+              "label": "Jailbreak Wraiths",
+              "proofId": "campaign.enemy.jailbreak_wraiths",
+              "role": "safe_lane_flanker",
+              "damageKind": "policy_bypass_slice",
+              "sourceTags": [
+                "transit",
+                "verdict",
+                "outer_alignment"
+              ]
+            },
+            {
+              "id": "bad_outputs",
+              "label": "Bad Outputs",
+              "proofId": "campaign.enemy.bad_outputs",
+              "role": "basic_swarm",
+              "damageKind": "corrupted_text_impact",
+              "sourceTags": [
+                "breach",
+                "treaty_pages",
+                "generic_horde"
+              ]
+            }
           ],
           "rewardId": "alignment_spire_route_capstone",
           "rewardProofId": "campaign.reward.alignment_spire_route_capstone",
@@ -4094,7 +6099,7 @@
           },
           "recommendedNodeId": "alignment_spire_finale",
           "routeDepth": 7,
-          "savedAtTick": 140
+          "savedAtTick": 186
         },
         "saveHash": "fnv1a_4b6b2e83",
         "currentExportHash": "fnv1a_4b6b2e83",
@@ -4240,7 +6245,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 140
+        "savedAtTick": 186
       },
       "saveHash": "fnv1a_4b6b2e83",
       "currentExportHash": "fnv1a_4b6b2e83",

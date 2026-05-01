@@ -902,6 +902,8 @@ export class OnlineCoopState implements GameState {
     }
     game.layers.ground.addChild(ground);
 
+    this.drawPartyDioramaDetails(game);
+
     const routes = new Graphics();
     const party = this.snapshot?.party;
     const selectedNodeId = party?.selectedNodeId ?? "armistice_plaza";
@@ -1055,11 +1057,80 @@ export class OnlineCoopState implements GameState {
     }
   }
 
+  private drawPartyDioramaDetails(game: Game): void {
+    const graphics = new Graphics();
+    for (const region of ALIGNMENT_GRID_MAP.biomeRegions) {
+      const p = worldToIso(region.labelWorldX, region.labelWorldY);
+      graphics
+        .ellipse(p.screenX, p.screenY + 4, 78, 22)
+        .fill({ color: region.colorA, alpha: 0.13 })
+        .stroke({ color: region.accent, width: 2, alpha: 0.32 });
+      const label = new Text({
+        text: region.label.toUpperCase(),
+        style: { ...fontStyle, fontSize: 8, fill: "#8b94a3", align: "center" }
+      });
+      label.anchor.set(0.5);
+      label.position.set(p.screenX, p.screenY - 10);
+      game.layers.propsFront.addChild(label);
+    }
+    for (const landmark of ALIGNMENT_GRID_MAP.microLandmarks) {
+      const p = worldToIso(landmark.worldX, landmark.worldY);
+      graphics.ellipse(p.screenX, p.screenY + 3, 13, 5).fill({ color: palette.shadow, alpha: 0.26 });
+      if (landmark.kind === "teeth") {
+        graphics
+          .ellipse(p.screenX, p.screenY - 9, 16, 7)
+          .fill({ color: landmark.color, alpha: 0.88 })
+          .stroke({ color: landmark.accent, width: 2, alpha: 0.82 });
+        graphics.rect(p.screenX - 8, p.screenY - 12, 4, 4).fill(0xfff4d6);
+        graphics.rect(p.screenX + 1, p.screenY - 13, 4, 4).fill(0xfff4d6);
+      } else if (landmark.kind === "mirror") {
+        graphics.rect(p.screenX - 2, p.screenY - 24, 4, 18).fill(0x202833);
+        graphics
+          .poly([p.screenX - 10, p.screenY - 29, p.screenX + 11, p.screenY - 25, p.screenX + 8, p.screenY - 14, p.screenX - 12, p.screenY - 17])
+          .fill(landmark.color)
+          .stroke({ color: landmark.accent, width: 1, alpha: 0.82 });
+      } else if (landmark.kind === "antenna" || landmark.kind === "cable_knot") {
+        graphics.rect(p.screenX - 2, p.screenY - 28, 4, 22).fill(0x202833);
+        graphics.circle(p.screenX, p.screenY - 30, 6).fill(landmark.accent).stroke({ color: palette.ink, width: 1 });
+      } else if (landmark.kind === "redaction") {
+        graphics.rect(p.screenX - 10, p.screenY - 25, 20, 18).fill(landmark.color).stroke({ color: landmark.accent, width: 1, alpha: 0.74 });
+        graphics.rect(p.screenX - 7, p.screenY - 20, 14, 3).fill(0xfff4d6);
+      } else {
+        graphics.rect(p.screenX - 9, p.screenY - 21, 18, 14).fill(landmark.color).stroke({ color: palette.ink, width: 1 });
+        graphics.rect(p.screenX - 6, p.screenY - 25, 12, 4).fill(landmark.accent);
+      }
+    }
+    game.layers.propsBehind.addChild(graphics);
+  }
+
   private drawPartyLobbyEntities(game: Game): void {
     const snapshot = this.snapshot;
     if (!snapshot?.party) return;
     const party = snapshot.party;
     const objectiveArt = this.milestone34ObjectiveArt(game);
+    const votesByNode = new Map<string, OnlinePlayerSnapshot[]>();
+    for (const player of snapshot.players) {
+      const nodeId = player.votedNodeId ?? party.selectedNodeId;
+      votesByNode.set(nodeId, [...(votesByNode.get(nodeId) ?? []), player]);
+    }
+    for (const [nodeId, voters] of votesByNode.entries()) {
+      const node = ALIGNMENT_GRID_MAP.nodes.find((candidate) => candidate.id === nodeId);
+      if (!node) continue;
+      const p = worldToIso(node.worldX, node.worldY);
+      const readyCount = voters.filter((player) => player.ready).length;
+      this.entityGraphics
+        .ellipse(p.screenX, p.screenY + 12, 43, 16)
+        .stroke({ color: readyCount === voters.length ? palette.mint : palette.lemon, width: 3, alpha: 0.74 })
+        .ellipse(p.screenX, p.screenY + 12, 53, 20)
+        .stroke({ color: palette.paper, width: 1, alpha: 0.28 });
+      const voteLabel = new Text({
+        text: `${voters.length} VOTE${voters.length === 1 ? "" : "S"} // ${readyCount} READY`,
+        style: { ...fontStyle, fontSize: 9, fill: readyCount === voters.length ? "#64e0b4" : "#ffd166", align: "center" }
+      });
+      voteLabel.anchor.set(0.5);
+      voteLabel.position.set(p.screenX, p.screenY + 48);
+      game.layers.floatingText.addChild(voteLabel);
+    }
     for (const player of snapshot.players) {
       const voteNode = ALIGNMENT_GRID_MAP.nodes.find((node) => node.id === (player.votedNodeId ?? party.selectedNodeId)) ?? this.selectedPartyMapNode();
       if (!voteNode) continue;
@@ -1457,6 +1528,37 @@ ${focus.focusDescription}`,
     };
   }
 
+  private routeDioramaInfo(
+    party: NonNullable<OnlineConsensusSnapshot["party"]>,
+    routeFocus: { focusMode: RouteFocusMode; highlightedNodeIds: string[]; highlightedRouteIds: string[] }
+  ) {
+    const selected = party.nodes.find((node) => node.id === party.selectedNodeId) ?? null;
+    const finaleNode = party.nodes.find((node) => node.id === party.campaign?.finaleNodeId || node.id === "alignment_spire_finale");
+    const availableVoteNodeIds = new Set(party.availableNodeIds);
+    const launchableIds = new Set(party.launchableNodeIds);
+    return {
+      set: "milestone51_overworld_diorama_1_0",
+      densityPolicy: "online_party_grid_uses_biome_regions_micro_landmarks_route_markers_vote_rings_and_compact_labels",
+      biomeRegionCount: ALIGNMENT_GRID_MAP.biomeRegions.length,
+      microLandmarkCount: ALIGNMENT_GRID_MAP.microLandmarks.length,
+      propClusterCount: ALIGNMENT_GRID_MAP.propClusters.length,
+      nodeCount: party.nodes.length,
+      routeCount: party.routes.length,
+      onlineVotingReadability: "selected_node_vote_ring_ready_count_party_pips_and_route_focus_panel_visible",
+      smallViewportPolicy: "proof captures party grid at 960x540 with map labels and HUD panels still readable",
+      selectedNodeId: party.selectedNodeId,
+      selectedRouteBiome: selected?.routeBiome ?? "",
+      selectedLaunchable: launchableIds.has(party.selectedNodeId),
+      availableVoteNodeIds: [...availableVoteNodeIds],
+      focusMode: routeFocus.focusMode,
+      highlightedNodeIds: routeFocus.highlightedNodeIds,
+      highlightedRouteIds: routeFocus.highlightedRouteIds,
+      finaleCorruptionState: finaleNode?.completed ? "contained" : finaleNode?.unlocked ? "reachable_teeth_active" : "dormant_teeth_visible",
+      finaleNodeId: party.campaign?.finaleNodeId ?? "alignment_spire_finale",
+      persistenceBoundary: "route_profile_only_no_route_focus_vote_ui_or_diorama_runtime_state"
+    };
+  }
+
   private selectedPartyMapNode(): { worldX: number; worldY: number } | undefined {
     const selectedNodeId = this.snapshot?.party?.selectedNodeId ?? "armistice_plaza";
     return ALIGNMENT_GRID_MAP.nodes.find((node) => node.id === selectedNodeId);
@@ -1630,6 +1732,7 @@ ${focus.focusDescription}`,
       .filter((node) => node.completed || node.id === party.selectedNodeId || launchableIds.has(node.id) || (node.unlocked && node.onlineSupported))
       .map((node) => node.id);
     const routeFocus = this.routeFocusInfo(party, persistence);
+    const routeDiorama = this.routeDioramaInfo(party, routeFocus);
     return {
       panel: "milestone25_route_profile_panel",
       milestone40: routeFocus,
@@ -1760,6 +1863,11 @@ ${focus.focusDescription}`,
           hazardIds: [...MILESTONE50_HAZARD_IDS],
           placeholderOptOutSupported: true,
           persistenceBoundary: "route_profile_only_no_runtime_art_or_live_arena_state"
+        },
+        milestone51: {
+          ...routeDiorama,
+          enabled: true,
+          placeholderOptOutSupported: true
         }
       },
       routeDepth: persistence?.profile.routeDepth ?? party.completedNodeIds.length,

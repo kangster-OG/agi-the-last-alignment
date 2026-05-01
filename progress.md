@@ -2986,9 +2986,61 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone49-player-comind-art/milestone49-rift-runtime-production-frame.png`
 - Milestone 50 readiness decision: ready. The main campaign encounters now have default production terrain, props, hazards, enemy sprites, boss sprites, and boss portraits backed by manifest/provenance records, while online authority, deterministic proof hooks, and placeholder opt-outs remain intact.
 
+- Implemented Milestone 51 Overworld Diorama 1.0.
+- Expanded the Alignment Grid data with:
+  - 11 named biome regions spanning Armistice Zone, Faction Signal, Kettle Coast Trace, Refuge Barricades, Blackwater Array, Unreal Metro Line, Redaction Archive, Memory Badlands, Glass Sunfield, Adjudication Rupture, and Outer Alignment;
+  - 19 micro-landmarks including cable knots, buoys, wrong-platform markers, redaction gates, court writs, and Outer Alignment teeth markers;
+  - route metadata for checkpoint density, route texture language, and finale corruption routes.
+- Upgraded the local overworld renderer with:
+  - biome region plaques;
+  - denser micro-landmark props;
+  - animated stable/unstable route pulse rings;
+  - selected-adjacent route labels;
+  - M51 `render_game_to_text()` diorama telemetry.
+- Upgraded the online party Alignment Grid with:
+  - biome/micro-landmark details in the static party map;
+  - selected-node vote rings, ready counts, and existing party pips/tokens preserved;
+  - M51 route UI telemetry for density, small-viewport proof policy, selected route biome, available vote nodes, and finale corruption state.
+- Preserved route-profile-only persistence boundaries: no route-focus state, vote UI state, diorama runtime state, combat state, objectives, dialogue, build kits, or authority state are imported/exported.
+- Added `npm run proof:milestone51-overworld-diorama`, covering:
+  - local overworld diorama density on 1280x720;
+  - local overworld diorama density on 960x540;
+  - online party-grid diorama telemetry;
+  - online finale vote-ring clarity;
+  - online small-viewport party-grid readability;
+  - placeholder opt-out safety.
+- Verification after Milestone 51:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone51-overworld-diorama`
+  - `npm run proof:overworld`
+  - `npm run proof:milestone40-campaign-route-ux`
+  - `npm run proof:milestone50-arena-boss-art`
+  - `npm run proof:smoke`
+- Milestone 51 proof artifacts:
+  - `docs/proof/milestone51-overworld-diorama/milestone51-local-diorama-desktop.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-local-diorama-small.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-online-party-diorama-desktop.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-online-vote-ring-finale.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-online-party-diorama-small.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-placeholder-opt-out-safe.png`
+- Screenshots inspected after Milestone 51:
+  - `docs/proof/milestone51-overworld-diorama/milestone51-local-diorama-desktop.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-local-diorama-small.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-online-party-diorama-desktop.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-online-party-diorama-small.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-online-vote-ring-finale.png`
+  - `docs/proof/milestone51-overworld-diorama/milestone51-placeholder-opt-out-safe.png`
+  - `docs/proof/overworld/alignment-grid.png`
+  - `docs/proof/overworld/walked-map.png`
+  - `docs/proof/smoke/overworld.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-all-a.png`
+- Milestone 51 readiness decision: ready. The Alignment Grid now reads as a denser isometric miniature world in local and online views, online party voting is clearer, finale corruption is proof-visible, and persistence/art opt-out boundaries remain intact.
+
 ## TODO
 
-- Next recommended milestone: Milestone 51 Overworld Diorama 1.0. Make the Alignment Grid feel like a dense miniature world with richer landmarks, readable roads, regional biome identity, animated route states, unlock reveals, party voting polish, and finale corruption state.
+- Next recommended milestone: Milestone 52 Progression, Rewards, And Balance 1.0. Tune campaign economy, route rewards, unlock pacing, class/co-mind balance, objective pacing, and proof-visible balance telemetry without expanding export/import beyond route-profile-only data.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.
