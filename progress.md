@@ -3197,9 +3197,71 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone54-audio-juice-feel/milestone54-online-summary-feedback.png`
 - Milestone 54 readiness decision: ready. Feedback hooks, mixer controls, reduced-flash budgets, online server counters, and route-profile-only boundaries are proof-visible and stable.
 
+- Implemented Milestone 55 Online Robustness And Deployment.
+- Added room-code filtered online co-op:
+  - clients pass `roomCode` to Colyseus `joinOrCreate`;
+  - the server filters rooms by `roomCode`;
+  - `?roomCode=TEAM123` joins or creates an isolated Consensus Cell;
+  - the default room code remains `PUBLIC`;
+  - the online HUD and proof text show the active room code.
+- Added hosted/deployment server config:
+  - `CONSENSUS_PORT` or `PORT` controls the server port;
+  - `CONSENSUS_HOST` or `HOST` controls the bind host;
+  - `/healthz` reports M55 deployment policy, tick rate, client input Hz, max clients, and static-dist mode;
+  - `SERVE_STATIC_DIST=1 npm start` serves the built `dist/` client from the same Node process as the Colyseus server.
+- Added client server URL resolution:
+  - `?coopServer=...` still overrides the server URL and now normalizes `http(s)` to `ws(s)`;
+  - `VITE_CONSENSUS_URL` supports split static-client / WebSocket-server hosting;
+  - local/default play still uses the same host with port `2567`.
+- Added M55 robustness telemetry to snapshots and `render_game_to_text()`:
+  - room code;
+  - join mode;
+  - health path;
+  - static-dist mode;
+  - tick/input cadence;
+  - reconnect grace;
+  - latency tolerance policy;
+  - route-profile-only persistence boundary.
+- Added `docs/DEPLOYMENT.md` and refreshed `docs/COOP_NETWORKING.md` with current M55 online/deployment status.
+- Preserved non-negotiable boundaries:
+  - online combat/objectives/rewards/reconnect/route progression remain server-authored;
+  - reconnect still reclaims the same player slot by reconnect key;
+  - export/import remains no-account route-profile-only;
+  - room code, reconnect key, deployment metadata, live objectives, combat, build kits, cooldowns, pets, role pressure, Recompile, dialogue, route focus, portal params, and authority state are not imported/exported.
+- Added `npm run proof:milestone55-online-robustness`, covering:
+  - `/healthz` deployment policy;
+  - query `coopServer=http://...` normalization to WebSocket;
+  - same room code joins the same Colyseus room;
+  - different room codes isolate rooms;
+  - export codes omit room/deployment/robustness state;
+  - disconnect retains a reclaimable slot;
+  - rejoin with the same reconnect key reclaims P2 instead of creating a new player.
+- Verification after Milestone 55:
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - package JSON parse
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone55-online-robustness`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone30-save-profile-export-codes`
+  - `npm run proof:milestone54-audio-juice-feel`
+  - `npm run proof:smoke`
+  - static-dist hosted-mode smoke with `SERVE_STATIC_DIST=1`
+- Milestone 55 proof artifacts:
+  - `docs/proof/milestone55-online-robustness/milestone55-room-code-lobby.png`
+  - `docs/proof/milestone55-online-robustness/milestone55-isolated-room-code.png`
+  - `docs/proof/milestone55-online-robustness/milestone55-disconnected-slot.png`
+  - `docs/proof/milestone55-online-robustness/milestone55-rejoined-slot.png`
+- Screenshots inspected after Milestone 55:
+  - `docs/proof/milestone55-online-robustness/milestone55-room-code-lobby.png`
+  - `docs/proof/milestone55-online-robustness/milestone55-disconnected-slot.png`
+  - `docs/proof/milestone55-online-robustness/milestone55-rejoined-slot.png`
+- Milestone 55 readiness decision: ready. Room-code isolation, reconnect reclaim, export-code boundaries, health checks, and hosted static-dist server mode are proofed.
+
 ## TODO
 
-- Next recommended milestone: Milestone 55 Online Robustness And Deployment. Harden hosted online play, room codes, reconnect/leave/rejoin robustness, latency tolerance, server config, deployment docs, and no-account export-code profile flow.
+- Next recommended milestone: Milestone 56 Proof, Performance, Compatibility, And Accessibility Lock. Finish the technical quality gate with proof helper cleanup, campaign proof coverage, render/performance checks, compatibility, and accessibility lock.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

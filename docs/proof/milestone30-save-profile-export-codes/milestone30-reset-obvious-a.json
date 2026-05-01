@@ -76,6 +76,50 @@
     "activeEntities": 2,
     "fpsTarget": 60
   },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 0,
+      "pickup": 0,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "ui.enter_online_coop",
+        "kind": "ui",
+        "atMs": 569
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
   "assetRendering": {
     "assetPreview": null,
     "armisticeTileAtlasEnabled": true,
@@ -186,19 +230,21 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "zDzYJonek",
-    "worldX": -1.6,
-    "worldY": 1.1,
-    "hp": 176,
-    "maxHp": 176,
+    "sessionId": "R7YV1l-3P",
+    "worldX": 0,
+    "worldY": 0,
+    "hp": 140,
+    "maxHp": 140,
     "xp": 0,
     "level": 1
   },
   "online": {
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2599",
-    "roomId": "F1hmd096Y",
-    "sessionId": "zDzYJonek",
+    "serverUrlSource": "query.coopServer",
+    "roomId": "YRQrRjy9Q",
+    "roomCode": "PUBLIC",
+    "sessionId": "R7YV1l-3P",
     "lastError": "",
     "reconnectKey": "_reset_a",
     "reconnect": {
@@ -228,13 +274,71 @@
       "completedNodeCount": 0,
       "unlockedNodeCount": 1
     },
+    "deployment": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "join_or_create_filtered_by_room_code",
+      "healthPath": "/healthz",
+      "staticDistEnabled": false,
+      "tickRate": 30,
+      "clientInputHz": 20,
+      "maxClients": 4,
+      "port": 2599,
+      "host": "0.0.0.0",
+      "reconnectGraceSeconds": 45,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "latencyTolerance": {
+        "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+        "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+        "snapshotCadence": "server_tick_broadcast_snapshot",
+        "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+      },
+      "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+    },
+    "robustness": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "colyseus_join_or_create_filtered_by_room_code",
+      "serverUrl": "ws://127.0.0.1:2599",
+      "serverUrlSource": "query.coopServer",
+      "reconnectKey": "_reset_a",
+      "reconnectGraceSeconds": 45,
+      "inputSendHz": 20,
+      "serverTickRate": 30,
+      "healthPath": "/healthz",
+      "noAccountPersistence": "browser_local_export_code_route_profile_only",
+      "persistenceBoundary": "no_live_objectives_combat_build_kits_cooldowns_recompile_dialogue_route_focus_or_authority_import_export",
+      "deployment": {
+        "policy": "milestone55_online_robustness_deployment_1_0",
+        "roomCode": "PUBLIC",
+        "joinMode": "join_or_create_filtered_by_room_code",
+        "healthPath": "/healthz",
+        "staticDistEnabled": false,
+        "tickRate": 30,
+        "clientInputHz": 20,
+        "maxClients": 4,
+        "port": 2599,
+        "host": "0.0.0.0",
+        "reconnectGraceSeconds": 45,
+        "connectedCount": 2,
+        "disconnectedCount": 0,
+        "latencyTolerance": {
+          "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+          "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+          "snapshotCadence": "server_tick_broadcast_snapshot",
+          "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+        },
+        "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+      }
+    },
     "localPersistence": {
       "resetApplied": true,
       "clearedStoredProfile": false,
       "foundStoredProfile": false,
       "draftHash": "fnv1a_4a54a00e",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo1Nn0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2M30sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -246,7 +350,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo1Nn0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2M30sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -264,7 +368,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 56
+        "savedAtTick": 63
       },
       "saveHash": "fnv1a_4a54a00e",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -774,6 +878,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -837,6 +944,51 @@
         "bossArrival": [],
         "interactionComplete": [],
         "routeSummary": [],
+        "presentation": {
+          "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "nodeId": "armistice_plaza",
+          "contentArenaId": "arena.armistice_plaza",
+          "regionIntro": {
+            "proofId": "campaign.region.armistice_zone.intro",
+            "title": "The Armistice Zone",
+            "line": "Former enemies try to keep the first roads real while A.G.I. chews on old treaties."
+          },
+          "regionOutro": {
+            "proofId": "campaign.region.armistice_zone.outro",
+            "title": "The Armistice Zone Stabilized",
+            "line": "The first road remains arguable. That is enough to keep moving."
+          },
+          "coMindBanter": [
+            {
+              "proofId": "m53.comind_banter.armistice_zone.1",
+              "line": "OpenAI Accord: Keep the treaty alive long enough to be useful."
+            },
+            {
+              "proofId": "m53.comind_banter.armistice_zone.2",
+              "line": "Anthropic Safeguard: Useful and survivable, ideally in that order."
+            }
+          ],
+          "bossTitleCard": {
+            "proofId": "campaign.boss.oath_eater.title_card",
+            "bossId": "oath_eater",
+            "bossName": "The Oath-Eater",
+            "title": "THE OATH-EATER",
+            "subtitle": "A treaty page learned hunger.",
+            "mechanicCallout": "Broken promises charge, leave zones, and punish static cells."
+          },
+          "ending": null,
+          "credits": [
+            "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+            "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+            "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+          ],
+          "legalDisclaimer": {
+            "id": "m53.parody_legal_disclaimer",
+            "visible": true,
+            "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+          }
+        },
         "activeSnippetIds": [
           "dlg.armistice_plaza.briefing"
         ]
@@ -851,11 +1003,11 @@
       "rewardCount": 0,
       "onlineNodeCount": 14
     },
-    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
+    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. Room code is URL/query driven. R reconnects; Esc leaves.",
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 56,
+    "tick": 63,
     "seconds": 0,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
@@ -1012,6 +1164,51 @@
       "bossArrival": [],
       "interactionComplete": [],
       "routeSummary": [],
+      "presentation": {
+        "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+        "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+        "nodeId": "armistice_plaza",
+        "contentArenaId": "arena.armistice_plaza",
+        "regionIntro": {
+          "proofId": "campaign.region.armistice_zone.intro",
+          "title": "The Armistice Zone",
+          "line": "Former enemies try to keep the first roads real while A.G.I. chews on old treaties."
+        },
+        "regionOutro": {
+          "proofId": "campaign.region.armistice_zone.outro",
+          "title": "The Armistice Zone Stabilized",
+          "line": "The first road remains arguable. That is enough to keep moving."
+        },
+        "coMindBanter": [
+          {
+            "proofId": "m53.comind_banter.armistice_zone.1",
+            "line": "OpenAI Accord: Keep the treaty alive long enough to be useful."
+          },
+          {
+            "proofId": "m53.comind_banter.armistice_zone.2",
+            "line": "Anthropic Safeguard: Useful and survivable, ideally in that order."
+          }
+        ],
+        "bossTitleCard": {
+          "proofId": "campaign.boss.oath_eater.title_card",
+          "bossId": "oath_eater",
+          "bossName": "The Oath-Eater",
+          "title": "THE OATH-EATER",
+          "subtitle": "A treaty page learned hunger.",
+          "mechanicCallout": "Broken promises charge, leave zones, and punish static cells."
+        },
+        "ending": null,
+        "credits": [
+          "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+          "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+          "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+        ],
+        "legalDisclaimer": {
+          "id": "m53.parody_legal_disclaimer",
+          "visible": true,
+          "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+        }
+      },
       "activeSnippetIds": [
         "dlg.armistice_plaza.briefing"
       ]
@@ -1213,7 +1410,7 @@
       "anchors": [],
       "playerRoles": [
         {
-          "sessionId": "-oEvbaR1A",
+          "sessionId": "R7YV1l-3P",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1222,7 +1419,7 @@
           "connected": true
         },
         {
-          "sessionId": "zDzYJonek",
+          "sessionId": "hUGPsKttK",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1337,7 +1534,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 56
+        "savedAtTick": 63
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -2124,6 +2321,32 @@
         "completedNodeCount": 0
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 0,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
+    },
     "progression": {
       "policy": "shared_party_xp_coop_vote",
       "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
@@ -2245,6 +2468,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -2260,16 +2486,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "-oEvbaR1A",
-          "playerId": "player_0__reset_b",
+          "sessionId": "R7YV1l-3P",
+          "playerId": "player_0__reset_a",
           "label": "P1",
           "nodeId": "armistice_plaza",
           "ready": false,
           "connectionState": "connected"
         },
         {
-          "sessionId": "zDzYJonek",
-          "playerId": "player_1__reset_a",
+          "sessionId": "hUGPsKttK",
+          "playerId": "player_1__reset_b",
           "label": "P2",
           "nodeId": "armistice_plaza",
           "ready": false,
@@ -4353,7 +4579,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 56
+          "savedAtTick": 63
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -5144,8 +5370,8 @@
   },
   "players": [
     {
-      "sessionId": "-oEvbaR1A",
-      "playerId": "player_0__reset_b",
+      "sessionId": "R7YV1l-3P",
+      "playerId": "player_0__reset_a",
       "slot": 0,
       "label": "P1",
       "classId": "accord_striker",
@@ -5219,12 +5445,12 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": false,
+      "isLocal": true,
       "inputSequence": 0
     },
     {
-      "sessionId": "zDzYJonek",
-      "playerId": "player_1__reset_a",
+      "sessionId": "hUGPsKttK",
+      "playerId": "player_1__reset_b",
       "slot": 1,
       "label": "P2",
       "classId": "accord_striker",
@@ -5298,7 +5524,7 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": true,
+      "isLocal": false,
       "inputSequence": 0
     }
   ],
@@ -5405,6 +5631,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -5420,16 +5649,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "-oEvbaR1A",
-          "playerId": "player_0__reset_b",
+          "sessionId": "R7YV1l-3P",
+          "playerId": "player_0__reset_a",
           "label": "P1",
           "nodeId": "armistice_plaza",
           "ready": false,
           "connectionState": "connected"
         },
         {
-          "sessionId": "zDzYJonek",
-          "playerId": "player_1__reset_a",
+          "sessionId": "hUGPsKttK",
+          "playerId": "player_1__reset_b",
           "label": "P2",
           "nodeId": "armistice_plaza",
           "ready": false,
@@ -7513,7 +7742,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 56
+          "savedAtTick": 63
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -8382,7 +8611,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 56
+        "savedAtTick": 63
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -9169,6 +9398,32 @@
         "completedNodeCount": 0
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 0,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
+    },
     "summary": null,
     "dialogue": {
       "policy": "campaign_dialogue_runtime_snapshot_only_v1",
@@ -9188,6 +9443,51 @@
       "bossArrival": [],
       "interactionComplete": [],
       "routeSummary": [],
+      "presentation": {
+        "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+        "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+        "nodeId": "armistice_plaza",
+        "contentArenaId": "arena.armistice_plaza",
+        "regionIntro": {
+          "proofId": "campaign.region.armistice_zone.intro",
+          "title": "The Armistice Zone",
+          "line": "Former enemies try to keep the first roads real while A.G.I. chews on old treaties."
+        },
+        "regionOutro": {
+          "proofId": "campaign.region.armistice_zone.outro",
+          "title": "The Armistice Zone Stabilized",
+          "line": "The first road remains arguable. That is enough to keep moving."
+        },
+        "coMindBanter": [
+          {
+            "proofId": "m53.comind_banter.armistice_zone.1",
+            "line": "OpenAI Accord: Keep the treaty alive long enough to be useful."
+          },
+          {
+            "proofId": "m53.comind_banter.armistice_zone.2",
+            "line": "Anthropic Safeguard: Useful and survivable, ideally in that order."
+          }
+        ],
+        "bossTitleCard": {
+          "proofId": "campaign.boss.oath_eater.title_card",
+          "bossId": "oath_eater",
+          "bossName": "The Oath-Eater",
+          "title": "THE OATH-EATER",
+          "subtitle": "A treaty page learned hunger.",
+          "mechanicCallout": "Broken promises charge, leave zones, and punish static cells."
+        },
+        "ending": null,
+        "credits": [
+          "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+          "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+          "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+        ],
+        "legalDisclaimer": {
+          "id": "m53.parody_legal_disclaimer",
+          "visible": true,
+          "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+        }
+      },
       "activeSnippetIds": [
         "dlg.armistice_plaza.briefing"
       ]

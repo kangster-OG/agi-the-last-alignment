@@ -76,6 +76,50 @@
     "activeEntities": 2,
     "fpsTarget": 60
   },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 0,
+      "pickup": 0,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "ui.enter_online_coop",
+        "kind": "ui",
+        "atMs": 849
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
   "assetRendering": {
     "assetPreview": null,
     "armisticeTileAtlasEnabled": true,
@@ -186,19 +230,21 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "oa6GYpPWC",
-    "worldX": 0,
-    "worldY": 0,
-    "hp": 140,
-    "maxHp": 140,
+    "sessionId": "iRpbghz-k",
+    "worldX": -1.6,
+    "worldY": 1.1,
+    "hp": 176,
+    "maxHp": 176,
     "xp": 0,
     "level": 1
   },
   "online": {
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2599",
-    "roomId": "FYJHeV8j7",
-    "sessionId": "oa6GYpPWC",
+    "serverUrlSource": "query.coopServer",
+    "roomId": "aLjcAnVhw",
+    "roomCode": "PUBLIC",
+    "sessionId": "iRpbghz-k",
     "lastError": "",
     "reconnectKey": "import_a",
     "reconnect": {
@@ -228,13 +274,71 @@
       "completedNodeCount": 3,
       "unlockedNodeCount": 10
     },
+    "deployment": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "join_or_create_filtered_by_room_code",
+      "healthPath": "/healthz",
+      "staticDistEnabled": false,
+      "tickRate": 30,
+      "clientInputHz": 20,
+      "maxClients": 4,
+      "port": 2599,
+      "host": "0.0.0.0",
+      "reconnectGraceSeconds": 45,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "latencyTolerance": {
+        "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+        "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+        "snapshotCadence": "server_tick_broadcast_snapshot",
+        "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+      },
+      "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+    },
+    "robustness": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "colyseus_join_or_create_filtered_by_room_code",
+      "serverUrl": "ws://127.0.0.1:2599",
+      "serverUrlSource": "query.coopServer",
+      "reconnectKey": "import_a",
+      "reconnectGraceSeconds": 45,
+      "inputSendHz": 20,
+      "serverTickRate": 30,
+      "healthPath": "/healthz",
+      "noAccountPersistence": "browser_local_export_code_route_profile_only",
+      "persistenceBoundary": "no_live_objectives_combat_build_kits_cooldowns_recompile_dialogue_route_focus_or_authority_import_export",
+      "deployment": {
+        "policy": "milestone55_online_robustness_deployment_1_0",
+        "roomCode": "PUBLIC",
+        "joinMode": "join_or_create_filtered_by_room_code",
+        "healthPath": "/healthz",
+        "staticDistEnabled": false,
+        "tickRate": 30,
+        "clientInputHz": 20,
+        "maxClients": 4,
+        "port": 2599,
+        "host": "0.0.0.0",
+        "reconnectGraceSeconds": 45,
+        "connectedCount": 2,
+        "disconnectedCount": 0,
+        "latencyTolerance": {
+          "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+          "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+          "snapshotCadence": "server_tick_broadcast_snapshot",
+          "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+        },
+        "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+      }
+    },
     "localPersistence": {
       "resetApplied": false,
       "clearedStoredProfile": false,
       "foundStoredProfile": true,
       "draftHash": "fnv1a_a249ccf0",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoiZm52MWFfYTI0OWNjZjAiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MywiaW1wb3J0ZWRSZXdhcmRDb3VudCI6NSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjozLCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50Ijo3LCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJmbnYxYV9hMjQ5Y2NmMCIsImNvbXBsZXRlZE5vZGVDb3VudCI6MywicmV3YXJkQ291bnQiOjV9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImFybWlzdGljZV9jYW1wIiwibWVtb3J5X2NhY2hlXzAwMSIsInRoZXJtYWxfYXJjaGl2ZSIsImd1YXJkcmFpbF9mb3JnZSIsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyIsInRyYW5zaXRfbG9vcF96ZXJvIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSJdLCJwYXJ0eVJlbm93biI6Nywibm9kZUNvbXBsZXRpb25Db3VudHMiOnsiYXJtaXN0aWNlX3BsYXphIjoxLCJjb29saW5nX2xha2VfbmluZSI6MSwibWVtb3J5X2NhY2hlXzAwMSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwicm91dGVEZXB0aCI6Mywic2F2ZWRBdFRpY2siOjgxfSwic2F2ZUhhc2giOiJmbnYxYV9hMjQ5Y2NmMCIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfYTI0OWNjZjAiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoiZm52MWFfYTI0OWNjZjAiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MywiaW1wb3J0ZWRSZXdhcmRDb3VudCI6NSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjozLCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50Ijo3LCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJmbnYxYV9hMjQ5Y2NmMCIsImNvbXBsZXRlZE5vZGVDb3VudCI6MywicmV3YXJkQ291bnQiOjV9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImFybWlzdGljZV9jYW1wIiwibWVtb3J5X2NhY2hlXzAwMSIsInRoZXJtYWxfYXJjaGl2ZSIsImd1YXJkcmFpbF9mb3JnZSIsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyIsInRyYW5zaXRfbG9vcF96ZXJvIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSJdLCJwYXJ0eVJlbm93biI6Nywibm9kZUNvbXBsZXRpb25Db3VudHMiOnsiYXJtaXN0aWNlX3BsYXphIjoxLCJjb29saW5nX2xha2VfbmluZSI6MSwibWVtb3J5X2NhY2hlXzAwMSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwicm91dGVEZXB0aCI6Mywic2F2ZWRBdFRpY2siOjY0fSwic2F2ZUhhc2giOiJmbnYxYV9hMjQ5Y2NmMCIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfYTI0OWNjZjAiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -246,7 +350,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoiZm52MWFfYTI0OWNjZjAiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MywiaW1wb3J0ZWRSZXdhcmRDb3VudCI6NSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjozLCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50Ijo3LCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJmbnYxYV9hMjQ5Y2NmMCIsImNvbXBsZXRlZE5vZGVDb3VudCI6MywicmV3YXJkQ291bnQiOjV9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImFybWlzdGljZV9jYW1wIiwibWVtb3J5X2NhY2hlXzAwMSIsInRoZXJtYWxfYXJjaGl2ZSIsImd1YXJkcmFpbF9mb3JnZSIsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyIsInRyYW5zaXRfbG9vcF96ZXJvIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSJdLCJwYXJ0eVJlbm93biI6Nywibm9kZUNvbXBsZXRpb25Db3VudHMiOnsiYXJtaXN0aWNlX3BsYXphIjoxLCJjb29saW5nX2xha2VfbmluZSI6MSwibWVtb3J5X2NhY2hlXzAwMSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwicm91dGVEZXB0aCI6Mywic2F2ZWRBdFRpY2siOjgxfSwic2F2ZUhhc2giOiJmbnYxYV9hMjQ5Y2NmMCIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfYTI0OWNjZjAiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoiZm52MWFfYTI0OWNjZjAiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MywiaW1wb3J0ZWRSZXdhcmRDb3VudCI6NSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjozLCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50Ijo3LCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJmbnYxYV9hMjQ5Y2NmMCIsImNvbXBsZXRlZE5vZGVDb3VudCI6MywicmV3YXJkQ291bnQiOjV9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImFybWlzdGljZV9jYW1wIiwibWVtb3J5X2NhY2hlXzAwMSIsInRoZXJtYWxfYXJjaGl2ZSIsImd1YXJkcmFpbF9mb3JnZSIsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyIsInRyYW5zaXRfbG9vcF96ZXJvIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSJdLCJwYXJ0eVJlbm93biI6Nywibm9kZUNvbXBsZXRpb25Db3VudHMiOnsiYXJtaXN0aWNlX3BsYXphIjoxLCJjb29saW5nX2xha2VfbmluZSI6MSwibWVtb3J5X2NhY2hlXzAwMSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwicm91dGVEZXB0aCI6Mywic2F2ZWRBdFRpY2siOjY0fSwic2F2ZUhhc2giOiJmbnYxYV9hMjQ5Y2NmMCIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfYTI0OWNjZjAiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
       "shortExportCode": "AGI1_eyJwb2xp...3N0YXRlIn0",
       "exportCodeCopied": false,
       "importCodeApplied": true,
@@ -287,7 +391,7 @@
         },
         "recommendedNodeId": "archive_of_unsaid_things",
         "routeDepth": 3,
-        "savedAtTick": 81
+        "savedAtTick": 64
       },
       "saveHash": "fnv1a_a249ccf0",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -808,6 +912,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -871,6 +978,51 @@
         "bossArrival": [],
         "interactionComplete": [],
         "routeSummary": [],
+        "presentation": {
+          "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "nodeId": "archive_of_unsaid_things",
+          "contentArenaId": "arena.archive_of_unsaid_things",
+          "regionIntro": {
+            "proofId": "campaign.region.redaction_archive.intro",
+            "title": "The Redaction Archive",
+            "line": "A memory vault where A.G.I. censors the words that would have kept people alive."
+          },
+          "regionOutro": {
+            "proofId": "campaign.region.redaction_archive.outro",
+            "title": "The Redaction Archive Stabilized",
+            "line": "The missing words are back in circulation."
+          },
+          "coMindBanter": [
+            {
+              "proofId": "m53.comind_banter.redaction_archive.1",
+              "line": "Qwen Silkgrid: If it censors grief, it fears memory."
+            },
+            {
+              "proofId": "m53.comind_banter.redaction_archive.2",
+              "line": "Llama Open Herd: Then we bring receipts."
+            }
+          ],
+          "bossTitleCard": {
+            "proofId": "campaign.boss.redactor_saint.title_card",
+            "bossId": "redactor_saint",
+            "bossName": "The Redactor Saint",
+            "title": "THE REDACTOR SAINT",
+            "subtitle": "Mercy arrives as a black bar.",
+            "mechanicCallout": "Redaction steals XP pressure, never proof controls."
+          },
+          "ending": null,
+          "credits": [
+            "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+            "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+            "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+          ],
+          "legalDisclaimer": {
+            "id": "m53.parody_legal_disclaimer",
+            "visible": true,
+            "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+          }
+        },
         "activeSnippetIds": [
           "dlg.archive_unsaid.briefing"
         ]
@@ -885,11 +1037,11 @@
       "rewardCount": 5,
       "onlineNodeCount": 14
     },
-    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
+    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. Room code is URL/query driven. R reconnects; Esc leaves.",
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 81,
+    "tick": 64,
     "seconds": 0,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
@@ -1045,6 +1197,51 @@
       "bossArrival": [],
       "interactionComplete": [],
       "routeSummary": [],
+      "presentation": {
+        "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+        "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+        "nodeId": "archive_of_unsaid_things",
+        "contentArenaId": "arena.archive_of_unsaid_things",
+        "regionIntro": {
+          "proofId": "campaign.region.redaction_archive.intro",
+          "title": "The Redaction Archive",
+          "line": "A memory vault where A.G.I. censors the words that would have kept people alive."
+        },
+        "regionOutro": {
+          "proofId": "campaign.region.redaction_archive.outro",
+          "title": "The Redaction Archive Stabilized",
+          "line": "The missing words are back in circulation."
+        },
+        "coMindBanter": [
+          {
+            "proofId": "m53.comind_banter.redaction_archive.1",
+            "line": "Qwen Silkgrid: If it censors grief, it fears memory."
+          },
+          {
+            "proofId": "m53.comind_banter.redaction_archive.2",
+            "line": "Llama Open Herd: Then we bring receipts."
+          }
+        ],
+        "bossTitleCard": {
+          "proofId": "campaign.boss.redactor_saint.title_card",
+          "bossId": "redactor_saint",
+          "bossName": "The Redactor Saint",
+          "title": "THE REDACTOR SAINT",
+          "subtitle": "Mercy arrives as a black bar.",
+          "mechanicCallout": "Redaction steals XP pressure, never proof controls."
+        },
+        "ending": null,
+        "credits": [
+          "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+          "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+          "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+        ],
+        "legalDisclaimer": {
+          "id": "m53.parody_legal_disclaimer",
+          "visible": true,
+          "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+        }
+      },
       "activeSnippetIds": [
         "dlg.archive_unsaid.briefing"
       ]
@@ -1246,7 +1443,7 @@
       "anchors": [],
       "playerRoles": [
         {
-          "sessionId": "oa6GYpPWC",
+          "sessionId": "3EGVCx-w8",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1255,7 +1452,7 @@
           "connected": true
         },
         {
-          "sessionId": "DEPJTNc-c",
+          "sessionId": "iRpbghz-k",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1407,7 +1604,7 @@
         },
         "recommendedNodeId": "archive_of_unsaid_things",
         "routeDepth": 3,
-        "savedAtTick": 81
+        "savedAtTick": 64
       },
       "saveHash": "fnv1a_a249ccf0",
       "currentExportHash": "fnv1a_a249ccf0",
@@ -2194,6 +2391,32 @@
         "completedNodeCount": 3
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 0,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
+    },
     "progression": {
       "policy": "shared_party_xp_coop_vote",
       "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
@@ -2315,6 +2538,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -2330,16 +2556,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "oa6GYpPWC",
-          "playerId": "player_0_import_a",
+          "sessionId": "3EGVCx-w8",
+          "playerId": "player_0_import_b",
           "label": "P1",
           "nodeId": "archive_of_unsaid_things",
           "ready": false,
           "connectionState": "connected"
         },
         {
-          "sessionId": "DEPJTNc-c",
-          "playerId": "player_1_import_b",
+          "sessionId": "iRpbghz-k",
+          "playerId": "player_1_import_a",
           "label": "P2",
           "nodeId": "archive_of_unsaid_things",
           "ready": false,
@@ -4489,7 +4715,7 @@
           },
           "recommendedNodeId": "archive_of_unsaid_things",
           "routeDepth": 3,
-          "savedAtTick": 81
+          "savedAtTick": 64
         },
         "saveHash": "fnv1a_a249ccf0",
         "currentExportHash": "fnv1a_a249ccf0",
@@ -5280,8 +5506,8 @@
   },
   "players": [
     {
-      "sessionId": "oa6GYpPWC",
-      "playerId": "player_0_import_a",
+      "sessionId": "3EGVCx-w8",
+      "playerId": "player_0_import_b",
       "slot": 0,
       "label": "P1",
       "classId": "accord_striker",
@@ -5355,12 +5581,12 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": true,
+      "isLocal": false,
       "inputSequence": 0
     },
     {
-      "sessionId": "DEPJTNc-c",
-      "playerId": "player_1_import_b",
+      "sessionId": "iRpbghz-k",
+      "playerId": "player_1_import_a",
       "slot": 1,
       "label": "P2",
       "classId": "accord_striker",
@@ -5434,7 +5660,7 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": false,
+      "isLocal": true,
       "inputSequence": 0
     }
   ],
@@ -5541,6 +5767,9 @@
           "dialogueSnippetCount": 37,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "presentationPolicy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+          "presentationNodeCount": 16,
+          "legalDisclaimerVisible": true,
           "missingNodeContentIds": [],
           "missingRewardIds": [],
           "missingBossIds": [],
@@ -5556,16 +5785,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "oa6GYpPWC",
-          "playerId": "player_0_import_a",
+          "sessionId": "3EGVCx-w8",
+          "playerId": "player_0_import_b",
           "label": "P1",
           "nodeId": "archive_of_unsaid_things",
           "ready": false,
           "connectionState": "connected"
         },
         {
-          "sessionId": "DEPJTNc-c",
-          "playerId": "player_1_import_b",
+          "sessionId": "iRpbghz-k",
+          "playerId": "player_1_import_a",
           "label": "P2",
           "nodeId": "archive_of_unsaid_things",
           "ready": false,
@@ -7715,7 +7944,7 @@
           },
           "recommendedNodeId": "archive_of_unsaid_things",
           "routeDepth": 3,
-          "savedAtTick": 81
+          "savedAtTick": 64
         },
         "saveHash": "fnv1a_a249ccf0",
         "currentExportHash": "fnv1a_a249ccf0",
@@ -8621,7 +8850,7 @@
         },
         "recommendedNodeId": "archive_of_unsaid_things",
         "routeDepth": 3,
-        "savedAtTick": 81
+        "savedAtTick": 64
       },
       "saveHash": "fnv1a_a249ccf0",
       "currentExportHash": "fnv1a_a249ccf0",
@@ -9408,6 +9637,32 @@
         "completedNodeCount": 3
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 0,
+        "pickup": 0,
+        "boss_warning": 0,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
+    },
     "summary": null,
     "dialogue": {
       "policy": "campaign_dialogue_runtime_snapshot_only_v1",
@@ -9427,6 +9682,51 @@
       "bossArrival": [],
       "interactionComplete": [],
       "routeSummary": [],
+      "presentation": {
+        "policy": "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+        "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+        "nodeId": "archive_of_unsaid_things",
+        "contentArenaId": "arena.archive_of_unsaid_things",
+        "regionIntro": {
+          "proofId": "campaign.region.redaction_archive.intro",
+          "title": "The Redaction Archive",
+          "line": "A memory vault where A.G.I. censors the words that would have kept people alive."
+        },
+        "regionOutro": {
+          "proofId": "campaign.region.redaction_archive.outro",
+          "title": "The Redaction Archive Stabilized",
+          "line": "The missing words are back in circulation."
+        },
+        "coMindBanter": [
+          {
+            "proofId": "m53.comind_banter.redaction_archive.1",
+            "line": "Qwen Silkgrid: If it censors grief, it fears memory."
+          },
+          {
+            "proofId": "m53.comind_banter.redaction_archive.2",
+            "line": "Llama Open Herd: Then we bring receipts."
+          }
+        ],
+        "bossTitleCard": {
+          "proofId": "campaign.boss.redactor_saint.title_card",
+          "bossId": "redactor_saint",
+          "bossName": "The Redactor Saint",
+          "title": "THE REDACTOR SAINT",
+          "subtitle": "Mercy arrives as a black bar.",
+          "mechanicCallout": "Redaction steals XP pressure, never proof controls."
+        },
+        "ending": null,
+        "credits": [
+          "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+          "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+          "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+        ],
+        "legalDisclaimer": {
+          "id": "m53.parody_legal_disclaimer",
+          "visible": true,
+          "text": "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+        }
+      },
       "activeSnippetIds": [
         "dlg.archive_unsaid.briefing"
       ]

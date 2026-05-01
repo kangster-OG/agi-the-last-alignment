@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "server:coop": "node server/consensusCellServer.mjs",
+    "start": "SERVE_STATIC_DIST=1 node server/consensusCellServer.mjs",
     "build": "tsc && vite build",
     "proof:smoke": "node scripts/proof/run-proof.mjs smoke",
     "proof:movement": "node scripts/proof/run-proof.mjs movement",
@@ -66,6 +67,7 @@
     "proof:milestone52-progression-balance": "node scripts/proof/run-proof.mjs milestone52-progression-balance",
     "proof:milestone53-dialogue-ending": "node scripts/proof/run-proof.mjs milestone53-dialogue-ending",
     "proof:milestone54-audio-juice-feel": "node scripts/proof/run-proof.mjs milestone54-audio-juice-feel",
+    "proof:milestone55-online-robustness": "node scripts/proof/run-proof.mjs milestone55-online-robustness",
     "proof:full": "node scripts/proof/run-proof.mjs full"
   },
   "dependencies": {

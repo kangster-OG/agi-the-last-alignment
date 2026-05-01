@@ -154,6 +154,7 @@ export interface OnlineCampaignPresentationSnapshot {
 export interface OnlineConsensusSnapshot {
   schemaVersion: 1 | 2 | 3 | 4;
   roomId: string;
+  roomCode?: string;
   arenaId: string;
   mapId: string;
   tick: number;
@@ -187,6 +188,7 @@ export interface OnlineConsensusSnapshot {
   recompile?: OnlineRecompileSnapshot;
   progression?: OnlineProgressionSnapshot;
   lifecycle?: OnlineLifecycleSnapshot;
+  deployment?: OnlineDeploymentSnapshot;
   reconnect?: OnlineReconnectSnapshot;
   rewards?: OnlineRewardsSnapshot;
   persistence?: OnlinePersistenceSnapshot;
@@ -717,6 +719,29 @@ export interface OnlineBalanceSnapshot {
     selectedNodeId: string;
     completedNodeCount: number;
   };
+}
+
+export interface OnlineDeploymentSnapshot {
+  policy: "milestone55_online_robustness_deployment_1_0";
+  roomCode: string;
+  joinMode: string;
+  healthPath: string;
+  staticDistEnabled: boolean;
+  tickRate: number;
+  clientInputHz: number;
+  maxClients: number;
+  port: number;
+  host: string;
+  reconnectGraceSeconds: number;
+  connectedCount: number;
+  disconnectedCount: number;
+  latencyTolerance: {
+    inputSequenceAuthority: string;
+    missedInputPolicy: string;
+    snapshotCadence: string;
+    reconnectPolicy: string;
+  };
+  persistenceBoundary: string;
 }
 
 export interface OnlineFeedbackSnapshot {

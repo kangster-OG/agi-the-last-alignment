@@ -1,4 +1,7 @@
 import http from "node:http";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { Room, Server, WebSocketTransport } from "colyseus";
 import { ArraySchema, MapSchema, Schema, defineTypes } from "@colyseus/schema";
 import {
@@ -15,8 +18,13 @@ import { OBJECTIVE_POLICY, objectiveSetForRouteNode } from "./data/onlineObjecti
 import { aggregateRecompileKitModifiers, onlineWeaponProfileForKit, resolveBuildKit } from "./data/buildKits.mjs";
 import { BALANCE_POLICY, PARTY_XP_THRESHOLDS, buildBalanceSnapshot, renownForNodeClear, rewardBalanceForNode, routeRewardIdsFor } from "./data/balance.mjs";
 
-const PORT = Number(process.env.CONSENSUS_PORT ?? 2567);
+const PORT = Number(process.env.CONSENSUS_PORT ?? process.env.PORT ?? 2567);
+const HOST = process.env.CONSENSUS_HOST ?? process.env.HOST ?? "0.0.0.0";
+const SERVE_STATIC_DIST = process.env.SERVE_STATIC_DIST === "1";
+const DIST_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "dist");
+const DEPLOYMENT_POLICY = "milestone55_online_robustness_deployment_1_0";
 const TICK_RATE = 30;
+const CLIENT_INPUT_HZ = 20;
 const BOUNDS = { minX: -30, maxX: 30, minY: -30, maxY: 30 };
 const REVIVE_RADIUS = 2.35;
 const REVIVE_SECONDS = 2.4;
@@ -197,6 +205,7 @@ defineTypes(ConsensusCellState, {
 class ConsensusCellRoom extends Room {
   state = new ConsensusCellState();
   maxClients = 4;
+  roomCode = "PUBLIC";
   arenaId = "armistice_plaza";
   seconds = 0;
   tick = 0;
@@ -270,8 +279,15 @@ class ConsensusCellRoom extends Room {
     ignoredFieldCount: 0
   };
 
-  onCreate() {
-    this.setMetadata({ mode: "Consensus Cell", arenaId: this.arenaId });
+  onCreate(options = {}) {
+    this.roomCode = sanitizeRoomCode(options.roomCode);
+    this.setMetadata({
+      mode: "Consensus Cell",
+      arenaId: this.arenaId,
+      roomCode: this.roomCode,
+      policy: DEPLOYMENT_POLICY,
+      maxClients: this.maxClients
+    });
     this.onMessage("input", (client, message) => this.receiveInput(client.sessionId, message));
     this.onMessage("ready", (client, message) => this.receiveReady(client.sessionId, message));
     this.onMessage("vote_node", (client, message) => this.receiveVoteNode(client.sessionId, message));
@@ -1925,6 +1941,7 @@ class ConsensusCellRoom extends Room {
     this.broadcast("snapshot", {
       schemaVersion: 4,
       roomId: this.roomId,
+      roomCode: this.roomCode,
       arenaId: this.arenaId,
       mapId: this.activeArenaConfig().mapId,
       tick: this.tick,
@@ -2049,6 +2066,7 @@ class ConsensusCellRoom extends Room {
         chosenUpgrades: [...this.chosenUpgrades]
       },
       lifecycle: this.lifecycleSnapshot(connectedPlayers, disconnectedPlayers),
+      deployment: this.deploymentSnapshot(connectedPlayers, disconnectedPlayers),
       reconnect: {
         policy: "session_storage_reconnect_key_slot_reclaim",
         slotTtlSeconds: DISCONNECTED_SLOT_TTL_SECONDS,
@@ -2329,6 +2347,31 @@ class ConsensusCellRoom extends Room {
         burst: this.consensusBurstActivations,
         summary: this.runSummary ? 1 : 0
       }
+    };
+  }
+
+  deploymentSnapshot(connectedPlayers, disconnectedPlayers) {
+    return {
+      policy: DEPLOYMENT_POLICY,
+      roomCode: this.roomCode,
+      joinMode: "join_or_create_filtered_by_room_code",
+      healthPath: "/healthz",
+      staticDistEnabled: SERVE_STATIC_DIST,
+      tickRate: TICK_RATE,
+      clientInputHz: CLIENT_INPUT_HZ,
+      maxClients: this.maxClients,
+      port: PORT,
+      host: HOST,
+      reconnectGraceSeconds: DISCONNECTED_SLOT_TTL_SECONDS,
+      connectedCount: connectedPlayers.length,
+      disconnectedCount: disconnectedPlayers.length,
+      latencyTolerance: {
+        inputSequenceAuthority: "server_accepts_monotonic_client_input_sequences",
+        missedInputPolicy: "last_axis_zeroed_on_disconnect_or_leave",
+        snapshotCadence: "server_tick_broadcast_snapshot",
+        reconnectPolicy: "session_storage_reconnect_key_slot_reclaim"
+      },
+      persistenceBoundary: "route_profile_export_code_only_no_live_room_authority_or_combat_state"
     };
   }
 
@@ -2942,6 +2985,15 @@ function sanitizeReconnectKey(value) {
   return value.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 72);
 }
 
+function sanitizeRoomCode(value) {
+  const cleaned = String(value ?? "PUBLIC")
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9_-]/g, "")
+    .slice(0, 18);
+  return cleaned || "PUBLIC";
+}
+
 function shortId(value) {
   const safe = sanitizeReconnectKey(String(value));
   return safe.slice(-8) || "anon";
@@ -3083,12 +3135,68 @@ function insideBounds(worldX, worldY, margin) {
   return worldX >= BOUNDS.minX - margin && worldX <= BOUNDS.maxX + margin && worldY >= BOUNDS.minY - margin && worldY <= BOUNDS.maxY + margin;
 }
 
-const httpServer = http.createServer();
+function serveStaticFile(requestUrl, response) {
+  const parsed = new URL(requestUrl ?? "/", "http://127.0.0.1");
+  const pathname = parsed.pathname === "/" ? "/index.html" : parsed.pathname;
+  const targetPath = path.resolve(DIST_DIR, `.${decodeURIComponent(pathname)}`);
+  if (!targetPath.startsWith(DIST_DIR)) {
+    response.writeHead(403).end("Forbidden");
+    return;
+  }
+  const fallbackPath = path.join(DIST_DIR, "index.html");
+  const filePath = fs.existsSync(targetPath) && fs.statSync(targetPath).isFile() ? targetPath : fallbackPath;
+  if (!fs.existsSync(filePath)) {
+    response.writeHead(200, { "content-type": "text/plain; charset=utf-8" });
+    response.end("AGI: The Last Alignment Consensus Cell server. Build the client or set SERVE_STATIC_DIST=1 with dist/ present.");
+    return;
+  }
+  const ext = path.extname(filePath);
+  const contentType =
+    ext === ".html"
+      ? "text/html; charset=utf-8"
+      : ext === ".js"
+        ? "text/javascript; charset=utf-8"
+        : ext === ".css"
+          ? "text/css; charset=utf-8"
+          : ext === ".png"
+            ? "image/png"
+            : "application/octet-stream";
+  response.writeHead(200, { "content-type": contentType, "cache-control": ext === ".html" ? "no-store" : "public, max-age=31536000, immutable" });
+  fs.createReadStream(filePath).pipe(response);
+}
+
+const httpServer = http.createServer((request, response) => {
+  const parsed = new URL(request.url ?? "/", "http://127.0.0.1");
+  if (parsed.pathname.startsWith("/matchmake")) {
+    return;
+  }
+  if (parsed.pathname === "/healthz") {
+    response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+    response.end(
+      JSON.stringify({
+        ok: true,
+        service: "agi-consensus-cell",
+        policy: DEPLOYMENT_POLICY,
+        maxClients: 4,
+        tickRate: TICK_RATE,
+        clientInputHz: CLIENT_INPUT_HZ,
+        staticDistEnabled: SERVE_STATIC_DIST
+      })
+    );
+    return;
+  }
+  if (SERVE_STATIC_DIST) {
+    serveStaticFile(request.url, response);
+    return;
+  }
+  response.writeHead(200, { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" });
+  response.end("AGI: The Last Alignment Consensus Cell server. Health: /healthz");
+});
 
 const gameServer = new Server({
   transport: new WebSocketTransport({ server: httpServer })
 });
 
-gameServer.define("consensus_cell", ConsensusCellRoom);
-gameServer.listen(PORT);
-console.log(`Consensus Cell Colyseus server listening on ws://127.0.0.1:${PORT}`);
+gameServer.define("consensus_cell", ConsensusCellRoom).filterBy(["roomCode"]);
+gameServer.listen(PORT, HOST);
+console.log(`Consensus Cell Colyseus server listening on ws://${HOST}:${PORT}`);

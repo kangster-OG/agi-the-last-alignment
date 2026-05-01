@@ -75,23 +75,24 @@ Recommended migration path:
 7. Add second client support.
 8. Scale to 4 clients and add proof scripts for multiplayer smoke tests.
 
-## Current Prototype Status Through Milestone 15
+## Current Prototype Status Through Milestone 55
 
-The online prototype now has server-owned combat-critical state for the first Armistice Plaza pass:
+The online prototype now has server-owned combat-critical state, campaign route authority, and deployment-oriented room joining:
 
-- Colyseus room snapshots report `schemaVersion: 2`.
+- Colyseus room snapshots report `schemaVersion: 4`.
 - `networkAuthority` reports `colyseus_room_server_combat`.
-- The room owns synced enemies, projectiles, Coherence Shard pickups, kill/pickup counters, Oath-Eater boss spawn state, Broken Promise zones, and Treaty Charge warning/impact state.
-- Clients render those synced projectiles, pickups, boss labels, and boss warning decals with the default production-art path.
+- The room owns synced players, enemies, projectiles, Coherence Shard pickups, objectives, role pressure, Recompile Ally, Consensus Burst, rewards, route progression, boss events, and completion summaries.
+- Clients render synced gameplay state with production-art defaults and placeholder opt-outs.
+- Room codes use Colyseus `joinOrCreate` filtering. `?roomCode=TEAM123` joins or creates an isolated Consensus Cell; the default is `PUBLIC`.
 - `R` reconnects to the Consensus Cell and `Esc` leaves online co-op back to the main menu.
+- `/healthz` exposes deployment health and M55 robustness metadata for hosted checks.
+- `SERVE_STATIC_DIST=1 npm start` can serve the built Vite client and Colyseus server from one Node process.
 
 Still future work:
 
-- Server-authored online upgrades.
-- Party overworld voting/ready flow.
-- Recompile/revive rules.
-- Run completion rewards and return-to-overworld behavior for online parties.
-- Schema-backed collections for any state that should move beyond compact broadcast snapshots.
+- hosted production deployment and public URL validation;
+- final release proof/performance/accessibility lock;
+- final VibeJam widget/submission packaging.
 
 Important constraints:
 

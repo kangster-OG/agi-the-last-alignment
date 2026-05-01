@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-54 are complete. Milestone 55 is next.
+Current repo status as of May 1, 2026: Milestones 0-55 are complete. Milestone 56 is next.
 
 ## Non-Negotiable Continuity
 
@@ -733,19 +733,26 @@ Readiness: complete.
 
 Goal: harden hosted online play and public play instructions.
 
-Expected scope:
+Implemented:
 
-- room codes;
-- reconnect/leave/rejoin robustness;
-- latency tolerance;
-- server config;
-- deployment docs;
-- no-account export-code profile flow.
+- added room-code filtered Colyseus `joinOrCreate` support with `?roomCode=...` and default `PUBLIC` rooms;
+- exposed M55 deployment/robustness telemetry in server snapshots and `render_game_to_text()`;
+- added `/healthz` with deployment policy, tick rate, input cadence, room cap, and static-dist mode;
+- added `SERVE_STATIC_DIST=1 npm start` for single-service static client plus Colyseus hosting;
+- added hosted/split deployment documentation in `docs/DEPLOYMENT.md`;
+- preserved reconnect slot reclaim and leave/rejoin behavior under room-code filtering;
+- preserved no-account export-code route-profile-only persistence and verified room/deployment state is omitted.
 
-Proof expectations:
+Proof coverage:
 
-- local and hosted-like server config paths pass;
-- reconnect and export-code flow remain deterministic.
+- `npm run proof:milestone55-online-robustness`
+- `npm run proof:milestone19-reconnect-schema`
+- `npm run proof:milestone30-save-profile-export-codes`
+- `npm run proof:milestone54-audio-juice-feel`
+- `npm run proof:smoke`
+- static-dist hosted-mode smoke with `SERVE_STATIC_DIST=1`
+
+Readiness: complete.
 
 ### M56: Proof, Performance, Compatibility, And Accessibility Lock
 

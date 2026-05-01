@@ -3,7 +3,7 @@
 > node server/consensusCellServer.mjs
 
 ℹ️  optional .env file not found: .env.development, .env
-Consensus Cell Colyseus server listening on ws://0.0.0.0:2623
+Consensus Cell Colyseus server listening on ws://0.0.0.0:2624
 
    ___      _                                    ___   _ _____
   / __\___ | |_   _ ___  ___ _   _ ___   __   __/ _ \ / |___  |
@@ -23,6 +23,13 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot remove headers after they are sent to the 
     at file:///Users/donghokang/Documents/New%20project%205/node_modules/@colyseus/better-call/dist/adapters/node/request.mjs:81:46
     at Array.forEach (<anonymous>)
     at setResponse (file:///Users/donghokang/Documents/New%20project%205/node_modules/@colyseus/better-call/dist/adapters/node/request.mjs:81:24)
+    at file:///Users/donghokang/Documents/New%20project%205/node_modules/@colyseus/better-call/dist/node.mjs:7:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  code: 'ERR_HTTP_HEADERS_SENT'
+}
+Error [ERR_HTTP_HEADERS_SENT]: Cannot write headers after they are sent to the client
+    at ServerResponse.writeHead (node:_http_server:356:11)
+    at setResponse (file:///Users/donghokang/Documents/New%20project%205/node_modules/@colyseus/better-call/dist/adapters/node/request.mjs:86:6)
     at file:///Users/donghokang/Documents/New%20project%205/node_modules/@colyseus/better-call/dist/node.mjs:7:10
     at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
   code: 'ERR_HTTP_HEADERS_SENT'

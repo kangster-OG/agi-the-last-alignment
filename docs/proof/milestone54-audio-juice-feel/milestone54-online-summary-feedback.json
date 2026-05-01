@@ -72,8 +72,8 @@
   "upgrades": [],
   "objective": "Move independently in the shared Consensus Cell.",
   "performance": {
-    "entitiesAllocated": 8,
-    "activeEntities": 8,
+    "entitiesAllocated": 7,
+    "activeEntities": 7,
     "fpsTarget": 60
   },
   "feedback": {
@@ -104,7 +104,7 @@
     },
     "counters": {
       "ui": 1,
-      "hit": 1,
+      "hit": 2,
       "pickup": 0,
       "boss_warning": 1,
       "music": 1,
@@ -115,32 +115,37 @@
       {
         "id": "online.summary_stinger",
         "kind": "summary",
-        "atMs": 3784
+        "atMs": 5042
       },
       {
         "id": "online.weapon_hit",
         "kind": "hit",
-        "atMs": 3664
+        "atMs": 4759
+      },
+      {
+        "id": "online.weapon_hit",
+        "kind": "hit",
+        "atMs": 4180
       },
       {
         "id": "online.objective_tick",
         "kind": "objective",
-        "atMs": 3543
+        "atMs": 4144
       },
       {
         "id": "music.armistice_plaza.boss",
         "kind": "music",
-        "atMs": 2751
+        "atMs": 3481
       },
       {
         "id": "online.armistice_plaza.boss_warning",
         "kind": "boss_warning",
-        "atMs": 2751
+        "atMs": 3481
       },
       {
         "id": "ui.enter_online_coop",
         "kind": "ui",
-        "atMs": 828
+        "atMs": 957
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -255,10 +260,10 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "ve5kw4Smi",
+    "sessionId": "LJd_wtAtW",
     "worldX": -1.6,
     "worldY": 1.1,
-    "hp": 175,
+    "hp": 172,
     "maxHp": 176,
     "xp": 0,
     "level": 1
@@ -266,8 +271,10 @@
   "online": {
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2623",
-    "roomId": "RHfwNoCap",
-    "sessionId": "ve5kw4Smi",
+    "serverUrlSource": "query.coopServer",
+    "roomId": "uHRt_IpWP",
+    "roomCode": "PUBLIC",
+    "sessionId": "LJd_wtAtW",
     "lastError": "",
     "reconnectKey": "online_a",
     "reconnect": {
@@ -297,13 +304,71 @@
       "completedNodeCount": 1,
       "unlockedNodeCount": 4
     },
+    "deployment": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "join_or_create_filtered_by_room_code",
+      "healthPath": "/healthz",
+      "staticDistEnabled": false,
+      "tickRate": 30,
+      "clientInputHz": 20,
+      "maxClients": 4,
+      "port": 2623,
+      "host": "0.0.0.0",
+      "reconnectGraceSeconds": 45,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "latencyTolerance": {
+        "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+        "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+        "snapshotCadence": "server_tick_broadcast_snapshot",
+        "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+      },
+      "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+    },
+    "robustness": {
+      "policy": "milestone55_online_robustness_deployment_1_0",
+      "roomCode": "PUBLIC",
+      "joinMode": "colyseus_join_or_create_filtered_by_room_code",
+      "serverUrl": "ws://127.0.0.1:2623",
+      "serverUrlSource": "query.coopServer",
+      "reconnectKey": "online_a",
+      "reconnectGraceSeconds": 45,
+      "inputSendHz": 20,
+      "serverTickRate": 30,
+      "healthPath": "/healthz",
+      "noAccountPersistence": "browser_local_export_code_route_profile_only",
+      "persistenceBoundary": "no_live_objectives_combat_build_kits_cooldowns_recompile_dialogue_route_focus_or_authority_import_export",
+      "deployment": {
+        "policy": "milestone55_online_robustness_deployment_1_0",
+        "roomCode": "PUBLIC",
+        "joinMode": "join_or_create_filtered_by_room_code",
+        "healthPath": "/healthz",
+        "staticDistEnabled": false,
+        "tickRate": 30,
+        "clientInputHz": 20,
+        "maxClients": 4,
+        "port": 2623,
+        "host": "0.0.0.0",
+        "reconnectGraceSeconds": 45,
+        "connectedCount": 2,
+        "disconnectedCount": 0,
+        "latencyTolerance": {
+          "inputSequenceAuthority": "server_accepts_monotonic_client_input_sequences",
+          "missedInputPolicy": "last_axis_zeroed_on_disconnect_or_leave",
+          "snapshotCadence": "server_tick_broadcast_snapshot",
+          "reconnectPolicy": "session_storage_reconnect_key_slot_reclaim"
+        },
+        "persistenceBoundary": "route_profile_export_code_only_no_live_room_authority_or_combat_state"
+      }
+    },
     "localPersistence": {
       "resetApplied": true,
       "clearedStoredProfile": false,
       "foundStoredProfile": false,
       "draftHash": "fnv1a_d74d7465",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTE4fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTUzfSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -315,7 +380,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTE4fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTUzfSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
       "shortExportCode": "AGI1_eyJwb2xp...3N0YXRlIn0",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -342,7 +407,7 @@
         },
         "recommendedNodeId": "cooling_lake_nine",
         "routeDepth": 1,
-        "savedAtTick": 118
+        "savedAtTick": 153
       },
       "saveHash": "fnv1a_d74d7465",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -997,12 +1062,12 @@
       "rewardCount": 1,
       "onlineNodeCount": 14
     },
-    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
+    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. Room code is URL/query driven. R reconnects; Esc leaves.",
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 118,
-    "seconds": 21.03,
+    "tick": 153,
+    "seconds": 21.55,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "completed",
@@ -1010,17 +1075,17 @@
     "connectedCount": 2,
     "downedCount": 0,
     "combat": {
-      "kills": 1,
+      "kills": 2,
       "collectedPickups": 0,
       "authoritativeProjectiles": 2,
-      "authoritativePickups": 1,
+      "authoritativePickups": 2,
       "bossGateMechanic": "broken_promise"
     },
     "combatArt": {
       "pressure": 1,
       "phase": "boss_active",
       "projectileCount": 2,
-      "pickupCount": 1,
+      "pickupCount": 2,
       "bossEventActive": true
     },
     "campaignContent": {
@@ -1236,7 +1301,7 @@
           "worldX": 2.5,
           "worldY": -0.7,
           "radius": 3.1,
-          "expiresIn": 7.47,
+          "expiresIn": 6.95,
           "label": "Broken Promise"
         },
         {
@@ -1244,7 +1309,7 @@
           "worldX": 0,
           "worldY": 0,
           "radius": 2.5,
-          "expiresIn": 8.19,
+          "expiresIn": 7.67,
           "label": "Broken Promise"
         }
       ],
@@ -1253,7 +1318,7 @@
         "fromY": -2.84,
         "toX": 0,
         "toY": 0,
-        "impactIn": 0.74,
+        "impactIn": 0.22,
         "resolved": false
       }
     },
@@ -1477,7 +1542,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "OgMrtVW41",
+          "sessionId": "9cIowtSqR",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1486,7 +1551,7 @@
           "connected": true
         },
         {
-          "sessionId": "ve5kw4Smi",
+          "sessionId": "LJd_wtAtW",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1630,7 +1695,7 @@
         },
         "recommendedNodeId": "cooling_lake_nine",
         "routeDepth": 1,
-        "savedAtTick": 118
+        "savedAtTick": 153
       },
       "saveHash": "fnv1a_d74d7465",
       "currentExportHash": "fnv1a_d74d7465",
@@ -2435,7 +2500,7 @@
         "maxFloatingLabels": 32
       },
       "counters": {
-        "hit": 1,
+        "hit": 2,
         "pickup": 0,
         "boss_warning": 1,
         "objective": 1,
@@ -2487,8 +2552,8 @@
       "subtitle": "Online Consensus Cell kept the road real.",
       "nodeId": "armistice_plaza",
       "arenaId": "armistice_plaza",
-      "seconds": 21.03,
-      "kills": 1,
+      "seconds": 21.55,
+      "kills": 2,
       "collectedPickups": 0,
       "partyXp": 0,
       "partyLevel": 1,
@@ -2844,7 +2909,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "OgMrtVW41",
+          "sessionId": "9cIowtSqR",
           "playerId": "player_0_online_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -2852,7 +2917,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "ve5kw4Smi",
+          "sessionId": "LJd_wtAtW",
           "playerId": "player_1_online_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -4976,7 +5041,7 @@
           },
           "recommendedNodeId": "cooling_lake_nine",
           "routeDepth": 1,
-          "savedAtTick": 118
+          "savedAtTick": 153
         },
         "saveHash": "fnv1a_d74d7465",
         "currentExportHash": "fnv1a_d74d7465",
@@ -5767,7 +5832,7 @@
   },
   "players": [
     {
-      "sessionId": "OgMrtVW41",
+      "sessionId": "9cIowtSqR",
       "playerId": "player_0_online_b",
       "slot": 0,
       "label": "P1",
@@ -5828,7 +5893,7 @@
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 135,
+      "hp": 132,
       "maxHp": 140,
       "xp": 0,
       "level": 1,
@@ -5843,10 +5908,10 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": false,
-      "inputSequence": 11
+      "inputSequence": 14
     },
     {
-      "sessionId": "ve5kw4Smi",
+      "sessionId": "LJd_wtAtW",
       "playerId": "player_1_online_a",
       "slot": 1,
       "label": "P2",
@@ -5907,7 +5972,7 @@
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 175,
+      "hp": 172,
       "maxHp": 176,
       "xp": 0,
       "level": 1,
@@ -5922,7 +5987,7 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": true,
-      "inputSequence": 13
+      "inputSequence": 14
     }
   ],
   "overworld": null,
@@ -6046,7 +6111,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "OgMrtVW41",
+          "sessionId": "9cIowtSqR",
           "playerId": "player_0_online_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -6054,7 +6119,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "ve5kw4Smi",
+          "sessionId": "LJd_wtAtW",
           "playerId": "player_1_online_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -8178,7 +8243,7 @@
           },
           "recommendedNodeId": "cooling_lake_nine",
           "routeDepth": 1,
-          "savedAtTick": 118
+          "savedAtTick": 153
         },
         "saveHash": "fnv1a_d74d7465",
         "currentExportHash": "fnv1a_d74d7465",
@@ -9076,7 +9141,7 @@
         },
         "recommendedNodeId": "cooling_lake_nine",
         "routeDepth": 1,
-        "savedAtTick": 118
+        "savedAtTick": 153
       },
       "saveHash": "fnv1a_d74d7465",
       "currentExportHash": "fnv1a_d74d7465",
@@ -9881,7 +9946,7 @@
         "maxFloatingLabels": 32
       },
       "counters": {
-        "hit": 1,
+        "hit": 2,
         "pickup": 0,
         "boss_warning": 1,
         "objective": 1,
@@ -9896,8 +9961,8 @@
       "subtitle": "Online Consensus Cell kept the road real.",
       "nodeId": "armistice_plaza",
       "arenaId": "armistice_plaza",
-      "seconds": 21.03,
-      "kills": 1,
+      "seconds": 21.55,
+      "kills": 2,
       "collectedPickups": 0,
       "partyXp": 0,
       "partyLevel": 1,
@@ -10248,7 +10313,7 @@
           "worldX": 2.5,
           "worldY": -0.7,
           "radius": 3.1,
-          "expiresIn": 7.47,
+          "expiresIn": 6.95,
           "label": "Broken Promise"
         },
         {
@@ -10256,7 +10321,7 @@
           "worldX": 0,
           "worldY": 0,
           "radius": 2.5,
-          "expiresIn": 8.19,
+          "expiresIn": 7.67,
           "label": "Broken Promise"
         }
       ],
@@ -10265,7 +10330,7 @@
         "fromY": -2.84,
         "toX": 0,
         "toY": 0,
-        "impactIn": 0.74,
+        "impactIn": 0.22,
         "resolved": false
       }
     }
@@ -10275,17 +10340,17 @@
       "id": 3,
       "familyId": "oath_eater",
       "sourceRegionId": "armistice_plaza_boss_gate",
-      "worldX": 1.79,
-      "worldY": -2.51,
-      "hp": 564,
+      "worldX": 1.43,
+      "worldY": -2.01,
+      "hp": 600,
       "boss": true
     },
     {
       "id": 1,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -20.84,
-      "worldY": 20.16,
+      "worldX": -20.13,
+      "worldY": 19.46,
       "hp": 22,
       "boss": false
     },
@@ -10293,8 +10358,8 @@
       "id": 2,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -26.26,
-      "worldY": 19.08,
+      "worldX": -25.46,
+      "worldY": 18.5,
       "hp": 22,
       "boss": false
     },
@@ -10302,8 +10367,8 @@
       "id": 5,
       "familyId": "bad_outputs",
       "sourceRegionId": "treaty_monument_oath_pages",
-      "worldX": 1.24,
-      "worldY": -5.48,
+      "worldX": 1.06,
+      "worldY": -4.65,
       "hp": 24,
       "boss": false
     },
@@ -10311,48 +10376,45 @@
       "id": 6,
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -23.83,
-      "worldY": -15.38,
+      "worldX": -22.97,
+      "worldY": -13.09,
       "hp": 34,
-      "boss": false
-    },
-    {
-      "id": 7,
-      "familyId": "bad_outputs",
-      "sourceRegionId": "treaty_monument_oath_pages",
-      "worldX": 2.99,
-      "worldY": 2.36,
-      "hp": 22,
       "boss": false
     }
   ],
   "pickups": [
     {
       "id": 1,
-      "worldX": 2.47,
-      "worldY": -0.93,
+      "worldX": 2.72,
+      "worldY": -1.02,
+      "value": 1
+    },
+    {
+      "id": 2,
+      "worldX": 2.15,
+      "worldY": 1.4,
       "value": 1
     }
   ],
   "projectiles": [
     {
-      "id": 1,
-      "ownerSessionId": "OgMrtVW41",
-      "worldX": -7.26,
-      "worldY": 7.03,
-      "velocityX": -6.61,
-      "velocityY": 6.4,
-      "life": 0.15,
+      "id": 4,
+      "ownerSessionId": "LJd_wtAtW",
+      "worldX": 6.68,
+      "worldY": -2.92,
+      "velocityX": 8.28,
+      "velocityY": -4.02,
+      "life": 0.25,
       "label": "refusal shard"
     },
     {
-      "id": 4,
-      "ownerSessionId": "ve5kw4Smi",
-      "worldX": 1.23,
-      "worldY": -0.29,
-      "velocityX": 8.26,
-      "velocityY": -4.05,
-      "life": 0.91,
+      "id": 6,
+      "ownerSessionId": "LJd_wtAtW",
+      "worldX": 1.61,
+      "worldY": 1.4,
+      "velocityX": 9.16,
+      "velocityY": 0.86,
+      "life": 0.9,
       "label": "refusal shard"
     }
   ]

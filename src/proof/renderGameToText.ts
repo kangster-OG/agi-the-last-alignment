@@ -337,6 +337,7 @@ export function renderGameToText(game: Game): string {
           downedCount: snapshot?.players.filter((player) => player.downed).length ?? 0,
           reconnect: snapshot?.reconnect ?? null,
           lifecycle: snapshot?.lifecycle ?? null,
+          deployment: snapshot?.deployment ?? null,
 	          combat: snapshot?.combat ?? null,
 	          combatArt: snapshot?.combatArt ?? null,
 	          campaignContent: snapshot?.campaignContent ?? null,

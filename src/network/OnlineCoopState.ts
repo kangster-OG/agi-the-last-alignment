@@ -119,8 +119,10 @@ export class OnlineCoopState implements GameState {
   readonly mode = "OnlineCoop" as const;
   status: ConnectionStatus = "connecting";
   roomId = "";
+  roomCode = roomCodeForSession();
   sessionId = "";
   serverUrl = "";
+  serverUrlSource = "same-origin-port";
   snapshot: OnlineConsensusSnapshot | null = null;
   lastError = "";
   reconnectKey = reconnectKeyForTab();
@@ -146,7 +148,10 @@ export class OnlineCoopState implements GameState {
   private lastFeedbackCounters = { hit: 0, pickup: 0, boss_warning: 0, objective: 0, burst: 0, summary: 0 };
 
   enter(game: Game): void {
-    this.serverUrl = onlineServerUrl();
+    const serverConfig = onlineServerConfig();
+    this.serverUrl = serverConfig.url;
+    this.serverUrlSource = serverConfig.source;
+    this.roomCode = roomCodeForSession();
     this.connect(game);
     this.render(game);
   }
@@ -278,16 +283,20 @@ export class OnlineCoopState implements GameState {
     return {
       status: this.status,
       serverUrl: this.serverUrl,
+      serverUrlSource: this.serverUrlSource,
       roomId: this.roomId,
+      roomCode: this.roomCode,
       sessionId: this.sessionId,
       lastError: this.lastError,
       reconnectKey: shortReconnectKey(this.reconnectKey),
       reconnect: this.snapshot?.reconnect ?? null,
       lifecycle: this.snapshot?.lifecycle ?? null,
+      deployment: this.snapshot?.deployment ?? null,
+      robustness: this.robustnessInfo(),
       localPersistence: localPersistenceStatus,
       saveProfile: this.saveProfileInfo(),
       routeUi: this.routeUiInfo(),
-      controls: "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves."
+      controls: "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. Room code is URL/query driven. R reconnects; Esc leaves."
     };
   }
 
@@ -299,7 +308,14 @@ export class OnlineCoopState implements GameState {
         classId: proofLoadout.classId ?? game.selectedClassId,
         factionId: proofLoadout.factionId ?? game.selectedFactionId,
         reconnectKey: this.reconnectKey,
-        clientMilestone: "milestone32_party_builds",
+        roomCode: this.roomCode,
+        clientMilestone: "milestone55_online_robustness_deployment",
+        clientConfig: {
+          roomCode: this.roomCode,
+          serverUrlSource: this.serverUrlSource,
+          inputHz: 20,
+          persistenceBoundary: "route_profile_export_code_only"
+        },
         onlineProgressionDraft: readOnlineProgressionDraft()
       });
       this.room = room;
@@ -1182,7 +1198,7 @@ export class OnlineCoopState implements GameState {
     const className = local ? COMBAT_CLASSES[local.classId]?.displayName ?? local.classId : "Connecting Frame";
     const faction = local ? FACTIONS[local.factionId]?.shortName ?? local.factionId : "Consensus";
     const left = new Text({
-      text: `ONLINE CONSENSUS CELL\n${className} + ${faction}\n${this.status.toUpperCase()} ${this.roomId || this.serverUrl}`,
+      text: `ONLINE CONSENSUS CELL  ROOM ${this.roomCode}\n${className} + ${faction}\n${this.status.toUpperCase()} ${this.roomId || this.serverUrl}`,
       style: { ...fontStyle, fontSize: 13, fill: "#fff4d6" }
     });
     left.position.set(30, 28);
@@ -2026,6 +2042,25 @@ ${focus.focusDescription}`,
     };
   }
 
+  private robustnessInfo() {
+    const deployment = this.snapshot?.deployment ?? null;
+    return {
+      policy: "milestone55_online_robustness_deployment_1_0",
+      roomCode: this.roomCode,
+      joinMode: "colyseus_join_or_create_filtered_by_room_code",
+      serverUrl: this.serverUrl,
+      serverUrlSource: this.serverUrlSource,
+      reconnectKey: shortReconnectKey(this.reconnectKey),
+      reconnectGraceSeconds: this.snapshot?.reconnect?.slotTtlSeconds ?? deployment?.reconnectGraceSeconds ?? 45,
+      inputSendHz: 20,
+      serverTickRate: deployment?.tickRate ?? 30,
+      healthPath: deployment?.healthPath ?? "/healthz",
+      noAccountPersistence: "browser_local_export_code_route_profile_only",
+      persistenceBoundary: "no_live_objectives_combat_build_kits_cooldowns_recompile_dialogue_route_focus_or_authority_import_export",
+      deployment
+    };
+  }
+
   private prepareProductionSprites(game: Game): void {
     const art = this.productionArt(game);
     const milestone50Art = this.milestone50ArenaBossArt(game);
@@ -2590,12 +2625,44 @@ function shortReconnectKey(reconnectKey: string): string {
   return reconnectKey.slice(-8);
 }
 
-function onlineServerUrl(): string {
+function roomCodeForSession(): string {
+  const params = new URLSearchParams(window.location.search);
+  const explicit = params.get("roomCode") ?? params.get("cellCode") ?? params.get("cell");
+  if (explicit) return sanitizeRoomCode(explicit);
+  const storageKey = "agi:last-alignment:online-room-code";
+  const existing = window.sessionStorage.getItem(storageKey);
+  if (existing) return sanitizeRoomCode(existing);
+  window.sessionStorage.setItem(storageKey, "PUBLIC");
+  return "PUBLIC";
+}
+
+function onlineServerConfig(): { url: string; source: string } {
   const params = new URLSearchParams(window.location.search);
   const explicit = params.get("coopServer");
-  if (explicit) return explicit;
+  if (explicit) return { url: normalizeWebsocketUrl(explicit), source: "query.coopServer" };
+  const env = (import.meta as unknown as { env?: Record<string, string | undefined> }).env;
+  const configured = env?.VITE_CONSENSUS_URL;
+  if (configured) return { url: normalizeWebsocketUrl(configured), source: "env.VITE_CONSENSUS_URL" };
+  const port = params.get("coopPort") ?? env?.VITE_CONSENSUS_PORT ?? "2567";
   const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-  return `${protocol}//${window.location.hostname || "127.0.0.1"}:2567`;
+  return { url: `${protocol}//${window.location.hostname || "127.0.0.1"}:${port}`, source: "same-origin-port" };
+}
+
+function normalizeWebsocketUrl(value: string): string {
+  if (value.startsWith("ws://") || value.startsWith("wss://")) return value;
+  if (value.startsWith("https://")) return `wss://${value.slice("https://".length)}`;
+  if (value.startsWith("http://")) return `ws://${value.slice("http://".length)}`;
+  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+  return `${protocol}//${value}`;
+}
+
+function sanitizeRoomCode(value: string): string {
+  const cleaned = value
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9_-]/g, "")
+    .slice(0, 18);
+  return cleaned || "PUBLIC";
 }
 
 function onlineProofLoadoutParams(): { classId: string | null; factionId: string | null } {
