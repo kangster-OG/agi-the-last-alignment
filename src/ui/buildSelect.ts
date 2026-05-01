@@ -1,0 +1,214 @@
+import { Graphics, Text } from "pixi.js";
+import { fontStyle, palette } from "../core/Assets";
+import type { Game } from "../core/Game";
+import type { GameState } from "../core/StateMachine";
+import { clearAllLayers } from "../render/layers";
+import { COMBAT_CLASSES, FACTIONS } from "../content";
+import { CONSENSUS_CELL_MAX_PLAYERS, clampConsensusCellSize } from "../sim/consensusCell";
+import { BUILD_CLASS_IDS, BUILD_FACTION_IDS, isClassUnlocked, isFactionUnlocked, readOnlineMetaProgression, type OnlineMetaProgression } from "../metaprogression/onlineMetaProgression";
+
+const CLASS_IDS: string[] = [...BUILD_CLASS_IDS];
+const FACTION_IDS: string[] = [...BUILD_FACTION_IDS];
+
+export class BuildSelectState implements GameState {
+  readonly mode = "BuildSelect" as const;
+  private classIndex = 0;
+  private factionIndex = 0;
+  private metaprogression: OnlineMetaProgression = readOnlineMetaProgression();
+
+  enter(game: Game): void {
+    this.metaprogression = readOnlineMetaProgression();
+    this.classIndex = Math.max(0, CLASS_IDS.indexOf(game.selectedClassId));
+    this.factionIndex = Math.max(0, FACTION_IDS.indexOf(game.selectedFactionId));
+    if (!this.classUnlocked(CLASS_IDS[this.classIndex])) this.classIndex = this.firstUnlockedClassIndex();
+    if (!this.factionUnlocked(FACTION_IDS[this.factionIndex])) this.factionIndex = this.firstUnlockedFactionIndex();
+    this.applySelection(game);
+    this.render(game);
+  }
+
+  exit(): void {}
+
+  update(game: Game): void {
+    if (game.input.wasPressed("up")) this.classIndex = this.nextUnlockedClassIndex(-1);
+    if (game.input.wasPressed("down")) this.classIndex = this.nextUnlockedClassIndex(1);
+    if (game.input.wasPressed("left")) this.factionIndex = this.nextUnlockedFactionIndex(-1);
+    if (game.input.wasPressed("right")) this.factionIndex = this.nextUnlockedFactionIndex(1);
+    if (game.input.wasPressed("one")) this.selectClassIfUnlocked(0);
+    if (game.input.wasPressed("two")) this.selectClassIfUnlocked(1);
+    if (game.input.wasPressed("three")) this.selectClassIfUnlocked(2);
+    if (game.input.wasPressed("four")) game.consensusCellSize = 4;
+    if (game.input.wasPressed("dash")) {
+      game.consensusCellSize = clampConsensusCellSize((game.consensusCellSize % CONSENSUS_CELL_MAX_PLAYERS) + 1);
+    }
+    this.applySelection(game);
+    if (game.input.wasPressed("interact")) {
+      game.state.set(game.createOverworld());
+    }
+  }
+
+  render(game: Game): void {
+    clearAllLayers(game.layers);
+    game.layers.root.position.set(0, 0);
+    game.layers.root.scale.set(1);
+
+    const bg = new Graphics();
+    bg.rect(0, 0, game.width, game.height).fill(0x111923);
+    bg.rect(0, game.height - 165, game.width, 165).fill({ color: 0x203447, alpha: 0.9 });
+    game.layers.hud.addChild(bg);
+
+    const title = new Text({
+      text: "CONSENSUS CELL LOADOUT",
+      style: { ...fontStyle, fontSize: 34, fill: "#ffd166" }
+    });
+    title.anchor.set(0.5);
+    title.position.set(game.width / 2, 70);
+    game.layers.hud.addChild(title);
+
+    const subtitle = new Text({
+      text: "Choose combat body and frontier co-mind. Starter shell defaults to Accord Striker + OpenAI Accord Division.",
+      style: { ...fontStyle, fontSize: 15, fill: "#64e0b4", align: "center", wordWrap: true, wordWrapWidth: 860 }
+    });
+    subtitle.anchor.set(0.5);
+    subtitle.position.set(game.width / 2, 108);
+    game.layers.hud.addChild(subtitle);
+
+    this.drawClassPanel(game);
+    this.drawFactionPanel(game);
+    this.drawSummary(game);
+  }
+
+  private applySelection(game: Game): void {
+    if (!this.classUnlocked(CLASS_IDS[this.classIndex])) this.classIndex = this.firstUnlockedClassIndex();
+    if (!this.factionUnlocked(FACTION_IDS[this.factionIndex])) this.factionIndex = this.firstUnlockedFactionIndex();
+    game.selectedClassId = CLASS_IDS[this.classIndex] ?? CLASS_IDS[0];
+    game.selectedFactionId = FACTION_IDS[this.factionIndex] ?? FACTION_IDS[0];
+  }
+
+  metaprogressionInfo(): OnlineMetaProgression {
+    return this.metaprogression;
+  }
+
+  private drawClassPanel(game: Game): void {
+    const x = 70;
+    const y = 155;
+    const header = new Text({
+      text: "COMBAT CLASS",
+      style: { ...fontStyle, fontSize: 20, fill: "#fff4d6" }
+    });
+    header.position.set(x, y - 42);
+    game.layers.hud.addChild(header);
+
+    CLASS_IDS.forEach((id, index) => {
+      const combatClass = COMBAT_CLASSES[id];
+      const selected = index === this.classIndex;
+      const unlocked = this.classUnlocked(id);
+      const entry = this.metaprogression.classes.find((candidate) => candidate.id === id);
+      const top = y + index * 75;
+      const g = new Graphics();
+      g.rect(x, top, 520, 62)
+        .fill(selected ? 0x263d44 : unlocked ? 0x202633 : 0x171c25)
+        .stroke({ color: selected ? palette.mint : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.72 });
+      g.rect(x + 16, top + 14, 38, 34).fill(selected ? palette.blue : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
+      game.layers.hud.addChild(g);
+
+      const text = new Text({
+        text: `${index + 1}. ${combatClass.displayName}${unlocked ? "" : "  LOCKED"}\n${combatClass.role} // ${unlocked ? combatClass.mechanicalIdentity : entry?.requirementLabel ?? "Route reward required"}`,
+        style: { ...fontStyle, fontSize: 12, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: 438 }
+      });
+      text.position.set(x + 72, top + 11);
+      game.layers.hud.addChild(text);
+    });
+  }
+
+  private drawFactionPanel(game: Game): void {
+    const x = game.width - 590;
+    const y = 155;
+    const header = new Text({
+      text: "FRONTIER CO-MIND",
+      style: { ...fontStyle, fontSize: 20, fill: "#fff4d6" }
+    });
+    header.position.set(x, y - 42);
+    game.layers.hud.addChild(header);
+
+    FACTION_IDS.forEach((id, index) => {
+      const faction = FACTIONS[id];
+      const selected = index === this.factionIndex;
+      const unlocked = this.factionUnlocked(id);
+      const entry = this.metaprogression.factions.find((candidate) => candidate.id === id);
+      const top = y + index * 53;
+      const g = new Graphics();
+      g.rect(x, top, 520, 42)
+        .fill(selected ? 0x3a3327 : unlocked ? 0x202633 : 0x171c25)
+        .stroke({ color: selected ? palette.lemon : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.72 });
+      g.circle(x + 32, top + 21, 13).fill(selected ? factionColor(id) : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
+      game.layers.hud.addChild(g);
+
+      const text = new Text({
+        text: `${faction.shortName} Co-Mind${unlocked ? "" : "  LOCKED"} // ${unlocked ? faction.doctrine : entry?.requirementLabel ?? "Route reward required"}`,
+        style: { ...fontStyle, fontSize: 11, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: 440 }
+      });
+      text.position.set(x + 58, top + 9);
+      game.layers.hud.addChild(text);
+    });
+  }
+
+  private drawSummary(game: Game): void {
+    const combatClass = COMBAT_CLASSES[game.selectedClassId];
+    const faction = FACTIONS[game.selectedFactionId];
+    const meta = this.metaprogression;
+    const text = new Text({
+      text: `Selected: ${combatClass.displayName} + ${faction.shortName} Co-Mind  //  Cell ${game.consensusCellSize}/4  //  Unlocks ${meta.unlockedClassIds.length}/${CLASS_IDS.length} frames ${meta.unlockedFactionIds.length}/${FACTION_IDS.length} co-minds\nRoute profile: ${meta.loaded ? `depth ${meta.routeDepth} renown ${meta.partyRenown} rewards ${meta.rewardIds.length}` : "clean starter profile"}  //  ${meta.disclaimer}\nUp/Down class  Left/Right co-mind  1/2/3 quick class  Space cell size  Enter Alignment Grid`,
+      style: { ...fontStyle, fontSize: 13, fill: "#fff4d6", align: "center", wordWrap: true, wordWrapWidth: 1100 }
+    });
+    text.anchor.set(0.5);
+    text.position.set(game.width / 2, game.height - 86);
+    game.layers.hud.addChild(text);
+  }
+
+  private selectClassIfUnlocked(index: number): void {
+    if (this.classUnlocked(CLASS_IDS[index])) this.classIndex = index;
+  }
+
+  private firstUnlockedClassIndex(): number {
+    return Math.max(0, CLASS_IDS.findIndex((id) => this.classUnlocked(id)));
+  }
+
+  private firstUnlockedFactionIndex(): number {
+    return Math.max(0, FACTION_IDS.findIndex((id) => this.factionUnlocked(id)));
+  }
+
+  private nextUnlockedClassIndex(direction: number): number {
+    return nextUnlockedIndex(CLASS_IDS, this.classIndex, direction, (id) => this.classUnlocked(id));
+  }
+
+  private nextUnlockedFactionIndex(direction: number): number {
+    return nextUnlockedIndex(FACTION_IDS, this.factionIndex, direction, (id) => this.factionUnlocked(id));
+  }
+
+  private classUnlocked(id: string | undefined): boolean {
+    return Boolean(id && isClassUnlocked(id, this.metaprogression));
+  }
+
+  private factionUnlocked(id: string | undefined): boolean {
+    return Boolean(id && isFactionUnlocked(id, this.metaprogression));
+  }
+}
+
+function factionColor(id: string): number {
+  if (id === "anthropic_safeguard") return palette.lemon;
+  if (id === "google_deepmind_gemini") return palette.blue;
+  if (id === "mistral_cyclone") return 0xff8f3d;
+  if (id === "meta_llama_open_herd") return 0x45c789;
+  if (id === "qwen_silkgrid") return 0x5bd0a8;
+  if (id === "deepseek_abyssal") return 0x2a9d8f;
+  if (id === "xai_grok_free_signal") return palette.tomato;
+  return palette.mint;
+}
+
+function nextUnlockedIndex(ids: readonly string[], current: number, direction: number, unlocked: (id: string) => boolean): number {
+  for (let step = 1; step <= ids.length; step += 1) {
+    const index = (current + direction * step + ids.length) % ids.length;
+    if (unlocked(ids[index])) return index;
+  }
+  return current;
+}

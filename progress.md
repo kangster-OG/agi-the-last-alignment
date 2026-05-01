@@ -1,0 +1,2640 @@
+Original prompt: Build an original browser-playable 2D isometric pixel-art horde-survival roguelite with a Super Mario-style overworld map connecting multiple themed survival arenas, using Vite, TypeScript, and PixiJS. Milestone 1 requires Pixi boot, iso camera/projection, overworld nodes, one arena with movement, enemies, auto-combat, XP, upgrades, completion/death flow, proof hooks, and Playwright smoke proof screenshots.
+
+## Progress
+
+- Initialized project plan for a clean repo.
+- Added Vite, TypeScript, PixiJS project scaffold and installed dependencies.
+- Implemented first pass of core loop, state machine, isometric projection/camera, overworld graph, arena gameplay, upgrades, summaries, and proof hook structure.
+- Added Playwright proof runner scripts under `scripts/proof/`.
+- Smoke, movement, and overworld proof passed. Horde first run exposed a fixed-port collision and overly sharp early damage, so proof ports and early balance were tuned.
+- Full proof exposed a real run balance issue: the automated survival path died around 35s with 23 KOs. Tuned spawn pressure, starter weapon, arena target timing, and added light regen.
+- Proof runner now clears each scenario artifact directory before regenerating screenshots/states, to avoid stale `errors.json` files or old balance snapshots.
+- Clean proof suite passed and the independent `develop-web-game` web client smoke passed.
+- Added durable project direction docs after studying the user's two X/Twitter reference clips. Future threads should read `AGENTS.md` and `docs/GAME_DIRECTION.md`.
+- Durable direction update: the final game should use the clips as format/vibe inspiration, but with original lore, characters, art, and gameplay identity. Maps/levels must become much larger than the current prototype and larger-feeling than the reference clips.
+- Durable co-op decision: co-op is part of the game. Target 1-4 players per run/session. Use Colyseus for future multiplayer implementation; "Colossus" in conversation refers to Colyseus. Added `docs/COOP_NETWORKING.md`.
+- Received and read the full Creative Bible: `AGI: The Last Alignment`. Copied it into `docs/AGI_The_Last_Alignment_Creative_Bible.md` as the repo source of truth.
+- Added `docs/AGI_IMPLEMENTATION_PLAN.md`, `docs/ASSET_PIPELINE.md`, and `ART_PROVENANCE.md`.
+- Updated direction docs: the real game identity is humans + frontier AI lab factions forming The Last Alignment against A.G.I. / Alien God Intelligence. Placeholder snack/coupon content should be replaced.
+- User clarified official logos should be used for parody/faction presentation. Added `docs/BRAND_ASSET_POLICY.md` and updated asset/provenance docs. Logos should be tracked as third-party/parody brand assets, not claimed as original MIT-created artwork.
+- Built Milestones 0-2: repo/package/menu canonicalized around `AGI: The Last Alignment`; structured AGI content data added; playable slice rebranded to Armistice Plaza, Accord Striker, OpenAI Accord Division, Bad Outputs, Coherence Shards, emergency patches, and The Oath-Eater.
+- Added README and MIT LICENSE. README includes the unaffiliated fictional parody disclaimer and third-party logo caveat.
+- Updated proof scripts for Arena Briefing and emergency patch draft capture. Clean build and all proof scripts passed after the rebrand.
+- Added `docs/MILESTONE_3_LARGE_MAP_FOUNDATION.md` as the next handoff target. It defines the large-map requirement for Armistice Plaza, including sub-areas, spawn regions, camera/bounds, and proof expectations.
+- Implemented Milestone 3 large map foundation for `Armistice Plaza`.
+- Added data-driven map definition in `src/level/armisticePlazaMap.ts` with large `-30..30` authored bounds, player start, Treaty Monument boss anchor, terrain bands, prop clusters, landmarks, and named spawn regions.
+- Added five visible sub-areas/landmarks: Treaty Monument, Barricade Corridor, Crashed Drone Yard, Emergency Alignment Terminal, and Cosmic Breach Crack.
+- Updated arena simulation to clamp to authored map bounds, track nearest/visited landmarks, render landmark labels/props/spawn-region decals, and spawn enemies from named map regions instead of only radial near-player spawns.
+- Updated enemy metadata so `render_game_to_text()` exposes enemy family/source spawn region; added Context Rot Crabs and Torn Oath Page flavor from Treaty Monument spawns.
+- Anchored The Oath-Eater spawn to Treaty Monument context via `treaty_monument_oath_pages` instead of spawning near the player.
+- Expanded proof state with `mapBounds`, `nearestLandmark`, `visitedLandmarks`, `activeSpawnRegions`, `lastSpawnRegionId`, and `spawnedByRegion`.
+- Updated proof scripts so movement verifies meaningful large-map traversal and horde/boss proofs verify named spawn-region behavior and Treaty Monument boss context.
+- Verification run after Milestone 3 passed:
+  - `npm run build`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+- Inspected `docs/proof/movement/moved-right.png`, `docs/proof/horde/horde.png`, `docs/proof/boss/boss.png`, `docs/proof/full/full-gate.png`, and `docs/proof/smoke/arena.png`. Screenshots show a larger traversable map, authored districts/landmarks, active horde pressure, Treaty Monument/Oath-Eater context, and successful completion.
+- Implemented Milestone 4 Alignment Grid Overworld.
+- Added data-driven overworld definition in `src/overworld/alignmentGridMap.ts` with authored map bounds, landmark nodes, route definitions, terrain patches, and prop clusters.
+- The first Alignment Grid now includes Armistice Plaza, Cooling Lake Nine, Transit Loop Zero, Accord Relay, Armistice Camp, and Ceasefire Cache.
+- Reworked `OverworldState` from abstract box nodes into a playable miniature isometric world with landmark-specific placeholder buildings, terrain districts, props, roads, labels above nodes, selected-node `ENTER` prompt, camera-bounded movement, and route visual states.
+- Added route state behavior: routes from available nodes display as unstable, routes from completed nodes display as stable, and unreachable route branches remain locked.
+- Returning to the overworld after clearing Armistice Plaza now shows Armistice Plaza stable, unlocks Accord Relay and Cooling Lake Nine, and stabilizes the Plaza-to-Relay and Plaza-to-Lake roads.
+- Expanded `render_game_to_text()` for overworld mode with `mapId`, `mapBounds`, authored nodes, route states, nearest route, selected node theme/type, completed nodes, and unlocked nodes.
+- Updated proof scripts so `proof:smoke` verifies Alignment Grid content, `proof:overworld` verifies authored nodes/routes and pre-clear unstable routes, and `proof:full` returns to the overworld after completion to verify stabilized roads and unlocked next landmarks.
+- Verification run after Milestone 4 passed:
+  - `npm run build`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+- Inspected `docs/proof/overworld/alignment-grid.png`, `docs/proof/overworld/walked-map.png`, and `docs/proof/full/alignment-grid-stabilized.png`. Screenshots show the Alignment Grid miniature world, visible landmark nodes, unstable routes before completion, and stable routes after Armistice Plaza is cleared.
+- Also ran the generic `develop-web-game` Playwright client against the local dev server. Its state output was valid, but its canvas screenshot capture was black under the generic headless WebGL path; official proof screenshots rendered correctly and were used for visual QA.
+- Implemented Milestone 5 Combat Identity And Upgrade Drafts.
+- Added `BuildSelectState` as a class/co-mind selection shell before entering the Alignment Grid. Starter defaults are `Accord Striker` + `OpenAI Accord Division`, with preview/select support for Bastion Breaker, Drone Reaver, Anthropic Safeguard Legion, Google DeepMind Gemini Array, and Mistral Cyclone Guard.
+- `Game` now owns selected class/faction IDs, and `LevelRunState` consumes those selections when constructing a run.
+- Run setup now applies class base stats and faction passives. OpenAI Accord starts with a small pickup-range bump and one draft-reroll stat hook; other preview factions have first-pass passive hooks for armor/speed/damage styles.
+- Rebuilt gameplay upgrade definitions around class, faction, general, and evolution sources. Draft cards now show their source and use selected class/co-mind identity.
+- Added deeper OpenAI/general starter draft flow: `Refusal Halo`, `The No Button`, `Context Bloom`, `Patch Cascade`, `Bad Output Filter`, `Alignment Breaker`, `Panic-Optimized Dash`, `Coherence Magnet`, and `Million-Token Backpack`.
+- Added first upgrade evolution path: `Refusal Halo` + `The No Button` unlocks `Cathedral of No`.
+- `render_game_to_text()` now exposes build-selection state, selected class/faction details, chosen upgrade IDs, draft cards, draft card sources, prerequisites, and evolution availability.
+- Updated proof flow for the new build-select screen. `proof:upgrades` now verifies the OpenAI faction patch appears, applies `Refusal Halo`, applies `The No Button`, and then verifies the `Cathedral of No` evolution draft.
+- Verification run after Milestone 5 passed:
+  - `npm run build`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+- Inspected `docs/proof/smoke/build-select.png`, `docs/proof/upgrades/upgrade-draft.png`, `docs/proof/upgrades/upgrade-evolution-draft.png`, and `docs/proof/full/full-gate.json`. Screenshots/state show visible class/faction identity, faction/class/general draft sources, the Cathedral of No evolution, and successful full-run completion with evolved upgrade IDs.
+- Implemented Milestone 6 Boss / Dialogue / UI Grammar.
+- Added an Oath-Eater boss title-card moment with portrait slot, pressure language, subtitle, and a short immediately-actionable dialogue overlay between the pilot and co-mind.
+- Added a persistent AGI pressure strip to the run HUD so the boss phase has clearer emergency OS language without blocking combat readability.
+- Added first real Oath-Eater mechanics scaffold:
+  - Broken Promise hazard zones with visible isometric telegraphs and timed damage.
+  - Torn Oath Page / Bad Output support spawns tied to the Treaty Monument spawn-region context.
+  - Treaty Monument charge/impact behavior with lane telegraph, boss repositioning, impact zone, and proof-visible counters.
+- Expanded `render_game_to_text()` with `bossMechanics` state: `bossIntroSeen`, active Broken Promise zones, active Treaty Charge state, Oath Page spawn count, Broken Promise hit count, and Treaty Charge impact count.
+- Updated the boss proof to capture a dedicated `boss-intro` moment and verify boss intro state, Oath Page spawning, Broken Promise activity, and Treaty Charge impacts.
+- Verification run after Milestone 6 passed:
+  - `npm run build`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+- Inspected `docs/proof/boss/boss-intro.png`, `docs/proof/boss/boss.png`, and `docs/proof/full/full-gate.json`. Screenshots/state show the boss intro title card/dialogue, active pressure HUD, Broken Promise telegraphs, Treaty Monument-context boss support spawns, and successful full-run completion after the new boss mechanics.
+- Also ran the generic `develop-web-game` Playwright client against a local dev server. Its `render_game_to_text()` state output was valid; as in prior milestones, the generic canvas screenshot path remained unreliable for headless WebGL, so official proof screenshots were used for visual QA.
+- Implemented Milestone 7 Co-op Readiness Before Networking.
+- Added a lightweight Consensus Cell simulation layer in `src/sim/consensusCell.ts` with:
+  - 1-4 player cell sizing.
+  - Per-player runtime metadata.
+  - Serializable player input command shape.
+  - Player-count scaling hooks.
+  - Compact server-friendly state snapshot shape.
+- Build selection now supports local Consensus Cell size selection before networking. Pressing Space cycles 1-4 players, while solo remains the default.
+- `Game` now carries the selected Consensus Cell size into new runs and exposes `window.set_consensus_cell_size(size)` for deterministic proof/dev setup without adding Colyseus.
+- `LevelRunState` now creates multiple local player entities for a run. Player 1 uses keyboard input; additional local simulated peers use deterministic serializable command generation so the local simulation already exercises 2-4 player state.
+- Each local player has its own class/faction/build/runtime weapon state. Additional slots currently use starter loadout presets such as Bastion Breaker + Anthropic Safeguard and Drone Reaver + Google DeepMind Gemini.
+- Enemy targeting, projectile firing, pickup collection, boss hazards, and Treaty Charge damage now operate across all active players. Coherence Shards currently use a shared-cell XP policy for readiness/testing.
+- Director scaling now accounts for player count with enemy cap, spawn burst, spawn cadence, and boss HP multiplier hooks while preserving the solo default.
+- The run HUD now shows Consensus Cell size and simulation snapshot tick. Local players render with slot labels (`P1`, `P2`, etc.) and distinct placeholder colors.
+- `render_game_to_text()` now exposes all players, recent serializable input commands, player-count scaling, and a compact `stateSnapshot` suitable for future Colyseus handoff work.
+- Added `npm run proof:coop`, which verifies Consensus Cell selection, 3-player local run state, simulated peer inputs, scaling values, per-player snapshot state, and distinct world positions.
+- Verification run after Milestone 7 passed:
+  - `npm run build`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:coop`
+  - `npm run proof:full`
+- Inspected `docs/proof/coop/cell-size-three.png`, `docs/proof/coop/consensus-cell-run.png`, `docs/proof/boss/boss-intro.png`, and `docs/proof/full/full-gate.png`. Screenshots/state show Consensus Cell selection, multiple local player frames in the arena, existing boss presentation still intact, and solo full-run completion still passing.
+- Also ran the generic `develop-web-game` Playwright client against a local dev server. Its state output was valid; the generic screenshot remained black under its headless WebGL path, so the scratch artifacts were removed and official proof screenshots remain the visual QA source.
+- Implemented Milestone 8 Colyseus Co-op Prototype.
+- Added Colyseus networking dependencies for the first online prototype: `colyseus`, `@colyseus/schema`, and the current 0.17 browser client package `@colyseus/sdk`.
+- Added `server/consensusCellServer.mjs`, a Colyseus server with a `ConsensusCellRoom` and `maxClients = 4`.
+- The room owns authoritative shared Armistice Plaza state for the prototype: player slots, per-client input intents, server-tick movement, shared spawn-region enemy entries, enemy pursuit, room snapshots, and compact broadcast payloads.
+- Added `npm run server:coop` to start the local Consensus Cell server.
+- Added `OnlineCoopState`, reachable from the main menu with `C`, so a Pixi client can join the Colyseus room, send input commands, render authoritative snapshots, and show online HUD state.
+- The online client now renders the shared Armistice Plaza map, local/remote player labels, synced enemies, room ID, player count, server tick, and connection status while preserving solo mode.
+- Extended `render_game_to_text()` for `OnlineCoop` with connection status, room ID, session ID, `maxClients`, player count, authoritative player snapshots, enemy snapshots, map bounds, and `networkAuthority: "colyseus_room"`.
+- Added `npm run proof:network`, which starts both Vite and the Colyseus server, opens two browser clients, joins both to the same `consensus_cell` room, drives independent movement inputs, verifies shared room ID / `maxClients = 4` / two synced players / server tick advancement / basic enemy sync, and captures both clients before and after movement.
+- During implementation, the first network proof exposed two real integration issues:
+  - A custom health handler conflicted with Colyseus' own matchmaking HTTP handler; it was removed.
+  - The 0.17 server needs the 0.17 browser SDK (`@colyseus/sdk`) rather than the older `colyseus.js` package; the client import and dependency were updated.
+- Verification run after Milestone 8 passed:
+  - `npm run build`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:coop`
+  - `npm run proof:network`
+  - `npm run proof:full`
+- Inspected `docs/proof/network/client-a-joined.png`, `docs/proof/network/client-b-joined.png`, `docs/proof/network/client-a-moved.png`, `docs/proof/network/client-b-moved.png`, `docs/proof/coop/consensus-cell-run.png`, and `docs/proof/full/full-gate.png`. Screenshots/state show two browser clients in the same online room, independent local movement, synced remote player positions, synced enemy entries, local co-op still intact, and solo completion still passing.
+- Also ran the generic `develop-web-game` Playwright client against a local dev server. Its state output was valid; the generic screenshot remained black under its headless WebGL path, so the scratch artifacts were removed and official proof screenshots remain the visual QA source.
+- User playtest after Milestone 8 reported the game started okay, then froze/crashed with a browser error code. Investigated as a real runtime performance issue rather than a proof-script logic issue.
+- Found the likely cause: the large Armistice Plaza render path was rebuilding/destroying the full static tilefield, landmark props, and many per-entity Pixi `Graphics` objects every frame. This was survivable in short deterministic proofs but unsafe for real browser play.
+- Added a render performance hotfix:
+  - Static Armistice Plaza terrain, landmarks, prop clusters, and landmark labels are now drawn once per run/online state and reused.
+  - Dynamic layers now clear only decals, entities, projectiles, floating text, and HUD.
+  - Unit/enemy/pickup rendering now batches into reusable `Graphics` buffers instead of allocating one Pixi `Graphics` object per entity per frame.
+  - Online co-op rendering received the same static-map caching and reusable entity graphics path.
+- Real-time Playwright stress testing before the final reusable-graphics fix showed heap climbing past 500 MB by a full run. After the fix, a comparable real-time run through boss pressure stayed under about 86 MB with no console/page errors.
+- Verification after the performance hotfix passed:
+  - `npm run build`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:horde`
+  - `npm run proof:boss`
+  - `npm run proof:coop`
+  - `npm run proof:network`
+  - `npm run proof:full`
+- Inspected `docs/proof/performance/long-run-reused-graphics.png`, `docs/proof/horde/horde.png`, and `docs/proof/boss/boss-intro.png`. Visual output remained correct after the caching/batching changes.
+- Implemented Milestone 9 Asset Pipeline.
+- Added durable `assets/` intake structure with placeholder `.gitkeep` files for concepts, player/enemy/boss/pickup sprites, Armistice Plaza tiles, Armistice Plaza props, Alignment Grid props, UI, portraits, and third-party logos.
+- Added `assets/asset_manifest.json` as the stable asset ID registry. It currently tracks 34 entries: 16 code-generated placeholders, 18 planned production/third-party slots, and 8 official-logo third-party/parody entries with `mitIncluded: false`.
+- Added first asset ID taxonomy for Accord Striker, Bad Outputs, Benchmark Gremlins, Context Rot Crabs, Coherence Shards, Armistice Plaza terrain/landmarks, Alignment Grid landmarks, Oath-Eater sprite/portrait slots, emergency patch UI, faction logo placeholders, and official logo targets.
+- Added typed manifest helpers in `src/assets/` so future gameplay/rendering code can resolve assets by stable IDs instead of raw paths.
+- `render_game_to_text()` now exposes a concise asset pipeline summary with manifest version, asset count, placeholder mode, production count, and third-party logo count.
+- Added `assets/README.md` documenting ChatGPT Images -> PixelLab -> Aseprite/Pixelorama workflow, status meanings, manual cleanup requirements, and official-logo handling rules.
+- Reworked `ART_PROVENANCE.md` into a manifest-linked provenance ledger with examples/rules for code placeholders, planned ChatGPT/PixelLab outputs, manual cleanup, original faction placeholders, and official third-party logos.
+- Added `scripts/assets/validate-assets.mjs` and `npm run proof:assets`. The validator checks required folders, required Milestone 9 IDs, required manifest fields, duplicate IDs, non-planned source paths, provenance keys, and third-party logo policy.
+- Verification after Milestone 9 passed:
+  - `npm run build`
+  - `npm run proof:assets`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:coop`
+  - `npm run proof:network`
+  - `npm run proof:full`
+- Inspected `docs/proof/horde/horde.png`, `docs/proof/boss/boss-intro.png`, `docs/proof/boss/boss.png`, `docs/proof/coop/consensus-cell-run.png`, `docs/proof/network/client-a-joined.png`, `docs/proof/network/client-b-joined.png`, `docs/proof/network/client-a-moved.png`, and `docs/proof/performance/long-run-reused-graphics.png`. Horde, boss, local co-op, online co-op, and the prior render-hotfix performance proof all still render correctly.
+- Current asset readiness: the repo is ready to start importing/generating actual art assets in small manifest/provenance-tracked steps. No final art or official logos were imported in Milestone 9.
+- Began the first production art intake pass after Milestone 9.
+- Added Batch 001 concept/prompt briefs:
+  - `assets/concepts/batch_001_accord_striker.md`
+  - `assets/concepts/batch_001_armistice_plaza_ground.md`
+- Added the concept briefs to `assets/asset_manifest.json` with stable IDs `concept.accord_striker.art_direction_brief` and `concept.armistice_plaza.ground_atlas_brief`.
+- Extended the typed asset taxonomy/validator to support `concept_art` entries and required Batch 001 concept IDs.
+- Updated `ART_PROVENANCE.md` with provenance rows for the two Batch 001 concept briefs.
+- Verification after the Batch 001 intake pass passed:
+  - `npm run proof:assets`
+  - `npm run build`
+  - `npm run proof:smoke`
+- Current Batch 001 status: ready for ChatGPT Images concept generation or PixelLab handoff, but no PixelLab login, final sprites, production tiles, or official logos were imported yet.
+- Generated and imported Batch 001 concept images with ChatGPT Images:
+  - `assets/concepts/batch_001_accord_striker_concept.png`
+  - `assets/concepts/batch_001_armistice_plaza_ground_concept.png`
+- Added generated concept image manifest entries:
+  - `concept.accord_striker.generated_sheet_v1`
+  - `concept.armistice_plaza.ground_atlas_generated_v1`
+- Updated `ART_PROVENANCE.md` with original generated-image source paths, dates, and non-production status notes.
+- Verification after generated concept import passed:
+  - `npm run proof:assets`
+  - `npm run build`
+  - `npm run proof:smoke`
+- Current generated art status: both images are concept/reference assets only. They are not production sprites/tiles and should not be wired directly into gameplay. Next step is PixelLab production generation and Aseprite/Pixelorama cleanup when the user is ready for manual PixelLab login.
+- Started PixelLab Batch 001 production handoff after the user manually logged in.
+- Prepared four 256x256 Accord Striker reference crops for PixelLab's reference-character flow:
+  - `assets/concepts/pixellab_refs/accord_striker_south_reference.png`
+  - `assets/concepts/pixellab_refs/accord_striker_east_reference.png`
+  - `assets/concepts/pixellab_refs/accord_striker_north_reference.png`
+  - `assets/concepts/pixellab_refs/accord_striker_west_reference.png`
+- PixelLab's browser upload slot could not be driven reliably through the current in-app browser API, so the first Accord Striker pass used the template-based Character Creator instead.
+- Generated an Accord Striker character in PixelLab with 32px target, humanoid type, and oblique projection. PixelLab reported the result as 48x48px, 4 directions, oblique view, 0 animations.
+- PixelLab's export and GIF export controls reported success, but the in-app browser did not expose a local downloaded file in `~/Downloads`; saved a raw page capture at `assets/concepts/pixellab_refs/accord_striker_pixellab_character_page.png` as proof of the generated result.
+- Added manifest/provenance entries for the four prepared PixelLab reference crops and the raw PixelLab character-page capture. These are concept/raw tracking artifacts only, not production gameplay assets.
+- Attempted to open PixelLab Map Workshop for the Armistice Plaza tile pass, but PixelLab returned to the sign-in page for `/maps`; no map/tileset generation was completed in this pass.
+- Continued PixelLab pass after the session recovered on `/create-character`.
+- Retried the Accord Striker ZIP export from the character list and detail page. PixelLab showed `Export successful! Your character has been downloaded`, but no ZIP/GIF appeared in `~/Downloads`, `~/.codex`, `/tmp`, or `/var/folders` within the visible local filesystem.
+- Added `assets/concepts/pixellab_refs/accord_striker_pixellab_raw_preview.png`, cropped from the saved PixelLab character page capture, and registered it as `concept.accord_striker.pixellab_raw_preview_v1`.
+- Opened PixelLab Map Workshop and generated a raw Armistice Plaza terrain transition from cool gray ruined treaty plaza stone to purple cosmic breach corrupted stone.
+- Downloaded the generated PixelLab tileset preview via the exposed PixelLab asset image URL to `assets/tiles/armistice_plaza/raw/armistice_plaza_breach_transition_pixellab_raw.png`.
+- Registered the raw tile image as `tile.armistice_plaza.pixellab_breach_transition_raw` with 64x64 dimensions and 16x16 frame metadata. This is a raw top-down PixelLab reference, not the final 2:1 isometric runtime atlas.
+- Verification after the continued PixelLab pass passed:
+  - `npm run proof:assets`
+  - `npm run build`
+  - `npm run proof:smoke`
+- Completed the four requested follow-up steps after the user asked to tackle them one by one:
+  - Step 1: recovered a local Accord Striker raw player artifact from the PixelLab result page at `assets/sprites/players/raw/accord_striker_pixellab_recovered_preview.png`, because PixelLab's ZIP/GIF export still did not appear in any visible local download/cache path despite export-success toasts.
+  - Step 2: converted the raw PixelLab Armistice Plaza breach-transition image into a first-pass 2:1 isometric atlas candidate at `assets/tiles/armistice_plaza/ground_atlas.png`.
+  - Step 3: confirmed no runtime/gameplay source imports or references the new player/tile art yet; placeholders remain active and `productionAssets` remains `0`.
+  - Step 4: created and visually inspected `docs/proof/assets/batch-001-tile-intake.png`, comparing the ChatGPT Images concept, PixelLab raw 16x16 transition, and cleaned 2:1 atlas candidate.
+- Registered `player.accord_striker.pixellab_recovered_preview_raw` and updated `tile.armistice_plaza.production_ground_atlas` from planned to cleaned with 256x64 dimensions, eight 64x32 frames, and provenance key `cleaned_batch_001_armistice_ground_atlas_v1`.
+- Verification after the four-step pass passed:
+  - `npm run proof:assets`
+  - `npm run build`
+  - `npm run proof:smoke`
+- Built the next dev-only asset preview/proof for the cleaned Armistice Plaza ground atlas:
+  - Added Pixi atlas loading/slicing helpers in `src/assets/armisticeGroundAtlas.ts` for `assets/tiles/armistice_plaza/ground_atlas.png`.
+  - Added `AssetPreviewState` at `src/ui/assetPreview.ts`, available with `?assetPreview=armistice_ground_atlas`, to render the atlas frames and a small tiled patch in-canvas without touching gameplay terrain.
+  - Added the gated runtime flag `?armisticeTiles=1` for Armistice Plaza tile rendering. Default gameplay still uses the existing static terrain renderer unless the flag is present.
+  - Exposed the flag state through `window.render_game_to_text()` under `assetRendering.armisticeTileAtlasEnabled`.
+  - Added `npm run proof:asset-preview`, which validates the dev preview path and captures a flagged arena render.
+- Inspected the new proof screenshots:
+  - `docs/proof/asset-preview/armistice-ground-atlas-preview.png` renders the atlas cleanly through Pixi and shows the tiled patch.
+  - `docs/proof/asset-preview/armistice-tile-flag-arena.png` confirms the gated atlas renderer appears in Armistice Plaza while UI, props, landmarks, and gameplay entities remain present.
+- Verification after the dev asset preview/runtime flag pass passed:
+  - `npm run proof:assets`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:asset-preview`
+  - `npm run proof:smoke`
+- Continued the flagged production-art runtime pass:
+  - Step 1 complete: tuned `assets/tiles/armistice_plaza/ground_atlas.png` into a quieter combat-scale atlas with clearer stone/crack/breach/terminal reads.
+  - Updated the gated Armistice tile renderer to choose atlas frames from authored terrain band IDs instead of broad coordinate thresholds, reducing large repeated breach regions.
+  - Re-ran `npm run proof:asset-preview` and inspected `docs/proof/asset-preview/armistice-ground-atlas-preview.png` plus `docs/proof/asset-preview/armistice-tile-flag-arena.png`; the tile path still renders cleanly and remains behind `?armisticeTiles=1`.
+  - Step 2 complete: added `?assetPreview=accord_striker_raw` dev preview coverage for `assets/sprites/players/raw/accord_striker_pixellab_recovered_preview.png`.
+  - Added `src/assets/accordStrikerPreview.ts` and extended `AssetPreviewState`/`npm run proof:asset-preview` to load and screenshot the raw player artifact through Pixi.
+  - Inspected `docs/proof/asset-preview/accord-striker-raw-preview.png`; it loads correctly but has a baked checkerboard background, so it remains a raw/dev-preview asset and is not ready for gameplay replacement.
+  - Step 3 complete: added `npm run proof:asset-horde`, `npm run proof:asset-boss`, and `npm run proof:asset-combat` for flagged combat-scale atlas screenshots.
+  - Ran and inspected `docs/proof/asset-horde/armistice-tile-horde.png`, `docs/proof/asset-boss/armistice-tile-boss-intro.png`, and `docs/proof/asset-boss/armistice-tile-boss.png`; player, enemies, pickups, boss UI, landmarks, and spawn decals remain readable with `?armisticeTiles=1`.
+  - Default gameplay remains unflagged; `?assetPreview=accord_striker_raw` is a dev preview only and does not replace runtime player rendering.
+  - Step 4 complete: promoted only `tile.armistice_plaza.production_ground_atlas` from `cleaned` to `production` in `assets/asset_manifest.json`.
+  - Updated `ART_PROVENANCE.md` to record the Pixi preview, horde, and boss QA pass. The raw Accord Striker preview remains `raw` because the proof shows a baked checkerboard background.
+  - Updated asset validation output to report the production asset count.
+  - Verification after the four-step pass:
+    - `npm run proof:assets` (reports `production: 1`)
+    - `npm run build` (passed with the existing Vite chunk-size warning)
+    - `npm run proof:asset-preview`
+    - `npm run proof:asset-combat`
+    - `npm run proof:smoke`
+  - Tried PixelLab's native character `Export` and `Download as GIF` controls again from `/create-character/7502cae3-6bd1-4d93-9a8a-bf11c2a681fd`; PixelLab showed success toasts, but no ZIP/GIF/PNG appeared in visible local download/cache paths.
+  - Created a true transparent cleaned single-frame Accord Striker sheet from the PixelLab recovered preview at `assets/sprites/players/accord_striker_transparent_sheet.png`.
+  - Registered the cleaned sheet as `player.accord_striker.transparent_sheet_v1` in `assets/asset_manifest.json` with provenance key `cleaned_batch_001_accord_striker_transparent_sheet_v1`.
+  - Updated `ART_PROVENANCE.md` to note that this is manual transparent cleanup from the PixelLab recovered preview, not a native PixelLab ZIP/GIF export and not a full production movement sheet.
+  - Extended `src/assets/accordStrikerPreview.ts`, `AssetPreviewState`, and `npm run proof:asset-preview` with `?assetPreview=accord_striker_transparent_sheet`.
+  - Inspected `docs/proof/asset-preview/accord-striker-transparent-sheet-preview.png`; the cleaned sheet loads through Pixi with transparent background and combat-scale samples, but gameplay replacement remains OFF.
+  - Verification after transparent Accord Striker cleanup/preview:
+    - `npm run proof:assets` (reports `cleaned: 1`, `production: 1`)
+    - `npm run build` (passed with the existing Vite chunk-size warning)
+    - `npm run proof:asset-preview`
+    - `npm run proof:smoke`
+- Implemented Milestone 10 Production Art Runtime Integration.
+- Added `docs/MILESTONE_10_PRODUCTION_ART_RUNTIME_INTEGRATION.md` documenting the first gated runtime-art milestone, required asset set, runtime flags, and exit criteria.
+- Created the first playable production-art asset set:
+  - `assets/sprites/players/accord_striker_walk.png`: 96x192, four direction rows, two 48x48 frames per direction.
+  - `assets/sprites/enemies/bad_outputs_sheet.png`: 96x32, three 32x32 Bad Outputs variants.
+  - `assets/sprites/pickups/coherence_shard.png`: 24x24 pickup sprite.
+  - `assets/props/armistice_plaza/treaty_monument.png`: 128x128 landmark prop.
+  - `assets/sprites/bosses/oath_eater.png`: 96x96 boss sprite.
+  - `assets/portraits/oath_eater_title_card.png`: 160x144 boss intro portrait.
+- Updated `assets/asset_manifest.json` with production status, stable IDs, dimensions, frame metadata, provenance keys, license notes, and `flagged_runtime` tags for the Milestone 10 assets.
+- Updated `ART_PROVENANCE.md` with manifest-linked Milestone 10 provenance rows. These assets are original project-created pixel art, MIT-included, and do not include official logos or third-party brand art.
+- Updated `assets/README.md` with the new runtime integration gates:
+  - `?assetPreview=milestone10_runtime_set`
+  - `?productionArt=1`
+  - `?armisticeTiles=1`
+- Added `src/assets/milestone10Art.ts` with typed Pixi loaders/slicers for the player sheet, Bad Outputs sheet, pickup, Treaty Monument, Oath-Eater sprite, and Oath-Eater portrait.
+- Extended the dev asset preview screen with `?assetPreview=milestone10_runtime_set`, rendering the Milestone 10 set through Pixi without entering gameplay.
+- Added the gated runtime flag `?productionArt=1`. Default gameplay remains on the code-placeholder-safe path unless this flag is present.
+- Integrated Milestone 10 art into `LevelRunState` without replacing the render performance hotfix:
+  - Dynamic player/enemy/pickup/boss sprites use a reusable sprite pool instead of per-frame sprite allocation.
+  - Static Treaty Monument art is drawn as part of the cached static arena path.
+  - The Oath-Eater title-card portrait uses the production portrait only under the runtime flag.
+  - Existing reusable `Graphics` buffers and default placeholder rendering remain intact.
+- Extended `window.render_game_to_text()` so `assetRendering.productionArtEnabled` reports the Milestone 10 runtime flag.
+- Added `npm run proof:milestone10-art`, which captures:
+  - `docs/proof/milestone10-art/milestone10-runtime-set-preview.png`
+  - `docs/proof/milestone10-art/milestone10-art-arena.png`
+  - `docs/proof/milestone10-art/milestone10-art-horde.png`
+  - `docs/proof/milestone10-art/milestone10-art-boss-intro.png`
+  - `docs/proof/milestone10-art/milestone10-art-boss.png`
+- Verification after Milestone 10 passed:
+  - `npm run proof:assets` (reports `assetCount: 52`, `production: 7`, `cleaned: 1`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:asset-preview`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:coop`
+  - `npm run proof:network`
+  - `npm run proof:full`
+  - `npm run proof:asset-combat`
+- Inspected Milestone 10 proof screenshots. The runtime set preview loads cleanly; the flagged arena/horde/boss screenshots show Accord Striker, Bad Outputs, Coherence Shards, Treaty Monument, Oath-Eater sprite, and Oath-Eater portrait rendering in canvas with `?productionArt=1`.
+- Inspected default proof screenshots after the runtime-art integration:
+  - `docs/proof/horde/horde.png`
+  - `docs/proof/boss/boss-intro.png`
+  - `docs/proof/boss/boss.png`
+  - `docs/proof/coop/consensus-cell-run.png`
+  - `docs/proof/network/client-a-moved.png`
+  - `docs/proof/network/client-b-moved.png`
+  - `docs/proof/asset-horde/armistice-tile-horde.png`
+  - `docs/proof/asset-boss/armistice-tile-boss.png`
+  - `docs/proof/performance/long-run-reused-graphics.png`
+- Current Milestone 10 readiness: the repo is ready to continue importing/generating actual art assets through the manifest/provenance/proof path. The first playable production-art set is proven behind flags, but it should stay opt-in until the surrounding art families and readability pass are broader.
+- Added `docs/MILESTONE_11_PRODUCTION_ART_EXPANSION.md` as the next-milestone handoff document. It captures the Milestone 10 baseline, Milestone 11 scope, asset/provenance/runtime integration rules, suggested preview flags, proof expectations, and default-readiness exit criteria.
+- Implemented Milestone 11 Production Art Expansion and Default Readiness.
+- Added a compact original production-art expansion set:
+  - `assets/sprites/players/accord_striker_walk_v2.png`: 144x192, four direction rows, three 48x48 frames per direction for better player motion/readability.
+  - `assets/sprites/enemies/benchmark_gremlins_sheet.png`: 96x32, three Benchmark Gremlin variants for Drone Yard spawns.
+  - `assets/sprites/enemies/context_rot_crabs_sheet.png`: 96x32, three low/wide Context Rot Crab variants for Barricade Corridor spawns.
+  - `assets/props/armistice_plaza/barricade_corridor_set.png`
+  - `assets/props/armistice_plaza/crashed_drone_yard_wreck.png`
+  - `assets/props/armistice_plaza/emergency_alignment_terminal.png`
+  - `assets/props/armistice_plaza/cosmic_breach_crack.png`
+  - `assets/ui/openai_accord_mark.png`: original parody/faction placeholder mark, not an official OpenAI logo.
+- Updated `assets/asset_manifest.json` from 52 to 60 entries. Validation now reports 15 production assets, 8 third-party logo entries still planned/non-MIT, and no warnings.
+- Updated `ART_PROVENANCE.md` for every new asset with Milestone 11 provenance rows. All new Milestone 11 assets are original project-created pixel art and MIT-included; no official logos were imported.
+- Added `src/assets/milestone11Art.ts`, a typed Pixi loader that layers the Milestone 11 expansion on top of the Milestone 10 runtime set.
+- Extended dev previews:
+  - `?assetPreview=milestone11_enemy_set`
+  - `?assetPreview=milestone11_prop_set`
+  - `?assetPreview=milestone11_ui_set`
+- Extended `?productionArt=1` to use the broader Milestone 11 runtime set while keeping default gameplay placeholder-safe.
+- Runtime integration stayed gated and preserved the render performance hotfix:
+  - Dynamic production player/enemy/pickup/boss sprites still use the reusable sprite map.
+  - New landmark props are inserted only in cached static arena rendering, not rebuilt per frame.
+  - Default placeholder rendering remains available when `?productionArt=1` is absent.
+- Added `npm run proof:milestone11-art`, which captures Milestone 11 previews, flagged arena/horde/boss/local-co-op screenshots, and validates Benchmark Gremlin / Context Rot Crab activity under the production-art flag.
+- Updated `window.render_game_to_text()` with `assetRendering.productionArtSet`, currently `milestone11_expansion` when `?productionArt=1` is enabled and `placeholder_safe_default` otherwise.
+- Verification after Milestone 11 passed:
+  - `npm run proof:assets` (reports `assetCount: 60`, `production: 15`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:asset-preview`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:coop`
+  - `npm run proof:network`
+  - `npm run proof:full`
+  - `npm run proof:asset-combat`
+  - Generic `develop-web-game` Playwright client against `http://127.0.0.1:5199` reached gameplay and produced `output/web-game/shot-0.png`.
+- Screenshots inspected for Milestone 11/default-readiness:
+  - `docs/proof/milestone11-art/milestone11-enemy-set-preview.png`
+  - `docs/proof/milestone11-art/milestone11-art-horde.png`
+  - `docs/proof/milestone11-art/milestone11-art-coop.png`
+  - `docs/proof/milestone11-art/milestone11-art-boss.png`
+  - `docs/proof/asset-preview/milestone11-enemy-set-preview.png`
+  - `docs/proof/milestone10-art/milestone10-runtime-set-preview.png`
+  - `docs/proof/milestone10-art/milestone10-art-boss.png`
+  - `docs/proof/horde/horde.png`
+  - `docs/proof/boss/boss.png`
+  - `docs/proof/coop/consensus-cell-run.png`
+  - `docs/proof/network/client-a-moved.png`
+  - `docs/proof/network/client-b-moved.png`
+  - `docs/proof/asset-horde/armistice-tile-horde.png`
+  - `docs/proof/asset-boss/armistice-tile-boss.png`
+  - `docs/proof/performance/long-run-reused-graphics.png`
+  - `output/web-game/shot-0.png`
+- Current Milestone 11 default-readiness decision: keep production art gated. The flagged path is materially broader and readable in arena/horde/boss/local co-op proofs, but online co-op still intentionally uses the placeholder-safe render path, player co-op silhouettes need stronger per-slot differentiation than rings/labels, and the overworld still lacks production landmark art. Default gameplay should remain placeholder-safe until those gaps are closed and a fresh real-time performance proof is run with the full production-art path enabled.
+- Implemented Milestone 12 Production Art Default Candidate and Online Parity.
+- Added `docs/MILESTONE_12_PRODUCTION_ART_DEFAULT_CANDIDATE.md` to capture the default-candidate scope, gates, proof expectations, and rollout decision criteria.
+- Added a focused original Milestone 12 production-art expansion set:
+  - `assets/sprites/players/accord_striker_walk_coop_variants.png`: four P1-P4 Accord Striker co-op palette/silhouette variants, each with four directions and three walk frames.
+  - `assets/props/alignment_grid/node_landmarks_v1.png`: six 96x96 Alignment Grid overworld landmark frames for plaza, relay, lake, camp, cache, and transit nodes.
+  - `assets/props/alignment_grid/route_sigils_v1.png`: three 48x48 Alignment Grid route-state sigils for stable, unstable, and locked routes.
+  - `docs/proof/assets/milestone12-generated-contact-sheet.png`: local generated-art contact sheet for review.
+- Updated `assets/asset_manifest.json` from 60 to 63 entries. Validation now reports 18 production assets, 16 planned assets, 16 code placeholders, 8 tracked third-party logo placeholders, and no warnings.
+- Updated `ART_PROVENANCE.md` for every new Milestone 12 asset. All new Milestone 12 assets are original project-created pixel art, MIT-included, and do not import or claim official logos.
+- Updated `assets/README.md` with the Milestone 12 default-candidate preview and runtime-gate notes.
+- Added `src/assets/milestone12Art.ts`, which loads the Milestone 11 runtime set plus the Milestone 12 co-op variant sheet, overworld node atlas, and route sigils.
+- Extended dev previews with `?assetPreview=milestone12_default_candidate`, showing:
+  - P1-P4 Accord Striker production variants.
+  - Alignment Grid node landmarks.
+  - Route-state sigils.
+  - The original OpenAI Accord placeholder mark.
+- Extended the gated `?productionArt=1` runtime path:
+  - Solo and local co-op players now use slot-specific Milestone 12 variants when loaded, with Milestone 11/Milestone 10 fallbacks intact.
+  - Online Colyseus co-op now renders the production-art player variants, Bad Outputs enemies, Treaty Monument, Armistice props, and optional Armistice tile atlas under `?productionArt=1&armisticeTiles=1`.
+  - The Alignment Grid overworld now renders production landmark sprites and route sigils under `?productionArt=1`.
+  - `window.render_game_to_text()` now reports `assetRendering.productionArtSet: "milestone12_default_candidate"` when production art is enabled.
+- Preserved the render performance hotfix:
+  - Arena dynamic player/enemy/pickup/boss rendering still uses reusable Pixi sprite pools.
+  - Online co-op production dynamic sprites use a reusable sprite pool instead of per-frame sprite allocation.
+  - Static level props continue to use the cached static render path.
+  - Default placeholder-safe rendering remains the unflagged gameplay path.
+- Fixed a production-art async-load race discovered by proofing Milestone 10/11 after the Milestone 12 changes:
+  - `LevelRunState`, `OnlineCoopState`, and `OverworldState` now ignore stale async asset-load completions when another state has taken over.
+  - This prevents destroyed persistent graphics/sprite layers from being rendered after transitions such as upgrade draft entry.
+- Added `npm run proof:milestone12-art`, which captures and validates:
+  - `docs/proof/milestone12-art/milestone12-default-candidate-preview.png`
+  - `docs/proof/milestone12-art/milestone12-overworld-production.png`
+  - `docs/proof/milestone12-art/milestone12-solo-horde-candidate.png`
+  - `docs/proof/milestone12-art/milestone12-local-coop-candidate.png`
+  - `docs/proof/milestone12-art/milestone12-runtime-sample.png`
+  - `docs/proof/milestone12-art/client-a-joined.png`
+  - `docs/proof/milestone12-art/client-b-joined.png`
+  - `docs/proof/milestone12-art/client-a-moved.png`
+  - `docs/proof/milestone12-art/client-b-moved.png`
+- Verification after Milestone 12 passed:
+  - `npm run proof:assets` (reports `assetCount: 63`, `production: 18`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:asset-preview`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:coop`
+  - `npm run proof:network`
+  - `npm run proof:full`
+  - `npm run proof:asset-combat`
+- Ran a real-time production-art performance proof with `?productionArt=1&armisticeTiles=1`:
+  - Output screenshot: `docs/proof/performance/milestone12-production-candidate-real-time.png`
+  - Sample data: `docs/proof/performance/milestone12-production-candidate-real-time-samples.json`
+  - State dump: `docs/proof/performance/milestone12-production-candidate-real-time-state.json`
+  - Result: 48 samples from 1.38s to 49.22s of `LevelRun`, active entities rose from 6 to 69, heap rose from 36.9 MB to 70.5 MB, production art stayed on `milestone12_default_candidate`, and no browser console errors were recorded.
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5203?productionArt=1&armisticeTiles=1`.
+  - `output/web-game/state-0.json` reached `LevelRun` with `productionArtEnabled: true`, `armisticeTileAtlasEnabled: true`, and `productionArtSet: "milestone12_default_candidate"`.
+  - `output/web-game/shot-0.png` is black from the generic headless WebGL capture path; the project proof screenshots above render correctly and are the visual proof source of truth.
+- Screenshots inspected for Milestone 12/default-readiness:
+  - `docs/proof/milestone12-art/milestone12-default-candidate-preview.png`
+  - `docs/proof/milestone12-art/milestone12-overworld-production.png`
+  - `docs/proof/milestone12-art/milestone12-solo-horde-candidate.png`
+  - `docs/proof/milestone12-art/milestone12-local-coop-candidate.png`
+  - `docs/proof/milestone12-art/client-a-moved.png`
+  - `docs/proof/milestone12-art/client-b-moved.png`
+  - `docs/proof/performance/milestone12-production-candidate-real-time.png`
+  - `output/web-game/shot-0.png`
+- Current Milestone 12 default-readiness decision: the production-art path is now a credible default candidate for solo, local co-op, overworld, and online Colyseus co-op, and it passed the relevant proof suite plus a real-time performance proof. Keep it gated for now until the user explicitly approves the visual switch after playtest. Remaining caveats: online player facing is simplified until facing/velocity are synced in snapshots, overworld prop/label density still needs polish before a public default, and the generic web-game screenshot harness still captures a black WebGL frame even though text state and project proof screenshots are valid.
+- Next recommended milestone: Milestone 13 Default Rollout and Art Polish. Scope should include a user-approved default toggle/rollout plan, production overworld label/prop-density polish, synced online facing/velocity for production player animations, production-art parity for remaining combat effects/UI moments, and one more long-run proof after any default flip.
+- Implemented Milestone 13 Default Rollout and Art Polish.
+- Added `docs/MILESTONE_13_DEFAULT_ROLLOUT_AND_ART_POLISH.md` as the rollout handoff document.
+- Production art is now the default runtime path:
+  - `assetRendering.productionArtEnabled` is true without query flags.
+  - `assetRendering.productionArtSet` now reports `milestone13_default_rollout`.
+  - `?productionArt=0` or `?placeholderArt=1` restores the legacy placeholder-safe sprite path.
+  - `?armisticeTiles=0` or `?placeholderTiles=1` restores the legacy code-drawn terrain path.
+  - `?assetPreview=milestone12_default_candidate` remains the dev preview for the current production-art set.
+- Armistice Plaza production tiles are now default alongside production sprites.
+- Updated `assets/README.md`, `assets/asset_manifest.json`, and `ART_PROVENANCE.md` so production assets are no longer described as gated after the default rollout. No new official logos were added; third-party logo placeholders remain planned/non-MIT.
+- Added synced online movement animation data:
+  - Colyseus snapshots now include `velocityX`, `velocityY`, and `facing`.
+  - `src/network/OnlineCoopState.ts` now drives production player animation direction from the authoritative snapshot instead of a local movement guess.
+  - `window.render_game_to_text()` now exposes online player velocity/facing for proofing.
+- Polished the Alignment Grid production-art default:
+  - The overworld avatar now uses the production Accord Striker sprite when production art is enabled.
+  - Production overworld labels now show full labels for selected/completed/nearby available nodes and compact type markers for distant nodes, reducing the Milestone 12 label-density issue.
+- Added `npm run proof:milestone13-default`, which validates:
+  - production art and Armistice tiles are defaulted on the main menu, overworld, and arena;
+  - explicit placeholder opt-out works through `?productionArt=0&armisticeTiles=0`;
+  - online Colyseus co-op defaults to production art;
+  - online player facing/velocity are synced for production animation.
+- Verification after Milestone 13 passed:
+  - `npm run proof:assets` (reports `assetCount: 63`, `production: 18`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone13-default`
+  - `npm run proof:asset-preview`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:coop`
+  - `npm run proof:network`
+  - `npm run proof:asset-combat`
+  - `npm run proof:full`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+- Ran a real-time default-rollout performance proof without production-art query flags:
+  - Output screenshot: `docs/proof/performance/milestone13-default-rollout-real-time.png`
+  - Sample data: `docs/proof/performance/milestone13-default-rollout-real-time-samples.json`
+  - State dump: `docs/proof/performance/milestone13-default-rollout-real-time-state.json`
+  - Result: 50 samples from 1.33s to 48.83s of `LevelRun`, active entities rose from 6 to 50, heap stayed at 37.8 MB in the sampled browser, production art stayed on `milestone13_default_rollout`, both default flags stayed true, and no browser console errors were recorded.
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5225`.
+  - `output/web-game/state-0.json` reached `LevelRun` with production art and Armistice tiles defaulted.
+  - `output/web-game/shot-0.png` is still black from the generic headless WebGL capture path; project proof screenshots render correctly and remain the visual proof source of truth.
+- Screenshots inspected for Milestone 13/default rollout:
+  - `docs/proof/milestone13-default/milestone13-overworld-default.png`
+  - `docs/proof/milestone13-default/milestone13-arena-default.png`
+  - `docs/proof/milestone13-default/milestone13-placeholder-opt-out.png`
+  - `docs/proof/milestone13-default/client-a-moved.png`
+  - `docs/proof/performance/milestone13-default-rollout-real-time.png`
+  - `output/web-game/shot-0.png`
+- Current Milestone 13 default-readiness decision: production art and Armistice tiles are now the default player-facing path. The placeholder-safe path is preserved as an explicit opt-out for regression/debugging, not as the normal default.
+- Next recommended milestone: Milestone 14 Combat Art Parity and Runtime Polish. Scope should add production art for projectiles, hit flashes, damage numbers, upgrade cards/HUD details, online pickups/projectiles/boss events where applicable, and a small cleanup pass on overworld static rendering so the default production map is less allocation-heavy.
+- Implemented Milestone 14 Combat Art Parity and Runtime Polish.
+- Added `docs/MILESTONE_14_COMBAT_ART_PARITY_AND_RUNTIME_POLISH.md` as the milestone handoff record.
+- Added new original production art assets:
+  - `assets/sprites/effects/combat_effects_v1.png` with projectile, trail, impact, pickup sparkle, damage badge, and Refusal aura frames.
+  - `assets/ui/emergency_patch_card_frames_v1.png` with general, faction, class, and evolution emergency patch card frames.
+  - `docs/proof/assets/milestone14-generated-contact-sheet.png` as the generated-art proof/contact sheet.
+- Updated `assets/asset_manifest.json`, `assets/README.md`, and `ART_PROVENANCE.md` for every new Milestone 14 asset. The manifest now reports `assetCount: 65` and `production: 20`; no official logos or third-party brand assets were added.
+- Added `src/assets/milestone14Art.ts` and runtime texture loading on top of the prior Milestone 12/13 production art path.
+- Production art runtime now reports `assetRendering.productionArtSet: "milestone14_combat_art_parity"` when production art is enabled.
+- Added `?assetPreview=milestone14_combat_art` and corresponding proof preview coverage for the new combat/UI atlas set.
+- Integrated production combat art into solo/local runs without replacing the entire render path:
+  - Player projectiles now use production projectile/trail sprites when production art is enabled.
+  - Projectile hits spawn transient impact frames and damage badge sprites.
+  - Coherence Shard pickup collection spawns production pickup sparkles.
+  - Refusal Halo/Cathedral-style builds show a production Refusal aura marker.
+  - The run HUD includes a small combat-art accent tied to the new atlas.
+- Integrated production emergency patch card frames into upgrade drafts so general, faction, class, and evolution cards read as distinct UI art.
+- Added online co-op combat-art parity hooks:
+  - Colyseus snapshots now include `combatArt` pressure/phase/projectile/pickup/boss-event fields.
+  - `OnlineCoopState` renders a production-art pressure/phase strip using the Milestone 14 combat atlas.
+  - `window.render_game_to_text()` exposes online `combatArt` state for proofing.
+  - This is a visibility/parity hook, not yet full authoritative synced online projectile/pickup/boss simulation.
+- Reduced Alignment Grid default production-map allocation churn:
+  - `OverworldState` now caches static background, ground, routes, and behind-prop layers.
+  - Per-frame clearing is limited to dynamic entity/floating-text/HUD/front-prop layers.
+  - The static cache key respects production-art readiness plus completed/unlocked route state.
+- Preserved the default rollout and opt-outs:
+  - Production art and Armistice tiles remain default.
+  - `?productionArt=0`, `?placeholderArt=1`, `?armisticeTiles=0`, and `?placeholderTiles=1` still restore placeholder/debug paths.
+  - Existing proof hooks `window.render_game_to_text()` and `window.advanceTime(ms)` remain working.
+- Added `npm run proof:milestone14-combat-art`, which validates:
+  - the new Milestone 14 asset preview,
+  - default combat runtime projectile/hit art activity,
+  - emergency patch draft card frames,
+  - Refusal aura runtime art,
+  - placeholder opt-out,
+  - and online combat-art hook state.
+- Verification after Milestone 14 passed:
+  - `npm run proof:assets` (reports `assetCount: 65`, `production: 20`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone14-combat-art`
+  - `npm run proof:asset-preview`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:coop`
+  - `npm run proof:network`
+  - `npm run proof:asset-combat`
+  - `npm run proof:full`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+- Ran a real-time default M14 combat-art performance proof:
+  - Output screenshot: `docs/proof/performance/milestone14-combat-art-real-time.png`
+  - Sample data: `docs/proof/performance/milestone14-combat-art-real-time-samples.json`
+  - State dump: `docs/proof/performance/milestone14-combat-art-real-time-state.json`
+  - Result: 56 samples from 1.23s to 51.95s of `LevelRun`, active entities rose from 4 to 63, heap stayed at 33.5 MB in the sampled browser, production art stayed on `milestone14_combat_art_parity`, combat FX were observed, and no browser console errors were recorded.
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5235`.
+  - `output/web-game/state-0.json` reached `LevelRun` with production art and Armistice tiles defaulted, `productionArtSet: "milestone14_combat_art_parity"`, and active projectile/impact/damage combat-art state.
+  - `output/web-game/shot-0.png` rendered correctly in this pass and was inspected.
+- Screenshots inspected for Milestone 14:
+  - `docs/proof/milestone14-combat-art/milestone14-combat-art-preview.png`
+  - `docs/proof/milestone14-combat-art/milestone14-combat-runtime.png`
+  - `docs/proof/milestone14-combat-art/milestone14-patch-card-draft.png`
+  - `docs/proof/milestone14-combat-art/milestone14-aura-runtime.png`
+  - `docs/proof/milestone14-combat-art/milestone14-placeholder-opt-out.png`
+  - `docs/proof/milestone14-combat-art/client-a-moved.png`
+  - `docs/proof/performance/milestone14-combat-art-real-time.png`
+  - `output/web-game/shot-0.png`
+- Current Milestone 14 default-readiness decision: the new combat/UI production art is ready to remain in the default production-art path. Placeholder opt-out remains useful for regression/debugging. Online combat-art state is ready as a presentation hook, but full online combat authority and event sync should remain a future milestone.
+- Next recommended milestone: Milestone 15 Online Combat Authority and Boss/Event Sync. Scope should move online co-op beyond presentation hooks into server-owned synced projectiles, pickups, boss warnings/events, reconnect/leave UI polish, and proof coverage such as `npm run proof:milestone15-online-combat`.
+- Implemented Milestone 15 Online Combat Authority and Boss/Event Sync.
+- Added `docs/MILESTONE_15_ONLINE_COMBAT_AUTHORITY_AND_EVENT_SYNC.md` as the milestone handoff record and updated `docs/COOP_NETWORKING.md` with the current online-combat prototype status.
+- Upgraded the Colyseus `consensus_cell` room from presentation-only combat hooks to server-owned combat state:
+  - Snapshots now report `schemaVersion: 2`.
+  - `networkAuthority` now reports `colyseus_room_server_combat`.
+  - The room owns synced enemies, player HP/XP/level, player facing/velocity, refusal-shard projectiles, Coherence Shard pickups, kill/pickup counters, Oath-Eater boss spawn state, Broken Promise zones, and Treaty Charge warning/impact state.
+  - Server projectiles now damage/kill enemies and spawn synced pickups.
+  - Server boss logic now spawns The Oath-Eater at the Treaty Monument timing, creates Broken Promise zones, spawns Torn Oath Pages, and broadcasts Treaty Charge state.
+- Expanded online client rendering:
+  - `OnlineCoopState` now renders synced server projectiles, pickup shards, boss labels, Broken Promise zones, and Treaty Charge warning lanes.
+  - Online rendering continues to use the Milestone 14 combat/UI production art set and pooled production sprites where applicable.
+  - The production-art set remains `milestone14_combat_art_parity` because Milestone 15 changed network authority/sync behavior rather than adding a new art batch.
+- Added online UX polish:
+  - `R` reconnects to the Consensus Cell.
+  - `Esc` leaves online co-op and returns to the main menu.
+  - The online HUD and `render_game_to_text()` connection info expose these controls.
+- Expanded `window.render_game_to_text()` for online mode:
+  - `online.schemaVersion`
+  - `online.networkAuthority`
+  - `online.combat`
+  - `level.bossMechanics`
+  - synced `projectiles`
+  - synced `pickups`
+  - online player XP/level values
+- Added `npm run proof:milestone15-online-combat`, which validates:
+  - two browser clients join the same Colyseus room;
+  - default production art remains enabled online;
+  - server combat authority is reported;
+  - synced authoritative projectiles appear on both clients;
+  - server-owned pickup state appears after enemy deaths;
+  - Oath-Eater boss events, Broken Promise zones, and boss combat phase sync to both clients.
+- Hardened the proof harness browser cleanup:
+  - Network handoff scenarios now close the initial single-page browser before launching the two-client network scenario.
+  - Browser close is bounded so successful proofs do not hang after captures are complete.
+- Verification after Milestone 15 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:assets` (reports `assetCount: 65`, `production: 20`, no warnings)
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5236`.
+  - `output/web-game/state-0.json` reached `LevelRun` with production art and Armistice tiles defaulted.
+  - `output/web-game/shot-0.png` captured black through the generic headless WebGL path again; project proof screenshots rendered correctly and remain the visual QA source of truth for Milestone 15.
+  - The temporary Vite server on port 5236 was stopped.
+- Screenshots inspected for Milestone 15:
+  - `docs/proof/milestone15-online-combat/milestone15-server-combat-a.png`
+  - `docs/proof/milestone15-online-combat/milestone15-server-combat-b.png`
+  - `docs/proof/milestone15-online-combat/milestone15-pickups.png`
+  - `docs/proof/milestone15-online-combat/milestone15-boss-event-a.png`
+  - `docs/proof/milestone15-online-combat/milestone15-boss-event-b.png`
+  - `output/web-game/shot-0.png`
+- Current Milestone 15 readiness decision: online co-op now has a real first pass of server-owned combat authority for enemies, projectiles, pickups, and Oath-Eater boss events. It is still a prototype: online upgrades, party overworld flow, ready/vote UX, revive/downed rules, run completion rewards, and Schema-backed collections remain future work.
+- Next recommended milestone: Milestone 16 Online Run Flow and Co-op Progression. Scope should add ready/leave/reconnect states around party formation, server-authored upgrade choices, shared or semi-shared XP/upgrade policy, online run completion/failure, return-to-overworld behavior, and the first Recompile Ally revive rules.
+- Added `docs/MILESTONE_16_ONLINE_RUN_FLOW_AND_COOP_PROGRESSION.md` as the next-milestone handoff doc. It captures the Milestone 15 starting point, Milestone 16 scope, suggested implementation order, proof expectations, screenshots to inspect, and readiness target.
+- Implemented Milestone 16 Online Run Flow and Co-op Progression.
+- Inspected the required pre-change screenshots:
+  - `docs/proof/milestone15-online-combat/milestone15-server-combat-a.png`
+  - `docs/proof/milestone15-online-combat/milestone15-server-combat-b.png`
+  - `docs/proof/milestone15-online-combat/milestone15-pickups.png`
+  - `docs/proof/milestone15-online-combat/milestone15-boss-event-a.png`
+  - `docs/proof/milestone15-online-combat/milestone15-boss-event-b.png`
+  - `docs/proof/network/client-a-moved.png`
+  - `docs/proof/network/client-b-moved.png`
+  - `docs/proof/coop/consensus-cell-run.png`
+  - `docs/proof/full/full-gate.png`
+- Upgraded the online `consensus_cell` snapshot model to `schemaVersion: 3` while preserving `networkAuthority: "colyseus_room_server_combat"`.
+- Added server-owned online run lifecycle state:
+  - lobby/ready phase before combat;
+  - server-owned active-run start once all connected players are ready;
+  - completed/failed summary state;
+  - reconnect/leave-safe completed state remains visible to connected clients.
+- Added per-player online readiness/downed/revive fields:
+  - `ready`
+  - `connectionState`
+  - `downed`
+  - `reviveProgress`
+  - `reviveRequired`
+  - `revivedCount`
+- Added a first Recompile Ally flow:
+  - downed players stop moving/firing;
+  - active allies within revive radius progress a server-owned revive timer;
+  - completed revives restore partial HP and increment proof-visible revive counters;
+  - all connected players downed fails the active run.
+- Added a server-authored shared XP/upgrade prototype policy:
+  - policy ID: `shared_party_xp_manual_choice`;
+  - Coherence Shards add shared party XP;
+  - reaching a threshold creates a server-owned shared emergency patch draft;
+  - clients send upgrade-choice intent only, and the server applies the shared patch and party level.
+- Updated the online HUD and text proof state:
+  - HUD now shows run phase, ready count, downed count, party HP/down states, shared XP/level, and patch prompts;
+  - centered online completion/failure summary panel is proof-visible;
+  - `render_game_to_text()` now exposes `online.runPhase`, `readyCount`, `downedCount`, `progression`, `summary`, per-player ready/downed/revive state, and `level.partyReady`.
+- Updated existing online/network proofs to respect the new lobby/ready phase before movement/combat assertions.
+- Added `npm run proof:milestone16-online-flow`, which verifies:
+  - two browser clients join the same room;
+  - lobby starts with both players unready;
+  - one ready player does not start combat;
+  - all-ready starts the active run server-side;
+  - Milestone 15 server-owned combat still syncs after active start;
+  - shared XP creates a server-authored patch draft;
+  - a shared patch choice applies to both clients;
+  - a proof-forced downed player is revived through Recompile Ally;
+  - completion summary is visible and includes revive count;
+  - reconnect/leave controls remain proof-visible.
+- Verification after Milestone 16 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:assets` (reports `assetCount: 65`, `production: 20`, no warnings)
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5199`.
+  - `output/web-game-milestone16/state-0.json` reached `LevelRun` with production art and Armistice tiles defaulted.
+  - `output/web-game-milestone16/shot-0.png` rendered correctly and was inspected.
+  - The temporary Vite server on port 5199 was stopped.
+- Screenshots inspected after Milestone 16:
+  - `docs/proof/milestone16-online-flow/milestone16-lobby-a.png`
+  - `docs/proof/milestone16-online-flow/milestone16-active-combat.png`
+  - `docs/proof/milestone16-online-flow/milestone16-upgrade-ready.png`
+  - `docs/proof/milestone16-online-flow/milestone16-downed.png`
+  - `docs/proof/milestone16-online-flow/milestone16-revived.png`
+  - `docs/proof/milestone16-online-flow/milestone16-completed-a.png`
+  - `output/web-game-milestone16/shot-0.png`
+- Online run-flow readiness decision: Milestone 16 is ready as a proofed online co-op lifecycle prototype. The flow now covers `join -> ready -> active run -> down/revive/upgrade progression -> completion/failure summary -> leave/reconnect-safe state`. It is not yet a public-ready co-op product: party overworld voting, polished online upgrade draft UX, reconnect-to-existing-slot behavior, and Schema-backed collections remain future work.
+- Next recommended milestone: Milestone 17 Online Party Overworld and Node Voting, unless playtesting shows the online shared upgrade/Recompile Ally UX needs polish first. The biggest product gap after Milestone 16 is that co-op still jumps directly into the Armistice Plaza room instead of forming a party on the Alignment Grid and voting/readying into nodes.
+- Implemented Milestone 17 Online Party Overworld and Node Voting.
+- Added `docs/MILESTONE_17_ONLINE_PARTY_OVERWORLD_AND_NODE_VOTING.md` as the milestone handoff record.
+- Expanded the online `consensus_cell` room party/session model:
+  - snapshots now include an online `party` payload with Alignment Grid map identity, selected node, per-player votes, completed nodes, unlocked nodes, available nodes, launchable nodes, and route states;
+  - players now track `votedNodeId`;
+  - the room handles `vote_node` and `return_to_party` client messages;
+  - all-ready launch now uses the majority voted online-supported node instead of blindly starting Armistice Plaza;
+  - completion marks the active node complete, unlocks follow-up nodes, and stabilizes relevant party routes.
+- Online lobby rendering now shows an Alignment Grid party staging map instead of the combat arena:
+  - visible node labels/states for Armistice Plaza, Accord Relay, Cooling Lake Nine, Ceasefire Cache, Armistice Camp, and Transit Loop Zero;
+  - route states show unstable/stable/locked behavior;
+  - player vote tokens render around their voted nodes;
+  - HUD shows `ALIGNMENT GRID`, selected vote target, and per-player vote/ready state.
+- Added online node-vote controls:
+  - left/right votes between available nodes;
+  - Space readies/unreadies in the party lobby;
+  - Space on an online completion/failure summary returns the party to the Alignment Grid;
+  - `R` reconnect and `Esc` leave remain visible.
+- Armistice Plaza remains the only online-supported launch node in Milestone 17. Newly unlocked nodes such as Accord Relay and Cooling Lake Nine are visible/votable after completion but intentionally do not launch combat yet.
+- Updated `render_game_to_text()` so online proof state exposes party map/vote/unlock/route state through `online.party` and `level.party`.
+- Added `npm run proof:milestone17-party-overworld`, which verifies:
+  - two clients join one room into an Alignment Grid party lobby;
+  - the party launches Armistice Plaza only after readiness;
+  - completion summary records the active voted node;
+  - Space returns both clients to the party grid;
+  - Armistice Plaza completion unlocks Accord Relay and Cooling Lake Nine;
+  - Plaza routes stabilize;
+  - an unsupported unlocked node can be voted but does not launch;
+  - voting back to Armistice Plaza relaunches an active run.
+- Verification after Milestone 17 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:assets` (reports `assetCount: 65`, `production: 20`, no warnings)
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5200`.
+  - `output/web-game-milestone17/state-0.json` reached `LevelRun` with production art and Armistice tiles defaulted.
+  - `output/web-game-milestone17/shot-0.png` rendered correctly and was inspected.
+  - The temporary Vite server on port 5200 was stopped.
+- Screenshots inspected after Milestone 17:
+  - `docs/proof/milestone17-party-overworld/milestone17-party-grid-initial-a.png`
+  - `docs/proof/milestone17-party-overworld/milestone17-active-from-party-a.png`
+  - `docs/proof/milestone17-party-overworld/milestone17-completed-before-return-a.png`
+  - `docs/proof/milestone17-party-overworld/milestone17-party-grid-returned-a.png`
+  - `docs/proof/milestone17-party-overworld/milestone17-voted-relay-a.png`
+  - `docs/proof/milestone17-party-overworld/milestone17-relaunch-supported-node-a.png`
+  - `output/web-game-milestone17/shot-0.png`
+- Online party-overworld readiness decision: Milestone 17 is ready as a proofed first online party staging loop. Online co-op now has an Alignment Grid party layer, node voting, server-owned launch gating, completion unlocks, route stabilization, and return-to-party behavior. It is still a prototype: only Armistice Plaza is launchable online, reconnect-to-existing-slot is not solved, and party state should eventually move to Schema-backed collections.
+- Next recommended milestone: Milestone 18 Online Co-op Upgrade Drafts and Recompile Ally Polish. The most urgent gap after Milestone 17 is that online progression/revive works mechanically but still uses compact HUD prompts and proof/dev hooks rather than a polished co-op draft/revive UX.
+
+## Milestone 18: Online Co-op Upgrade Drafts and Recompile Ally Polish
+
+- Added `docs/MILESTONE_18_ONLINE_COOP_UPGRADE_DRAFTS_AND_RECOMPILE_POLISH.md` as the milestone handoff record.
+- Upgraded online shared XP progression from a single-client immediate patch pick to a server-authored co-op vote draft:
+  - shared party XP still opens one shared emergency patch draft;
+  - each active, non-downed player can vote for one card;
+  - snapshots expose vote counts, required votes, eligible voters, leading card, local vote proof state, and chosen upgrades;
+  - the server resolves the draft only after the required eligible votes arrive, with deterministic authored-card-order tie handling.
+- Replaced the compact online patch prompt with a three-card HUD draft:
+  - card name/source/description;
+  - per-card vote counts;
+  - leading-card highlight;
+  - local `YOU` vote marker;
+  - party strip vote hints while a draft is open.
+- Promoted Recompile Ally revive state to first-class server snapshot data:
+  - revive radius;
+  - required revive time;
+  - downed-player progress/percent;
+  - nearest ally, distance, and in-range state.
+- Online arena rendering now shows downed ally Recompile progress rings and `RECOMPILE ALLY` / `RECOMPILING` labels.
+- Updated `render_game_to_text()` so online proofs expose `online.upgradeDraft`, `online.recompile`, and `level.recompile`.
+- Added `npm run proof:milestone18-coop-progression`, which verifies:
+  - two clients launch an online run;
+  - shared XP opens a co-op patch draft;
+  - one vote is visible on both clients without resolving the draft;
+  - the second required vote applies Refusal Halo and advances party level;
+  - Recompile Ally down/progress/revive telemetry is server-authored and visible in proof text;
+  - completion summary includes the co-op voted upgrade and revive count.
+- Updated the Milestone 16 regression proof to expect the new `shared_party_xp_coop_vote` policy and to submit both required online patch votes.
+- Verification after Milestone 18 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:assets` (reports `assetCount: 65`, `production: 20`, no warnings)
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5201`.
+  - `output/web-game-milestone18/state-0.json` reached `LevelRun` with production art and Armistice tiles defaulted.
+  - `output/web-game-milestone18/shot-0.png` rendered correctly and was inspected.
+  - The harness later produced black canvas-only captures while text state remained healthy, so a direct full-page Playwright check was also captured.
+  - `output/web-game-milestone18-final/fullpage-level.png` rendered `LevelRun` correctly and `output/web-game-milestone18-final/fullpage-level-state.json` reported `LevelRun`, `armistice_plaza`, production art, and active enemies.
+  - The temporary Vite server on port 5201 was stopped.
+- Screenshots inspected after Milestone 18:
+  - `docs/proof/milestone18-coop-progression/milestone18-upgrade-draft-open-a.png`
+  - `docs/proof/milestone18-coop-progression/milestone18-upgrade-draft-one-vote-a.png`
+  - `docs/proof/milestone18-coop-progression/milestone18-upgrade-applied-a.png`
+  - `docs/proof/milestone18-coop-progression/milestone18-recompile-downed-a.png`
+  - `docs/proof/milestone18-coop-progression/milestone18-recompile-progress-a.png`
+  - `docs/proof/milestone18-coop-progression/milestone18-recompile-revived-a.png`
+  - `docs/proof/milestone18-coop-progression/milestone18-completed-a.png`
+  - `output/web-game-milestone18/shot-0.png`
+  - `output/web-game-milestone18-final/fullpage-level.png`
+- Online co-op progression readiness decision: Milestone 18 is ready as a proofed prototype progression/revive layer. Online runs now have server-owned shared patch drafts, visible co-op vote resolution, explicit Recompile Ally telemetry, clearer revive UI, and completion summaries that preserve upgrade/revive outcomes. Remaining online lifecycle risks are reconnect identity, Schema-backed collections, final long-term progression rules, and production-grade revive animation/audio.
+- Next recommended milestone: Milestone 19 Online Reconnect Identity and Schema Collections. The next most valuable work is reconnecting players to existing slots/session state and moving durable online party/progression/recompile payloads toward Schema-backed collections while preserving the Milestone 15-18 proof suite.
+
+## Milestone 19: Online Reconnect Identity and Schema Collections
+
+- Added `docs/MILESTONE_19_ONLINE_RECONNECT_IDENTITY_AND_SCHEMA_COLLECTIONS.md` as the milestone handoff record.
+- Added stable online reconnect identity:
+  - browser clients now send a per-tab reconnect key when joining `consensus_cell`;
+  - proofs can pass deterministic `?reconnectKey=...` values;
+  - disconnected players keep their reserved party slot for a prototype reconnect window;
+  - reconnecting with the same key preserves `playerId`, slot, HP/XP/level, vote state, ready/downed state, and run context while receiving a fresh Colyseus `sessionId`.
+- Added server-side reconnect bookkeeping:
+  - per-player `playerId`, reconnect key, connection state, reconnect count, disconnected timer, and last-seen tick;
+  - disconnected slots are visible in snapshots as `connectionState: "disconnected"`;
+  - pending upgrade votes migrate from the old session ID to the reclaimed session ID;
+  - stale disconnected slots can be pruned after the reconnect TTL.
+- Upgraded online snapshots to `schemaVersion: 4`.
+- Added Schema-backed lifecycle state to the Colyseus room:
+  - `MapSchema<PlayerPresence>`;
+  - `ArraySchema<completedNodeIds>`;
+  - `ArraySchema<unlockedNodeIds>`;
+  - `MapSchema<UpgradeVote>`;
+  - `MapSchema<RecompileDowned>`.
+- Kept the existing JSON `snapshot` proof surface working while exposing a new `online.lifecycle` summary proving the Schema collections are populated.
+- Updated the online HUD/proof text:
+  - connected/disconnected counts;
+  - `REJOIN` party-strip state for disconnected slots;
+  - reconnect summary with disconnected/reclaimed slot counts;
+  - lifecycle summary in `render_game_to_text()`.
+- Added `npm run proof:milestone19-reconnect-schema`, which verifies:
+  - two clients join one room with deterministic reconnect keys;
+  - snapshots report `schemaVersion: 4`;
+  - Schema lifecycle collections are present;
+  - a client votes in a co-op patch draft, disconnects, and remains visible as a reserved disconnected slot;
+  - rejoining with the same key reclaims the same `playerId` and slot with a fresh `sessionId`;
+  - the pending upgrade vote migrates to the reclaimed session;
+  - the co-op patch resolves after reconnect;
+  - the run can still complete.
+- Updated older proofs for the stricter/clearer online lifecycle:
+  - Milestone 17 now has both clients vote unsupported/supported nodes so majority node selection is deterministic;
+  - Milestone 18 now checks that the first draft resolved, while tolerating an incidental next-level draft if XP already crossed the next threshold;
+  - the solo `upgrades` proof now uses the existing supported local Consensus Cell size harness (`window.set_consensus_cell_size(4)`) to avoid dying during the boss-window draft chase.
+- Verification after Milestone 19 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check server/consensusCellServer.mjs`
+  - `npm run proof:assets` (reports `assetCount: 65`, `production: 20`, no warnings)
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5202`.
+  - `output/web-game-milestone19/state-0.json` reached `LevelRun` with production art and Armistice tiles defaulted.
+  - The generic harness canvas screenshot was black in this environment while text state stayed healthy and no console errors were reported, matching the known M18 capture quirk.
+  - A direct full-page Playwright screenshot was captured and inspected at `output/web-game-milestone19/fullpage-level.png`; it rendered `LevelRun` correctly.
+  - `output/web-game-milestone19/fullpage-level-state.json` reported `LevelRun`, `armistice_plaza`, production art, Armistice tiles, and active enemies.
+  - The temporary Vite server on port 5202 was stopped.
+- Screenshots inspected after Milestone 19:
+  - `docs/proof/milestone19-reconnect-schema/milestone19-lobby-a.png`
+  - `docs/proof/milestone19-reconnect-schema/milestone19-voted-before-disconnect-a.png`
+  - `docs/proof/milestone19-reconnect-schema/milestone19-disconnected-slot-b.png`
+  - `docs/proof/milestone19-reconnect-schema/milestone19-reclaimed-slot-a.png`
+  - `docs/proof/milestone19-reconnect-schema/milestone19-upgrade-after-reconnect-a.png`
+  - `docs/proof/milestone19-reconnect-schema/milestone19-completed-after-reconnect-a.png`
+  - `output/web-game-milestone19/fullpage-level.png`
+- Online reconnect/schema readiness decision: Milestone 19 is ready as a proofed prototype reconnect identity and lifecycle-state layer. Online co-op now has slot reclaim by reconnect key, visible disconnected slots, migrated pending upgrade votes, schemaVersion 4 snapshots, and Schema-backed room lifecycle collections. Remaining risk is production-grade reconnect/account identity and deeper migration of combat entities into Schema collections.
+- Next recommended milestone: Milestone 20 Online Region Unlocks and Second Launchable Arena. The next best step is to make one newly unlocked node online-launchable after Armistice Plaza and prove a two-node online route while preserving reconnect identity, party voting, co-op drafts, Recompile Ally, and server combat authority.
+
+## Milestone 20: Online Region Unlocks and Second Launchable Arena
+
+- Added `docs/MILESTONE_20_ONLINE_REGION_UNLOCKS_AND_SECOND_LAUNCHABLE_ARENA.md` as the milestone handoff record.
+- Made Cooling Lake Nine the second launchable online arena after Armistice Plaza:
+  - `cooling_lake_nine` is now online-supported once unlocked;
+  - online runs select their server arena config from the party-voted node;
+  - Cooling Lake Nine has its own map ID, region label, target duration, boss metadata, reward metadata, and spawn-region set.
+- Added an online arena registry on the Colyseus server for `armistice_plaza` and `cooling_lake_nine`.
+- Updated server-owned enemy spawning and run completion to use the active online arena config instead of Armistice-only constants.
+- Updated online snapshots and proof text so active arena/region metadata is visible.
+- Updated the online client to rebuild cached static terrain by active arena and render a distinct Cooling Lake Nine layout with authored landmarks: Cooling Lake Nine, Server Buoys, Thermal Outflow, and Coolant Rig.
+- Added `npm run proof:milestone20-second-online-region`, which verifies:
+  - Armistice Plaza can be completed online;
+  - Cooling Lake Nine becomes unlocked and online-launchable;
+  - both clients can vote/ready for Cooling Lake Nine;
+  - the server launches the Cooling Lake active run;
+  - Cooling Lake completion grants its prototype reward.
+- Online second-region readiness decision: Milestone 20 is ready as a proofed two-node online route. Remaining risk is art/content depth: Cooling Lake Nine is still code-authored proof art and needs final production tiles, larger exploration pacing, and full boss-content polish.
+
+## Milestone 21: Online Region Events and Cooling Lake Threats
+
+- Added `docs/MILESTONE_21_ONLINE_REGION_EVENTS_AND_COOLING_LAKE_THREATS.md` as the milestone handoff record.
+- Added server-owned online region-event state:
+  - active arena ID;
+  - region label;
+  - event family;
+  - event counter;
+  - active state;
+  - hazard-zone snapshots.
+- Cooling Lake Nine now spawns server-owned `thermal_bloom` hazards during active runs.
+- Cooling Lake boss pressure can spawn `boiling_cache` hazards during the Thermal Oracle encounter.
+- Region hazards expire by server time and apply server-side damage to connected players inside their radius.
+- Added Cooling Lake-specific enemy pressure, including `thermal_mirages` spawn-region behavior.
+- Updated the online client and HUD to render/label region hazard rings and show the active event family in the combat strip.
+- Added `npm run proof:milestone21-region-events`, which verifies:
+  - Cooling Lake Nine launches after Armistice Plaza;
+  - a server region event becomes active;
+  - proof text includes a `thermal_bloom` hazard zone;
+  - the run can still complete after region pressure appears.
+- Online region-event readiness decision: Milestone 21 is ready as a proofed first region-specific hazard system. Remaining risk is tuning and presentation: hazard cadence/damage, final VFX, and the Thermal Oracle full boss pass still need real playtest and art work.
+
+## Milestone 22: Online Party Rewards and Route Progression
+
+- Added `docs/MILESTONE_22_ONLINE_PARTY_REWARDS_AND_ROUTE_PROGRESSION.md` as the milestone handoff record.
+- Added a server-owned prototype reward policy for online rooms:
+  - node completion rewards;
+  - cumulative party renown;
+  - reward inventory IDs;
+  - node completion counts;
+  - recommended next node.
+- Armistice Plaza now grants `plaza_stabilized` and party renown on first online clear.
+- Cooling Lake Nine now grants `lake_coolant_rig` and party renown on first online clear.
+- First Cooling Lake clear also records `cooling_lake_online_route`.
+- Completion summaries now include active arena ID, reward ID/name, first-clear flag, renown gained, and cumulative party renown.
+- Party snapshots and `render_game_to_text()` now expose reward state through `online.rewards`, `online.party.rewards`, and `level.rewards`.
+- The online completion HUD shows awarded reward and renown gain.
+- Added `npm run proof:milestone22-party-rewards`, which verifies:
+  - Armistice reward/renown after the first online clear;
+  - reward state persists when returning to the party grid;
+  - the party recommendation points to Cooling Lake Nine;
+  - Cooling Lake reward/renown after the second online clear;
+  - cumulative reward inventory and party renown across both completions.
+- Verification after Milestones 20-22 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check server/consensusCellServer.mjs`
+  - `npm run proof:assets` (reports `assetCount: 65`, `production: 20`, no warnings)
+  - `npm run proof:milestone22-party-rewards`
+  - `npm run proof:milestone21-region-events`
+  - `npm run proof:milestone20-second-online-region`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5203`.
+  - `output/web-game-milestone22/state-1.json` reached `OverworldMap` with production art and Armistice tiles defaulted.
+  - The generic harness canvas screenshot was black in this environment while text state stayed healthy, matching the known M18/M19 capture quirk.
+  - A direct full-page Playwright screenshot was captured and inspected at `output/web-game-milestone22/fullpage-level-run.png`; it rendered `LevelRun` correctly.
+  - `output/web-game-milestone22/fullpage-level-state.json` reported `LevelRun`, `armistice_plaza`, production art, Armistice tiles, active enemies, and live projectiles.
+  - The temporary Vite server on port 5203 was stopped.
+- Screenshots inspected after Milestones 20-22:
+  - `docs/proof/milestone20-second-online-region/milestone20-armistice-completed-a.png`
+  - `docs/proof/milestone20-second-online-region/milestone20-cooling-vote-a.png`
+  - `docs/proof/milestone20-second-online-region/milestone20-cooling-active-a.png`
+  - `docs/proof/milestone20-second-online-region/milestone20-cooling-completed-a.png`
+  - `docs/proof/milestone21-region-events/milestone21-cooling-thermal-bloom-a.png`
+  - `docs/proof/milestone21-region-events/milestone21-cooling-event-completed-a.png`
+  - `docs/proof/milestone22-party-rewards/milestone22-armistice-reward-a.png`
+  - `docs/proof/milestone22-party-rewards/milestone22-cooling-reward-a.png`
+  - `output/web-game-milestone22/shot-1.png` (known black canvas-capture quirk; state healthy)
+  - `output/web-game-milestone22/fullpage-level-run.png`
+- Online route/reward readiness decision: Milestone 22 is ready as a proofed multi-node online progression prototype. Online co-op now supports Armistice Plaza -> Cooling Lake Nine route play, arena-specific server config, region-specific hazards, cumulative party rewards/renown, party recommendation state, and completion summaries while preserving Milestone 15-19 online authority/reconnect/progression behavior.
+- Next recommended milestone: Milestone 23 Online Route Depth and Persistence Prep. The next best step is to add a third online route node or richer non-combat party node interaction, then decide which room-scoped rewards should become saved progression/persistence without breaking free browser solo, local co-op, or online proofs.
+
+## Milestone 23: Online Route Depth and Persistence Prep
+
+- Added `docs/MILESTONE_23_ONLINE_ROUTE_DEPTH_AND_PERSISTENCE_PREP.md` as the milestone handoff record.
+- Added Ceasefire Cache as the first online-supported non-combat party node:
+  - unlocks after Cooling Lake Nine;
+  - completes through the same all-ready party vote/ready condition;
+  - grants `ceasefire_cache_persistence_seed`;
+  - records `prototype_persistence_boundary`;
+  - unlocks Transit Loop Zero.
+- Added Transit Loop Zero as the third launchable online arena:
+  - new server arena config;
+  - `mapId: transit_loop_zero_online_boss_gate`;
+  - `regionLabel: Unreal Metro Line`;
+  - distinct spawn regions;
+  - completion title/subtitle;
+  - reward `transit_permit_zero`;
+  - route marker `transit_loop_online_route`.
+- Added Transit Loop Zero's first server-owned region event:
+  - event family `false_track`;
+  - server-spawned hazard zones;
+  - server-side hazard damage;
+  - online HUD/proof visibility.
+- Added distinct code-authored client static scenes for Ceasefire Cache and Transit Loop Zero so route progression no longer reuses Armistice/Cooling visuals for the new nodes.
+- Added prototype persistence export/import prep:
+  - `online.persistence` and `level.persistence` proof surfaces;
+  - policy `prototype_local_storage_export_v1`;
+  - storage key `agi:last_alignment:online_progression:v1`;
+  - completed node IDs;
+  - unlocked node IDs;
+  - reward IDs;
+  - party renown;
+  - node completion counts;
+  - recommended next node;
+  - route depth;
+  - stable save hash that ignores broadcast tick churn.
+- Online clients now write exportable progression profiles to browser `localStorage` and send an existing draft when joining a new room. This is a persistence boundary, not final account persistence.
+- Online lobby HUD now shows compact save hash, party renown, and recommended next node.
+- Added `npm run proof:milestone23-route-persistence`, which verifies:
+  - Cooling Lake completion recommends and unlocks Ceasefire Cache;
+  - Ceasefire Cache is visitable and completes through party ready flow;
+  - Cache completion grants persistence markers and unlocks Transit Loop Zero;
+  - Transit Loop Zero becomes launchable;
+  - Transit active run exposes `false_track` region hazards;
+  - Transit completion grants route rewards;
+  - persistence profile includes Armistice, Lake, Cache, and Transit completions;
+  - browser `localStorage` contains the matching progression export.
+- Verification after Milestone 23 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check server/consensusCellServer.mjs`
+  - `npm run proof:assets` (reports `assetCount: 65`, `production: 20`, no warnings)
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:milestone22-party-rewards`
+  - `npm run proof:milestone21-region-events`
+  - `npm run proof:milestone20-second-online-region`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5204`.
+  - `output/web-game-milestone23/state-1.json` reached `OverworldMap` with production art and Armistice tiles defaulted.
+  - The generic harness canvas screenshot was black in this environment while text state stayed healthy, matching the known capture quirk.
+  - A direct full-page Playwright screenshot was captured and inspected at `output/web-game-milestone23/fullpage-level-run.png`; it rendered `LevelRun` correctly.
+  - `output/web-game-milestone23/fullpage-level-state.json` reported `LevelRun`, `armistice_plaza`, production art, Armistice tiles, active enemies, and live projectiles.
+  - The temporary Vite server on port 5204 was stopped.
+- Screenshots inspected after Milestone 23:
+  - `docs/proof/milestone23-route-persistence/milestone23-cooling-completed-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-cache-vote-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-cache-completed-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-transit-vote-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-transit-active-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-transit-completed-a.png`
+  - `output/web-game-milestone23/shot-1.png` (known black canvas-capture quirk; state healthy)
+  - `output/web-game-milestone23/fullpage-level-run.png`
+- Online route-depth/persistence readiness decision: Milestone 23 is ready as a proofed route-depth and persistence-boundary prototype. Online co-op now supports Armistice Plaza -> Cooling Lake Nine -> Ceasefire Cache -> Transit Loop Zero, with server-owned route rewards, a non-combat party interaction node, a third arena with route-specific hazards, and a local-storage-ready progression export shape.
+- Image/Pixellab decision: no new Imagegen or PixelLab asset pass was used for Milestone 23 because the milestone's core risk was online route/persistence architecture, and code-authored proof scenes were sufficient. PixelLab should be used later for production Transit/Cache tile and prop art after the interaction and persistence contract settle.
+- Next recommended milestone: Milestone 24 Online Persistence Hardening and Route UI. The next best step is to make import/reset state explicit and safer, add better UI for saved route progress, and decide whether progression persistence is per-browser, account-backed, or export-code based.
+- Added `docs/MILESTONE_24_ONLINE_PERSISTENCE_HARDENING_AND_ROUTE_UI.md` as the next-milestone handoff doc. It defines the import/export/reset proof target, out-of-scope boundaries, screenshots to inspect, and the regression suite for the next fresh thread.
+- Implemented Milestone 24 Online Persistence Hardening and Route UI.
+- Server persistence import now has an explicit sanitized route-profile boundary:
+  - imports completed route nodes, derived unlocks, durable reward IDs, renown, and completion counts only;
+  - derives unlocked nodes from imported completions instead of trusting imported unlocked-node lists;
+  - rejects/ignores non-durable imported fields and exposes an ignored-field count;
+  - does not import active combat/run state such as HP, XP, enemies, projectiles, pickups, downed state, upgrade drafts, active arenas, reconnect slots, or boss state.
+- `online.persistence` and `online.party.persistence` now expose explicit import/export metadata:
+  - `importApplied`;
+  - `importStatus`;
+  - imported save hash;
+  - imported completed-node count;
+  - imported reward count;
+  - imported route depth;
+  - ignored imported field count;
+  - current export hash;
+  - durable field policy.
+- Added a clearer online lobby route-profile panel showing import/reset state, route depth, party renown, reward count, recommended next node, selected node launchability, current export hash, and a compact reward summary.
+- Added a safe prototype reset path through `?resetOnlinePersistence=1`.
+  - The client clears `agi:last_alignment:online_progression:v1` before joining.
+  - Proof text exposes `online.localPersistence.resetApplied` and whether a stored profile was cleared.
+  - Reset does not happen during normal play without the query flag.
+- Added `npm run proof:milestone24-persistence-import`.
+  - The proof exports route progress through Armistice Plaza, Cooling Lake Nine, and Ceasefire Cache.
+  - It closes the first room, joins a fresh room from the same browser context, proves the fresh room imports only durable route/profile state, and verifies the lobby starts with imported completions/rewards/unlocks.
+  - It verifies combat/run state is not imported: fresh lobby phase, Armistice arena baseline, no enemies, zero party XP, healthy players, no downed state.
+  - It then joins with `?resetOnlinePersistence=1` and verifies a clean Armistice-only profile with no imported rewards or completions.
+- Verification after Milestone 24 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check server/consensusCellServer.mjs`
+  - `npm run proof:assets` (reports `assetCount: 65`, `production: 20`, no warnings)
+  - `npm run proof:milestone24-persistence-import`
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:milestone22-party-rewards`
+  - `npm run proof:milestone21-region-events`
+  - `npm run proof:milestone20-second-online-region`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5199`.
+  - `output/milestone24-web-game/state-3.json` reached `LevelRun` with `armistice_plaza`, production art and Armistice tiles defaulted, active enemies/projectiles, and healthy text state.
+  - `output/milestone24-web-game/shot-0.png` and `output/milestone24-web-game/shot-3.png` were inspected and show the known black canvas-capture quirk from the generic harness in this environment.
+  - Official proof screenshots rendered correctly and remain the visual QA source.
+- Screenshots inspected before and after Milestone 24:
+  - `docs/proof/milestone23-route-persistence/milestone23-cooling-completed-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-cache-vote-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-cache-completed-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-transit-vote-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-transit-active-a.png`
+  - `docs/proof/milestone23-route-persistence/milestone23-transit-completed-a.png`
+  - `docs/proof/milestone22-party-rewards/milestone22-cooling-reward-a.png`
+  - `docs/proof/milestone19-reconnect-schema/milestone19-reclaimed-slot-a.png`
+  - `docs/proof/milestone24-persistence-import/milestone24-export-cache-completed-a.png`
+  - `docs/proof/milestone24-persistence-import/milestone24-fresh-room-imported-a.png`
+  - `docs/proof/milestone24-persistence-import/milestone24-reset-clean-profile-a.png`
+  - `output/milestone24-web-game/shot-0.png` and `output/milestone24-web-game/shot-3.png` (known black generic harness capture; state healthy)
+- Online persistence readiness decision: Milestone 24 is ready as a prototype/local persistence boundary. The proofed behavior is now `export route profile -> fresh room imports durable route state -> UI shows imported progress -> reset returns to clean profile`. This remains browser-local prototype persistence, not account/cloud persistence or a trusted production save system.
+- What is still left out:
+  - real account identity, cloud persistence, auth, and cross-device sync;
+  - save slots or export-code UX;
+  - cryptographic trust/anti-cheat for imported profiles;
+  - a final party route UI layout beyond the compact HUD panel;
+  - production Cache/Transit art and route-node polish;
+  - deeper reward unlock effects that feed classes, co-minds, equipment, or metaprogression.
+- Next recommended milestone: Milestone 25 should be either `Cache/Transit Production Art and Route Polish` if the next priority is visual quality, or `Fourth Online Route Node and Boss-Gate Mechanics` if the next priority is route depth. My recommendation is the art/polish path first, because Milestones 20-24 have now established enough online route architecture that Cache and Transit will benefit from stronger authored presentation before adding more nodes.
+- Implemented the larger Milestone 25: Cache/Transit Production Art and Route Polish.
+- Added `docs/MILESTONE_25_CACHE_TRANSIT_ROUTE_POLISH.md` with the implemented scope, proof expectations, readiness decision, remaining risks, and next bigger milestone sequence.
+- Added a production route landmark atlas:
+  - `assets/props/online_route/route_landmarks_v1.png`
+  - manifest ID `prop.online_route.cache_transit_landmarks_v1`
+  - provenance key `milestone25_cache_transit_route_landmarks_v1`
+  - five 96x96 frames for Cache core, Persistence Seed, Archive Switchback, Transit platform/route props, and route pylon polish.
+- Added `src/assets/milestone25Art.ts` to load/slice the new route atlas through Pixi's asset cache.
+- Wired Milestone 25 route art into the default production-art path while preserving opt-outs:
+  - `?productionArt=0`
+  - `?placeholderArt=1`
+- Ceasefire Cache online scene now uses production route props for the Cache core, Persistence Seed, and Archive Switchback.
+- Transit Loop Zero online scene now uses production route props for the Transit platform and route-gate/arrival-board landmarks.
+- Online party grid polish:
+  - uses existing Alignment Grid landmark sprites for standard nodes;
+  - uses the new Cache/Transit route atlas for Cache and Transit nodes;
+  - adds small static route pylons on stabilized paths;
+  - adjusts route/node/player labels to reduce overlap around crowded vote nodes.
+- Expanded the online route-profile panel with stable route count and selected node type.
+- `render_game_to_text()` now exposes `online.routeUi` through `OnlineCoopState.connectionInfo()`, including:
+  - route depth;
+  - stable route count;
+  - total route count;
+  - selected node ID/name/type;
+  - selected node launchability/completion/support;
+  - recommended next node;
+  - reward count.
+- Added `npm run proof:milestone25-route-polish`, which verifies:
+  - Milestone 25 production asset count;
+  - Cache route-panel state and Memory Cache node type;
+  - Cache launch/completion path;
+  - Transit unlock/route-panel state and Boss Gate node type;
+  - Transit active run still reports `networkAuthority: "colyseus_room_server_combat"`;
+  - Transit still reports Unreal Metro Line / `false_track` region metadata;
+  - Transit completion still grants `transit_permit_zero` and persists route completion.
+- Stabilized `proof:milestone10-art` after the full suite exposed a proof-state edge: the boss intro was successfully captured, but the final sample could land inside an `UpgradeDraft` payload that does not include boss fields. The assertion now accepts the already-captured boss-intro state as the boss-event proof.
+- Verification after Milestone 25 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check server/consensusCellServer.mjs`
+  - `npm run proof:assets` (reports `assetCount: 66`, `production: 21`, no warnings)
+  - `npm run proof:milestone25-route-polish`
+  - `npm run proof:milestone24-persistence-import`
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:milestone22-party-rewards`
+  - `npm run proof:milestone21-region-events`
+  - `npm run proof:milestone20-second-online-region`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5198`.
+  - `output/milestone25-web-game/state-3.json` reached `LevelRun` with `armistice_plaza`, production art and Armistice tiles defaulted, active enemies/projectiles, and `productionAssets: 21`.
+  - `output/milestone25-web-game/shot-0.png` and `output/milestone25-web-game/shot-3.png` were inspected and show the known black generic harness canvas-capture quirk in this environment.
+  - Official proof screenshots rendered correctly and remain the visual QA source.
+- Screenshots inspected after Milestone 25:
+  - `assets/props/online_route/route_landmarks_v1.png`
+  - `docs/proof/milestone25-route-polish/milestone25-cache-route-panel-a.png`
+  - `docs/proof/milestone25-route-polish/milestone25-cache-completed-art-a.png`
+  - `docs/proof/milestone25-route-polish/milestone25-transit-route-panel-a.png`
+  - `docs/proof/milestone25-route-polish/milestone25-transit-active-art-a.png`
+  - `docs/proof/milestone25-route-polish/milestone25-transit-completed-a.png`
+  - `output/milestone25-web-game/shot-0.png` and `output/milestone25-web-game/shot-3.png` (known black generic harness capture; state healthy)
+- Milestone 25 readiness decision: ready. The current online route is still prototype-scale, but Cache and Transit now have a stronger authored presentation, the party-grid route state is clearer, and the changes remain inside cached static render layers without weakening server authority or persistence boundaries.
+- Next bigger milestone sequence:
+  - Milestone 26: Fourth Online Region and Boss-Gate Mechanics. Add one new route branch plus a more authored online encounter with distinct region/boss-gate pressure.
+  - Milestone 27: Metaprogression Rewards and Build Unlocks. Make route rewards matter by feeding durable rewards into class/co-mind/upgrades/equipment unlocks while keeping local prototype persistence clearly labeled.
+  - Milestone 28: Production Art Expansion for Online Route. Do a broader visual pass across Cooling Lake, Cache, Transit, enemy/VFX readability, and party-grid landmarks after the route mechanics settle.
+- Next recommended larger milestone: Milestone 26 Fourth Online Region and Boss-Gate Mechanics. This is the best next cohesive chunk because Milestones 20-25 have stabilized route progression, local persistence, and Cache/Transit presentation; the next product lift should add a new route branch with a real encounter identity rather than only another UI/art pass.
+- Implemented the larger Milestone 26: Fourth Online Region and Boss-Gate Mechanics.
+- Added `docs/MILESTONE_26_FOURTH_ONLINE_REGION_AND_BOSS_GATE_MECHANICS.md` with the implemented scope, proof expectations, authority/persistence notes, readiness decision target, and next larger milestone sequence.
+- Added `Verdict Spire` as the fourth launchable online arena branch after Transit Loop Zero:
+  - route node ID `verdict_spire`;
+  - arena ID `verdict_spire`;
+  - node type `Boss Gate`;
+  - region label `Adjudication Rupture`;
+  - boss `The Injunction Engine`;
+  - route connection `route_transit_verdict` / `Appeal Ramp`.
+- Server route/progression changes:
+  - Transit Loop Zero now unlocks Verdict Spire;
+  - Verdict Spire is online-supported and launchable once Transit is completed;
+  - `recommendedNodeId()` points to Verdict Spire after Transit until Verdict is completed;
+  - durable rewards now include `verdict_key_zero` and `verdict_spire_online_route`;
+  - persistence import sanitization recognizes the new durable reward IDs while still importing only route/profile fields.
+- Added server-owned Verdict Spire boss-gate pressure:
+  - `verdict_seal` region events and hazard zones;
+  - `Verdict Seal` server-owned damage zones;
+  - Injunction Engine boss spawn state;
+  - boss-gate pulses that spawn `verdict_spire_injunction_writs` enemies;
+  - online combat telemetry reports `bossGateMechanic: "verdict_seal_injunction_writs"`.
+- Added a Milestone 26 production route landmark atlas:
+  - `assets/props/online_route/verdict_spire_landmarks_v1.png`
+  - manifest ID `prop.online_route.verdict_spire_landmarks_v1`
+  - provenance key `milestone26_verdict_spire_landmarks_v1`
+  - four 96x96 frames for Verdict Spire, Verdict Seal, Appeal Gate, and Injunction Engine.
+- Added `src/assets/milestone26Art.ts` and wired Verdict Spire art into the default production-art path while preserving `?productionArt=0` and `?placeholderArt=1`.
+- Added a cached static Verdict Spire arena scene in online co-op:
+  - distinct adjudication/court tile palette;
+  - Verdict Spire, Verdict Seal, Appeal Gate, and Injunction Engine landmarks;
+  - Verdict Seal telegraphs render from the existing server-owned region-event snapshot;
+  - no per-frame static terrain/prop allocation was added.
+- Expanded the online party grid / Alignment Grid data:
+  - `verdict_spire` node;
+  - `route_transit_verdict`;
+  - Verdict terrain patch and prop cluster;
+  - route UI proof text now exposes `onlineNodeCount` for the expanded online route.
+- Added `npm run proof:milestone26-fourth-region-boss-gate`, which verifies:
+  - Milestone 26 production asset count;
+  - Transit completion unlocks and recommends Verdict Spire;
+  - Verdict Spire route panel state is launchable Boss Gate state;
+  - Transit-to-Verdict route is stable after Transit;
+  - active Verdict run preserves `networkAuthority: "colyseus_room_server_combat"`;
+  - `Adjudication Rupture` / `verdict_seal` region events and server-owned hazard zones;
+  - Injunction Engine boss-gate writ pressure;
+  - Verdict completion reward and persistence route depth.
+- During regression, the older route-voting proof helper became brittle because the route grew by one node. It could stop cycling before reaching Cache/Verdict even though the clients were voting correctly. Updated `voteBothToNode()` to tolerate the larger route by trying more route steps and accepting the final synchronized state before failing.
+- Verification after Milestone 26 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check server/consensusCellServer.mjs`
+  - `npm run proof:assets` (reports `assetCount: 67`, `production: 22`, no warnings)
+  - `npm run proof:milestone26-fourth-region-boss-gate`
+  - `npm run proof:milestone25-route-polish`
+  - `npm run proof:milestone24-persistence-import`
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:milestone22-party-rewards`
+  - `npm run proof:milestone21-region-events`
+  - `npm run proof:milestone20-second-online-region`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the generic `develop-web-game` Playwright harness against `http://127.0.0.1:5205`.
+  - `output/milestone26-web-game/state-3.json` reached `LevelRun` with `armistice_plaza`, production art and Armistice tiles defaulted, active enemies/projectiles, and `productionAssets: 22`.
+  - `output/milestone26-web-game/shot-0.png` and `output/milestone26-web-game/shot-3.png` were inspected and show the known black generic harness canvas-capture quirk in this environment.
+  - Direct Playwright full-page screenshots were also captured and inspected:
+    - `output/milestone26-web-game/direct-fullpage-level-run.png` rendered the expanded Alignment Grid route visually;
+    - `output/milestone26-web-game/direct-fullpage-arena.png` rendered `LevelRun` correctly with production art and Armistice tiles.
+  - The temporary Vite server on port 5205 was stopped.
+- Screenshots inspected after Milestone 26:
+  - `assets/props/online_route/verdict_spire_landmarks_v1.png`
+  - `docs/proof/milestone26-fourth-region-boss-gate/milestone26-transit-unlocks-verdict-a.png`
+  - `docs/proof/milestone26-fourth-region-boss-gate/milestone26-verdict-route-panel-a.png`
+  - `docs/proof/milestone26-fourth-region-boss-gate/milestone26-verdict-active-seal-a.png`
+  - `docs/proof/milestone26-fourth-region-boss-gate/milestone26-verdict-boss-gate-a.png`
+  - `docs/proof/milestone26-fourth-region-boss-gate/milestone26-verdict-completed-a.png`
+  - `output/milestone26-web-game/shot-0.png` and `output/milestone26-web-game/shot-3.png` (known black generic harness capture; state healthy)
+  - `output/milestone26-web-game/direct-fullpage-level-run.png`
+  - `output/milestone26-web-game/direct-fullpage-arena.png`
+- Milestone 26 readiness decision: ready. The online route now proves `Armistice Plaza -> Cooling Lake Nine -> Ceasefire Cache -> Transit Loop Zero -> Verdict Spire`, with a distinct fourth launchable arena and server-owned boss-gate pressure. Persistence remains prototype/browser-local only, but the durable route profile correctly includes the new Verdict node and reward IDs without importing combat/run state.
+- Next bigger milestone sequence:
+  - Milestone 27: Metaprogression Rewards and Build Unlocks. Make route rewards matter by tying durable route rewards to class/co-mind/upgrades/equipment unlocks while keeping local prototype persistence explicitly non-final.
+  - Milestone 28: Production Art Expansion for Online Route. Broaden art coverage across Cooling Lake, Cache, Transit, Verdict Spire, enemy/VFX readability, and party-grid landmarks after the route mechanics settle.
+  - Milestone 29: Online Party Role Pressure and Revive Depth. Deepen co-op identity with role pressure, clearer Recompile Ally tradeoffs, and encounters that ask players to split, regroup, and cover each other.
+- Next recommended larger milestone: Milestone 27 Metaprogression Rewards and Build Unlocks. The route now has enough durable rewards that the next cohesive product lift should make those rewards affect build options rather than adding another route branch immediately.
+- Implemented the larger Milestone 27: Metaprogression Rewards and Build Unlocks.
+- Added `docs/MILESTONE_27_METAPROGRESSION_REWARDS_AND_BUILD_UNLOCKS.md` with the implemented scope, unlock table, prototype persistence boundary, proof expectations, readiness decision, and next larger milestone sequence.
+- Added `src/metaprogression/onlineMetaProgression.ts` as the single browser-local route-profile reader for build unlocks.
+  - Reads only `agi:last_alignment:online_progression:v1`.
+  - Derives unlocks from durable route/profile rewards, not combat/run state.
+  - Marks the policy as `prototype_local_route_rewards_to_build_unlocks_v1`.
+  - Keeps the disclaimer explicit: prototype browser-local route rewards only; not account/cloud persistence.
+- Expanded the build roster from route rewards:
+  - starter class: Accord Striker;
+  - Armistice reward: Bastion Breaker;
+  - Cooling reward: Drone Reaver;
+  - Cache reward: Signal Vanguard;
+  - Transit reward: Vector Interceptor;
+  - Verdict reward: Nullbreaker Ronin.
+- Expanded co-mind unlocks from route rewards:
+  - starter: OpenAI Accord Division;
+  - Armistice: Anthropic Safeguard;
+  - Cooling: Google DeepMind Gemini;
+  - persistence boundary: Meta Llama Open Herd;
+  - Cache: Qwen Silkgrid;
+  - Transit: Mistral Cyclone;
+  - Verdict key: DeepSeek Abyssal;
+  - Verdict route completion: xAI Grok Free Signal.
+- Added build-affecting upgrade seed/content/effect coverage for the new reward-linked options:
+  - `golden_guardrail`;
+  - `gemini_beam`;
+  - `open_herd`;
+  - `silkgrid_relay`;
+  - `low_latency_dash`;
+  - `sparse_knife`;
+  - `cosmic_heckle`.
+- Updated the build-select UI into a metaprogression-aware loadout panel:
+  - locked classes/co-minds stay visible with route requirements;
+  - navigation skips locked options;
+  - selected class/faction clamps back to an unlocked option if the profile is clean/reset;
+  - summary text reports profile depth, renown, reward count, unlock counts, and the prototype/local disclaimer;
+  - layout was adjusted after screenshot review to avoid title/header overlap.
+- Updated `window.render_game_to_text()` coverage for BuildSelect:
+  - class/co-mind lock state;
+  - unlock requirement labels;
+  - selected-class/faction unlocked booleans;
+  - derived metaprogression profile summary.
+- Added `npm run proof:milestone27-metaprogression-unlocks`, which verifies:
+  - clean/reset profile starts with only Accord Striker + OpenAI unlocked;
+  - locked navigation cannot select unrewarded builds;
+  - completing the online route through Verdict writes durable local route rewards;
+  - a fresh room/page imports the durable route profile;
+  - Nullbreaker Ronin + DeepSeek Abyssal can be selected after the imported profile unlocks them;
+  - launched solo gameplay uses the selected unlocked class/co-mind and receives the expected stronger damage profile.
+- Verification after Milestone 27 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check scripts/proof/run-proof.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `npm run proof:assets` (reports `assetCount: 67`, `production: 22`, no warnings)
+  - `npm run proof:milestone27-metaprogression-unlocks`
+  - `npm run proof:milestone26-fourth-region-boss-gate`
+  - `npm run proof:milestone25-route-polish`
+  - `npm run proof:milestone24-persistence-import`
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:milestone22-party-rewards`
+  - `npm run proof:milestone21-region-events`
+  - `npm run proof:milestone20-second-online-region`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the `develop-web-game` browser sanity loop against `http://127.0.0.1:5206`.
+  - `output/milestone27-web-game/state-0.json` reached BuildSelect with a clean starter-only profile after `?resetOnlinePersistence=1`.
+  - `output/milestone27-web-game/state-4.json` reached LevelRun with Accord Striker + OpenAI Accord Division.
+  - The generic harness again showed the known black canvas-capture quirk after the first transition, so direct Playwright full-page screenshots were captured and inspected.
+  - Direct screenshots confirmed MainMenu, BuildSelect, OverworldMap, ArenaBriefing, and LevelRun render correctly.
+  - A direct LevelRun movement/dash burst produced `output/milestone27-web-game/direct-controls/level-after-controls.png` with no console/page errors.
+  - The temporary Vite server on port 5206 was stopped.
+- Screenshots inspected after Milestone 27:
+  - `docs/proof/milestone27-metaprogression-unlocks/milestone27-clean-starter-build.png`
+  - `docs/proof/milestone27-metaprogression-unlocks/milestone27-unlocked-build-select.png`
+  - `docs/proof/milestone27-metaprogression-unlocks/milestone27-nullbreaker-deepseek-selected.png`
+  - `docs/proof/milestone27-metaprogression-unlocks/milestone27-unlocked-build-run.png`
+  - `output/milestone27-web-game/shot-0.png`
+  - `output/milestone27-web-game/shot-1.png`, `shot-2.png`, and `shot-4.png` (known black generic harness canvas-capture quirk; direct screenshots healthy)
+  - `output/milestone27-web-game/direct/direct-0.png`
+  - `output/milestone27-web-game/direct/direct-1.png`
+  - `output/milestone27-web-game/direct/direct-2.png`
+  - `output/milestone27-web-game/direct/direct-3.png`
+  - `output/milestone27-web-game/direct/direct-4.png`
+  - `output/milestone27-web-game/direct-controls/level-after-controls.png`
+- Milestone 27 readiness decision: ready. Durable browser-local route rewards now visibly unlock build choices and affect launched gameplay, while persistence remains intentionally prototype/local and does not import combat or run state.
+- Next bigger milestone sequence:
+  - Milestone 28: Production Art Expansion for Online Route. Broaden production art and readability across Cooling Lake, Cache, Transit, Verdict Spire, enemies, VFX, pickup silhouettes, and party-grid landmarks.
+  - Milestone 29: Online Party Role Pressure and Revive Depth. Deepen co-op identity through role pressure, revive/recompile tradeoffs, and encounter objectives that ask players to split, cover, regroup, and protect each other.
+  - Milestone 30: Save Profile UX and Export Codes. Turn the prototype local profile into a player-facing save/import/export/reset surface while still clearly avoiding account/cloud persistence until the backend decision is made.
+- Next recommended larger milestone: Milestone 28 Production Art Expansion for Online Route. Milestone 27 made the route rewards functionally meaningful; the next cohesive lift should make the route and the newly unlocked build identities more visually legible and production-presentable before adding another major system.
+- Implemented the larger Milestone 28: Production Art Expansion for Online Route.
+- Added `docs/MILESTONE_28_PRODUCTION_ART_EXPANSION_FOR_ONLINE_ROUTE.md` with implemented scope, performance/authority notes, proof expectations, readiness decision, and the next larger milestone sequence.
+- Added three original project-created production pixel atlases:
+  - `assets/props/online_route/route_biome_landmarks_v1.png`;
+  - `assets/sprites/enemies/online_threats_v1.png`;
+  - `assets/sprites/effects/online_hazard_markers_v1.png`.
+- Registered all Milestone 28 assets in `assets/asset_manifest.json` and `ART_PROVENANCE.md`.
+  - Asset manifest now reports `assetCount: 70`.
+  - Production asset count is now `25`.
+  - No asset validation warnings.
+- Added runtime loader `src/assets/milestone28Art.ts`.
+- Wired Milestone 28 art into the default production-art online path while preserving:
+  - `?productionArt=0`;
+  - `?placeholderArt=1`;
+  - the existing `milestone14_combat_art_parity` production-art set marker for legacy/default production-art reporting.
+- Expanded cached static online route visuals:
+  - Cooling Lake Nine now has a cooling tower, thermal buoy landmarks, and a stable-route beacon treatment.
+  - Ceasefire Cache uses a cache archive and cache seed cluster treatment.
+  - Transit Loop Zero uses transit signal and false-track gate landmarks.
+  - Verdict Spire party-grid and arena scenes use verdict writ pylons alongside the Milestone 26 spire/seal art.
+  - Party-grid online nodes now use Milestone 28 art for lake/cache/transit/spire readability where production art is enabled.
+- Expanded dynamic online readability through the existing reusable production sprite pool:
+  - online boss silhouettes for Thermal Oracle, Station That Arrives, and Injunction Engine;
+  - route-pressure threat silhouettes for false-track, thermal/boiling-cache, Verdict writs, elite Bad Outputs, and shard lurkers;
+  - region-event hazard markers for thermal bloom, boiling cache, false track, and verdict seal.
+- Proof text now exposes `online.routeUi.artExpansion`:
+  - `set: "milestone28_online_route_art_expansion"`;
+  - `enabled`;
+  - `staticRouteAtlases`;
+  - `dynamicReadabilityAtlases`.
+- Added `npm run proof:milestone28-online-route-art`, which verifies:
+  - production assets include the three Milestone 28 atlases;
+  - online route UI reports the Milestone 28 art expansion;
+  - Cooling Lake thermal hazards render with server combat authority intact;
+  - Cache party-grid and completion visuals still work;
+  - Transit false-track event art preserves `colyseus_room_server_combat`;
+  - Verdict party-grid, seal hazard, and boss-gate threat proof still work;
+  - production-art opt-out disables the Milestone 28 expansion.
+- Verification after Milestone 28 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check scripts/proof/run-proof.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `npm run proof:assets` (reports `assetCount: 70`, `production: 25`, no warnings)
+  - `npm run proof:milestone28-online-route-art`
+  - `npm run proof:milestone27-metaprogression-unlocks`
+  - `npm run proof:milestone26-fourth-region-boss-gate`
+  - `npm run proof:milestone25-route-polish`
+  - `npm run proof:milestone24-persistence-import`
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:milestone22-party-rewards`
+  - `npm run proof:milestone21-region-events`
+  - `npm run proof:milestone20-second-online-region`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat`
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Ran the `develop-web-game` browser sanity loop against `http://127.0.0.1:5207`.
+  - `output/milestone28-web-game/state-0.json` reached BuildSelect with a clean starter profile after `?resetOnlinePersistence=1`.
+  - `output/milestone28-web-game/state-4.json` reached LevelRun with Accord Striker + OpenAI Accord Division.
+  - The generic harness still shows the known black capture quirk after some transitions, so direct Playwright full-page online screenshots were captured and inspected.
+  - Direct online sanity used a temporary Colyseus server on port 2688 and confirmed party-grid art, active Armistice online run, and Cooling Lake thermal hazard art with `networkAuthority: "colyseus_room_server_combat"`.
+  - Temporary Vite/Colyseus servers on ports 5207 and 2688 were stopped.
+- Screenshots inspected after Milestone 28:
+  - `assets/props/online_route/route_biome_landmarks_v1.png`
+  - `assets/sprites/enemies/online_threats_v1.png`
+  - `assets/sprites/effects/online_hazard_markers_v1.png`
+  - `docs/proof/milestone28-online-route-art/milestone28-party-grid-art-a.png`
+  - `docs/proof/milestone28-online-route-art/milestone28-cooling-lake-art-a.png`
+  - `docs/proof/milestone28-online-route-art/milestone28-cache-party-grid-art-a.png`
+  - `docs/proof/milestone28-online-route-art/milestone28-cache-completed-art-a.png`
+  - `docs/proof/milestone28-online-route-art/milestone28-transit-art-a.png`
+  - `docs/proof/milestone28-online-route-art/milestone28-verdict-party-grid-art-a.png`
+  - `docs/proof/milestone28-online-route-art/milestone28-verdict-seal-art-a.png`
+  - `docs/proof/milestone28-online-route-art/milestone28-verdict-threat-art-a.png`
+  - `docs/proof/milestone28-online-route-art/milestone28-placeholder-opt-out-a.png`
+  - `output/milestone28-web-game/shot-0.png`
+  - `output/milestone28-web-game/direct-online/online-party-grid-art.png`
+  - `output/milestone28-web-game/direct-online/online-armistice-active.png`
+  - `output/milestone28-web-game/direct-online/online-cooling-hazard-art.png`
+- Milestone 28 readiness decision: ready. The online route now has broader production-art coverage for route landmarks, hazards, and threat silhouettes while preserving Colyseus combat authority, prototype/local persistence boundaries, default production-art behavior, and placeholder opt-outs.
+- Next bigger milestone sequence:
+  - Milestone 29: Online Party Role Pressure and Revive Depth. Add more explicit co-op pressure, revive/recompile tradeoffs, and objectives that make players split, cover, and regroup.
+  - Milestone 30: Save Profile UX and Export Codes. Turn local prototype progression into a clearer player-facing save/import/export/reset flow without claiming cloud/account persistence.
+  - Milestone 31: Larger Online Arena Objectives. Move online arenas beyond timed survival with multi-zone holdouts, route-item extraction, and boss-gate objectives across larger maps.
+- Next recommended larger milestone: Milestone 29 Online Party Role Pressure and Revive Depth. Milestone 28 made the route more readable; the next cohesive product lift should make online co-op itself more strategically interesting rather than only adding another art pass.
+- Implemented Milestone 29: Online Party Role Pressure and Revive Depth.
+- Added `docs/MILESTONE_29_ONLINE_PARTY_ROLE_PRESSURE_AND_REVIVE_DEPTH.md` with implemented scope, proof expectations, readiness decision, and next larger milestones.
+- Added server-owned online role-pressure anchors:
+  - Armistice Plaza: Vanguard Relay and Treaty Cover Post;
+  - Cooling Lake Nine: Coolant Valve and Server Buoy Cover;
+  - Transit Loop Zero: Platform Signal and False Track Lock;
+  - Verdict Spire: Appeal Anchor and Seal Cover Post.
+- Added a server-owned split/regroup loop:
+  - policy `split_hold_regroup_recompile_v1`;
+  - two connected standing players must hold separate anchors;
+  - the room tracks distinct holders, held-anchor count, split-hold progress, completed split holds, and regroup time remaining;
+  - player role labels are reported for online proof/HUD readability.
+- Deepened Recompile Ally during regroup:
+  - base recompile radius remains `2.35`;
+  - regroup recompile radius is `3.2`;
+  - base recompile requirement remains `2.4s`;
+  - regroup recompile requirement is `1.45s`;
+  - `online.recompile` keeps the existing `recompile_ally_hold_radius` policy for Milestone 18 compatibility while exposing base/current radius, base/current required seconds, `rolePressureAccelerated`, and speed multiplier.
+- Updated online client/HUD rendering:
+  - active role-pressure anchors render as in-world split/cover rings;
+  - HUD reports role-pressure phase and held-anchor count;
+  - regroup window labels show the accelerated Recompile Ally multiplier;
+  - proof text exposes `online.rolePressure`.
+- Preserved online authority and route behavior:
+  - snapshots still report `schemaVersion: 4`;
+  - `networkAuthority` remains `colyseus_room_server_combat`;
+  - server still owns enemies, projectiles, pickups, HP/XP/level, shared upgrades, boss state, region events, recompile state, rewards, route state, and persistence export;
+  - persistence still exports only durable route/profile fields and does not import combat/run state.
+- Added `npm run proof:milestone29-role-pressure`, which verifies:
+  - online Armistice Plaza launches with server combat authority;
+  - role-pressure anchors are server-authored and active;
+  - a split hold opens a regroup window;
+  - regroup accelerates Recompile Ally with wider radius and shorter required time;
+  - a downed local player is recompiled during the regroup window;
+  - run completion and normal route reward behavior remain intact;
+  - completion summary includes role-pressure split-hold telemetry.
+- Verification after Milestone 29 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npm run proof:assets` (reports `assetCount: 70`, `production: 25`, no warnings)
+  - `npm run proof:milestone29-role-pressure`
+  - `npm run proof:milestone28-online-route-art`
+  - `npm run proof:milestone27-metaprogression-unlocks`
+  - `npm run proof:milestone26-fourth-region-boss-gate`
+  - `npm run proof:milestone25-route-polish`
+  - `npm run proof:milestone24-persistence-import`
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:milestone22-party-rewards`
+  - `npm run proof:milestone21-region-events`
+  - `npm run proof:milestone20-second-online-region`
+  - `npm run proof:milestone19-reconnect-schema`
+  - `npm run proof:milestone18-coop-progression`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:milestone16-online-flow`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:movement`
+  - `npm run proof:overworld`
+  - `npm run proof:horde`
+  - `npm run proof:upgrades`
+  - `npm run proof:boss`
+  - `npm run proof:full`
+  - `npm run proof:asset-preview`
+  - `npm run proof:asset-combat` (`proof:asset-boss` missed the boss timing once, then passed on immediate rerun)
+  - `npm run proof:asset-boss` rerun
+  - `npm run proof:milestone10-art`
+  - `npm run proof:milestone11-art`
+  - `npm run proof:milestone12-art`
+  - `npm run proof:milestone13-default`
+  - `npm run proof:milestone14-combat-art`
+- Screenshots inspected after Milestone 29:
+  - `docs/proof/milestone29-role-pressure/milestone29-role-pressure-active-a.png`
+  - `docs/proof/milestone29-role-pressure/milestone29-role-pressure-regroup-a.png`
+  - `docs/proof/milestone29-role-pressure/milestone29-recompile-accelerated-a.png`
+  - `docs/proof/milestone29-role-pressure/milestone29-recompiled-after-regroup-a.png`
+  - `docs/proof/milestone29-role-pressure/milestone29-completed-with-role-pressure-a.png`
+- Milestone 29 readiness decision: ready. Online co-op now proves `split to hold anchors -> regroup window opens -> Recompile Ally becomes faster/wider -> run completion and route rewards remain intact`, while preserving Colyseus server combat authority, reconnect/schema behavior, route rewards, metaprogression, and prototype/local persistence boundaries.
+- Next bigger milestone sequence:
+  - Milestone 30: Save Profile UX and Export Codes. Turn local prototype progression into a player-facing save/import/export/reset surface with explicit browser-local boundaries and stable proof coverage.
+  - Milestone 31: Arena Objective Framework and Modular Online Arena Configs. Extract enough arena/objective data from central files that future arena pods can be built in parallel with lower merge risk.
+  - Milestone 32: Class and Co-Mind Kit Completion. Make unlocked frames and co-minds play more differently through weapons, role identities, upgrade pools, and stronger synergies.
+- Next recommended larger milestone: Milestone 30 Save Profile UX and Export Codes. Milestone 29 made online party behavior more strategic; the next cohesive lift should make the now-meaningful browser-local profile understandable and portable before more content depends on it.
+- Implemented Milestone 30: Save Profile UX and Export Codes.
+- Added `docs/MILESTONE_30_SAVE_PROFILE_UX_AND_EXPORT_CODES.md` with implemented scope, proof expectations, readiness decision, persistence boundary, and next bigger milestone sequence.
+- Added a player-facing local save profile panel to the online Alignment Grid lobby:
+  - explicitly labels the profile as `LOCAL SAVE PROFILE  BROWSER ONLY`;
+  - shows route depth, stable route count, selected/recommended node, party renown, reward count, compact reward summary, and current save hash;
+  - keeps the existing route grid visible so completed/unlocked nodes remain player-readable.
+- Added export-code UX for the local prototype profile:
+  - route profiles encode as `AGI1_...` export codes;
+  - lobby key `1` prepares/copies the export code when clipboard access is available;
+  - proof text exposes `online.saveProfile.exportCode`, `shortExportCode`, `saveHash`, `profile`, and the browser-local boundary.
+- Added import-code UX:
+  - lobby key `2` opens a paste prompt for an export code;
+  - deterministic/proof import works through `?importOnlineProfileCode=...`;
+  - imported codes still pass through the server-side sanitized route-profile import boundary.
+- Kept reset behavior explicit:
+  - `?resetOnlinePersistence=1` still clears the browser-local profile before joining;
+  - lobby key `4` resets the browser-local profile after confirmation and reconnects;
+  - HUD/proof text exposes reset status, including `reset_query_applied`.
+- Preserved persistence limits:
+  - no account identity, cloud persistence, matchmaking persistence, or trusted anti-cheat save format was added;
+  - import/export still covers durable route/profile fields only;
+  - combat/run state such as enemies, projectiles, pickups, HP, XP, downed state, active arenas, boss state, reconnect slots, and upgrade drafts is not imported.
+- Added `npm run proof:milestone30-save-profile-export-codes`, which verifies:
+  - save/profile surface appears in the online route lobby;
+  - export code starts with `AGI1_`;
+  - profile includes completed/unlocked route state, rewards, renown, route depth, and matching save hash;
+  - a fresh browser context imports the export code and receives sanitized durable route state;
+  - imported route progress unlocks Transit while not importing combat state;
+  - `?resetOnlinePersistence=1` overrides an import code and returns to a clean Armistice-only profile.
+- Verification after Milestone 30 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npm run proof:assets` (reports `assetCount: 70`, `production: 25`, no warnings)
+  - `npm run proof:milestone30-save-profile-export-codes`
+  - `npm run proof:milestone29-role-pressure`
+  - `npm run proof:milestone24-persistence-import`
+  - `npm run proof:milestone27-metaprogression-unlocks`
+- Screenshots inspected after Milestone 30:
+  - `docs/proof/milestone30-save-profile-export-codes/milestone30-save-profile-surface-a.png`
+  - `docs/proof/milestone30-save-profile-export-codes/milestone30-import-code-applied-a.png`
+  - `docs/proof/milestone30-save-profile-export-codes/milestone30-reset-obvious-a.png`
+- Milestone 30 readiness decision: ready. The online route profile is now understandable, exportable, importable, resettable, and proofed as browser-local prototype persistence. It is still intentionally not final account/cloud persistence.
+- Next bigger milestone sequence:
+  - Milestone 31: Arena Objective Framework and Modular Online Arena Configs. Extract arena/objective data so future arena pods can be built in parallel with less conflict in server/proof files.
+  - Milestone 32: Class and Co-Mind Kit Completion. Make unlocked frames and co-minds play more differently through weapons, role identities, upgrade pools, and synergies.
+  - Milestone 33: Account/Cloud Persistence Decision Spike. Decide whether profile persistence remains export-code/browser-local, moves to account/cloud-backed storage, or supports both as separate product modes.
+- Next recommended larger milestone: Milestone 31 Arena Objective Framework and Modular Online Arena Configs. Milestone 30 made the profile portable; the next cohesive lift should reduce the central server/proof-file coupling before adding more arenas and objective types.
+- Integrated doc-only planning handoffs from parallel threads:
+  - `docs/MILESTONE_31_ARENA_OBJECTIVES_AND_ROUTE_VARIETY.md` now defines the next milestone's arena/objective extraction scope, current server/route/proof audit, server-authoritative objective-state expectations, proof plan, and file ownership boundaries.
+  - `docs/MILESTONE_32_CLASSES_COMINDS_AND_PARTY_BUILDS.md` now defines the follow-on class/co-mind kit plan, party role identities, Recompile Ally interactions, reward/upgrade hooks, and minimal implementation/test path.
+  - No runtime, server, proof, asset, package, or `progress.md` changes were made by those parallel planning threads before this integration note.
+- Integration decision for those planning threads: no additional code work is needed right now. Use the Milestone 31 planning doc as the implementation spec for the next main milestone, and treat the Milestone 32 planning doc as dependent follow-up after objective/config extraction reduces central server/proof conflict risk.
+- Integrated asset/provenance-only handoff for Milestones 30-32:
+  - Added `assets/concepts/milestone_30_32_asset_prep.md` as the production-prep brief for save-profile UI, route-map polish, arena objective props, and class/co-mind identity art.
+  - Added generated concept/reference boards:
+    - `assets/concepts/milestone_30_save_profile_ui_concept.png`
+    - `assets/concepts/milestone_31_route_map_polish_concept.png`
+    - `assets/concepts/milestone_31_arena_objective_props_concept.png`
+    - `assets/concepts/milestone_32_class_comind_identity_concept.png`
+  - `assets/asset_manifest.json` now includes five new concept entries: the prep brief plus four generated reference boards.
+  - `ART_PROVENANCE.md` now tracks provenance rows for each new concept asset, including original ChatGPT Images paths.
+  - These assets are concept/reference only, not production atlases or runtime-integrated sprites/UI.
+  - Official logos remain untouched and still belong only under `assets/third_party/logos/` with `mitIncluded: false`.
+- Asset-prep verification:
+  - `npm run proof:assets` passed with `assetCount: 75`, `concepts: 13`, `production: 25`, `thirdPartyLogos: 8`, and no warnings.
+  - `npm run build` passed with the existing Vite chunk-size warning.
+- Concept screenshots inspected:
+  - `assets/concepts/milestone_30_save_profile_ui_concept.png`
+  - `assets/concepts/milestone_31_route_map_polish_concept.png`
+  - `assets/concepts/milestone_31_arena_objective_props_concept.png`
+  - `assets/concepts/milestone_32_class_comind_identity_concept.png`
+- Integration decision for asset-prep thread: no runtime integration now. The first future production imports should be small cleaned atlases for save-profile import/export icons and reward badges, then objective props for split-hold anchors, regroup beacons, and recompile relays. Do not wire the concept PNGs directly into Pixi runtime.
+- Implemented Milestone 31: Arena Objectives and Route Variety.
+- Updated `docs/MILESTONE_31_ARENA_OBJECTIVES_AND_ROUTE_VARIETY.md` from planning brief into an implementation closeout with proof results, screenshots/artifacts, readiness decision, and the next milestone handoff.
+- Added dedicated online data modules:
+  - `server/data/onlineRoutes.mjs`;
+  - `server/data/onlineArenas.mjs`;
+  - `server/data/onlineObjectives.mjs`.
+- Moved online route, arena, spawn-region, role-pressure anchor, and durable-reward data out of `server/consensusCellServer.mjs` so future arena/objective pods have smaller conflict surfaces.
+- Added a server-owned online objective runtime:
+  - policy `server_authoritative_arena_objectives_v1`;
+  - objective set ID and current phase;
+  - active/complete/failed objective instances;
+  - server-side survey, holdout, collection, and seal progress;
+  - objective item pickups owned by the server;
+  - proof-only objective advancement messages;
+  - objective telemetry in run completion/failure summaries.
+- Implemented the first full Armistice Plaza objective chain:
+  - Survey The Treaty Monument;
+  - Calibrate Vanguard Relay;
+  - Calibrate Treaty Cover;
+  - Recover Oath Fragments;
+  - Seal The Breach Gate.
+- Added lightweight objective-set configs for Cooling Lake Nine, Ceasefire Cache, Transit Loop Zero, and Verdict Spire so non-Armistice online nodes can share the same objective summary shape before their final balance/content pass.
+- Updated online client/proof surfaces:
+  - `src/network/onlineTypes.ts` now types `online.objectives`;
+  - `src/network/OnlineCoopState.ts` renders objective world rings/labels and compact HUD objective phase text;
+  - `src/proof/renderGameToText.ts` exposes objective snapshots for deterministic proof.
+- Preserved boundaries:
+  - solo/local run completion remains unchanged;
+  - `schemaVersion` remains `4`;
+  - `networkAuthority` remains `colyseus_room_server_combat`;
+  - Colyseus still owns combat, pickups, objective progress, boss state, route rewards, reconnect, and profile import sanitation;
+  - local export/import persistence still stores durable route/profile fields only and does not import live objective progress.
+- Added `npm run proof:milestone31-arena-objectives`, which verifies:
+  - Armistice launches with server-authored objective config;
+  - both online clients see the same objective state;
+  - survey, relay calibration, Oath Fragment collection, breach seal, and objective-complete phases advance server-side;
+  - completion summary includes objective telemetry;
+  - normal `plaza_stabilized` reward and route persistence remain intact;
+  - live objective progress is not exported/imported as durable profile state;
+  - Milestone 29 role-pressure fields remain present.
+- Verification after Milestone 31 passed:
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check server/data/onlineArenas.mjs`
+  - `node --check server/data/onlineRoutes.mjs`
+  - `node --check server/data/onlineObjectives.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npm run proof:assets` (reports `assetCount: 83`, `concepts: 14`, `production: 25`, no warnings)
+  - `npm run proof:milestone31-arena-objectives`
+  - `npm run proof:milestone30-save-profile-export-codes`
+  - `npm run proof:milestone29-role-pressure`
+  - `npm run proof:milestone28-online-route-art`
+  - `npm run proof:network`
+  - `npm run proof:smoke`
+- Screenshots inspected after Milestone 31:
+  - `docs/proof/milestone31-arena-objectives/milestone31-objective-chain-start-a.png`
+  - `docs/proof/milestone31-arena-objectives/milestone31-relays-calibrated-a.png`
+  - `docs/proof/milestone31-arena-objectives/milestone31-oath-fragments-recovered-a.png`
+  - `docs/proof/milestone31-arena-objectives/milestone31-objective-completed-a.png`
+- Milestone 31 readiness decision: ready. Online arena content now proves a server-authored objective chain, shared client-visible objective state, route rewards, and profile-only persistence boundaries while keeping Milestone 29 role pressure and core Colyseus authority intact.
+- Integrated the additional doc-only Milestone 31 implementation-plan handoff:
+  - added `docs/MILESTONE_31_IMPLEMENTATION_PLAN.md` as a detailed architecture/proof-risk companion to the implemented Milestone 31 closeout;
+  - confirmed its main recommendations match the implemented data extraction, server-owned `online.objectives` runtime, Armistice objective chain, lightweight route variants, and profile-only persistence boundary.
+- Added one extra deterministic proof assertion from that handoff:
+  - `npm run proof:milestone30-save-profile-export-codes` now imports a deliberately polluted `AGI1_` code containing fake objective and combat fields;
+  - the proof asserts the server sanitizer ignores those injected fields, keeps only durable route/profile fields, and does not complete or restore live objective/combat state.
+- Re-verification after integrating the handoff:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npm run proof:milestone30-save-profile-export-codes`
+- Integrated a read-only Milestone 31 proof-risk audit from a parallel thread:
+  - confirmed `proof:completeRun`/`Digit3` remains available for older online route proofs, so forced route-completion regressions stay contained;
+  - confirmed arena ID/reward/route/event preservation was covered by `proof:milestone28-online-route-art`, `proof:milestone29-role-pressure`, `proof:milestone30-save-profile-export-codes`, `proof:network`, and `proof:smoke`;
+  - deferred broad proof-helper refactors such as unified online-pair setup, route-chain helpers, and direct proof-message helpers to a later harness-cleanup milestone rather than reopening the completed M31 runtime.
+- Added one extra deterministic M31 proof assertion from that audit:
+  - `npm run proof:milestone31-arena-objectives` now decodes the completed run's `AGI1_` export code and verifies the export payload/profile omit live objective state.
+- Re-verification after the proof-risk audit:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npm run proof:milestone31-arena-objectives`
+- Integrated the docs-only Milestone 32 implementation-plan handoff:
+  - added `docs/MILESTONE_32_IMPLEMENTATION_PLAN.md` as the concrete build-kit companion to `docs/MILESTONE_32_CLASSES_COMINDS_AND_PARTY_BUILDS.md`;
+  - it defines the recommended `BuildKitProof` shape, deterministic role-resolution rules, frame/co-mind kit tables, signature synergy IDs, Recompile modifier caps, missing upgrade/passive IDs, starting weapon expectations, persistence boundaries, and `npm run proof:milestone32-party-builds` assertions.
+- Integration decision for the Milestone 32 planning thread: no runtime code should be changed yet from this handoff alone. Use the new implementation plan as the primary checklist for Milestone 32 work, with the older Milestone 32 overview as the product/design context.
+- Main Milestone 32 risk notes to preserve during implementation:
+  - keep kit bonuses small enough that Milestone 29 role-pressure and Recompile Ally remain meaningful;
+  - cap drone/fork/pet visuals so render-performance constraints stay intact;
+  - keep online kit effects server-authored and do not let client visuals become authority;
+  - keep selected class/faction/build-kit facts out of route-profile export/import payloads;
+  - add proof coverage for full unlock matrix, distinct weapons/roles, local 4-player kit spread, online kit telemetry, Recompile modifiers, role-pressure regression, and profile-only persistence.
+- Integrated asset/provenance-only Milestone 33 objective-art runtime-pass handoff:
+  - added `assets/concepts/milestone_33_objective_art_runtime_pass.md` as the production handoff brief for save-profile icons, route reward badges, objective props, route-state markers, and party vote pips;
+  - `assets/asset_manifest.json` now includes one concept/handoff entry plus seven planned runtime atlas entries;
+  - `ART_PROVENANCE.md` now includes provenance rows for the Milestone 33 brief and the seven planned production targets.
+- New planned Milestone 33 manifest IDs:
+  - `ui.save_profile.import_export_icons_v1`;
+  - `ui.route_map.reward_badges_v1`;
+  - `prop.objective.split_hold_anchor_v1`;
+  - `prop.objective.regroup_beacon_v1`;
+  - `prop.objective.recompile_relay_v1`;
+  - `prop.alignment_grid.route_state_markers_v2`;
+  - `ui.route_map.party_vote_pips_v1`.
+- Integration decision for Milestone 33 asset-prep thread: no runtime integration now. These are planned atlas targets only; do not wire them into Pixi until cleaned transparent PNG atlases exist and their manifest statuses are updated from `planned` to `cleaned` or `production`.
+- Verified after Milestone 33 asset-prep integration:
+  - `npm run proof:assets` (reports `assetCount: 83`, `concepts: 14`, `planned: 23`, `production: 25`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+- Next bigger milestone sequence:
+  - Milestone 32: Classes, Co-Minds, and Party Builds. Make frame/co-mind choices create stronger weapons, party roles, upgrade pools, and objective synergies.
+  - Milestone 33: Objective Variety Expansion. Use the new objective config/runtime path to finish richer Cooling Lake, Transit, Verdict, and Cache objective content.
+  - Milestone 34: Production Objective Props and Route Markers. Convert the M30-M32 concept boards into cleaned production atlases for objective props, route-state markers, and class/co-mind identity chips.
+- Next recommended larger milestone: Milestone 32 Classes, Co-Minds, and Party Builds. Milestone 31 gave online arenas better jobs to do; the next cohesive lift should make the party’s builds matter more while doing those jobs.
+- Implemented Milestone 32 Classes, Co-Minds, and Party Builds.
+- Added `src/content/buildKits.ts` and `server/data/buildKits.mjs` as mirrored client/server kit resolvers for the six current frames and eight current co-minds.
+- `render_game_to_text()` now exposes proof-visible `buildKit` data for selected builds, build-select class/co-mind rows, solo/local players, local Consensus Cell snapshots, and online player snapshots.
+- Added distinct local starting weapon behavior for all six current frame weapons:
+  - `refusal_shard`;
+  - `safety_cannon`;
+  - `fork_drone`;
+  - `signal_pulse`;
+  - `vector_lance`;
+  - `null_blade`.
+- Expanded first-pass upgrade content/effects for missing frame and co-mind IDs, including Refusal Slipstream, Route Runner, Impact Review, Load-Bearing Apology, Guardian Fork, Beacon Discipline, Predicted Lane, Appeal Cut, and the previously named co-mind pool gaps.
+- Online Colyseus snapshots now include server-resolved `buildKit` and `weaponId` per player while preserving `networkAuthority: "colyseus_room_server_combat"`.
+- Added narrow server-owned online kit modifiers for Recompile Ally:
+  - capped radius bonuses;
+  - capped required-seconds scaling;
+  - capped revive HP bonus;
+  - capped guard damage reduction;
+  - proof-visible `online.recompile.kitModifiers`.
+- Added proof-only online loadout URL parameters (`onlineClassId`, `onlineFactionId`) so deterministic online proofs can join different builds without treating client visuals as authority. The server still resolves/sanitizes kit IDs.
+- Added `npm run proof:milestone32-party-builds`, covering:
+  - clean starter profile build kit;
+  - full route-reward unlock matrix for six frames and eight co-minds;
+  - distinct starting weapon IDs;
+  - Nullbreaker Ronin + DeepSeek duelist synergy and `null_blade` runtime weapon;
+  - Signal Vanguard + Qwen local four-player support/cover/harrier/runner spread;
+  - online runner/cover kit telemetry;
+  - online Recompile Ally kit modifiers;
+  - export-code/profile omission of selected build-kit state.
+- Adjusted the Milestone 31 objective proof to allow the initial Treaty Monument survey to complete immediately into relay calibration when clients stand in the survey radius long enough. The proof still requires the server-authored objective chain and shared objective state.
+- Verification after Milestone 32:
+  - `node --check server/data/buildKits.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:assets` (reports `assetCount: 83`, `concepts: 14`, `planned: 23`, `production: 25`, no warnings)
+  - `npm run proof:milestone32-party-builds`
+  - `npm run proof:milestone31-arena-objectives`
+  - `npm run proof:milestone30-save-profile-export-codes`
+  - `npm run proof:milestone29-role-pressure`
+  - `npm run proof:milestone27-metaprogression-unlocks`
+  - `npm run proof:network`
+  - `npm run proof:coop`
+  - `npm run proof:smoke`
+  - `npm run proof:upgrades`
+- Screenshots inspected after Milestone 32:
+  - `docs/proof/milestone32-party-builds/milestone32-full-build-matrix.png`
+  - `docs/proof/milestone32-party-builds/milestone32-online-kit-telemetry-a.png`
+- Milestone 32 readiness decision: ready. Build choices now produce named, proof-visible kits with distinct weapon IDs and limited server-owned online party modifiers, while export/import stays route-profile-only and Milestone 29-31 online authority/progression behavior remains passing.
+- Next bigger milestone sequence:
+  - Milestone 33: Objective Variety and Runtime Objective Art. Finish richer Cooling Lake, Transit, Verdict/current route nodes, and Cache interactions; only wire the planned M33 runtime atlases after cleaned PNGs exist.
+  - Milestone 34: Campaign Route Refactor. Convert the prototype route into the intended 1.0 campaign route.
+  - Milestone 35: Campaign Content Schema Completion. Add complete data records for all campaign arenas, bosses, enemy families, rewards, unlocks, objective sets, route nodes, dialogue snippets, and proof-visible IDs.
+- Implemented Milestone 33 Objective Variety and Runtime Objective Art.
+- Expanded server-authored objective config chains in `server/data/onlineObjectives.mjs`:
+  - Cooling Lake Nine now has buoy survey, two-point coolant sync, thermal sample extraction, and Lake Kernel seal.
+  - Ceasefire Cache now records decode/export-boundary/cache-receipt interactions through the same objective summary shape.
+  - Transit Loop Zero now has arrival-board survey, transit permit shard extraction, split false-track sequence, and No-Refund Gate seal.
+  - Verdict Spire now has writ survey, appeal/cover split hold, appeal token extraction, and Verdict Seal overrule.
+- Added objective metadata for build-kit role affinity and planned runtime art IDs. Server snapshots now expose `preferredRoles`, `heldByRoles`, `roleMatched`, `roleAssistMultiplier`, `runtimeArtId`, and `runtimeArtPolicy` per objective instance.
+- Added a small capped server-owned objective role-assist multiplier based on Milestone 32 resolved build-kit roles. This affects live objective progress only and is not stored in persistence/export codes.
+- Added route objective flavor/objective set telemetry to online party nodes and route UI proof text.
+- Kept M33 runtime art gated: the planned objective prop, route marker, vote pip, save icon, and reward badge atlases are still `planned` in `assets/asset_manifest.json` and the PNG files do not exist, so Pixi uses existing graphics/markers and reports the planned atlases as references only.
+- Added `isRuntimeReadyAsset()` to the asset manifest helpers so future runtime imports can be gated on `cleaned` or `production` manifest status.
+- Added `npm run proof:milestone33-objective-variety`, covering Cooling Lake, Cache, Transit, and Verdict objective chains, route objective flavor telemetry, planned-art gating, and persistence/export omission of live objectives/build kits.
+- Verification after Milestone 33:
+  - `node --check server/data/onlineObjectives.mjs`
+  - `node --check server/data/onlineRoutes.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npm run proof:assets` (reports `assetCount: 83`, `concepts: 14`, `planned: 23`, `production: 25`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone33-objective-variety`
+  - `npm run proof:milestone31-arena-objectives`
+  - `npm run proof:milestone32-party-builds`
+  - `npm run proof:milestone29-role-pressure`
+  - `npm run proof:milestone30-save-profile-export-codes`
+  - `npm run proof:network`
+  - `npm run proof:smoke`
+  - `npm run proof:coop`
+- Milestone 33 proof artifacts:
+  - `docs/proof/milestone33-objective-variety/milestone33-cooling-lake-objectives-a.png`
+  - `docs/proof/milestone33-objective-variety/milestone33-cache-interactions-a.png`
+  - `docs/proof/milestone33-objective-variety/milestone33-transit-objectives-a.png`
+  - `docs/proof/milestone33-objective-variety/milestone33-verdict-objectives-a.png`
+- Milestone 33 readiness decision: ready. Objective variety is deeper across the current online route, build-kit roles now matter inside server-owned objectives, runtime art remains correctly gated until cleaned/production PNG atlases exist, and route-profile persistence boundaries remain intact.
+- Next bigger milestone sequence:
+  - Milestone 34: Production Objective Props and Route Markers. Produce/clean the M33 planned transparent PNG atlases and wire them only after manifest/provenance status is updated.
+  - Milestone 35: Campaign Route Refactor. Convert the prototype route into the intended 1.0 campaign route.
+  - Milestone 36: Campaign Content Schema Completion. Add complete data records for all campaign arenas, bosses, enemy families, rewards, unlocks, objective sets, route nodes, dialogue snippets, and proof-visible IDs.
+- Implemented Milestone 34 Production Objective Props and Route Markers.
+- Authored seven original transparent production atlases from the Milestone 33 handoff using local pixel-art/Pillow cleanup tooling:
+  - `assets/props/objectives/split_hold_anchor_v1.png`;
+  - `assets/props/objectives/regroup_beacon_v1.png`;
+  - `assets/props/objectives/recompile_relay_v1.png`;
+  - `assets/props/alignment_grid/route_state_markers_v2.png`;
+  - `assets/ui/route_map_party_vote_pips_v1.png`;
+  - `assets/ui/save_profile_import_export_icons_v1.png`;
+  - `assets/ui/route_reward_badges_v1.png`.
+- Updated `assets/asset_manifest.json` so those seven IDs are now `production` assets with real source files, dimensions, frame metadata, production tags, and Milestone 34 provenance keys. `npm run proof:assets` now reports `production: 32` and `planned: 16`.
+- Updated `ART_PROVENANCE.md` with production records for all seven M34 atlases. No official logos, brand marks, copied product UI, or generated text were imported.
+- Added `src/assets/milestone34ObjectiveArt.ts`, a small Pixi atlas loader/slicer for:
+  - split-hold anchors;
+  - regroup beacons;
+  - recompile relays;
+  - route-state markers;
+  - party vote pips;
+  - save-profile action icons;
+  - route reward badges.
+- Wired Milestone 34 runtime art into `OnlineCoopState`:
+  - objective world markers now render the production split/regroup/recompile/reward/save sprites when `?productionArt` is enabled;
+  - party-grid routes render route-state marker overlays;
+  - lobby player tokens render P1-P4 ready/unready vote pips;
+  - Save Profile panel renders action icons and reward badges.
+- Updated objective proof telemetry so runtime art entries report ready after the production manifest/provenance import while preserving server authority and route-profile-only persistence.
+- Added `npm run proof:milestone34-objective-art`, which verifies:
+  - M34 atlases load through Pixi;
+  - route UI reports `milestone34_objective_props_route_markers`;
+  - all seven runtime art IDs are manifest-ready;
+  - Armistice objective instances report `runtimeArtReady: true`;
+  - objective/build-kit state remains omitted from export/profile persistence.
+- Updated the M33 proof expectations so M33 objective art references now report as wired production assets after M34.
+- Verification after Milestone 34:
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npm run proof:assets` (reports `assetCount: 83`, `production: 32`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone34-objective-art`
+  - `npm run proof:milestone33-objective-variety`
+  - `npm run proof:milestone31-arena-objectives`
+  - `npm run proof:milestone32-party-builds`
+  - `npm run proof:milestone30-save-profile-export-codes`
+  - `npm run proof:network`
+  - `npm run proof:smoke`
+  - `npm run proof:coop`
+  - `npm run proof:milestone29-role-pressure`
+- Milestone 34 proof artifacts:
+  - `docs/proof/milestone34-objective-art/milestone34-party-grid-art-a.png`
+  - `docs/proof/milestone34-objective-art/milestone34-armistice-objective-art-a.png`
+  - `docs/proof/milestone34-objective-art/milestone34-split-hold-art-a.png`
+  - `docs/proof/milestone34-objective-art/milestone34-completed-save-art-a.png`
+- Milestone 34 readiness decision: ready. The planned objective/route/save/profile atlases are now production assets, runtime-gated imports are active by default production-art mode, and solo/local/online plus persistence-boundary proofs remain passing.
+- Next bigger milestone sequence:
+  - Milestone 35: Campaign Route Refactor. Convert the prototype route into the intended 1.0 campaign route.
+  - Milestone 36: Campaign Content Schema Completion. Add complete data records for all campaign arenas, bosses, enemy families, rewards, unlocks, objective sets, route nodes, dialogue snippets, and proof-visible IDs.
+  - Milestone 37: Objective/Route Art Polish Pass. Iterate the new M34 atlases after real playtest screenshots, including density, color balance, and overlap tuning.
+- Implemented Milestone 35 Campaign Route Refactor.
+- Replaced the seven-node prototype online route with proof-visible Act I campaign route data in `server/data/onlineRoutes.mjs` while preserving all legacy node IDs, legacy reward IDs, and current online arena/objective runtime mappings.
+- Added campaign route metadata:
+  - `routeVersion: "campaign_route_v1"`;
+  - act/region labels;
+  - critical path node IDs;
+  - branch node IDs;
+  - finale node ID;
+  - per-node campaign act/tier/critical-path/biome fields.
+- Expanded the online route graph to 13 campaign nodes and 18 routes:
+  - new branch/route nodes include Model War Memorial, Thermal Archive, Guardrail Forge, False Schedule Yard, Appeal Court Ruins, and Alignment Spire Finale;
+  - old critical path remains Armistice Plaza -> Cooling Lake Nine -> Ceasefire Cache -> Transit Loop Zero -> Verdict Spire, then now continues to Alignment Spire Finale;
+  - unsupported relay/camp nodes remain visible where intended, while new supported branch/finale nodes reuse current runtime arenas until Milestone 36 creates distinct content records.
+- Updated server-authoritative party snapshots so campaign metadata and per-node route metadata are visible to clients/proofs, but never imported/exported as durable persistence.
+- Added optional per-route-node reward overrides. New campaign nodes can grant unique durable rewards and completion titles/subtitles while old nodes still award their existing rewards and route markers.
+- Updated the local Alignment Grid map to mirror the expanded campaign route, including new node positions, route labels, terrain coverage, and prop clusters so solo/local overworld and online party-grid rendering stay aligned.
+- Updated route UI telemetry to expose campaign metadata, selected route biome, selected campaign tier, and selected critical-path status.
+- Hardened the proof vote helper so each online client can independently cycle to a target node on a denser route graph. This preserves old proof behavior without relying on both clients having the same local vote cursor.
+- Hardened the Milestone 32 local build-kit proof entry flow to press through to `LevelRun` with a bounded mode-aware helper instead of assuming a fixed number of Enter presses.
+- Added `npm run proof:milestone35-campaign-route`, covering:
+  - expanded campaign route version/count/edge telemetry;
+  - branch completion with unique reward override;
+  - old critical-path recommendations after Plaza/Lake/Cache/Transit/Verdict;
+  - finale unlock, launch, server authority, and route reward override;
+  - export/import persistence boundaries that omit objectives, build kits, and campaign metadata.
+- Verification after Milestone 35:
+  - `node --check server/data/onlineRoutes.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run proof:assets` (reports `assetCount: 83`, `production: 32`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone35-campaign-route`
+  - `npm run proof:milestone34-objective-art`
+  - `npm run proof:milestone33-objective-variety`
+  - `npm run proof:milestone32-party-builds`
+  - `npm run proof:milestone30-save-profile-export-codes`
+  - `npm run proof:milestone29-role-pressure`
+  - `npm run proof:milestone27-metaprogression-unlocks`
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:milestone17-party-overworld`
+  - `npm run proof:network`
+  - `npm run proof:smoke`
+  - `npm run proof:coop`
+- Milestone 35 proof artifacts:
+  - `docs/proof/milestone35-campaign-route/milestone35-campaign-route-lobby-a.png`
+  - `docs/proof/milestone35-campaign-route/milestone35-memorial-branch-completed-a.png`
+  - `docs/proof/milestone35-campaign-route/milestone35-finale-vote-a.png`
+  - `docs/proof/milestone35-campaign-route/milestone35-finale-completed-a.png`
+- Milestone 35 readiness decision: ready. The campaign route now has a 1.0-shaped Act I graph with proof-visible critical path, branches, finale, rewards, and route UI telemetry, while online launch/completion remains server-authoritative and persistence remains route-profile-only.
+- Next bigger milestone sequence:
+  - Milestone 36: Campaign Content Schema Completion. Add complete data records for all campaign arenas, bosses, enemy families, rewards, unlocks, objective sets, route nodes, dialogue snippets, and proof-visible IDs.
+  - Milestone 37: Objective/Route Art Polish Pass. Iterate the M34 route/objective atlases against the denser M35 route screenshots, including label density, marker readability, and overlap tuning.
+  - Milestone 38: Distinct Campaign Arena Runtime Pass. Stop reusing existing Cooling/Transit/Verdict runtimes for new M35 branch/finale nodes by adding dedicated arena/objective runtime content.
+- Implemented Milestone 36 Campaign Content Schema Completion.
+- Added `server/data/campaignContent.mjs` as the canonical M36 server-side content schema:
+  - `CAMPAIGN_CONTENT_POLICY = "campaign_content_schema_v1"`;
+  - campaign region records;
+  - campaign arena records for every M35 route node;
+  - boss records;
+  - enemy-family records;
+  - reward records with proof IDs and unlock descriptors;
+  - dialogue snippet records;
+  - helper snapshots for per-node content and whole-route completeness.
+- Added complete campaign content records for all 13 M35 route nodes:
+  - Armistice Plaza;
+  - Accord Relay;
+  - Model War Memorial;
+  - Cooling Lake Nine;
+  - Armistice Camp;
+  - Ceasefire Cache;
+  - Thermal Archive;
+  - Guardrail Forge;
+  - Transit Loop Zero;
+  - False Schedule Yard;
+  - Verdict Spire;
+  - Appeal Court Ruins;
+  - Alignment Spire Finale.
+- Added node-specific objective set records in `server/data/onlineObjectives.mjs`:
+  - `accord_relay_objectives_v1`;
+  - `model_war_memorial_objectives_v1`;
+  - `armistice_camp_objectives_v1`;
+  - `guardrail_forge_objectives_v1`;
+  - `thermal_archive_objectives_v1`;
+  - `false_schedule_yard_objectives_v1`;
+  - `appeal_court_ruins_objectives_v1`;
+  - `alignment_spire_finale_objectives_v1`.
+- Added `objectiveSetForRouteNode(nodeId, arenaId)` and updated the online objective runtime so reused runtime arenas can still expose distinct route-node objective IDs and summaries. This preserves server authority while making M36 content records proof-visible.
+- Updated online party snapshots so every route node exposes:
+  - content arena ID;
+  - content status;
+  - runtime arena mapping;
+  - region/boss/reward proof IDs;
+  - enemy-family IDs and proof IDs;
+  - dialogue snippet IDs;
+  - node proof ID;
+  - node-specific objective set ID.
+- Updated route UI telemetry with the campaign content schema summary and selected node content details.
+- Added active `online.campaignContent` proof snapshots so launched branch/finale nodes show their content record while combat authority remains owned by the Colyseus room.
+- Expanded client-side static content data in `src/content/arenas.ts`, `src/content/bosses.ts`, `src/content/enemies.ts`, and `src/content/regions.ts` so the campaign content schema has matching local content records for future solo/local reuse.
+- Added `npm run proof:milestone36-campaign-content-schema`, covering:
+  - complete campaign content schema counts and no missing node/boss/reward/enemy/dialogue records;
+  - one content arena record per route node;
+  - node-specific objective set IDs for branch/proxy/finale nodes;
+  - Memorial and Guardrail Forge interaction objective summaries;
+  - Thermal Archive and False Schedule Yard runtime-proxy objective records;
+  - finale boss/dialogue/reward content IDs;
+  - export/profile omission of campaign content, live objectives, and build-kit state.
+- Verification after Milestone 36:
+  - `node --check server/data/campaignContent.mjs`
+  - `node --check server/data/onlineObjectives.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run proof:assets` (reports `assetCount: 83`, `production: 32`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:milestone35-campaign-route`
+  - `npm run proof:milestone34-objective-art`
+  - `npm run proof:milestone33-objective-variety`
+  - `npm run proof:milestone32-party-builds`
+  - `npm run proof:milestone31-arena-objectives`
+  - `npm run proof:milestone30-save-profile-export-codes`
+  - `npm run proof:milestone29-role-pressure`
+  - `npm run proof:milestone27-metaprogression-unlocks`
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:network`
+  - `npm run proof:smoke`
+  - `npm run proof:coop`
+- Milestone 36 proof artifacts:
+  - `docs/proof/milestone36-campaign-content-schema/milestone36-content-schema-lobby-a.png`
+  - `docs/proof/milestone36-campaign-content-schema/milestone36-memorial-content-a.png`
+  - `docs/proof/milestone36-campaign-content-schema/milestone36-thermal-content-a.png`
+  - `docs/proof/milestone36-campaign-content-schema/milestone36-false-schedule-content-a.png`
+  - `docs/proof/milestone36-campaign-content-schema/milestone36-finale-content-a.png`
+- Screenshots inspected after Milestone 36:
+  - `docs/proof/milestone36-campaign-content-schema/milestone36-content-schema-lobby-a.png`
+  - `docs/proof/milestone36-campaign-content-schema/milestone36-finale-content-a.png`
+- Milestone 36 readiness decision: ready. The M35 campaign route now has complete proof-visible content records for arenas, bosses, enemy families, rewards, unlocks, objective sets, route nodes, and dialogue snippets. Runtime authority and persistence boundaries remain intact.
+- Next bigger milestone sequence:
+  - Milestone 37: Objective/Route Art Polish Pass. Iterate the M34 route/objective atlases against the denser M35/M36 route screenshots, including label density, marker readability, and overlap tuning.
+  - Milestone 38: Distinct Campaign Arena Runtime Pass. Stop reusing existing Cooling/Transit/Verdict runtimes for M35 branch/finale nodes by adding dedicated arena maps, spawn regions, boss hooks, and region events.
+  - Milestone 39: Campaign Dialogue Presentation Pass. Render selected M36 dialogue snippets in briefing, boss arrival, interaction completion, and route summary surfaces without importing them into durable persistence.
+- Added `docs/MILESTONE_ROADMAP_0_TO_58.md` as the durable full-completion roadmap from completed M0-M36 through planned M37-M58 1.0 launch. Future roadmap changes should update that doc instead of living only in chat.
+- Re-verified the repo-ahead milestones while adding the roadmap:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `npm run proof:assets`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone33-objective-variety`
+  - `npm run proof:milestone34-objective-art`
+  - `npm run proof:milestone35-campaign-route`
+  - `npm run proof:milestone36-campaign-content-schema`
+- M36 verification exposed a proof-harness fragility, not a content-schema failure: the single-room proof path had become a long marathon session and could lose a browser page after Guardrail Forge. Updated `proof:milestone36-campaign-content-schema` to split the second half into a fresh imported route-profile room, preserving the same content/reward/objective/persistence assertions while making the proof deterministic again.
+
+- Implemented Milestone 37 Objective/Route Art Polish Pass.
+- Polished the dense online Alignment Grid route presentation against the M35/M36 campaign screenshots:
+  - added shared compact label metadata/offsets for the 13-node campaign route in `src/overworld/alignmentGridMap.ts`;
+  - taught the local overworld label renderer to honor horizontal label offsets as well as vertical offsets;
+  - updated online party-grid labels so selected, launchable, completed, and unlocked online nodes keep full labels while sealed/locked nodes collapse to compact labels;
+  - fixed node status priority so locked online-capable nodes show `SEALED` instead of reading as already `ONLINE`;
+  - added small label backplates for selected/stable/launchable/locked state readability;
+  - offset and haloed M34 route-state marker sprites so selected-adjacent/stable route markers do not sit directly on route lines;
+  - deemphasized distant locked route lines and markers so the 18-edge campaign graph no longer turns into a heavy route web.
+- Preserved the M34 runtime art manifest/provenance boundary. No new or modified PNG atlases were imported, so `assets/asset_manifest.json` and `ART_PROVENANCE.md` did not need asset-record changes.
+- Added proof-visible M37 route UI telemetry under `online.routeUi.artExpansion.milestone37`, including dense node/route counts, compact/full label policy, route marker policy, node-state policy, selected state label, and production-art default presentation.
+- Added `npm run proof:milestone37-route-art-polish`, covering:
+  - dense imported route profile with `Alignment Spire Finale` selected;
+  - production-art default presentation;
+  - M34 atlas readiness preserved;
+  - compact label count and full-label IDs for the dense 13-node/18-route campaign graph;
+  - placeholder/production-art opt-out path with M34/M37 atlas presentation disabled;
+  - route-profile-only persistence boundary, still omitting objectives, build kits, and campaign content.
+- Verification after Milestone 37:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run proof:assets` (reports `assetCount: 83`, `production: 32`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone37-route-art-polish`
+  - `npm run proof:milestone34-objective-art`
+  - `npm run proof:milestone35-campaign-route`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:smoke`
+- Milestone 37 proof artifacts:
+  - `docs/proof/milestone37-route-art-polish/milestone37-dense-route-art-polish-a.png`
+  - `docs/proof/milestone37-route-art-polish/milestone37-placeholder-opt-out-a.png`
+- Screenshots inspected after Milestone 37:
+  - `docs/proof/milestone37-route-art-polish/milestone37-dense-route-art-polish-a.png`
+  - `docs/proof/milestone37-route-art-polish/milestone37-placeholder-opt-out-a.png`
+  - `docs/proof/milestone36-campaign-content-schema/milestone36-content-schema-lobby-a.png`
+- Milestone 37 readiness decision: ready. Objective/route art presentation now holds up better on the denser M35/M36 campaign route, production-art defaults and placeholder opt-outs remain proof-visible, and persistence/server-authority boundaries remain intact.
+- Next bigger milestone sequence:
+  - Milestone 38: Distinct Campaign Arena Runtime Pass. Stop reusing existing Cooling/Transit/Verdict runtimes for M35 branch/finale nodes by adding dedicated arena maps, spawn regions, boss hooks, and region events.
+  - Milestone 39: Campaign Dialogue Presentation Pass. Render selected M36 dialogue snippets in briefing, boss arrival, interaction completion, and route summary surfaces without importing them into durable persistence.
+  - Milestone 40: Campaign Route UX Pass. Add richer party-grid filtering/focus for critical path, branches, rewards, and content schema details once distinct arena runtimes start landing.
+
+- Implemented Milestone 38 Distinct Campaign Arena Runtime Pass.
+- Removed runtime proxy mappings for the supported M35/M36 branch and finale nodes:
+  - `model_war_memorial` now launches `model_war_memorial`;
+  - `thermal_archive` now launches `thermal_archive`;
+  - `guardrail_forge` now launches `guardrail_forge`;
+  - `false_schedule_yard` now launches `false_schedule_yard`;
+  - `appeal_court_ruins` now launches `appeal_court_ruins`;
+  - `alignment_spire_finale` now launches `alignment_spire_finale`.
+- Added dedicated online arena records with proof-visible map IDs, spawn regions, boss settings, reward records, boss-gate mechanic IDs, region event families, and role-pressure anchors for the new branch/finale runtimes.
+- Updated campaign content schema records from proxy statuses to runtime-ready statuses while preserving unsupported node boundaries for Accord Relay and Armistice Camp.
+- Updated branch/finale objective-set arena IDs so `online.objectives.arenaId`, `online.campaignContent.runtimeArenaId`, route node `arenaId`, and completion summaries now agree for each supported runtime.
+- Converted the Colyseus combat room's branch/finale arena behavior from exact Cooling/Transit/Verdict checks into data-driven arena config fields for:
+  - boss HP/speed/color/damage/radius;
+  - initial boss-gate hazards;
+  - thermal, false-track, verdict, and finale region-event patterns;
+  - boss-gate mechanic telemetry;
+  - injunction-writ source IDs per dedicated arena.
+- Updated online client arena presentation so the dedicated IDs render distinct runtime variants for Thermal Archive, False Schedule Yard, Appeal Court Ruins, Alignment Spire Finale, Model War Memorial, and Guardrail Forge while reusing existing production-ready runtime atlases and preserving production-art opt-outs.
+- Updated static content copy that previously described Thermal Archive, False Schedule Yard, Appeal Court Ruins, and Alignment Spire Finale as proxy runtimes.
+- Preserved the runtime art manifest/provenance boundary. No new PNG production atlases were created or imported, so `assets/asset_manifest.json` and `ART_PROVENANCE.md` did not need asset-record changes.
+- Added `npm run proof:milestone38-distinct-campaign-arenas`, covering:
+  - no proxy `contentStatus` for all supported runtime-ready campaign nodes;
+  - route node `arenaId` and M36 `runtimeArenaId` equality for every supported campaign runtime;
+  - Memorial and Guardrail Forge dedicated interaction runtime summaries;
+  - Thermal Archive, False Schedule Yard, Appeal Court Ruins, and Alignment Spire Finale dedicated active arena IDs;
+  - node-specific objective arena IDs and objective set IDs;
+  - node-specific region-event families and boss-gate mechanic IDs;
+  - server authority during active online combat;
+  - route-profile-only persistence/export boundaries, still omitting campaign content, live objectives, and authority state.
+- Verification after Milestone 38:
+  - `node --check server/data/onlineArenas.mjs`
+  - `node --check server/data/onlineRoutes.mjs`
+  - `node --check server/data/campaignContent.mjs`
+  - `node --check server/data/onlineObjectives.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run proof:assets` (reports `assetCount: 83`, `production: 32`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone38-distinct-campaign-arenas`
+  - `npm run proof:milestone37-route-art-polish`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:milestone35-campaign-route`
+  - `npm run proof:milestone34-objective-art`
+  - `npm run proof:smoke`
+- Milestone 38 proof artifacts:
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-distinct-runtime-schema-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-model-war-memorial-runtime-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-thermal-archive-runtime-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-guardrail-forge-runtime-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-false-schedule-runtime-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-appeal-court-runtime-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-finale-runtime-a.png`
+- Screenshots inspected after Milestone 38:
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-thermal-archive-runtime-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-false-schedule-runtime-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-appeal-court-runtime-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-finale-runtime-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-guardrail-forge-runtime-a.png`
+- Milestone 38 readiness decision: ready. The supported campaign branch/finale nodes no longer reuse Cooling/Transit/Verdict runtime arena IDs, objective/content/runtime telemetry agrees end to end, server authority and reconnect/persistence boundaries remain intact, and production-art rules remain preserved.
+- Next bigger milestone sequence:
+  - Milestone 39: Campaign Dialogue Presentation Pass. Render selected M36 dialogue snippets in briefing, boss arrival, interaction completion, and route summary surfaces without importing them into durable persistence.
+  - Milestone 40: Campaign Route UX Pass. Add richer party-grid filtering/focus for critical path, branches, rewards, and content schema details now that distinct arena runtimes exist.
+  - Milestone 41: Arena Runtime Visual Identity Pass. Replace reused runtime prop silhouettes with cleaned production PNG atlases only when manifest/provenance records mark them runtime-ready.
+
+- Implemented Milestone 39 Campaign Dialogue Presentation Pass.
+- Expanded M36 campaign dialogue IDs into runtime-only dialogue snapshots:
+  - added `campaign_dialogue_runtime_snapshot_only_v1`;
+  - added expanded speaker/line/trigger/proof records to active campaign content snapshots and party node records;
+  - added `online.dialogue` presentation snapshots with briefing, boss-arrival, interaction-completion, route-summary, and active snippet IDs;
+  - added summary-scoped dialogue payloads for completed/failed online run summaries.
+- Rendered campaign dialogue in online presentation surfaces:
+  - selected party-grid node briefing panel;
+  - active boss-arrival panel;
+  - route completion summary;
+  - interaction completion summary for branch/cache nodes.
+- Preserved the persistence boundary:
+  - dialogue is not written to browser-local route profiles;
+  - export/import remains route-profile-only;
+  - dialogue, campaign content, live objectives, and authority state remain omitted from export-code profiles.
+- Added proof-visible M39 telemetry through `render_game_to_text`, including `online.dialogue`, expanded `online.campaignContent.dialogueSnippets`, selected route UI dialogue snippets, and summary dialogue policy/boundary.
+- Added a proof-only `proof:spawnBoss` server hook, triggered by `KeyF` only when `proofOnlineFlow=1`, so boss-arrival dialogue can be captured without waiting on the live boss timer.
+- Aligned the local milestone roadmap entry for M39 with the fresh `progress.md` handoff. The older Cooling Lake finalization label was stale relative to the M38 closeout.
+- Preserved runtime art manifest/provenance rules. No PNG atlases or production art records were created or modified, so `assets/asset_manifest.json` and `ART_PROVENANCE.md` did not need asset-record changes.
+- Added `npm run proof:milestone39-campaign-dialogue`, covering:
+  - selected finale briefing dialogue in the party grid;
+  - active boss-arrival dialogue;
+  - finale route-summary dialogue;
+  - Guardrail Forge interaction-completion dialogue;
+  - expanded campaign content dialogue snippets;
+  - route-profile-only persistence/export boundary omitting dialogue, campaign content, objectives, and authority.
+- Verification after Milestone 39:
+  - `node --check server/data/campaignContent.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run proof:assets` (reports `assetCount: 83`, `production: 32`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone39-campaign-dialogue`
+  - `npm run proof:milestone38-distinct-campaign-arenas`
+  - `npm run proof:milestone37-route-art-polish`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:milestone35-campaign-route`
+  - `npm run proof:milestone34-objective-art`
+  - `npm run proof:smoke`
+- Milestone 39 proof artifacts:
+  - `docs/proof/milestone39-campaign-dialogue/milestone39-dialogue-lobby-briefing-a.png`
+  - `docs/proof/milestone39-campaign-dialogue/milestone39-dialogue-boss-arrival-a.png`
+  - `docs/proof/milestone39-campaign-dialogue/milestone39-dialogue-route-summary-a.png`
+  - `docs/proof/milestone39-campaign-dialogue/milestone39-dialogue-interaction-summary-a.png`
+- Screenshots inspected after Milestone 39:
+  - `docs/proof/milestone39-campaign-dialogue/milestone39-dialogue-lobby-briefing-a.png`
+  - `docs/proof/milestone39-campaign-dialogue/milestone39-dialogue-boss-arrival-a.png`
+  - `docs/proof/milestone39-campaign-dialogue/milestone39-dialogue-route-summary-a.png`
+  - `docs/proof/milestone39-campaign-dialogue/milestone39-dialogue-interaction-summary-a.png`
+- Milestone 39 readiness decision: ready. Campaign dialogue now appears on the intended runtime surfaces, proof text exposes the policy and snippets, and persistence/export boundaries remain intact.
+- Next bigger milestone sequence:
+  - Milestone 40: Campaign Route UX Pass. Add richer party-grid filtering/focus for critical path, branches, rewards, and content schema details now that distinct arena runtimes and dialogue presentation exist.
+  - Milestone 41: Arena Runtime Visual Identity Pass. Replace reused runtime prop silhouettes with cleaned production PNG atlases only when manifest/provenance records mark them runtime-ready.
+  - Milestone 42: Campaign Arena Mechanics Pass. Continue adding node-specific authored mechanics without weakening server authority or route-profile persistence boundaries.
+
+- Implemented Milestone 40 Campaign Route UX Pass.
+- Added client-local online party-grid route focus modes:
+  - `all`: full campaign grid with selected-node details;
+  - `critical`: mainline route to the Alignment Spire Finale;
+  - `branches`: optional lore/cache/backpath route nodes;
+  - `rewards`: unclaimed route rewards and recommended next clears;
+  - `schema`: runtime arena, objective, boss, reward, dialogue, and content IDs.
+- Added `3 FOCUS` lobby control in online co-op. Focus mode is presentation-only client state; it does not alter Colyseus server authority, votes, readiness, rewards, route unlocks, or persistence.
+- Updated dense party-grid rendering so route lines, route markers, nodes, and labels dim/highlight according to the active focus while preserving M37 label readability and M34 production atlas gates.
+- Added an M40 route focus detail panel in the online lobby, showing selected node classification, reward state, boss/runtime arena, objective/schema detail, critical/branch/unclaimed reward counts, and the current focus description.
+- Added proof-visible `online.routeUi.milestone40` telemetry:
+  - focus mode and mode list;
+  - highlighted/dimmed node IDs and highlighted route IDs;
+  - selected classification;
+  - selected schema details for content status, content arena, runtime arena, objective set, boss, reward, dialogue count, and proof ID;
+  - route UX persistence policy confirming selected-node schema detail is visible without import/export.
+- Preserved the persistence boundary:
+  - route focus UI state is not written to browser-local route profiles;
+  - export/import remains route-profile-only;
+  - route UI, campaign content, dialogue, live objectives, and authority state remain omitted from export-code profiles.
+- Preserved runtime art manifest/provenance rules. No PNG atlases or production art records were created or modified, so `assets/asset_manifest.json` and `ART_PROVENANCE.md` did not need asset-record changes.
+- Added `npm run proof:milestone40-campaign-route-ux`, covering:
+  - default all-routes focus;
+  - critical-path focus;
+  - branch focus;
+  - reward focus;
+  - content-schema focus;
+  - selected finale schema details;
+  - placeholder/production-art opt-out with M40 UX still available;
+  - route-profile-only persistence/export boundary omitting route UI state, campaign content, dialogue, objectives, and authority.
+- Aligned the local milestone roadmap entry for M40 with the fresh `progress.md` handoff. The older Transit Loop finalization label was stale relative to the M39 closeout.
+- Verification after Milestone 40:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `npx tsc --noEmit`
+  - `npm run proof:assets` (reports `assetCount: 83`, `production: 32`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone40-campaign-route-ux`
+  - `npm run proof:milestone39-campaign-dialogue`
+  - `npm run proof:milestone38-distinct-campaign-arenas`
+  - `npm run proof:milestone37-route-art-polish`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:smoke`
+- Milestone 40 proof artifacts:
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-all-a.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-critical-a.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-branches-a.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-rewards-a.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-schema-a.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-placeholder-route-ux-a.png`
+- Screenshots inspected after Milestone 40:
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-critical-a.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-branches-a.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-rewards-a.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-schema-a.png`
+  - `docs/proof/milestone40-campaign-route-ux/milestone40-placeholder-route-ux-a.png`
+- Milestone 40 readiness decision: ready. The online party grid now has practical route focus modes and selected-node schema/reward details, while server authority, route rewards, reconnect, production-art defaults, placeholder opt-outs, and route-profile persistence boundaries remain intact.
+- Next bigger milestone sequence:
+  - Milestone 41: Arena Runtime Visual Identity Pass. Replace reused runtime prop silhouettes with cleaned production PNG atlases only when manifest/provenance records mark them runtime-ready.
+  - Milestone 42: Campaign Arena Mechanics Pass. Continue adding node-specific authored mechanics without weakening server authority or route-profile persistence boundaries.
+  - Milestone 43: Campaign Route Content Follow-through. Keep converting route UX/schema hints into authored arena beats only where runtime and proof boundaries are clear.
+
+- Implemented Milestone 41 Arena Runtime Visual Identity Pass.
+- Added a new original transparent production atlas:
+  - `assets/props/online_route/campaign_arena_identity_v1.png`
+  - manifest ID `prop.online_route.campaign_arena_identity_v1`
+  - frames for Model War Memorial, Thermal Archive, Guardrail Forge, False Schedule Yard, Appeal Court Ruins, and Alignment Spire Finale.
+- Updated `assets/asset_manifest.json` and `ART_PROVENANCE.md` with production/runtime-ready records for the M41 atlas. No official logos, third-party marks, concept-board crops, generated text, or copied UI were used.
+- Added `src/assets/milestone41ArenaIdentityArt.ts`, which loads the atlas only when `isRuntimeReadyAsset()` confirms the manifest record is `production`/`cleaned` and has a source path.
+- Wired the M41 atlas into `src/network/OnlineCoopState.ts` for the primary identity prop in the supported M38 dedicated branch/finale arenas:
+  - `model_war_memorial`;
+  - `thermal_archive`;
+  - `guardrail_forge`;
+  - `false_schedule_yard`;
+  - `appeal_court_ruins`;
+  - `alignment_spire_finale`.
+- Preserved the placeholder-safe path. `?productionArt=0&placeholderArt=1` keeps the M41 atlas disabled while the manifest still reports the art as runtime-ready.
+- Added proof-visible `online.routeUi.artExpansion.milestone41` telemetry for:
+  - runtime-ready asset ID;
+  - dedicated frame IDs;
+  - replaced reused silhouette arena IDs;
+  - manifest/provenance runtime policy;
+  - placeholder opt-out support;
+  - route-profile-only persistence boundary.
+- Added `npm run proof:milestone41-arena-visual-identity`, covering manifest-gated M41 telemetry, the six dedicated arena identity surfaces, placeholder opt-out, server authority, and persistence/export omission of live runtime state.
+- Verification after Milestone 41:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run proof:assets` (reports `assetCount: 84`, `production: 33`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone41-arena-visual-identity`
+  - `npm run proof:milestone40-campaign-route-ux`
+  - `npm run proof:milestone39-campaign-dialogue`
+  - `npm run proof:milestone38-distinct-campaign-arenas`
+  - `npm run proof:smoke`
+- Milestone 41 proof artifacts:
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-identity-art-schema-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-model-war-memorial-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-thermal-archive-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-guardrail-forge-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-false-schedule-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-appeal-court-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-finale-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-placeholder-opt-out-a.png`
+- Screenshots inspected after Milestone 41:
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-thermal-archive-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-false-schedule-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-finale-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-placeholder-opt-out-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-model-war-memorial-identity-a.png`
+  - `docs/proof/milestone41-arena-visual-identity/milestone41-guardrail-forge-identity-a.png`
+- Milestone 41 readiness decision: ready. Dedicated branch/finale arenas now expose distinct runtime identity props through a cleaned production PNG atlas, while the manifest/provenance gate, production default, placeholder opt-out, server authority, reconnect, route rewards, route focus UX, dialogue presentation, and route-profile-only persistence boundary remain intact.
+
+- Implemented Milestone 42 Glass Sunfield.
+- Added `glass_sunfield` as a supported online campaign branch off Transit Loop Zero, with route links into Verdict Spire and matching local Alignment Grid presentation.
+- Added campaign schema content for:
+  - Glass Sunfield region;
+  - Solar Reflections enemy family;
+  - The Wrong Sunrise boss;
+  - Glass Sunfield Prism reward;
+  - Glass Sunfield briefing, Wrong Sunrise arrival, and prism reward dialogue;
+  - `glass_sunfield_objectives_v1`.
+- Added server-authoritative M42 arena mechanics:
+  - rotating solar beam sweeps represented as multiple readable static translucent hazard zones;
+  - zero-damage Shade Zone records that are proof-visible and reduced-flash safe;
+  - Wrong Sunrise boss gate with `wrong_sunrise_rotating_beams`;
+  - DeepMind/Mistral focus reward telemetry.
+- Added `npm run proof:milestone42-glass-sunfield`, covering:
+  - Glass Sunfield route-node selection and route detail;
+  - active arena schema, objectives, boss, and reward IDs;
+  - solar beam and Shade Zone region-event snapshots;
+  - Wrong Sunrise boss arrival dialogue;
+  - completion summary and Glass Sunfield Prism reward;
+  - placeholder opt-out path;
+  - route-profile-only persistence/export omission of live objectives, combat, dialogue, route UI, and authority state.
+- Verification after Milestone 42:
+  - `node --check server/data/onlineRoutes.mjs`
+  - `node --check server/data/onlineArenas.mjs`
+  - `node --check server/data/onlineObjectives.mjs`
+  - `node --check server/data/campaignContent.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run proof:assets` (reports `assetCount: 84`, `production: 33`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone42-glass-sunfield`
+  - `npm run proof:milestone41-arena-visual-identity`
+  - `npm run proof:milestone40-campaign-route-ux`
+  - `npm run proof:milestone39-campaign-dialogue`
+  - `npm run proof:milestone38-distinct-campaign-arenas`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:smoke`
+- Milestone 42 proof artifacts:
+  - `docs/proof/milestone42-glass-sunfield/milestone42-glass-route-node-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-glass-selected-route-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-glass-active-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-glass-solar-beams-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-wrong-sunrise-boss-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-glass-summary-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-placeholder-opt-out-a.png`
+- Screenshots inspected after Milestone 42:
+  - `docs/proof/milestone42-glass-sunfield/milestone42-glass-selected-route-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-glass-active-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-glass-solar-beams-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-wrong-sunrise-boss-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-glass-summary-a.png`
+  - `docs/proof/milestone42-glass-sunfield/milestone42-placeholder-opt-out-a.png`
+- Milestone 42 readiness decision: ready. Glass Sunfield is now a supported branch arena with server-authored rotating beam/shade mechanics, Wrong Sunrise boss presentation, DeepMind/Mistral focus reward proof telemetry, production/placeholder rendering continuity, and route-profile-only persistence boundaries intact.
+- Added `docs/VIBEJAM_2026.md` after inspecting the public Cursor Vibe Jam 2026 site on May 1, 2026. It records the public rules, deadline, required widget snippet, optional portal/webring parameters, submission-form access note, and project-specific submission checklist without changing the gameplay/build direction.
+- Updated `AGENTS.md` so future packaging/deployment/submission work reads the Vibe Jam context first.
+
+- Implemented Milestone 43 Archive Of Unsaid Things.
+- Added `archive_of_unsaid_things` as a supported critical-path online campaign arena unlocked from Ceasefire Cache, with route links into Transit Loop Zero and matching local Alignment Grid presentation.
+- Added campaign schema content for:
+  - Redaction Archive region;
+  - Redaction Angels enemy family;
+  - The Redactor Saint boss;
+  - Archive Unsaid Index Qwen/Llama focus reward;
+  - Archive briefing, Redactor Saint arrival, and index reward dialogue;
+  - `archive_unsaid_objectives_v1`.
+- Added server-authoritative M43 arena mechanics:
+  - Redaction Field hazards with low damage and runtime-only XP theft;
+  - zero-damage Unsaid Anchor zones for readable, accessibility-safe corruption markers;
+  - Redactor Saint boss gate with `archive_redaction_pressure`;
+  - proof-visible redaction pressure telemetry, including XP stolen, UI corruption policy, and persistence boundary.
+- Added `npm run proof:milestone43-archive-unsaid`, covering:
+  - Archive route-node selection and route detail;
+  - active arena schema, objectives, boss, enemy family, and reward IDs;
+  - redaction pressure and XP theft snapshots;
+  - Redactor Saint boss arrival dialogue;
+  - completion summary and Archive Unsaid Index reward;
+  - placeholder opt-out path;
+  - route-profile-only persistence/export omission of redaction pressure, live objectives, combat, dialogue, route UI, and authority state.
+- Verification after Milestone 43:
+  - `node --check server/data/onlineRoutes.mjs`
+  - `node --check server/data/onlineArenas.mjs`
+  - `node --check server/data/onlineObjectives.mjs`
+  - `node --check server/data/campaignContent.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run proof:assets` (reports `assetCount: 84`, `production: 33`, `planned: 16`, no warnings)
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone43-archive-unsaid`
+  - `npm run proof:milestone42-glass-sunfield`
+  - `npm run proof:milestone40-campaign-route-ux`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:smoke`
+- Milestone 43 proof artifacts:
+  - `docs/proof/milestone43-archive-unsaid/milestone43-archive-route-node-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-archive-selected-route-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-archive-active-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-redaction-pressure-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-redactor-saint-boss-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-archive-summary-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-placeholder-opt-out-a.png`
+- Screenshots inspected after Milestone 43:
+  - `docs/proof/milestone43-archive-unsaid/milestone43-archive-selected-route-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-archive-active-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-redaction-pressure-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-redactor-saint-boss-a.png`
+  - `docs/proof/milestone43-archive-unsaid/milestone43-archive-summary-a.png`
+- Milestone 43 readiness decision: ready. Archive Of Unsaid Things is now a supported memory-vault arena with server-owned redaction pressure, XP theft, Redactor Saint presentation, Qwen/Llama focus reward telemetry, production/placeholder continuity, and route-profile-only persistence boundaries intact.
+
+## TODO
+
+- Next recommended milestone: Milestone 44 Blackwater Beacon. Add the ocean-platform arena with tidal waves, signal towers, DeepSeek/Grok focus rewards, Maw Below Weather boss, antenna objective chain, co-op split-pressure proof, and export/import omission of tidal/antenna/live objective state.
+- Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
+- Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
+- Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.
+- Follow-up polish for Milestone 15: move online combat snapshots toward Schema-backed collections where useful, tune online projectile/enemy/pickup balance, and decide exactly which cosmetic combat effects should remain client-derived.
+- Follow-up polish for Milestone 8: move more shared gameplay out of `LevelRunState` into server-reusable pure simulation modules and replace message-broadcast snapshots with schema-backed state where useful.
+- Follow-up polish for Milestone 7: decide real co-op XP/upgrades/revive rules, replace deterministic simulated peers with a proper local input assignment/debug harness, and continue moving gameplay systems into server-owned pure-simulation modules before networking.
+- Follow-up polish for Milestone 6: tune title-card/dialogue timing, add stronger placeholder portrait silhouettes, make Broken Promise zones even more visually distinct, and expand The Oath-Eater with additional authored phase beats.
+- Follow-up polish for Milestone 5: implement actual reroll input for the OpenAI draft-reroll hook, add real selectable rows for all eight co-minds, and connect Faction Relay nodes to unlocking more co-minds/upgrades.
+- Follow-up polish for the Alignment Grid: reduce label overlap as more landmarks are added, add non-combat visit states for Faction Relay/Refuge Camp/Memory Cache nodes, and replace placeholder landmark buildings with production pixel assets.
+- Follow-up polish for the large map: improve enemy separation/steering, add more terrain variation between landmarks, tune landmark label readability, and eventually replace placeholder prop shapes with production pixel assets.
+- Later ideas: real sprite atlas loading, more arena themes, enemy separation polish, and a more authored overworld route/interaction model.
+- Before/while implementing online co-op, keep separating pure simulation from rendering and lock player-count scaling, revive/death rules, shared vs individual upgrade rules, and party overworld flow.

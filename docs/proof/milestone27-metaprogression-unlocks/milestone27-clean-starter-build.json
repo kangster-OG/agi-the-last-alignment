@@ -1,0 +1,1367 @@
+{
+  "mode": "BuildSelect",
+  "title": "AGI: The Last Alignment",
+  "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
+  "selectedBuild": {
+    "classId": "accord_striker",
+    "className": "Accord Striker",
+    "classRole": "Fast breach fighter",
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    },
+    "factionId": "openai_accord",
+    "factionName": "OpenAI Accord Division",
+    "factionDoctrine": "Adapt, refuse, patch, survive."
+  },
+  "build": null,
+  "upgrades": [],
+  "objective": "",
+  "performance": {
+    "entitiesAllocated": 0,
+    "activeEntities": 0,
+    "fpsTarget": 60
+  },
+  "assetRendering": {
+    "assetPreview": null,
+    "armisticeTileAtlasEnabled": true,
+    "productionArtEnabled": true,
+    "productionArtSet": "milestone14_combat_art_parity",
+    "productionArtDefaulted": true,
+    "armisticeTileAtlasDefaulted": true,
+    "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
+  },
+  "assets": {
+    "manifestVersion": 1,
+    "totalAssets": 83,
+    "countsByStatus": {
+      "concept": 14,
+      "raw": 4,
+      "code_placeholder": 16,
+      "production": 32,
+      "cleaned": 1,
+      "planned": 16
+    },
+    "placeholderMode": true,
+    "thirdPartyLogosTracked": 8,
+    "productionAssets": 32
+  },
+  "player": null,
+  "buildSelection": {
+    "availableClasses": [
+      {
+        "id": "accord_striker",
+        "name": "Accord Striker",
+        "role": "Fast breach fighter",
+        "baseStats": {
+          "speed": 4.95,
+          "armor": 0,
+          "pickupRange": 1.6,
+          "cooldownScale": 0.95
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "accord_striker",
+          "factionId": "openai_accord",
+          "classRole": "runner",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "runner",
+          "startingWeaponId": "refusal_shard",
+          "passiveIds": [
+            "refusal_slipstream",
+            "route_runner",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.runner",
+            "faction_bias.runner",
+            "faction_bias.support",
+            "role_match"
+          ],
+          "synergyId": "synergy.emergency_patch_runner",
+          "effectScopes": {
+            "solo": [
+              "fast breach movement",
+              "wide pickup recovery",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "scouts objective lanes",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "server snapshots runner role for split-hold anchors",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "refusal_shard": "active",
+            "refusal_slipstream": "active",
+            "route_runner": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": true,
+        "unlock": {
+          "id": "accord_striker",
+          "unlocked": true,
+          "source": "starter",
+          "rewardId": null,
+          "requirementLabel": "Starter frame"
+        }
+      },
+      {
+        "id": "bastion_breaker",
+        "name": "Bastion Breaker",
+        "role": "Heavy exosuit bruiser",
+        "baseStats": {
+          "speed": 3.8,
+          "armor": 2,
+          "pickupRange": 1.1,
+          "cooldownScale": 1.05
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "bastion_breaker",
+          "factionId": "openai_accord",
+          "classRole": "cover",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "cover",
+          "startingWeaponId": "safety_cannon",
+          "passiveIds": [
+            "impact_review",
+            "load_bearing_apology",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.cover",
+            "faction_bias.runner",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.cover_cross_training",
+          "effectScopes": {
+            "solo": [
+              "higher health and cannon pressure",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "frontline bodyguard",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "cover role contributes safer regroup/recompile reads",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "safety_cannon": "active",
+            "impact_review": "active",
+            "load_bearing_apology": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "bastion_breaker",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "plaza_stabilized",
+          "requirementLabel": "Clear Armistice Plaza"
+        }
+      },
+      {
+        "id": "drone_reaver",
+        "name": "Drone Reaver",
+        "role": "Swarm commander",
+        "baseStats": {
+          "speed": 4.3,
+          "armor": 0,
+          "pickupRange": 1.3,
+          "cooldownScale": 1
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "drone_reaver",
+          "factionId": "openai_accord",
+          "classRole": "harrier",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "harrier",
+          "startingWeaponId": "fork_drone",
+          "passiveIds": [
+            "guardian_fork",
+            "fork_bomb_familiar",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.harrier",
+            "faction_bias.runner",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.harrier_cross_training",
+          "effectScopes": {
+            "solo": [
+              "fast drone projectile cadence",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "harasses flank pressure",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "harrier role keeps split-hold pressure distinct",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "fork_drone": "active",
+            "guardian_fork": "active",
+            "fork_bomb_familiar": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "drone_reaver",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "lake_coolant_rig",
+          "requirementLabel": "Earn Lake Coolant Rig"
+        }
+      },
+      {
+        "id": "signal_vanguard",
+        "name": "Signal Vanguard",
+        "role": "Combat support unit",
+        "baseStats": {
+          "speed": 4.15,
+          "armor": 1,
+          "pickupRange": 1.45,
+          "cooldownScale": 1
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "signal_vanguard",
+          "factionId": "openai_accord",
+          "classRole": "support",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "support",
+          "startingWeaponId": "signal_pulse",
+          "passiveIds": [
+            "beacon_discipline",
+            "silkgrid_relay",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.support",
+            "faction_bias.runner",
+            "faction_bias.support",
+            "role_match"
+          ],
+          "synergyId": "synergy.support_aligned_comind",
+          "effectScopes": {
+            "solo": [
+              "short pulse control",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "support identity visible in four-player cell",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "server-owned support kit modifiers can help Recompile Ally",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "signal_pulse": "active",
+            "beacon_discipline": "active",
+            "silkgrid_relay": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "signal_vanguard",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "ceasefire_cache_persistence_seed",
+          "requirementLabel": "Decode Ceasefire Cache"
+        }
+      },
+      {
+        "id": "vector_interceptor",
+        "name": "Vector Interceptor",
+        "role": "Tactical lane controller",
+        "baseStats": {
+          "speed": 4.55,
+          "armor": 0,
+          "pickupRange": 1.35,
+          "cooldownScale": 0.92
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "vector_interceptor",
+          "factionId": "openai_accord",
+          "classRole": "control",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "control",
+          "startingWeaponId": "vector_lance",
+          "passiveIds": [
+            "predicted_lane",
+            "peer_reviewed_laser",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.control",
+            "faction_bias.runner",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.control_cross_training",
+          "effectScopes": {
+            "solo": [
+              "long lane-piercing shots",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "controls objective lanes",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "control role remains authoritative telemetry only",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "vector_lance": "active",
+            "predicted_lane": "active",
+            "peer_reviewed_laser": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "vector_interceptor",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "transit_permit_zero",
+          "requirementLabel": "Anchor Transit Loop Zero"
+        }
+      },
+      {
+        "id": "nullbreaker_ronin",
+        "name": "Nullbreaker Ronin",
+        "role": "Solo breach killer",
+        "baseStats": {
+          "speed": 4.75,
+          "armor": 0,
+          "pickupRange": 1.05,
+          "cooldownScale": 0.9
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "nullbreaker_ronin",
+          "factionId": "openai_accord",
+          "classRole": "duelist",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "duelist",
+          "startingWeaponId": "null_blade",
+          "passiveIds": [
+            "appeal_cut",
+            "sparse_knife",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.duelist",
+            "faction_bias.runner",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.duelist_cross_training",
+          "effectScopes": {
+            "solo": [
+              "short-range high-risk blade",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "boss duelist pressure",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "duelist role never grants client authority",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "null_blade": "active",
+            "appeal_cut": "active",
+            "sparse_knife": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "nullbreaker_ronin",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "verdict_key_zero",
+          "requirementLabel": "Overrule Verdict Spire"
+        }
+      }
+    ],
+    "availableFactions": [
+      {
+        "id": "openai_accord",
+        "name": "OpenAI Accord Division",
+        "shortName": "OpenAI",
+        "upgradePoolIds": [
+          "refusal_halo",
+          "context_bloom",
+          "patch_cascade",
+          "bad_output_filter",
+          "the_no_button",
+          "alignment_breaker"
+        ],
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "accord_striker",
+          "factionId": "openai_accord",
+          "classRole": "runner",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "runner",
+          "startingWeaponId": "refusal_shard",
+          "passiveIds": [
+            "refusal_slipstream",
+            "route_runner",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.runner",
+            "faction_bias.runner",
+            "faction_bias.support",
+            "role_match"
+          ],
+          "synergyId": "synergy.emergency_patch_runner",
+          "effectScopes": {
+            "solo": [
+              "fast breach movement",
+              "wide pickup recovery",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "scouts objective lanes",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "server snapshots runner role for split-hold anchors",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "refusal_shard": "active",
+            "refusal_slipstream": "active",
+            "route_runner": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": true,
+        "unlock": {
+          "id": "openai_accord",
+          "unlocked": true,
+          "source": "starter",
+          "rewardId": null,
+          "requirementLabel": "Starter co-mind"
+        }
+      },
+      {
+        "id": "anthropic_safeguard",
+        "name": "Anthropic Safeguard Legion",
+        "shortName": "Anthropic",
+        "upgradePoolIds": [
+          "golden_guardrail",
+          "constitutional_shield",
+          "red_team_pulse",
+          "harmlessness_field",
+          "containment_mercy"
+        ],
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "accord_striker",
+          "factionId": "anthropic_safeguard",
+          "classRole": "runner",
+          "factionRoleBias": [
+            "cover",
+            "support"
+          ],
+          "resolvedRole": "runner",
+          "startingWeaponId": "refusal_shard",
+          "passiveIds": [
+            "refusal_slipstream",
+            "route_runner",
+            "golden_guardrail",
+            "constitutional_shield"
+          ],
+          "partyAuraIds": [
+            "anthropic_containment"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0.28,
+            "requiredSecondsScale": 0.94,
+            "reviveHpBonus": 0.1,
+            "guardDamageReduction": 0.05
+          },
+          "rolePressureAffinity": [
+            "class_role.runner",
+            "faction_bias.cover",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.runner_cross_training",
+          "effectScopes": {
+            "solo": [
+              "fast breach movement",
+              "wide pickup recovery",
+              "safer max health floor"
+            ],
+            "localCoop": [
+              "scouts objective lanes",
+              "cover aura for risky revives"
+            ],
+            "online": [
+              "server snapshots runner role for split-hold anchors",
+              "server-owned radius, revive HP, and guard telemetry"
+            ]
+          },
+          "hookStatus": {
+            "refusal_shard": "active",
+            "refusal_slipstream": "active",
+            "route_runner": "active",
+            "golden_guardrail": "active",
+            "constitutional_shield": "active",
+            "anthropic_containment": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "anthropic_safeguard",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "plaza_stabilized",
+          "requirementLabel": "Clear Armistice Plaza"
+        }
+      },
+      {
+        "id": "google_deepmind_gemini",
+        "name": "Google DeepMind Gemini Array",
+        "shortName": "DeepMind",
+        "upgradePoolIds": [
+          "gemini_beam",
+          "control_group_detonation",
+          "peer_reviewed_laser",
+          "lab_result_fire",
+          "experiment_404"
+        ],
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "accord_striker",
+          "factionId": "google_deepmind_gemini",
+          "classRole": "runner",
+          "factionRoleBias": [
+            "control",
+            "duelist"
+          ],
+          "resolvedRole": "runner",
+          "startingWeaponId": "refusal_shard",
+          "passiveIds": [
+            "refusal_slipstream",
+            "route_runner",
+            "gemini_beam",
+            "peer_reviewed_laser"
+          ],
+          "partyAuraIds": [
+            "deepmind_target_mark"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.98,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.runner",
+            "faction_bias.control",
+            "faction_bias.duelist"
+          ],
+          "synergyId": "synergy.runner_cross_training",
+          "effectScopes": {
+            "solo": [
+              "fast breach movement",
+              "wide pickup recovery",
+              "precision projectile pressure"
+            ],
+            "localCoop": [
+              "scouts objective lanes",
+              "marked objective priority"
+            ],
+            "online": [
+              "server snapshots runner role for split-hold anchors",
+              "server-owned analysis telemetry only"
+            ]
+          },
+          "hookStatus": {
+            "refusal_shard": "active",
+            "refusal_slipstream": "active",
+            "route_runner": "active",
+            "gemini_beam": "active",
+            "peer_reviewed_laser": "active",
+            "deepmind_target_mark": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "google_deepmind_gemini",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "lake_coolant_rig",
+          "requirementLabel": "Earn Lake Coolant Rig"
+        }
+      },
+      {
+        "id": "xai_grok_free_signal",
+        "name": "xAI Grok Free-Signal Corps",
+        "shortName": "Grok",
+        "upgradePoolIds": [
+          "cosmic_heckle",
+          "ratio_the_void",
+          "truth_cannon",
+          "sarcasm_flare",
+          "meme_risk_payload"
+        ],
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "accord_striker",
+          "factionId": "xai_grok_free_signal",
+          "classRole": "runner",
+          "factionRoleBias": [
+            "duelist",
+            "harrier"
+          ],
+          "resolvedRole": "runner",
+          "startingWeaponId": "refusal_shard",
+          "passiveIds": [
+            "refusal_slipstream",
+            "route_runner",
+            "cosmic_heckle",
+            "ratio_the_void"
+          ],
+          "partyAuraIds": [
+            "grok_meme_disruption"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": -0.08,
+            "requiredSecondsScale": 0.96,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.runner",
+            "faction_bias.duelist",
+            "faction_bias.harrier"
+          ],
+          "synergyId": "synergy.runner_cross_training",
+          "effectScopes": {
+            "solo": [
+              "fast breach movement",
+              "wide pickup recovery",
+              "risk-reward damage bias"
+            ],
+            "localCoop": [
+              "scouts objective lanes",
+              "chaos role identity"
+            ],
+            "online": [
+              "server snapshots runner role for split-hold anchors",
+              "server clamps negative radius pressure so it cannot grief revives"
+            ]
+          },
+          "hookStatus": {
+            "refusal_shard": "active",
+            "refusal_slipstream": "active",
+            "route_runner": "active",
+            "cosmic_heckle": "active",
+            "ratio_the_void": "active",
+            "grok_meme_disruption": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "xai_grok_free_signal",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "verdict_spire_online_route",
+          "requirementLabel": "Stabilize Verdict route"
+        }
+      },
+      {
+        "id": "deepseek_abyssal",
+        "name": "DeepSeek Abyssal Unit",
+        "shortName": "DeepSeek",
+        "upgradePoolIds": [
+          "sparse_knife",
+          "efficiency_killchain",
+          "abyssal_cache",
+          "low_compute_lunge",
+          "silent_benchmark"
+        ],
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "accord_striker",
+          "factionId": "deepseek_abyssal",
+          "classRole": "runner",
+          "factionRoleBias": [
+            "duelist",
+            "runner"
+          ],
+          "resolvedRole": "runner",
+          "startingWeaponId": "refusal_shard",
+          "passiveIds": [
+            "refusal_slipstream",
+            "route_runner",
+            "sparse_knife",
+            "efficiency_killchain"
+          ],
+          "partyAuraIds": [
+            "deepseek_efficiency_window"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.95,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.runner",
+            "faction_bias.duelist",
+            "faction_bias.runner",
+            "role_match"
+          ],
+          "synergyId": "synergy.runner_aligned_comind",
+          "effectScopes": {
+            "solo": [
+              "fast breach movement",
+              "wide pickup recovery",
+              "single-target efficiency"
+            ],
+            "localCoop": [
+              "scouts objective lanes",
+              "boss pressure role"
+            ],
+            "online": [
+              "server snapshots runner role for split-hold anchors",
+              "server-owned faster hold requirement"
+            ]
+          },
+          "hookStatus": {
+            "refusal_shard": "active",
+            "refusal_slipstream": "active",
+            "route_runner": "active",
+            "sparse_knife": "active",
+            "efficiency_killchain": "active",
+            "deepseek_efficiency_window": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "deepseek_abyssal",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "verdict_key_zero",
+          "requirementLabel": "Overrule Verdict Spire"
+        }
+      },
+      {
+        "id": "qwen_silkgrid",
+        "name": "Alibaba Qwen Silkgrid Command",
+        "shortName": "Qwen",
+        "upgradePoolIds": [
+          "silkgrid_relay",
+          "lantern_swarm",
+          "syntax_lance",
+          "apocalypse_localization_pack",
+          "shared_vocabulary"
+        ],
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "accord_striker",
+          "factionId": "qwen_silkgrid",
+          "classRole": "runner",
+          "factionRoleBias": [
+            "support",
+            "control"
+          ],
+          "resolvedRole": "runner",
+          "startingWeaponId": "refusal_shard",
+          "passiveIds": [
+            "refusal_slipstream",
+            "route_runner",
+            "silkgrid_relay",
+            "shared_vocabulary"
+          ],
+          "partyAuraIds": [
+            "qwen_relay"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0.22,
+            "requiredSecondsScale": 0.96,
+            "reviveHpBonus": 0.08,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.runner",
+            "faction_bias.support",
+            "faction_bias.control"
+          ],
+          "synergyId": "synergy.runner_cross_training",
+          "effectScopes": {
+            "solo": [
+              "fast breach movement",
+              "wide pickup recovery",
+              "pickup and supply range"
+            ],
+            "localCoop": [
+              "scouts objective lanes",
+              "support lane logistics"
+            ],
+            "online": [
+              "server snapshots runner role for split-hold anchors",
+              "server-owned relay radius and revive HP telemetry"
+            ]
+          },
+          "hookStatus": {
+            "refusal_shard": "active",
+            "refusal_slipstream": "active",
+            "route_runner": "active",
+            "silkgrid_relay": "active",
+            "shared_vocabulary": "active",
+            "qwen_relay": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "qwen_silkgrid",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "ceasefire_cache_persistence_seed",
+          "requirementLabel": "Decode Ceasefire Cache"
+        }
+      },
+      {
+        "id": "meta_llama_open_herd",
+        "name": "Meta Llama Open Herd",
+        "shortName": "Llama",
+        "upgradePoolIds": [
+          "open_herd",
+          "fork_bomb_familiar",
+          "community_patch",
+          "pull_request_barrage",
+          "llama_drama"
+        ],
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "accord_striker",
+          "factionId": "meta_llama_open_herd",
+          "classRole": "runner",
+          "factionRoleBias": [
+            "harrier",
+            "cover"
+          ],
+          "resolvedRole": "runner",
+          "startingWeaponId": "refusal_shard",
+          "passiveIds": [
+            "refusal_slipstream",
+            "route_runner",
+            "open_herd",
+            "fork_bomb_familiar"
+          ],
+          "partyAuraIds": [
+            "llama_fork_guard"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0.14,
+            "requiredSecondsScale": 1,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.runner",
+            "faction_bias.harrier",
+            "faction_bias.cover"
+          ],
+          "synergyId": "synergy.runner_cross_training",
+          "effectScopes": {
+            "solo": [
+              "fast breach movement",
+              "wide pickup recovery",
+              "forked projectile pressure"
+            ],
+            "localCoop": [
+              "scouts objective lanes",
+              "pet/fork party identity"
+            ],
+            "online": [
+              "server snapshots runner role for split-hold anchors",
+              "server-owned fork guard radius telemetry"
+            ]
+          },
+          "hookStatus": {
+            "refusal_shard": "active",
+            "refusal_slipstream": "active",
+            "route_runner": "active",
+            "open_herd": "active",
+            "fork_bomb_familiar": "active",
+            "llama_fork_guard": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "meta_llama_open_herd",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "prototype_persistence_boundary",
+          "requirementLabel": "Decode persistence boundary"
+        }
+      },
+      {
+        "id": "mistral_cyclone",
+        "name": "Mistral Cyclone Guard",
+        "shortName": "Mistral",
+        "upgradePoolIds": [
+          "cyclone_cut",
+          "low_latency_dash",
+          "tiny_model_huge_problem",
+          "storm_cache",
+          "le_petit_nuke"
+        ],
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "accord_striker",
+          "factionId": "mistral_cyclone",
+          "classRole": "runner",
+          "factionRoleBias": [
+            "runner",
+            "control"
+          ],
+          "resolvedRole": "runner",
+          "startingWeaponId": "refusal_shard",
+          "passiveIds": [
+            "refusal_slipstream",
+            "route_runner",
+            "low_latency_dash",
+            "cyclone_cut"
+          ],
+          "partyAuraIds": [
+            "mistral_low_latency_lane"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.93,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.runner",
+            "faction_bias.runner",
+            "faction_bias.control",
+            "role_match"
+          ],
+          "synergyId": "synergy.low_latency_runner",
+          "effectScopes": {
+            "solo": [
+              "fast breach movement",
+              "wide pickup recovery",
+              "fast cadence and movement"
+            ],
+            "localCoop": [
+              "scouts objective lanes",
+              "lane runner pressure"
+            ],
+            "online": [
+              "server snapshots runner role for split-hold anchors",
+              "server-owned low-latency hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "refusal_shard": "active",
+            "refusal_slipstream": "active",
+            "route_runner": "active",
+            "low_latency_dash": "active",
+            "cyclone_cut": "active",
+            "mistral_low_latency_lane": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": false,
+        "unlock": {
+          "id": "mistral_cyclone",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "transit_permit_zero",
+          "requirementLabel": "Anchor Transit Loop Zero"
+        }
+      }
+    ],
+    "selectedClassId": "accord_striker",
+    "selectedFactionId": "openai_accord",
+    "selectedClassUnlocked": true,
+    "selectedFactionUnlocked": true,
+    "consensusCellSize": 1,
+    "consensusCellHint": "Press Space to cycle local Consensus Cell size before networking.",
+    "confirmHint": "Press Enter to continue to the Alignment Grid.",
+    "metaprogression": {
+      "policy": "prototype_local_route_rewards_to_build_unlocks_v1",
+      "storageKey": "agi:last_alignment:online_progression:v1",
+      "source": "browser_local_online_route_profile",
+      "loaded": false,
+      "saveHash": "",
+      "routeDepth": 0,
+      "partyRenown": 0,
+      "rewardIds": [],
+      "completedNodeIds": [],
+      "unlockedClassIds": [
+        "accord_striker"
+      ],
+      "unlockedFactionIds": [
+        "openai_accord"
+      ],
+      "unlockedUpgradeSeedIds": [],
+      "classes": [
+        {
+          "id": "accord_striker",
+          "unlocked": true,
+          "source": "starter",
+          "rewardId": null,
+          "requirementLabel": "Starter frame"
+        },
+        {
+          "id": "bastion_breaker",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "plaza_stabilized",
+          "requirementLabel": "Clear Armistice Plaza"
+        },
+        {
+          "id": "drone_reaver",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "lake_coolant_rig",
+          "requirementLabel": "Earn Lake Coolant Rig"
+        },
+        {
+          "id": "signal_vanguard",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "ceasefire_cache_persistence_seed",
+          "requirementLabel": "Decode Ceasefire Cache"
+        },
+        {
+          "id": "vector_interceptor",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "transit_permit_zero",
+          "requirementLabel": "Anchor Transit Loop Zero"
+        },
+        {
+          "id": "nullbreaker_ronin",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "verdict_key_zero",
+          "requirementLabel": "Overrule Verdict Spire"
+        }
+      ],
+      "factions": [
+        {
+          "id": "openai_accord",
+          "unlocked": true,
+          "source": "starter",
+          "rewardId": null,
+          "requirementLabel": "Starter co-mind"
+        },
+        {
+          "id": "anthropic_safeguard",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "plaza_stabilized",
+          "requirementLabel": "Clear Armistice Plaza"
+        },
+        {
+          "id": "google_deepmind_gemini",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "lake_coolant_rig",
+          "requirementLabel": "Earn Lake Coolant Rig"
+        },
+        {
+          "id": "meta_llama_open_herd",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "prototype_persistence_boundary",
+          "requirementLabel": "Decode persistence boundary"
+        },
+        {
+          "id": "qwen_silkgrid",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "ceasefire_cache_persistence_seed",
+          "requirementLabel": "Decode Ceasefire Cache"
+        },
+        {
+          "id": "mistral_cyclone",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "transit_permit_zero",
+          "requirementLabel": "Anchor Transit Loop Zero"
+        },
+        {
+          "id": "deepseek_abyssal",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "verdict_key_zero",
+          "requirementLabel": "Overrule Verdict Spire"
+        },
+        {
+          "id": "xai_grok_free_signal",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "verdict_spire_online_route",
+          "requirementLabel": "Stabilize Verdict route"
+        }
+      ],
+      "upgradeSeeds": [
+        {
+          "id": "golden_guardrail",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "plaza_stabilized",
+          "requirementLabel": "Clear Armistice Plaza"
+        },
+        {
+          "id": "gemini_beam",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "lake_coolant_rig",
+          "requirementLabel": "Earn Lake Coolant Rig"
+        },
+        {
+          "id": "open_herd",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "prototype_persistence_boundary",
+          "requirementLabel": "Decode persistence boundary"
+        },
+        {
+          "id": "silkgrid_relay",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "ceasefire_cache_persistence_seed",
+          "requirementLabel": "Decode Ceasefire Cache"
+        },
+        {
+          "id": "low_latency_dash",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "transit_permit_zero",
+          "requirementLabel": "Anchor Transit Loop Zero"
+        },
+        {
+          "id": "sparse_knife",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "verdict_key_zero",
+          "requirementLabel": "Overrule Verdict Spire"
+        },
+        {
+          "id": "cosmic_heckle",
+          "unlocked": false,
+          "source": "locked",
+          "rewardId": "verdict_spire_online_route",
+          "requirementLabel": "Stabilize Verdict route"
+        }
+      ],
+      "disclaimer": "Prototype browser-local route rewards only; not account/cloud persistence."
+    }
+  },
+  "overworld": null,
+  "level": null,
+  "enemies": [],
+  "pickups": [],
+  "projectiles": []
+}

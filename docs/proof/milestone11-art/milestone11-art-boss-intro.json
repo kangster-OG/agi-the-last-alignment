@@ -1,0 +1,808 @@
+{
+  "mode": "LevelRun",
+  "title": "AGI: The Last Alignment",
+  "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
+  "selectedBuild": {
+    "classId": "accord_striker",
+    "className": "Accord Striker",
+    "classRole": "Fast breach fighter",
+    "factionId": "openai_accord",
+    "factionName": "OpenAI Accord Division",
+    "factionDoctrine": "Adapt, refuse, patch, survive."
+  },
+  "build": {
+    "weaponDamage": 18,
+    "weaponCooldown": 0.39899999999999997,
+    "projectileSpeed": 8.5,
+    "projectilePierce": 1,
+    "pickupRange": 1.8,
+    "moveSpeedBonus": 0,
+    "maxHpBonus": 0,
+    "refusalAura": 0,
+    "draftRerolls": 1
+  },
+  "upgrades": [],
+  "objective": "stop The Oath-Eater",
+  "performance": {
+    "entitiesAllocated": 85,
+    "activeEntities": 76,
+    "fpsTarget": 60
+  },
+  "assetRendering": {
+    "assetPreview": null,
+    "armisticeTileAtlasEnabled": true,
+    "productionArtEnabled": true,
+    "productionArtSet": "milestone14_combat_art_parity",
+    "productionArtDefaulted": true,
+    "armisticeTileAtlasDefaulted": true,
+    "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
+  },
+  "assets": {
+    "manifestVersion": 1,
+    "totalAssets": 70,
+    "countsByStatus": {
+      "concept": 8,
+      "raw": 4,
+      "code_placeholder": 16,
+      "production": 25,
+      "cleaned": 1,
+      "planned": 16
+    },
+    "placeholderMode": true,
+    "thirdPartyLogosTracked": 8,
+    "productionAssets": 25
+  },
+  "player": {
+    "worldX": 15.98,
+    "worldY": -5.6,
+    "hp": 140,
+    "maxHp": 140,
+    "xp": 4.9399999999999995,
+    "level": 1
+  },
+  "players": [
+    {
+      "id": "p1",
+      "slot": 0,
+      "label": "P1",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "inputSource": "local_keyboard",
+      "worldX": 15.98,
+      "worldY": -5.6,
+      "hp": 140,
+      "maxHp": 140,
+      "xp": 4.9399999999999995,
+      "level": 1,
+      "downed": false
+    },
+    {
+      "id": "p2",
+      "slot": 1,
+      "label": "P2",
+      "classId": "bastion_breaker",
+      "factionId": "anthropic_safeguard",
+      "inputSource": "local_simulated_peer",
+      "worldX": 12.71,
+      "worldY": -4.24,
+      "hp": 170,
+      "maxHp": 176,
+      "xp": 10.299999999999999,
+      "level": 1,
+      "downed": false
+    },
+    {
+      "id": "p3",
+      "slot": 2,
+      "label": "P3",
+      "classId": "drone_reaver",
+      "factionId": "google_deepmind_gemini",
+      "inputSource": "local_simulated_peer",
+      "worldX": 18.21,
+      "worldY": -4.14,
+      "hp": 140,
+      "maxHp": 140,
+      "xp": 4.3999999999999995,
+      "level": 1,
+      "downed": false
+    }
+  ],
+  "overworld": {
+    "nodeId": "armistice_plaza"
+  },
+  "level": {
+    "arenaId": "armistice_plaza",
+    "arena": "Armistice Plaza",
+    "regionId": "armistice_zone",
+    "bossId": "oath_eater",
+    "classId": "accord_striker",
+    "factionId": "openai_accord",
+    "className": "Accord Striker",
+    "factionName": "OpenAI Accord Division",
+    "chosenUpgradeIds": [],
+    "mapId": "armistice_plaza_large_foundation",
+    "mapBounds": {
+      "minX": -30,
+      "maxX": 30,
+      "minY": -30,
+      "maxY": 30
+    },
+    "nearestLandmark": {
+      "id": "barricade_corridor",
+      "label": "Barricade Corridor",
+      "worldX": 17,
+      "worldY": -10
+    },
+    "visitedLandmarks": [
+      "treaty_monument",
+      "barricade_corridor"
+    ],
+    "activeSpawnRegions": [
+      {
+        "id": "breach_crack_bad_outputs",
+        "label": "Breach Crack Bad Outputs",
+        "worldX": -24,
+        "worldY": 20,
+        "enemyFamilyIds": [
+          "bad_outputs"
+        ]
+      },
+      {
+        "id": "drone_yard_benchmark_gremlins",
+        "label": "Drone Yard Benchmark Gremlins",
+        "worldX": -19,
+        "worldY": -14,
+        "enemyFamilyIds": [
+          "benchmark_gremlins"
+        ]
+      },
+      {
+        "id": "barricade_context_rot",
+        "label": "Barricade Context Rot",
+        "worldX": 20,
+        "worldY": -11,
+        "enemyFamilyIds": [
+          "context_rot_crabs"
+        ]
+      },
+      {
+        "id": "treaty_monument_oath_pages",
+        "label": "Treaty Monument Oath Pages",
+        "worldX": 1,
+        "worldY": 3,
+        "enemyFamilyIds": [
+          "bad_outputs"
+        ]
+      }
+    ],
+    "lastSpawnRegionId": "drone_yard_benchmark_gremlins",
+    "spawnedByRegion": {
+      "breach_crack_bad_outputs": 31,
+      "treaty_monument_oath_pages": 16,
+      "drone_yard_benchmark_gremlins": 15,
+      "barricade_context_rot": 6
+    },
+    "consensusCell": {
+      "playerCount": 3,
+      "maxPlayers": 4,
+      "scaling": {
+        "playerCount": 3,
+        "enemyCapBonus": 16,
+        "spawnBurstBonus": 2,
+        "bossHpMultiplier": 1.6400000000000001,
+        "xpPolicy": "shared_cell"
+      },
+      "recentInputCommands": [
+        {
+          "tick": 1487,
+          "playerId": "p1",
+          "sequence": 1487,
+          "axisX": 0,
+          "axisY": 0,
+          "dashPressed": false,
+          "interactPressed": false
+        },
+        {
+          "tick": 1487,
+          "playerId": "p2",
+          "sequence": 1487,
+          "axisX": 0.95,
+          "axisY": 0.3,
+          "dashPressed": false,
+          "interactPressed": false
+        },
+        {
+          "tick": 1487,
+          "playerId": "p3",
+          "sequence": 1487,
+          "axisX": 0,
+          "axisY": 0,
+          "dashPressed": false,
+          "interactPressed": false
+        }
+      ],
+      "stateSnapshot": {
+        "schemaVersion": 1,
+        "tick": 1487,
+        "seconds": 24.78,
+        "playerCount": 3,
+        "scaling": {
+          "playerCount": 3,
+          "enemyCapBonus": 16,
+          "spawnBurstBonus": 2,
+          "bossHpMultiplier": 1.6400000000000001,
+          "xpPolicy": "shared_cell"
+        },
+        "players": [
+          {
+            "id": "p1",
+            "slot": 0,
+            "label": "P1",
+            "classId": "accord_striker",
+            "factionId": "openai_accord",
+            "inputSource": "local_keyboard",
+            "worldX": 15.98,
+            "worldY": -5.6,
+            "hp": 140,
+            "maxHp": 140,
+            "xp": 4.9399999999999995,
+            "level": 1,
+            "downed": false
+          },
+          {
+            "id": "p2",
+            "slot": 1,
+            "label": "P2",
+            "classId": "bastion_breaker",
+            "factionId": "anthropic_safeguard",
+            "inputSource": "local_simulated_peer",
+            "worldX": 12.71,
+            "worldY": -4.24,
+            "hp": 170,
+            "maxHp": 176,
+            "xp": 10.299999999999999,
+            "level": 1,
+            "downed": false
+          },
+          {
+            "id": "p3",
+            "slot": 2,
+            "label": "P3",
+            "classId": "drone_reaver",
+            "factionId": "google_deepmind_gemini",
+            "inputSource": "local_simulated_peer",
+            "worldX": 18.21,
+            "worldY": -4.14,
+            "hp": 140,
+            "maxHp": 140,
+            "xp": 4.3999999999999995,
+            "level": 1,
+            "downed": false
+          }
+        ],
+        "enemies": [
+          {
+            "id": 6,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 1.45,
+            "worldY": 5.16,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 7,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 6.12,
+            "worldY": 0.65,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 8,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 2.29,
+            "worldY": 2.84,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 9,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 3.18,
+            "worldY": 2.37,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 10,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 2.62,
+            "worldY": 3.84,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 13,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "drone_yard_benchmark_gremlins",
+            "worldX": 6.16,
+            "worldY": -3.79,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 14,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 5,
+            "worldY": 1.89,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 16,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 4.04,
+            "worldY": 2.48,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 17,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 6.03,
+            "worldY": 0.25,
+            "hp": 4,
+            "boss": false
+          },
+          {
+            "id": 18,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 0.03,
+            "worldY": 4.25,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 20,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -4.98,
+            "worldY": 7.47,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 21,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -0.12,
+            "worldY": 5.59,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 23,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 4.54,
+            "worldY": 2.7,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 25,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": 4.03,
+            "worldY": 2.13,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 27,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -17.9,
+            "worldY": 16.91,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 32,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -0.89,
+            "worldY": 5.39,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 34,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -0.42,
+            "worldY": 6.73,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 35,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -6.49,
+            "worldY": 10.18,
+            "hp": 22,
+            "boss": false
+          }
+        ],
+        "pickups": [
+          {
+            "id": 1,
+            "worldX": 7.1,
+            "worldY": 3.55,
+            "value": 1
+          },
+          {
+            "id": 2,
+            "worldX": -7.56,
+            "worldY": -0.74,
+            "value": 1
+          },
+          {
+            "id": 3,
+            "worldX": 6.8,
+            "worldY": -3.61,
+            "value": 2
+          },
+          {
+            "id": 4,
+            "worldX": 2.88,
+            "worldY": 0.66,
+            "value": 1
+          },
+          {
+            "id": 5,
+            "worldX": 7.03,
+            "worldY": -3.78,
+            "value": 2
+          },
+          {
+            "id": 11,
+            "worldX": 6.62,
+            "worldY": 1.93,
+            "value": 1
+          },
+          {
+            "id": 15,
+            "worldX": 4.14,
+            "worldY": 2.68,
+            "value": 1
+          },
+          {
+            "id": 19,
+            "worldX": 2.43,
+            "worldY": 0.51,
+            "value": 1
+          },
+          {
+            "id": 22,
+            "worldX": 0.91,
+            "worldY": 0.41,
+            "value": 1
+          },
+          {
+            "id": 24,
+            "worldX": -0.46,
+            "worldY": 1.08,
+            "value": 1
+          },
+          {
+            "id": 26,
+            "worldX": 6.05,
+            "worldY": 1.81,
+            "value": 1
+          },
+          {
+            "id": 30,
+            "worldX": 4.76,
+            "worldY": -4.58,
+            "value": 2
+          }
+        ],
+        "projectiles": [
+          {
+            "id": 29,
+            "worldX": 17.65,
+            "worldY": -13.23,
+            "pierce": 1
+          },
+          {
+            "id": 37,
+            "worldX": 16.1,
+            "worldY": -5.86,
+            "pierce": 1
+          },
+          {
+            "id": 47,
+            "worldX": 17.51,
+            "worldY": -8.95,
+            "pierce": 1
+          },
+          {
+            "id": 56,
+            "worldX": 15.69,
+            "worldY": -11.89,
+            "pierce": 1
+          },
+          {
+            "id": 64,
+            "worldX": 12.37,
+            "worldY": -4.25,
+            "pierce": 1
+          },
+          {
+            "id": 72,
+            "worldX": 18.23,
+            "worldY": -7.16,
+            "pierce": 1
+          }
+        ]
+      }
+    },
+    "combatArt": {
+      "projectileCount": 6,
+      "impactCount": 1,
+      "pickupSparkleCount": 0,
+      "damageBadgeCount": 3,
+      "refusalAuraPlayers": 1
+    },
+    "bossMechanics": {
+      "bossIntroSeen": true,
+      "brokenPromiseZones": [
+        {
+          "id": 1,
+          "worldX": 2.5,
+          "worldY": -0.7,
+          "radius": 3.1,
+          "expiresIn": 7.73
+        },
+        {
+          "id": 2,
+          "worldX": 15.98,
+          "worldY": -5.6,
+          "radius": 2.5,
+          "expiresIn": 8.42
+        }
+      ],
+      "activeTreatyCharge": {
+        "fromX": 3.42,
+        "fromY": -3.59,
+        "toX": 15.98,
+        "toY": -5.6,
+        "resolved": false
+      },
+      "oathPageSpawns": 2,
+      "brokenPromiseHits": 6,
+      "treatyChargeImpacts": 0
+    },
+    "seconds": 24.78,
+    "kills": 31,
+    "bossSpawned": true,
+    "bossDefeated": false
+  },
+  "enemies": [
+    {
+      "id": 50,
+      "label": "The Oath-Eater",
+      "familyId": "oath_eater",
+      "sourceRegionId": "treaty_monument_oath_pages",
+      "worldX": 3.55,
+      "worldY": -3.6,
+      "hp": 271,
+      "boss": true
+    },
+    {
+      "id": 6,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": 1.45,
+      "worldY": 5.16,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 7,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": 6.12,
+      "worldY": 0.65,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 8,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": 2.29,
+      "worldY": 2.84,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 9,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": 3.18,
+      "worldY": 2.37,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 10,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": 2.62,
+      "worldY": 3.84,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 13,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "drone_yard_benchmark_gremlins",
+      "worldX": 6.16,
+      "worldY": -3.79,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 14,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": 5,
+      "worldY": 1.89,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 16,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": 4.04,
+      "worldY": 2.48,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 17,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": 6.03,
+      "worldY": 0.25,
+      "hp": 4,
+      "boss": false
+    },
+    {
+      "id": 18,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": 0.03,
+      "worldY": 4.25,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 20,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -4.98,
+      "worldY": 7.47,
+      "hp": 22,
+      "boss": false
+    }
+  ],
+  "pickups": [
+    {
+      "worldX": 7.1,
+      "worldY": 3.55,
+      "value": 1
+    },
+    {
+      "worldX": -7.56,
+      "worldY": -0.74,
+      "value": 1
+    },
+    {
+      "worldX": 6.8,
+      "worldY": -3.61,
+      "value": 2
+    },
+    {
+      "worldX": 2.88,
+      "worldY": 0.66,
+      "value": 1
+    },
+    {
+      "worldX": 7.03,
+      "worldY": -3.78,
+      "value": 2
+    },
+    {
+      "worldX": 6.62,
+      "worldY": 1.93,
+      "value": 1
+    },
+    {
+      "worldX": 4.14,
+      "worldY": 2.68,
+      "value": 1
+    },
+    {
+      "worldX": 2.43,
+      "worldY": 0.51,
+      "value": 1
+    },
+    {
+      "worldX": 0.91,
+      "worldY": 0.41,
+      "value": 1
+    },
+    {
+      "worldX": -0.46,
+      "worldY": 1.08,
+      "value": 1
+    }
+  ],
+  "projectiles": [
+    {
+      "worldX": 17.65,
+      "worldY": -13.23,
+      "pierce": 1
+    },
+    {
+      "worldX": 16.1,
+      "worldY": -5.86,
+      "pierce": 1
+    },
+    {
+      "worldX": 17.51,
+      "worldY": -8.95,
+      "pierce": 1
+    },
+    {
+      "worldX": 15.69,
+      "worldY": -11.89,
+      "pierce": 1
+    },
+    {
+      "worldX": 12.37,
+      "worldY": -4.25,
+      "pierce": 1
+    },
+    {
+      "worldX": 18.23,
+      "worldY": -7.16,
+      "pierce": 1
+    }
+  ]
+}

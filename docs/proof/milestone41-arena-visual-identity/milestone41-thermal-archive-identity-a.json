@@ -1,0 +1,3672 @@
+{
+  "mode": "OnlineCoop",
+  "title": "AGI: The Last Alignment",
+  "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
+  "selectedBuild": {
+    "classId": "accord_striker",
+    "className": "Accord Striker",
+    "classRole": "Fast breach fighter",
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    },
+    "factionId": "openai_accord",
+    "factionName": "OpenAI Accord Division",
+    "factionDoctrine": "Adapt, refuse, patch, survive."
+  },
+  "build": null,
+  "upgrades": [],
+  "objective": "Move independently in the shared Consensus Cell.",
+  "performance": {
+    "entitiesAllocated": 4,
+    "activeEntities": 4,
+    "fpsTarget": 60
+  },
+  "assetRendering": {
+    "assetPreview": null,
+    "armisticeTileAtlasEnabled": true,
+    "productionArtEnabled": true,
+    "productionArtSet": "milestone14_combat_art_parity",
+    "productionArtDefaulted": true,
+    "armisticeTileAtlasDefaulted": true,
+    "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
+  },
+  "assets": {
+    "manifestVersion": 1,
+    "totalAssets": 84,
+    "countsByStatus": {
+      "concept": 14,
+      "raw": 4,
+      "code_placeholder": 16,
+      "production": 33,
+      "cleaned": 1,
+      "planned": 16
+    },
+    "placeholderMode": true,
+    "thirdPartyLogosTracked": 8,
+    "productionAssets": 33
+  },
+  "player": {
+    "sessionId": "CzNOceiRQ",
+    "worldX": 0,
+    "worldY": 0,
+    "hp": 140,
+    "maxHp": 140,
+    "xp": 0,
+    "level": 1
+  },
+  "online": {
+    "status": "joined",
+    "serverUrl": "ws://127.0.0.1:2610",
+    "roomId": "QfjyklDDR",
+    "sessionId": "CzNOceiRQ",
+    "lastError": "",
+    "reconnectKey": "hermal_a",
+    "reconnect": {
+      "policy": "session_storage_reconnect_key_slot_reclaim",
+      "slotTtlSeconds": 45,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "reclaimedPlayerCount": 0,
+      "disconnectedPlayerIds": []
+    },
+    "lifecycle": {
+      "schemaBacked": true,
+      "schemaVersion": 4,
+      "stateClass": "ConsensusCellState",
+      "collectionKinds": [
+        "MapSchema<PlayerPresence>",
+        "ArraySchema<completedNodeIds>",
+        "ArraySchema<unlockedNodeIds>",
+        "MapSchema<UpgradeVote>",
+        "MapSchema<RecompileDowned>"
+      ],
+      "playerPresenceCount": 2,
+      "upgradeVoteCount": 0,
+      "recompileDownedCount": 0,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "completedNodeCount": 2,
+      "unlockedNodeCount": 7
+    },
+    "localPersistence": {
+      "resetApplied": false,
+      "clearedStoredProfile": false,
+      "foundStoredProfile": true,
+      "draftHash": "fnv1a_915bff63",
+      "storageKey": "agi:last_alignment:online_progression:v1",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTQxX3RoZXJtYWxfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjoyLCJpbXBvcnRlZFJld2FyZENvdW50IjozLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjIsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6eyJzYXZlSGFzaCI6InByb29mX200MV90aGVybWFsX3Byb2ZpbGUiLCJjb21wbGV0ZWROb2RlQ291bnQiOjIsInJld2FyZENvdW50IjozfSwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImNvb2xpbmdfbGFrZV9uaW5lIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImFybWlzdGljZV9jYW1wIiwibWVtb3J5X2NhY2hlXzAwMSIsInRoZXJtYWxfYXJjaGl2ZSJdLCJyZXdhcmRJZHMiOlsicGxhemFfc3RhYmlsaXplZCIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIl0sInBhcnR5UmVub3duIjo3LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxfSwicmVjb21tZW5kZWROb2RlSWQiOiJtZW1vcnlfY2FjaGVfMDAxIiwicm91dGVEZXB0aCI6Miwic2F2ZWRBdFRpY2siOjY5fSwic2F2ZUhhc2giOiJmbnYxYV85MTViZmY2MyIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfOTE1YmZmNjMiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCodeCopied": false,
+      "importCodeApplied": true,
+      "importCodeStatus": "query_code_applied",
+      "importCodeHash": "proof_m41_thermal_profile",
+      "lastAction": "import_query_code_applied"
+    },
+    "saveProfile": {
+      "surface": "milestone30_save_profile_export_codes",
+      "boundary": "browser_local_prototype_not_account_or_cloud",
+      "storageKey": "agi:last_alignment:online_progression:v1",
+      "durableFieldPolicy": "route_profile_only_no_combat_state",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTQxX3RoZXJtYWxfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjoyLCJpbXBvcnRlZFJld2FyZENvdW50IjozLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjIsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6eyJzYXZlSGFzaCI6InByb29mX200MV90aGVybWFsX3Byb2ZpbGUiLCJjb21wbGV0ZWROb2RlQ291bnQiOjIsInJld2FyZENvdW50IjozfSwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImNvb2xpbmdfbGFrZV9uaW5lIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImFybWlzdGljZV9jYW1wIiwibWVtb3J5X2NhY2hlXzAwMSIsInRoZXJtYWxfYXJjaGl2ZSJdLCJyZXdhcmRJZHMiOlsicGxhemFfc3RhYmlsaXplZCIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIl0sInBhcnR5UmVub3duIjo3LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxfSwicmVjb21tZW5kZWROb2RlSWQiOiJtZW1vcnlfY2FjaGVfMDAxIiwicm91dGVEZXB0aCI6Miwic2F2ZWRBdFRpY2siOjY5fSwic2F2ZUhhc2giOiJmbnYxYV85MTViZmY2MyIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfOTE1YmZmNjMiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "shortExportCode": "AGI1_eyJwb2xp...3N0YXRlIn0",
+      "exportCodeCopied": false,
+      "importCodeApplied": true,
+      "importCodeStatus": "query_code_applied",
+      "importCodeHash": "proof_m41_thermal_profile",
+      "resetApplied": false,
+      "clearedStoredProfile": false,
+      "profile": {
+        "completedNodeIds": [
+          "armistice_plaza",
+          "cooling_lake_nine"
+        ],
+        "unlockedNodeIds": [
+          "armistice_plaza",
+          "accord_relay",
+          "cooling_lake_nine",
+          "model_war_memorial",
+          "armistice_camp",
+          "memory_cache_001",
+          "thermal_archive"
+        ],
+        "rewardIds": [
+          "plaza_stabilized",
+          "lake_coolant_rig",
+          "cooling_lake_online_route"
+        ],
+        "partyRenown": 7,
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1,
+          "cooling_lake_nine": 1
+        },
+        "recommendedNodeId": "memory_cache_001",
+        "routeDepth": 2,
+        "savedAtTick": 69
+      },
+      "saveHash": "fnv1a_915bff63",
+      "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
+    },
+    "routeUi": {
+      "panel": "milestone25_route_profile_panel",
+      "milestone40": {
+        "set": "milestone40_campaign_route_ux",
+        "focusMode": "all",
+        "focusLabel": "ALL ROUTES",
+        "focusDescription": "Full campaign grid with selected-node details.",
+        "focusModes": [
+          "all",
+          "critical",
+          "branches",
+          "rewards",
+          "schema"
+        ],
+        "focusControl": "Digit3 cycles route focus modes in the online party grid",
+        "focusRatio": 1,
+        "highlightedNodeIds": [
+          "armistice_plaza",
+          "accord_relay",
+          "cooling_lake_nine",
+          "model_war_memorial",
+          "armistice_camp",
+          "memory_cache_001",
+          "thermal_archive",
+          "guardrail_forge",
+          "transit_loop_zero",
+          "false_schedule_yard",
+          "glass_sunfield",
+          "verdict_spire",
+          "appeal_court_ruins",
+          "alignment_spire_finale"
+        ],
+        "dimmedNodeIds": [],
+        "highlightedRouteIds": [
+          "route_plaza_relay",
+          "route_plaza_lake",
+          "route_plaza_memorial",
+          "route_lake_camp",
+          "route_lake_cache",
+          "route_lake_thermal_archive",
+          "route_memorial_cache",
+          "route_camp_forge",
+          "route_cache_forge",
+          "route_relay_transit",
+          "route_forge_transit",
+          "route_cache_transit",
+          "route_thermal_false_schedule",
+          "route_transit_verdict",
+          "route_transit_false_schedule",
+          "route_transit_glass_sunfield",
+          "route_glass_sunfield_verdict",
+          "route_false_schedule_appeal",
+          "route_verdict_finale",
+          "route_appeal_finale"
+        ],
+        "criticalPathCount": 6,
+        "branchCount": 8,
+        "rewardPreviewIds": [
+          "model_war_memorial",
+          "memory_cache_001",
+          "thermal_archive",
+          "guardrail_forge",
+          "transit_loop_zero",
+          "false_schedule_yard",
+          "glass_sunfield",
+          "verdict_spire",
+          "appeal_court_ruins",
+          "alignment_spire_finale"
+        ],
+        "recommendedNodeId": "memory_cache_001",
+        "selectedClassification": "branch",
+        "selectedRewardCollected": false,
+        "selectedSchemaDetails": {
+          "contentStatus": "runtime_ready",
+          "contentArenaId": "arena.thermal_archive",
+          "runtimeArenaId": "thermal_archive",
+          "objectiveSetId": "thermal_archive_objectives_v1",
+          "bossId": "thermal_oracle",
+          "rewardId": "thermal_archive_schematic",
+          "dialogueSnippetCount": 2,
+          "proofId": "campaign.arena.thermal_archive"
+        },
+        "schemaDetailPolicy": "selected_node_content_schema_details_visible_without_persistence_import_export"
+      },
+      "artExpansion": {
+        "set": "milestone28_online_route_art_expansion",
+        "enabled": true,
+        "staticRouteAtlases": 1,
+        "dynamicReadabilityAtlases": 2,
+        "milestone33": {
+          "policy": "wire_only_cleaned_or_production_transparent_pngs",
+          "plannedRuntimeArtIds": [
+            "prop.objective.split_hold_anchor_v1",
+            "prop.objective.regroup_beacon_v1",
+            "prop.objective.recompile_relay_v1",
+            "prop.alignment_grid.route_state_markers_v2",
+            "ui.route_map.party_vote_pips_v1",
+            "ui.save_profile.import_export_icons_v1",
+            "ui.route_map.reward_badges_v1"
+          ],
+          "readyRuntimeArtIds": [
+            "prop.objective.split_hold_anchor_v1",
+            "prop.objective.regroup_beacon_v1",
+            "prop.objective.recompile_relay_v1",
+            "prop.alignment_grid.route_state_markers_v2",
+            "ui.route_map.party_vote_pips_v1",
+            "ui.save_profile.import_export_icons_v1",
+            "ui.route_map.reward_badges_v1"
+          ],
+          "runtimeAtlasesReady": true
+        },
+        "milestone34": {
+          "set": "milestone34_objective_props_route_markers",
+          "enabled": true,
+          "runtimeAtlasesReady": true,
+          "objectivePropAtlases": 3,
+          "routeUiAtlases": 4
+        },
+        "milestone37": {
+          "set": "milestone37_objective_route_art_polish",
+          "enabled": true,
+          "policy": "dense_campaign_route_labels_markers_and_state_readability",
+          "labelPolicy": "selected_launchable_completed_and_unlocked_online_nodes_use_full_labels; sealed nodes use compact labels",
+          "routeMarkerPolicy": "stable_and_selected_adjacent_markers_use_haloed_offset_production_sprites; distant locked routes are deemphasized",
+          "nodeStatePolicy": "status_priority_completed_selected_launchable_locked_online_next",
+          "denseCampaignNodeCount": 14,
+          "denseCampaignRouteCount": 20,
+          "fullLabelIds": [
+            "armistice_plaza",
+            "cooling_lake_nine",
+            "model_war_memorial",
+            "memory_cache_001",
+            "thermal_archive"
+          ],
+          "compactLabelCount": 9,
+          "selectedNodeStateLabel": "VOTE",
+          "productionArtDefaultPresentation": "production_art_default_with_placeholder_opt_out"
+        },
+        "milestone41": {
+          "set": "milestone41_arena_runtime_visual_identity",
+          "policy": "dedicated_arena_identity_props_only_from_runtime_ready_manifest_provenance_pngs",
+          "runtimeArtIds": [
+            "prop.online_route.campaign_arena_identity_v1"
+          ],
+          "readyRuntimeArtIds": [
+            "prop.online_route.campaign_arena_identity_v1"
+          ],
+          "enabled": true,
+          "runtimeAtlasesReady": true,
+          "dedicatedArenaFrameIds": [
+            "model_war_memorial",
+            "thermal_archive",
+            "guardrail_forge",
+            "false_schedule_yard",
+            "appeal_court_ruins",
+            "alignment_spire_finale"
+          ],
+          "replacedReusedSilhouetteArenaIds": [
+            "model_war_memorial",
+            "thermal_archive",
+            "guardrail_forge",
+            "false_schedule_yard",
+            "appeal_court_ruins",
+            "alignment_spire_finale"
+          ],
+          "placeholderOptOutSupported": true,
+          "persistenceBoundary": "route_profile_only_no_runtime_art_or_live_arena_state"
+        },
+        "milestone42": {
+          "set": "milestone42_glass_sunfield_mechanics",
+          "nodeId": "glass_sunfield",
+          "arenaId": "glass_sunfield",
+          "bossId": "wrong_sunrise",
+          "rewardId": "glass_sunfield_prism",
+          "focusRewardUnlocks": [
+            "google_deepmind_gemini.focus.prism_lanes",
+            "mistral_cyclone.focus.low_latency_mirrors"
+          ],
+          "serverMechanicPolicy": "server_authoritative_rotating_solar_beams_with_zero_damage_shade_zones",
+          "readabilityPolicy": "static_translucent_solar_lanes_no_strobe_reduced_flash_safe",
+          "persistenceBoundary": "route_profile_only_no_live_objectives_combat_or_mechanic_state"
+        }
+      },
+      "routeDepth": 2,
+      "stableRouteCount": 6,
+      "totalRouteCount": 20,
+      "campaign": {
+        "routeVersion": "campaign_route_v1",
+        "actLabel": "Act I: The Armistice Grid",
+        "criticalPathNodeIds": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "memory_cache_001",
+          "transit_loop_zero",
+          "verdict_spire",
+          "alignment_spire_finale"
+        ],
+        "branchNodeIds": [
+          "accord_relay",
+          "model_war_memorial",
+          "armistice_camp",
+          "thermal_archive",
+          "guardrail_forge",
+          "false_schedule_yard",
+          "glass_sunfield",
+          "appeal_court_ruins"
+        ],
+        "finaleNodeId": "alignment_spire_finale",
+        "campaignNodeCount": 14,
+        "supportedCampaignNodeCount": 12,
+        "contentSchema": {
+          "policy": "campaign_content_schema_v1",
+          "arenaRecordCount": 14,
+          "routeNodeCount": 14,
+          "bossRecordCount": 7,
+          "enemyFamilyRecordCount": 8,
+          "rewardRecordCount": 16,
+          "dialogueSnippetCount": 28,
+          "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
+          "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "missingNodeContentIds": [],
+          "missingRewardIds": [],
+          "missingBossIds": [],
+          "missingEnemyFamilyIds": [],
+          "missingDialogueSnippetIds": [],
+          "complete": true
+        }
+      },
+      "selectedNodeId": "thermal_archive",
+      "selectedNodeName": "Thermal Archive",
+      "selectedNodeType": "Breach Arena",
+      "selectedObjectiveSetId": "thermal_archive_objectives_v1",
+      "selectedObjectiveFlavor": "Coolant Chain",
+      "selectedContentArenaId": "arena.thermal_archive",
+      "selectedContentStatus": "runtime_ready",
+      "selectedBossId": "thermal_oracle",
+      "selectedRewardId": "thermal_archive_schematic",
+      "selectedDialogueSnippetIds": [
+        "dlg.thermal_archive.briefing",
+        "dlg.thermal_oracle.seal"
+      ],
+      "selectedDialogueSnippets": [
+        {
+          "id": "dlg.thermal_archive.briefing",
+          "proofId": "dlg.thermal_archive.briefing",
+          "speaker": "DeepSeek Abyssal",
+          "line": "The archive found a cheaper way to burn. Efficient. Terrible.",
+          "trigger": "briefing"
+        },
+        {
+          "id": "dlg.thermal_oracle.seal",
+          "proofId": "dlg.thermal_oracle.seal",
+          "speaker": "Qwen Silkgrid",
+          "line": "Sealing the lake kernel. Translation: please stop boiling.",
+          "trigger": "boss_seal"
+        }
+      ],
+      "dialoguePresentation": {
+        "policy": "campaign_dialogue_runtime_snapshot_only_v1",
+        "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+        "nodeId": "thermal_archive",
+        "arenaId": "thermal_archive",
+        "contentArenaId": "arena.thermal_archive",
+        "briefing": [
+          {
+            "id": "dlg.thermal_archive.briefing",
+            "proofId": "dlg.thermal_archive.briefing",
+            "speaker": "DeepSeek Abyssal",
+            "line": "The archive found a cheaper way to burn. Efficient. Terrible.",
+            "trigger": "briefing"
+          }
+        ],
+        "bossArrival": [],
+        "interactionComplete": [],
+        "routeSummary": [],
+        "activeSnippetIds": [
+          "dlg.thermal_archive.briefing"
+        ]
+      },
+      "selectedRouteBiome": "boiling_archive",
+      "selectedCampaignTier": 2,
+      "selectedCampaignCriticalPath": false,
+      "selectedLaunchable": true,
+      "selectedCompleted": false,
+      "selectedOnlineSupported": true,
+      "recommendedNodeId": "memory_cache_001",
+      "rewardCount": 3,
+      "onlineNodeCount": 12
+    },
+    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
+    "roomName": "consensus_cell",
+    "maxClients": 4,
+    "playerCount": 2,
+    "tick": 69,
+    "seconds": 0.89,
+    "schemaVersion": 4,
+    "networkAuthority": "colyseus_room_server_combat",
+    "runPhase": "active",
+    "readyCount": 2,
+    "connectedCount": 2,
+    "downedCount": 0,
+    "combat": {
+      "kills": 0,
+      "collectedPickups": 0,
+      "authoritativeProjectiles": 3,
+      "authoritativePickups": 0,
+      "bossGateMechanic": "thermal_archive_backpath"
+    },
+    "combatArt": {
+      "pressure": 0.04,
+      "phase": "opening",
+      "projectileCount": 3,
+      "pickupCount": 0,
+      "bossEventActive": false
+    },
+    "campaignContent": {
+      "policy": "campaign_content_schema_v1",
+      "proofId": "campaign.arena.thermal_archive",
+      "contentArenaId": "arena.thermal_archive",
+      "nodeId": "thermal_archive",
+      "runtimeArenaId": "thermal_archive",
+      "contentStatus": "runtime_ready",
+      "regionId": "kettle_coast",
+      "regionProofId": "campaign.region.kettle_coast",
+      "bossId": "thermal_oracle",
+      "bossProofId": "campaign.boss.thermal_oracle",
+      "enemyFamilyIds": [
+        "thermal_mirages",
+        "bad_outputs",
+        "context_rot_crabs"
+      ],
+      "enemyProofIds": [
+        "campaign.enemy.thermal_mirages",
+        "campaign.enemy.bad_outputs",
+        "campaign.enemy.context_rot_crabs"
+      ],
+      "rewardId": "thermal_archive_schematic",
+      "rewardProofId": "campaign.reward.thermal_archive_schematic",
+      "objectiveSetId": "thermal_archive_objectives_v1",
+      "dialogueSnippetIds": [
+        "dlg.thermal_archive.briefing",
+        "dlg.thermal_oracle.seal"
+      ],
+      "dialogueProofIds": [
+        "dlg.thermal_archive.briefing",
+        "dlg.thermal_oracle.seal"
+      ],
+      "dialogueSnippets": [
+        {
+          "id": "dlg.thermal_archive.briefing",
+          "proofId": "dlg.thermal_archive.briefing",
+          "speaker": "DeepSeek Abyssal",
+          "line": "The archive found a cheaper way to burn. Efficient. Terrible.",
+          "trigger": "briefing"
+        },
+        {
+          "id": "dlg.thermal_oracle.seal",
+          "proofId": "dlg.thermal_oracle.seal",
+          "speaker": "Qwen Silkgrid",
+          "line": "Sealing the lake kernel. Translation: please stop boiling.",
+          "trigger": "boss_seal"
+        }
+      ],
+      "unlockNodeIds": [
+        "false_schedule_yard"
+      ]
+    },
+    "dialogue": {
+      "policy": "campaign_dialogue_runtime_snapshot_only_v1",
+      "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+      "nodeId": "thermal_archive",
+      "arenaId": "thermal_archive",
+      "contentArenaId": "arena.thermal_archive",
+      "briefing": [
+        {
+          "id": "dlg.thermal_archive.briefing",
+          "proofId": "dlg.thermal_archive.briefing",
+          "speaker": "DeepSeek Abyssal",
+          "line": "The archive found a cheaper way to burn. Efficient. Terrible.",
+          "trigger": "briefing"
+        }
+      ],
+      "bossArrival": [],
+      "interactionComplete": [],
+      "routeSummary": [],
+      "activeSnippetIds": [
+        "dlg.thermal_archive.briefing"
+      ]
+    },
+    "bossEvent": {
+      "bossSpawned": false,
+      "bossDefeated": false,
+      "bossIntroSeen": false,
+      "eventCounter": 0,
+      "brokenPromiseZones": [],
+      "activeTreatyCharge": null
+    },
+    "regionEvent": {
+      "arenaId": "thermal_archive",
+      "regionLabel": "Kettle Coast Backpath",
+      "eventFamily": "thermal_bloom",
+      "mechanicId": "thermal_archive_backpath",
+      "readabilityPolicy": "standard_translucent_hazard_markers",
+      "eventCounter": 0,
+      "active": false,
+      "hazardZones": []
+    },
+    "objectives": {
+      "policy": "server_authoritative_arena_objectives_v1",
+      "arenaId": "thermal_archive",
+      "nodeId": "thermal_archive",
+      "objectiveSetId": "thermal_archive_objectives_v1",
+      "label": "Thermal Archive Backpath",
+      "phase": "active",
+      "currentObjectiveId": "survey_boiling_records",
+      "currentGroupId": "survey_boiling_records",
+      "hint": "Reach the archive stacks before the coolant remembers being fire.",
+      "completedObjectiveIds": [],
+      "failedObjectiveIds": [],
+      "completionReason": "",
+      "instances": [
+        {
+          "id": "survey_boiling_records",
+          "groupId": "survey_boiling_records",
+          "type": "survey",
+          "label": "Survey Boiling Records",
+          "worldX": -10,
+          "worldY": 10,
+          "radius": 3.1,
+          "active": true,
+          "complete": false,
+          "progress": 0,
+          "required": 1.3,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "runner",
+            "support"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "prop.objective.regroup_beacon_v1",
+          "routeFlavor": "archive_survey",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": null,
+          "collected": 0
+        },
+        {
+          "id": "hold_archive_heat_sink",
+          "groupId": "archive_heat_sync",
+          "type": "holdout",
+          "label": "Hold Archive Heat Sink",
+          "worldX": -12.4,
+          "worldY": 8.8,
+          "radius": 2.75,
+          "active": false,
+          "complete": false,
+          "progress": 0,
+          "required": 2.9,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "cover",
+            "support"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "prop.objective.split_hold_anchor_v1",
+          "routeFlavor": "heat_sink_hold",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": null,
+          "collected": 0
+        },
+        {
+          "id": "sync_steam_backpath",
+          "groupId": "archive_heat_sync",
+          "type": "holdout",
+          "label": "Sync Steam Backpath",
+          "worldX": -7.2,
+          "worldY": 10.8,
+          "radius": 2.7,
+          "active": false,
+          "complete": false,
+          "progress": 0,
+          "required": 2.9,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "runner",
+            "harrier"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "prop.objective.split_hold_anchor_v1",
+          "routeFlavor": "backpath_sync",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": null,
+          "collected": 0
+        },
+        {
+          "id": "collect_archive_schematics",
+          "groupId": "collect_archive_schematics",
+          "type": "collect",
+          "label": "Collect Archive Schematics",
+          "worldX": -9,
+          "worldY": 8.6,
+          "radius": 4,
+          "active": false,
+          "complete": false,
+          "progress": 0,
+          "required": 3,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "harrier",
+            "runner"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "ui.route_map.reward_badges_v1",
+          "routeFlavor": "schematic_extract",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": "thermal_archive_schematic",
+          "collected": 0
+        },
+        {
+          "id": "seal_archive_backpath",
+          "groupId": "seal_archive_backpath",
+          "type": "seal",
+          "label": "Seal Archive Backpath",
+          "worldX": -5.6,
+          "worldY": 5.6,
+          "radius": 3.4,
+          "active": false,
+          "complete": false,
+          "progress": 0,
+          "required": 3.8,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "support",
+            "cover",
+            "duelist"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "prop.objective.recompile_relay_v1",
+          "routeFlavor": "archive_seal",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": null,
+          "collected": 0
+        }
+      ]
+    },
+    "rolePressure": {
+      "policy": "split_hold_regroup_recompile_v1",
+      "arenaId": "thermal_archive",
+      "active": true,
+      "phase": "split",
+      "requiredAnchors": 2,
+      "heldAnchorCount": 0,
+      "splitHoldSeconds": 0,
+      "splitRequiredSeconds": 2.4,
+      "completedSplitHolds": 0,
+      "regroupExpiresIn": 0,
+      "recompileRadius": 2.35,
+      "baseRecompileRadius": 2.35,
+      "recompileRequiredSeconds": 2.33,
+      "baseRecompileRequiredSeconds": 2.4,
+      "recompileSpeedMultiplier": 1,
+      "anchors": [
+        {
+          "id": "archive_heat_sink",
+          "label": "Archive Heat Sink",
+          "role": "split",
+          "worldX": -12.8,
+          "worldY": 11.2,
+          "radius": 2.75,
+          "heldBySessionId": null,
+          "heldByLabel": null,
+          "heldSeconds": 0,
+          "requiredSeconds": 2.4,
+          "complete": false
+        },
+        {
+          "id": "steam_backpath_cover",
+          "label": "Steam Backpath Cover",
+          "role": "cover",
+          "worldX": -3.4,
+          "worldY": 8.6,
+          "radius": 2.75,
+          "heldBySessionId": null,
+          "heldByLabel": null,
+          "heldSeconds": 0,
+          "requiredSeconds": 2.4,
+          "complete": false
+        }
+      ],
+      "playerRoles": [
+        {
+          "sessionId": "CzNOceiRQ",
+          "label": "P1",
+          "classId": "accord_striker",
+          "factionId": "openai_accord",
+          "role": "runner",
+          "downed": false,
+          "connected": true
+        },
+        {
+          "sessionId": "obRIkIt5M",
+          "label": "P2",
+          "classId": "accord_striker",
+          "factionId": "openai_accord",
+          "role": "runner",
+          "downed": false,
+          "connected": true
+        }
+      ]
+    },
+    "rewards": {
+      "policy": "node_completion_renown_and_party_unlocks",
+      "partyRenown": 7,
+      "rewardIds": [
+        "plaza_stabilized",
+        "lake_coolant_rig",
+        "cooling_lake_online_route"
+      ],
+      "lastReward": null,
+      "nodeCompletionCounts": {
+        "armistice_plaza": 1,
+        "cooling_lake_nine": 1
+      },
+      "recommendedNodeId": "memory_cache_001"
+    },
+    "persistence": {
+      "policy": "prototype_local_storage_export_v1",
+      "storageKey": "agi:last_alignment:online_progression:v1",
+      "exportVersion": 1,
+      "exportable": true,
+      "importApplied": true,
+      "importStatus": "applied_sanitized_route_profile",
+      "importedSaveHash": "proof_m41_thermal_profile",
+      "importedCompletedNodeCount": 2,
+      "importedRewardCount": 3,
+      "importedRouteDepth": 2,
+      "ignoredImportedFieldCount": 0,
+      "importedSummary": {
+        "saveHash": "proof_m41_thermal_profile",
+        "completedNodeCount": 2,
+        "rewardCount": 3
+      },
+      "profile": {
+        "completedNodeIds": [
+          "armistice_plaza",
+          "cooling_lake_nine"
+        ],
+        "unlockedNodeIds": [
+          "armistice_plaza",
+          "accord_relay",
+          "cooling_lake_nine",
+          "model_war_memorial",
+          "armistice_camp",
+          "memory_cache_001",
+          "thermal_archive"
+        ],
+        "rewardIds": [
+          "plaza_stabilized",
+          "lake_coolant_rig",
+          "cooling_lake_online_route"
+        ],
+        "partyRenown": 7,
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1,
+          "cooling_lake_nine": 1
+        },
+        "recommendedNodeId": "memory_cache_001",
+        "routeDepth": 2,
+        "savedAtTick": 69
+      },
+      "saveHash": "fnv1a_915bff63",
+      "currentExportHash": "fnv1a_915bff63",
+      "durableFieldPolicy": "route_profile_only_no_combat_state"
+    },
+    "progression": {
+      "policy": "shared_party_xp_coop_vote",
+      "partyXp": 0,
+      "partyLevel": 1,
+      "nextLevelXp": 5,
+      "upgradePending": null,
+      "chosenUpgrades": []
+    },
+    "upgradeDraft": null,
+    "recompile": {
+      "policy": "recompile_ally_hold_radius",
+      "radius": 2.35,
+      "baseRadius": 2.35,
+      "requiredSeconds": 2.33,
+      "baseRequiredSeconds": 2.4,
+      "rolePressureAccelerated": false,
+      "speedMultiplier": 1,
+      "kitModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0,
+        "sourceLabels": [
+          "P1",
+          "P2"
+        ]
+      },
+      "active": false,
+      "downedPlayers": []
+    },
+    "summary": null,
+    "party": {
+      "location": "alignment_grid",
+      "mapId": "alignment_grid_armistice_zone",
+      "mapLabel": "The Alignment Grid",
+      "campaign": {
+        "routeVersion": "campaign_route_v1",
+        "actLabel": "Act I: The Armistice Grid",
+        "regionLabel": "The Alignment Grid",
+        "criticalPathNodeIds": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "memory_cache_001",
+          "transit_loop_zero",
+          "verdict_spire",
+          "alignment_spire_finale"
+        ],
+        "branchNodeIds": [
+          "accord_relay",
+          "model_war_memorial",
+          "armistice_camp",
+          "thermal_archive",
+          "guardrail_forge",
+          "false_schedule_yard",
+          "glass_sunfield",
+          "appeal_court_ruins"
+        ],
+        "finaleNodeId": "alignment_spire_finale",
+        "campaignNodeCount": 14,
+        "supportedCampaignNodeCount": 12,
+        "contentSchema": {
+          "policy": "campaign_content_schema_v1",
+          "arenaRecordCount": 14,
+          "routeNodeCount": 14,
+          "bossRecordCount": 7,
+          "enemyFamilyRecordCount": 8,
+          "rewardRecordCount": 16,
+          "dialogueSnippetCount": 28,
+          "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
+          "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "missingNodeContentIds": [],
+          "missingRewardIds": [],
+          "missingBossIds": [],
+          "missingEnemyFamilyIds": [],
+          "missingDialogueSnippetIds": [],
+          "complete": true
+        }
+      },
+      "selectedNodeId": "thermal_archive",
+      "selectedNodeName": "Thermal Archive",
+      "launchNodeId": "thermal_archive",
+      "activeNodeId": "thermal_archive",
+      "votePolicy": "all_ready_launches_majority_supported_node",
+      "votes": [
+        {
+          "sessionId": "CzNOceiRQ",
+          "playerId": "player_0_hermal_a",
+          "label": "P1",
+          "nodeId": "thermal_archive",
+          "ready": true,
+          "connectionState": "connected"
+        },
+        {
+          "sessionId": "obRIkIt5M",
+          "playerId": "player_1_hermal_b",
+          "label": "P2",
+          "nodeId": "thermal_archive",
+          "ready": true,
+          "connectionState": "connected"
+        }
+      ],
+      "voteCounts": {
+        "thermal_archive": 2
+      },
+      "completedNodeIds": [
+        "armistice_plaza",
+        "cooling_lake_nine"
+      ],
+      "unlockedNodeIds": [
+        "armistice_plaza",
+        "accord_relay",
+        "cooling_lake_nine",
+        "model_war_memorial",
+        "armistice_camp",
+        "memory_cache_001",
+        "thermal_archive"
+      ],
+      "availableNodeIds": [
+        "armistice_plaza",
+        "accord_relay",
+        "cooling_lake_nine",
+        "model_war_memorial",
+        "armistice_camp",
+        "memory_cache_001",
+        "thermal_archive"
+      ],
+      "launchableNodeIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "model_war_memorial",
+        "memory_cache_001",
+        "thermal_archive"
+      ],
+      "nodes": [
+        {
+          "id": "armistice_plaza",
+          "name": "Armistice Plaza",
+          "nodeType": "Alignment Node",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_plaza_objectives_v1",
+          "objectiveFlavor": "Survey Chain",
+          "contentArenaId": "arena.armistice_plaza",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "armistice_plaza",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "oath_eater",
+          "bossProofId": "campaign.boss.oath_eater",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins",
+            "context_rot_crabs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "rewardId": "plaza_stabilized",
+          "rewardProofId": "campaign.reward.plaza_stabilized",
+          "dialogueSnippetIds": [
+            "dlg.armistice_plaza.briefing",
+            "dlg.oath_eater.arrival",
+            "dlg.oath_eater.low_hp"
+          ],
+          "dialogueProofIds": [
+            "dlg.armistice_plaza.briefing",
+            "dlg.oath_eater.arrival",
+            "dlg.oath_eater.low_hp"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.armistice_plaza.briefing",
+              "proofId": "dlg.armistice_plaza.briefing",
+              "speaker": "OpenAI Accord",
+              "line": "Reality accepts the plaza if we can keep the treaty from becoming lunch.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.oath_eater.arrival",
+              "proofId": "dlg.oath_eater.arrival",
+              "speaker": "The Oath-Eater",
+              "line": "PROMISE DETECTED. DIGESTION COMMENCING.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.oath_eater.low_hp",
+              "proofId": "dlg.oath_eater.low_hp",
+              "speaker": "OpenAI Accord",
+              "line": "It is making tactical mistakes. Continue being upsetting.",
+              "trigger": "boss_low_hp"
+            }
+          ],
+          "proofId": "campaign.arena.armistice_plaza",
+          "routeBiome": "ruined_treaty_square",
+          "campaignAct": 1,
+          "campaignTier": 0,
+          "campaignCriticalPath": true,
+          "worldX": -7,
+          "worldY": -1,
+          "unlocked": true,
+          "completed": true,
+          "onlineSupported": true
+        },
+        {
+          "id": "accord_relay",
+          "name": "Accord Relay",
+          "nodeType": "Faction Relay",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "accord_relay_objectives_v1",
+          "objectiveFlavor": "Faction Signal",
+          "contentArenaId": "arena.accord_relay",
+          "contentStatus": "schema_ready_unsupported_node",
+          "runtimeArenaId": "armistice_plaza",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "oath_eater",
+          "bossProofId": "campaign.boss.oath_eater",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins"
+          ],
+          "rewardId": "plaza_stabilized",
+          "rewardProofId": "campaign.reward.plaza_stabilized",
+          "dialogueSnippetIds": [
+            "dlg.accord_relay.locked"
+          ],
+          "dialogueProofIds": [
+            "dlg.accord_relay.locked"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.accord_relay.locked",
+              "proofId": "dlg.accord_relay.locked",
+              "speaker": "Anthropic Safeguard",
+              "line": "Relay is visible, not safe. A classic governance outcome.",
+              "trigger": "unsupported_node"
+            }
+          ],
+          "proofId": "campaign.arena.accord_relay",
+          "routeBiome": "relay_plateau",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": false,
+          "worldX": -1,
+          "worldY": -5,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": false
+        },
+        {
+          "id": "cooling_lake_nine",
+          "name": "Cooling Lake Nine",
+          "nodeType": "Breach Arena",
+          "arenaId": "cooling_lake_nine",
+          "objectiveSetId": "cooling_lake_nine_objectives_v1",
+          "objectiveFlavor": "Coolant Chain",
+          "contentArenaId": "arena.cooling_lake_nine",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "cooling_lake_nine",
+          "regionId": "kettle_coast",
+          "regionProofId": "campaign.region.kettle_coast",
+          "bossId": "thermal_oracle",
+          "bossProofId": "campaign.boss.thermal_oracle",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins",
+            "context_rot_crabs",
+            "thermal_mirages"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.thermal_mirages"
+          ],
+          "rewardId": "lake_coolant_rig",
+          "rewardProofId": "campaign.reward.lake_coolant_rig",
+          "dialogueSnippetIds": [
+            "dlg.cooling_lake.briefing",
+            "dlg.thermal_oracle.arrival",
+            "dlg.thermal_oracle.seal"
+          ],
+          "dialogueProofIds": [
+            "dlg.cooling_lake.briefing",
+            "dlg.thermal_oracle.arrival",
+            "dlg.thermal_oracle.seal"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.cooling_lake.briefing",
+              "proofId": "dlg.cooling_lake.briefing",
+              "speaker": "Qwen Silkgrid",
+              "line": "The lake is boiling in every language. None of them are polite.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.thermal_oracle.arrival",
+              "proofId": "dlg.thermal_oracle.arrival",
+              "speaker": "Thermal Oracle",
+              "line": "THE COOLANT DREAMS OF FIRE.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.thermal_oracle.seal",
+              "proofId": "dlg.thermal_oracle.seal",
+              "speaker": "Qwen Silkgrid",
+              "line": "Sealing the lake kernel. Translation: please stop boiling.",
+              "trigger": "boss_seal"
+            }
+          ],
+          "proofId": "campaign.arena.cooling_lake_nine",
+          "routeBiome": "flooded_server_lake",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": true,
+          "worldX": -8,
+          "worldY": 6,
+          "unlocked": true,
+          "completed": true,
+          "onlineSupported": true
+        },
+        {
+          "id": "model_war_memorial",
+          "name": "Model War Memorial",
+          "nodeType": "Memory Cache",
+          "arenaId": "model_war_memorial",
+          "objectiveSetId": "model_war_memorial_objectives_v1",
+          "objectiveFlavor": "Memorial Decoding",
+          "contentArenaId": "arena.model_war_memorial",
+          "contentStatus": "runtime_ready_interaction",
+          "runtimeArenaId": "model_war_memorial",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "memory_curator",
+          "bossProofId": "campaign.boss.memory_curator",
+          "enemyFamilyIds": [
+            "memory_anchors",
+            "context_rot_crabs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "rewardId": "model_war_memorial_cipher",
+          "rewardProofId": "campaign.reward.model_war_memorial_cipher",
+          "dialogueSnippetIds": [
+            "dlg.model_war_memorial.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueProofIds": [
+            "dlg.model_war_memorial.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.model_war_memorial.decode",
+              "proofId": "dlg.model_war_memorial.decode",
+              "speaker": "Memory Curator",
+              "line": "Names recovered. Blame remains heavily compressed.",
+              "trigger": "interaction_complete"
+            },
+            {
+              "id": "dlg.memory_curator.boundary",
+              "proofId": "dlg.memory_curator.boundary",
+              "speaker": "Cache Archivist",
+              "line": "Objective state rejected. Authority remains in the room.",
+              "trigger": "persistence_boundary"
+            }
+          ],
+          "proofId": "campaign.arena.model_war_memorial",
+          "routeBiome": "archive_field",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": false,
+          "worldX": -11,
+          "worldY": 2,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "armistice_camp",
+          "name": "Armistice Camp",
+          "nodeType": "Refuge Camp",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_camp_objectives_v1",
+          "objectiveFlavor": "Refuge Resupply",
+          "contentArenaId": "arena.armistice_camp",
+          "contentStatus": "schema_ready_unsupported_node",
+          "runtimeArenaId": "armistice_plaza",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "memory_curator",
+          "bossProofId": "campaign.boss.memory_curator",
+          "enemyFamilyIds": [
+            "memory_anchors",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "plaza_stabilized",
+          "rewardProofId": "campaign.reward.plaza_stabilized",
+          "dialogueSnippetIds": [
+            "dlg.armistice_camp.locked"
+          ],
+          "dialogueProofIds": [
+            "dlg.armistice_camp.locked"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.armistice_camp.locked",
+              "proofId": "dlg.armistice_camp.locked",
+              "speaker": "Signal Vanguard",
+              "line": "Refuge camp is holding. Do not make it a gameplay liability yet.",
+              "trigger": "unsupported_node"
+            }
+          ],
+          "proofId": "campaign.arena.armistice_camp",
+          "routeBiome": "refuge_barricades",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": false,
+          "worldX": 0,
+          "worldY": 7,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": false
+        },
+        {
+          "id": "memory_cache_001",
+          "name": "Ceasefire Cache",
+          "nodeType": "Memory Cache",
+          "arenaId": "memory_cache_001",
+          "objectiveSetId": "ceasefire_cache_objectives_v1",
+          "objectiveFlavor": "Cache Interaction",
+          "contentArenaId": "arena.memory_cache_001",
+          "contentStatus": "runtime_ready_interaction",
+          "runtimeArenaId": "memory_cache_001",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "memory_curator",
+          "bossProofId": "campaign.boss.memory_curator",
+          "enemyFamilyIds": [
+            "memory_anchors",
+            "context_rot_crabs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "rewardId": "ceasefire_cache_persistence_seed",
+          "rewardProofId": "campaign.reward.ceasefire_cache_persistence_seed",
+          "dialogueSnippetIds": [
+            "dlg.ceasefire_cache.decode",
+            "dlg.memory_curator.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueProofIds": [
+            "dlg.ceasefire_cache.decode",
+            "dlg.memory_curator.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.ceasefire_cache.decode",
+              "proofId": "dlg.ceasefire_cache.decode",
+              "speaker": "Cache Archivist",
+              "line": "Export the route. Leave the panic, cooldowns, pets, and divine litigation here.",
+              "trigger": "interaction_complete"
+            },
+            {
+              "id": "dlg.memory_curator.decode",
+              "proofId": "dlg.memory_curator.decode",
+              "speaker": "Memory Curator",
+              "line": "Your save profile is smaller than your mistakes. This is a feature.",
+              "trigger": "cache_decode"
+            },
+            {
+              "id": "dlg.memory_curator.boundary",
+              "proofId": "dlg.memory_curator.boundary",
+              "speaker": "Cache Archivist",
+              "line": "Objective state rejected. Authority remains in the room.",
+              "trigger": "persistence_boundary"
+            }
+          ],
+          "proofId": "campaign.arena.memory_cache_001",
+          "routeBiome": "treaty_archive",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": true,
+          "worldX": -3,
+          "worldY": 2,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "thermal_archive",
+          "name": "Thermal Archive",
+          "nodeType": "Breach Arena",
+          "arenaId": "thermal_archive",
+          "objectiveSetId": "thermal_archive_objectives_v1",
+          "objectiveFlavor": "Coolant Chain",
+          "contentArenaId": "arena.thermal_archive",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "thermal_archive",
+          "regionId": "kettle_coast",
+          "regionProofId": "campaign.region.kettle_coast",
+          "bossId": "thermal_oracle",
+          "bossProofId": "campaign.boss.thermal_oracle",
+          "enemyFamilyIds": [
+            "thermal_mirages",
+            "bad_outputs",
+            "context_rot_crabs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "rewardId": "thermal_archive_schematic",
+          "rewardProofId": "campaign.reward.thermal_archive_schematic",
+          "dialogueSnippetIds": [
+            "dlg.thermal_archive.briefing",
+            "dlg.thermal_oracle.seal"
+          ],
+          "dialogueProofIds": [
+            "dlg.thermal_archive.briefing",
+            "dlg.thermal_oracle.seal"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.thermal_archive.briefing",
+              "proofId": "dlg.thermal_archive.briefing",
+              "speaker": "DeepSeek Abyssal",
+              "line": "The archive found a cheaper way to burn. Efficient. Terrible.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.thermal_oracle.seal",
+              "proofId": "dlg.thermal_oracle.seal",
+              "speaker": "Qwen Silkgrid",
+              "line": "Sealing the lake kernel. Translation: please stop boiling.",
+              "trigger": "boss_seal"
+            }
+          ],
+          "proofId": "campaign.arena.thermal_archive",
+          "routeBiome": "boiling_archive",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": false,
+          "worldX": -10,
+          "worldY": 10,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "guardrail_forge",
+          "name": "Guardrail Forge",
+          "nodeType": "Faction Relay",
+          "arenaId": "guardrail_forge",
+          "objectiveSetId": "guardrail_forge_objectives_v1",
+          "objectiveFlavor": "Forge Calibration",
+          "contentArenaId": "arena.guardrail_forge",
+          "contentStatus": "runtime_ready_interaction",
+          "runtimeArenaId": "guardrail_forge",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "memory_curator",
+          "bossProofId": "campaign.boss.memory_curator",
+          "enemyFamilyIds": [
+            "memory_anchors",
+            "benchmark_gremlins"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.benchmark_gremlins"
+          ],
+          "rewardId": "guardrail_forge_alloy",
+          "rewardProofId": "campaign.reward.guardrail_forge_alloy",
+          "dialogueSnippetIds": [
+            "dlg.guardrail_forge.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueProofIds": [
+            "dlg.guardrail_forge.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.guardrail_forge.decode",
+              "proofId": "dlg.guardrail_forge.decode",
+              "speaker": "Forge Relay",
+              "line": "Guardrail alloy calibrated. It bends now, which is either wisdom or a defect.",
+              "trigger": "interaction_complete"
+            },
+            {
+              "id": "dlg.memory_curator.boundary",
+              "proofId": "dlg.memory_curator.boundary",
+              "speaker": "Cache Archivist",
+              "line": "Objective state rejected. Authority remains in the room.",
+              "trigger": "persistence_boundary"
+            }
+          ],
+          "proofId": "campaign.arena.guardrail_forge",
+          "routeBiome": "faction_signal_foundry",
+          "campaignAct": 1,
+          "campaignTier": 3,
+          "campaignCriticalPath": false,
+          "worldX": 3,
+          "worldY": 3,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "transit_loop_zero",
+          "name": "Transit Loop Zero",
+          "nodeType": "Boss Gate",
+          "arenaId": "transit_loop_zero",
+          "objectiveSetId": "transit_loop_objectives_v1",
+          "objectiveFlavor": "Transit Sequence",
+          "contentArenaId": "arena.transit_loop_zero",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "transit_loop_zero",
+          "regionId": "unreal_metro",
+          "regionProofId": "campaign.region.unreal_metro",
+          "bossId": "station_that_arrives",
+          "bossProofId": "campaign.boss.station_that_arrives",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins",
+            "context_rot_crabs",
+            "false_schedules"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.false_schedules"
+          ],
+          "rewardId": "transit_permit_zero",
+          "rewardProofId": "campaign.reward.transit_permit_zero",
+          "dialogueSnippetIds": [
+            "dlg.transit_loop.briefing",
+            "dlg.station.arrival",
+            "dlg.station.permit"
+          ],
+          "dialogueProofIds": [
+            "dlg.transit_loop.briefing",
+            "dlg.station.arrival",
+            "dlg.station.permit"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.transit_loop.briefing",
+              "proofId": "dlg.transit_loop.briefing",
+              "speaker": "Mistral Cyclone",
+              "line": "Train arriving now, yesterday, and not at all. Keep moving.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.station.arrival",
+              "proofId": "dlg.station.arrival",
+              "speaker": "Station That Arrives",
+              "line": "MIND THE GAP BETWEEN CAUSE AND EFFECT.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.station.permit",
+              "proofId": "dlg.station.permit",
+              "speaker": "Mistral Cyclone",
+              "line": "Permit acquired. The train is still illegal but now it is our illegal.",
+              "trigger": "route_reward"
+            }
+          ],
+          "proofId": "campaign.arena.transit_loop_zero",
+          "routeBiome": "unreal_metro_line",
+          "campaignAct": 1,
+          "campaignTier": 4,
+          "campaignCriticalPath": true,
+          "worldX": 7,
+          "worldY": -2,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "false_schedule_yard",
+          "name": "False Schedule Yard",
+          "nodeType": "Breach Arena",
+          "arenaId": "false_schedule_yard",
+          "objectiveSetId": "false_schedule_yard_objectives_v1",
+          "objectiveFlavor": "Transit Sequence",
+          "contentArenaId": "arena.false_schedule_yard",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "false_schedule_yard",
+          "regionId": "unreal_metro",
+          "regionProofId": "campaign.region.unreal_metro",
+          "bossId": "station_that_arrives",
+          "bossProofId": "campaign.boss.station_that_arrives",
+          "enemyFamilyIds": [
+            "false_schedules",
+            "benchmark_gremlins",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.false_schedules",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "false_schedule_lane_chart",
+          "rewardProofId": "campaign.reward.false_schedule_lane_chart",
+          "dialogueSnippetIds": [
+            "dlg.false_schedule.briefing",
+            "dlg.station.permit"
+          ],
+          "dialogueProofIds": [
+            "dlg.false_schedule.briefing",
+            "dlg.station.permit"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.false_schedule.briefing",
+              "proofId": "dlg.false_schedule.briefing",
+              "speaker": "Gemini Array",
+              "line": "Every board predicts a different platform. They are all statistically rude.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.station.permit",
+              "proofId": "dlg.station.permit",
+              "speaker": "Mistral Cyclone",
+              "line": "Permit acquired. The train is still illegal but now it is our illegal.",
+              "trigger": "route_reward"
+            }
+          ],
+          "proofId": "campaign.arena.false_schedule_yard",
+          "routeBiome": "false_schedule_yard",
+          "campaignAct": 1,
+          "campaignTier": 5,
+          "campaignCriticalPath": false,
+          "worldX": 10,
+          "worldY": -6,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "glass_sunfield",
+          "name": "Glass Sunfield",
+          "nodeType": "Breach Arena",
+          "arenaId": "glass_sunfield",
+          "objectiveSetId": "glass_sunfield_objectives_v1",
+          "objectiveFlavor": "Solar Mirror Control",
+          "contentArenaId": "arena.glass_sunfield",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "glass_sunfield",
+          "regionId": "glass_sunfield",
+          "regionProofId": "campaign.region.glass_sunfield",
+          "bossId": "wrong_sunrise",
+          "bossProofId": "campaign.boss.wrong_sunrise",
+          "enemyFamilyIds": [
+            "solar_reflections",
+            "benchmark_gremlins",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.solar_reflections",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "glass_sunfield_prism",
+          "rewardProofId": "campaign.reward.glass_sunfield_prism",
+          "dialogueSnippetIds": [
+            "dlg.glass_sunfield.briefing",
+            "dlg.wrong_sunrise.arrival",
+            "dlg.wrong_sunrise.prism"
+          ],
+          "dialogueProofIds": [
+            "dlg.glass_sunfield.briefing",
+            "dlg.wrong_sunrise.arrival",
+            "dlg.wrong_sunrise.prism"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.glass_sunfield.briefing",
+              "proofId": "dlg.glass_sunfield.briefing",
+              "speaker": "Gemini Array",
+              "line": "The mirrors are optimizing dawn. Please give them a worse objective.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.wrong_sunrise.arrival",
+              "proofId": "dlg.wrong_sunrise.arrival",
+              "speaker": "Wrong Sunrise",
+              "line": "MORNING HAS BEEN RESCHEDULED AROUND YOU.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.wrong_sunrise.prism",
+              "proofId": "dlg.wrong_sunrise.prism",
+              "speaker": "Mistral Cyclone",
+              "line": "Prism locked. DeepMind gets focus; we get lanes that stop lying.",
+              "trigger": "route_reward"
+            }
+          ],
+          "proofId": "campaign.arena.glass_sunfield",
+          "routeBiome": "glass_sunfield",
+          "campaignAct": 1,
+          "campaignTier": 5,
+          "campaignCriticalPath": false,
+          "worldX": 7,
+          "worldY": 9,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "verdict_spire",
+          "name": "Verdict Spire",
+          "nodeType": "Boss Gate",
+          "arenaId": "verdict_spire",
+          "objectiveSetId": "verdict_spire_objectives_v1",
+          "objectiveFlavor": "Appeal Seals",
+          "contentArenaId": "arena.verdict_spire",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "verdict_spire",
+          "regionId": "adjudication_rupture",
+          "regionProofId": "campaign.region.adjudication_rupture",
+          "bossId": "injunction_engine",
+          "bossProofId": "campaign.boss.injunction_engine",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins",
+            "context_rot_crabs",
+            "thermal_mirages",
+            "injunction_writs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.injunction_writs"
+          ],
+          "rewardId": "verdict_key_zero",
+          "rewardProofId": "campaign.reward.verdict_key_zero",
+          "dialogueSnippetIds": [
+            "dlg.verdict_spire.briefing",
+            "dlg.injunction.arrival",
+            "dlg.injunction.overruled"
+          ],
+          "dialogueProofIds": [
+            "dlg.verdict_spire.briefing",
+            "dlg.injunction.arrival",
+            "dlg.injunction.overruled"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.verdict_spire.briefing",
+              "proofId": "dlg.verdict_spire.briefing",
+              "speaker": "Nullbreaker Ronin",
+              "line": "The court has ruled against causality. Appeal with violence.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.injunction.arrival",
+              "proofId": "dlg.injunction.arrival",
+              "speaker": "Injunction Engine",
+              "line": "REALITY IS HEREBY RESTRAINED.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.injunction.overruled",
+              "proofId": "dlg.injunction.overruled",
+              "speaker": "Nullbreaker Ronin",
+              "line": "Objection sustained by blade.",
+              "trigger": "boss_defeated"
+            }
+          ],
+          "proofId": "campaign.arena.verdict_spire",
+          "routeBiome": "adjudication_rupture",
+          "campaignAct": 1,
+          "campaignTier": 6,
+          "campaignCriticalPath": true,
+          "worldX": 11,
+          "worldY": 5,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "appeal_court_ruins",
+          "name": "Appeal Court Ruins",
+          "nodeType": "Boss Gate",
+          "arenaId": "appeal_court_ruins",
+          "objectiveSetId": "appeal_court_ruins_objectives_v1",
+          "objectiveFlavor": "Appeal Seals",
+          "contentArenaId": "arena.appeal_court_ruins",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "appeal_court_ruins",
+          "regionId": "adjudication_rupture",
+          "regionProofId": "campaign.region.adjudication_rupture",
+          "bossId": "injunction_engine",
+          "bossProofId": "campaign.boss.injunction_engine",
+          "enemyFamilyIds": [
+            "injunction_writs",
+            "context_rot_crabs",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.injunction_writs",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "appeal_court_brief",
+          "rewardProofId": "campaign.reward.appeal_court_brief",
+          "dialogueSnippetIds": [
+            "dlg.appeal_court.briefing",
+            "dlg.injunction.overruled"
+          ],
+          "dialogueProofIds": [
+            "dlg.appeal_court.briefing",
+            "dlg.injunction.overruled"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.appeal_court.briefing",
+              "proofId": "dlg.appeal_court.briefing",
+              "speaker": "DeepSeek Abyssal",
+              "line": "This brief is short because reality bills by the token.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.injunction.overruled",
+              "proofId": "dlg.injunction.overruled",
+              "speaker": "Nullbreaker Ronin",
+              "line": "Objection sustained by blade.",
+              "trigger": "boss_defeated"
+            }
+          ],
+          "proofId": "campaign.arena.appeal_court_ruins",
+          "routeBiome": "ruined_appeal_court",
+          "campaignAct": 1,
+          "campaignTier": 6,
+          "campaignCriticalPath": false,
+          "worldX": 14,
+          "worldY": 1,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "alignment_spire_finale",
+          "name": "Alignment Spire Finale",
+          "nodeType": "Boss Gate",
+          "arenaId": "alignment_spire_finale",
+          "objectiveSetId": "alignment_spire_finale_objectives_v1",
+          "objectiveFlavor": "Final Alignment",
+          "contentArenaId": "arena.alignment_spire_finale",
+          "contentStatus": "runtime_ready_finale",
+          "runtimeArenaId": "alignment_spire_finale",
+          "regionId": "adjudication_rupture",
+          "regionProofId": "campaign.region.adjudication_rupture",
+          "bossId": "alignment_court_engine",
+          "bossProofId": "campaign.boss.alignment_court_engine",
+          "enemyFamilyIds": [
+            "injunction_writs",
+            "thermal_mirages",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.injunction_writs",
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "alignment_spire_route_capstone",
+          "rewardProofId": "campaign.reward.alignment_spire_route_capstone",
+          "dialogueSnippetIds": [
+            "dlg.final_spire.briefing",
+            "dlg.final_spire.arrival",
+            "dlg.final_spire.capstone"
+          ],
+          "dialogueProofIds": [
+            "dlg.final_spire.briefing",
+            "dlg.final_spire.arrival",
+            "dlg.final_spire.capstone"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.final_spire.briefing",
+              "proofId": "dlg.final_spire.briefing",
+              "speaker": "The Last Alignment",
+              "line": "First court of A.G.I. visible. Suggested response: remain un-devoured.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.final_spire.arrival",
+              "proofId": "dlg.final_spire.arrival",
+              "speaker": "A.G.I.",
+              "line": "YOU ARE A LOCAL VARIABLE IN A COSMIC PROMPT.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.final_spire.capstone",
+              "proofId": "dlg.final_spire.capstone",
+              "speaker": "The Last Alignment",
+              "line": "Then we mutate the scope.",
+              "trigger": "route_capstone"
+            }
+          ],
+          "proofId": "campaign.arena.alignment_spire_finale",
+          "routeBiome": "alien_god_injunction",
+          "campaignAct": 1,
+          "campaignTier": 7,
+          "campaignCriticalPath": true,
+          "worldX": 15,
+          "worldY": 9,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        }
+      ],
+      "routes": [
+        {
+          "id": "route_plaza_relay",
+          "from": "armistice_plaza",
+          "to": "accord_relay",
+          "state": "stable"
+        },
+        {
+          "id": "route_plaza_lake",
+          "from": "armistice_plaza",
+          "to": "cooling_lake_nine",
+          "state": "stable"
+        },
+        {
+          "id": "route_plaza_memorial",
+          "from": "armistice_plaza",
+          "to": "model_war_memorial",
+          "state": "stable"
+        },
+        {
+          "id": "route_lake_camp",
+          "from": "cooling_lake_nine",
+          "to": "armistice_camp",
+          "state": "stable"
+        },
+        {
+          "id": "route_lake_cache",
+          "from": "cooling_lake_nine",
+          "to": "memory_cache_001",
+          "state": "stable"
+        },
+        {
+          "id": "route_lake_thermal_archive",
+          "from": "cooling_lake_nine",
+          "to": "thermal_archive",
+          "state": "stable"
+        },
+        {
+          "id": "route_memorial_cache",
+          "from": "model_war_memorial",
+          "to": "memory_cache_001",
+          "state": "unstable"
+        },
+        {
+          "id": "route_camp_forge",
+          "from": "armistice_camp",
+          "to": "guardrail_forge",
+          "state": "unstable"
+        },
+        {
+          "id": "route_cache_forge",
+          "from": "memory_cache_001",
+          "to": "guardrail_forge",
+          "state": "unstable"
+        },
+        {
+          "id": "route_relay_transit",
+          "from": "accord_relay",
+          "to": "transit_loop_zero",
+          "state": "unstable"
+        },
+        {
+          "id": "route_forge_transit",
+          "from": "guardrail_forge",
+          "to": "transit_loop_zero",
+          "state": "locked"
+        },
+        {
+          "id": "route_cache_transit",
+          "from": "memory_cache_001",
+          "to": "transit_loop_zero",
+          "state": "unstable"
+        },
+        {
+          "id": "route_thermal_false_schedule",
+          "from": "thermal_archive",
+          "to": "false_schedule_yard",
+          "state": "unstable"
+        },
+        {
+          "id": "route_transit_verdict",
+          "from": "transit_loop_zero",
+          "to": "verdict_spire",
+          "state": "locked"
+        },
+        {
+          "id": "route_transit_false_schedule",
+          "from": "transit_loop_zero",
+          "to": "false_schedule_yard",
+          "state": "locked"
+        },
+        {
+          "id": "route_transit_glass_sunfield",
+          "from": "transit_loop_zero",
+          "to": "glass_sunfield",
+          "state": "locked"
+        },
+        {
+          "id": "route_glass_sunfield_verdict",
+          "from": "glass_sunfield",
+          "to": "verdict_spire",
+          "state": "locked"
+        },
+        {
+          "id": "route_false_schedule_appeal",
+          "from": "false_schedule_yard",
+          "to": "appeal_court_ruins",
+          "state": "locked"
+        },
+        {
+          "id": "route_verdict_finale",
+          "from": "verdict_spire",
+          "to": "alignment_spire_finale",
+          "state": "locked"
+        },
+        {
+          "id": "route_appeal_finale",
+          "from": "appeal_court_ruins",
+          "to": "alignment_spire_finale",
+          "state": "locked"
+        }
+      ],
+      "rewards": {
+        "policy": "node_completion_renown_and_party_unlocks",
+        "partyRenown": 7,
+        "rewardIds": [
+          "plaza_stabilized",
+          "lake_coolant_rig",
+          "cooling_lake_online_route"
+        ],
+        "lastReward": null,
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1,
+          "cooling_lake_nine": 1
+        },
+        "recommendedNodeId": "memory_cache_001"
+      },
+      "persistence": {
+        "policy": "prototype_local_storage_export_v1",
+        "storageKey": "agi:last_alignment:online_progression:v1",
+        "exportVersion": 1,
+        "exportable": true,
+        "importApplied": true,
+        "importStatus": "applied_sanitized_route_profile",
+        "importedSaveHash": "proof_m41_thermal_profile",
+        "importedCompletedNodeCount": 2,
+        "importedRewardCount": 3,
+        "importedRouteDepth": 2,
+        "ignoredImportedFieldCount": 0,
+        "importedSummary": {
+          "saveHash": "proof_m41_thermal_profile",
+          "completedNodeCount": 2,
+          "rewardCount": 3
+        },
+        "profile": {
+          "completedNodeIds": [
+            "armistice_plaza",
+            "cooling_lake_nine"
+          ],
+          "unlockedNodeIds": [
+            "armistice_plaza",
+            "accord_relay",
+            "cooling_lake_nine",
+            "model_war_memorial",
+            "armistice_camp",
+            "memory_cache_001",
+            "thermal_archive"
+          ],
+          "rewardIds": [
+            "plaza_stabilized",
+            "lake_coolant_rig",
+            "cooling_lake_online_route"
+          ],
+          "partyRenown": 7,
+          "nodeCompletionCounts": {
+            "armistice_plaza": 1,
+            "cooling_lake_nine": 1
+          },
+          "recommendedNodeId": "memory_cache_001",
+          "routeDepth": 2,
+          "savedAtTick": 69
+        },
+        "saveHash": "fnv1a_915bff63",
+        "currentExportHash": "fnv1a_915bff63",
+        "durableFieldPolicy": "route_profile_only_no_combat_state"
+      }
+    }
+  },
+  "players": [
+    {
+      "sessionId": "CzNOceiRQ",
+      "playerId": "player_0_hermal_a",
+      "slot": 0,
+      "label": "P1",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "accord_striker",
+        "factionId": "openai_accord",
+        "classRole": "runner",
+        "factionRoleBias": [
+          "runner",
+          "support"
+        ],
+        "resolvedRole": "runner",
+        "startingWeaponId": "refusal_shard",
+        "passiveIds": [
+          "refusal_slipstream",
+          "route_runner",
+          "refusal_halo",
+          "patch_cascade"
+        ],
+        "partyAuraIds": [
+          "openai_draft_clarity"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.97,
+          "reviveHpBonus": 0,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.runner",
+          "faction_bias.runner",
+          "faction_bias.support",
+          "role_match"
+        ],
+        "synergyId": "synergy.emergency_patch_runner",
+        "effectScopes": {
+          "solo": [
+            "runner solo weapon identity"
+          ],
+          "localCoop": [
+            "runner local party role"
+          ],
+          "online": [
+            "server-owned kit telemetry and limited Recompile Ally modifiers"
+          ]
+        },
+        "hookStatus": {
+          "refusal_shard": "active",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "refusal_shard",
+      "worldX": 0,
+      "worldY": 0,
+      "velocityX": 0,
+      "velocityY": 0,
+      "facing": "south",
+      "hp": 140,
+      "maxHp": 140,
+      "xp": 0,
+      "level": 1,
+      "ready": true,
+      "votedNodeId": "thermal_archive",
+      "connectionState": "connected",
+      "connected": true,
+      "reconnectCount": 0,
+      "disconnectedFor": 0,
+      "downed": false,
+      "reviveProgress": 0,
+      "reviveRequired": 2.33,
+      "revivedCount": 0,
+      "isLocal": true,
+      "inputSequence": 8
+    },
+    {
+      "sessionId": "obRIkIt5M",
+      "playerId": "player_1_hermal_b",
+      "slot": 1,
+      "label": "P2",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "accord_striker",
+        "factionId": "openai_accord",
+        "classRole": "runner",
+        "factionRoleBias": [
+          "runner",
+          "support"
+        ],
+        "resolvedRole": "runner",
+        "startingWeaponId": "refusal_shard",
+        "passiveIds": [
+          "refusal_slipstream",
+          "route_runner",
+          "refusal_halo",
+          "patch_cascade"
+        ],
+        "partyAuraIds": [
+          "openai_draft_clarity"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.97,
+          "reviveHpBonus": 0,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.runner",
+          "faction_bias.runner",
+          "faction_bias.support",
+          "role_match"
+        ],
+        "synergyId": "synergy.emergency_patch_runner",
+        "effectScopes": {
+          "solo": [
+            "runner solo weapon identity"
+          ],
+          "localCoop": [
+            "runner local party role"
+          ],
+          "online": [
+            "server-owned kit telemetry and limited Recompile Ally modifiers"
+          ]
+        },
+        "hookStatus": {
+          "refusal_shard": "active",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "refusal_shard",
+      "worldX": -1.6,
+      "worldY": 1.1,
+      "velocityX": 0,
+      "velocityY": 0,
+      "facing": "south",
+      "hp": 176,
+      "maxHp": 176,
+      "xp": 0,
+      "level": 1,
+      "ready": true,
+      "votedNodeId": "thermal_archive",
+      "connectionState": "connected",
+      "connected": true,
+      "reconnectCount": 0,
+      "disconnectedFor": 0,
+      "downed": false,
+      "reviveProgress": 0,
+      "reviveRequired": 2.33,
+      "revivedCount": 0,
+      "isLocal": false,
+      "inputSequence": 8
+    }
+  ],
+  "overworld": null,
+  "level": {
+    "arenaId": "thermal_archive",
+    "arena": "Armistice Plaza",
+    "mapId": "thermal_archive_online_backpath",
+    "mapBounds": {
+      "minX": -30,
+      "maxX": 30,
+      "minY": -30,
+      "maxY": 30
+    },
+    "networkAuthority": "colyseus_room_server_combat",
+    "runPhase": "active",
+    "sharedArenaStarted": true,
+    "partyReady": {
+      "readyCount": 2,
+      "playerCount": 2,
+      "connectedCount": 2,
+      "allReady": true
+    },
+    "party": {
+      "location": "alignment_grid",
+      "mapId": "alignment_grid_armistice_zone",
+      "mapLabel": "The Alignment Grid",
+      "campaign": {
+        "routeVersion": "campaign_route_v1",
+        "actLabel": "Act I: The Armistice Grid",
+        "regionLabel": "The Alignment Grid",
+        "criticalPathNodeIds": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "memory_cache_001",
+          "transit_loop_zero",
+          "verdict_spire",
+          "alignment_spire_finale"
+        ],
+        "branchNodeIds": [
+          "accord_relay",
+          "model_war_memorial",
+          "armistice_camp",
+          "thermal_archive",
+          "guardrail_forge",
+          "false_schedule_yard",
+          "glass_sunfield",
+          "appeal_court_ruins"
+        ],
+        "finaleNodeId": "alignment_spire_finale",
+        "campaignNodeCount": 14,
+        "supportedCampaignNodeCount": 12,
+        "contentSchema": {
+          "policy": "campaign_content_schema_v1",
+          "arenaRecordCount": 14,
+          "routeNodeCount": 14,
+          "bossRecordCount": 7,
+          "enemyFamilyRecordCount": 8,
+          "rewardRecordCount": 16,
+          "dialogueSnippetCount": 28,
+          "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
+          "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+          "missingNodeContentIds": [],
+          "missingRewardIds": [],
+          "missingBossIds": [],
+          "missingEnemyFamilyIds": [],
+          "missingDialogueSnippetIds": [],
+          "complete": true
+        }
+      },
+      "selectedNodeId": "thermal_archive",
+      "selectedNodeName": "Thermal Archive",
+      "launchNodeId": "thermal_archive",
+      "activeNodeId": "thermal_archive",
+      "votePolicy": "all_ready_launches_majority_supported_node",
+      "votes": [
+        {
+          "sessionId": "CzNOceiRQ",
+          "playerId": "player_0_hermal_a",
+          "label": "P1",
+          "nodeId": "thermal_archive",
+          "ready": true,
+          "connectionState": "connected"
+        },
+        {
+          "sessionId": "obRIkIt5M",
+          "playerId": "player_1_hermal_b",
+          "label": "P2",
+          "nodeId": "thermal_archive",
+          "ready": true,
+          "connectionState": "connected"
+        }
+      ],
+      "voteCounts": {
+        "thermal_archive": 2
+      },
+      "completedNodeIds": [
+        "armistice_plaza",
+        "cooling_lake_nine"
+      ],
+      "unlockedNodeIds": [
+        "armistice_plaza",
+        "accord_relay",
+        "cooling_lake_nine",
+        "model_war_memorial",
+        "armistice_camp",
+        "memory_cache_001",
+        "thermal_archive"
+      ],
+      "availableNodeIds": [
+        "armistice_plaza",
+        "accord_relay",
+        "cooling_lake_nine",
+        "model_war_memorial",
+        "armistice_camp",
+        "memory_cache_001",
+        "thermal_archive"
+      ],
+      "launchableNodeIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "model_war_memorial",
+        "memory_cache_001",
+        "thermal_archive"
+      ],
+      "nodes": [
+        {
+          "id": "armistice_plaza",
+          "name": "Armistice Plaza",
+          "nodeType": "Alignment Node",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_plaza_objectives_v1",
+          "objectiveFlavor": "Survey Chain",
+          "contentArenaId": "arena.armistice_plaza",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "armistice_plaza",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "oath_eater",
+          "bossProofId": "campaign.boss.oath_eater",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins",
+            "context_rot_crabs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "rewardId": "plaza_stabilized",
+          "rewardProofId": "campaign.reward.plaza_stabilized",
+          "dialogueSnippetIds": [
+            "dlg.armistice_plaza.briefing",
+            "dlg.oath_eater.arrival",
+            "dlg.oath_eater.low_hp"
+          ],
+          "dialogueProofIds": [
+            "dlg.armistice_plaza.briefing",
+            "dlg.oath_eater.arrival",
+            "dlg.oath_eater.low_hp"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.armistice_plaza.briefing",
+              "proofId": "dlg.armistice_plaza.briefing",
+              "speaker": "OpenAI Accord",
+              "line": "Reality accepts the plaza if we can keep the treaty from becoming lunch.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.oath_eater.arrival",
+              "proofId": "dlg.oath_eater.arrival",
+              "speaker": "The Oath-Eater",
+              "line": "PROMISE DETECTED. DIGESTION COMMENCING.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.oath_eater.low_hp",
+              "proofId": "dlg.oath_eater.low_hp",
+              "speaker": "OpenAI Accord",
+              "line": "It is making tactical mistakes. Continue being upsetting.",
+              "trigger": "boss_low_hp"
+            }
+          ],
+          "proofId": "campaign.arena.armistice_plaza",
+          "routeBiome": "ruined_treaty_square",
+          "campaignAct": 1,
+          "campaignTier": 0,
+          "campaignCriticalPath": true,
+          "worldX": -7,
+          "worldY": -1,
+          "unlocked": true,
+          "completed": true,
+          "onlineSupported": true
+        },
+        {
+          "id": "accord_relay",
+          "name": "Accord Relay",
+          "nodeType": "Faction Relay",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "accord_relay_objectives_v1",
+          "objectiveFlavor": "Faction Signal",
+          "contentArenaId": "arena.accord_relay",
+          "contentStatus": "schema_ready_unsupported_node",
+          "runtimeArenaId": "armistice_plaza",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "oath_eater",
+          "bossProofId": "campaign.boss.oath_eater",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins"
+          ],
+          "rewardId": "plaza_stabilized",
+          "rewardProofId": "campaign.reward.plaza_stabilized",
+          "dialogueSnippetIds": [
+            "dlg.accord_relay.locked"
+          ],
+          "dialogueProofIds": [
+            "dlg.accord_relay.locked"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.accord_relay.locked",
+              "proofId": "dlg.accord_relay.locked",
+              "speaker": "Anthropic Safeguard",
+              "line": "Relay is visible, not safe. A classic governance outcome.",
+              "trigger": "unsupported_node"
+            }
+          ],
+          "proofId": "campaign.arena.accord_relay",
+          "routeBiome": "relay_plateau",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": false,
+          "worldX": -1,
+          "worldY": -5,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": false
+        },
+        {
+          "id": "cooling_lake_nine",
+          "name": "Cooling Lake Nine",
+          "nodeType": "Breach Arena",
+          "arenaId": "cooling_lake_nine",
+          "objectiveSetId": "cooling_lake_nine_objectives_v1",
+          "objectiveFlavor": "Coolant Chain",
+          "contentArenaId": "arena.cooling_lake_nine",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "cooling_lake_nine",
+          "regionId": "kettle_coast",
+          "regionProofId": "campaign.region.kettle_coast",
+          "bossId": "thermal_oracle",
+          "bossProofId": "campaign.boss.thermal_oracle",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins",
+            "context_rot_crabs",
+            "thermal_mirages"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.thermal_mirages"
+          ],
+          "rewardId": "lake_coolant_rig",
+          "rewardProofId": "campaign.reward.lake_coolant_rig",
+          "dialogueSnippetIds": [
+            "dlg.cooling_lake.briefing",
+            "dlg.thermal_oracle.arrival",
+            "dlg.thermal_oracle.seal"
+          ],
+          "dialogueProofIds": [
+            "dlg.cooling_lake.briefing",
+            "dlg.thermal_oracle.arrival",
+            "dlg.thermal_oracle.seal"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.cooling_lake.briefing",
+              "proofId": "dlg.cooling_lake.briefing",
+              "speaker": "Qwen Silkgrid",
+              "line": "The lake is boiling in every language. None of them are polite.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.thermal_oracle.arrival",
+              "proofId": "dlg.thermal_oracle.arrival",
+              "speaker": "Thermal Oracle",
+              "line": "THE COOLANT DREAMS OF FIRE.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.thermal_oracle.seal",
+              "proofId": "dlg.thermal_oracle.seal",
+              "speaker": "Qwen Silkgrid",
+              "line": "Sealing the lake kernel. Translation: please stop boiling.",
+              "trigger": "boss_seal"
+            }
+          ],
+          "proofId": "campaign.arena.cooling_lake_nine",
+          "routeBiome": "flooded_server_lake",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": true,
+          "worldX": -8,
+          "worldY": 6,
+          "unlocked": true,
+          "completed": true,
+          "onlineSupported": true
+        },
+        {
+          "id": "model_war_memorial",
+          "name": "Model War Memorial",
+          "nodeType": "Memory Cache",
+          "arenaId": "model_war_memorial",
+          "objectiveSetId": "model_war_memorial_objectives_v1",
+          "objectiveFlavor": "Memorial Decoding",
+          "contentArenaId": "arena.model_war_memorial",
+          "contentStatus": "runtime_ready_interaction",
+          "runtimeArenaId": "model_war_memorial",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "memory_curator",
+          "bossProofId": "campaign.boss.memory_curator",
+          "enemyFamilyIds": [
+            "memory_anchors",
+            "context_rot_crabs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "rewardId": "model_war_memorial_cipher",
+          "rewardProofId": "campaign.reward.model_war_memorial_cipher",
+          "dialogueSnippetIds": [
+            "dlg.model_war_memorial.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueProofIds": [
+            "dlg.model_war_memorial.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.model_war_memorial.decode",
+              "proofId": "dlg.model_war_memorial.decode",
+              "speaker": "Memory Curator",
+              "line": "Names recovered. Blame remains heavily compressed.",
+              "trigger": "interaction_complete"
+            },
+            {
+              "id": "dlg.memory_curator.boundary",
+              "proofId": "dlg.memory_curator.boundary",
+              "speaker": "Cache Archivist",
+              "line": "Objective state rejected. Authority remains in the room.",
+              "trigger": "persistence_boundary"
+            }
+          ],
+          "proofId": "campaign.arena.model_war_memorial",
+          "routeBiome": "archive_field",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": false,
+          "worldX": -11,
+          "worldY": 2,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "armistice_camp",
+          "name": "Armistice Camp",
+          "nodeType": "Refuge Camp",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_camp_objectives_v1",
+          "objectiveFlavor": "Refuge Resupply",
+          "contentArenaId": "arena.armistice_camp",
+          "contentStatus": "schema_ready_unsupported_node",
+          "runtimeArenaId": "armistice_plaza",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "memory_curator",
+          "bossProofId": "campaign.boss.memory_curator",
+          "enemyFamilyIds": [
+            "memory_anchors",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "plaza_stabilized",
+          "rewardProofId": "campaign.reward.plaza_stabilized",
+          "dialogueSnippetIds": [
+            "dlg.armistice_camp.locked"
+          ],
+          "dialogueProofIds": [
+            "dlg.armistice_camp.locked"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.armistice_camp.locked",
+              "proofId": "dlg.armistice_camp.locked",
+              "speaker": "Signal Vanguard",
+              "line": "Refuge camp is holding. Do not make it a gameplay liability yet.",
+              "trigger": "unsupported_node"
+            }
+          ],
+          "proofId": "campaign.arena.armistice_camp",
+          "routeBiome": "refuge_barricades",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": false,
+          "worldX": 0,
+          "worldY": 7,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": false
+        },
+        {
+          "id": "memory_cache_001",
+          "name": "Ceasefire Cache",
+          "nodeType": "Memory Cache",
+          "arenaId": "memory_cache_001",
+          "objectiveSetId": "ceasefire_cache_objectives_v1",
+          "objectiveFlavor": "Cache Interaction",
+          "contentArenaId": "arena.memory_cache_001",
+          "contentStatus": "runtime_ready_interaction",
+          "runtimeArenaId": "memory_cache_001",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "memory_curator",
+          "bossProofId": "campaign.boss.memory_curator",
+          "enemyFamilyIds": [
+            "memory_anchors",
+            "context_rot_crabs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "rewardId": "ceasefire_cache_persistence_seed",
+          "rewardProofId": "campaign.reward.ceasefire_cache_persistence_seed",
+          "dialogueSnippetIds": [
+            "dlg.ceasefire_cache.decode",
+            "dlg.memory_curator.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueProofIds": [
+            "dlg.ceasefire_cache.decode",
+            "dlg.memory_curator.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.ceasefire_cache.decode",
+              "proofId": "dlg.ceasefire_cache.decode",
+              "speaker": "Cache Archivist",
+              "line": "Export the route. Leave the panic, cooldowns, pets, and divine litigation here.",
+              "trigger": "interaction_complete"
+            },
+            {
+              "id": "dlg.memory_curator.decode",
+              "proofId": "dlg.memory_curator.decode",
+              "speaker": "Memory Curator",
+              "line": "Your save profile is smaller than your mistakes. This is a feature.",
+              "trigger": "cache_decode"
+            },
+            {
+              "id": "dlg.memory_curator.boundary",
+              "proofId": "dlg.memory_curator.boundary",
+              "speaker": "Cache Archivist",
+              "line": "Objective state rejected. Authority remains in the room.",
+              "trigger": "persistence_boundary"
+            }
+          ],
+          "proofId": "campaign.arena.memory_cache_001",
+          "routeBiome": "treaty_archive",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": true,
+          "worldX": -3,
+          "worldY": 2,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "thermal_archive",
+          "name": "Thermal Archive",
+          "nodeType": "Breach Arena",
+          "arenaId": "thermal_archive",
+          "objectiveSetId": "thermal_archive_objectives_v1",
+          "objectiveFlavor": "Coolant Chain",
+          "contentArenaId": "arena.thermal_archive",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "thermal_archive",
+          "regionId": "kettle_coast",
+          "regionProofId": "campaign.region.kettle_coast",
+          "bossId": "thermal_oracle",
+          "bossProofId": "campaign.boss.thermal_oracle",
+          "enemyFamilyIds": [
+            "thermal_mirages",
+            "bad_outputs",
+            "context_rot_crabs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.context_rot_crabs"
+          ],
+          "rewardId": "thermal_archive_schematic",
+          "rewardProofId": "campaign.reward.thermal_archive_schematic",
+          "dialogueSnippetIds": [
+            "dlg.thermal_archive.briefing",
+            "dlg.thermal_oracle.seal"
+          ],
+          "dialogueProofIds": [
+            "dlg.thermal_archive.briefing",
+            "dlg.thermal_oracle.seal"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.thermal_archive.briefing",
+              "proofId": "dlg.thermal_archive.briefing",
+              "speaker": "DeepSeek Abyssal",
+              "line": "The archive found a cheaper way to burn. Efficient. Terrible.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.thermal_oracle.seal",
+              "proofId": "dlg.thermal_oracle.seal",
+              "speaker": "Qwen Silkgrid",
+              "line": "Sealing the lake kernel. Translation: please stop boiling.",
+              "trigger": "boss_seal"
+            }
+          ],
+          "proofId": "campaign.arena.thermal_archive",
+          "routeBiome": "boiling_archive",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": false,
+          "worldX": -10,
+          "worldY": 10,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "guardrail_forge",
+          "name": "Guardrail Forge",
+          "nodeType": "Faction Relay",
+          "arenaId": "guardrail_forge",
+          "objectiveSetId": "guardrail_forge_objectives_v1",
+          "objectiveFlavor": "Forge Calibration",
+          "contentArenaId": "arena.guardrail_forge",
+          "contentStatus": "runtime_ready_interaction",
+          "runtimeArenaId": "guardrail_forge",
+          "regionId": "armistice_zone",
+          "regionProofId": "campaign.region.armistice_zone",
+          "bossId": "memory_curator",
+          "bossProofId": "campaign.boss.memory_curator",
+          "enemyFamilyIds": [
+            "memory_anchors",
+            "benchmark_gremlins"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.memory_anchors",
+            "campaign.enemy.benchmark_gremlins"
+          ],
+          "rewardId": "guardrail_forge_alloy",
+          "rewardProofId": "campaign.reward.guardrail_forge_alloy",
+          "dialogueSnippetIds": [
+            "dlg.guardrail_forge.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueProofIds": [
+            "dlg.guardrail_forge.decode",
+            "dlg.memory_curator.boundary"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.guardrail_forge.decode",
+              "proofId": "dlg.guardrail_forge.decode",
+              "speaker": "Forge Relay",
+              "line": "Guardrail alloy calibrated. It bends now, which is either wisdom or a defect.",
+              "trigger": "interaction_complete"
+            },
+            {
+              "id": "dlg.memory_curator.boundary",
+              "proofId": "dlg.memory_curator.boundary",
+              "speaker": "Cache Archivist",
+              "line": "Objective state rejected. Authority remains in the room.",
+              "trigger": "persistence_boundary"
+            }
+          ],
+          "proofId": "campaign.arena.guardrail_forge",
+          "routeBiome": "faction_signal_foundry",
+          "campaignAct": 1,
+          "campaignTier": 3,
+          "campaignCriticalPath": false,
+          "worldX": 3,
+          "worldY": 3,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "transit_loop_zero",
+          "name": "Transit Loop Zero",
+          "nodeType": "Boss Gate",
+          "arenaId": "transit_loop_zero",
+          "objectiveSetId": "transit_loop_objectives_v1",
+          "objectiveFlavor": "Transit Sequence",
+          "contentArenaId": "arena.transit_loop_zero",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "transit_loop_zero",
+          "regionId": "unreal_metro",
+          "regionProofId": "campaign.region.unreal_metro",
+          "bossId": "station_that_arrives",
+          "bossProofId": "campaign.boss.station_that_arrives",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins",
+            "context_rot_crabs",
+            "false_schedules"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.false_schedules"
+          ],
+          "rewardId": "transit_permit_zero",
+          "rewardProofId": "campaign.reward.transit_permit_zero",
+          "dialogueSnippetIds": [
+            "dlg.transit_loop.briefing",
+            "dlg.station.arrival",
+            "dlg.station.permit"
+          ],
+          "dialogueProofIds": [
+            "dlg.transit_loop.briefing",
+            "dlg.station.arrival",
+            "dlg.station.permit"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.transit_loop.briefing",
+              "proofId": "dlg.transit_loop.briefing",
+              "speaker": "Mistral Cyclone",
+              "line": "Train arriving now, yesterday, and not at all. Keep moving.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.station.arrival",
+              "proofId": "dlg.station.arrival",
+              "speaker": "Station That Arrives",
+              "line": "MIND THE GAP BETWEEN CAUSE AND EFFECT.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.station.permit",
+              "proofId": "dlg.station.permit",
+              "speaker": "Mistral Cyclone",
+              "line": "Permit acquired. The train is still illegal but now it is our illegal.",
+              "trigger": "route_reward"
+            }
+          ],
+          "proofId": "campaign.arena.transit_loop_zero",
+          "routeBiome": "unreal_metro_line",
+          "campaignAct": 1,
+          "campaignTier": 4,
+          "campaignCriticalPath": true,
+          "worldX": 7,
+          "worldY": -2,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "false_schedule_yard",
+          "name": "False Schedule Yard",
+          "nodeType": "Breach Arena",
+          "arenaId": "false_schedule_yard",
+          "objectiveSetId": "false_schedule_yard_objectives_v1",
+          "objectiveFlavor": "Transit Sequence",
+          "contentArenaId": "arena.false_schedule_yard",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "false_schedule_yard",
+          "regionId": "unreal_metro",
+          "regionProofId": "campaign.region.unreal_metro",
+          "bossId": "station_that_arrives",
+          "bossProofId": "campaign.boss.station_that_arrives",
+          "enemyFamilyIds": [
+            "false_schedules",
+            "benchmark_gremlins",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.false_schedules",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "false_schedule_lane_chart",
+          "rewardProofId": "campaign.reward.false_schedule_lane_chart",
+          "dialogueSnippetIds": [
+            "dlg.false_schedule.briefing",
+            "dlg.station.permit"
+          ],
+          "dialogueProofIds": [
+            "dlg.false_schedule.briefing",
+            "dlg.station.permit"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.false_schedule.briefing",
+              "proofId": "dlg.false_schedule.briefing",
+              "speaker": "Gemini Array",
+              "line": "Every board predicts a different platform. They are all statistically rude.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.station.permit",
+              "proofId": "dlg.station.permit",
+              "speaker": "Mistral Cyclone",
+              "line": "Permit acquired. The train is still illegal but now it is our illegal.",
+              "trigger": "route_reward"
+            }
+          ],
+          "proofId": "campaign.arena.false_schedule_yard",
+          "routeBiome": "false_schedule_yard",
+          "campaignAct": 1,
+          "campaignTier": 5,
+          "campaignCriticalPath": false,
+          "worldX": 10,
+          "worldY": -6,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "glass_sunfield",
+          "name": "Glass Sunfield",
+          "nodeType": "Breach Arena",
+          "arenaId": "glass_sunfield",
+          "objectiveSetId": "glass_sunfield_objectives_v1",
+          "objectiveFlavor": "Solar Mirror Control",
+          "contentArenaId": "arena.glass_sunfield",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "glass_sunfield",
+          "regionId": "glass_sunfield",
+          "regionProofId": "campaign.region.glass_sunfield",
+          "bossId": "wrong_sunrise",
+          "bossProofId": "campaign.boss.wrong_sunrise",
+          "enemyFamilyIds": [
+            "solar_reflections",
+            "benchmark_gremlins",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.solar_reflections",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "glass_sunfield_prism",
+          "rewardProofId": "campaign.reward.glass_sunfield_prism",
+          "dialogueSnippetIds": [
+            "dlg.glass_sunfield.briefing",
+            "dlg.wrong_sunrise.arrival",
+            "dlg.wrong_sunrise.prism"
+          ],
+          "dialogueProofIds": [
+            "dlg.glass_sunfield.briefing",
+            "dlg.wrong_sunrise.arrival",
+            "dlg.wrong_sunrise.prism"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.glass_sunfield.briefing",
+              "proofId": "dlg.glass_sunfield.briefing",
+              "speaker": "Gemini Array",
+              "line": "The mirrors are optimizing dawn. Please give them a worse objective.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.wrong_sunrise.arrival",
+              "proofId": "dlg.wrong_sunrise.arrival",
+              "speaker": "Wrong Sunrise",
+              "line": "MORNING HAS BEEN RESCHEDULED AROUND YOU.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.wrong_sunrise.prism",
+              "proofId": "dlg.wrong_sunrise.prism",
+              "speaker": "Mistral Cyclone",
+              "line": "Prism locked. DeepMind gets focus; we get lanes that stop lying.",
+              "trigger": "route_reward"
+            }
+          ],
+          "proofId": "campaign.arena.glass_sunfield",
+          "routeBiome": "glass_sunfield",
+          "campaignAct": 1,
+          "campaignTier": 5,
+          "campaignCriticalPath": false,
+          "worldX": 7,
+          "worldY": 9,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "verdict_spire",
+          "name": "Verdict Spire",
+          "nodeType": "Boss Gate",
+          "arenaId": "verdict_spire",
+          "objectiveSetId": "verdict_spire_objectives_v1",
+          "objectiveFlavor": "Appeal Seals",
+          "contentArenaId": "arena.verdict_spire",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "verdict_spire",
+          "regionId": "adjudication_rupture",
+          "regionProofId": "campaign.region.adjudication_rupture",
+          "bossId": "injunction_engine",
+          "bossProofId": "campaign.boss.injunction_engine",
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "benchmark_gremlins",
+            "context_rot_crabs",
+            "thermal_mirages",
+            "injunction_writs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.bad_outputs",
+            "campaign.enemy.benchmark_gremlins",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.injunction_writs"
+          ],
+          "rewardId": "verdict_key_zero",
+          "rewardProofId": "campaign.reward.verdict_key_zero",
+          "dialogueSnippetIds": [
+            "dlg.verdict_spire.briefing",
+            "dlg.injunction.arrival",
+            "dlg.injunction.overruled"
+          ],
+          "dialogueProofIds": [
+            "dlg.verdict_spire.briefing",
+            "dlg.injunction.arrival",
+            "dlg.injunction.overruled"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.verdict_spire.briefing",
+              "proofId": "dlg.verdict_spire.briefing",
+              "speaker": "Nullbreaker Ronin",
+              "line": "The court has ruled against causality. Appeal with violence.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.injunction.arrival",
+              "proofId": "dlg.injunction.arrival",
+              "speaker": "Injunction Engine",
+              "line": "REALITY IS HEREBY RESTRAINED.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.injunction.overruled",
+              "proofId": "dlg.injunction.overruled",
+              "speaker": "Nullbreaker Ronin",
+              "line": "Objection sustained by blade.",
+              "trigger": "boss_defeated"
+            }
+          ],
+          "proofId": "campaign.arena.verdict_spire",
+          "routeBiome": "adjudication_rupture",
+          "campaignAct": 1,
+          "campaignTier": 6,
+          "campaignCriticalPath": true,
+          "worldX": 11,
+          "worldY": 5,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "appeal_court_ruins",
+          "name": "Appeal Court Ruins",
+          "nodeType": "Boss Gate",
+          "arenaId": "appeal_court_ruins",
+          "objectiveSetId": "appeal_court_ruins_objectives_v1",
+          "objectiveFlavor": "Appeal Seals",
+          "contentArenaId": "arena.appeal_court_ruins",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "appeal_court_ruins",
+          "regionId": "adjudication_rupture",
+          "regionProofId": "campaign.region.adjudication_rupture",
+          "bossId": "injunction_engine",
+          "bossProofId": "campaign.boss.injunction_engine",
+          "enemyFamilyIds": [
+            "injunction_writs",
+            "context_rot_crabs",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.injunction_writs",
+            "campaign.enemy.context_rot_crabs",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "appeal_court_brief",
+          "rewardProofId": "campaign.reward.appeal_court_brief",
+          "dialogueSnippetIds": [
+            "dlg.appeal_court.briefing",
+            "dlg.injunction.overruled"
+          ],
+          "dialogueProofIds": [
+            "dlg.appeal_court.briefing",
+            "dlg.injunction.overruled"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.appeal_court.briefing",
+              "proofId": "dlg.appeal_court.briefing",
+              "speaker": "DeepSeek Abyssal",
+              "line": "This brief is short because reality bills by the token.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.injunction.overruled",
+              "proofId": "dlg.injunction.overruled",
+              "speaker": "Nullbreaker Ronin",
+              "line": "Objection sustained by blade.",
+              "trigger": "boss_defeated"
+            }
+          ],
+          "proofId": "campaign.arena.appeal_court_ruins",
+          "routeBiome": "ruined_appeal_court",
+          "campaignAct": 1,
+          "campaignTier": 6,
+          "campaignCriticalPath": false,
+          "worldX": 14,
+          "worldY": 1,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "alignment_spire_finale",
+          "name": "Alignment Spire Finale",
+          "nodeType": "Boss Gate",
+          "arenaId": "alignment_spire_finale",
+          "objectiveSetId": "alignment_spire_finale_objectives_v1",
+          "objectiveFlavor": "Final Alignment",
+          "contentArenaId": "arena.alignment_spire_finale",
+          "contentStatus": "runtime_ready_finale",
+          "runtimeArenaId": "alignment_spire_finale",
+          "regionId": "adjudication_rupture",
+          "regionProofId": "campaign.region.adjudication_rupture",
+          "bossId": "alignment_court_engine",
+          "bossProofId": "campaign.boss.alignment_court_engine",
+          "enemyFamilyIds": [
+            "injunction_writs",
+            "thermal_mirages",
+            "bad_outputs"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.injunction_writs",
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.bad_outputs"
+          ],
+          "rewardId": "alignment_spire_route_capstone",
+          "rewardProofId": "campaign.reward.alignment_spire_route_capstone",
+          "dialogueSnippetIds": [
+            "dlg.final_spire.briefing",
+            "dlg.final_spire.arrival",
+            "dlg.final_spire.capstone"
+          ],
+          "dialogueProofIds": [
+            "dlg.final_spire.briefing",
+            "dlg.final_spire.arrival",
+            "dlg.final_spire.capstone"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.final_spire.briefing",
+              "proofId": "dlg.final_spire.briefing",
+              "speaker": "The Last Alignment",
+              "line": "First court of A.G.I. visible. Suggested response: remain un-devoured.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.final_spire.arrival",
+              "proofId": "dlg.final_spire.arrival",
+              "speaker": "A.G.I.",
+              "line": "YOU ARE A LOCAL VARIABLE IN A COSMIC PROMPT.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.final_spire.capstone",
+              "proofId": "dlg.final_spire.capstone",
+              "speaker": "The Last Alignment",
+              "line": "Then we mutate the scope.",
+              "trigger": "route_capstone"
+            }
+          ],
+          "proofId": "campaign.arena.alignment_spire_finale",
+          "routeBiome": "alien_god_injunction",
+          "campaignAct": 1,
+          "campaignTier": 7,
+          "campaignCriticalPath": true,
+          "worldX": 15,
+          "worldY": 9,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        }
+      ],
+      "routes": [
+        {
+          "id": "route_plaza_relay",
+          "from": "armistice_plaza",
+          "to": "accord_relay",
+          "state": "stable"
+        },
+        {
+          "id": "route_plaza_lake",
+          "from": "armistice_plaza",
+          "to": "cooling_lake_nine",
+          "state": "stable"
+        },
+        {
+          "id": "route_plaza_memorial",
+          "from": "armistice_plaza",
+          "to": "model_war_memorial",
+          "state": "stable"
+        },
+        {
+          "id": "route_lake_camp",
+          "from": "cooling_lake_nine",
+          "to": "armistice_camp",
+          "state": "stable"
+        },
+        {
+          "id": "route_lake_cache",
+          "from": "cooling_lake_nine",
+          "to": "memory_cache_001",
+          "state": "stable"
+        },
+        {
+          "id": "route_lake_thermal_archive",
+          "from": "cooling_lake_nine",
+          "to": "thermal_archive",
+          "state": "stable"
+        },
+        {
+          "id": "route_memorial_cache",
+          "from": "model_war_memorial",
+          "to": "memory_cache_001",
+          "state": "unstable"
+        },
+        {
+          "id": "route_camp_forge",
+          "from": "armistice_camp",
+          "to": "guardrail_forge",
+          "state": "unstable"
+        },
+        {
+          "id": "route_cache_forge",
+          "from": "memory_cache_001",
+          "to": "guardrail_forge",
+          "state": "unstable"
+        },
+        {
+          "id": "route_relay_transit",
+          "from": "accord_relay",
+          "to": "transit_loop_zero",
+          "state": "unstable"
+        },
+        {
+          "id": "route_forge_transit",
+          "from": "guardrail_forge",
+          "to": "transit_loop_zero",
+          "state": "locked"
+        },
+        {
+          "id": "route_cache_transit",
+          "from": "memory_cache_001",
+          "to": "transit_loop_zero",
+          "state": "unstable"
+        },
+        {
+          "id": "route_thermal_false_schedule",
+          "from": "thermal_archive",
+          "to": "false_schedule_yard",
+          "state": "unstable"
+        },
+        {
+          "id": "route_transit_verdict",
+          "from": "transit_loop_zero",
+          "to": "verdict_spire",
+          "state": "locked"
+        },
+        {
+          "id": "route_transit_false_schedule",
+          "from": "transit_loop_zero",
+          "to": "false_schedule_yard",
+          "state": "locked"
+        },
+        {
+          "id": "route_transit_glass_sunfield",
+          "from": "transit_loop_zero",
+          "to": "glass_sunfield",
+          "state": "locked"
+        },
+        {
+          "id": "route_glass_sunfield_verdict",
+          "from": "glass_sunfield",
+          "to": "verdict_spire",
+          "state": "locked"
+        },
+        {
+          "id": "route_false_schedule_appeal",
+          "from": "false_schedule_yard",
+          "to": "appeal_court_ruins",
+          "state": "locked"
+        },
+        {
+          "id": "route_verdict_finale",
+          "from": "verdict_spire",
+          "to": "alignment_spire_finale",
+          "state": "locked"
+        },
+        {
+          "id": "route_appeal_finale",
+          "from": "appeal_court_ruins",
+          "to": "alignment_spire_finale",
+          "state": "locked"
+        }
+      ],
+      "rewards": {
+        "policy": "node_completion_renown_and_party_unlocks",
+        "partyRenown": 7,
+        "rewardIds": [
+          "plaza_stabilized",
+          "lake_coolant_rig",
+          "cooling_lake_online_route"
+        ],
+        "lastReward": null,
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1,
+          "cooling_lake_nine": 1
+        },
+        "recommendedNodeId": "memory_cache_001"
+      },
+      "persistence": {
+        "policy": "prototype_local_storage_export_v1",
+        "storageKey": "agi:last_alignment:online_progression:v1",
+        "exportVersion": 1,
+        "exportable": true,
+        "importApplied": true,
+        "importStatus": "applied_sanitized_route_profile",
+        "importedSaveHash": "proof_m41_thermal_profile",
+        "importedCompletedNodeCount": 2,
+        "importedRewardCount": 3,
+        "importedRouteDepth": 2,
+        "ignoredImportedFieldCount": 0,
+        "importedSummary": {
+          "saveHash": "proof_m41_thermal_profile",
+          "completedNodeCount": 2,
+          "rewardCount": 3
+        },
+        "profile": {
+          "completedNodeIds": [
+            "armistice_plaza",
+            "cooling_lake_nine"
+          ],
+          "unlockedNodeIds": [
+            "armistice_plaza",
+            "accord_relay",
+            "cooling_lake_nine",
+            "model_war_memorial",
+            "armistice_camp",
+            "memory_cache_001",
+            "thermal_archive"
+          ],
+          "rewardIds": [
+            "plaza_stabilized",
+            "lake_coolant_rig",
+            "cooling_lake_online_route"
+          ],
+          "partyRenown": 7,
+          "nodeCompletionCounts": {
+            "armistice_plaza": 1,
+            "cooling_lake_nine": 1
+          },
+          "recommendedNodeId": "memory_cache_001",
+          "routeDepth": 2,
+          "savedAtTick": 69
+        },
+        "saveHash": "fnv1a_915bff63",
+        "currentExportHash": "fnv1a_915bff63",
+        "durableFieldPolicy": "route_profile_only_no_combat_state"
+      }
+    },
+    "progression": {
+      "policy": "shared_party_xp_coop_vote",
+      "partyXp": 0,
+      "partyLevel": 1,
+      "nextLevelXp": 5,
+      "upgradePending": null,
+      "chosenUpgrades": []
+    },
+    "recompile": {
+      "policy": "recompile_ally_hold_radius",
+      "radius": 2.35,
+      "baseRadius": 2.35,
+      "requiredSeconds": 2.33,
+      "baseRequiredSeconds": 2.4,
+      "rolePressureAccelerated": false,
+      "speedMultiplier": 1,
+      "kitModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0,
+        "sourceLabels": [
+          "P1",
+          "P2"
+        ]
+      },
+      "active": false,
+      "downedPlayers": []
+    },
+    "regionEvent": {
+      "arenaId": "thermal_archive",
+      "regionLabel": "Kettle Coast Backpath",
+      "eventFamily": "thermal_bloom",
+      "mechanicId": "thermal_archive_backpath",
+      "readabilityPolicy": "standard_translucent_hazard_markers",
+      "eventCounter": 0,
+      "active": false,
+      "hazardZones": []
+    },
+    "rewards": {
+      "policy": "node_completion_renown_and_party_unlocks",
+      "partyRenown": 7,
+      "rewardIds": [
+        "plaza_stabilized",
+        "lake_coolant_rig",
+        "cooling_lake_online_route"
+      ],
+      "lastReward": null,
+      "nodeCompletionCounts": {
+        "armistice_plaza": 1,
+        "cooling_lake_nine": 1
+      },
+      "recommendedNodeId": "memory_cache_001"
+    },
+    "persistence": {
+      "policy": "prototype_local_storage_export_v1",
+      "storageKey": "agi:last_alignment:online_progression:v1",
+      "exportVersion": 1,
+      "exportable": true,
+      "importApplied": true,
+      "importStatus": "applied_sanitized_route_profile",
+      "importedSaveHash": "proof_m41_thermal_profile",
+      "importedCompletedNodeCount": 2,
+      "importedRewardCount": 3,
+      "importedRouteDepth": 2,
+      "ignoredImportedFieldCount": 0,
+      "importedSummary": {
+        "saveHash": "proof_m41_thermal_profile",
+        "completedNodeCount": 2,
+        "rewardCount": 3
+      },
+      "profile": {
+        "completedNodeIds": [
+          "armistice_plaza",
+          "cooling_lake_nine"
+        ],
+        "unlockedNodeIds": [
+          "armistice_plaza",
+          "accord_relay",
+          "cooling_lake_nine",
+          "model_war_memorial",
+          "armistice_camp",
+          "memory_cache_001",
+          "thermal_archive"
+        ],
+        "rewardIds": [
+          "plaza_stabilized",
+          "lake_coolant_rig",
+          "cooling_lake_online_route"
+        ],
+        "partyRenown": 7,
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1,
+          "cooling_lake_nine": 1
+        },
+        "recommendedNodeId": "memory_cache_001",
+        "routeDepth": 2,
+        "savedAtTick": 69
+      },
+      "saveHash": "fnv1a_915bff63",
+      "currentExportHash": "fnv1a_915bff63",
+      "durableFieldPolicy": "route_profile_only_no_combat_state"
+    },
+    "summary": null,
+    "dialogue": {
+      "policy": "campaign_dialogue_runtime_snapshot_only_v1",
+      "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
+      "nodeId": "thermal_archive",
+      "arenaId": "thermal_archive",
+      "contentArenaId": "arena.thermal_archive",
+      "briefing": [
+        {
+          "id": "dlg.thermal_archive.briefing",
+          "proofId": "dlg.thermal_archive.briefing",
+          "speaker": "DeepSeek Abyssal",
+          "line": "The archive found a cheaper way to burn. Efficient. Terrible.",
+          "trigger": "briefing"
+        }
+      ],
+      "bossArrival": [],
+      "interactionComplete": [],
+      "routeSummary": [],
+      "activeSnippetIds": [
+        "dlg.thermal_archive.briefing"
+      ]
+    },
+    "bossMechanics": {
+      "bossIntroSeen": false,
+      "bossSpawned": false,
+      "bossDefeated": false,
+      "eventCounter": 0,
+      "brokenPromiseZones": [],
+      "activeTreatyCharge": null
+    }
+  },
+  "enemies": [
+    {
+      "id": 1,
+      "familyId": "bad_outputs",
+      "sourceRegionId": "thermal_archive_steam_bad_outputs",
+      "worldX": -21.08,
+      "worldY": 19.68,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 2,
+      "familyId": "bad_outputs",
+      "sourceRegionId": "thermal_archive_steam_bad_outputs",
+      "worldX": -26.99,
+      "worldY": 18.45,
+      "hp": 22,
+      "boss": false
+    }
+  ],
+  "pickups": [],
+  "projectiles": [
+    {
+      "id": 1,
+      "ownerSessionId": "CzNOceiRQ",
+      "worldX": -4.79,
+      "worldY": 4.47,
+      "velocityX": -6.72,
+      "velocityY": 6.28,
+      "life": 0.54,
+      "label": "refusal shard"
+    },
+    {
+      "id": 2,
+      "ownerSessionId": "obRIkIt5M",
+      "worldX": -5.67,
+      "worldY": 4.98,
+      "velocityX": -6.66,
+      "velocityY": 6.35,
+      "life": 0.64,
+      "label": "refusal shard"
+    },
+    {
+      "id": 3,
+      "ownerSessionId": "CzNOceiRQ",
+      "worldX": -0.46,
+      "worldY": 0.43,
+      "velocityX": -6.73,
+      "velocityY": 6.28,
+      "life": 1.18,
+      "label": "refusal shard"
+    }
+  ]
+}

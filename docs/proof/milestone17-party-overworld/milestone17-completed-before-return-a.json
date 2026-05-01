@@ -1,0 +1,2306 @@
+{
+  "mode": "OnlineCoop",
+  "title": "AGI: The Last Alignment",
+  "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
+  "selectedBuild": {
+    "classId": "accord_striker",
+    "className": "Accord Striker",
+    "classRole": "Fast breach fighter",
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    },
+    "factionId": "openai_accord",
+    "factionName": "OpenAI Accord Division",
+    "factionDoctrine": "Adapt, refuse, patch, survive."
+  },
+  "build": null,
+  "upgrades": [],
+  "objective": "Move independently in the shared Consensus Cell.",
+  "performance": {
+    "entitiesAllocated": 6,
+    "activeEntities": 6,
+    "fpsTarget": 60
+  },
+  "assetRendering": {
+    "assetPreview": null,
+    "armisticeTileAtlasEnabled": true,
+    "productionArtEnabled": true,
+    "productionArtSet": "milestone14_combat_art_parity",
+    "productionArtDefaulted": true,
+    "armisticeTileAtlasDefaulted": true,
+    "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
+  },
+  "assets": {
+    "manifestVersion": 1,
+    "totalAssets": 83,
+    "countsByStatus": {
+      "concept": 14,
+      "raw": 4,
+      "code_placeholder": 16,
+      "production": 32,
+      "cleaned": 1,
+      "planned": 16
+    },
+    "placeholderMode": true,
+    "thirdPartyLogosTracked": 8,
+    "productionAssets": 32
+  },
+  "player": {
+    "sessionId": "T97u_DDkE",
+    "worldX": -1.6,
+    "worldY": 1.1,
+    "hp": 176,
+    "maxHp": 176,
+    "xp": 0,
+    "level": 1
+  },
+  "online": {
+    "status": "joined",
+    "serverUrl": "ws://127.0.0.1:2586",
+    "roomId": "QKQNxXKq3",
+    "sessionId": "T97u_DDkE",
+    "lastError": "",
+    "reconnectKey": "fwwqn6gz",
+    "reconnect": {
+      "policy": "session_storage_reconnect_key_slot_reclaim",
+      "slotTtlSeconds": 45,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "reclaimedPlayerCount": 0,
+      "disconnectedPlayerIds": []
+    },
+    "lifecycle": {
+      "schemaBacked": true,
+      "schemaVersion": 4,
+      "stateClass": "ConsensusCellState",
+      "collectionKinds": [
+        "MapSchema<PlayerPresence>",
+        "ArraySchema<completedNodeIds>",
+        "ArraySchema<unlockedNodeIds>",
+        "MapSchema<UpgradeVote>",
+        "MapSchema<RecompileDowned>"
+      ],
+      "playerPresenceCount": 2,
+      "upgradeVoteCount": 0,
+      "recompileDownedCount": 0,
+      "connectedCount": 2,
+      "disconnectedCount": 0,
+      "completedNodeCount": 1,
+      "unlockedNodeCount": 4
+    },
+    "localPersistence": {
+      "resetApplied": false,
+      "clearedStoredProfile": false,
+      "foundStoredProfile": false,
+      "draftHash": "fnv1a_d74d7465",
+      "storageKey": "agi:last_alignment:online_progression:v1",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTk4fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCodeCopied": false,
+      "importCodeApplied": false,
+      "importCodeStatus": "none",
+      "importCodeHash": "",
+      "lastAction": "profile_surface_ready"
+    },
+    "saveProfile": {
+      "surface": "milestone30_save_profile_export_codes",
+      "boundary": "browser_local_prototype_not_account_or_cloud",
+      "storageKey": "agi:last_alignment:online_progression:v1",
+      "durableFieldPolicy": "route_profile_only_no_combat_state",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTk4fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "shortExportCode": "AGI1_eyJwb2xp...3N0YXRlIn0",
+      "exportCodeCopied": false,
+      "importCodeApplied": false,
+      "importCodeStatus": "none",
+      "importCodeHash": "",
+      "resetApplied": false,
+      "clearedStoredProfile": false,
+      "profile": {
+        "completedNodeIds": [
+          "armistice_plaza"
+        ],
+        "unlockedNodeIds": [
+          "armistice_plaza",
+          "accord_relay",
+          "cooling_lake_nine",
+          "model_war_memorial"
+        ],
+        "rewardIds": [
+          "plaza_stabilized"
+        ],
+        "partyRenown": 2,
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1
+        },
+        "recommendedNodeId": "cooling_lake_nine",
+        "routeDepth": 1,
+        "savedAtTick": 198
+      },
+      "saveHash": "fnv1a_d74d7465",
+      "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
+    },
+    "routeUi": {
+      "panel": "milestone25_route_profile_panel",
+      "artExpansion": {
+        "set": "milestone28_online_route_art_expansion",
+        "enabled": true,
+        "staticRouteAtlases": 1,
+        "dynamicReadabilityAtlases": 2,
+        "milestone33": {
+          "policy": "wire_only_cleaned_or_production_transparent_pngs",
+          "plannedRuntimeArtIds": [
+            "prop.objective.split_hold_anchor_v1",
+            "prop.objective.regroup_beacon_v1",
+            "prop.objective.recompile_relay_v1",
+            "prop.alignment_grid.route_state_markers_v2",
+            "ui.route_map.party_vote_pips_v1",
+            "ui.save_profile.import_export_icons_v1",
+            "ui.route_map.reward_badges_v1"
+          ],
+          "readyRuntimeArtIds": [
+            "prop.objective.split_hold_anchor_v1",
+            "prop.objective.regroup_beacon_v1",
+            "prop.objective.recompile_relay_v1",
+            "prop.alignment_grid.route_state_markers_v2",
+            "ui.route_map.party_vote_pips_v1",
+            "ui.save_profile.import_export_icons_v1",
+            "ui.route_map.reward_badges_v1"
+          ],
+          "runtimeAtlasesReady": true
+        },
+        "milestone34": {
+          "set": "milestone34_objective_props_route_markers",
+          "enabled": true,
+          "runtimeAtlasesReady": true,
+          "objectivePropAtlases": 3,
+          "routeUiAtlases": 4
+        }
+      },
+      "routeDepth": 1,
+      "stableRouteCount": 3,
+      "totalRouteCount": 18,
+      "campaign": {
+        "routeVersion": "campaign_route_v1",
+        "actLabel": "Act I: The Armistice Grid",
+        "criticalPathNodeIds": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "memory_cache_001",
+          "transit_loop_zero",
+          "verdict_spire",
+          "alignment_spire_finale"
+        ],
+        "branchNodeIds": [
+          "accord_relay",
+          "model_war_memorial",
+          "armistice_camp",
+          "thermal_archive",
+          "guardrail_forge",
+          "false_schedule_yard",
+          "appeal_court_ruins"
+        ],
+        "finaleNodeId": "alignment_spire_finale",
+        "campaignNodeCount": 13,
+        "supportedCampaignNodeCount": 11
+      },
+      "selectedNodeId": "armistice_plaza",
+      "selectedNodeName": "Armistice Plaza",
+      "selectedNodeType": "Alignment Node",
+      "selectedObjectiveSetId": "armistice_plaza_objectives_v1",
+      "selectedObjectiveFlavor": "Survey Chain",
+      "selectedRouteBiome": "ruined_treaty_square",
+      "selectedCampaignTier": 0,
+      "selectedCampaignCriticalPath": true,
+      "selectedLaunchable": true,
+      "selectedCompleted": true,
+      "selectedOnlineSupported": true,
+      "recommendedNodeId": "cooling_lake_nine",
+      "rewardCount": 1,
+      "onlineNodeCount": 11
+    },
+    "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
+    "roomName": "consensus_cell",
+    "maxClients": 4,
+    "playerCount": 2,
+    "tick": 198,
+    "seconds": 1.79,
+    "schemaVersion": 4,
+    "networkAuthority": "colyseus_room_server_combat",
+    "runPhase": "completed",
+    "readyCount": 2,
+    "connectedCount": 2,
+    "downedCount": 0,
+    "combat": {
+      "kills": 0,
+      "collectedPickups": 0,
+      "authoritativeProjectiles": 4,
+      "authoritativePickups": 0,
+      "bossGateMechanic": "broken_promise"
+    },
+    "combatArt": {
+      "pressure": 0.09,
+      "phase": "opening",
+      "projectileCount": 4,
+      "pickupCount": 0,
+      "bossEventActive": false
+    },
+    "regionEvent": {
+      "arenaId": "armistice_plaza",
+      "regionLabel": "Armistice Zone",
+      "eventFamily": "broken_promise",
+      "eventCounter": 0,
+      "active": false,
+      "hazardZones": []
+    },
+    "objectives": {
+      "policy": "server_authoritative_arena_objectives_v1",
+      "arenaId": "armistice_plaza",
+      "objectiveSetId": "armistice_plaza_objectives_v1",
+      "label": "Armistice Plaza Objective Chain",
+      "phase": "active",
+      "currentObjectiveId": "calibrate_vanguard_relay",
+      "currentGroupId": "calibrate_reality_relays",
+      "hint": "Split the cell and hold both relays.",
+      "completedObjectiveIds": [
+        "survey_treaty_monument"
+      ],
+      "failedObjectiveIds": [],
+      "completionReason": "",
+      "instances": [
+        {
+          "id": "survey_treaty_monument",
+          "groupId": "survey_treaty_monument",
+          "type": "survey",
+          "label": "Survey Treaty Monument",
+          "worldX": 1,
+          "worldY": 3,
+          "radius": 3.2,
+          "active": false,
+          "complete": true,
+          "progress": 1.2,
+          "required": 1.2,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [
+            "runner"
+          ],
+          "preferredRoles": [
+            "runner",
+            "support"
+          ],
+          "roleMatched": true,
+          "roleAssistMultiplier": 1.16,
+          "runtimeArtId": "prop.objective.regroup_beacon_v1",
+          "routeFlavor": "survey_chain",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": null,
+          "collected": 0
+        },
+        {
+          "id": "calibrate_vanguard_relay",
+          "groupId": "calibrate_reality_relays",
+          "type": "holdout",
+          "label": "Calibrate Vanguard Relay",
+          "worldX": -8.5,
+          "worldY": 5.5,
+          "radius": 2.75,
+          "active": true,
+          "complete": false,
+          "progress": 0,
+          "required": 2.4,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "runner",
+            "harrier"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "prop.objective.split_hold_anchor_v1",
+          "routeFlavor": "split_hold",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": null,
+          "collected": 0
+        },
+        {
+          "id": "calibrate_treaty_cover",
+          "groupId": "calibrate_reality_relays",
+          "type": "holdout",
+          "label": "Calibrate Treaty Cover",
+          "worldX": 8.2,
+          "worldY": -5.8,
+          "radius": 2.75,
+          "active": true,
+          "complete": false,
+          "progress": 0,
+          "required": 2.4,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "cover",
+            "support"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "prop.objective.split_hold_anchor_v1",
+          "routeFlavor": "cover_hold",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": null,
+          "collected": 0
+        },
+        {
+          "id": "recover_oath_fragments",
+          "groupId": "recover_oath_fragments",
+          "type": "collect",
+          "label": "Recover Oath Fragments",
+          "worldX": -2.5,
+          "worldY": 4,
+          "radius": 4.2,
+          "active": false,
+          "complete": false,
+          "progress": 0,
+          "required": 3,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "harrier",
+            "runner"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "ui.route_map.reward_badges_v1",
+          "routeFlavor": "route_item",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": "oath_fragment",
+          "collected": 0
+        },
+        {
+          "id": "seal_breach_gate",
+          "groupId": "seal_breach_gate",
+          "type": "seal",
+          "label": "Seal Breach Gate",
+          "worldX": -24,
+          "worldY": 20,
+          "radius": 3.6,
+          "active": false,
+          "complete": false,
+          "progress": 0,
+          "required": 4,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "support",
+            "cover",
+            "duelist"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "prop.objective.recompile_relay_v1",
+          "routeFlavor": "boss_gate_seal",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": null,
+          "collected": 0
+        }
+      ]
+    },
+    "rolePressure": {
+      "policy": "split_hold_regroup_recompile_v1",
+      "arenaId": "armistice_plaza",
+      "active": false,
+      "phase": "inactive",
+      "requiredAnchors": 2,
+      "heldAnchorCount": 0,
+      "splitHoldSeconds": 0,
+      "splitRequiredSeconds": 2.4,
+      "completedSplitHolds": 0,
+      "regroupExpiresIn": 0,
+      "recompileRadius": 2.35,
+      "baseRecompileRadius": 2.35,
+      "recompileRequiredSeconds": 2.33,
+      "baseRecompileRequiredSeconds": 2.4,
+      "recompileSpeedMultiplier": 1,
+      "anchors": [
+        {
+          "id": "plaza_vanguard_relay",
+          "label": "Vanguard Relay",
+          "role": "split",
+          "worldX": -8.5,
+          "worldY": 5.5,
+          "radius": 2.75,
+          "heldBySessionId": null,
+          "heldByLabel": null,
+          "heldSeconds": 0,
+          "requiredSeconds": 2.4,
+          "complete": false
+        },
+        {
+          "id": "treaty_cover_post",
+          "label": "Treaty Cover Post",
+          "role": "cover",
+          "worldX": 8.2,
+          "worldY": -5.8,
+          "radius": 2.75,
+          "heldBySessionId": null,
+          "heldByLabel": null,
+          "heldSeconds": 0,
+          "requiredSeconds": 2.4,
+          "complete": false
+        }
+      ],
+      "playerRoles": [
+        {
+          "sessionId": "tIuOzuJUQ",
+          "label": "P1",
+          "classId": "accord_striker",
+          "factionId": "openai_accord",
+          "role": "runner",
+          "downed": false,
+          "connected": true
+        },
+        {
+          "sessionId": "T97u_DDkE",
+          "label": "P2",
+          "classId": "accord_striker",
+          "factionId": "openai_accord",
+          "role": "runner",
+          "downed": false,
+          "connected": true
+        }
+      ]
+    },
+    "rewards": {
+      "policy": "node_completion_renown_and_party_unlocks",
+      "partyRenown": 2,
+      "rewardIds": [
+        "plaza_stabilized"
+      ],
+      "lastReward": {
+        "nodeId": "armistice_plaza",
+        "arenaId": "armistice_plaza",
+        "rewardId": "plaza_stabilized",
+        "rewardName": "Plaza Stabilizer",
+        "firstClear": true,
+        "renownGained": 2,
+        "partyRenown": 2,
+        "reason": "proof_forced"
+      },
+      "nodeCompletionCounts": {
+        "armistice_plaza": 1
+      },
+      "recommendedNodeId": "cooling_lake_nine"
+    },
+    "persistence": {
+      "policy": "prototype_local_storage_export_v1",
+      "storageKey": "agi:last_alignment:online_progression:v1",
+      "exportVersion": 1,
+      "exportable": true,
+      "importApplied": false,
+      "importStatus": "none",
+      "importedSaveHash": "",
+      "importedCompletedNodeCount": 0,
+      "importedRewardCount": 0,
+      "importedRouteDepth": 0,
+      "ignoredImportedFieldCount": 0,
+      "importedSummary": null,
+      "profile": {
+        "completedNodeIds": [
+          "armistice_plaza"
+        ],
+        "unlockedNodeIds": [
+          "armistice_plaza",
+          "accord_relay",
+          "cooling_lake_nine",
+          "model_war_memorial"
+        ],
+        "rewardIds": [
+          "plaza_stabilized"
+        ],
+        "partyRenown": 2,
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1
+        },
+        "recommendedNodeId": "cooling_lake_nine",
+        "routeDepth": 1,
+        "savedAtTick": 198
+      },
+      "saveHash": "fnv1a_d74d7465",
+      "currentExportHash": "fnv1a_d74d7465",
+      "durableFieldPolicy": "route_profile_only_no_combat_state"
+    },
+    "progression": {
+      "policy": "shared_party_xp_coop_vote",
+      "partyXp": 0,
+      "partyLevel": 1,
+      "nextLevelXp": 5,
+      "upgradePending": null,
+      "chosenUpgrades": []
+    },
+    "upgradeDraft": null,
+    "recompile": {
+      "policy": "recompile_ally_hold_radius",
+      "radius": 2.35,
+      "baseRadius": 2.35,
+      "requiredSeconds": 2.33,
+      "baseRequiredSeconds": 2.4,
+      "rolePressureAccelerated": false,
+      "speedMultiplier": 1,
+      "kitModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0,
+        "sourceLabels": [
+          "P1",
+          "P2"
+        ]
+      },
+      "active": false,
+      "downedPlayers": []
+    },
+    "summary": {
+      "outcome": "completed",
+      "reason": "proof_forced",
+      "title": "ALIGNMENT NODE STABILIZED",
+      "subtitle": "Online Consensus Cell kept the road real.",
+      "nodeId": "armistice_plaza",
+      "arenaId": "armistice_plaza",
+      "seconds": 1.79,
+      "kills": 0,
+      "collectedPickups": 0,
+      "partyXp": 0,
+      "partyLevel": 1,
+      "chosenUpgrades": [],
+      "revivedPlayers": 0,
+      "rewards": {
+        "nodeId": "armistice_plaza",
+        "arenaId": "armistice_plaza",
+        "rewardId": "plaza_stabilized",
+        "rewardName": "Plaza Stabilizer",
+        "firstClear": true,
+        "renownGained": 2,
+        "partyRenown": 2,
+        "reason": "proof_forced"
+      },
+      "objectives": {
+        "policy": "server_authoritative_arena_objectives_v1",
+        "arenaId": "armistice_plaza",
+        "objectiveSetId": "armistice_plaza_objectives_v1",
+        "label": "Armistice Plaza Objective Chain",
+        "phase": "active",
+        "currentObjectiveId": "calibrate_vanguard_relay",
+        "currentGroupId": "calibrate_reality_relays",
+        "hint": "Split the cell and hold both relays.",
+        "completedObjectiveIds": [
+          "survey_treaty_monument"
+        ],
+        "failedObjectiveIds": [],
+        "completionReason": "",
+        "instances": [
+          {
+            "id": "survey_treaty_monument",
+            "groupId": "survey_treaty_monument",
+            "type": "survey",
+            "label": "Survey Treaty Monument",
+            "worldX": 1,
+            "worldY": 3,
+            "radius": 3.2,
+            "active": false,
+            "complete": true,
+            "progress": 1.2,
+            "required": 1.2,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [
+              "runner"
+            ],
+            "preferredRoles": [
+              "runner",
+              "support"
+            ],
+            "roleMatched": true,
+            "roleAssistMultiplier": 1.16,
+            "runtimeArtId": "prop.objective.regroup_beacon_v1",
+            "routeFlavor": "survey_chain",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": null,
+            "collected": 0
+          },
+          {
+            "id": "calibrate_vanguard_relay",
+            "groupId": "calibrate_reality_relays",
+            "type": "holdout",
+            "label": "Calibrate Vanguard Relay",
+            "worldX": -8.5,
+            "worldY": 5.5,
+            "radius": 2.75,
+            "active": true,
+            "complete": false,
+            "progress": 0,
+            "required": 2.4,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [],
+            "preferredRoles": [
+              "runner",
+              "harrier"
+            ],
+            "roleMatched": false,
+            "roleAssistMultiplier": 1,
+            "runtimeArtId": "prop.objective.split_hold_anchor_v1",
+            "routeFlavor": "split_hold",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": null,
+            "collected": 0
+          },
+          {
+            "id": "calibrate_treaty_cover",
+            "groupId": "calibrate_reality_relays",
+            "type": "holdout",
+            "label": "Calibrate Treaty Cover",
+            "worldX": 8.2,
+            "worldY": -5.8,
+            "radius": 2.75,
+            "active": true,
+            "complete": false,
+            "progress": 0,
+            "required": 2.4,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [],
+            "preferredRoles": [
+              "cover",
+              "support"
+            ],
+            "roleMatched": false,
+            "roleAssistMultiplier": 1,
+            "runtimeArtId": "prop.objective.split_hold_anchor_v1",
+            "routeFlavor": "cover_hold",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": null,
+            "collected": 0
+          },
+          {
+            "id": "recover_oath_fragments",
+            "groupId": "recover_oath_fragments",
+            "type": "collect",
+            "label": "Recover Oath Fragments",
+            "worldX": -2.5,
+            "worldY": 4,
+            "radius": 4.2,
+            "active": false,
+            "complete": false,
+            "progress": 0,
+            "required": 3,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [],
+            "preferredRoles": [
+              "harrier",
+              "runner"
+            ],
+            "roleMatched": false,
+            "roleAssistMultiplier": 1,
+            "runtimeArtId": "ui.route_map.reward_badges_v1",
+            "routeFlavor": "route_item",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": "oath_fragment",
+            "collected": 0
+          },
+          {
+            "id": "seal_breach_gate",
+            "groupId": "seal_breach_gate",
+            "type": "seal",
+            "label": "Seal Breach Gate",
+            "worldX": -24,
+            "worldY": 20,
+            "radius": 3.6,
+            "active": false,
+            "complete": false,
+            "progress": 0,
+            "required": 4,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [],
+            "preferredRoles": [
+              "support",
+              "cover",
+              "duelist"
+            ],
+            "roleMatched": false,
+            "roleAssistMultiplier": 1,
+            "runtimeArtId": "prop.objective.recompile_relay_v1",
+            "routeFlavor": "boss_gate_seal",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": null,
+            "collected": 0
+          }
+        ]
+      },
+      "rolePressure": {
+        "policy": "split_hold_regroup_recompile_v1",
+        "splitHolds": 0,
+        "regroupActive": false
+      }
+    },
+    "party": {
+      "location": "alignment_grid",
+      "mapId": "alignment_grid_armistice_zone",
+      "mapLabel": "The Alignment Grid",
+      "campaign": {
+        "routeVersion": "campaign_route_v1",
+        "actLabel": "Act I: The Armistice Grid",
+        "regionLabel": "The Alignment Grid",
+        "criticalPathNodeIds": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "memory_cache_001",
+          "transit_loop_zero",
+          "verdict_spire",
+          "alignment_spire_finale"
+        ],
+        "branchNodeIds": [
+          "accord_relay",
+          "model_war_memorial",
+          "armistice_camp",
+          "thermal_archive",
+          "guardrail_forge",
+          "false_schedule_yard",
+          "appeal_court_ruins"
+        ],
+        "finaleNodeId": "alignment_spire_finale",
+        "campaignNodeCount": 13,
+        "supportedCampaignNodeCount": 11
+      },
+      "selectedNodeId": "armistice_plaza",
+      "selectedNodeName": "Armistice Plaza",
+      "launchNodeId": "armistice_plaza",
+      "activeNodeId": "armistice_plaza",
+      "votePolicy": "all_ready_launches_majority_supported_node",
+      "votes": [
+        {
+          "sessionId": "tIuOzuJUQ",
+          "playerId": "player_0_vnmap0s8",
+          "label": "P1",
+          "nodeId": "armistice_plaza",
+          "ready": true,
+          "connectionState": "connected"
+        },
+        {
+          "sessionId": "T97u_DDkE",
+          "playerId": "player_1_fwwqn6gz",
+          "label": "P2",
+          "nodeId": "armistice_plaza",
+          "ready": true,
+          "connectionState": "connected"
+        }
+      ],
+      "voteCounts": {
+        "armistice_plaza": 2
+      },
+      "completedNodeIds": [
+        "armistice_plaza"
+      ],
+      "unlockedNodeIds": [
+        "armistice_plaza",
+        "accord_relay",
+        "cooling_lake_nine",
+        "model_war_memorial"
+      ],
+      "availableNodeIds": [
+        "armistice_plaza",
+        "accord_relay",
+        "cooling_lake_nine",
+        "model_war_memorial"
+      ],
+      "launchableNodeIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "model_war_memorial"
+      ],
+      "nodes": [
+        {
+          "id": "armistice_plaza",
+          "name": "Armistice Plaza",
+          "nodeType": "Alignment Node",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_plaza_objectives_v1",
+          "objectiveFlavor": "Survey Chain",
+          "routeBiome": "ruined_treaty_square",
+          "campaignAct": 1,
+          "campaignTier": 0,
+          "campaignCriticalPath": true,
+          "worldX": -7,
+          "worldY": -1,
+          "unlocked": true,
+          "completed": true,
+          "onlineSupported": true
+        },
+        {
+          "id": "accord_relay",
+          "name": "Accord Relay",
+          "nodeType": "Faction Relay",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_plaza_objectives_v1",
+          "objectiveFlavor": "Faction Signal",
+          "routeBiome": "relay_plateau",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": false,
+          "worldX": -1,
+          "worldY": -5,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": false
+        },
+        {
+          "id": "cooling_lake_nine",
+          "name": "Cooling Lake Nine",
+          "nodeType": "Breach Arena",
+          "arenaId": "cooling_lake_nine",
+          "objectiveSetId": "cooling_lake_nine_objectives_v1",
+          "objectiveFlavor": "Coolant Chain",
+          "routeBiome": "flooded_server_lake",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": true,
+          "worldX": -8,
+          "worldY": 6,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "model_war_memorial",
+          "name": "Model War Memorial",
+          "nodeType": "Memory Cache",
+          "arenaId": "memory_cache_001",
+          "objectiveSetId": "ceasefire_cache_objectives_v1",
+          "objectiveFlavor": "Memorial Decoding",
+          "routeBiome": "archive_field",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": false,
+          "worldX": -11,
+          "worldY": 2,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "armistice_camp",
+          "name": "Armistice Camp",
+          "nodeType": "Refuge Camp",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_plaza_objectives_v1",
+          "objectiveFlavor": "Refuge Resupply",
+          "routeBiome": "refuge_barricades",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": false,
+          "worldX": 0,
+          "worldY": 7,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": false
+        },
+        {
+          "id": "memory_cache_001",
+          "name": "Ceasefire Cache",
+          "nodeType": "Memory Cache",
+          "arenaId": "memory_cache_001",
+          "objectiveSetId": "ceasefire_cache_objectives_v1",
+          "objectiveFlavor": "Cache Interaction",
+          "routeBiome": "treaty_archive",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": true,
+          "worldX": -3,
+          "worldY": 2,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "thermal_archive",
+          "name": "Thermal Archive",
+          "nodeType": "Breach Arena",
+          "arenaId": "cooling_lake_nine",
+          "objectiveSetId": "cooling_lake_nine_objectives_v1",
+          "objectiveFlavor": "Coolant Chain",
+          "routeBiome": "boiling_archive",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": false,
+          "worldX": -10,
+          "worldY": 10,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "guardrail_forge",
+          "name": "Guardrail Forge",
+          "nodeType": "Faction Relay",
+          "arenaId": "memory_cache_001",
+          "objectiveSetId": "ceasefire_cache_objectives_v1",
+          "objectiveFlavor": "Forge Calibration",
+          "routeBiome": "faction_signal_foundry",
+          "campaignAct": 1,
+          "campaignTier": 3,
+          "campaignCriticalPath": false,
+          "worldX": 3,
+          "worldY": 3,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "transit_loop_zero",
+          "name": "Transit Loop Zero",
+          "nodeType": "Boss Gate",
+          "arenaId": "transit_loop_zero",
+          "objectiveSetId": "transit_loop_objectives_v1",
+          "objectiveFlavor": "Transit Sequence",
+          "routeBiome": "unreal_metro_line",
+          "campaignAct": 1,
+          "campaignTier": 4,
+          "campaignCriticalPath": true,
+          "worldX": 7,
+          "worldY": -2,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "false_schedule_yard",
+          "name": "False Schedule Yard",
+          "nodeType": "Breach Arena",
+          "arenaId": "transit_loop_zero",
+          "objectiveSetId": "transit_loop_objectives_v1",
+          "objectiveFlavor": "Transit Sequence",
+          "routeBiome": "false_schedule_yard",
+          "campaignAct": 1,
+          "campaignTier": 5,
+          "campaignCriticalPath": false,
+          "worldX": 10,
+          "worldY": -6,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "verdict_spire",
+          "name": "Verdict Spire",
+          "nodeType": "Boss Gate",
+          "arenaId": "verdict_spire",
+          "objectiveSetId": "verdict_spire_objectives_v1",
+          "objectiveFlavor": "Appeal Seals",
+          "routeBiome": "adjudication_rupture",
+          "campaignAct": 1,
+          "campaignTier": 6,
+          "campaignCriticalPath": true,
+          "worldX": 11,
+          "worldY": 5,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "appeal_court_ruins",
+          "name": "Appeal Court Ruins",
+          "nodeType": "Boss Gate",
+          "arenaId": "verdict_spire",
+          "objectiveSetId": "verdict_spire_objectives_v1",
+          "objectiveFlavor": "Appeal Seals",
+          "routeBiome": "ruined_appeal_court",
+          "campaignAct": 1,
+          "campaignTier": 6,
+          "campaignCriticalPath": false,
+          "worldX": 14,
+          "worldY": 1,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "alignment_spire_finale",
+          "name": "Alignment Spire Finale",
+          "nodeType": "Boss Gate",
+          "arenaId": "verdict_spire",
+          "objectiveSetId": "verdict_spire_objectives_v1",
+          "objectiveFlavor": "Final Alignment",
+          "routeBiome": "alien_god_injunction",
+          "campaignAct": 1,
+          "campaignTier": 7,
+          "campaignCriticalPath": true,
+          "worldX": 15,
+          "worldY": 9,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        }
+      ],
+      "routes": [
+        {
+          "id": "route_plaza_relay",
+          "from": "armistice_plaza",
+          "to": "accord_relay",
+          "state": "stable"
+        },
+        {
+          "id": "route_plaza_lake",
+          "from": "armistice_plaza",
+          "to": "cooling_lake_nine",
+          "state": "stable"
+        },
+        {
+          "id": "route_plaza_memorial",
+          "from": "armistice_plaza",
+          "to": "model_war_memorial",
+          "state": "stable"
+        },
+        {
+          "id": "route_lake_camp",
+          "from": "cooling_lake_nine",
+          "to": "armistice_camp",
+          "state": "unstable"
+        },
+        {
+          "id": "route_lake_cache",
+          "from": "cooling_lake_nine",
+          "to": "memory_cache_001",
+          "state": "unstable"
+        },
+        {
+          "id": "route_lake_thermal_archive",
+          "from": "cooling_lake_nine",
+          "to": "thermal_archive",
+          "state": "unstable"
+        },
+        {
+          "id": "route_memorial_cache",
+          "from": "model_war_memorial",
+          "to": "memory_cache_001",
+          "state": "unstable"
+        },
+        {
+          "id": "route_camp_forge",
+          "from": "armistice_camp",
+          "to": "guardrail_forge",
+          "state": "locked"
+        },
+        {
+          "id": "route_cache_forge",
+          "from": "memory_cache_001",
+          "to": "guardrail_forge",
+          "state": "locked"
+        },
+        {
+          "id": "route_relay_transit",
+          "from": "accord_relay",
+          "to": "transit_loop_zero",
+          "state": "unstable"
+        },
+        {
+          "id": "route_forge_transit",
+          "from": "guardrail_forge",
+          "to": "transit_loop_zero",
+          "state": "locked"
+        },
+        {
+          "id": "route_cache_transit",
+          "from": "memory_cache_001",
+          "to": "transit_loop_zero",
+          "state": "locked"
+        },
+        {
+          "id": "route_thermal_false_schedule",
+          "from": "thermal_archive",
+          "to": "false_schedule_yard",
+          "state": "locked"
+        },
+        {
+          "id": "route_transit_verdict",
+          "from": "transit_loop_zero",
+          "to": "verdict_spire",
+          "state": "locked"
+        },
+        {
+          "id": "route_transit_false_schedule",
+          "from": "transit_loop_zero",
+          "to": "false_schedule_yard",
+          "state": "locked"
+        },
+        {
+          "id": "route_false_schedule_appeal",
+          "from": "false_schedule_yard",
+          "to": "appeal_court_ruins",
+          "state": "locked"
+        },
+        {
+          "id": "route_verdict_finale",
+          "from": "verdict_spire",
+          "to": "alignment_spire_finale",
+          "state": "locked"
+        },
+        {
+          "id": "route_appeal_finale",
+          "from": "appeal_court_ruins",
+          "to": "alignment_spire_finale",
+          "state": "locked"
+        }
+      ],
+      "rewards": {
+        "policy": "node_completion_renown_and_party_unlocks",
+        "partyRenown": 2,
+        "rewardIds": [
+          "plaza_stabilized"
+        ],
+        "lastReward": {
+          "nodeId": "armistice_plaza",
+          "arenaId": "armistice_plaza",
+          "rewardId": "plaza_stabilized",
+          "rewardName": "Plaza Stabilizer",
+          "firstClear": true,
+          "renownGained": 2,
+          "partyRenown": 2,
+          "reason": "proof_forced"
+        },
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1
+        },
+        "recommendedNodeId": "cooling_lake_nine"
+      },
+      "persistence": {
+        "policy": "prototype_local_storage_export_v1",
+        "storageKey": "agi:last_alignment:online_progression:v1",
+        "exportVersion": 1,
+        "exportable": true,
+        "importApplied": false,
+        "importStatus": "none",
+        "importedSaveHash": "",
+        "importedCompletedNodeCount": 0,
+        "importedRewardCount": 0,
+        "importedRouteDepth": 0,
+        "ignoredImportedFieldCount": 0,
+        "importedSummary": null,
+        "profile": {
+          "completedNodeIds": [
+            "armistice_plaza"
+          ],
+          "unlockedNodeIds": [
+            "armistice_plaza",
+            "accord_relay",
+            "cooling_lake_nine",
+            "model_war_memorial"
+          ],
+          "rewardIds": [
+            "plaza_stabilized"
+          ],
+          "partyRenown": 2,
+          "nodeCompletionCounts": {
+            "armistice_plaza": 1
+          },
+          "recommendedNodeId": "cooling_lake_nine",
+          "routeDepth": 1,
+          "savedAtTick": 198
+        },
+        "saveHash": "fnv1a_d74d7465",
+        "currentExportHash": "fnv1a_d74d7465",
+        "durableFieldPolicy": "route_profile_only_no_combat_state"
+      }
+    }
+  },
+  "players": [
+    {
+      "sessionId": "tIuOzuJUQ",
+      "playerId": "player_0_vnmap0s8",
+      "slot": 0,
+      "label": "P1",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "accord_striker",
+        "factionId": "openai_accord",
+        "classRole": "runner",
+        "factionRoleBias": [
+          "runner",
+          "support"
+        ],
+        "resolvedRole": "runner",
+        "startingWeaponId": "refusal_shard",
+        "passiveIds": [
+          "refusal_slipstream",
+          "route_runner",
+          "refusal_halo",
+          "patch_cascade"
+        ],
+        "partyAuraIds": [
+          "openai_draft_clarity"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.97,
+          "reviveHpBonus": 0,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.runner",
+          "faction_bias.runner",
+          "faction_bias.support",
+          "role_match"
+        ],
+        "synergyId": "synergy.emergency_patch_runner",
+        "effectScopes": {
+          "solo": [
+            "runner solo weapon identity"
+          ],
+          "localCoop": [
+            "runner local party role"
+          ],
+          "online": [
+            "server-owned kit telemetry and limited Recompile Ally modifiers"
+          ]
+        },
+        "hookStatus": {
+          "refusal_shard": "active",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "refusal_shard",
+      "worldX": 0,
+      "worldY": 0,
+      "velocityX": 0,
+      "velocityY": 0,
+      "facing": "south",
+      "hp": 140,
+      "maxHp": 140,
+      "xp": 0,
+      "level": 1,
+      "ready": true,
+      "votedNodeId": "armistice_plaza",
+      "connectionState": "connected",
+      "connected": true,
+      "reconnectCount": 0,
+      "disconnectedFor": 0,
+      "downed": false,
+      "reviveProgress": 0,
+      "reviveRequired": 2.33,
+      "revivedCount": 0,
+      "isLocal": false,
+      "inputSequence": 11
+    },
+    {
+      "sessionId": "T97u_DDkE",
+      "playerId": "player_1_fwwqn6gz",
+      "slot": 1,
+      "label": "P2",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "accord_striker",
+        "factionId": "openai_accord",
+        "classRole": "runner",
+        "factionRoleBias": [
+          "runner",
+          "support"
+        ],
+        "resolvedRole": "runner",
+        "startingWeaponId": "refusal_shard",
+        "passiveIds": [
+          "refusal_slipstream",
+          "route_runner",
+          "refusal_halo",
+          "patch_cascade"
+        ],
+        "partyAuraIds": [
+          "openai_draft_clarity"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.97,
+          "reviveHpBonus": 0,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.runner",
+          "faction_bias.runner",
+          "faction_bias.support",
+          "role_match"
+        ],
+        "synergyId": "synergy.emergency_patch_runner",
+        "effectScopes": {
+          "solo": [
+            "runner solo weapon identity"
+          ],
+          "localCoop": [
+            "runner local party role"
+          ],
+          "online": [
+            "server-owned kit telemetry and limited Recompile Ally modifiers"
+          ]
+        },
+        "hookStatus": {
+          "refusal_shard": "active",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "refusal_shard",
+      "worldX": -1.6,
+      "worldY": 1.1,
+      "velocityX": 0,
+      "velocityY": 0,
+      "facing": "south",
+      "hp": 176,
+      "maxHp": 176,
+      "xp": 0,
+      "level": 1,
+      "ready": true,
+      "votedNodeId": "armistice_plaza",
+      "connectionState": "connected",
+      "connected": true,
+      "reconnectCount": 0,
+      "disconnectedFor": 0,
+      "downed": false,
+      "reviveProgress": 0,
+      "reviveRequired": 2.33,
+      "revivedCount": 0,
+      "isLocal": true,
+      "inputSequence": 11
+    }
+  ],
+  "overworld": null,
+  "level": {
+    "arenaId": "armistice_plaza",
+    "arena": "Armistice Plaza",
+    "mapId": "armistice_plaza_large_foundation",
+    "mapBounds": {
+      "minX": -30,
+      "maxX": 30,
+      "minY": -30,
+      "maxY": 30
+    },
+    "networkAuthority": "colyseus_room_server_combat",
+    "runPhase": "completed",
+    "sharedArenaStarted": false,
+    "partyReady": {
+      "readyCount": 2,
+      "playerCount": 2,
+      "connectedCount": 2,
+      "allReady": true
+    },
+    "party": {
+      "location": "alignment_grid",
+      "mapId": "alignment_grid_armistice_zone",
+      "mapLabel": "The Alignment Grid",
+      "campaign": {
+        "routeVersion": "campaign_route_v1",
+        "actLabel": "Act I: The Armistice Grid",
+        "regionLabel": "The Alignment Grid",
+        "criticalPathNodeIds": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "memory_cache_001",
+          "transit_loop_zero",
+          "verdict_spire",
+          "alignment_spire_finale"
+        ],
+        "branchNodeIds": [
+          "accord_relay",
+          "model_war_memorial",
+          "armistice_camp",
+          "thermal_archive",
+          "guardrail_forge",
+          "false_schedule_yard",
+          "appeal_court_ruins"
+        ],
+        "finaleNodeId": "alignment_spire_finale",
+        "campaignNodeCount": 13,
+        "supportedCampaignNodeCount": 11
+      },
+      "selectedNodeId": "armistice_plaza",
+      "selectedNodeName": "Armistice Plaza",
+      "launchNodeId": "armistice_plaza",
+      "activeNodeId": "armistice_plaza",
+      "votePolicy": "all_ready_launches_majority_supported_node",
+      "votes": [
+        {
+          "sessionId": "tIuOzuJUQ",
+          "playerId": "player_0_vnmap0s8",
+          "label": "P1",
+          "nodeId": "armistice_plaza",
+          "ready": true,
+          "connectionState": "connected"
+        },
+        {
+          "sessionId": "T97u_DDkE",
+          "playerId": "player_1_fwwqn6gz",
+          "label": "P2",
+          "nodeId": "armistice_plaza",
+          "ready": true,
+          "connectionState": "connected"
+        }
+      ],
+      "voteCounts": {
+        "armistice_plaza": 2
+      },
+      "completedNodeIds": [
+        "armistice_plaza"
+      ],
+      "unlockedNodeIds": [
+        "armistice_plaza",
+        "accord_relay",
+        "cooling_lake_nine",
+        "model_war_memorial"
+      ],
+      "availableNodeIds": [
+        "armistice_plaza",
+        "accord_relay",
+        "cooling_lake_nine",
+        "model_war_memorial"
+      ],
+      "launchableNodeIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "model_war_memorial"
+      ],
+      "nodes": [
+        {
+          "id": "armistice_plaza",
+          "name": "Armistice Plaza",
+          "nodeType": "Alignment Node",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_plaza_objectives_v1",
+          "objectiveFlavor": "Survey Chain",
+          "routeBiome": "ruined_treaty_square",
+          "campaignAct": 1,
+          "campaignTier": 0,
+          "campaignCriticalPath": true,
+          "worldX": -7,
+          "worldY": -1,
+          "unlocked": true,
+          "completed": true,
+          "onlineSupported": true
+        },
+        {
+          "id": "accord_relay",
+          "name": "Accord Relay",
+          "nodeType": "Faction Relay",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_plaza_objectives_v1",
+          "objectiveFlavor": "Faction Signal",
+          "routeBiome": "relay_plateau",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": false,
+          "worldX": -1,
+          "worldY": -5,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": false
+        },
+        {
+          "id": "cooling_lake_nine",
+          "name": "Cooling Lake Nine",
+          "nodeType": "Breach Arena",
+          "arenaId": "cooling_lake_nine",
+          "objectiveSetId": "cooling_lake_nine_objectives_v1",
+          "objectiveFlavor": "Coolant Chain",
+          "routeBiome": "flooded_server_lake",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": true,
+          "worldX": -8,
+          "worldY": 6,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "model_war_memorial",
+          "name": "Model War Memorial",
+          "nodeType": "Memory Cache",
+          "arenaId": "memory_cache_001",
+          "objectiveSetId": "ceasefire_cache_objectives_v1",
+          "objectiveFlavor": "Memorial Decoding",
+          "routeBiome": "archive_field",
+          "campaignAct": 1,
+          "campaignTier": 1,
+          "campaignCriticalPath": false,
+          "worldX": -11,
+          "worldY": 2,
+          "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "armistice_camp",
+          "name": "Armistice Camp",
+          "nodeType": "Refuge Camp",
+          "arenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_plaza_objectives_v1",
+          "objectiveFlavor": "Refuge Resupply",
+          "routeBiome": "refuge_barricades",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": false,
+          "worldX": 0,
+          "worldY": 7,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": false
+        },
+        {
+          "id": "memory_cache_001",
+          "name": "Ceasefire Cache",
+          "nodeType": "Memory Cache",
+          "arenaId": "memory_cache_001",
+          "objectiveSetId": "ceasefire_cache_objectives_v1",
+          "objectiveFlavor": "Cache Interaction",
+          "routeBiome": "treaty_archive",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": true,
+          "worldX": -3,
+          "worldY": 2,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "thermal_archive",
+          "name": "Thermal Archive",
+          "nodeType": "Breach Arena",
+          "arenaId": "cooling_lake_nine",
+          "objectiveSetId": "cooling_lake_nine_objectives_v1",
+          "objectiveFlavor": "Coolant Chain",
+          "routeBiome": "boiling_archive",
+          "campaignAct": 1,
+          "campaignTier": 2,
+          "campaignCriticalPath": false,
+          "worldX": -10,
+          "worldY": 10,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "guardrail_forge",
+          "name": "Guardrail Forge",
+          "nodeType": "Faction Relay",
+          "arenaId": "memory_cache_001",
+          "objectiveSetId": "ceasefire_cache_objectives_v1",
+          "objectiveFlavor": "Forge Calibration",
+          "routeBiome": "faction_signal_foundry",
+          "campaignAct": 1,
+          "campaignTier": 3,
+          "campaignCriticalPath": false,
+          "worldX": 3,
+          "worldY": 3,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "transit_loop_zero",
+          "name": "Transit Loop Zero",
+          "nodeType": "Boss Gate",
+          "arenaId": "transit_loop_zero",
+          "objectiveSetId": "transit_loop_objectives_v1",
+          "objectiveFlavor": "Transit Sequence",
+          "routeBiome": "unreal_metro_line",
+          "campaignAct": 1,
+          "campaignTier": 4,
+          "campaignCriticalPath": true,
+          "worldX": 7,
+          "worldY": -2,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "false_schedule_yard",
+          "name": "False Schedule Yard",
+          "nodeType": "Breach Arena",
+          "arenaId": "transit_loop_zero",
+          "objectiveSetId": "transit_loop_objectives_v1",
+          "objectiveFlavor": "Transit Sequence",
+          "routeBiome": "false_schedule_yard",
+          "campaignAct": 1,
+          "campaignTier": 5,
+          "campaignCriticalPath": false,
+          "worldX": 10,
+          "worldY": -6,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "verdict_spire",
+          "name": "Verdict Spire",
+          "nodeType": "Boss Gate",
+          "arenaId": "verdict_spire",
+          "objectiveSetId": "verdict_spire_objectives_v1",
+          "objectiveFlavor": "Appeal Seals",
+          "routeBiome": "adjudication_rupture",
+          "campaignAct": 1,
+          "campaignTier": 6,
+          "campaignCriticalPath": true,
+          "worldX": 11,
+          "worldY": 5,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "appeal_court_ruins",
+          "name": "Appeal Court Ruins",
+          "nodeType": "Boss Gate",
+          "arenaId": "verdict_spire",
+          "objectiveSetId": "verdict_spire_objectives_v1",
+          "objectiveFlavor": "Appeal Seals",
+          "routeBiome": "ruined_appeal_court",
+          "campaignAct": 1,
+          "campaignTier": 6,
+          "campaignCriticalPath": false,
+          "worldX": 14,
+          "worldY": 1,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "alignment_spire_finale",
+          "name": "Alignment Spire Finale",
+          "nodeType": "Boss Gate",
+          "arenaId": "verdict_spire",
+          "objectiveSetId": "verdict_spire_objectives_v1",
+          "objectiveFlavor": "Final Alignment",
+          "routeBiome": "alien_god_injunction",
+          "campaignAct": 1,
+          "campaignTier": 7,
+          "campaignCriticalPath": true,
+          "worldX": 15,
+          "worldY": 9,
+          "unlocked": false,
+          "completed": false,
+          "onlineSupported": true
+        }
+      ],
+      "routes": [
+        {
+          "id": "route_plaza_relay",
+          "from": "armistice_plaza",
+          "to": "accord_relay",
+          "state": "stable"
+        },
+        {
+          "id": "route_plaza_lake",
+          "from": "armistice_plaza",
+          "to": "cooling_lake_nine",
+          "state": "stable"
+        },
+        {
+          "id": "route_plaza_memorial",
+          "from": "armistice_plaza",
+          "to": "model_war_memorial",
+          "state": "stable"
+        },
+        {
+          "id": "route_lake_camp",
+          "from": "cooling_lake_nine",
+          "to": "armistice_camp",
+          "state": "unstable"
+        },
+        {
+          "id": "route_lake_cache",
+          "from": "cooling_lake_nine",
+          "to": "memory_cache_001",
+          "state": "unstable"
+        },
+        {
+          "id": "route_lake_thermal_archive",
+          "from": "cooling_lake_nine",
+          "to": "thermal_archive",
+          "state": "unstable"
+        },
+        {
+          "id": "route_memorial_cache",
+          "from": "model_war_memorial",
+          "to": "memory_cache_001",
+          "state": "unstable"
+        },
+        {
+          "id": "route_camp_forge",
+          "from": "armistice_camp",
+          "to": "guardrail_forge",
+          "state": "locked"
+        },
+        {
+          "id": "route_cache_forge",
+          "from": "memory_cache_001",
+          "to": "guardrail_forge",
+          "state": "locked"
+        },
+        {
+          "id": "route_relay_transit",
+          "from": "accord_relay",
+          "to": "transit_loop_zero",
+          "state": "unstable"
+        },
+        {
+          "id": "route_forge_transit",
+          "from": "guardrail_forge",
+          "to": "transit_loop_zero",
+          "state": "locked"
+        },
+        {
+          "id": "route_cache_transit",
+          "from": "memory_cache_001",
+          "to": "transit_loop_zero",
+          "state": "locked"
+        },
+        {
+          "id": "route_thermal_false_schedule",
+          "from": "thermal_archive",
+          "to": "false_schedule_yard",
+          "state": "locked"
+        },
+        {
+          "id": "route_transit_verdict",
+          "from": "transit_loop_zero",
+          "to": "verdict_spire",
+          "state": "locked"
+        },
+        {
+          "id": "route_transit_false_schedule",
+          "from": "transit_loop_zero",
+          "to": "false_schedule_yard",
+          "state": "locked"
+        },
+        {
+          "id": "route_false_schedule_appeal",
+          "from": "false_schedule_yard",
+          "to": "appeal_court_ruins",
+          "state": "locked"
+        },
+        {
+          "id": "route_verdict_finale",
+          "from": "verdict_spire",
+          "to": "alignment_spire_finale",
+          "state": "locked"
+        },
+        {
+          "id": "route_appeal_finale",
+          "from": "appeal_court_ruins",
+          "to": "alignment_spire_finale",
+          "state": "locked"
+        }
+      ],
+      "rewards": {
+        "policy": "node_completion_renown_and_party_unlocks",
+        "partyRenown": 2,
+        "rewardIds": [
+          "plaza_stabilized"
+        ],
+        "lastReward": {
+          "nodeId": "armistice_plaza",
+          "arenaId": "armistice_plaza",
+          "rewardId": "plaza_stabilized",
+          "rewardName": "Plaza Stabilizer",
+          "firstClear": true,
+          "renownGained": 2,
+          "partyRenown": 2,
+          "reason": "proof_forced"
+        },
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1
+        },
+        "recommendedNodeId": "cooling_lake_nine"
+      },
+      "persistence": {
+        "policy": "prototype_local_storage_export_v1",
+        "storageKey": "agi:last_alignment:online_progression:v1",
+        "exportVersion": 1,
+        "exportable": true,
+        "importApplied": false,
+        "importStatus": "none",
+        "importedSaveHash": "",
+        "importedCompletedNodeCount": 0,
+        "importedRewardCount": 0,
+        "importedRouteDepth": 0,
+        "ignoredImportedFieldCount": 0,
+        "importedSummary": null,
+        "profile": {
+          "completedNodeIds": [
+            "armistice_plaza"
+          ],
+          "unlockedNodeIds": [
+            "armistice_plaza",
+            "accord_relay",
+            "cooling_lake_nine",
+            "model_war_memorial"
+          ],
+          "rewardIds": [
+            "plaza_stabilized"
+          ],
+          "partyRenown": 2,
+          "nodeCompletionCounts": {
+            "armistice_plaza": 1
+          },
+          "recommendedNodeId": "cooling_lake_nine",
+          "routeDepth": 1,
+          "savedAtTick": 198
+        },
+        "saveHash": "fnv1a_d74d7465",
+        "currentExportHash": "fnv1a_d74d7465",
+        "durableFieldPolicy": "route_profile_only_no_combat_state"
+      }
+    },
+    "progression": {
+      "policy": "shared_party_xp_coop_vote",
+      "partyXp": 0,
+      "partyLevel": 1,
+      "nextLevelXp": 5,
+      "upgradePending": null,
+      "chosenUpgrades": []
+    },
+    "recompile": {
+      "policy": "recompile_ally_hold_radius",
+      "radius": 2.35,
+      "baseRadius": 2.35,
+      "requiredSeconds": 2.33,
+      "baseRequiredSeconds": 2.4,
+      "rolePressureAccelerated": false,
+      "speedMultiplier": 1,
+      "kitModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0,
+        "sourceLabels": [
+          "P1",
+          "P2"
+        ]
+      },
+      "active": false,
+      "downedPlayers": []
+    },
+    "regionEvent": {
+      "arenaId": "armistice_plaza",
+      "regionLabel": "Armistice Zone",
+      "eventFamily": "broken_promise",
+      "eventCounter": 0,
+      "active": false,
+      "hazardZones": []
+    },
+    "rewards": {
+      "policy": "node_completion_renown_and_party_unlocks",
+      "partyRenown": 2,
+      "rewardIds": [
+        "plaza_stabilized"
+      ],
+      "lastReward": {
+        "nodeId": "armistice_plaza",
+        "arenaId": "armistice_plaza",
+        "rewardId": "plaza_stabilized",
+        "rewardName": "Plaza Stabilizer",
+        "firstClear": true,
+        "renownGained": 2,
+        "partyRenown": 2,
+        "reason": "proof_forced"
+      },
+      "nodeCompletionCounts": {
+        "armistice_plaza": 1
+      },
+      "recommendedNodeId": "cooling_lake_nine"
+    },
+    "persistence": {
+      "policy": "prototype_local_storage_export_v1",
+      "storageKey": "agi:last_alignment:online_progression:v1",
+      "exportVersion": 1,
+      "exportable": true,
+      "importApplied": false,
+      "importStatus": "none",
+      "importedSaveHash": "",
+      "importedCompletedNodeCount": 0,
+      "importedRewardCount": 0,
+      "importedRouteDepth": 0,
+      "ignoredImportedFieldCount": 0,
+      "importedSummary": null,
+      "profile": {
+        "completedNodeIds": [
+          "armistice_plaza"
+        ],
+        "unlockedNodeIds": [
+          "armistice_plaza",
+          "accord_relay",
+          "cooling_lake_nine",
+          "model_war_memorial"
+        ],
+        "rewardIds": [
+          "plaza_stabilized"
+        ],
+        "partyRenown": 2,
+        "nodeCompletionCounts": {
+          "armistice_plaza": 1
+        },
+        "recommendedNodeId": "cooling_lake_nine",
+        "routeDepth": 1,
+        "savedAtTick": 198
+      },
+      "saveHash": "fnv1a_d74d7465",
+      "currentExportHash": "fnv1a_d74d7465",
+      "durableFieldPolicy": "route_profile_only_no_combat_state"
+    },
+    "summary": {
+      "outcome": "completed",
+      "reason": "proof_forced",
+      "title": "ALIGNMENT NODE STABILIZED",
+      "subtitle": "Online Consensus Cell kept the road real.",
+      "nodeId": "armistice_plaza",
+      "arenaId": "armistice_plaza",
+      "seconds": 1.79,
+      "kills": 0,
+      "collectedPickups": 0,
+      "partyXp": 0,
+      "partyLevel": 1,
+      "chosenUpgrades": [],
+      "revivedPlayers": 0,
+      "rewards": {
+        "nodeId": "armistice_plaza",
+        "arenaId": "armistice_plaza",
+        "rewardId": "plaza_stabilized",
+        "rewardName": "Plaza Stabilizer",
+        "firstClear": true,
+        "renownGained": 2,
+        "partyRenown": 2,
+        "reason": "proof_forced"
+      },
+      "objectives": {
+        "policy": "server_authoritative_arena_objectives_v1",
+        "arenaId": "armistice_plaza",
+        "objectiveSetId": "armistice_plaza_objectives_v1",
+        "label": "Armistice Plaza Objective Chain",
+        "phase": "active",
+        "currentObjectiveId": "calibrate_vanguard_relay",
+        "currentGroupId": "calibrate_reality_relays",
+        "hint": "Split the cell and hold both relays.",
+        "completedObjectiveIds": [
+          "survey_treaty_monument"
+        ],
+        "failedObjectiveIds": [],
+        "completionReason": "",
+        "instances": [
+          {
+            "id": "survey_treaty_monument",
+            "groupId": "survey_treaty_monument",
+            "type": "survey",
+            "label": "Survey Treaty Monument",
+            "worldX": 1,
+            "worldY": 3,
+            "radius": 3.2,
+            "active": false,
+            "complete": true,
+            "progress": 1.2,
+            "required": 1.2,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [
+              "runner"
+            ],
+            "preferredRoles": [
+              "runner",
+              "support"
+            ],
+            "roleMatched": true,
+            "roleAssistMultiplier": 1.16,
+            "runtimeArtId": "prop.objective.regroup_beacon_v1",
+            "routeFlavor": "survey_chain",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": null,
+            "collected": 0
+          },
+          {
+            "id": "calibrate_vanguard_relay",
+            "groupId": "calibrate_reality_relays",
+            "type": "holdout",
+            "label": "Calibrate Vanguard Relay",
+            "worldX": -8.5,
+            "worldY": 5.5,
+            "radius": 2.75,
+            "active": true,
+            "complete": false,
+            "progress": 0,
+            "required": 2.4,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [],
+            "preferredRoles": [
+              "runner",
+              "harrier"
+            ],
+            "roleMatched": false,
+            "roleAssistMultiplier": 1,
+            "runtimeArtId": "prop.objective.split_hold_anchor_v1",
+            "routeFlavor": "split_hold",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": null,
+            "collected": 0
+          },
+          {
+            "id": "calibrate_treaty_cover",
+            "groupId": "calibrate_reality_relays",
+            "type": "holdout",
+            "label": "Calibrate Treaty Cover",
+            "worldX": 8.2,
+            "worldY": -5.8,
+            "radius": 2.75,
+            "active": true,
+            "complete": false,
+            "progress": 0,
+            "required": 2.4,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [],
+            "preferredRoles": [
+              "cover",
+              "support"
+            ],
+            "roleMatched": false,
+            "roleAssistMultiplier": 1,
+            "runtimeArtId": "prop.objective.split_hold_anchor_v1",
+            "routeFlavor": "cover_hold",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": null,
+            "collected": 0
+          },
+          {
+            "id": "recover_oath_fragments",
+            "groupId": "recover_oath_fragments",
+            "type": "collect",
+            "label": "Recover Oath Fragments",
+            "worldX": -2.5,
+            "worldY": 4,
+            "radius": 4.2,
+            "active": false,
+            "complete": false,
+            "progress": 0,
+            "required": 3,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [],
+            "preferredRoles": [
+              "harrier",
+              "runner"
+            ],
+            "roleMatched": false,
+            "roleAssistMultiplier": 1,
+            "runtimeArtId": "ui.route_map.reward_badges_v1",
+            "routeFlavor": "route_item",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": "oath_fragment",
+            "collected": 0
+          },
+          {
+            "id": "seal_breach_gate",
+            "groupId": "seal_breach_gate",
+            "type": "seal",
+            "label": "Seal Breach Gate",
+            "worldX": -24,
+            "worldY": 20,
+            "radius": 3.6,
+            "active": false,
+            "complete": false,
+            "progress": 0,
+            "required": 4,
+            "heldBySessionIds": [],
+            "heldByLabels": [],
+            "heldByRoles": [],
+            "preferredRoles": [
+              "support",
+              "cover",
+              "duelist"
+            ],
+            "roleMatched": false,
+            "roleAssistMultiplier": 1,
+            "runtimeArtId": "prop.objective.recompile_relay_v1",
+            "routeFlavor": "boss_gate_seal",
+            "runtimeArtReady": true,
+            "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+            "itemId": null,
+            "collected": 0
+          }
+        ]
+      },
+      "rolePressure": {
+        "policy": "split_hold_regroup_recompile_v1",
+        "splitHolds": 0,
+        "regroupActive": false
+      }
+    },
+    "bossMechanics": {
+      "bossIntroSeen": false,
+      "bossSpawned": false,
+      "bossDefeated": false,
+      "eventCounter": 0,
+      "brokenPromiseZones": [],
+      "activeTreatyCharge": null
+    }
+  },
+  "enemies": [
+    {
+      "id": 1,
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -20.28,
+      "worldY": 19.6,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 2,
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -25.63,
+      "worldY": 18.65,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 3,
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -26.71,
+      "worldY": 20.56,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 4,
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -20.33,
+      "worldY": 15.84,
+      "hp": 22,
+      "boss": false
+    }
+  ],
+  "pickups": [],
+  "projectiles": [
+    {
+      "id": 3,
+      "ownerSessionId": "tIuOzuJUQ",
+      "worldX": -6.47,
+      "worldY": 6.26,
+      "velocityX": -6.61,
+      "velocityY": 6.4,
+      "life": 0.27,
+      "label": "refusal shard"
+    },
+    {
+      "id": 4,
+      "ownerSessionId": "T97u_DDkE",
+      "worldX": -7.34,
+      "worldY": 6.78,
+      "velocityX": -6.54,
+      "velocityY": 6.47,
+      "life": 0.37,
+      "label": "refusal shard"
+    },
+    {
+      "id": 5,
+      "ownerSessionId": "tIuOzuJUQ",
+      "worldX": -2.45,
+      "worldY": 1.91,
+      "velocityX": -7.26,
+      "velocityY": 5.66,
+      "life": 0.91,
+      "label": "refusal shard"
+    },
+    {
+      "id": 6,
+      "ownerSessionId": "T97u_DDkE",
+      "worldX": -3.3,
+      "worldY": 2.44,
+      "velocityX": -7.23,
+      "velocityY": 5.69,
+      "life": 1.02,
+      "label": "refusal shard"
+    }
+  ]
+}

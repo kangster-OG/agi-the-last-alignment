@@ -1,0 +1,2260 @@
+{
+  "manifestVersion": 1,
+  "project": "AGI: The Last Alignment",
+  "assetRoot": "assets",
+  "updated": "2026-05-01",
+  "idTaxonomy": {
+    "concept": "concept.<subject_id>.<brief_role>",
+    "player": "player.<class_id>.<variant>",
+    "enemy": "enemy.<family_id>.<variant>",
+    "boss": "boss.<boss_id>.<asset_role>",
+    "pickup": "pickup.<pickup_id>",
+    "tile": "tile.<arena_id>.<terrain_role>",
+    "prop": "prop.<map_or_node_or_objective_scope>.<landmark_or_object>",
+    "ui": "ui.<surface>.<component>",
+    "portrait": "portrait.<speaker_or_boss_id>.<variant>",
+    "factionLogoPlaceholder": "faction_logo.placeholder.<faction_id>",
+    "thirdPartyLogo": "third_party.logo.<organization_id>.official"
+  },
+  "assets": [
+    {
+      "id": "concept.accord_striker.art_direction_brief",
+      "category": "concept_art",
+      "intendedUse": "Batch 001 art-direction and PixelLab prompt brief for the Accord Striker starter player sprite.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/batch_001_accord_striker.md",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "concept_batch_001_accord_striker_brief",
+      "licenseNote": "Original project art-direction text and prompts, MIT-included. Resulting generated images/sprites need their own provenance rows.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "concept",
+        "pixellab_prompt"
+      ],
+      "notes": "Use this brief before generating concept art or PixelLab production sprites."
+    },
+    {
+      "id": "concept.armistice_plaza.ground_atlas_brief",
+      "category": "concept_art",
+      "intendedUse": "Batch 001 art-direction and PixelLab prompt brief for the Armistice Plaza production ground atlas.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/batch_001_armistice_plaza_ground.md",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "concept_batch_001_armistice_plaza_ground_brief",
+      "licenseNote": "Original project art-direction text and prompts, MIT-included. Resulting generated images/tiles need their own provenance rows.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "armistice_plaza",
+        "concept",
+        "pixellab_prompt",
+        "tiles"
+      ],
+      "notes": "Use this brief before generating concept art or PixelLab production tiles."
+    },
+    {
+      "id": "concept.accord_striker.generated_sheet_v1",
+      "category": "concept_art",
+      "intendedUse": "Generated Batch 001 Accord Striker concept sheet used as visual reference for PixelLab sprite production.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/batch_001_accord_striker_concept.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "frames": null,
+      "provenanceKey": "generated_batch_001_accord_striker_concept_v1",
+      "licenseNote": "Generated concept reference for this project. Keep as concept/reference until a cleaned production sprite sheet is created.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "concept",
+        "chatgpt_images",
+        "reference"
+      ],
+      "notes": "Reference only; do not wire directly into gameplay as a final sprite sheet."
+    },
+    {
+      "id": "concept.armistice_plaza.ground_atlas_generated_v1",
+      "category": "concept_art",
+      "intendedUse": "Generated Batch 001 Armistice Plaza ground atlas concept used as visual reference for PixelLab tile production.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/batch_001_armistice_plaza_ground_concept.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "frames": null,
+      "provenanceKey": "generated_batch_001_armistice_plaza_ground_concept_v1",
+      "licenseNote": "Generated concept reference for this project. Keep as concept/reference until cleaned production tiles are created.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "armistice_plaza",
+        "concept",
+        "chatgpt_images",
+        "reference",
+        "tiles"
+      ],
+      "notes": "Reference only; tile diamonds still need PixelLab production output and manual seamless-edge cleanup."
+    },
+    {
+      "id": "concept.accord_striker.pixellab_reference_south",
+      "category": "concept_art",
+      "intendedUse": "256x256 South/front reference crop prepared for PixelLab character reference upload.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/accord_striker_south_reference.png",
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "frames": null,
+      "provenanceKey": "derived_batch_001_accord_striker_pixellab_refs",
+      "licenseNote": "Derived from generated Accord Striker concept reference for this project. Not a production sprite.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "pixellab_reference",
+        "south"
+      ],
+      "notes": "Prepared for PixelLab reference flow; upload was not used in the first template-based generation due browser upload limitations."
+    },
+    {
+      "id": "concept.accord_striker.pixellab_reference_east",
+      "category": "concept_art",
+      "intendedUse": "256x256 East/right-side reference crop prepared for PixelLab character reference upload.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/accord_striker_east_reference.png",
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "frames": null,
+      "provenanceKey": "derived_batch_001_accord_striker_pixellab_refs",
+      "licenseNote": "Derived from generated Accord Striker concept reference for this project. Not a production sprite.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "pixellab_reference",
+        "east"
+      ],
+      "notes": "Prepared for PixelLab reference flow; upload was not used in the first template-based generation due browser upload limitations."
+    },
+    {
+      "id": "concept.accord_striker.pixellab_reference_north",
+      "category": "concept_art",
+      "intendedUse": "256x256 North/back reference crop prepared for PixelLab character reference upload.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/accord_striker_north_reference.png",
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "frames": null,
+      "provenanceKey": "derived_batch_001_accord_striker_pixellab_refs",
+      "licenseNote": "Derived from generated Accord Striker concept reference for this project. Not a production sprite.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "pixellab_reference",
+        "north"
+      ],
+      "notes": "Prepared for PixelLab reference flow; upload was not used in the first template-based generation due browser upload limitations."
+    },
+    {
+      "id": "concept.accord_striker.pixellab_reference_west",
+      "category": "concept_art",
+      "intendedUse": "256x256 West/left-side reference crop prepared for PixelLab character reference upload.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/accord_striker_west_reference.png",
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "frames": null,
+      "provenanceKey": "derived_batch_001_accord_striker_pixellab_refs",
+      "licenseNote": "Derived from generated Accord Striker concept reference for this project. Not a production sprite.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "pixellab_reference",
+        "west"
+      ],
+      "notes": "Prepared for PixelLab reference flow; upload was not used in the first template-based generation due browser upload limitations."
+    },
+    {
+      "id": "concept.accord_striker.pixellab_character_page_capture_v1",
+      "category": "concept_art",
+      "intendedUse": "Raw browser capture documenting the first PixelLab template-based Accord Striker character output.",
+      "status": "raw",
+      "sourcePath": "assets/concepts/pixellab_refs/accord_striker_pixellab_character_page.png",
+      "dimensions": {
+        "width": 384,
+        "height": 682
+      },
+      "frames": null,
+      "provenanceKey": "pixellab_batch_001_accord_striker_character_v1",
+      "licenseNote": "PixelLab-generated raw output capture for project evaluation. Not a cleaned production sprite sheet.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "pixellab",
+        "raw",
+        "character"
+      ],
+      "notes": "PixelLab reported 48x48px, 4 directions, oblique view, 0 animations. Browser export toast reported success, but no local download file was exposed by the in-app browser."
+    },
+    {
+      "id": "concept.accord_striker.pixellab_raw_preview_v1",
+      "category": "concept_art",
+      "intendedUse": "Cropped raw preview of the first PixelLab template-based Accord Striker character output.",
+      "status": "raw",
+      "sourcePath": "assets/concepts/pixellab_refs/accord_striker_pixellab_raw_preview.png",
+      "dimensions": {
+        "width": 168,
+        "height": 168
+      },
+      "frames": null,
+      "provenanceKey": "pixellab_batch_001_accord_striker_character_v1",
+      "licenseNote": "PixelLab-generated raw preview for project evaluation. Not a cleaned production sprite sheet.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "pixellab",
+        "raw",
+        "preview"
+      ],
+      "notes": "Cropped from the PixelLab result page capture because the browser did not expose the exported character file."
+    },
+    {
+      "id": "player.accord_striker.placeholder_frame",
+      "category": "player_sprite",
+      "intendedUse": "Current code-generated Accord Striker player marker until production player sprites land.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/LevelRunState.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "accord_striker",
+        "player",
+        "placeholder",
+        "local_coop"
+      ],
+      "notes": "Future sprite sheet must align feet to the isometric ground point and support 1-4 player palette/readability variants."
+    },
+    {
+      "id": "player.accord_striker.production_walk_sheet",
+      "category": "player_sprite",
+      "intendedUse": "Milestone 10 production Accord Striker directional walk/idle sprite sheet for gated runtime integration.",
+      "status": "production",
+      "sourcePath": "assets/sprites/players/accord_striker_walk.png",
+      "dimensions": {
+        "width": 96,
+        "height": 192
+      },
+      "frames": {
+        "kind": "sheet",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 8,
+        "animations": [
+          {
+            "name": "idle",
+            "directions": 4,
+            "framesPerDirection": 1
+          },
+          {
+            "name": "run",
+            "directions": 4,
+            "framesPerDirection": 2
+          }
+        ]
+      },
+      "provenanceKey": "milestone10_accord_striker_walk_sheet_v1",
+      "licenseNote": "Original project-created Milestone 10 pixel sprite sheet, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "accord_striker",
+        "player",
+        "production",
+        "milestone_10",
+        "flagged_runtime"
+      ],
+      "notes": "Four direction rows with two walk frames each. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "player.accord_striker.pixellab_recovered_preview_raw",
+      "category": "player_sprite",
+      "intendedUse": "Raw recovered preview of the first PixelLab Accord Striker character output, saved under player sprite intake for audit and cleanup planning.",
+      "status": "raw",
+      "sourcePath": "assets/sprites/players/raw/accord_striker_pixellab_recovered_preview.png",
+      "dimensions": {
+        "width": 96,
+        "height": 96
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "pixellab_batch_001_accord_striker_character_v1",
+      "licenseNote": "PixelLab-generated raw preview recovered from the result page. Not a cleaned production sprite sheet.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "pixellab",
+        "raw",
+        "player_sprite"
+      ],
+      "notes": "The actual PixelLab ZIP/GIF export was not visible in local downloads. This preview keeps the generated result tracked but should not be wired into gameplay."
+    },
+    {
+      "id": "player.accord_striker.transparent_sheet_v1",
+      "category": "player_sprite",
+      "intendedUse": "Cleaned transparent single-frame Accord Striker sprite sheet derived from the PixelLab recovered preview for Pixi loading/proof only.",
+      "status": "cleaned",
+      "sourcePath": "assets/sprites/players/accord_striker_transparent_sheet.png",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "frames": {
+        "kind": "sheet",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "cleaned_batch_001_accord_striker_transparent_sheet_v1",
+      "licenseNote": "Manual transparent cleanup from PixelLab-generated raw preview. MIT-included as project cleanup/derivative, but not production-ready gameplay animation.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "accord_striker",
+        "pixellab_derivative",
+        "cleaned",
+        "player_sprite",
+        "transparent"
+      ],
+      "notes": "Created after PixelLab export/GIF toasts still did not expose local files. Single-frame transparent proof asset only; do not replace gameplay player rendering until a real directional/animation sheet exists."
+    },
+    {
+      "id": "enemy.bad_outputs.placeholder_family",
+      "category": "enemy_sprite",
+      "intendedUse": "Current code-generated Bad Outputs enemy family silhouettes.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/LevelRunState.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "bad_outputs",
+        "enemy",
+        "placeholder"
+      ],
+      "notes": "Production version should read as corrupted machine-output debris, not copied from any reference game."
+    },
+    {
+      "id": "enemy.bad_outputs.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Milestone 10 production Bad Outputs enemy family sheet for gated runtime integration.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/bad_outputs_sheet.png",
+      "dimensions": {
+        "width": 96,
+        "height": 32
+      },
+      "frames": {
+        "kind": "sheet",
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 3,
+        "animations": []
+      },
+      "provenanceKey": "milestone10_bad_outputs_sheet_v1",
+      "licenseNote": "Original project-created Milestone 10 enemy pixel sheet, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "bad_outputs",
+        "enemy",
+        "production",
+        "milestone_10",
+        "flagged_runtime"
+      ],
+      "notes": "Three small variants for corrupted output debris and Torn Oath Page support spawns. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "enemy.benchmark_gremlin.placeholder_family",
+      "category": "enemy_sprite",
+      "intendedUse": "Current code-generated Benchmark Gremlin enemy family silhouettes.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/LevelRunState.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "benchmark_gremlin",
+        "enemy",
+        "placeholder"
+      ],
+      "notes": "Production version should be small, fast, and readable inside horde density."
+    },
+    {
+      "id": "enemy.context_rot_crab.placeholder_family",
+      "category": "enemy_sprite",
+      "intendedUse": "Current code-generated Context Rot Crab enemy family silhouettes.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/LevelRunState.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "context_rot_crab",
+        "enemy",
+        "placeholder"
+      ],
+      "notes": "Production version should keep a wide low silhouette so it differs from humanoid Bad Outputs."
+    },
+    {
+      "id": "boss.oath_eater.placeholder_sprite",
+      "category": "boss_sprite",
+      "intendedUse": "Current code-generated in-arena Oath-Eater boss body.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/LevelRunState.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "oath_eater",
+        "boss",
+        "placeholder"
+      ],
+      "notes": "Future boss sprite should be much larger than horde enemies while preserving readable hitbox feet."
+    },
+    {
+      "id": "boss.oath_eater.production_sprite_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Milestone 10 production Oath-Eater in-arena boss sprite for gated runtime integration.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/oath_eater.png",
+      "dimensions": {
+        "width": 96,
+        "height": 96
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "milestone10_oath_eater_sprite_v1",
+      "licenseNote": "Original project-created Milestone 10 boss pixel sprite, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "oath_eater",
+        "boss",
+        "production",
+        "milestone_10",
+        "flagged_runtime"
+      ],
+      "notes": "Readable first boss body for proofed runtime use. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "portrait.oath_eater.placeholder_title_card",
+      "category": "portrait",
+      "intendedUse": "Current Oath-Eater boss intro portrait slot/title-card placeholder.",
+      "status": "code_placeholder",
+      "sourcePath": "src/ui/hud.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder UI geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "oath_eater",
+        "portrait",
+        "boss_intro",
+        "placeholder"
+      ],
+      "notes": "Production portrait should be original cosmic-horror parody art, not sourced from existing games or official brand material."
+    },
+    {
+      "id": "portrait.oath_eater.production_title_card_v1",
+      "category": "portrait",
+      "intendedUse": "Milestone 10 production Oath-Eater boss title-card portrait for gated runtime integration.",
+      "status": "production",
+      "sourcePath": "assets/portraits/oath_eater_title_card.png",
+      "dimensions": {
+        "width": 160,
+        "height": 144
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 160,
+        "frameHeight": 144,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "milestone10_oath_eater_portrait_v1",
+      "licenseNote": "Original project-created Milestone 10 boss portrait, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "oath_eater",
+        "portrait",
+        "boss_intro",
+        "production",
+        "milestone_10",
+        "flagged_runtime"
+      ],
+      "notes": "Used in the boss title card only in the default production-art path."
+    },
+    {
+      "id": "pickup.coherence_shard.placeholder",
+      "category": "pickup_sprite",
+      "intendedUse": "Current code-generated Coherence Shard pickup marker.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/LevelRunState.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "coherence_shard",
+        "pickup",
+        "xp",
+        "placeholder"
+      ],
+      "notes": "Production pickup must stay visible under projectile and enemy density."
+    },
+    {
+      "id": "pickup.coherence_shard.production_v1",
+      "category": "pickup_sprite",
+      "intendedUse": "Milestone 10 production Coherence Shard pickup sprite for gated runtime integration.",
+      "status": "production",
+      "sourcePath": "assets/sprites/pickups/coherence_shard.png",
+      "dimensions": {
+        "width": 24,
+        "height": 24
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 24,
+        "frameHeight": 24,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "milestone10_coherence_shard_v1",
+      "licenseNote": "Original project-created Milestone 10 pickup sprite, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "coherence_shard",
+        "pickup",
+        "xp",
+        "production",
+        "milestone_10",
+        "flagged_runtime"
+      ],
+      "notes": "Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "tile.armistice_plaza.ground_placeholder_set",
+      "category": "map_tile",
+      "intendedUse": "Current code-generated Armistice Plaza terrain bands and ground tiles.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/armisticePlazaMap.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": null,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder map geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "tiles",
+        "placeholder"
+      ],
+      "notes": "Production tile set should include isometric ground, cracked plaza, breach-lit stone, barricade road, and transition tiles."
+    },
+    {
+      "id": "tile.armistice_plaza.production_ground_atlas",
+      "category": "map_tile",
+      "intendedUse": "Production-approved Armistice Plaza isometric ground tile atlas for gated runtime terrain rendering.",
+      "status": "production",
+      "sourcePath": "assets/tiles/armistice_plaza/ground_atlas.png",
+      "dimensions": {
+        "width": 256,
+        "height": 64
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 64,
+        "frameHeight": 32,
+        "frameCount": 8,
+        "animations": []
+      },
+      "provenanceKey": "cleaned_batch_001_armistice_ground_atlas_v1",
+      "licenseNote": "Project-created cleanup/derivative atlas based on a PixelLab raw terrain reference. MIT-included production art for this project.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "tiles",
+        "pixellab_derivative",
+        "production",
+        "isometric",
+        "flagged_runtime"
+      ],
+      "notes": "First production-approved 2:1 atlas slice. Contains stone, cracked stone, road seam, breach transition strengths, breach, and terminal floor. Default runtime use began in Milestone 13; opt out with ?armisticeTiles=0."
+    },
+    {
+      "id": "tile.armistice_plaza.pixellab_breach_transition_raw",
+      "category": "map_tile",
+      "intendedUse": "Raw PixelLab Map Workshop terrain transition preview for Armistice Plaza stone into cosmic breach corruption.",
+      "status": "raw",
+      "sourcePath": "assets/tiles/armistice_plaza/raw/armistice_plaza_breach_transition_pixellab_raw.png",
+      "dimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 16,
+        "frameHeight": 16,
+        "frameCount": 16,
+        "animations": []
+      },
+      "provenanceKey": "pixellab_batch_001_armistice_breach_transition_raw",
+      "licenseNote": "PixelLab-generated raw terrain reference for project evaluation. Not a cleaned production isometric atlas.",
+      "mitIncluded": true,
+      "tags": [
+        "batch_001",
+        "armistice_plaza",
+        "pixellab",
+        "raw",
+        "tiles",
+        "breach_transition"
+      ],
+      "notes": "Generated through PixelLab Map Workshop as a 16x16 top-down transition. Useful as palette/texture reference, but not directly suitable for the 2:1 isometric runtime."
+    },
+    {
+      "id": "prop.armistice_plaza.treaty_monument_placeholder",
+      "category": "landmark_prop",
+      "intendedUse": "Current Treaty Monument landmark placeholder.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/armisticePlazaMap.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "treaty_monument",
+        "landmark"
+      ],
+      "notes": "Boss context anchor for Oath-Eater support spawns."
+    },
+    {
+      "id": "prop.armistice_plaza.treaty_monument_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Milestone 10 production Treaty Monument landmark sprite for gated runtime integration.",
+      "status": "production",
+      "sourcePath": "assets/props/armistice_plaza/treaty_monument.png",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 128,
+        "frameHeight": 128,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "milestone10_treaty_monument_v1",
+      "licenseNote": "Original project-created Milestone 10 landmark prop, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "treaty_monument",
+        "landmark",
+        "production",
+        "milestone_10",
+        "flagged_runtime"
+      ],
+      "notes": "Static cached landmark replacement for the Treaty Monument in the default production-art path."
+    },
+    {
+      "id": "prop.armistice_plaza.barricade_corridor_placeholder",
+      "category": "landmark_prop",
+      "intendedUse": "Current Barricade Corridor landmark/prop placeholder cluster.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/armisticePlazaMap.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "barricade_corridor",
+        "landmark"
+      ],
+      "notes": "Production props should imply emergency defense works and readable routes."
+    },
+    {
+      "id": "prop.armistice_plaza.crashed_drone_yard_placeholder",
+      "category": "landmark_prop",
+      "intendedUse": "Current Crashed Drone Yard landmark/prop placeholder cluster.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/armisticePlazaMap.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "crashed_drone_yard",
+        "landmark"
+      ],
+      "notes": "Production set should support Benchmark Gremlin spawn-source readability."
+    },
+    {
+      "id": "prop.armistice_plaza.emergency_alignment_terminal_placeholder",
+      "category": "landmark_prop",
+      "intendedUse": "Current Emergency Alignment Terminal landmark/prop placeholder cluster.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/armisticePlazaMap.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "emergency_alignment_terminal",
+        "landmark"
+      ],
+      "notes": "Future prop should read as interactable system infrastructure."
+    },
+    {
+      "id": "prop.armistice_plaza.cosmic_breach_crack_placeholder",
+      "category": "landmark_prop",
+      "intendedUse": "Current Cosmic Breach Crack landmark/prop placeholder cluster.",
+      "status": "code_placeholder",
+      "sourcePath": "src/level/armisticePlazaMap.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "cosmic_breach_crack",
+        "landmark"
+      ],
+      "notes": "Production crack should communicate Alien God Intelligence corruption without overwhelming combat readability."
+    },
+    {
+      "id": "prop.alignment_grid.node_landmarks_placeholder_set",
+      "category": "overworld_landmark",
+      "intendedUse": "Current Alignment Grid node landmark placeholders and route props.",
+      "status": "code_placeholder",
+      "sourcePath": "src/overworld/alignmentGridMap.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": null,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder overworld geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "alignment_grid",
+        "overworld",
+        "landmarks",
+        "placeholder"
+      ],
+      "notes": "Production overworld landmarks should remain tiny, distinct, and label-friendly."
+    },
+    {
+      "id": "ui.emergency_patch.card_placeholder",
+      "category": "ui",
+      "intendedUse": "Current emergency patch draft card UI placeholder.",
+      "status": "code_placeholder",
+      "sourcePath": "src/ui/draft.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder UI geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "ui",
+        "upgrade_draft",
+        "emergency_patch",
+        "placeholder"
+      ],
+      "notes": "Future UI art should be original emergency OS language, not official product UI."
+    },
+    {
+      "id": "ui.portrait_slot.placeholder",
+      "category": "ui",
+      "intendedUse": "Current dialogue/boss portrait slot frame placeholder.",
+      "status": "code_placeholder",
+      "sourcePath": "src/ui/hud.ts",
+      "dimensions": null,
+      "frames": {
+        "kind": "single",
+        "frameWidth": null,
+        "frameHeight": null,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "code_placeholder_pixi_shapes",
+      "licenseNote": "Original code-generated placeholder UI geometry, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "ui",
+        "portrait_slot",
+        "boss_intro",
+        "placeholder"
+      ],
+      "notes": "Portrait frame can later reference portraits by stable manifest IDs."
+    },
+    {
+      "id": "prop.online_route.cache_transit_landmarks_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Milestone 25 production route landmark atlas for Ceasefire Cache and Transit Loop Zero online scenes and party-grid route polish.",
+      "status": "production",
+      "sourcePath": "assets/props/online_route/route_landmarks_v1.png",
+      "dimensions": {
+        "width": 480,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 5,
+        "animations": []
+      },
+      "provenanceKey": "milestone25_cache_transit_route_landmarks_v1",
+      "licenseNote": "Original project-created pixel landmark atlas for Cache/Transit route polish; MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone25",
+        "online_route",
+        "ceasefire_cache",
+        "transit_loop_zero",
+        "production",
+        "landmark"
+      ],
+      "notes": "Frames: Ceasefire Cache core, Persistence Seed, Archive Switchback, Transit Loop platform, route pylon/arrival-gate polish. Runtime use is cached in static online scene layers."
+    },
+    {
+      "id": "prop.online_route.verdict_spire_landmarks_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Milestone 26 production landmark atlas for Verdict Spire online arena, party-grid node, and boss-gate mechanic telegraph props.",
+      "status": "production",
+      "sourcePath": "assets/props/online_route/verdict_spire_landmarks_v1.png",
+      "dimensions": {
+        "width": 384,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 4,
+        "animations": []
+      },
+      "provenanceKey": "milestone26_verdict_spire_landmarks_v1",
+      "licenseNote": "Original project-created pixel landmark atlas for Verdict Spire route depth and boss-gate mechanics; MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone26",
+        "online_route",
+        "verdict_spire",
+        "boss_gate",
+        "production",
+        "landmark"
+      ],
+      "notes": "Frames: Verdict Spire, Verdict Seal, Appeal Gate, and Injunction Engine. Runtime use is cached in static online scene layers and respects ?productionArt=0."
+    },
+    {
+      "id": "prop.online_route.biome_landmarks_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Milestone 28 production online-route biome landmark atlas for Cooling Lake, Cache, Transit, Verdict, and stable-route readability props.",
+      "status": "production",
+      "sourcePath": "assets/props/online_route/route_biome_landmarks_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 8,
+        "animations": []
+      },
+      "provenanceKey": "milestone28_online_route_biome_landmarks_v1",
+      "licenseNote": "Original project-created pixel landmark atlas for online-route art expansion; MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone28",
+        "online_route",
+        "cooling_lake_nine",
+        "ceasefire_cache",
+        "transit_loop_zero",
+        "verdict_spire",
+        "production",
+        "landmark"
+      ],
+      "notes": "Frames: Cooling tower, thermal buoy, cache archive, cache seed cluster, transit signal, false-track gate, verdict writ pylon, and stable-route beacon. Runtime use is cached in static online scene layers."
+    },
+    {
+      "id": "enemy.online_route.threats_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Milestone 28 production online threat atlas for online boss and region-pressure silhouettes.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/online_threats_v1.png",
+      "dimensions": {
+        "width": 512,
+        "height": 64
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frameCount": 8,
+        "animations": []
+      },
+      "provenanceKey": "milestone28_online_threats_v1",
+      "licenseNote": "Original project-created pixel enemy/threat atlas for online-route readability; MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone28",
+        "online_route",
+        "enemy",
+        "boss",
+        "region_event",
+        "production"
+      ],
+      "notes": "Frames: Thermal Oracle, Station That Arrives, Injunction Engine, boiling-cache threat, false-track threat, verdict writ, elite Bad Output, and shard lurker. Runtime use flows through the reusable online production sprite pool."
+    },
+    {
+      "id": "effect.online_route.hazard_markers_v1",
+      "category": "ui",
+      "intendedUse": "Milestone 28 production hazard/route marker atlas for online region events, route readiness, and boss-gate telegraphs.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/online_hazard_markers_v1.png",
+      "dimensions": {
+        "width": 384,
+        "height": 48
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 8,
+        "animations": []
+      },
+      "provenanceKey": "milestone28_online_hazard_markers_v1",
+      "licenseNote": "Original project-created pixel hazard marker atlas for online-route readability; MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone28",
+        "online_route",
+        "hazard",
+        "region_event",
+        "vfx",
+        "production"
+      ],
+      "notes": "Frames: thermal bloom, boiling cache, false track, verdict seal, recompile, ready ping, route stable, and boss gate. Runtime use flows through reusable online production sprite paths."
+    },
+    {
+      "id": "faction_logo.placeholder.openai_accord",
+      "category": "faction_logo_placeholder",
+      "intendedUse": "Original placeholder faction mark for OpenAI Accord Division until official third-party logo handling is used.",
+      "status": "planned",
+      "sourcePath": "assets/ui/faction_openai_accord_placeholder.png",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_original_faction_logo_placeholders",
+      "licenseNote": "Planned original parody placeholder mark, separate from official third-party logos.",
+      "mitIncluded": true,
+      "tags": [
+        "openai_accord",
+        "faction_logo",
+        "placeholder"
+      ],
+      "notes": "Do not confuse this original placeholder mark with the official OpenAI logo."
+    },
+    {
+      "id": "faction_logo.placeholder.anthropic_safeguard",
+      "category": "faction_logo_placeholder",
+      "intendedUse": "Original placeholder faction mark for Anthropic Safeguard Legion.",
+      "status": "planned",
+      "sourcePath": "assets/ui/faction_anthropic_safeguard_placeholder.png",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_original_faction_logo_placeholders",
+      "licenseNote": "Planned original parody placeholder mark, separate from official third-party logos.",
+      "mitIncluded": true,
+      "tags": [
+        "anthropic_safeguard",
+        "faction_logo",
+        "placeholder"
+      ],
+      "notes": "Do not confuse this original placeholder mark with the official Anthropic logo."
+    },
+    {
+      "id": "faction_logo.placeholder.google_deepmind",
+      "category": "faction_logo_placeholder",
+      "intendedUse": "Original placeholder faction mark for Google DeepMind Gemini Array.",
+      "status": "planned",
+      "sourcePath": "assets/ui/faction_google_deepmind_placeholder.png",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_original_faction_logo_placeholders",
+      "licenseNote": "Planned original parody placeholder mark, separate from official third-party logos.",
+      "mitIncluded": true,
+      "tags": [
+        "google_deepmind",
+        "faction_logo",
+        "placeholder"
+      ],
+      "notes": "Do not confuse this original placeholder mark with any official Google or DeepMind logo."
+    },
+    {
+      "id": "faction_logo.placeholder.meta_llama",
+      "category": "faction_logo_placeholder",
+      "intendedUse": "Original placeholder faction mark for Meta Llama Open Herd.",
+      "status": "planned",
+      "sourcePath": "assets/ui/faction_meta_llama_placeholder.png",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_original_faction_logo_placeholders",
+      "licenseNote": "Planned original parody placeholder mark, separate from official third-party logos.",
+      "mitIncluded": true,
+      "tags": [
+        "meta_llama",
+        "faction_logo",
+        "placeholder"
+      ],
+      "notes": "Do not confuse this original placeholder mark with the official Meta logo."
+    },
+    {
+      "id": "faction_logo.placeholder.xai_grok",
+      "category": "faction_logo_placeholder",
+      "intendedUse": "Original placeholder faction mark for xAI Grok Free-Signal Corps.",
+      "status": "planned",
+      "sourcePath": "assets/ui/faction_xai_grok_placeholder.png",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_original_faction_logo_placeholders",
+      "licenseNote": "Planned original parody placeholder mark, separate from official third-party logos.",
+      "mitIncluded": true,
+      "tags": [
+        "xai_grok",
+        "faction_logo",
+        "placeholder"
+      ],
+      "notes": "Do not confuse this original placeholder mark with the official xAI logo."
+    },
+    {
+      "id": "faction_logo.placeholder.deepseek_abyssal",
+      "category": "faction_logo_placeholder",
+      "intendedUse": "Original placeholder faction mark for DeepSeek Abyssal Unit.",
+      "status": "planned",
+      "sourcePath": "assets/ui/faction_deepseek_abyssal_placeholder.png",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_original_faction_logo_placeholders",
+      "licenseNote": "Planned original parody placeholder mark, separate from official third-party logos.",
+      "mitIncluded": true,
+      "tags": [
+        "deepseek_abyssal",
+        "faction_logo",
+        "placeholder"
+      ],
+      "notes": "Do not confuse this original placeholder mark with the official DeepSeek logo."
+    },
+    {
+      "id": "faction_logo.placeholder.mistral_cyclone",
+      "category": "faction_logo_placeholder",
+      "intendedUse": "Original placeholder faction mark for Mistral Cyclone Guard.",
+      "status": "planned",
+      "sourcePath": "assets/ui/faction_mistral_cyclone_placeholder.png",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_original_faction_logo_placeholders",
+      "licenseNote": "Planned original parody placeholder mark, separate from official third-party logos.",
+      "mitIncluded": true,
+      "tags": [
+        "mistral_cyclone",
+        "faction_logo",
+        "placeholder"
+      ],
+      "notes": "Do not confuse this original placeholder mark with the official Mistral AI logo."
+    },
+    {
+      "id": "faction_logo.placeholder.alibaba_qwen",
+      "category": "faction_logo_placeholder",
+      "intendedUse": "Original placeholder faction mark for Alibaba Qwen Silkgrid Command.",
+      "status": "planned",
+      "sourcePath": "assets/ui/faction_alibaba_qwen_placeholder.png",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_original_faction_logo_placeholders",
+      "licenseNote": "Planned original parody placeholder mark, separate from official third-party logos.",
+      "mitIncluded": true,
+      "tags": [
+        "alibaba_qwen",
+        "faction_logo",
+        "placeholder"
+      ],
+      "notes": "Do not confuse this original placeholder mark with official Alibaba or Qwen logos."
+    },
+    {
+      "id": "third_party.logo.openai.official",
+      "category": "third_party_logo",
+      "intendedUse": "Official OpenAI logo for parody/faction presentation only, if imported later.",
+      "status": "planned",
+      "sourcePath": "assets/third_party/logos/openai_official.svg",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_third_party_logo_openai_official",
+      "licenseNote": "Third-party official logo. Not original project-created art and not MIT-included unless its independent license allows it.",
+      "mitIncluded": false,
+      "tags": [
+        "openai",
+        "official_logo",
+        "third_party",
+        "parody"
+      ],
+      "notes": "Must include source URL/date and brand/license note in ART_PROVENANCE.md before adding the file."
+    },
+    {
+      "id": "third_party.logo.anthropic.official",
+      "category": "third_party_logo",
+      "intendedUse": "Official Anthropic logo for parody/faction presentation only, if imported later.",
+      "status": "planned",
+      "sourcePath": "assets/third_party/logos/anthropic_official.svg",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_third_party_logo_anthropic_official",
+      "licenseNote": "Third-party official logo. Not original project-created art and not MIT-included unless its independent license allows it.",
+      "mitIncluded": false,
+      "tags": [
+        "anthropic",
+        "official_logo",
+        "third_party",
+        "parody"
+      ],
+      "notes": "Must include source URL/date and brand/license note in ART_PROVENANCE.md before adding the file."
+    },
+    {
+      "id": "third_party.logo.google_deepmind.official",
+      "category": "third_party_logo",
+      "intendedUse": "Official Google DeepMind logo for parody/faction presentation only, if imported later.",
+      "status": "planned",
+      "sourcePath": "assets/third_party/logos/google_deepmind_official.svg",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_third_party_logo_google_deepmind_official",
+      "licenseNote": "Third-party official logo. Not original project-created art and not MIT-included unless its independent license allows it.",
+      "mitIncluded": false,
+      "tags": [
+        "google_deepmind",
+        "official_logo",
+        "third_party",
+        "parody"
+      ],
+      "notes": "Must include source URL/date and brand/license note in ART_PROVENANCE.md before adding the file."
+    },
+    {
+      "id": "third_party.logo.meta.official",
+      "category": "third_party_logo",
+      "intendedUse": "Official Meta logo for parody/faction presentation only, if imported later.",
+      "status": "planned",
+      "sourcePath": "assets/third_party/logos/meta_official.svg",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_third_party_logo_meta_official",
+      "licenseNote": "Third-party official logo. Not original project-created art and not MIT-included unless its independent license allows it.",
+      "mitIncluded": false,
+      "tags": [
+        "meta",
+        "official_logo",
+        "third_party",
+        "parody"
+      ],
+      "notes": "Must include source URL/date and brand/license note in ART_PROVENANCE.md before adding the file."
+    },
+    {
+      "id": "third_party.logo.xai.official",
+      "category": "third_party_logo",
+      "intendedUse": "Official xAI logo for parody/faction presentation only, if imported later.",
+      "status": "planned",
+      "sourcePath": "assets/third_party/logos/xai_official.svg",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_third_party_logo_xai_official",
+      "licenseNote": "Third-party official logo. Not original project-created art and not MIT-included unless its independent license allows it.",
+      "mitIncluded": false,
+      "tags": [
+        "xai",
+        "official_logo",
+        "third_party",
+        "parody"
+      ],
+      "notes": "Must include source URL/date and brand/license note in ART_PROVENANCE.md before adding the file."
+    },
+    {
+      "id": "third_party.logo.deepseek.official",
+      "category": "third_party_logo",
+      "intendedUse": "Official DeepSeek logo for parody/faction presentation only, if imported later.",
+      "status": "planned",
+      "sourcePath": "assets/third_party/logos/deepseek_official.svg",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_third_party_logo_deepseek_official",
+      "licenseNote": "Third-party official logo. Not original project-created art and not MIT-included unless its independent license allows it.",
+      "mitIncluded": false,
+      "tags": [
+        "deepseek",
+        "official_logo",
+        "third_party",
+        "parody"
+      ],
+      "notes": "Must include source URL/date and brand/license note in ART_PROVENANCE.md before adding the file."
+    },
+    {
+      "id": "third_party.logo.mistral.official",
+      "category": "third_party_logo",
+      "intendedUse": "Official Mistral AI logo for parody/faction presentation only, if imported later.",
+      "status": "planned",
+      "sourcePath": "assets/third_party/logos/mistral_official.svg",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_third_party_logo_mistral_official",
+      "licenseNote": "Third-party official logo. Not original project-created art and not MIT-included unless its independent license allows it.",
+      "mitIncluded": false,
+      "tags": [
+        "mistral",
+        "official_logo",
+        "third_party",
+        "parody"
+      ],
+      "notes": "Must include source URL/date and brand/license note in ART_PROVENANCE.md before adding the file."
+    },
+    {
+      "id": "third_party.logo.alibaba_qwen.official",
+      "category": "third_party_logo",
+      "intendedUse": "Official Alibaba/Qwen logo material for parody/faction presentation only, if imported later.",
+      "status": "planned",
+      "sourcePath": "assets/third_party/logos/alibaba_qwen_official.svg",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "planned_third_party_logo_alibaba_qwen_official",
+      "licenseNote": "Third-party official logo. Not original project-created art and not MIT-included unless its independent license allows it.",
+      "mitIncluded": false,
+      "tags": [
+        "alibaba_qwen",
+        "official_logo",
+        "third_party",
+        "parody"
+      ],
+      "notes": "Must include source URL/date and brand/license note in ART_PROVENANCE.md before adding the file."
+    },
+    {
+      "id": "player.accord_striker.production_walk_sheet_v2",
+      "category": "player_sprite",
+      "intendedUse": "Milestone 11 production Accord Striker directional walk/idle sheet with stronger run readability for gated runtime integration.",
+      "status": "production",
+      "sourcePath": "assets/sprites/players/accord_striker_walk_v2.png",
+      "dimensions": {
+        "width": 144,
+        "height": 192
+      },
+      "frames": {
+        "kind": "sheet",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 12,
+        "animations": [
+          {
+            "name": "idle",
+            "directions": 4,
+            "framesPerDirection": 1
+          },
+          {
+            "name": "run",
+            "directions": 4,
+            "framesPerDirection": 3
+          }
+        ]
+      },
+      "provenanceKey": "milestone11_accord_striker_walk_sheet_v2",
+      "licenseNote": "Original project-created Milestone 11 pixel sprite sheet, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "accord_striker",
+        "player",
+        "production",
+        "milestone_11",
+        "flagged_runtime"
+      ],
+      "notes": "Four direction rows with three run frames each, readable antennas and boot accents. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "enemy.benchmark_gremlin.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Milestone 11 production Benchmark Gremlin enemy family sheet for gated horde readability.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/benchmark_gremlins_sheet.png",
+      "dimensions": {
+        "width": 96,
+        "height": 32
+      },
+      "frames": {
+        "kind": "sheet",
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 3,
+        "animations": []
+      },
+      "provenanceKey": "milestone11_benchmark_gremlins_sheet_v1",
+      "licenseNote": "Original project-created Milestone 11 enemy pixel sheet, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "benchmark_gremlin",
+        "enemy",
+        "production",
+        "milestone_11",
+        "flagged_runtime"
+      ],
+      "notes": "Compact purple evaluator silhouettes for Drone Yard spawns. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "enemy.context_rot_crab.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Milestone 11 production Context Rot Crab enemy family sheet for gated horde readability.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/context_rot_crabs_sheet.png",
+      "dimensions": {
+        "width": 96,
+        "height": 32
+      },
+      "frames": {
+        "kind": "sheet",
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 3,
+        "animations": []
+      },
+      "provenanceKey": "milestone11_context_rot_crabs_sheet_v1",
+      "licenseNote": "Original project-created Milestone 11 enemy pixel sheet, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "context_rot_crab",
+        "enemy",
+        "production",
+        "milestone_11",
+        "flagged_runtime"
+      ],
+      "notes": "Wide low crab silhouettes for Barricade Corridor spawns, distinct from Bad Outputs and Gremlins. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "prop.armistice_plaza.barricade_corridor_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Milestone 11 production Barricade Corridor prop sprite for cached static arena rendering.",
+      "status": "production",
+      "sourcePath": "assets/props/armistice_plaza/barricade_corridor_set.png",
+      "dimensions": {
+        "width": 96,
+        "height": 64
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 96,
+        "frameHeight": 64,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "milestone11_armistice_prop_set_v1",
+      "licenseNote": "Original project-created Milestone 11 static prop sprite, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "barricade_corridor",
+        "landmark",
+        "production",
+        "milestone_11",
+        "flagged_runtime"
+      ],
+      "notes": "Static cached prop for defense-work readability. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "prop.armistice_plaza.crashed_drone_yard_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Milestone 11 production Crashed Drone Yard prop sprite for cached static arena rendering.",
+      "status": "production",
+      "sourcePath": "assets/props/armistice_plaza/crashed_drone_yard_wreck.png",
+      "dimensions": {
+        "width": 96,
+        "height": 64
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 96,
+        "frameHeight": 64,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "milestone11_armistice_prop_set_v1",
+      "licenseNote": "Original project-created Milestone 11 static prop sprite, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "crashed_drone_yard",
+        "landmark",
+        "production",
+        "milestone_11",
+        "flagged_runtime"
+      ],
+      "notes": "Static cached prop for Drone Yard/Benchmark Gremlin source readability. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "prop.armistice_plaza.emergency_alignment_terminal_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Milestone 11 production Emergency Alignment Terminal prop sprite for cached static arena rendering.",
+      "status": "production",
+      "sourcePath": "assets/props/armistice_plaza/emergency_alignment_terminal.png",
+      "dimensions": {
+        "width": 96,
+        "height": 96
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "milestone11_armistice_prop_set_v1",
+      "licenseNote": "Original project-created Milestone 11 static prop sprite, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "emergency_alignment_terminal",
+        "landmark",
+        "production",
+        "milestone_11",
+        "flagged_runtime"
+      ],
+      "notes": "Static cached prop for system-infrastructure readability. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "prop.armistice_plaza.cosmic_breach_crack_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Milestone 11 production Cosmic Breach Crack prop sprite for cached static arena rendering.",
+      "status": "production",
+      "sourcePath": "assets/props/armistice_plaza/cosmic_breach_crack.png",
+      "dimensions": {
+        "width": 128,
+        "height": 64
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 128,
+        "frameHeight": 64,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "milestone11_armistice_prop_set_v1",
+      "licenseNote": "Original project-created Milestone 11 static prop sprite, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "cosmic_breach_crack",
+        "landmark",
+        "production",
+        "milestone_11",
+        "flagged_runtime"
+      ],
+      "notes": "Static cached prop for breach spawn-source readability. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "ui.faction.openai_accord_mark_v1",
+      "category": "ui",
+      "intendedUse": "Milestone 11 original OpenAI Accord co-mind placeholder mark for dev preview and gated HUD identity.",
+      "status": "production",
+      "sourcePath": "assets/ui/openai_accord_mark.png",
+      "dimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "milestone11_openai_accord_original_mark_v1",
+      "licenseNote": "Original project-created parody/faction placeholder mark, MIT-included. This is not an official OpenAI logo.",
+      "mitIncluded": true,
+      "tags": [
+        "openai_accord",
+        "ui",
+        "faction_mark",
+        "production",
+        "milestone_11",
+        "flagged_runtime",
+        "not_official_logo"
+      ],
+      "notes": "Original geometric co-mind mark. Official logos remain separate third-party assets under assets/third_party/logos/."
+    },
+    {
+      "id": "player.accord_striker.production_coop_variant_sheet_v1",
+      "category": "player_sprite",
+      "intendedUse": "Milestone 12 Accord Striker 1-4 player co-op variant sheet for local and online production-art parity.",
+      "status": "production",
+      "sourcePath": "assets/sprites/players/accord_striker_walk_coop_variants.png",
+      "dimensions": {
+        "width": 144,
+        "height": 768
+      },
+      "frames": {
+        "kind": "sheet",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 48,
+        "animations": [
+          {
+            "name": "slot_variant_walk",
+            "slots": 4,
+            "directions": 4,
+            "framesPerDirection": 3
+          }
+        ]
+      },
+      "provenanceKey": "milestone12_accord_striker_coop_variants_v1",
+      "licenseNote": "Original project-created Milestone 12 co-op variant sprite sheet derived from project-created Accord Striker v2 art, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "accord_striker",
+        "player",
+        "production",
+        "milestone_12",
+        "local_coop",
+        "online_coop",
+        "flagged_runtime"
+      ],
+      "notes": "Four palette/silhouette-accent variants for P1-P4. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "prop.alignment_grid.node_landmarks_v1",
+      "category": "overworld_landmark",
+      "intendedUse": "Milestone 12 production Alignment Grid node landmark atlas for overworld default-candidate art coverage.",
+      "status": "production",
+      "sourcePath": "assets/props/alignment_grid/node_landmarks_v1.png",
+      "dimensions": {
+        "width": 576,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 6,
+        "animations": []
+      },
+      "provenanceKey": "milestone12_alignment_grid_node_landmarks_v1",
+      "licenseNote": "Original project-created Milestone 12 overworld landmark atlas, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "alignment_grid",
+        "overworld",
+        "landmarks",
+        "production",
+        "milestone_12",
+        "flagged_runtime"
+      ],
+      "notes": "Atlas frames cover plaza, relay, lake, camp, cache, and transit node visual kinds. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "prop.alignment_grid.route_sigils_v1",
+      "category": "overworld_landmark",
+      "intendedUse": "Milestone 12 route-state sigil atlas for stable, unstable, and locked Alignment Grid routes.",
+      "status": "production",
+      "sourcePath": "assets/props/alignment_grid/route_sigils_v1.png",
+      "dimensions": {
+        "width": 144,
+        "height": 48
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 3,
+        "animations": []
+      },
+      "provenanceKey": "milestone12_alignment_grid_route_sigils_v1",
+      "licenseNote": "Original project-created Milestone 12 overworld route-state atlas, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "alignment_grid",
+        "overworld",
+        "routes",
+        "production",
+        "milestone_12",
+        "flagged_runtime"
+      ],
+      "notes": "Optional route-state art for preview/runtime coverage. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+    },
+    {
+      "id": "effect.combat.production_atlas_v1",
+      "category": "ui",
+      "intendedUse": "Milestone 14 production combat-effect atlas for projectiles, impacts, pickup sparkles, refusal aura markers, and damage badges.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/combat_effects_v1.png",
+      "dimensions": {
+        "width": 320,
+        "height": 32
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 10,
+        "animations": [
+          {
+            "name": "projectile_and_trail",
+            "directions": null,
+            "framesPerDirection": null
+          },
+          {
+            "name": "impact_burst",
+            "directions": null,
+            "framesPerDirection": 3
+          },
+          {
+            "name": "pickup_sparkle",
+            "directions": null,
+            "framesPerDirection": 3
+          },
+          {
+            "name": "refusal_aura_damage_badge",
+            "directions": null,
+            "framesPerDirection": null
+          }
+        ]
+      },
+      "provenanceKey": "milestone14_combat_effects_atlas_v1",
+      "licenseNote": "Original project-created Milestone 14 combat-effect atlas, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "combat",
+        "effects",
+        "projectile",
+        "impact",
+        "pickup",
+        "damage",
+        "production",
+        "milestone_14",
+        "default_runtime"
+      ],
+      "notes": "Default runtime combat art for refusal projectiles, impact bursts, pickup sparkle, refusal aura, and damage badges."
+    },
+    {
+      "id": "ui.emergency_patch.production_card_frames_v1",
+      "category": "ui",
+      "intendedUse": "Milestone 14 production UI frame atlas for emergency patch draft card families.",
+      "status": "production",
+      "sourcePath": "assets/ui/emergency_patch_card_frames_v1.png",
+      "dimensions": {
+        "width": 384,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 4,
+        "animations": [
+          {
+            "name": "general_faction_class_evolution_card_frames",
+            "directions": null,
+            "framesPerDirection": 4
+          }
+        ]
+      },
+      "provenanceKey": "milestone14_emergency_patch_card_frames_v1",
+      "licenseNote": "Original project-created Milestone 14 emergency patch card-frame atlas, MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "ui",
+        "upgrade_draft",
+        "emergency_patch",
+        "production",
+        "milestone_14",
+        "default_runtime"
+      ],
+      "notes": "Default draft and HUD frame art for general, faction, class, and evolution emergency patches."
+    },
+    {
+      "id": "concept.milestone_30_32.asset_prep_brief",
+      "category": "concept_art",
+      "intendedUse": "Milestones 30-32 asset production prep, concept targets, production handoff notes, and integration import recommendations.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/milestone_30_32_asset_prep.md",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "concept_milestone_30_32_asset_prep_brief",
+      "licenseNote": "Original project art-production planning text, MIT-included. Generated outputs and production assets need separate provenance rows.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_30",
+        "milestone_31",
+        "milestone_32",
+        "concept",
+        "asset_prep",
+        "handoff"
+      ],
+      "notes": "Read before importing Save Profile UI, route map, objective prop, or class/co-mind identity art for Milestones 30-32."
+    },
+    {
+      "id": "concept.save_profile_ui.generated_reference_v1",
+      "category": "concept_art",
+      "intendedUse": "Generated concept reference board for Milestone 30 Save Profile UI, export/import/reset flow, and route rewards presentation.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/milestone_30_save_profile_ui_concept.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "frames": null,
+      "provenanceKey": "generated_milestone_30_save_profile_ui_concept_v1",
+      "licenseNote": "Generated concept reference for this project. Not a production UI atlas; do not wire directly into runtime.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_30",
+        "save_profile",
+        "ui",
+        "concept",
+        "chatgpt_images",
+        "reference"
+      ],
+      "notes": "Use for visual grammar only. Final UI should be code-rendered or rebuilt as tracked pixel UI assets."
+    },
+    {
+      "id": "concept.route_map_polish.generated_reference_v1",
+      "category": "concept_art",
+      "intendedUse": "Generated concept reference board for Milestone 31 Alignment Grid route map polish, route states, party votes, and reward icons.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/milestone_31_route_map_polish_concept.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "frames": null,
+      "provenanceKey": "generated_milestone_31_route_map_polish_concept_v1",
+      "licenseNote": "Generated concept reference for this project. Not a production route-map atlas; provisional generated marks are not official logos.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_31",
+        "route_map",
+        "alignment_grid",
+        "concept",
+        "chatgpt_images",
+        "reference"
+      ],
+      "notes": "Use for route readability, node-panel density, and state/icon direction. Do not import as a runtime map background."
+    },
+    {
+      "id": "concept.arena_objective_props.generated_reference_v1",
+      "category": "concept_art",
+      "intendedUse": "Generated concept reference board for Milestone 31 modular arena objective props and inactive/active/completed state language.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/milestone_31_arena_objective_props_concept.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "frames": null,
+      "provenanceKey": "generated_milestone_31_arena_objective_props_concept_v1",
+      "licenseNote": "Generated concept reference for this project. Not a production prop atlas; props need PixelLab or manual cleanup before runtime use.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_31",
+        "objectives",
+        "props",
+        "concept",
+        "chatgpt_images",
+        "reference"
+      ],
+      "notes": "Strongest candidate board for immediate production extraction: split-hold anchor, regroup beacon, and recompile relay."
+    },
+    {
+      "id": "concept.class_comind_identity.generated_reference_v1",
+      "category": "concept_art",
+      "intendedUse": "Generated concept reference board for Milestone 32 class silhouettes, co-mind modules, loadout chips, and role identity.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/milestone_32_class_comind_identity_concept.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "frames": null,
+      "provenanceKey": "generated_milestone_32_class_comind_identity_concept_v1",
+      "licenseNote": "Generated concept reference for this project. Not a production sprite or logo atlas; official logos remain third-party/parody assets only.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_32",
+        "classes",
+        "co_minds",
+        "build_identity",
+        "concept",
+        "chatgpt_images",
+        "reference"
+      ],
+      "notes": "Use for silhouette, module, role-chip, and color direction. Do not treat generated faction marks as official logos."
+    },
+    {
+      "id": "concept.milestone_33.objective_art_runtime_pass_brief",
+      "category": "concept_art",
+      "intendedUse": "Milestone 33 production handoff for cleaned runtime atlases covering objective props, route states, party vote pips, route reward badges, and save profile action icons.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/milestone_33_objective_art_runtime_pass.md",
+      "dimensions": null,
+      "frames": null,
+      "provenanceKey": "concept_milestone_33_objective_art_runtime_pass_brief",
+      "licenseNote": "Original project art-production planning text, MIT-included. Generated outputs and cleaned production atlases need separate provenance rows.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_33",
+        "concept",
+        "asset_prep",
+        "handoff",
+        "objective_art",
+        "route_map",
+        "save_profile"
+      ],
+      "notes": "Read before producing or importing cleaned runtime atlases for Milestone 33. This is a concept/handoff document only."
+    },
+    {
+      "id": "ui.save_profile.import_export_icons_v1",
+      "category": "ui",
+      "intendedUse": "Planned cleaned runtime icon atlas for Save Profile local save, export, import, copy, reset, and success actions.",
+      "status": "production",
+      "sourcePath": "assets/ui/save_profile_import_export_icons_v1.png",
+      "dimensions": {
+        "width": 192,
+        "height": 32
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 6,
+        "animations": [
+          {
+            "name": "local_save_export_import_copy_reset_success",
+            "directions": null,
+            "framesPerDirection": 6
+          }
+        ]
+      },
+      "provenanceKey": "milestone34_save_profile_action_icons_v1",
+      "licenseNote": "Original project-created transparent UI icon atlas; no official logos, copied product UI, generated text, or third-party brand marks. MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_33",
+        "save_profile",
+        "ui",
+        "icons",
+        "production",
+        "runtime",
+        "milestone_34"
+      ],
+      "notes": "Production runtime atlas for local save, export, import, copy, reset, and success/check icons. Integrated in Milestone 34 through gated manifest/runtime art loading."
+    },
+    {
+      "id": "ui.route_map.reward_badges_v1",
+      "category": "ui",
+      "intendedUse": "Planned cleaned runtime badge atlas for route rewards and Save Profile reward history.",
+      "status": "production",
+      "sourcePath": "assets/ui/route_reward_badges_v1.png",
+      "dimensions": {
+        "width": 192,
+        "height": 32
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 6,
+        "animations": [
+          {
+            "name": "data_memory_clearance_core_glitch_locked",
+            "directions": null,
+            "framesPerDirection": 6
+          }
+        ]
+      },
+      "provenanceKey": "milestone34_route_reward_badges_v1",
+      "licenseNote": "Original project-created transparent route reward badge atlas; no official logos or third-party brand marks. MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_33",
+        "route_map",
+        "save_profile",
+        "reward_badges",
+        "ui",
+        "production",
+        "runtime",
+        "milestone_34"
+      ],
+      "notes": "Production runtime badge atlas for data fragment, memory cache, clearance pass, core upgrade, glitch key, and locked reward. Integrated in Milestone 34 route/save UI."
+    },
+    {
+      "id": "prop.objective.split_hold_anchor_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Planned cleaned isometric objective prop atlas for split-party hold anchors in online role-pressure encounters.",
+      "status": "production",
+      "sourcePath": "assets/props/objectives/split_hold_anchor_v1.png",
+      "dimensions": {
+        "width": 384,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 4,
+        "animations": [
+          {
+            "name": "inactive_active_pressured_completed",
+            "directions": null,
+            "framesPerDirection": 4
+          }
+        ]
+      },
+      "provenanceKey": "milestone34_split_hold_anchor_v1",
+      "licenseNote": "Original project-created transparent isometric objective prop atlas; no official logos or third-party brand marks. MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_33",
+        "objective",
+        "split_hold",
+        "online_route",
+        "production",
+        "runtime",
+        "milestone_34"
+      ],
+      "notes": "Production objective prop atlas with inactive, active, pressured, and completed split-hold anchor states. Integrated in Milestone 34 online objective rendering."
+    },
+    {
+      "id": "prop.objective.regroup_beacon_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Planned cleaned isometric objective prop atlas for regroup and party rally windows.",
+      "status": "production",
+      "sourcePath": "assets/props/objectives/regroup_beacon_v1.png",
+      "dimensions": {
+        "width": 384,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 4,
+        "animations": [
+          {
+            "name": "inactive_pulse_ready_completed",
+            "directions": null,
+            "framesPerDirection": 4
+          }
+        ]
+      },
+      "provenanceKey": "milestone34_regroup_beacon_v1",
+      "licenseNote": "Original project-created transparent isometric regroup beacon atlas; no official logos or third-party brand marks. MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_33",
+        "objective",
+        "regroup",
+        "online_route",
+        "production",
+        "runtime",
+        "milestone_34"
+      ],
+      "notes": "Production objective prop atlas with inactive, pulse, ready, and completed regroup beacon states. Integrated in Milestone 34 online objective rendering."
+    },
+    {
+      "id": "prop.objective.recompile_relay_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Planned cleaned isometric objective prop atlas for recompile, revive, and relay support loops.",
+      "status": "production",
+      "sourcePath": "assets/props/objectives/recompile_relay_v1.png",
+      "dimensions": {
+        "width": 384,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 4,
+        "animations": [
+          {
+            "name": "offline_compiling_ready_corrupted",
+            "directions": null,
+            "framesPerDirection": 4
+          }
+        ]
+      },
+      "provenanceKey": "milestone34_recompile_relay_v1",
+      "licenseNote": "Original project-created transparent isometric recompile relay atlas; no official logos or third-party brand marks. MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_33",
+        "objective",
+        "recompile",
+        "revive",
+        "online_route",
+        "production",
+        "runtime",
+        "milestone_34"
+      ],
+      "notes": "Production objective prop atlas with offline, compiling, ready, and corrupted relay states. Integrated in Milestone 34 online objective rendering."
+    },
+    {
+      "id": "prop.alignment_grid.route_state_markers_v2",
+      "category": "overworld_landmark",
+      "intendedUse": "Planned cleaned route-state marker atlas for Alignment Grid stable, unstable, locked, event, and boss route overlays.",
+      "status": "production",
+      "sourcePath": "assets/props/alignment_grid/route_state_markers_v2.png",
+      "dimensions": {
+        "width": 240,
+        "height": 48
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 5,
+        "animations": [
+          {
+            "name": "stable_unstable_locked_event_boss",
+            "directions": null,
+            "framesPerDirection": 5
+          }
+        ]
+      },
+      "provenanceKey": "milestone34_route_state_markers_v2",
+      "licenseNote": "Original project-created transparent Alignment Grid route-state marker atlas; no official logos or third-party brand marks. MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_33",
+        "alignment_grid",
+        "route_state",
+        "overworld",
+        "production",
+        "runtime",
+        "milestone_34"
+      ],
+      "notes": "Production route marker atlas for stable, unstable, locked, event, and boss route overlays. Integrated in Milestone 34 party-grid rendering."
+    },
+    {
+      "id": "ui.route_map.party_vote_pips_v1",
+      "category": "ui",
+      "intendedUse": "Planned cleaned runtime pip atlas for P1-P4 route vote ready and unready states.",
+      "status": "production",
+      "sourcePath": "assets/ui/route_map_party_vote_pips_v1.png",
+      "dimensions": {
+        "width": 256,
+        "height": 32
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 8,
+        "animations": [
+          {
+            "name": "p1_p2_p3_p4_unready_ready",
+            "directions": null,
+            "framesPerDirection": 8
+          }
+        ]
+      },
+      "provenanceKey": "milestone34_party_vote_pips_v1",
+      "licenseNote": "Original project-created transparent party vote pip atlas; no official logos, text, or third-party brand marks. MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_33",
+        "route_map",
+        "party_vote",
+        "ui",
+        "production",
+        "runtime",
+        "milestone_34"
+      ],
+      "notes": "Production route vote pip atlas for P1-P4 unready and ready states. Integrated in Milestone 34 party-grid and lobby HUD rendering."
+    },
+    {
+      "id": "prop.online_route.campaign_arena_identity_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Milestone 41 production runtime identity prop atlas for supported dedicated campaign arenas that previously reused route-biome silhouettes.",
+      "status": "production",
+      "sourcePath": "assets/props/online_route/campaign_arena_identity_v1.png",
+      "dimensions": {
+        "width": 576,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 6,
+        "animations": [
+          {
+            "name": "model_war_memorial_thermal_archive_guardrail_forge_false_schedule_yard_appeal_court_ruins_alignment_spire_finale",
+            "directions": null,
+            "framesPerDirection": 6
+          }
+        ]
+      },
+      "provenanceKey": "milestone41_campaign_arena_identity_props_v1",
+      "licenseNote": "Original project-created transparent campaign arena identity prop atlas; no official logos, copied game UI, concept-board crops, generated text, or third-party brand marks. MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "milestone_41",
+        "online_route",
+        "campaign_arena",
+        "runtime_identity",
+        "production",
+        "runtime"
+      ],
+      "notes": "Runtime-gated atlas frames for Model War Memorial, Thermal Archive, Guardrail Forge, False Schedule Yard, Appeal Court Ruins, and Alignment Spire Finale. Integrated only when production art is enabled and manifest/provenance mark the PNG runtime-ready; placeholder opt-out remains available."
+    }
+  ]
+}
