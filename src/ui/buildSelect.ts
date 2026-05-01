@@ -9,7 +9,7 @@ import { BUILD_CLASS_IDS, BUILD_FACTION_IDS, isClassUnlocked, isFactionUnlocked,
 import {
   getMilestone49PlayableArtTextures,
   loadMilestone49PlayableArt,
-  milestone49CoMindModuleTexture,
+  milestone49FactionSigilTexture,
   milestone49CoMindPortraitTexture,
   milestone49NetworkPlayerTextureFor,
   milestone49RoleChipTexture,
@@ -186,6 +186,12 @@ export class BuildSelectState implements GameState {
       portrait.scale.set(0.5);
       portrait.position.set(x + 476, y - 32);
       game.layers.hud.addChild(portrait);
+
+      const sigil = new Sprite(milestone49FactionSigilTexture(FACTION_IDS[this.factionIndex] ?? FACTION_IDS[0], milestone49Art));
+      sigil.anchor.set(0.5);
+      sigil.scale.set(0.32);
+      sigil.position.set(x + 476, y - 32);
+      game.layers.hud.addChild(sigil);
     }
 
     FACTION_IDS.forEach((id, index) => {
@@ -204,12 +210,12 @@ export class BuildSelectState implements GameState {
       game.layers.hud.addChild(g);
 
       if (milestone49Art) {
-        const module = new Sprite(milestone49CoMindModuleTexture(id, milestone49Art));
-        module.anchor.set(0.5);
-        module.scale.set(0.44);
-        module.alpha = unlocked ? 1 : 0.38;
-        module.position.set(x + 32, top + 21);
-        game.layers.hud.addChild(module);
+        const sigil = new Sprite(milestone49FactionSigilTexture(id, milestone49Art));
+        sigil.anchor.set(0.5);
+        sigil.scale.set(0.44);
+        sigil.alpha = unlocked ? 1 : 0.38;
+        sigil.position.set(x + 32, top + 21);
+        game.layers.hud.addChild(sigil);
       }
 
       const text = new Text({

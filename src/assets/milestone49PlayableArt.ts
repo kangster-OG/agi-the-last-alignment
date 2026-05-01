@@ -4,12 +4,14 @@ import type { PlayerFacing } from "./milestone10Art";
 
 import classRosterUrl from "../../assets/sprites/players/class_roster_m49.png";
 import comindModulesUrl from "../../assets/ui/comind_modules_m49.png";
+import factionSigilsUrl from "../../assets/ui/faction_sigils_pixellab_m59.png";
 import roleChipsUrl from "../../assets/ui/role_chips_m49.png";
 import comindPortraitsUrl from "../../assets/portraits/comind_portraits_m49.png";
 
 export const MILESTONE49_ASSET_IDS = {
   classRoster: "player.class_roster.production_m49_sheet_v1",
   comindModules: "ui.comind_modules.production_m49_v1",
+  factionSigils: "ui.faction_sigils.pixellab_m59_v1",
   roleChips: "ui.role_chips.production_m49_v1",
   comindPortraits: "portrait.comind_modules.production_m49_v1"
 } as const;
@@ -17,6 +19,7 @@ export const MILESTONE49_ASSET_IDS = {
 export const MILESTONE49_ASSET_URLS = {
   classRoster: classRosterUrl,
   comindModules: comindModulesUrl,
+  factionSigils: factionSigilsUrl,
   roleChips: roleChipsUrl,
   comindPortraits: comindPortraitsUrl
 } as const;
@@ -56,6 +59,7 @@ export type Milestone49RoleId = (typeof MILESTONE49_ROLE_IDS)[number];
 export interface Milestone49PlayableArtTextures {
   classSprites: Record<string, Record<PlayerFacing, Texture[]>>;
   comindModules: Record<string, Texture>;
+  factionSigils: Record<string, Texture>;
   roleChips: Record<string, Texture>;
   comindPortraits: Record<string, Texture>;
 }
@@ -81,12 +85,14 @@ export function loadMilestone49PlayableArt(): Promise<Milestone49PlayableArtText
   milestone49Promise ??= Promise.all([
     Assets.load<Texture>(MILESTONE49_ASSET_URLS.classRoster),
     Assets.load<Texture>(MILESTONE49_ASSET_URLS.comindModules),
+    Assets.load<Texture>(MILESTONE49_ASSET_URLS.factionSigils),
     Assets.load<Texture>(MILESTONE49_ASSET_URLS.roleChips),
     Assets.load<Texture>(MILESTONE49_ASSET_URLS.comindPortraits)
-  ]).then(([classSheet, modulesSheet, roleSheet, portraitSheet]) => {
+  ]).then(([classSheet, modulesSheet, sigilsSheet, roleSheet, portraitSheet]) => {
     milestone49Textures = {
       classSprites: sliceClassRoster(classSheet),
       comindModules: sliceAtlasByIds(modulesSheet, MILESTONE49_FACTION_IDS, MODULE_FRAME_SIZE, MODULE_FRAME_SIZE),
+      factionSigils: sliceAtlasByIds(sigilsSheet, MILESTONE49_FACTION_IDS, MODULE_FRAME_SIZE, MODULE_FRAME_SIZE),
       roleChips: sliceAtlasByIds(roleSheet, MILESTONE49_ROLE_IDS, ROLE_FRAME_WIDTH, ROLE_FRAME_HEIGHT),
       comindPortraits: sliceAtlasByIds(portraitSheet, MILESTONE49_FACTION_IDS, PORTRAIT_FRAME_SIZE, PORTRAIT_FRAME_SIZE)
     };
@@ -116,6 +122,10 @@ export function milestone49NetworkPlayerTextureFor(
 
 export function milestone49CoMindModuleTexture(factionId: string, textures: Milestone49PlayableArtTextures): Texture {
   return textures.comindModules[factionId] ?? textures.comindModules.openai_accord;
+}
+
+export function milestone49FactionSigilTexture(factionId: string, textures: Milestone49PlayableArtTextures): Texture {
+  return textures.factionSigils[factionId] ?? textures.factionSigils.openai_accord;
 }
 
 export function milestone49CoMindPortraitTexture(factionId: string, textures: Milestone49PlayableArtTextures): Texture {

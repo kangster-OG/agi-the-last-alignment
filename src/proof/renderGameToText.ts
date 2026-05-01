@@ -88,7 +88,7 @@ export function renderGameToText(game: Game): string {
         atlasCount: 6,
         placeholderOptOutPreserved: !game.useMilestone10Art
       },
-      coMindArtPolicy: "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
+      coMindArtPolicy: "Original co-mind module art plus PixelLab-backed cleaned faction sigils; no official logos are imported for this runtime pass.",
       productionArtDefaulted: game.productionArtDefaulted,
       armisticeTileAtlasDefaulted: game.armisticeTileAtlasDefaulted,
       optOutHint: "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
@@ -134,6 +134,8 @@ export function renderGameToText(game: Game): string {
             playerFrameArtSet: game.useMilestone10Art ? "milestone49_class_roster_and_comind_modules" : "placeholder_safe_opt_out",
             classAtlasIds: [...MILESTONE49_CLASS_IDS],
             factionModuleIds: [...MILESTONE49_FACTION_IDS],
+            factionSigilIds: [...MILESTONE49_FACTION_IDS],
+            factionSigilSource: "pixellab_m59_cleaned_transparent_atlas",
             roleChipIds: [...MILESTONE49_ROLE_IDS],
             classFrameCount: MILESTONE49_CLASS_IDS.length * 4 * 3,
             placeholderOptOutPreserved: !game.useMilestone10Art

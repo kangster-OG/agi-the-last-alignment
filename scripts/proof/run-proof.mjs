@@ -4215,6 +4215,8 @@ async function runMilestone49PlayerCoMindArtScenario() {
     assert(artCoverage?.classFrameCount === 144, "expected twelve classes times four directions times three frames");
     assert(artCoverage?.classAtlasIds?.length === 12, "expected all twelve class atlas IDs");
     assert(artCoverage?.factionModuleIds?.length === 8, "expected all eight co-mind module IDs");
+    assert(artCoverage?.factionSigilIds?.length === 8, "expected all eight PixelLab faction sigil IDs");
+    assert(artCoverage?.factionSigilSource === "pixellab_m59_cleaned_transparent_atlas", "expected PixelLab-cleaned faction sigil source");
     assert(artCoverage?.roleChipIds?.length === 6, "expected all six role chips");
     assert(roster.buildSelection?.availableClasses?.every((entry) => entry.unlocked), "expected full route profile to unlock every playable frame");
     assert(roster.buildSelection?.availableFactions?.every((entry) => entry.unlocked), "expected full route profile to unlock every co-mind");

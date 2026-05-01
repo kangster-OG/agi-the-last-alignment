@@ -601,6 +601,11 @@ Implementation completed:
 - Updated asset manifest and provenance records for the four runtime atlases; no official logos or third-party brand marks are used in the M49 runtime art.
 - Added proof-visible M49 art coverage telemetry without changing the existing `productionArtSet` compatibility label expected by earlier proofs.
 
+Post-launch art recovery:
+
+- Added a PixelLab-backed cleaned transparent 8-frame faction/co-mind sigil atlas and wired it into the build-select co-mind list and selected co-mind presentation.
+- Committed raw PixelLab source exports, prompt documentation, deterministic cleanup tooling, manifest entries, provenance rows, and proof-visible `pixellab_m59_cleaned_transparent_atlas` telemetry.
+
 Proof coverage:
 
 - `npm run proof:assets`
