@@ -42,6 +42,33 @@ export const COMBAT_CLASSES: Record<string, CombatClassData> = {
     baseStats: { speed: 4.15, armor: 1, pickupRange: 1.45, cooldownScale: 1 },
     startingWeaponId: "signal_pulse"
   },
+  bonecode_executioner: {
+    id: "bonecode_executioner",
+    displayName: "Bonecode Executioner",
+    role: "Cyborg melee assassin",
+    mechanicalIdentity: "Melee aura, dashes, crit chains",
+    silhouetteNotes: "Lean cyborg, blade limbs, exposed glowing spine",
+    baseStats: { speed: 4.85, armor: 0, pickupRange: 1.05, cooldownScale: 0.9 },
+    startingWeaponId: "bonecode_saw"
+  },
+  redline_surgeon: {
+    id: "redline_surgeon",
+    displayName: "Redline Surgeon",
+    role: "Combat medic / death editor",
+    mechanicalIdentity: "Healing, revives, damage erasure",
+    silhouetteNotes: "Medical armor, repair gauntlet, red/white cable scarf, floating tools",
+    baseStats: { speed: 4.2, armor: 1, pickupRange: 1.55, cooldownScale: 1 },
+    startingWeaponId: "redline_suture"
+  },
+  moonframe_juggernaut: {
+    id: "moonframe_juggernaut",
+    displayName: "Moonframe Juggernaut",
+    role: "Compact mech pilot",
+    mechanicalIdentity: "Stomps, missiles, temporary giant mode",
+    silhouetteNotes: "Squat mini-mech, visible cockpit glow, oversized legs",
+    baseStats: { speed: 3.55, armor: 3, pickupRange: 1.05, cooldownScale: 1.08 },
+    startingWeaponId: "moonframe_stomp"
+  },
   vector_interceptor: {
     id: "vector_interceptor",
     displayName: "Vector Interceptor",
@@ -59,6 +86,33 @@ export const COMBAT_CLASSES: Record<string, CombatClassData> = {
     silhouetteNotes: "Asymmetric armor, energy blade, broken visor, lone-warrior stance",
     baseStats: { speed: 4.75, armor: 0, pickupRange: 1.05, cooldownScale: 0.9 },
     startingWeaponId: "null_blade"
+  },
+  overclock_marauder: {
+    id: "overclock_marauder",
+    displayName: "Overclock Marauder",
+    role: "Heat-sink berserker",
+    mechanicalIdentity: "Burn damage, rage scaling, unstable power",
+    silhouetteNotes: "Heat vents, glowing engine chest, molten shoulder plates",
+    baseStats: { speed: 4.45, armor: 1, pickupRange: 1.15, cooldownScale: 0.94 },
+    startingWeaponId: "overclock_spike"
+  },
+  prism_gunner: {
+    id: "prism_gunner",
+    displayName: "Prism Gunner",
+    role: "Beam specialist",
+    mechanicalIdentity: "Line attacks, piercing, ricochet beams",
+    silhouetteNotes: "Long prism cannon, mirrored armor, lens backpack",
+    baseStats: { speed: 4.6, armor: 0, pickupRange: 1.2, cooldownScale: 0.92 },
+    startingWeaponId: "prism_cannon"
+  },
+  rift_saboteur: {
+    id: "rift_saboteur",
+    displayName: "Rift Saboteur",
+    role: "Trap and mine specialist",
+    mechanicalIdentity: "Causal mines, delayed explosions, stealth tricks",
+    silhouetteNotes: "Low-profile stealth body, mine belt, flickering cloak, angular limbs",
+    baseStats: { speed: 4.35, armor: 0, pickupRange: 1.35, cooldownScale: 0.98 },
+    startingWeaponId: "rift_mine"
   }
 };
 

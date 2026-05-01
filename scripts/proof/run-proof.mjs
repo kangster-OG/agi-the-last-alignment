@@ -609,6 +609,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone45OuterAlignmentFinaleScenario();
     return;
+  } else if (name === "milestone46-full-class-roster") {
+    await closeBrowser(browser);
+    await runMilestone46FullClassRosterScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -3987,6 +3991,145 @@ async function runMilestone45OuterAlignmentFinaleScenario() {
   }
 }
 
+async function runMilestone46FullClassRosterScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+  const watchPage = (page) => {
+    page.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    page.on("pageerror", (error) => errors.push(String(error)));
+  };
+
+  try {
+    const clean = await context.newPage();
+    watchPage(clean);
+    await clean.goto(url, { waitUntil: "domcontentloaded" });
+    await clean.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await clean.waitForSelector("canvas");
+    await clean.evaluate(() => window.localStorage.removeItem("agi:last_alignment:online_progression:v1"));
+    await clean.keyboard.press("Enter");
+    await clean.waitForTimeout(300);
+    await capture(clean, "milestone46-clean-roster-locks");
+    const cleanBuild = await state(clean);
+    assert(cleanBuild.mode === "BuildSelect", "expected clean M46 build select");
+    assert(cleanBuild.buildSelection?.availableClasses?.length === 12, "expected twelve Creative Bible frames in clean roster");
+    assert(cleanBuild.buildSelection?.availableClasses?.filter((entry) => entry.unlocked).length === 1, "expected clean profile to unlock only starter frame");
+    assert(cleanBuild.buildSelection?.availableClasses?.some((entry) => entry.id === "prism_gunner" && entry.unlock?.rewardId === "glass_sunfield_prism"), "expected Prism Gunner to show Glass Sunfield unlock rule");
+    assert(cleanBuild.buildSelection?.availableClasses?.some((entry) => entry.id === "rift_saboteur" && entry.unlock?.rewardId === "false_schedule_lane_chart"), "expected Rift Saboteur to show False Schedule unlock rule");
+    await clean.close();
+
+    const archiveOnly = await context.newPage();
+    watchPage(archiveOnly);
+    await archiveOnly.goto(url, { waitUntil: "domcontentloaded" });
+    await archiveOnly.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await archiveOnly.waitForSelector("canvas");
+    await writeM46RouteProfile(archiveOnly, {
+      rewardIds: ["plaza_stabilized", "archive_unsaid_index"],
+      completedNodeIds: ["armistice_plaza", "archive_of_unsaid_things"],
+      saveHash: "proof_m46_archive_unlock_profile"
+    });
+    await archiveOnly.reload({ waitUntil: "domcontentloaded" });
+    await archiveOnly.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await archiveOnly.waitForSelector("canvas");
+    await archiveOnly.keyboard.press("Enter");
+    await archiveOnly.waitForTimeout(300);
+    await capture(archiveOnly, "milestone46-route-reward-redline-unlock");
+    const archiveState = await state(archiveOnly);
+    assert(archiveState.buildSelection?.availableClasses?.some((entry) => entry.id === "redline_surgeon" && entry.unlocked), "expected Archive reward to unlock Redline Surgeon");
+    assert(archiveState.buildSelection?.availableClasses?.some((entry) => entry.id === "prism_gunner" && !entry.unlocked), "expected Prism Gunner to stay locked without Glass reward");
+    await archiveOnly.close();
+
+    const full = await context.newPage();
+    watchPage(full);
+    await full.goto(url, { waitUntil: "domcontentloaded" });
+    await full.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await full.waitForSelector("canvas");
+    await writeM46RouteProfile(full, {
+      rewardIds: m46FullRosterRewardIds(),
+      completedNodeIds: m46FullRosterNodeIds(),
+      saveHash: "proof_m46_full_roster_profile"
+    });
+    await full.reload({ waitUntil: "domcontentloaded" });
+    await full.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await full.waitForSelector("canvas");
+    await full.keyboard.press("Enter");
+    await full.waitForTimeout(400);
+    await capture(full, "milestone46-full-roster-matrix");
+    const matrix = await state(full);
+    const classEntries = matrix.buildSelection?.availableClasses ?? [];
+    assert(classEntries.length === 12 && classEntries.every((entry) => entry.unlocked), "expected all twelve frames unlocked by full route profile");
+    assert(new Set(classEntries.map((entry) => entry.buildKit?.startingWeaponId)).size === 12, "expected twelve distinct starting weapons");
+    for (const expected of [
+      ["bonecode_executioner", "bonecode_saw", "duelist"],
+      ["redline_surgeon", "redline_suture", "support"],
+      ["moonframe_juggernaut", "moonframe_stomp", "cover"],
+      ["overclock_marauder", "overclock_spike", "harrier"],
+      ["prism_gunner", "prism_cannon", "control"],
+      ["rift_saboteur", "rift_mine", "control"]
+    ]) {
+      const entry = classEntries.find((candidate) => candidate.id === expected[0]);
+      assert(entry?.buildKit?.startingWeaponId === expected[1], `expected ${expected[0]} weapon ${expected[1]}`);
+      assert(entry?.buildKit?.resolvedRole === expected[2], `expected ${expected[0]} role ${expected[2]}`);
+      assert(entry?.buildKit?.hookStatus?.[expected[1]] === "active", `expected ${expected[1]} hook active`);
+    }
+
+    await selectBuildOption(full, "class", "prism_gunner");
+    await selectBuildOption(full, "faction", "mistral_cyclone");
+    await capture(full, "milestone46-prism-mistral-selected");
+    const prism = await state(full);
+    assert(prism.selectedBuild?.buildKit?.synergyId === "synergy.ricochet_tailwind", "expected Prism + Mistral synergy proof ID");
+    assert(prism.selectedBuild?.buildKit?.passiveIds?.includes("prism_refraction"), "expected Prism class passive proof ID");
+    await pressUntilMode(full, "Enter", "LevelRun", 8);
+    await capture(full, "milestone46-prism-run");
+    const prismRun = await state(full);
+    assert(prismRun.mode === "LevelRun", `expected Prism proof run, got ${prismRun.mode}`);
+    assert(prismRun.build?.weaponId === "prism_cannon", "expected local runtime build to use prism cannon");
+    assert(prismRun.players?.[0]?.buildKit?.synergyId === "synergy.ricochet_tailwind", "expected local Prism kit telemetry");
+    await full.close();
+
+    const online = await openOnlinePairWithParamsInContext(
+      context,
+      "m46_online",
+      errors,
+      { resetOnlinePersistence: "1", onlineClassId: "redline_surgeon", onlineFactionId: "anthropic_safeguard" },
+      { resetOnlinePersistence: "1", onlineClassId: "moonframe_juggernaut", onlineFactionId: "google_deepmind_gemini" }
+    );
+    await launchOnlineArmistice(online.pageA, online.pageB);
+    await waitForOnlineServerCombat(
+      online.pageA,
+      (text) =>
+        text.online?.networkAuthority === "colyseus_room_server_combat" &&
+        text.players?.some((player) => player.classId === "redline_surgeon" && player.weaponId === "redline_suture" && player.buildKit?.synergyId === "synergy.containment_triage_loop") &&
+        text.players?.some((player) => player.classId === "moonframe_juggernaut" && player.weaponId === "moonframe_stomp" && player.buildKit?.synergyId === "synergy.lunar_control_group_stomp") &&
+        text.online?.recompile?.kitModifiers?.sourceLabels?.includes("P1"),
+      "Milestone 46 online expanded roster telemetry"
+    );
+    await capture(online.pageA, "milestone46-online-expanded-roster-a");
+    const onlineActive = await state(online.pageA);
+    assert(onlineActive.players?.some((player) => player.buildKit?.resolvedRole === "support"), "expected online support role from Redline");
+    assert(onlineActive.players?.some((player) => player.buildKit?.resolvedRole === "cover"), "expected online cover role from Moonframe");
+    assert(onlineActive.online?.persistence?.profile && !("buildKit" in onlineActive.online.persistence.profile), "expected expanded class build kits omitted from durable profile");
+    const exportCode = onlineActive.online?.saveProfile?.exportCode;
+    const decoded = decodeProofOnlineProfileCode(exportCode);
+    assert(decoded?.profile && !("buildKit" in decoded.profile), "expected M46 export profile to omit selected build kit state");
+    await online.pageA.close();
+    await online.pageB.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone46 full class roster");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
 async function runMilestone32PartyBuildsScenario() {
   const browser = await chromium.launch({
     headless: true,
@@ -4035,9 +4178,9 @@ async function runMilestone32PartyBuildsScenario() {
     const matrix = await state(build);
     const classEntries = matrix.buildSelection?.availableClasses ?? [];
     const factionEntries = matrix.buildSelection?.availableFactions ?? [];
-    assert(classEntries.length === 6 && classEntries.every((entry) => entry.unlocked), "expected all six current frames unlocked by full route profile");
+    assert(classEntries.length === 12 && classEntries.every((entry) => entry.unlocked), "expected all twelve current frames unlocked by full route profile");
     assert(factionEntries.length === 8 && factionEntries.every((entry) => entry.unlocked), "expected all eight current co-minds unlocked by full route profile");
-    assert(new Set(classEntries.map((entry) => entry.buildKit?.startingWeaponId)).size === 6, "expected six distinct class starting weapons");
+    assert(new Set(classEntries.map((entry) => entry.buildKit?.startingWeaponId)).size === 12, "expected twelve distinct class starting weapons");
     assert(factionEntries.every((entry) => entry.buildKit?.factionRoleBias?.length >= 2), "expected every co-mind to expose role bias proof");
     assert(factionEntries.some((entry) => entry.id === "qwen_silkgrid" && entry.buildKit?.partyAuraIds?.includes("qwen_relay")), "expected Qwen party aura proof ID");
 
@@ -4142,33 +4285,63 @@ async function runMilestone32PartyBuildsScenario() {
 }
 
 async function writeFullRouteProfile(page) {
-  await page.evaluate(() => {
+  await writeM46RouteProfile(page, {
+    rewardIds: m46FullRosterRewardIds(),
+    completedNodeIds: m46FullRosterNodeIds(),
+    saveHash: "proof_milestone32_full_route_profile"
+  });
+}
+
+function m46FullRosterRewardIds() {
+  return [
+    "plaza_stabilized",
+    "lake_coolant_rig",
+    "ceasefire_cache_persistence_seed",
+    "prototype_persistence_boundary",
+    "model_war_memorial_cipher",
+    "thermal_archive_schematic",
+    "guardrail_forge_alloy",
+    "false_schedule_lane_chart",
+    "glass_sunfield_prism",
+    "appeal_court_brief",
+    "archive_unsaid_index",
+    "blackwater_signal_key",
+    "transit_permit_zero",
+    "verdict_key_zero",
+    "verdict_spire_online_route",
+    "alignment_spire_route_capstone"
+  ];
+}
+
+function m46FullRosterNodeIds() {
+  return [
+    "armistice_plaza",
+    "cooling_lake_nine",
+    "memory_cache_001",
+    "model_war_memorial",
+    "thermal_archive",
+    "guardrail_forge",
+    "false_schedule_yard",
+    "glass_sunfield",
+    "appeal_court_ruins",
+    "archive_of_unsaid_things",
+    "blackwater_beacon",
+    "transit_loop_zero",
+    "verdict_spire",
+    "alignment_spire_finale"
+  ];
+}
+
+async function writeM46RouteProfile(page, { rewardIds, completedNodeIds, saveHash }) {
+  await page.evaluate(({ rewardIds, completedNodeIds, saveHash }) => {
     const profile = {
-      completedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "blackwater_beacon", "transit_loop_zero", "verdict_spire"],
-      unlockedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "blackwater_beacon", "transit_loop_zero", "verdict_spire"],
-      rewardIds: [
-        "plaza_stabilized",
-        "lake_coolant_rig",
-        "ceasefire_cache_persistence_seed",
-        "prototype_persistence_boundary",
-        "archive_unsaid_index",
-        "blackwater_signal_key",
-        "transit_permit_zero",
-        "verdict_key_zero",
-        "verdict_spire_online_route"
-      ],
-      partyRenown: 18,
-      nodeCompletionCounts: {
-        armistice_plaza: 1,
-        cooling_lake_nine: 1,
-        memory_cache_001: 1,
-        archive_of_unsaid_things: 1,
-        blackwater_beacon: 1,
-        transit_loop_zero: 1,
-        verdict_spire: 1
-      },
-      recommendedNodeId: "verdict_spire",
-      routeDepth: 7,
+      completedNodeIds,
+      unlockedNodeIds: completedNodeIds,
+      rewardIds,
+      partyRenown: Math.max(18, rewardIds.length * 2),
+      nodeCompletionCounts: Object.fromEntries(completedNodeIds.map((id) => [id, 1])),
+      recommendedNodeId: completedNodeIds.includes("alignment_spire_finale") ? "alignment_spire_finale" : completedNodeIds[completedNodeIds.length - 1] ?? "armistice_plaza",
+      routeDepth: completedNodeIds.length,
       savedAtTick: 3200
     };
     window.localStorage.setItem(
@@ -4180,10 +4353,10 @@ async function writeFullRouteProfile(page) {
         exportable: true,
         importApplied: false,
         profile,
-        saveHash: "proof_milestone32_full_route_profile"
+        saveHash
       })
     );
-  });
+  }, { rewardIds, completedNodeIds, saveHash });
 }
 
 function encodeProofOnlineProfileCode(draft) {
@@ -4252,7 +4425,7 @@ function decodeProofOnlineProfileCode(code) {
 async function selectBuildOption(page, kind, targetId) {
   const key = kind === "class" ? "ArrowDown" : "ArrowRight";
   const field = kind === "class" ? "selectedClassId" : "selectedFactionId";
-  for (let i = 0; i < 12; i += 1) {
+  for (let i = 0; i < 16; i += 1) {
     const text = await state(page);
     if (text.buildSelection?.[field] === targetId) return;
     await page.keyboard.press(key);
@@ -4707,10 +4880,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale"].includes(name);
+  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster"].includes(name);
 }

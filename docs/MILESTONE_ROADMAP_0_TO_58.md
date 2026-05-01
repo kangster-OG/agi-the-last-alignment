@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-45 are complete. Milestone 46 is next.
+Current repo status as of May 1, 2026: Milestones 0-46 are complete. Milestone 47 is next.
 
 ## Non-Negotiable Continuity
 
@@ -507,22 +507,25 @@ Readiness: complete.
 
 ### M46: Full Class Roster Expansion
 
-Goal: add remaining Creative Bible frames after the six-kit foundation.
+Delivered the remaining Creative Bible frames after the six-kit foundation.
 
-Expected scope:
+Implemented:
 
-- Redline Surgeon;
-- Prism Gunner;
-- Moonframe Juggernaut;
-- Bonecode Executioner;
-- Overclock Marauder;
-- Rift Saboteur;
-- focused weapons, roles, unlock rules, proof telemetry.
+- Redline Surgeon, Prism Gunner, Moonframe Juggernaut, Bonecode Executioner, Overclock Marauder, and Rift Saboteur class records;
+- mirrored client/server build-kit definitions, roles, starting weapon IDs, passives, effect scopes, and signature synergies;
+- focused local and online weapon profiles for all six expanded frames;
+- route-reward unlock rules tied to Archive, Guardrail Forge, False Schedule, Glass Sunfield, Appeal Court, and Thermal Archive rewards;
+- compact two-column Build Select layout so all twelve frames remain visible without overlapping the co-mind panel or summary;
+- expanded proof telemetry across clean, partial-route, full-matrix, local run, online run, and export-boundary states.
 
-Proof expectations:
+Proof coverage:
 
-- build matrix covers all current and expanded frames;
-- route reward unlocks remain deterministic.
+- `npm run proof:milestone46-full-class-roster`
+- `npm run proof:milestone32-party-builds`
+- `npm run proof:milestone27-metaprogression-unlocks`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M47: Faction Bursts And Party Combos
 

@@ -98,24 +98,31 @@ export class BuildSelectState implements GameState {
     header.position.set(x, y - 42);
     game.layers.hud.addChild(header);
 
+    const cardWidth = 252;
+    const colGap = 18;
+    const rowHeight = 75;
+    const rows = Math.ceil(CLASS_IDS.length / 2);
     CLASS_IDS.forEach((id, index) => {
       const combatClass = COMBAT_CLASSES[id];
       const selected = index === this.classIndex;
       const unlocked = this.classUnlocked(id);
       const entry = this.metaprogression.classes.find((candidate) => candidate.id === id);
-      const top = y + index * 75;
+      const col = index >= rows ? 1 : 0;
+      const row = index % rows;
+      const left = x + col * (cardWidth + colGap);
+      const top = y + row * rowHeight;
       const g = new Graphics();
-      g.rect(x, top, 520, 62)
+      g.rect(left, top, cardWidth, 62)
         .fill(selected ? 0x263d44 : unlocked ? 0x202633 : 0x171c25)
         .stroke({ color: selected ? palette.mint : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.72 });
-      g.rect(x + 16, top + 14, 38, 34).fill(selected ? palette.blue : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
+      g.rect(left + 12, top + 14, 30, 34).fill(selected ? palette.blue : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
       game.layers.hud.addChild(g);
 
       const text = new Text({
         text: `${index + 1}. ${combatClass.displayName}${unlocked ? "" : "  LOCKED"}\n${combatClass.role} // ${unlocked ? combatClass.mechanicalIdentity : entry?.requirementLabel ?? "Route reward required"}`,
-        style: { ...fontStyle, fontSize: 12, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: 438 }
+        style: { ...fontStyle, fontSize: 10, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: 188 }
       });
-      text.position.set(x + 72, top + 11);
+      text.position.set(left + 52, top + 10);
       game.layers.hud.addChild(text);
     });
   }

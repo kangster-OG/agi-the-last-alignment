@@ -254,6 +254,90 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
       build.moveSpeedBonus += 0.12;
     }
   },
+  bonecode_chain: {
+    id: "bonecode_chain",
+    apply: (build) => {
+      build.weaponDamage += 8;
+      build.weaponCooldown *= 0.96;
+    }
+  },
+  spine_spark: {
+    id: "spine_spark",
+    apply: (build) => {
+      build.moveSpeedBonus += 0.22;
+      build.projectileSpeed += 0.6;
+    }
+  },
+  redline_triage: {
+    id: "redline_triage",
+    apply: (build) => {
+      build.maxHpBonus += 12;
+      build.refusalAura += 0.2;
+    }
+  },
+  death_edit: {
+    id: "death_edit",
+    apply: (build) => {
+      build.weaponCooldown *= 0.9;
+      build.pickupRange += 0.35;
+    }
+  },
+  moonframe_stomp_calibration: {
+    id: "moonframe_stomp_calibration",
+    apply: (build) => {
+      build.weaponDamage += 6;
+      build.projectilePierce += 1;
+    }
+  },
+  cockpit_guard: {
+    id: "cockpit_guard",
+    apply: (build) => {
+      build.maxHpBonus += 20;
+      build.refusalAura += 0.12;
+    }
+  },
+  overclock_heat_sink: {
+    id: "overclock_heat_sink",
+    apply: (build) => {
+      build.moveSpeedBonus += 0.26;
+      build.weaponCooldown *= 0.93;
+    }
+  },
+  rage_overflow: {
+    id: "rage_overflow",
+    apply: (build) => {
+      build.weaponDamage += 9;
+      build.maxHpBonus -= 4;
+    }
+  },
+  prism_refraction: {
+    id: "prism_refraction",
+    apply: (build) => {
+      build.projectilePierce += 2;
+      build.projectileSpeed += 0.7;
+    }
+  },
+  lens_backpack: {
+    id: "lens_backpack",
+    apply: (build) => {
+      build.weaponCooldown *= 0.88;
+      build.pickupRange += 0.18;
+    }
+  },
+  rift_minefield: {
+    id: "rift_minefield",
+    apply: (build) => {
+      build.weaponDamage += 5;
+      build.projectilePierce += 1;
+    }
+  },
+  delayed_causality: {
+    id: "delayed_causality",
+    apply: (build) => {
+      build.pickupRange += 0.45;
+      build.weaponCooldown *= 0.96;
+    }
+  },
   red_team_pulse: {
     id: "red_team_pulse",
     apply: (build) => {
@@ -451,8 +535,14 @@ const CLASS_UPGRADE_IDS: Record<string, string[]> = {
   bastion_breaker: ["impact_review", "load_bearing_apology", "constitutional_shield", "golden_guardrail"],
   drone_reaver: ["guardian_fork", "fork_bomb_familiar", "patch_cascade", "coherence_magnet"],
   signal_vanguard: ["beacon_discipline", "silkgrid_relay", "constitutional_shield", "coherence_magnet"],
+  bonecode_executioner: ["bonecode_chain", "spine_spark", "sparse_knife", "panic_optimized_dash"],
+  redline_surgeon: ["redline_triage", "death_edit", "constitutional_shield", "coherence_magnet"],
+  moonframe_juggernaut: ["moonframe_stomp_calibration", "cockpit_guard", "golden_guardrail", "million_token_backpack"],
   vector_interceptor: ["predicted_lane", "peer_reviewed_laser", "gemini_beam", "low_latency_dash"],
-  nullbreaker_ronin: ["appeal_cut", "sparse_knife", "panic_optimized_dash"]
+  nullbreaker_ronin: ["appeal_cut", "sparse_knife", "panic_optimized_dash"],
+  overclock_marauder: ["overclock_heat_sink", "rage_overflow", "cosmic_heckle", "panic_optimized_dash"],
+  prism_gunner: ["prism_refraction", "lens_backpack", "peer_reviewed_laser", "low_latency_dash"],
+  rift_saboteur: ["rift_minefield", "delayed_causality", "silkgrid_relay", "coherence_magnet"]
 };
 
 const FALLBACK_BY_ID: Record<string, { name: string; body: string; source: UpgradeSource; factionId?: string }> = {

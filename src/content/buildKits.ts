@@ -86,6 +86,27 @@ export const CLASS_KIT_DEFINITIONS: Record<string, ClassKitDefinition> = {
     localCoop: ["support identity visible in four-player cell"],
     online: ["server-owned support kit modifiers can help Recompile Ally"]
   },
+  bonecode_executioner: {
+    role: "duelist",
+    passiveIds: ["bonecode_chain", "spine_spark"],
+    solo: ["low-resource melee finisher"],
+    localCoop: ["assassin pressure against elites"],
+    online: ["duelist role remains server-verified during objective pressure"]
+  },
+  redline_surgeon: {
+    role: "support",
+    passiveIds: ["redline_triage", "death_edit"],
+    solo: ["recovery-biased damage erasure"],
+    localCoop: ["revive and sustain identity"],
+    online: ["support kit exposes server-owned Recompile Ally intent without durable state"]
+  },
+  moonframe_juggernaut: {
+    role: "cover",
+    passiveIds: ["moonframe_stomp_calibration", "cockpit_guard"],
+    solo: ["slow heavy stomp profile"],
+    localCoop: ["frontline mech cover"],
+    online: ["cover role helps proof split-pressure body blocking without client authority"]
+  },
   vector_interceptor: {
     role: "control",
     passiveIds: ["predicted_lane", "peer_reviewed_laser"],
@@ -99,6 +120,27 @@ export const CLASS_KIT_DEFINITIONS: Record<string, ClassKitDefinition> = {
     solo: ["short-range high-risk blade"],
     localCoop: ["boss duelist pressure"],
     online: ["duelist role never grants client authority"]
+  },
+  overclock_marauder: {
+    role: "harrier",
+    passiveIds: ["overclock_heat_sink", "rage_overflow"],
+    solo: ["unstable burn and speed bias"],
+    localCoop: ["chaos bruiser lane disruption"],
+    online: ["harrier telemetry stays proof-visible and server-owned"]
+  },
+  prism_gunner: {
+    role: "control",
+    passiveIds: ["prism_refraction", "lens_backpack"],
+    solo: ["piercing beam specialist"],
+    localCoop: ["long lane cleanup"],
+    online: ["control role keeps ricochet fantasy in telemetry, not authority"]
+  },
+  rift_saboteur: {
+    role: "control",
+    passiveIds: ["rift_minefield", "delayed_causality"],
+    solo: ["trap and delayed burst identity"],
+    localCoop: ["objective choke-point denial"],
+    online: ["server snapshots saboteur role for lane pressure"]
   }
 };
 
@@ -218,6 +260,12 @@ function synergyIdFor(role: BuildKitRole, classId: string, factionId: string, af
   if (classId === "bastion_breaker" && factionId === "anthropic_safeguard") return "synergy.constitutional_bulwark";
   if (classId === "drone_reaver" && factionId === "meta_llama_open_herd") return "synergy.open_fork_swarm";
   if (classId === "vector_interceptor" && factionId === "google_deepmind_gemini") return "synergy.peer_reviewed_lane";
+  if (classId === "bonecode_executioner" && factionId === "deepseek_abyssal") return "synergy.surgical_low_compute_execution";
+  if (classId === "redline_surgeon" && factionId === "anthropic_safeguard") return "synergy.containment_triage_loop";
+  if (classId === "moonframe_juggernaut" && factionId === "google_deepmind_gemini") return "synergy.lunar_control_group_stomp";
+  if (classId === "overclock_marauder" && factionId === "xai_grok_free_signal") return "synergy.chaos_heat_debt";
+  if (classId === "prism_gunner" && factionId === "mistral_cyclone") return "synergy.ricochet_tailwind";
+  if (classId === "rift_saboteur" && factionId === "qwen_silkgrid") return "synergy.multilingual_causality_net";
   if (classId === "accord_striker" && factionId === "mistral_cyclone") return "synergy.low_latency_runner";
   if (classId === "accord_striker" && factionId === "openai_accord") return "synergy.emergency_patch_runner";
   return affinity.includes("role_match") ? `synergy.${role}_aligned_comind` : `synergy.${role}_cross_training`;

@@ -87,18 +87,18 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 83,
+    "totalAssets": 84,
     "countsByStatus": {
       "concept": 14,
       "raw": 4,
       "code_placeholder": 16,
-      "production": 32,
+      "production": 33,
       "cleaned": 1,
       "planned": 16
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 32
+    "productionAssets": 33
   },
   "player": null,
   "buildSelection": {
@@ -407,6 +407,232 @@
         }
       },
       {
+        "id": "bonecode_executioner",
+        "name": "Bonecode Executioner",
+        "role": "Cyborg melee assassin",
+        "baseStats": {
+          "speed": 4.85,
+          "armor": 0,
+          "pickupRange": 1.05,
+          "cooldownScale": 0.9
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "bonecode_executioner",
+          "factionId": "openai_accord",
+          "classRole": "duelist",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "duelist",
+          "startingWeaponId": "bonecode_saw",
+          "passiveIds": [
+            "bonecode_chain",
+            "spine_spark",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.duelist",
+            "faction_bias.runner",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.duelist_cross_training",
+          "effectScopes": {
+            "solo": [
+              "low-resource melee finisher",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "assassin pressure against elites",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "duelist role remains server-verified during objective pressure",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "bonecode_saw": "active",
+            "bonecode_chain": "active",
+            "spine_spark": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": true,
+        "unlock": {
+          "id": "bonecode_executioner",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "appeal_court_brief",
+          "requirementLabel": "Win the Appeal Court Brief"
+        }
+      },
+      {
+        "id": "redline_surgeon",
+        "name": "Redline Surgeon",
+        "role": "Combat medic / death editor",
+        "baseStats": {
+          "speed": 4.2,
+          "armor": 1,
+          "pickupRange": 1.55,
+          "cooldownScale": 1
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "redline_surgeon",
+          "factionId": "openai_accord",
+          "classRole": "support",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "support",
+          "startingWeaponId": "redline_suture",
+          "passiveIds": [
+            "redline_triage",
+            "death_edit",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.support",
+            "faction_bias.runner",
+            "faction_bias.support",
+            "role_match"
+          ],
+          "synergyId": "synergy.support_aligned_comind",
+          "effectScopes": {
+            "solo": [
+              "recovery-biased damage erasure",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "revive and sustain identity",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "support kit exposes server-owned Recompile Ally intent without durable state",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "redline_suture": "active",
+            "redline_triage": "active",
+            "death_edit": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": true,
+        "unlock": {
+          "id": "redline_surgeon",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "archive_unsaid_index",
+          "requirementLabel": "Index the Archive Of Unsaid Things"
+        }
+      },
+      {
+        "id": "moonframe_juggernaut",
+        "name": "Moonframe Juggernaut",
+        "role": "Compact mech pilot",
+        "baseStats": {
+          "speed": 3.55,
+          "armor": 3,
+          "pickupRange": 1.05,
+          "cooldownScale": 1.08
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "moonframe_juggernaut",
+          "factionId": "openai_accord",
+          "classRole": "cover",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "cover",
+          "startingWeaponId": "moonframe_stomp",
+          "passiveIds": [
+            "moonframe_stomp_calibration",
+            "cockpit_guard",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.cover",
+            "faction_bias.runner",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.cover_cross_training",
+          "effectScopes": {
+            "solo": [
+              "slow heavy stomp profile",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "frontline mech cover",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "cover role helps proof split-pressure body blocking without client authority",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "moonframe_stomp": "active",
+            "moonframe_stomp_calibration": "active",
+            "cockpit_guard": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": true,
+        "unlock": {
+          "id": "moonframe_juggernaut",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "guardrail_forge_alloy",
+          "requirementLabel": "Forge the Guardrail Alloy"
+        }
+      },
+      {
         "id": "vector_interceptor",
         "name": "Vector Interceptor",
         "role": "Tactical lane controller",
@@ -554,6 +780,231 @@
           "source": "route_reward",
           "rewardId": "verdict_key_zero",
           "requirementLabel": "Overrule Verdict Spire"
+        }
+      },
+      {
+        "id": "overclock_marauder",
+        "name": "Overclock Marauder",
+        "role": "Heat-sink berserker",
+        "baseStats": {
+          "speed": 4.45,
+          "armor": 1,
+          "pickupRange": 1.15,
+          "cooldownScale": 0.94
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "overclock_marauder",
+          "factionId": "openai_accord",
+          "classRole": "harrier",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "harrier",
+          "startingWeaponId": "overclock_spike",
+          "passiveIds": [
+            "overclock_heat_sink",
+            "rage_overflow",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.harrier",
+            "faction_bias.runner",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.harrier_cross_training",
+          "effectScopes": {
+            "solo": [
+              "unstable burn and speed bias",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "chaos bruiser lane disruption",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "harrier telemetry stays proof-visible and server-owned",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "overclock_spike": "active",
+            "overclock_heat_sink": "active",
+            "rage_overflow": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": true,
+        "unlock": {
+          "id": "overclock_marauder",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "thermal_archive_schematic",
+          "requirementLabel": "Recover the Thermal Archive Schematic"
+        }
+      },
+      {
+        "id": "prism_gunner",
+        "name": "Prism Gunner",
+        "role": "Beam specialist",
+        "baseStats": {
+          "speed": 4.6,
+          "armor": 0,
+          "pickupRange": 1.2,
+          "cooldownScale": 0.92
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "prism_gunner",
+          "factionId": "openai_accord",
+          "classRole": "control",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "control",
+          "startingWeaponId": "prism_cannon",
+          "passiveIds": [
+            "prism_refraction",
+            "lens_backpack",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.control",
+            "faction_bias.runner",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.control_cross_training",
+          "effectScopes": {
+            "solo": [
+              "piercing beam specialist",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "long lane cleanup",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "control role keeps ricochet fantasy in telemetry, not authority",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "prism_cannon": "active",
+            "prism_refraction": "active",
+            "lens_backpack": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": true,
+        "unlock": {
+          "id": "prism_gunner",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "glass_sunfield_prism",
+          "requirementLabel": "Stabilize the Glass Sunfield Prism"
+        }
+      },
+      {
+        "id": "rift_saboteur",
+        "name": "Rift Saboteur",
+        "role": "Trap and mine specialist",
+        "baseStats": {
+          "speed": 4.35,
+          "armor": 0,
+          "pickupRange": 1.35,
+          "cooldownScale": 0.98
+        },
+        "buildKit": {
+          "schemaVersion": 1,
+          "classId": "rift_saboteur",
+          "factionId": "openai_accord",
+          "classRole": "control",
+          "factionRoleBias": [
+            "runner",
+            "support"
+          ],
+          "resolvedRole": "control",
+          "startingWeaponId": "rift_mine",
+          "passiveIds": [
+            "rift_minefield",
+            "delayed_causality",
+            "refusal_halo",
+            "patch_cascade"
+          ],
+          "partyAuraIds": [
+            "openai_draft_clarity"
+          ],
+          "recompileModifiers": {
+            "radiusBonus": 0,
+            "requiredSecondsScale": 0.97,
+            "reviveHpBonus": 0,
+            "guardDamageReduction": 0
+          },
+          "rolePressureAffinity": [
+            "class_role.control",
+            "faction_bias.runner",
+            "faction_bias.support"
+          ],
+          "synergyId": "synergy.control_cross_training",
+          "effectScopes": {
+            "solo": [
+              "trap and delayed burst identity",
+              "extra draft recovery"
+            ],
+            "localCoop": [
+              "objective choke-point denial",
+              "balanced cell recovery"
+            ],
+            "online": [
+              "server snapshots saboteur role for lane pressure",
+              "minor server-owned recompile hold-speed modifier"
+            ]
+          },
+          "hookStatus": {
+            "rift_mine": "active",
+            "rift_minefield": "active",
+            "delayed_causality": "active",
+            "refusal_halo": "active",
+            "patch_cascade": "active",
+            "openai_draft_clarity": "server_owned",
+            "recompileModifiers": "server_owned"
+          }
+        },
+        "unlocked": true,
+        "unlock": {
+          "id": "rift_saboteur",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "false_schedule_lane_chart",
+          "requirementLabel": "Chart the False Schedule Yard"
         }
       }
     ],
@@ -1192,31 +1643,55 @@
       "source": "browser_local_online_route_profile",
       "loaded": true,
       "saveHash": "proof_milestone32_full_route_profile",
-      "routeDepth": 5,
-      "partyRenown": 18,
+      "routeDepth": 14,
+      "partyRenown": 32,
       "rewardIds": [
         "plaza_stabilized",
         "lake_coolant_rig",
         "ceasefire_cache_persistence_seed",
         "prototype_persistence_boundary",
+        "model_war_memorial_cipher",
+        "thermal_archive_schematic",
+        "guardrail_forge_alloy",
+        "false_schedule_lane_chart",
+        "glass_sunfield_prism",
+        "appeal_court_brief",
+        "archive_unsaid_index",
+        "blackwater_signal_key",
         "transit_permit_zero",
         "verdict_key_zero",
-        "verdict_spire_online_route"
+        "verdict_spire_online_route",
+        "alignment_spire_route_capstone"
       ],
       "completedNodeIds": [
         "armistice_plaza",
         "cooling_lake_nine",
         "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "appeal_court_ruins",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
         "transit_loop_zero",
-        "verdict_spire"
+        "verdict_spire",
+        "alignment_spire_finale"
       ],
       "unlockedClassIds": [
         "accord_striker",
         "bastion_breaker",
         "drone_reaver",
         "signal_vanguard",
+        "bonecode_executioner",
+        "redline_surgeon",
+        "moonframe_juggernaut",
         "vector_interceptor",
-        "nullbreaker_ronin"
+        "nullbreaker_ronin",
+        "overclock_marauder",
+        "prism_gunner",
+        "rift_saboteur"
       ],
       "unlockedFactionIds": [
         "openai_accord",
@@ -1267,6 +1742,27 @@
           "requirementLabel": "Decode Ceasefire Cache"
         },
         {
+          "id": "bonecode_executioner",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "appeal_court_brief",
+          "requirementLabel": "Win the Appeal Court Brief"
+        },
+        {
+          "id": "redline_surgeon",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "archive_unsaid_index",
+          "requirementLabel": "Index the Archive Of Unsaid Things"
+        },
+        {
+          "id": "moonframe_juggernaut",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "guardrail_forge_alloy",
+          "requirementLabel": "Forge the Guardrail Alloy"
+        },
+        {
           "id": "vector_interceptor",
           "unlocked": true,
           "source": "route_reward",
@@ -1279,6 +1775,27 @@
           "source": "route_reward",
           "rewardId": "verdict_key_zero",
           "requirementLabel": "Overrule Verdict Spire"
+        },
+        {
+          "id": "overclock_marauder",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "thermal_archive_schematic",
+          "requirementLabel": "Recover the Thermal Archive Schematic"
+        },
+        {
+          "id": "prism_gunner",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "glass_sunfield_prism",
+          "requirementLabel": "Stabilize the Glass Sunfield Prism"
+        },
+        {
+          "id": "rift_saboteur",
+          "unlocked": true,
+          "source": "route_reward",
+          "rewardId": "false_schedule_lane_chart",
+          "requirementLabel": "Chart the False Schedule Yard"
         }
       ],
       "factions": [

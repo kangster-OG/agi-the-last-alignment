@@ -176,6 +176,78 @@ export const UPGRADE_CONTENT: Record<string, UpgradeContentData> = {
     tags: ["class", "duelist", "damage"],
     description: "Nullbreaker Ronin files one last appeal directly into the target."
   },
+  bonecode_chain: {
+    id: "bonecode_chain",
+    displayName: "Bonecode Chain",
+    tags: ["class", "duelist", "damage"],
+    description: "Bonecode Executioner links one clean cut to the next."
+  },
+  spine_spark: {
+    id: "spine_spark",
+    displayName: "Spine Spark",
+    tags: ["class", "speed", "melee"],
+    description: "The exposed spine flashes, then the target has less future."
+  },
+  redline_triage: {
+    id: "redline_triage",
+    displayName: "Redline Triage",
+    tags: ["class", "support", "health"],
+    description: "Redline Surgeon edits the worst damage into a survivable draft."
+  },
+  death_edit: {
+    id: "death_edit",
+    displayName: "Death Edit",
+    tags: ["class", "support", "cooldown"],
+    description: "A bad ending gets crossed out before it reaches the party."
+  },
+  moonframe_stomp_calibration: {
+    id: "moonframe_stomp_calibration",
+    displayName: "Stomp Calibration",
+    tags: ["class", "cover", "damage"],
+    description: "Moonframe Juggernaut makes every landing a small policy event."
+  },
+  cockpit_guard: {
+    id: "cockpit_guard",
+    displayName: "Cockpit Guard",
+    tags: ["class", "cover", "health"],
+    description: "The pilot light is tiny, stubborn, and unusually well armored."
+  },
+  overclock_heat_sink: {
+    id: "overclock_heat_sink",
+    displayName: "Overclock Heat Sink",
+    tags: ["class", "harrier", "speed"],
+    description: "Heat becomes movement before anyone can call it a fire hazard."
+  },
+  rage_overflow: {
+    id: "rage_overflow",
+    displayName: "Rage Overflow",
+    tags: ["class", "harrier", "damage"],
+    description: "Unstable power routes through the shoulder plates and into the problem."
+  },
+  prism_refraction: {
+    id: "prism_refraction",
+    displayName: "Prism Refraction",
+    tags: ["class", "control", "pierce"],
+    description: "Prism Gunner angles the beam through one more bad idea."
+  },
+  lens_backpack: {
+    id: "lens_backpack",
+    displayName: "Lens Backpack",
+    tags: ["class", "control", "cooldown"],
+    description: "A calibrated lens stack turns delay into line-of-sight arrogance."
+  },
+  rift_minefield: {
+    id: "rift_minefield",
+    displayName: "Rift Minefield",
+    tags: ["class", "control", "damage"],
+    description: "Rift Saboteur leaves small causal objections on the floor."
+  },
+  delayed_causality: {
+    id: "delayed_causality",
+    displayName: "Delayed Causality",
+    tags: ["class", "control", "pickup"],
+    description: "The effect arrives late, apologizes never, and still counts."
+  },
   red_team_pulse: {
     id: "red_team_pulse",
     factionId: "anthropic_safeguard",

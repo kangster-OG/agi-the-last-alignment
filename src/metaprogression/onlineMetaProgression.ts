@@ -1,6 +1,19 @@
 export const ONLINE_PROGRESSION_STORAGE_KEY = "agi:last_alignment:online_progression:v1";
 
-export const BUILD_CLASS_IDS = ["accord_striker", "bastion_breaker", "drone_reaver", "signal_vanguard", "vector_interceptor", "nullbreaker_ronin"] as const;
+export const BUILD_CLASS_IDS = [
+  "accord_striker",
+  "bastion_breaker",
+  "drone_reaver",
+  "signal_vanguard",
+  "bonecode_executioner",
+  "redline_surgeon",
+  "moonframe_juggernaut",
+  "vector_interceptor",
+  "nullbreaker_ronin",
+  "overclock_marauder",
+  "prism_gunner",
+  "rift_saboteur"
+] as const;
 export const BUILD_FACTION_IDS = [
   "openai_accord",
   "anthropic_safeguard",
@@ -53,8 +66,14 @@ const CLASS_UNLOCK_RULES: UnlockRule[] = [
   { id: "bastion_breaker", kind: "route_reward", rewardId: "plaza_stabilized", requirementLabel: "Clear Armistice Plaza" },
   { id: "drone_reaver", kind: "route_reward", rewardId: "lake_coolant_rig", requirementLabel: "Earn Lake Coolant Rig" },
   { id: "signal_vanguard", kind: "route_reward", rewardId: "ceasefire_cache_persistence_seed", requirementLabel: "Decode Ceasefire Cache" },
+  { id: "bonecode_executioner", kind: "route_reward", rewardId: "appeal_court_brief", requirementLabel: "Win the Appeal Court Brief" },
+  { id: "redline_surgeon", kind: "route_reward", rewardId: "archive_unsaid_index", requirementLabel: "Index the Archive Of Unsaid Things" },
+  { id: "moonframe_juggernaut", kind: "route_reward", rewardId: "guardrail_forge_alloy", requirementLabel: "Forge the Guardrail Alloy" },
   { id: "vector_interceptor", kind: "route_reward", rewardId: "transit_permit_zero", requirementLabel: "Anchor Transit Loop Zero" },
-  { id: "nullbreaker_ronin", kind: "route_reward", rewardId: "verdict_key_zero", requirementLabel: "Overrule Verdict Spire" }
+  { id: "nullbreaker_ronin", kind: "route_reward", rewardId: "verdict_key_zero", requirementLabel: "Overrule Verdict Spire" },
+  { id: "overclock_marauder", kind: "route_reward", rewardId: "thermal_archive_schematic", requirementLabel: "Recover the Thermal Archive Schematic" },
+  { id: "prism_gunner", kind: "route_reward", rewardId: "glass_sunfield_prism", requirementLabel: "Stabilize the Glass Sunfield Prism" },
+  { id: "rift_saboteur", kind: "route_reward", rewardId: "false_schedule_lane_chart", requirementLabel: "Chart the False Schedule Yard" }
 ];
 
 const FACTION_UNLOCK_RULES: UnlockRule[] = [

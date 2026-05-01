@@ -2743,9 +2743,71 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone45-outer-alignment-finale/milestone45-placeholder-opt-out-a.png`
 - Milestone 45 readiness decision: ready. Outer Alignment Finale is now a supported final route with server-owned corrupted overworld pressure, A.G.I. presentation, previous-boss echoes, victory/export hash proof, production/placeholder continuity, and route-profile-only persistence boundaries intact.
 
+- Implemented Milestone 46 Full Class Roster Expansion.
+- Expanded the combat frame roster from six to twelve Creative Bible frames:
+  - Bonecode Executioner;
+  - Redline Surgeon;
+  - Moonframe Juggernaut;
+  - Overclock Marauder;
+  - Prism Gunner;
+  - Rift Saboteur.
+- Added mirrored client/server build-kit data for the expanded frames:
+  - deterministic role mappings for support, cover, harrier, control, and duelist pressure;
+  - focused starting weapon IDs and online weapon profiles;
+  - class passive IDs, effect scopes, active hook telemetry, and signature synergy IDs;
+  - online Redline/Moonframe telemetry under server combat authority.
+- Added local runtime weapon profiles for the new frame weapons:
+  - `bonecode_saw`;
+  - `redline_suture`;
+  - `moonframe_stomp`;
+  - `overclock_spike`;
+  - `prism_cannon`;
+  - `rift_mine`.
+- Added first-pass class upgrade content and gameplay effects for the new frames, including Bonecode Chain, Redline Triage, Stomp Calibration, Rage Overflow, Prism Refraction, and Rift Minefield.
+- Expanded route reward unlocks:
+  - Redline Surgeon from `archive_unsaid_index`;
+  - Moonframe Juggernaut from `guardrail_forge_alloy`;
+  - Rift Saboteur from `false_schedule_lane_chart`;
+  - Prism Gunner from `glass_sunfield_prism`;
+  - Bonecode Executioner from `appeal_court_brief`;
+  - Overclock Marauder from `thermal_archive_schematic`.
+- Reworked Build Select class layout into a two-column grid so all twelve frames fit without overlapping the co-mind panel or bottom summary.
+- Added `npm run proof:milestone46-full-class-roster`, covering:
+  - clean profile lock state for all expanded frames;
+  - deterministic partial route reward unlock for Redline Surgeon;
+  - full route profile unlocking all twelve frames and all eight co-minds;
+  - twelve distinct starting weapon IDs and active build-kit hook telemetry;
+  - Prism Gunner + Mistral local run weapon/synergy proof;
+  - Redline Surgeon + Anthropic and Moonframe Juggernaut + Gemini online server-authoritative telemetry;
+  - export/profile omission of selected build-kit state.
+- Verification after Milestone 46:
+  - `node --check server/data/buildKits.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone46-full-class-roster`
+  - `npm run proof:milestone32-party-builds`
+  - `npm run proof:milestone27-metaprogression-unlocks`
+  - `npm run proof:smoke`
+- Milestone 46 proof artifacts:
+  - `docs/proof/milestone46-full-class-roster/milestone46-clean-roster-locks.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-route-reward-redline-unlock.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-full-roster-matrix.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-prism-mistral-selected.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-prism-run.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-online-expanded-roster-a.png`
+- Screenshots inspected after Milestone 46:
+  - `docs/proof/milestone46-full-class-roster/milestone46-clean-roster-locks.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-route-reward-redline-unlock.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-full-roster-matrix.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-prism-mistral-selected.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-prism-run.png`
+  - `docs/proof/milestone46-full-class-roster/milestone46-online-expanded-roster-a.png`
+- Milestone 46 readiness decision: ready. The full twelve-frame roster is now selectable, route-unlocked, proof-visible across solo/local/online surfaces, and still excludes selected build-kit state from durable route-profile export/import.
+
 ## TODO
 
-- Next recommended milestone: Milestone 46 Full Class Roster Expansion. Add the remaining Creative Bible frames with focused weapons, roles, unlock rules, proof telemetry, and preservation of solo/local/online co-op authority boundaries.
+- Next recommended milestone: Milestone 47 Faction Bursts And Party Combos. Implement Consensus Burst and faction combo effects while preserving server authority, route-profile-only persistence, and solo/local/online co-op parity.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

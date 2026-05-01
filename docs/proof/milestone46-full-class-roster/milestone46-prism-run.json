@@ -3,131 +3,135 @@
   "title": "AGI: The Last Alignment",
   "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
   "selectedBuild": {
-    "classId": "nullbreaker_ronin",
-    "className": "Nullbreaker Ronin",
-    "classRole": "Solo breach killer",
+    "classId": "prism_gunner",
+    "className": "Prism Gunner",
+    "classRole": "Beam specialist",
     "buildKit": {
       "schemaVersion": 1,
-      "classId": "nullbreaker_ronin",
-      "factionId": "deepseek_abyssal",
-      "classRole": "duelist",
+      "classId": "prism_gunner",
+      "factionId": "mistral_cyclone",
+      "classRole": "control",
       "factionRoleBias": [
-        "duelist",
-        "runner"
+        "runner",
+        "control"
       ],
-      "resolvedRole": "duelist",
-      "startingWeaponId": "null_blade",
+      "resolvedRole": "control",
+      "startingWeaponId": "prism_cannon",
       "passiveIds": [
-        "appeal_cut",
-        "sparse_knife",
-        "efficiency_killchain"
+        "prism_refraction",
+        "lens_backpack",
+        "low_latency_dash",
+        "cyclone_cut"
       ],
       "partyAuraIds": [
-        "deepseek_efficiency_window"
+        "mistral_low_latency_lane"
       ],
       "recompileModifiers": {
         "radiusBonus": 0,
-        "requiredSecondsScale": 0.95,
+        "requiredSecondsScale": 0.93,
         "reviveHpBonus": 0,
         "guardDamageReduction": 0
       },
       "rolePressureAffinity": [
-        "class_role.duelist",
-        "faction_bias.duelist",
+        "class_role.control",
         "faction_bias.runner",
+        "faction_bias.control",
         "role_match"
       ],
-      "synergyId": "synergy.one_optimized_cut",
+      "synergyId": "synergy.ricochet_tailwind",
       "effectScopes": {
         "solo": [
-          "short-range high-risk blade",
-          "single-target efficiency"
+          "piercing beam specialist",
+          "fast cadence and movement"
         ],
         "localCoop": [
-          "boss duelist pressure",
-          "boss pressure role"
+          "long lane cleanup",
+          "lane runner pressure"
         ],
         "online": [
-          "duelist role never grants client authority",
-          "server-owned faster hold requirement"
+          "control role keeps ricochet fantasy in telemetry, not authority",
+          "server-owned low-latency hold-speed modifier"
         ]
       },
       "hookStatus": {
-        "null_blade": "active",
-        "appeal_cut": "active",
-        "sparse_knife": "active",
-        "efficiency_killchain": "active",
-        "deepseek_efficiency_window": "server_owned",
+        "prism_cannon": "active",
+        "prism_refraction": "active",
+        "lens_backpack": "active",
+        "low_latency_dash": "active",
+        "cyclone_cut": "active",
+        "mistral_low_latency_lane": "server_owned",
         "recompileModifiers": "server_owned"
       }
     },
-    "factionId": "deepseek_abyssal",
-    "factionName": "DeepSeek Abyssal Unit",
-    "factionDoctrine": "Go deeper, spend less, strike once."
+    "factionId": "mistral_cyclone",
+    "factionName": "Mistral Cyclone Guard",
+    "factionDoctrine": "Move fast, hit clean, leave only wind."
   },
   "build": {
-    "weaponId": "null_blade",
-    "weaponDamage": 21,
-    "weaponCooldown": 0.37044,
+    "weaponId": "prism_cannon",
+    "weaponDamage": 18,
+    "weaponCooldown": 0.370944,
     "projectileSpeed": 8.5,
     "projectilePierce": 1,
-    "pickupRange": 1.05,
-    "moveSpeedBonus": 0,
+    "pickupRange": 1.2,
+    "moveSpeedBonus": 0.25,
     "maxHpBonus": 0,
     "refusalAura": 0,
     "draftRerolls": 0,
     "buildKit": {
       "schemaVersion": 1,
-      "classId": "nullbreaker_ronin",
-      "factionId": "deepseek_abyssal",
-      "classRole": "duelist",
+      "classId": "prism_gunner",
+      "factionId": "mistral_cyclone",
+      "classRole": "control",
       "factionRoleBias": [
-        "duelist",
-        "runner"
+        "runner",
+        "control"
       ],
-      "resolvedRole": "duelist",
-      "startingWeaponId": "null_blade",
+      "resolvedRole": "control",
+      "startingWeaponId": "prism_cannon",
       "passiveIds": [
-        "appeal_cut",
-        "sparse_knife",
-        "efficiency_killchain"
+        "prism_refraction",
+        "lens_backpack",
+        "low_latency_dash",
+        "cyclone_cut"
       ],
       "partyAuraIds": [
-        "deepseek_efficiency_window"
+        "mistral_low_latency_lane"
       ],
       "recompileModifiers": {
         "radiusBonus": 0,
-        "requiredSecondsScale": 0.95,
+        "requiredSecondsScale": 0.93,
         "reviveHpBonus": 0,
         "guardDamageReduction": 0
       },
       "rolePressureAffinity": [
-        "class_role.duelist",
-        "faction_bias.duelist",
+        "class_role.control",
         "faction_bias.runner",
+        "faction_bias.control",
         "role_match"
       ],
-      "synergyId": "synergy.one_optimized_cut",
+      "synergyId": "synergy.ricochet_tailwind",
       "effectScopes": {
         "solo": [
-          "short-range high-risk blade",
-          "single-target efficiency"
+          "piercing beam specialist",
+          "fast cadence and movement"
         ],
         "localCoop": [
-          "boss duelist pressure",
-          "boss pressure role"
+          "long lane cleanup",
+          "lane runner pressure"
         ],
         "online": [
-          "duelist role never grants client authority",
-          "server-owned faster hold requirement"
+          "control role keeps ricochet fantasy in telemetry, not authority",
+          "server-owned low-latency hold-speed modifier"
         ]
       },
       "hookStatus": {
-        "null_blade": "active",
-        "appeal_cut": "active",
-        "sparse_knife": "active",
-        "efficiency_killchain": "active",
-        "deepseek_efficiency_window": "server_owned",
+        "prism_cannon": "active",
+        "prism_refraction": "active",
+        "lens_backpack": "active",
+        "low_latency_dash": "active",
+        "cyclone_cut": "active",
+        "mistral_low_latency_lane": "server_owned",
         "recompileModifiers": "server_owned"
       }
     }
@@ -135,8 +139,8 @@
   "upgrades": [],
   "objective": "AGI pressure in 24s",
   "performance": {
-    "entitiesAllocated": 2,
-    "activeEntities": 2,
+    "entitiesAllocated": 3,
+    "activeEntities": 3,
     "fpsTarget": 60
   },
   "assetRendering": {
@@ -176,64 +180,66 @@
       "id": "p1",
       "slot": 0,
       "label": "P1",
-      "classId": "nullbreaker_ronin",
-      "factionId": "deepseek_abyssal",
+      "classId": "prism_gunner",
+      "factionId": "mistral_cyclone",
       "buildKit": {
         "schemaVersion": 1,
-        "classId": "nullbreaker_ronin",
-        "factionId": "deepseek_abyssal",
-        "classRole": "duelist",
+        "classId": "prism_gunner",
+        "factionId": "mistral_cyclone",
+        "classRole": "control",
         "factionRoleBias": [
-          "duelist",
-          "runner"
+          "runner",
+          "control"
         ],
-        "resolvedRole": "duelist",
-        "startingWeaponId": "null_blade",
+        "resolvedRole": "control",
+        "startingWeaponId": "prism_cannon",
         "passiveIds": [
-          "appeal_cut",
-          "sparse_knife",
-          "efficiency_killchain"
+          "prism_refraction",
+          "lens_backpack",
+          "low_latency_dash",
+          "cyclone_cut"
         ],
         "partyAuraIds": [
-          "deepseek_efficiency_window"
+          "mistral_low_latency_lane"
         ],
         "recompileModifiers": {
           "radiusBonus": 0,
-          "requiredSecondsScale": 0.95,
+          "requiredSecondsScale": 0.93,
           "reviveHpBonus": 0,
           "guardDamageReduction": 0
         },
         "rolePressureAffinity": [
-          "class_role.duelist",
-          "faction_bias.duelist",
+          "class_role.control",
           "faction_bias.runner",
+          "faction_bias.control",
           "role_match"
         ],
-        "synergyId": "synergy.one_optimized_cut",
+        "synergyId": "synergy.ricochet_tailwind",
         "effectScopes": {
           "solo": [
-            "short-range high-risk blade",
-            "single-target efficiency"
+            "piercing beam specialist",
+            "fast cadence and movement"
           ],
           "localCoop": [
-            "boss duelist pressure",
-            "boss pressure role"
+            "long lane cleanup",
+            "lane runner pressure"
           ],
           "online": [
-            "duelist role never grants client authority",
-            "server-owned faster hold requirement"
+            "control role keeps ricochet fantasy in telemetry, not authority",
+            "server-owned low-latency hold-speed modifier"
           ]
         },
         "hookStatus": {
-          "null_blade": "active",
-          "appeal_cut": "active",
-          "sparse_knife": "active",
-          "efficiency_killchain": "active",
-          "deepseek_efficiency_window": "server_owned",
+          "prism_cannon": "active",
+          "prism_refraction": "active",
+          "lens_backpack": "active",
+          "low_latency_dash": "active",
+          "cyclone_cut": "active",
+          "mistral_low_latency_lane": "server_owned",
           "recompileModifiers": "server_owned"
         }
       },
-      "weaponId": "null_blade",
+      "weaponId": "prism_cannon",
       "inputSource": "local_keyboard",
       "worldX": 0,
       "worldY": 0,
@@ -252,10 +258,10 @@
     "arena": "Armistice Plaza",
     "regionId": "armistice_zone",
     "bossId": "oath_eater",
-    "classId": "nullbreaker_ronin",
-    "factionId": "deepseek_abyssal",
-    "className": "Nullbreaker Ronin",
-    "factionName": "DeepSeek Abyssal Unit",
+    "classId": "prism_gunner",
+    "factionId": "mistral_cyclone",
+    "className": "Prism Gunner",
+    "factionName": "Mistral Cyclone Guard",
     "chosenUpgradeIds": [],
     "mapId": "armistice_plaza_large_foundation",
     "mapBounds": {
@@ -273,17 +279,7 @@
     "visitedLandmarks": [
       "treaty_monument"
     ],
-    "activeSpawnRegions": [
-      {
-        "id": "breach_crack_bad_outputs",
-        "label": "Breach Crack Bad Outputs",
-        "worldX": -24,
-        "worldY": 20,
-        "enemyFamilyIds": [
-          "bad_outputs"
-        ]
-      }
-    ],
+    "activeSpawnRegions": [],
     "lastSpawnRegionId": "",
     "spawnedByRegion": {},
     "consensusCell": {
@@ -298,9 +294,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 42,
+          "tick": 29,
           "playerId": "p1",
-          "sequence": 42,
+          "sequence": 29,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -309,8 +305,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 42,
-        "seconds": 0.7,
+        "tick": 29,
+        "seconds": 0.48,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -324,60 +320,62 @@
             "id": "p1",
             "slot": 0,
             "label": "P1",
-            "classId": "nullbreaker_ronin",
-            "factionId": "deepseek_abyssal",
+            "classId": "prism_gunner",
+            "factionId": "mistral_cyclone",
             "buildKit": {
               "schemaVersion": 1,
-              "classId": "nullbreaker_ronin",
-              "factionId": "deepseek_abyssal",
-              "classRole": "duelist",
+              "classId": "prism_gunner",
+              "factionId": "mistral_cyclone",
+              "classRole": "control",
               "factionRoleBias": [
-                "duelist",
-                "runner"
+                "runner",
+                "control"
               ],
-              "resolvedRole": "duelist",
-              "startingWeaponId": "null_blade",
+              "resolvedRole": "control",
+              "startingWeaponId": "prism_cannon",
               "passiveIds": [
-                "appeal_cut",
-                "sparse_knife",
-                "efficiency_killchain"
+                "prism_refraction",
+                "lens_backpack",
+                "low_latency_dash",
+                "cyclone_cut"
               ],
               "partyAuraIds": [
-                "deepseek_efficiency_window"
+                "mistral_low_latency_lane"
               ],
               "recompileModifiers": {
                 "radiusBonus": 0,
-                "requiredSecondsScale": 0.95,
+                "requiredSecondsScale": 0.93,
                 "reviveHpBonus": 0,
                 "guardDamageReduction": 0
               },
               "rolePressureAffinity": [
-                "class_role.duelist",
-                "faction_bias.duelist",
+                "class_role.control",
                 "faction_bias.runner",
+                "faction_bias.control",
                 "role_match"
               ],
-              "synergyId": "synergy.one_optimized_cut",
+              "synergyId": "synergy.ricochet_tailwind",
               "effectScopes": {
                 "solo": [
-                  "short-range high-risk blade",
-                  "single-target efficiency"
+                  "piercing beam specialist",
+                  "fast cadence and movement"
                 ],
                 "localCoop": [
-                  "boss duelist pressure",
-                  "boss pressure role"
+                  "long lane cleanup",
+                  "lane runner pressure"
                 ],
                 "online": [
-                  "duelist role never grants client authority",
-                  "server-owned faster hold requirement"
+                  "control role keeps ricochet fantasy in telemetry, not authority",
+                  "server-owned low-latency hold-speed modifier"
                 ]
               },
               "hookStatus": {
-                "null_blade": "active",
-                "appeal_cut": "active",
-                "sparse_knife": "active",
-                "efficiency_killchain": "active",
-                "deepseek_efficiency_window": "server_owned",
+                "prism_cannon": "active",
+                "prism_refraction": "active",
+                "lens_backpack": "active",
+                "low_latency_dash": "active",
+                "cyclone_cut": "active",
+                "mistral_low_latency_lane": "server_owned",
                 "recompileModifiers": "server_owned"
               }
             },
@@ -396,8 +394,8 @@
             "id": 1,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": 6.91,
-            "worldY": 4.78,
+            "worldX": 7.18,
+            "worldY": 4.96,
             "hp": 22,
             "boss": false
           },
@@ -405,18 +403,25 @@
             "id": 2,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": -9.39,
-            "worldY": -0.31,
+            "worldX": -9.72,
+            "worldY": -0.32,
             "hp": 22,
             "boss": false
           }
         ],
         "pickups": [],
-        "projectiles": []
+        "projectiles": [
+          {
+            "id": 3,
+            "worldX": 1.75,
+            "worldY": 1.21,
+            "pierce": 4
+          }
+        ]
       }
     },
     "combatArt": {
-      "projectileCount": 0,
+      "projectileCount": 1,
       "impactCount": 0,
       "pickupSparkleCount": 0,
       "damageBadgeCount": 0,
@@ -430,7 +435,7 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 0.7,
+    "seconds": 0.48,
     "kills": 0,
     "bossSpawned": false,
     "bossDefeated": false
@@ -441,8 +446,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": 6.91,
-      "worldY": 4.78,
+      "worldX": 7.18,
+      "worldY": 4.96,
       "hp": 22,
       "boss": false
     },
@@ -451,12 +456,19 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": -9.39,
-      "worldY": -0.31,
+      "worldX": -9.72,
+      "worldY": -0.32,
       "hp": 22,
       "boss": false
     }
   ],
   "pickups": [],
-  "projectiles": []
+  "projectiles": [
+    {
+      "worldX": 1.75,
+      "worldY": 1.21,
+      "pierce": 4,
+      "label": "prism cannon"
+    }
+  ]
 }

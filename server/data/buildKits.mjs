@@ -3,8 +3,14 @@ const CLASS_KITS = {
   bastion_breaker: { role: "cover", startingWeaponId: "safety_cannon" },
   drone_reaver: { role: "harrier", startingWeaponId: "fork_drone" },
   signal_vanguard: { role: "support", startingWeaponId: "signal_pulse" },
+  bonecode_executioner: { role: "duelist", startingWeaponId: "bonecode_saw" },
+  redline_surgeon: { role: "support", startingWeaponId: "redline_suture" },
+  moonframe_juggernaut: { role: "cover", startingWeaponId: "moonframe_stomp" },
   vector_interceptor: { role: "control", startingWeaponId: "vector_lance" },
-  nullbreaker_ronin: { role: "duelist", startingWeaponId: "null_blade" }
+  nullbreaker_ronin: { role: "duelist", startingWeaponId: "null_blade" },
+  overclock_marauder: { role: "harrier", startingWeaponId: "overclock_spike" },
+  prism_gunner: { role: "control", startingWeaponId: "prism_cannon" },
+  rift_saboteur: { role: "control", startingWeaponId: "rift_mine" }
 };
 
 const FACTION_KITS = {
@@ -63,8 +69,14 @@ const CLASS_PASSIVES = {
   bastion_breaker: ["impact_review", "load_bearing_apology"],
   drone_reaver: ["guardian_fork", "fork_bomb_familiar"],
   signal_vanguard: ["beacon_discipline", "silkgrid_relay"],
+  bonecode_executioner: ["bonecode_chain", "spine_spark"],
+  redline_surgeon: ["redline_triage", "death_edit"],
+  moonframe_juggernaut: ["moonframe_stomp_calibration", "cockpit_guard"],
   vector_interceptor: ["predicted_lane", "peer_reviewed_laser"],
-  nullbreaker_ronin: ["appeal_cut", "sparse_knife"]
+  nullbreaker_ronin: ["appeal_cut", "sparse_knife"],
+  overclock_marauder: ["overclock_heat_sink", "rage_overflow"],
+  prism_gunner: ["prism_refraction", "lens_backpack"],
+  rift_saboteur: ["rift_minefield", "delayed_causality"]
 };
 
 const WEAPON_PROFILES = {
@@ -72,8 +84,14 @@ const WEAPON_PROFILES = {
   safety_cannon: { label: "safety cannon", damage: 23, cooldown: 0.78, speed: 7.6, pierce: 1, radius: 0.31, life: 1.18 },
   fork_drone: { label: "fork drone", damage: 13, cooldown: 0.5, speed: 10.4, pierce: 1, radius: 0.16, life: 1.1 },
   signal_pulse: { label: "signal pulse", damage: 9, cooldown: 0.7, speed: 6, pierce: 1, radius: 0.24, life: 0.78 },
+  bonecode_saw: { label: "bonecode saw", damage: 27, cooldown: 0.52, speed: 13.5, pierce: 2, radius: 0.36, life: 0.28, range: 3.8 },
+  redline_suture: { label: "redline suture", damage: 14, cooldown: 0.58, speed: 8.8, pierce: 2, radius: 0.2, life: 1.1 },
+  moonframe_stomp: { label: "moonframe stomp", damage: 30, cooldown: 0.86, speed: 5.6, pierce: 4, radius: 0.46, life: 0.62, range: 5.2 },
   vector_lance: { label: "vector lance", damage: 15, cooldown: 0.56, speed: 11.6, pierce: 3, radius: 0.13, life: 1.05 },
-  null_blade: { label: "null blade", damage: 32, cooldown: 0.64, speed: 13, pierce: 2, radius: 0.44, life: 0.22, range: 3.4 }
+  null_blade: { label: "null blade", damage: 32, cooldown: 0.64, speed: 13, pierce: 2, radius: 0.44, life: 0.22, range: 3.4 },
+  overclock_spike: { label: "overclock spike", damage: 20, cooldown: 0.43, speed: 10.8, pierce: 1, radius: 0.22, life: 0.92 },
+  prism_cannon: { label: "prism cannon", damage: 16, cooldown: 0.54, speed: 12.4, pierce: 4, radius: 0.14, life: 1.22 },
+  rift_mine: { label: "rift mine", damage: 24, cooldown: 0.72, speed: 5.2, pierce: 3, radius: 0.38, life: 1.5, range: 7.2 }
 };
 
 export function resolveBuildKit(classId, factionId) {
@@ -153,6 +171,13 @@ function synergyIdFor(role, classId, factionId, affinity) {
   if (classId === "bastion_breaker" && factionId === "anthropic_safeguard") return "synergy.constitutional_bulwark";
   if (classId === "drone_reaver" && factionId === "meta_llama_open_herd") return "synergy.open_fork_swarm";
   if (classId === "vector_interceptor" && factionId === "google_deepmind_gemini") return "synergy.peer_reviewed_lane";
+  if (classId === "bonecode_executioner" && factionId === "deepseek_abyssal") return "synergy.surgical_low_compute_execution";
+  if (classId === "redline_surgeon" && factionId === "anthropic_safeguard") return "synergy.containment_triage_loop";
+  if (classId === "moonframe_juggernaut" && factionId === "google_deepmind_gemini") return "synergy.lunar_control_group_stomp";
+  if (classId === "overclock_marauder" && factionId === "xai_grok_free_signal") return "synergy.chaos_heat_debt";
+  if (classId === "prism_gunner" && factionId === "mistral_cyclone") return "synergy.ricochet_tailwind";
+  if (classId === "rift_saboteur" && factionId === "qwen_silkgrid") return "synergy.multilingual_causality_net";
+  if (classId === "accord_striker" && factionId === "mistral_cyclone") return "synergy.low_latency_runner";
   if (classId === "accord_striker" && factionId === "openai_accord") return "synergy.emergency_patch_runner";
   return affinity.includes("role_match") ? `synergy.${role}_aligned_comind` : `synergy.${role}_cross_training`;
 }
