@@ -3322,9 +3322,42 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/campaign-full/campaign-full-finale-complete.png`
 - Milestone 56 readiness decision: ready. Full campaign proof, reduced-flash visibility, compact viewport, long-session budget, and online compatibility telemetry are release-gate proofed.
 
+- Implemented Milestone 57 Release Candidate Packaging.
+- Added the required Vibe Jam 2026 widget to `index.html`.
+- Refreshed `README.md` with public play instructions, online room-code setup, deploy notes, release-gate commands, no-login language, route-profile-only persistence boundaries, parody disclaimer, and license/provenance notes.
+- Added `docs/RELEASE_CANDIDATE.md` as the 1.0 candidate packet.
+- Added `render.yaml` for single-service Node/WebSocket hosting with `SERVE_STATIC_DIST=1`.
+- Added `scripts/proof/release-checklist.mjs` and `npm run proof:release-checklist`, covering:
+  - required widget presence;
+  - README/release-candidate/no-login language;
+  - license, provenance, and brand policy docs;
+  - deployment, quality lock, and release candidate docs;
+  - `.codex-local/` and `dist/` ignore rules;
+  - required release proof scripts;
+  - existing proof artifacts for campaign-full, quality lock, online robustness, and smoke;
+  - campaign finale proof completion and capstone reward;
+  - M56 quality-gate policy;
+  - route-profile-only export boundary.
+- Preserved non-negotiable boundaries:
+  - solo/local/online remain available;
+  - server-authoritative online combat/objectives/rewards/reconnect/route progression remain unchanged;
+  - production-art defaults and placeholder opt-outs remain unchanged;
+  - `render_game_to_text()` and `advanceTime()` remain proof-visible;
+  - export/import remains route-profile-only and omits live combat, objectives, build kits, cooldowns, pets, role pressure, Recompile, dialogue, route focus, portal params, deployment, feedback, quality telemetry, and authority state.
+- Verification after Milestone 57:
+  - `node --check scripts/proof/release-checklist.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:assets`
+  - `npm run proof:release-checklist`
+  - `npm run proof:smoke`
+- Milestone 57 proof artifact:
+  - `docs/proof/release-checklist/release-checklist.json`
+- Milestone 57 readiness decision: ready. The 1.0 release candidate is packaged with widget, docs, deployment blueprint, release checklist proof, and current smoke evidence.
+
 ## TODO
 
-- Next recommended milestone: Milestone 57 Release Candidate Packaging. Package the free browser-playable 1.0 candidate, refresh README/release notes, add required VibeJam widget, and prepare the final deploy/submission path.
+- Next recommended milestone: Milestone 58 1.0 Launch. Push the release repo, deploy a stable public URL, run the final release gate against the deployed build, and submit to Cursor Vibe Jam 2026 only if all launch checks pass.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

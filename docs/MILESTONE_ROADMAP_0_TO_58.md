@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-56 are complete. Milestone 57 is next.
+Current repo status as of May 1, 2026: Milestones 0-57 are complete. Milestone 58 is next.
 
 ## Non-Negotiable Continuity
 
@@ -783,21 +783,24 @@ Readiness: complete.
 
 Goal: package the free browser-playable 1.0 candidate.
 
-Expected scope:
+Implemented:
 
-- README;
-- license/provenance;
-- brand/logo disclaimers;
-- deployment scripts;
-- build artifacts;
-- proof evidence;
-- public play instructions;
-- content lock except critical fixes.
+- refreshed `README.md` with public play, online room-code, deploy, release-gate, widget, no-login, persistence, parody, and license/provenance information;
+- added `docs/RELEASE_CANDIDATE.md`;
+- added the required Vibe Jam widget script to `index.html`;
+- added `render.yaml` for a single-service Node/WebSocket deployment blueprint;
+- added `npm run proof:release-checklist`;
+- added `scripts/proof/release-checklist.mjs` to verify widget, docs, scripts, proof artifacts, ignore rules, campaign finale proof, and route-profile-only boundaries;
+- preserved content lock except release-critical packaging and checklist changes.
 
-Proof expectations:
+Proof coverage:
 
-- release checklist passes;
-- all required proof artifacts are present and current.
+- `npm run proof:release-checklist`
+- `npm run build`
+- `npm run proof:assets`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M58: 1.0 Launch
 
