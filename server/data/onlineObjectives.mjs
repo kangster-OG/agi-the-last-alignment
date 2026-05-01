@@ -752,6 +752,88 @@ export const ONLINE_OBJECTIVE_SETS = {
     ],
     order: ["survey_unsaid_index", "redaction_recovery_sequence", "collect_unsaid_pages", "seal_redactor_saint"]
   },
+  blackwater_beacon: {
+    id: "blackwater_beacon_objectives_v1",
+    arenaId: "blackwater_beacon",
+    nodeId: "blackwater_beacon",
+    label: "Blackwater Antenna Chain",
+    phases: ["active", "boss_gate", "completed"],
+    completionReason: "blackwater_signal_tuned",
+    instances: [
+      {
+        id: "survey_inverted_antenna",
+        groupId: "survey_inverted_antenna",
+        type: "survey",
+        label: "Survey Inverted Antenna",
+        hint: "Reach the platform center and confirm which direction the beacon is listening.",
+        worldX: 4.8,
+        worldY: -4.8,
+        radius: 3.2,
+        required: 1.4,
+        preferredRoles: ["runner", "support"],
+        runtimeArtId: "prop.objective.regroup_beacon_v1",
+        routeFlavor: "blackwater_antenna_survey"
+      },
+      {
+        id: "hold_antenna_tower",
+        groupId: "blackwater_split_pressure_sequence",
+        type: "holdout",
+        label: "Hold Antenna Tower",
+        hint: "Split the party and hold the tower while the tide tries to rotate it downward.",
+        worldX: 3.4,
+        worldY: -6.2,
+        radius: 2.8,
+        required: 3.1,
+        preferredRoles: ["runner", "support"],
+        runtimeArtId: "prop.objective.split_hold_anchor_v1",
+        routeFlavor: "antenna_tower_hold"
+      },
+      {
+        id: "hold_signal_buoy",
+        groupId: "blackwater_split_pressure_sequence",
+        type: "holdout",
+        label: "Hold Signal Buoy",
+        hint: "A cover ally holds the buoy so the antenna can distinguish signal from weather.",
+        worldX: 8.2,
+        worldY: -2.4,
+        radius: 2.8,
+        required: 3.2,
+        preferredRoles: ["cover", "duelist"],
+        runtimeArtId: "prop.objective.split_hold_anchor_v1",
+        routeFlavor: "signal_buoy_hold"
+      },
+      {
+        id: "collect_signal_shards",
+        groupId: "collect_signal_shards",
+        type: "collect",
+        label: "Collect Signal Shards",
+        hint: "Recover signal shards from tidecall static before the waves carry the channel under.",
+        worldX: 6.2,
+        worldY: -4.2,
+        radius: 4,
+        required: 4,
+        itemId: "signal_shard",
+        preferredRoles: ["harrier", "runner"],
+        runtimeArtId: "ui.route_map.reward_badges_v1",
+        routeFlavor: "blackwater_signal_extract"
+      },
+      {
+        id: "seal_maw_below_weather",
+        groupId: "seal_maw_below_weather",
+        type: "seal",
+        label: "Seal Maw Below Weather",
+        hint: "After the Maw breaks, hold the beacon lock until the tidal forecast stops biting.",
+        worldX: 4.8,
+        worldY: -4.8,
+        radius: 3.5,
+        required: 4.2,
+        preferredRoles: ["duelist", "support", "cover"],
+        runtimeArtId: "prop.objective.recompile_relay_v1",
+        routeFlavor: "maw_weather_seal"
+      }
+    ],
+    order: ["survey_inverted_antenna", "blackwater_split_pressure_sequence", "collect_signal_shards", "seal_maw_below_weather"]
+  },
   verdict_spire: {
     id: "verdict_spire_objectives_v1",
     arenaId: "verdict_spire",

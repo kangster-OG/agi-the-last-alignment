@@ -38,6 +38,10 @@ export const ROLE_PRESSURE_ANCHORS = {
     { id: "vault_index_split", label: "Unsaid Index", role: "split", worldX: 1.8, worldY: 1.6 },
     { id: "redaction_cover_desk", label: "Redaction Desk", role: "cover", worldX: -4.2, worldY: 4.8 }
   ],
+  blackwater_beacon: [
+    { id: "antenna_tower_split", label: "Antenna Tower", role: "split", worldX: 3.4, worldY: -6.2 },
+    { id: "signal_buoy_cover", label: "Signal Buoy", role: "cover", worldX: 8.2, worldY: -2.4 }
+  ],
   verdict_spire: [
     { id: "appeal_anchor", label: "Appeal Anchor", role: "split", worldX: 14.4, worldY: 8.2 },
     { id: "seal_cover_post", label: "Seal Cover Post", role: "cover", worldX: 5.8, worldY: 10.6 }
@@ -396,6 +400,39 @@ export const ONLINE_ARENAS = {
       { id: "archive_memory_anchors", worldX: -10, worldY: 16, radius: 5.1, startsAtSeconds: 5, color: 0x64e0b4, familyId: "memory_anchors" },
       { id: "archive_context_rot", worldX: -18, worldY: -8, radius: 5.2, startsAtSeconds: 9, color: 0x7a4c5a, familyId: "context_rot_crabs" },
       { id: "archive_unsaid_index", worldX: 5, worldY: -20, radius: 5.3, startsAtSeconds: 13, color: 0x7b61ff, familyId: "redaction_angels" }
+    ]
+  },
+  blackwater_beacon: {
+    id: "blackwater_beacon",
+    mapId: "blackwater_beacon_online_tidal_array",
+    label: "Blackwater Beacon",
+    regionLabel: "Blackwater Array",
+    targetSeconds: 78,
+    bossSeconds: 25,
+    bossFamilyId: "maw_below_weather",
+    bossLabel: "The Maw Below Weather",
+    bossSpawn: { worldX: 4.8, worldY: -4.8 },
+    completionTitle: "BLACKWATER BEACON TUNED",
+    completionSubtitle: "The antenna points at the sky again, which feels like progress.",
+    rewardId: "blackwater_signal_key",
+    rewardName: "Blackwater Signal Key",
+    rewardRenown: 5,
+    bossBaseHp: 610,
+    bossHpPerPlayer: 90,
+    bossSpeed: 0.96,
+    bossColor: 0x45aaf2,
+    bossDamage: 14,
+    bossRadius: 0.94,
+    bossMechanicFamily: "blackwater",
+    bossGateMechanic: "blackwater_tidal_weather",
+    initialHazardFamily: "tidal_wave",
+    regionEventFamily: "tidal_wave",
+    regionEventPattern: "blackwater_beacon",
+    spawnRegions: [
+      { id: "blackwater_tidecall_static", worldX: 18, worldY: -18, radius: 5.5, startsAtSeconds: 0.5, color: 0x45aaf2, familyId: "tidecall_static" },
+      { id: "blackwater_signal_tower_gremlins", worldX: 8, worldY: -23, radius: 5.2, startsAtSeconds: 5, color: 0xffd166, familyId: "benchmark_gremlins" },
+      { id: "blackwater_abyssal_mirages", worldX: -12, worldY: -16, radius: 5.4, startsAtSeconds: 9, color: 0x64e0b4, familyId: "thermal_mirages" },
+      { id: "blackwater_grok_static", worldX: 22, worldY: 4, radius: 5.3, startsAtSeconds: 13, color: 0x7b61ff, familyId: "tidecall_static" }
     ]
   },
   appeal_court_ruins: {

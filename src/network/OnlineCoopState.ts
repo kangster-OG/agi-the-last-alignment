@@ -394,6 +394,7 @@ export class OnlineCoopState implements GameState {
     const falseScheduleYard = arenaId === "false_schedule_yard";
     const glassSunfield = arenaId === "glass_sunfield";
     const archiveUnsaid = arenaId === "archive_of_unsaid_things";
+    const blackwaterBeacon = arenaId === "blackwater_beacon";
     const memoryCache = arenaId === "memory_cache_001";
     const memoryBranch = arenaId === "model_war_memorial" || arenaId === "guardrail_forge";
     const verdictSpire = arenaId === "verdict_spire";
@@ -403,13 +404,14 @@ export class OnlineCoopState implements GameState {
     const transitFamily = transitLoop || falseScheduleYard;
     const solarFamily = glassSunfield;
     const redactionFamily = archiveUnsaid;
+    const blackwaterFamily = blackwaterBeacon;
     const memoryFamily = memoryCache || memoryBranch;
     const verdictFamily = verdictSpire || appealCourt || alignmentFinale;
     const bg = new Graphics();
-    bg.rect(-4200, -3600, 8400, 7200).fill(coolingFamily ? 0x10212b : transitFamily ? 0x17151e : solarFamily ? 0x171a20 : redactionFamily ? 0x10141d : memoryFamily ? 0x171b28 : verdictFamily ? 0x161720 : 0x141922);
+    bg.rect(-4200, -3600, 8400, 7200).fill(coolingFamily ? 0x10212b : transitFamily ? 0x17151e : solarFamily ? 0x171a20 : redactionFamily ? 0x10141d : blackwaterFamily ? 0x0d1c28 : memoryFamily ? 0x171b28 : verdictFamily ? 0x161720 : 0x141922);
     game.layers.background.addChild(bg);
 
-    if (!coolingFamily && !transitFamily && !solarFamily && !redactionFamily && !memoryFamily && !verdictFamily && !this.drawTextureGroundIfEnabled(game)) {
+    if (!coolingFamily && !transitFamily && !solarFamily && !redactionFamily && !blackwaterFamily && !memoryFamily && !verdictFamily && !this.drawTextureGroundIfEnabled(game)) {
       const ground = new Graphics();
       for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
         for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
@@ -461,6 +463,19 @@ export class OnlineCoopState implements GameState {
           const redactionLine = Math.abs((x + y + 2) % 7) <= 1 || Math.abs((x - y - 1) % 9) <= 1;
           const color = vault ? ((x + y) % 2 === 0 ? 0x2c3141 : 0x222839) : redactionLine ? 0x111820 : (x * 3 + y * 5) % 4 === 0 ? 0x262d3c : 0x1b2230;
           drawIsoDiamond(ground, x, y, color, redactionLine ? 0xfff4d6 : vault ? 0x596270 : 0x10141d);
+        }
+      }
+      game.layers.ground.addChild(ground);
+    }
+    if (blackwaterFamily) {
+      const ground = new Graphics();
+      for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
+        for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
+          const platform = x > 1 && x < 10 && y > -8 && y < 0;
+          const antennaLane = Math.abs((x + y + 1) % 8) <= 1 || Math.abs((x - 4) % 6) <= 1;
+          const waterFoam = Math.abs((x + y - 2) % 5) <= 1;
+          const color = platform ? ((x + y) % 2 === 0 ? 0x3b4f5d : 0x314452) : antennaLane ? 0x203849 : waterFoam ? 0x164d61 : 0x0f2b3b;
+          drawIsoDiamond(ground, x, y, color, platform ? 0xffd166 : antennaLane ? 0x45aaf2 : 0x0b2330);
         }
       }
       game.layers.ground.addChild(ground);
@@ -529,6 +544,13 @@ export class OnlineCoopState implements GameState {
               { id: "missing_pages", label: "Missing Pages", worldX: 0.2, worldY: 3.4, radius: 1.7, color: 0x596270, accent: 0x64e0b4 },
               { id: "redactor_saint", label: "Redactor Saint", worldX: 1.2, worldY: 2.2, radius: 1.8, color: 0xfff4d6, accent: 0x111820 }
             ]
+        : blackwaterFamily
+          ? [
+              { id: "blackwater_beacon", label: "Blackwater Beacon", worldX: 4.8, worldY: -4.8, radius: 2.6, color: 0x45aaf2, accent: 0xffd166 },
+              { id: "antenna_tower", label: "Antenna Tower", worldX: 3.4, worldY: -6.2, radius: 1.8, color: 0x203849, accent: 0x64e0b4 },
+              { id: "signal_buoy", label: "Signal Buoy", worldX: 8.2, worldY: -2.4, radius: 1.7, color: 0x164d61, accent: 0xfff4d6 },
+              { id: "maw_weather", label: "Maw Below Weather", worldX: 4.8, worldY: -4.8, radius: 1.8, color: 0x7b61ff, accent: 0xff5d57 }
+            ]
         : memoryFamily
           ? [
               { id: "ceasefire_cache", label: arenaId === "model_war_memorial" ? "Model War Memorial" : arenaId === "guardrail_forge" ? "Guardrail Forge" : "Ceasefire Cache", worldX: arenaId === "model_war_memorial" ? -11 : arenaId === "guardrail_forge" ? 3 : -3, worldY: arenaId === "guardrail_forge" ? 3 : 2, radius: 2.1, color: 0x64e0b4, accent: 0xffd166 },
@@ -586,6 +608,12 @@ export class OnlineCoopState implements GameState {
                         ? routeExpansionArt.routeBiomeLandmarks.cache_seed_cluster
                         : routeArt && redactionFamily
                           ? routeArt.routeLandmarks.archive_switchback
+                    : routeExpansionArt && blackwaterFamily && landmark.id === "blackwater_beacon"
+                      ? routeExpansionArt.routeBiomeLandmarks.transit_signal
+                      : routeExpansionArt && blackwaterFamily && landmark.id === "signal_buoy"
+                        ? routeExpansionArt.routeBiomeLandmarks.thermal_buoy
+                        : routeArt && blackwaterFamily
+                          ? routeArt.routeLandmarks.route_pylon
                     : routeExpansionArt && verdictFamily && (landmark.id === "verdict_seal" || landmark.id === "appeal_gate")
                       ? routeExpansionArt.routeBiomeLandmarks.verdict_writ_pylon
                       : verdictArt && verdictFamily && landmark.id === "verdict_spire"
@@ -599,19 +627,19 @@ export class OnlineCoopState implements GameState {
                   : null;
       if (routeTexture) {
         this.addStaticPropSprite(game, routeTexture, p.screenX, p.screenY + 10, landmark.id === "transit_loop_zero" || landmark.id === "verdict_spire" ? 1.05 : 0.94);
-      } else if (!coolingFamily && !transitFamily && !redactionFamily && !memoryFamily && !verdictFamily && art && landmark.id === "treaty_monument") {
+      } else if (!coolingFamily && !transitFamily && !redactionFamily && !blackwaterFamily && !memoryFamily && !verdictFamily && art && landmark.id === "treaty_monument") {
         const sprite = new Sprite(art.base.base.treatyMonument);
         sprite.anchor.set(0.5, 0.88);
         sprite.scale.set(1.08);
         sprite.position.set(p.screenX, p.screenY + 6);
         game.layers.propsBehind.addChild(sprite);
-      } else if (!coolingFamily && !transitFamily && !redactionFamily && !memoryFamily && !verdictFamily && art && landmark.id === "barricade_corridor") {
+      } else if (!coolingFamily && !transitFamily && !redactionFamily && !blackwaterFamily && !memoryFamily && !verdictFamily && art && landmark.id === "barricade_corridor") {
         this.addStaticPropSprite(game, art.base.props.barricade_corridor, p.screenX, p.screenY + 6, 1.08);
-      } else if (!coolingFamily && !transitFamily && !redactionFamily && !memoryFamily && !verdictFamily && art && landmark.id === "crashed_drone_yard") {
+      } else if (!coolingFamily && !transitFamily && !redactionFamily && !blackwaterFamily && !memoryFamily && !verdictFamily && art && landmark.id === "crashed_drone_yard") {
         this.addStaticPropSprite(game, art.base.props.crashed_drone_yard, p.screenX, p.screenY + 6, 1.12);
-      } else if (!coolingFamily && !transitFamily && !redactionFamily && !memoryFamily && !verdictFamily && art && landmark.id === "emergency_alignment_terminal") {
+      } else if (!coolingFamily && !transitFamily && !redactionFamily && !blackwaterFamily && !memoryFamily && !verdictFamily && art && landmark.id === "emergency_alignment_terminal") {
         this.addStaticPropSprite(game, art.base.props.emergency_alignment_terminal, p.screenX, p.screenY + 8, 1.1);
-      } else if (!coolingFamily && !transitFamily && !redactionFamily && !memoryFamily && !verdictFamily && art && landmark.id === "cosmic_breach_crack") {
+      } else if (!coolingFamily && !transitFamily && !redactionFamily && !blackwaterFamily && !memoryFamily && !verdictFamily && art && landmark.id === "cosmic_breach_crack") {
         this.addStaticPropSprite(game, art.base.props.cosmic_breach_crack, p.screenX, p.screenY + 12, 1.25);
       } else {
         landmarks.rect(p.screenX - 26, p.screenY - 54, 52, 34).fill(landmark.color).stroke({ color: palette.ink, width: 3 });
@@ -738,8 +766,8 @@ export class OnlineCoopState implements GameState {
     const boss = snapshot.enemies.find((enemy) => enemy.boss);
     if (boss) {
       const p = worldToIso(boss.worldX, boss.worldY);
-      const bossName = boss.familyId === "thermal_oracle" ? "THE THERMAL ORACLE" : boss.familyId === "station_that_arrives" ? "THE STATION THAT ARRIVES" : boss.familyId === "injunction_engine" ? "THE INJUNCTION ENGINE" : "THE OATH-EATER";
-      const bossColor = boss.familyId === "thermal_oracle" ? "#45aaf2" : boss.familyId === "injunction_engine" ? "#fff4d6" : "#ffd166";
+      const bossName = onlineBossDisplayName(boss.familyId);
+      const bossColor = onlineBossDisplayColor(boss.familyId);
       const label = new Text({
         text: `${bossName} ${boss.hp}`,
         style: { ...fontStyle, fontSize: 14, fill: bossColor }
@@ -1246,7 +1274,7 @@ ${focus.focusDescription}`,
 
   private routeFocusInfo(party: NonNullable<OnlineConsensusSnapshot["party"]>, persistence?: OnlineConsensusSnapshot["persistence"] | null) {
     const selected = party.nodes.find((node) => node.id === party.selectedNodeId) ?? party.nodes[0] ?? null;
-    const criticalPathIds = party.campaign?.criticalPathNodeIds ?? ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "transit_loop_zero", "verdict_spire", "alignment_spire_finale"];
+    const criticalPathIds = party.campaign?.criticalPathNodeIds ?? ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "blackwater_beacon", "transit_loop_zero", "verdict_spire", "alignment_spire_finale"];
     const branchIds = party.campaign?.branchNodeIds ?? [];
     const criticalSet = new Set(criticalPathIds);
     const branchSet = new Set(branchIds);
@@ -1565,6 +1593,17 @@ ${focus.focusDescription}`,
           serverMechanicPolicy: "server_authoritative_redaction_pressure_and_xp_theft",
           readabilityPolicy: "accessibility_safe_redaction_never_obscures_controls_or_proof_text",
           persistenceBoundary: "route_profile_only_no_redaction_live_objectives_combat_or_authority_state"
+        },
+        milestone44: {
+          set: "milestone44_blackwater_beacon",
+          nodeId: "blackwater_beacon",
+          arenaId: "blackwater_beacon",
+          bossId: "maw_below_weather",
+          rewardId: "blackwater_signal_key",
+          focusRewardUnlocks: ["deepseek_abyssal.focus.abyssal_ping", "xai_grok_free_signal.focus.weather_argument"],
+          serverMechanicPolicy: "server_authoritative_tidal_waves_signal_towers_and_split_pressure",
+          readabilityPolicy: "static_translucent_tidal_lanes_and_zero_damage_signal_towers",
+          persistenceBoundary: "route_profile_only_no_tidal_antenna_live_objectives_combat_or_authority_state"
         }
       },
       routeDepth: persistence?.profile.routeDepth ?? party.completedNodeIds.length,
@@ -1783,10 +1822,10 @@ ${focus.focusDescription}`,
     const routeExpansionArt = this.onlineRouteExpansionArt(game);
     for (const zone of regionEvent.hazardZones) {
       const p = worldToIso(zone.worldX, zone.worldY);
-      const color = zone.familyId === "boiling_cache" ? palette.tomato : zone.familyId === "false_track" || zone.familyId === "solar_beam" ? palette.lemon : zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" ? palette.mint : zone.familyId === "redaction_field" ? 0xfff4d6 : 0x45aaf2;
-      const labelFill = zone.familyId === "boiling_cache" ? "#ff5d57" : zone.familyId === "false_track" || zone.familyId === "solar_beam" ? "#ffd166" : zone.familyId === "verdict_seal" || zone.familyId === "redaction_field" ? "#fff4d6" : zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" ? "#64e0b4" : "#45aaf2";
+      const color = zone.familyId === "boiling_cache" ? palette.tomato : zone.familyId === "false_track" || zone.familyId === "solar_beam" ? palette.lemon : zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" ? palette.mint : zone.familyId === "redaction_field" ? 0xfff4d6 : zone.familyId === "tidal_wave" ? 0x45aaf2 : 0x45aaf2;
+      const labelFill = zone.familyId === "boiling_cache" ? "#ff5d57" : zone.familyId === "false_track" || zone.familyId === "solar_beam" ? "#ffd166" : zone.familyId === "verdict_seal" || zone.familyId === "redaction_field" ? "#fff4d6" : zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" ? "#64e0b4" : "#45aaf2";
       const hazardColor = zone.familyId === "verdict_seal" ? 0xfff4d6 : color;
-      const zoneAlpha = zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" ? 0.1 : zone.familyId === "solar_beam" || zone.familyId === "redaction_field" ? 0.11 : zone.familyId === "verdict_seal" ? 0.12 : 0.14;
+      const zoneAlpha = zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" ? 0.1 : zone.familyId === "solar_beam" || zone.familyId === "redaction_field" || zone.familyId === "tidal_wave" ? 0.11 : zone.familyId === "verdict_seal" ? 0.12 : 0.14;
       const markerFrame = hazardFrameForZone(zone.familyId);
       if (routeExpansionArt && markerFrame) {
         this.drawProductionEffectSprite(`online-hazard:${zone.familyId}:${zone.id}`, routeExpansionArt.hazardMarkers[markerFrame], zone.worldX, zone.worldY, Math.max(0.72, Math.min(1.45, zone.radius * 0.28)), 0.72, zone.worldX + zone.worldY + 0.02);
@@ -1797,7 +1836,7 @@ ${focus.focusDescription}`,
         .stroke({ color: hazardColor, width: 3, alpha: 0.68 });
       this.entityGraphics
         .ellipse(p.screenX, p.screenY + 6, zone.radius * 18, zone.radius * 7)
-        .stroke({ color: zone.familyId === "verdict_seal" || zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" ? palette.mint : palette.lemon, width: 1, alpha: 0.62 });
+        .stroke({ color: zone.familyId === "verdict_seal" || zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" ? palette.mint : palette.lemon, width: 1, alpha: 0.62 });
       const label = new Text({
         text: zone.label.toUpperCase(),
         style: { ...fontStyle, fontSize: 10, fill: labelFill }
@@ -1849,6 +1888,23 @@ ${focus.focusDescription}`,
     }
   }
 
+}
+
+function onlineBossDisplayName(familyId: string): string {
+  if (familyId === "thermal_oracle") return "THE THERMAL ORACLE";
+  if (familyId === "station_that_arrives") return "THE STATION THAT ARRIVES";
+  if (familyId === "injunction_engine") return "THE INJUNCTION ENGINE";
+  if (familyId === "wrong_sunrise") return "THE WRONG SUNRISE";
+  if (familyId === "redactor_saint") return "THE REDACTOR SAINT";
+  if (familyId === "maw_below_weather") return "THE MAW BELOW WEATHER";
+  return "THE OATH-EATER";
+}
+
+function onlineBossDisplayColor(familyId: string): string {
+  if (familyId === "thermal_oracle" || familyId === "maw_below_weather") return "#45aaf2";
+  if (familyId === "injunction_engine" || familyId === "redactor_saint") return "#fff4d6";
+  if (familyId === "wrong_sunrise") return "#ff6b57";
+  return "#ffd166";
 }
 
 function objectiveTextureFor(art: Milestone34ObjectiveArtTextures, objective: OnlineObjectiveInstance, ratio: number): Texture | null {
@@ -1916,7 +1972,7 @@ function routeMarkerFrame(routeId: string, state: PartyRouteState, toNodeId: str
   if (state === "stable") return "stable";
   if (state === "locked") return "locked";
   if (toNodeId === "transit_loop_zero" || toNodeId === "verdict_spire" || toNodeId === "appeal_court_ruins" || toNodeId === "alignment_spire_finale" || routeId.includes("verdict")) return "boss";
-  if (toNodeId === "memory_cache_001" || toNodeId === "cooling_lake_nine" || toNodeId === "model_war_memorial" || toNodeId === "thermal_archive" || toNodeId === "guardrail_forge" || toNodeId === "false_schedule_yard" || toNodeId === "glass_sunfield" || toNodeId === "archive_of_unsaid_things") return "event";
+  if (toNodeId === "memory_cache_001" || toNodeId === "cooling_lake_nine" || toNodeId === "model_war_memorial" || toNodeId === "thermal_archive" || toNodeId === "guardrail_forge" || toNodeId === "false_schedule_yard" || toNodeId === "glass_sunfield" || toNodeId === "archive_of_unsaid_things" || toNodeId === "blackwater_beacon") return "event";
   return "unstable";
 }
 
@@ -1929,7 +1985,7 @@ function rewardBadgeFrame(rewardId: string): RouteRewardBadgeFrame {
   if (rewardId.includes("cache") || rewardId.includes("persistence")) return "memory_cache";
   if (rewardId.includes("permit") || rewardId.includes("route")) return "clearance_pass";
   if (rewardId.includes("key") || rewardId.includes("verdict")) return "glitch_key";
-  if (rewardId.includes("rig") || rewardId.includes("stabilized") || rewardId.includes("prism")) return "core_upgrade";
+  if (rewardId.includes("rig") || rewardId.includes("stabilized") || rewardId.includes("prism") || rewardId.includes("signal")) return "core_upgrade";
   return "data_fragment";
 }
 
@@ -1942,9 +1998,11 @@ function onlineThreatTextureFor(
   if (enemy.boss && enemy.familyId === "injunction_engine") return { texture: textures.injunction_engine, scale: 1.26 };
   if (enemy.boss && enemy.familyId === "wrong_sunrise") return { texture: textures.thermal_oracle, scale: 1.24 };
   if (enemy.boss && enemy.familyId === "redactor_saint") return { texture: textures.shard_lurker, scale: 1.24 };
+  if (enemy.boss && enemy.familyId === "maw_below_weather") return { texture: textures.thermal_oracle, scale: 1.25 };
   if (enemy.sourceRegionId?.includes("injunction_writs") || enemy.familyId === "injunction_writs") return { texture: textures.verdict_writ, scale: 0.82 };
   if (enemy.sourceRegionId?.includes("sunfield") || enemy.familyId === "solar_reflections") return { texture: textures.false_track, scale: 0.76 };
   if (enemy.sourceRegionId?.includes("archive") || enemy.familyId === "redaction_angels") return { texture: textures.shard_lurker, scale: 0.78 };
+  if (enemy.sourceRegionId?.includes("blackwater") || enemy.familyId === "tidecall_static") return { texture: textures.false_track, scale: 0.78 };
   if (enemy.sourceRegionId === "false_track" || enemy.sourceRegionId?.includes("false_schedule") || enemy.familyId === "false_track" || enemy.familyId === "false_schedules") return { texture: textures.false_track, scale: 0.74 };
   if (enemy.sourceRegionId === "thermal_bloom" || enemy.sourceRegionId === "boiling_cache" || enemy.sourceRegionId?.includes("thermal_archive")) return { texture: textures.boiling_cache, scale: 0.78 };
   if (enemy.familyId === "context_rot_crabs") return { texture: textures.shard_lurker, scale: 0.72 };
@@ -1972,6 +2030,8 @@ function hazardFrameForZone(familyId: string): Milestone28HazardFrame | null {
   if (familyId === "shade_zone") return "route_stable";
   if (familyId === "redaction_field") return "false_track";
   if (familyId === "redaction_anchor") return "route_stable";
+  if (familyId === "tidal_wave") return "boiling_cache";
+  if (familyId === "signal_tower") return "route_stable";
   return null;
 }
 
@@ -2018,6 +2078,7 @@ function shortNodeName(name: string): string {
   if (name === "False Schedule Yard" || name === "false_schedule_yard") return "Yard";
   if (name === "Glass Sunfield" || name === "glass_sunfield") return "Glass";
   if (name === "Archive Of Unsaid Things" || name === "archive_of_unsaid_things") return "Archive";
+  if (name === "Blackwater Beacon" || name === "blackwater_beacon") return "Blackwater";
   if (name === "Appeal Court Ruins" || name === "appeal_court_ruins") return "Appeal";
   if (name === "Alignment Spire Finale" || name === "alignment_spire_finale") return "Finale";
   return name.split(" ")[0] ?? name;
@@ -2050,6 +2111,7 @@ function shortObjectiveSet(objectiveSetId: string): string {
   if (objectiveSetId.includes("false_schedule")) return "schedule";
   if (objectiveSetId.includes("glass_sunfield")) return "sunfield";
   if (objectiveSetId.includes("archive_unsaid")) return "archive";
+  if (objectiveSetId.includes("blackwater")) return "beacon";
   if (objectiveSetId.includes("appeal")) return "appeal";
   if (objectiveSetId.includes("transit")) return "transit";
   if (objectiveSetId.includes("cache") || objectiveSetId.includes("memorial")) return "memory";
@@ -2070,6 +2132,7 @@ function arenaLabel(arenaId: string): string {
   if (arenaId === "false_schedule_yard") return "FALSE SCHEDULE YARD";
   if (arenaId === "glass_sunfield") return "GLASS SUNFIELD";
   if (arenaId === "archive_of_unsaid_things") return "ARCHIVE OF UNSAID THINGS";
+  if (arenaId === "blackwater_beacon") return "BLACKWATER BEACON";
   if (arenaId === "verdict_spire") return "VERDICT SPIRE";
   if (arenaId === "appeal_court_ruins") return "APPEAL COURT RUINS";
   if (arenaId === "alignment_spire_finale") return "ALIGNMENT SPIRE FINALE";

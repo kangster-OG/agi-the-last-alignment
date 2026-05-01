@@ -195,6 +195,14 @@ export interface OnlineRegionEventSnapshot {
     uiCorruptionPolicy: string;
     persistenceBoundary: string;
   } | null;
+  blackwaterPressure?: {
+    policy: string;
+    waveTicks: number;
+    antennaPulses: number;
+    activeSignalTowerCount: number;
+    splitPressureObjectiveGroupId: string;
+    persistenceBoundary: string;
+  } | null;
   eventCounter: number;
   active: boolean;
   hazardZones: Array<{

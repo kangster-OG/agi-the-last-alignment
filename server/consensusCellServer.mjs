@@ -192,6 +192,8 @@ class ConsensusCellRoom extends Room {
   redactionXpStolen = 0;
   redactionTheftTicks = 0;
   redactionTheftCooldown = 0;
+  blackwaterWaveTicks = 0;
+  blackwaterAntennaPulses = 0;
   kills = 0;
   collectedPickups = 0;
   bossEventCounter = 0;
@@ -454,6 +456,7 @@ class ConsensusCellRoom extends Room {
     if (familyId === "false_schedules") return { hp: 30, speed: 1.95 };
     if (familyId === "solar_reflections") return { hp: 32, speed: 1.88 };
     if (familyId === "redaction_angels") return { hp: 34, speed: 1.72 };
+    if (familyId === "tidecall_static") return { hp: 33, speed: 1.9 };
     if (familyId === "injunction_writs") return { hp: 36, speed: 1.62 };
     if (familyId === "memory_anchors") return { hp: 38, speed: 1.18 };
     if (familyId === "context_rot_crabs") return { hp: 30, speed: 1.42 };
@@ -496,6 +499,8 @@ class ConsensusCellRoom extends Room {
       this.spawnSolarBeamSweep(arena.bossSpawn.worldX, arena.bossSpawn.worldY, 0.25);
     } else if (arena.initialHazardFamily === "redaction_field") {
       this.spawnRedactionPressure(arena.bossSpawn.worldX, arena.bossSpawn.worldY);
+    } else if (arena.initialHazardFamily === "tidal_wave") {
+      this.spawnTidalWavePressure(arena.bossSpawn.worldX, arena.bossSpawn.worldY);
     } else {
       this.spawnBrokenPromiseZone(arena.bossSpawn.worldX, arena.bossSpawn.worldY + 2.8, 3.1);
     }
@@ -703,6 +708,15 @@ class ConsensusCellRoom extends Room {
       }
       return;
     }
+    if (arena.bossMechanicFamily === "blackwater") {
+      this.bossMechanicTimer -= dt;
+      if (this.bossMechanicTimer <= 0) {
+        const target = nearestPlayer(boss.worldX, boss.worldY, this.players) ?? nearestPlayer(0, 0, this.players);
+        this.spawnTidalWavePressure(target?.worldX ?? boss.worldX, target?.worldY ?? boss.worldY);
+        this.bossMechanicTimer = 5.3;
+      }
+      return;
+    }
 
     this.oathPageTimer -= dt;
     if (this.oathPageTimer <= 0) {
@@ -752,6 +766,15 @@ class ConsensusCellRoom extends Room {
         const anchor = positions[this.regionEventCounter % positions.length];
         this.spawnRedactionPressure(anchor.worldX, anchor.worldY);
         this.regionEventTimer = 4.9;
+      } else if (arena.regionEventPattern === "blackwater_beacon") {
+        const anchors = [
+          { worldX: 3.4, worldY: -6.2 },
+          { worldX: 8.2, worldY: -2.4 },
+          { worldX: 4.8, worldY: -4.8 }
+        ];
+        const anchor = anchors[this.regionEventCounter % anchors.length];
+        this.spawnTidalWavePressure(anchor.worldX, anchor.worldY);
+        this.regionEventTimer = 4.7;
       } else if (arena.regionEventPattern === "verdict_spire" || arena.regionEventPattern === "appeal_court_ruins" || arena.regionEventPattern === "alignment_spire_finale") {
         const lane = this.regionEventCounter % 4;
         const positions =
@@ -786,11 +809,13 @@ class ConsensusCellRoom extends Room {
         this.regionEventTimer = arena.regionEventPattern === "thermal_archive" ? 5.9 : 6.4;
       }
     }
+    if (arena.regionEventPattern === "archive_redaction" && this.regionHazardZones.some((zone) => zone.familyId === "redaction_field")) {
+      this.applyRedactionXpTheft(dt);
+    }
     for (const player of this.players.values()) {
       if (player.connectionState !== "connected" || player.downed || player.hp <= 0) continue;
       for (const zone of this.regionHazardZones) {
         if (Math.hypot(player.worldX - zone.worldX, player.worldY - zone.worldY) > zone.radius) continue;
-        if (zone.familyId === "redaction_field") this.applyRedactionXpTheft(dt);
         player.hp -= zone.damagePerSecond * dt;
         if (player.hp <= 0) this.downPlayer(player);
         break;
@@ -802,30 +827,13 @@ class ConsensusCellRoom extends Room {
     const zone = {
       id: this.nextRegionEventId,
       familyId,
-      label:
-        familyId === "boiling_cache"
-          ? "Boiling Cache"
-          : familyId === "false_track"
-            ? "False Track"
-            : familyId === "verdict_seal"
-              ? "Verdict Seal"
-              : familyId === "memory_anchor"
-                ? "Memory Anchor"
-                : familyId === "redaction_field"
-                  ? "Redaction Field"
-                  : familyId === "redaction_anchor"
-                    ? "Unsaid Anchor"
-                : familyId === "solar_beam"
-                  ? "Solar Beam"
-                  : familyId === "shade_zone"
-                    ? "Shade Zone"
-                    : "Thermal Bloom",
+      label: regionHazardLabel(familyId),
       worldX: clamp(worldX, BOUNDS.minX + 1.5, BOUNDS.maxX - 1.5),
       worldY: clamp(worldY, BOUNDS.minY + 1.5, BOUNDS.maxY - 1.5),
       radius,
-      damagePerSecond: familyId === "shade_zone" || familyId === "redaction_anchor" ? 0 : familyId === "redaction_field" ? 1.2 : familyId === "boiling_cache" ? 3.4 : familyId === "solar_beam" ? 3.2 : familyId === "false_track" ? 2.8 : familyId === "verdict_seal" ? 3.6 : 2.2,
+      damagePerSecond: familyId === "shade_zone" || familyId === "redaction_anchor" || familyId === "signal_tower" ? 0 : familyId === "redaction_field" ? 1.2 : familyId === "tidal_wave" ? 3.0 : familyId === "boiling_cache" ? 3.4 : familyId === "solar_beam" ? 3.2 : familyId === "false_track" ? 2.8 : familyId === "verdict_seal" ? 3.6 : 2.2,
       createdAt: this.seconds,
-      expiresAt: this.seconds + (familyId === "boiling_cache" ? 7.5 : familyId === "solar_beam" ? 5.8 : familyId === "shade_zone" ? 6.1 : familyId === "redaction_field" ? 6.3 : familyId === "redaction_anchor" ? 6.6 : familyId === "false_track" ? 5.6 : familyId === "verdict_seal" ? 6.2 : 6.4)
+      expiresAt: this.seconds + (familyId === "boiling_cache" ? 7.5 : familyId === "solar_beam" ? 5.8 : familyId === "shade_zone" ? 6.1 : familyId === "redaction_field" ? 6.3 : familyId === "redaction_anchor" ? 6.6 : familyId === "tidal_wave" ? 6.0 : familyId === "signal_tower" ? 6.4 : familyId === "false_track" ? 5.6 : familyId === "verdict_seal" ? 6.2 : 6.4)
     };
     this.regionHazardZones.push(zone);
     this.nextRegionEventId += 1;
@@ -848,6 +856,16 @@ class ConsensusCellRoom extends Room {
     this.spawnRegionHazard(centerX, centerY, 2.6, "redaction_field");
     this.spawnRegionHazard(centerX - 2.2, centerY + 1.4, 1.75, "redaction_anchor");
     this.spawnRegionHazard(centerX + 2.2, centerY - 1.4, 1.75, "redaction_anchor");
+  }
+
+  spawnTidalWavePressure(centerX, centerY) {
+    const lane = this.blackwaterWaveTicks % 3;
+    const offset = (lane - 1) * 2.4;
+    this.spawnRegionHazard(centerX + offset, centerY - 1.6, 2.85, "tidal_wave");
+    this.spawnRegionHazard(centerX - 2.5, centerY + 1.2, 1.8, "signal_tower");
+    this.spawnRegionHazard(centerX + 2.5, centerY + 1.2, 1.8, "signal_tower");
+    this.blackwaterWaveTicks += 1;
+    this.blackwaterAntennaPulses += 2;
   }
 
   applyRedactionXpTheft(dt) {
@@ -1451,7 +1469,7 @@ class ConsensusCellRoom extends Room {
   forceSharedXp() {
     if (this.runPhase !== "active") return;
     const threshold = PARTY_XP_THRESHOLDS[this.partyLevel - 1] ?? this.partyXp + 5;
-    this.partyXp = Math.max(this.partyXp, threshold);
+    this.partyXp = Math.max(this.partyXp, threshold + 5);
     for (const player of this.players.values()) player.xp = this.partyXp;
     this.checkProgression();
     this.broadcastSnapshot();
@@ -1814,6 +1832,8 @@ class ConsensusCellRoom extends Room {
           ? "static_translucent_solar_lanes_no_strobe_reduced_flash_safe"
           : arena.regionEventPattern === "archive_redaction"
             ? "accessibility_safe_redaction_never_obscures_controls_or_proof_text"
+            : arena.regionEventPattern === "blackwater_beacon"
+              ? "static_translucent_tidal_lanes_and_zero_damage_signal_towers"
             : "standard_translucent_hazard_markers",
       redactionPressure:
         arena.regionEventPattern === "archive_redaction"
@@ -1824,6 +1844,17 @@ class ConsensusCellRoom extends Room {
               theftCooldown: round(this.redactionTheftCooldown),
               uiCorruptionPolicy: "decorative_black_bar_markers_do_not_cover_required_text_or_controls",
               persistenceBoundary: "route_profile_only_no_redaction_pressure_or_live_xp_theft_state"
+          }
+          : null,
+      blackwaterPressure:
+        arena.regionEventPattern === "blackwater_beacon"
+          ? {
+              policy: "server_authoritative_tidal_waves_and_antenna_split_pressure",
+              waveTicks: this.blackwaterWaveTicks,
+              antennaPulses: this.blackwaterAntennaPulses,
+              activeSignalTowerCount: this.regionHazardZones.filter((zone) => zone.familyId === "signal_tower").length,
+              splitPressureObjectiveGroupId: "blackwater_split_pressure_sequence",
+              persistenceBoundary: "route_profile_only_no_tidal_antenna_or_live_objective_state"
             }
           : null,
       eventCounter: this.regionEventCounter,
@@ -2396,6 +2427,8 @@ class ConsensusCellRoom extends Room {
     this.redactionXpStolen = 0;
     this.redactionTheftTicks = 0;
     this.redactionTheftCooldown = 0;
+    this.blackwaterWaveTicks = 0;
+    this.blackwaterAntennaPulses = 0;
     this.kills = 0;
     this.collectedPickups = 0;
     this.bossEventCounter = 0;
@@ -2556,8 +2589,23 @@ function objectiveItemLabel(itemId) {
   if (itemId === "appeal_token") return "Appeal Token";
   if (itemId === "prism_shard") return "Prism Shard";
   if (itemId === "unsaid_page") return "Unsaid Page";
+  if (itemId === "signal_shard") return "Signal Shard";
   if (itemId === "oath_fragment") return "Oath Fragment";
   return "Route Item";
+}
+
+function regionHazardLabel(familyId) {
+  if (familyId === "boiling_cache") return "Boiling Cache";
+  if (familyId === "false_track") return "False Track";
+  if (familyId === "verdict_seal") return "Verdict Seal";
+  if (familyId === "memory_anchor") return "Memory Anchor";
+  if (familyId === "redaction_field") return "Redaction Field";
+  if (familyId === "redaction_anchor") return "Unsaid Anchor";
+  if (familyId === "tidal_wave") return "Tidal Wave";
+  if (familyId === "signal_tower") return "Signal Tower";
+  if (familyId === "solar_beam") return "Solar Beam";
+  if (familyId === "shade_zone") return "Shade Zone";
+  return "Thermal Bloom";
 }
 
 function stableHash(text) {

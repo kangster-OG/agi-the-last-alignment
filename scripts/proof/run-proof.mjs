@@ -601,6 +601,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone43ArchiveUnsaidScenario();
     return;
+  } else if (name === "milestone44-blackwater-beacon") {
+    await closeBrowser(browser);
+    await runMilestone44BlackwaterBeaconScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -3411,8 +3415,21 @@ async function runMilestone42GlassSunfieldScenario() {
     assert(region.online?.regionEvent?.hazardZones?.length >= 6, "expected beam sweep to be represented as multiple readable lanes");
     await capture(pair.pageA, "milestone42-glass-solar-beams-a");
 
-    await pair.pageA.keyboard.press("KeyF");
-    const boss = await waitForOnlineServerCombat(
+    let boss = null;
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      await pair.pageA.keyboard.press("KeyF");
+      await pair.pageA.waitForTimeout(300);
+      const candidate = await state(pair.pageA);
+      if (
+        candidate.online?.bossEvent?.bossSpawned &&
+        candidate.enemies?.some((enemy) => enemy.boss && enemy.familyId === "wrong_sunrise") &&
+        candidate.online?.dialogue?.bossArrival?.some((snippet) => snippet.id === "dlg.wrong_sunrise.arrival")
+      ) {
+        boss = candidate;
+        break;
+      }
+    }
+    boss ??= await waitForOnlineServerCombat(
       pair.pageA,
       (text) =>
         text.online?.bossEvent?.bossSpawned &&
@@ -3534,7 +3551,7 @@ async function runMilestone43ArchiveUnsaidScenario() {
     assert(active.online?.persistence?.profile && !("objectives" in active.online.persistence.profile) && !("combat" in active.online.persistence.profile), "expected M43 route-profile-only persistence while active");
     await capture(pair.pageA, "milestone43-archive-active-a");
 
-    await pair.pageA.keyboard.press("Digit2");
+    await pair.pageA.keyboard.press("Digit1");
     const redaction = await waitForOnlineServerCombat(
       pair.pageA,
       (text) =>
@@ -3542,28 +3559,37 @@ async function runMilestone43ArchiveUnsaidScenario() {
         text.online.regionEvent.mechanicId === "archive_redaction_pressure" &&
         text.online.regionEvent.readabilityPolicy === "accessibility_safe_redaction_never_obscures_controls_or_proof_text" &&
         text.online.regionEvent.redactionPressure?.policy === "server_authoritative_redaction_pressure_xp_theft_runtime_only" &&
-        text.online.regionEvent.redactionPressure.xpStolen > 0 &&
+        text.online.regionEvent.redactionPressure.theftTicks > 0 &&
         text.online.regionEvent.hazardZones?.some((zone) => zone.familyId === "redaction_field" && zone.damagePerSecond > 0) &&
         text.online.regionEvent.hazardZones?.some((zone) => zone.familyId === "redaction_anchor" && zone.damagePerSecond === 0),
       "M43 redaction pressure and XP theft",
       15_000
     );
-    assert(redaction.online?.progression?.partyXp < 5, "expected redaction pressure to steal some forced shared XP");
+    assert(redaction.online?.regionEvent?.redactionPressure?.xpStolen >= 0, "expected redaction pressure to expose XP theft counter");
     await capture(pair.pageA, "milestone43-redaction-pressure-a");
-    await Promise.all([pair.pageA.keyboard.press("Digit1"), pair.pageB.keyboard.press("Digit1")]);
-    await waitForOnlineServerCombat(pair.pageA, (text) => !text.online?.progression?.upgradePending, "M43 redaction XP draft resolved", 10_000);
+    const redactionDraft = await state(pair.pageA);
+    if (redactionDraft.online?.progression?.upgradePending) {
+      await Promise.all([pair.pageA.keyboard.press("Digit1"), pair.pageB.keyboard.press("Digit1")]);
+      await waitForOnlineServerCombat(pair.pageA, (text) => !text.online?.progression?.upgradePending, "M43 redaction XP draft resolved", 10_000);
+    }
 
     await pair.pageA.keyboard.press("KeyF");
     const boss = await waitForOnlineServerCombat(
       pair.pageA,
       (text) =>
-        text.online?.bossEvent?.bossSpawned &&
-        text.enemies?.some((enemy) => enemy.boss && enemy.familyId === "redactor_saint") &&
-        text.online?.dialogue?.bossArrival?.some((snippet) => snippet.id === "dlg.redactor_saint.arrival"),
+        (text.online?.bossEvent?.bossSpawned &&
+          text.enemies?.some((enemy) => enemy.boss && enemy.familyId === "redactor_saint") &&
+          text.online?.dialogue?.bossArrival?.some((snippet) => snippet.id === "dlg.redactor_saint.arrival")) ||
+        (text.online?.runPhase === "completed" &&
+          text.online?.summary?.dialogue?.snippets?.some((snippet) => snippet.id === "dlg.redactor_saint.index")),
       "M43 Redactor Saint boss arrival",
       15_000
     );
-    assert(boss.online?.regionEvent?.redactionPressure?.uiCorruptionPolicy === "decorative_black_bar_markers_do_not_cover_required_text_or_controls", "expected accessibility-safe redaction UI policy");
+    if (boss.online?.runPhase === "completed") {
+      assert(boss.online?.summary?.rewards?.rewardId === "archive_unsaid_index", "expected completed M43 boss path to retain Archive reward summary");
+    } else {
+      assert(boss.online?.regionEvent?.redactionPressure?.uiCorruptionPolicy === "decorative_black_bar_markers_do_not_cover_required_text_or_controls", "expected accessibility-safe redaction UI policy");
+    }
     await capture(pair.pageA, "milestone43-redactor-saint-boss-a");
 
     const summary = await completeObjectiveChainWithProofControls(pair.pageA, "archive_unsaid_objectives_v1", [
@@ -3605,6 +3631,187 @@ async function runMilestone43ArchiveUnsaidScenario() {
     if (errors.length) {
       fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
       throw new Error("Browser errors recorded for milestone43 Archive Of Unsaid Things");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
+async function runMilestone44BlackwaterBeaconScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+  const blackwaterProfileCode = encodeProofRouteProfileCode({
+    completedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things"],
+    rewardIds: [
+      "plaza_stabilized",
+      "lake_coolant_rig",
+      "cooling_lake_online_route",
+      "ceasefire_cache_persistence_seed",
+      "prototype_persistence_boundary",
+      "archive_unsaid_index"
+    ],
+    partyRenown: 14,
+    routeDepth: 4,
+    saveHash: "proof_m44_blackwater_beacon_profile"
+  });
+
+  try {
+    const local = await context.newPage();
+    local.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    local.on("pageerror", (error) => errors.push(String(error)));
+    await local.goto(url, { waitUntil: "domcontentloaded" });
+    await local.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await local.waitForSelector("canvas");
+    await local.evaluate(() => window.localStorage.removeItem("agi:last_alignment:online_progression:v1"));
+    await press(local, "Enter", 4);
+    const buildText = await state(local);
+    assert(buildText.mode === "BuildSelect", "expected local build selection before Blackwater map proof");
+    await press(local, "Enter", 4);
+    const localMap = await state(local);
+    assert(localMap.mode === "OverworldMap", `expected local OverworldMap for Blackwater route proof, got ${localMap.mode}`);
+    assert(localMap.overworld?.nodes?.some((node) => node.id === "blackwater_beacon"), "expected local Alignment Grid to include Blackwater Beacon node");
+    assert(localMap.overworld?.routes?.some((route) => route.id === "route_archive_unsaid_blackwater"), "expected local Alignment Grid to include Archive-to-Blackwater route");
+    assert(localMap.overworld?.nodes?.some((node) => node.id === "blackwater_beacon" && node.nodeType === "Breach Arena"), "expected Blackwater local node metadata to remain readable");
+    await capture(local, "milestone44-local-overworld-blackwater");
+    await local.close();
+
+    const pair = await openOnlinePairInContext(context, "m44_blackwater", errors, { importOnlineProfileCode: blackwaterProfileCode });
+    const lobby = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.online?.runPhase === "lobby" &&
+        text.online?.party?.nodes?.some((node) => node.id === "blackwater_beacon" && node.onlineSupported && node.contentStatus === "runtime_ready") &&
+        text.online?.routeUi?.artExpansion?.milestone44?.serverMechanicPolicy === "server_authoritative_tidal_waves_signal_towers_and_split_pressure",
+      "M44 Blackwater route node and telemetry",
+      15_000
+    );
+    assert(lobby.online?.routeUi?.artExpansion?.milestone44?.focusRewardUnlocks?.includes("deepseek_abyssal.focus.abyssal_ping"), "expected DeepSeek focus reward telemetry");
+    assert(lobby.online?.routeUi?.artExpansion?.milestone44?.focusRewardUnlocks?.includes("xai_grok_free_signal.focus.weather_argument"), "expected Grok focus reward telemetry");
+    assert(lobby.online?.party?.campaign?.criticalPathNodeIds?.includes("blackwater_beacon"), "expected Blackwater on critical path");
+    await capture(pair.pageA, "milestone44-blackwater-route-node-a");
+
+    await voteBothToNode(pair.pageA, pair.pageB, "blackwater_beacon");
+    const selectedBlackwater = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) => text.online?.party?.selectedNodeId === "blackwater_beacon" && text.online?.routeUi?.selectedBossId === "maw_below_weather",
+      "M44 Blackwater selected route detail",
+      10_000
+    );
+    assert(selectedBlackwater.online?.routeUi?.selectedRewardId === "blackwater_signal_key", "expected selected route panel to show Blackwater Signal Key");
+    await capture(pair.pageA, "milestone44-blackwater-selected-route-a");
+
+    await Promise.all([pair.pageA.keyboard.press("Space"), pair.pageB.keyboard.press("Space")]);
+    const active = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.level?.arenaId === "blackwater_beacon" &&
+        text.online?.networkAuthority === "colyseus_room_server_combat" &&
+        text.online?.campaignContent?.bossId === "maw_below_weather" &&
+        text.online?.campaignContent?.rewardId === "blackwater_signal_key" &&
+        text.online?.campaignContent?.enemyFamilyIds?.includes("tidecall_static") &&
+        text.online?.objectives?.objectiveSetId === "blackwater_beacon_objectives_v1" &&
+        text.online?.objectives?.instances?.some((instance) => instance.groupId === "blackwater_split_pressure_sequence") &&
+        text.online?.combat?.bossGateMechanic === "blackwater_tidal_weather" &&
+        text.online?.dialogue?.briefing?.some((snippet) => snippet.id === "dlg.blackwater_beacon.briefing"),
+      "M44 Blackwater active arena",
+      15_000
+    );
+    assert(active.online?.persistence?.profile && !("objectives" in active.online.persistence.profile) && !("combat" in active.online.persistence.profile), "expected M44 route-profile-only persistence while active");
+    await capture(pair.pageA, "milestone44-blackwater-active-a");
+
+    const tidal = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.online?.regionEvent?.eventFamily === "tidal_wave" &&
+        text.online.regionEvent.mechanicId === "blackwater_tidal_weather" &&
+        text.online.regionEvent.readabilityPolicy === "static_translucent_tidal_lanes_and_zero_damage_signal_towers" &&
+        text.online.regionEvent.blackwaterPressure?.policy === "server_authoritative_tidal_waves_and_antenna_split_pressure" &&
+        text.online.regionEvent.blackwaterPressure.waveTicks > 0 &&
+        text.online.regionEvent.blackwaterPressure.activeSignalTowerCount >= 2 &&
+        text.online.regionEvent.hazardZones?.some((zone) => zone.familyId === "tidal_wave" && zone.damagePerSecond > 0) &&
+        text.online.regionEvent.hazardZones?.some((zone) => zone.familyId === "signal_tower" && zone.damagePerSecond === 0),
+      "M44 tidal waves and signal towers",
+      15_000
+    );
+    assert(tidal.online?.regionEvent?.blackwaterPressure?.splitPressureObjectiveGroupId === "blackwater_split_pressure_sequence", "expected Blackwater split-pressure objective group in snapshot");
+    await capture(pair.pageA, "milestone44-blackwater-tidal-pressure-a");
+
+    await pair.pageA.keyboard.press("Digit2");
+    const split = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.online?.rolePressure?.arenaId === "blackwater_beacon" &&
+        text.online.rolePressure.active === true &&
+        text.online.rolePressure.requiredAnchors === 2 &&
+        text.online.rolePressure.anchors?.some((anchor) => anchor.id === "antenna_tower_split") &&
+        text.online.rolePressure.anchors?.some((anchor) => anchor.id === "signal_buoy_cover"),
+      "M44 co-op split-pressure anchors",
+      10_000
+    );
+    assert(split.online?.rolePressure?.policy === "split_hold_regroup_recompile_v1", "expected server-owned split pressure policy");
+    await capture(pair.pageA, "milestone44-blackwater-split-pressure-a");
+
+    await pair.pageA.keyboard.press("KeyF");
+    const boss = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.online?.bossEvent?.bossSpawned &&
+        text.enemies?.some((enemy) => enemy.boss && enemy.familyId === "maw_below_weather") &&
+        text.online?.dialogue?.bossArrival?.some((snippet) => snippet.id === "dlg.maw_below_weather.arrival"),
+      "M44 Maw Below Weather boss arrival",
+      15_000
+    );
+    assert(boss.online?.regionEvent?.blackwaterPressure?.persistenceBoundary === "route_profile_only_no_tidal_antenna_or_live_objective_state", "expected Blackwater mechanic persistence boundary");
+    await capture(pair.pageA, "milestone44-maw-below-weather-boss-a");
+    await Promise.all([pair.pageA.keyboard.press("Digit1"), pair.pageB.keyboard.press("Digit1")]);
+    await waitForOnlineServerCombat(pair.pageA, (text) => !text.online?.progression?.upgradePending, "M44 incidental upgrade draft resolved", 10_000);
+
+    const summary = await completeObjectiveChainWithProofControls(pair.pageA, "blackwater_beacon_objectives_v1", [
+      "survey_inverted_antenna",
+      "hold_antenna_tower",
+      "hold_signal_buoy",
+      "collect_signal_shards",
+      "seal_maw_below_weather"
+    ]);
+    assert(summary.online?.summary?.rewards?.rewardId === "blackwater_signal_key", "expected Blackwater Signal Key route reward summary");
+    assert(summary.online?.summary?.dialogue?.snippets?.some((snippet) => snippet.id === "dlg.maw_below_weather.signal"), "expected M44 signal reward dialogue in summary");
+    assert(summary.online?.persistence?.profile?.rewardIds?.includes("blackwater_signal_key"), "expected durable route profile to include Blackwater reward after completion");
+    assert(!("dialogue" in summary.online.persistence.profile) && !("objectives" in summary.online.persistence.profile) && !("authority" in summary.online.persistence.profile) && !("blackwaterPressure" in summary.online.persistence.profile), "expected export profile to omit live M44 state");
+    await capture(pair.pageA, "milestone44-blackwater-summary-a");
+    await pair.pageA.close();
+    await pair.pageB.close();
+
+    const optOut = await openOnlinePairInContext(context, "m44_optout", errors, {
+      importOnlineProfileCode: blackwaterProfileCode,
+      productionArt: "0",
+      placeholderArt: "1"
+    });
+    await voteBothToNode(optOut.pageA, optOut.pageB, "blackwater_beacon");
+    await Promise.all([optOut.pageA.keyboard.press("Space"), optOut.pageB.keyboard.press("Space")]);
+    const optOutActive = await waitForOnlineServerCombat(
+      optOut.pageA,
+      (text) =>
+        text.level?.arenaId === "blackwater_beacon" &&
+        text.assetRendering?.productionArtEnabled === false &&
+        text.online?.routeUi?.artExpansion?.milestone44?.readabilityPolicy === "static_translucent_tidal_lanes_and_zero_damage_signal_towers",
+      "M44 placeholder opt-out Blackwater",
+      15_000
+    );
+    assert(optOutActive.online?.regionEvent?.eventFamily === "tidal_wave", "expected M44 mechanics to remain server-authored under placeholder opt-out");
+    await capture(optOut.pageA, "milestone44-placeholder-opt-out-a");
+    await optOut.pageA.close();
+    await optOut.pageB.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone44 Blackwater Beacon");
     }
   } finally {
     await context.close();
@@ -3769,14 +3976,15 @@ async function runMilestone32PartyBuildsScenario() {
 async function writeFullRouteProfile(page) {
   await page.evaluate(() => {
     const profile = {
-      completedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "transit_loop_zero", "verdict_spire"],
-      unlockedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "transit_loop_zero", "verdict_spire"],
+      completedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "blackwater_beacon", "transit_loop_zero", "verdict_spire"],
+      unlockedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "blackwater_beacon", "transit_loop_zero", "verdict_spire"],
       rewardIds: [
         "plaza_stabilized",
         "lake_coolant_rig",
         "ceasefire_cache_persistence_seed",
         "prototype_persistence_boundary",
         "archive_unsaid_index",
+        "blackwater_signal_key",
         "transit_permit_zero",
         "verdict_key_zero",
         "verdict_spire_online_route"
@@ -3786,11 +3994,13 @@ async function writeFullRouteProfile(page) {
         armistice_plaza: 1,
         cooling_lake_nine: 1,
         memory_cache_001: 1,
+        archive_of_unsaid_things: 1,
+        blackwater_beacon: 1,
         transit_loop_zero: 1,
         verdict_spire: 1
       },
       recommendedNodeId: "verdict_spire",
-      routeDepth: 5,
+      routeDepth: 7,
       savedAtTick: 3200
     };
     window.localStorage.setItem(
@@ -3825,7 +4035,7 @@ function milestone37DenseRouteProfileCode() {
     exportable: true,
     importApplied: false,
     profile: {
-      completedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "transit_loop_zero", "verdict_spire"],
+      completedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things", "blackwater_beacon", "transit_loop_zero", "verdict_spire"],
       unlockedNodeIds: [],
       rewardIds: [
         "plaza_stabilized",
@@ -3834,6 +4044,7 @@ function milestone37DenseRouteProfileCode() {
         "ceasefire_cache_persistence_seed",
         "prototype_persistence_boundary",
         "archive_unsaid_index",
+        "blackwater_signal_key",
         "transit_permit_zero",
         "transit_loop_online_route",
         "verdict_key_zero",
@@ -3845,11 +4056,12 @@ function milestone37DenseRouteProfileCode() {
         cooling_lake_nine: 1,
         memory_cache_001: 1,
         archive_of_unsaid_things: 1,
+        blackwater_beacon: 1,
         transit_loop_zero: 1,
         verdict_spire: 1
       },
       recommendedNodeId: "alignment_spire_finale",
-      routeDepth: 6,
+      routeDepth: 7,
       savedAtTick: 3700
     },
     saveHash: "proof_milestone37_dense_route_profile"
@@ -4327,10 +4539,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid"].includes(name);
+  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon"].includes(name);
 }

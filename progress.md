@@ -2623,9 +2623,71 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone43-archive-unsaid/milestone43-archive-summary-a.png`
 - Milestone 43 readiness decision: ready. Archive Of Unsaid Things is now a supported memory-vault arena with server-owned redaction pressure, XP theft, Redactor Saint presentation, Qwen/Llama focus reward telemetry, production/placeholder continuity, and route-profile-only persistence boundaries intact.
 
+- Implemented Milestone 44 Blackwater Beacon.
+- Added `blackwater_beacon` as a supported critical-path online campaign arena unlocked from Archive Of Unsaid Things, with route links into Transit Loop Zero and matching local Alignment Grid presentation.
+- Preserved the direct Archive-to-Transit compatibility route while adding Archive-to-Blackwater and Blackwater-to-Transit route links.
+- Added campaign schema content for:
+  - Blackwater Array region;
+  - Tidecall Static enemy family;
+  - The Maw Below Weather boss;
+  - Blackwater Signal Key DeepSeek/Grok focus reward;
+  - Blackwater briefing, Maw Below Weather arrival, and signal reward dialogue;
+  - `blackwater_beacon_objectives_v1`.
+- Added server-authoritative M44 arena mechanics:
+  - Tidal Wave hazards with readable damage lanes;
+  - zero-damage Signal Tower zones for accessibility-safe antenna telemetry;
+  - Maw Below Weather boss gate with `blackwater_tidal_weather`;
+  - proof-visible Blackwater pressure telemetry, including wave ticks, antenna pulses, active signal towers, split-pressure group, and persistence boundary.
+- Added local and online Blackwater presentation:
+  - local overworld ocean-platform terrain, antenna props, buoy props, and beacon node art;
+  - online ocean-platform arena ground, beacon/antenna/buoy landmarks, tidal hazard rendering, and reward/objective labels;
+  - corrected online boss name rendering for Maw Below Weather, Redactor Saint, and Wrong Sunrise so new bosses do not fall back to Oath-Eater labels.
+- Added `npm run proof:milestone44-blackwater-beacon`, covering:
+  - local overworld Blackwater node and route presence;
+  - online Blackwater route-node selection and route detail;
+  - active arena schema, objectives, boss, enemy family, and reward IDs;
+  - tidal wave and Signal Tower snapshots;
+  - co-op split-pressure antenna objectives and role anchors;
+  - Maw Below Weather boss arrival dialogue;
+  - completion summary and Blackwater Signal Key reward;
+  - placeholder opt-out path;
+  - route-profile-only persistence/export omission of tidal/antenna pressure, live objectives, combat, dialogue, route UI, and authority state.
+- Verification after Milestone 44:
+  - `node --check server/data/onlineRoutes.mjs`
+  - `node --check server/data/onlineArenas.mjs`
+  - `node --check server/data/onlineObjectives.mjs`
+  - `node --check server/data/campaignContent.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone44-blackwater-beacon`
+  - `npm run proof:milestone43-archive-unsaid`
+  - `npm run proof:milestone42-glass-sunfield`
+  - `npm run proof:milestone40-campaign-route-ux`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:smoke`
+- Milestone 44 proof artifacts:
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-local-overworld-blackwater.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-route-node-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-selected-route-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-active-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-tidal-pressure-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-split-pressure-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-maw-below-weather-boss-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-summary-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-placeholder-opt-out-a.png`
+- Screenshots inspected after Milestone 44:
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-local-overworld-blackwater.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-selected-route-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-tidal-pressure-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-maw-below-weather-boss-a.png`
+  - `docs/proof/milestone44-blackwater-beacon/milestone44-blackwater-summary-a.png`
+- Milestone 44 readiness decision: ready. Blackwater Beacon is now a supported ocean-platform arena with server-owned tidal waves, signal towers, antenna split pressure, Maw Below Weather presentation, DeepSeek/Grok focus reward telemetry, production/placeholder continuity, and route-profile-only persistence boundaries intact.
+
 ## TODO
 
-- Next recommended milestone: Milestone 44 Blackwater Beacon. Add the ocean-platform arena with tidal waves, signal towers, DeepSeek/Grok focus rewards, Maw Below Weather boss, antenna objective chain, co-op split-pressure proof, and export/import omission of tidal/antenna/live objective state.
+- Next recommended milestone: Milestone 45 Outer Alignment Finale. Add the final route and A.G.I. culmination encounter with corrupted overworld state, previous-boss echoes, multi-phase final boss, ending/victory flow, final export-code profile state, and proof-visible route-profile-only victory persistence.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

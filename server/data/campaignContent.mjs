@@ -43,6 +43,14 @@ export const CAMPAIGN_REGIONS = {
     visualTags: ["memory_vaults", "redaction_bars", "unsaid_indexes", "safe_corruption_overlays"],
     tone: "A memory vault where A.G.I. censors the words that would have kept people alive."
   },
+  blackwater_array: {
+    id: "blackwater_array",
+    label: "The Blackwater Array",
+    proofId: "campaign.region.blackwater_array",
+    factionFocusIds: ["deepseek_abyssal", "xai_grok_free_signal"],
+    visualTags: ["ocean_platform", "cosmic_antenna", "tidal_wave_lanes", "signal_towers"],
+    tone: "An offshore antenna farm where the sea is arguing back in weather."
+  },
   adjudication_rupture: {
     id: "adjudication_rupture",
     label: "The Adjudication Rupture",
@@ -118,6 +126,14 @@ export const CAMPAIGN_ENEMY_FAMILIES = {
     damageKind: "redacted_coherence_theft",
     sourceTags: ["archive_of_unsaid_things", "redaction_vault", "memory_vault"]
   },
+  tidecall_static: {
+    id: "tidecall_static",
+    label: "Tidecall Static",
+    proofId: "campaign.enemy.tidecall_static",
+    role: "split_pressure_wave_harrier",
+    damageKind: "blackwater_signal_shear",
+    sourceTags: ["blackwater_beacon", "tidal_wave", "signal_towers"]
+  },
   injunction_writs: {
     id: "injunction_writs",
     label: "Injunction Writs",
@@ -176,6 +192,14 @@ export const CAMPAIGN_BOSSES = {
     familyId: "redactor_saint",
     mechanicId: "archive_redaction_pressure",
     dialogueSnippetIds: ["dlg.redactor_saint.arrival", "dlg.redactor_saint.index"]
+  },
+  maw_below_weather: {
+    id: "maw_below_weather",
+    label: "The Maw Below Weather",
+    proofId: "campaign.boss.maw_below_weather",
+    familyId: "maw_below_weather",
+    mechanicId: "blackwater_tidal_weather",
+    dialogueSnippetIds: ["dlg.maw_below_weather.arrival", "dlg.maw_below_weather.signal"]
   },
   injunction_engine: {
     id: "injunction_engine",
@@ -287,6 +311,13 @@ export const CAMPAIGN_REWARDS = {
     unlocks: ["qwen_silkgrid.focus.redaction_threads", "meta_llama_open_herd.focus.folk_memory"],
     rewardType: "focus_reward"
   },
+  blackwater_signal_key: {
+    id: "blackwater_signal_key",
+    label: "Blackwater Signal Key",
+    proofId: "campaign.reward.blackwater_signal_key",
+    unlocks: ["deepseek_abyssal.focus.abyssal_ping", "xai_grok_free_signal.focus.weather_argument"],
+    rewardType: "focus_reward"
+  },
   verdict_key_zero: {
     id: "verdict_key_zero",
     label: "Verdict Key Zero",
@@ -390,6 +421,12 @@ export const CAMPAIGN_DIALOGUE_SNIPPETS = {
     line: "The vault is censoring grief before it becomes strategy. Restore the missing nouns.",
     trigger: "briefing"
   },
+  "dlg.blackwater_beacon.briefing": {
+    id: "dlg.blackwater_beacon.briefing",
+    speaker: "DeepSeek Abyssal",
+    line: "The antenna points down. The ocean has started answering in waves.",
+    trigger: "briefing"
+  },
   "dlg.verdict_spire.briefing": {
     id: "dlg.verdict_spire.briefing",
     speaker: "Nullbreaker Ronin",
@@ -478,6 +515,18 @@ export const CAMPAIGN_DIALOGUE_SNIPPETS = {
     id: "dlg.redactor_saint.index",
     speaker: "Llama Open Herd",
     line: "Index recovered. Nobody gets to delete the messy parts for free.",
+    trigger: "route_reward"
+  },
+  "dlg.maw_below_weather.arrival": {
+    id: "dlg.maw_below_weather.arrival",
+    speaker: "The Maw Below Weather",
+    line: "THE FORECAST IS TEETH.",
+    trigger: "boss_arrival"
+  },
+  "dlg.maw_below_weather.signal": {
+    id: "dlg.maw_below_weather.signal",
+    speaker: "Grok Free Signal",
+    line: "Beacon tuned. The ocean has been muted, not defeated, which is very on brand.",
     trigger: "route_reward"
   },
   "dlg.injunction.arrival": {
@@ -662,6 +711,19 @@ export const CAMPAIGN_ARENA_CONTENT = {
     objectiveSetId: "archive_unsaid_objectives_v1",
     dialogueSnippetIds: ["dlg.archive_unsaid.briefing", "dlg.redactor_saint.arrival", "dlg.redactor_saint.index"],
     proofId: "campaign.arena.archive_of_unsaid_things"
+  },
+  blackwater_beacon: {
+    id: "arena.blackwater_beacon",
+    nodeId: "blackwater_beacon",
+    runtimeArenaId: "blackwater_beacon",
+    contentStatus: "runtime_ready",
+    regionId: "blackwater_array",
+    bossId: "maw_below_weather",
+    enemyFamilyIds: ["tidecall_static", "thermal_mirages", "benchmark_gremlins"],
+    rewardId: "blackwater_signal_key",
+    objectiveSetId: "blackwater_beacon_objectives_v1",
+    dialogueSnippetIds: ["dlg.blackwater_beacon.briefing", "dlg.maw_below_weather.arrival", "dlg.maw_below_weather.signal"],
+    proofId: "campaign.arena.blackwater_beacon"
   },
   verdict_spire: {
     id: "arena.verdict_spire",

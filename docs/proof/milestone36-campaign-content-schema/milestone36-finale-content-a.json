@@ -101,7 +101,7 @@
     "productionAssets": 33
   },
   "player": {
-    "sessionId": "t3evsKx54",
+    "sessionId": "5yudbXxxc",
     "worldX": -1.6,
     "worldY": 1.1,
     "hp": 176,
@@ -112,8 +112,8 @@
   "online": {
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2605",
-    "roomId": "faYBvCaHZ",
-    "sessionId": "t3evsKx54",
+    "roomId": "d5bcGaLBE",
+    "sessionId": "5yudbXxxc",
     "lastError": "",
     "reconnectKey": "onward_a",
     "reconnect": {
@@ -248,6 +248,7 @@
           "armistice_plaza",
           "accord_relay",
           "archive_of_unsaid_things",
+          "blackwater_beacon",
           "cooling_lake_nine",
           "model_war_memorial",
           "armistice_camp",
@@ -274,6 +275,8 @@
           "route_cache_forge",
           "route_cache_archive_unsaid",
           "route_archive_unsaid_transit",
+          "route_archive_unsaid_blackwater",
+          "route_blackwater_transit",
           "route_relay_transit",
           "route_forge_transit",
           "route_cache_transit",
@@ -286,10 +289,11 @@
           "route_verdict_finale",
           "route_appeal_finale"
         ],
-        "criticalPathCount": 7,
+        "criticalPathCount": 8,
         "branchCount": 8,
         "rewardPreviewIds": [
           "archive_of_unsaid_things",
+          "blackwater_beacon",
           "model_war_memorial",
           "thermal_archive",
           "glass_sunfield",
@@ -351,8 +355,8 @@
           "labelPolicy": "selected_launchable_completed_and_unlocked_online_nodes_use_full_labels; sealed nodes use compact labels",
           "routeMarkerPolicy": "stable_and_selected_adjacent_markers_use_haloed_offset_production_sprites; distant locked routes are deemphasized",
           "nodeStatePolicy": "status_priority_completed_selected_launchable_locked_online_next",
-          "denseCampaignNodeCount": 15,
-          "denseCampaignRouteCount": 22,
+          "denseCampaignNodeCount": 16,
+          "denseCampaignRouteCount": 24,
           "fullLabelIds": [
             "armistice_plaza",
             "archive_of_unsaid_things",
@@ -368,7 +372,7 @@
             "appeal_court_ruins",
             "alignment_spire_finale"
           ],
-          "compactLabelCount": 2,
+          "compactLabelCount": 3,
           "selectedNodeStateLabel": "STABLE",
           "productionArtDefaultPresentation": "production_art_default_with_placeholder_opt_out"
         },
@@ -429,11 +433,25 @@
           "serverMechanicPolicy": "server_authoritative_redaction_pressure_and_xp_theft",
           "readabilityPolicy": "accessibility_safe_redaction_never_obscures_controls_or_proof_text",
           "persistenceBoundary": "route_profile_only_no_redaction_live_objectives_combat_or_authority_state"
+        },
+        "milestone44": {
+          "set": "milestone44_blackwater_beacon",
+          "nodeId": "blackwater_beacon",
+          "arenaId": "blackwater_beacon",
+          "bossId": "maw_below_weather",
+          "rewardId": "blackwater_signal_key",
+          "focusRewardUnlocks": [
+            "deepseek_abyssal.focus.abyssal_ping",
+            "xai_grok_free_signal.focus.weather_argument"
+          ],
+          "serverMechanicPolicy": "server_authoritative_tidal_waves_signal_towers_and_split_pressure",
+          "readabilityPolicy": "static_translucent_tidal_lanes_and_zero_damage_signal_towers",
+          "persistenceBoundary": "route_profile_only_no_tidal_antenna_live_objectives_combat_or_authority_state"
         }
       },
       "routeDepth": 8,
       "stableRouteCount": 15,
-      "totalRouteCount": 22,
+      "totalRouteCount": 24,
       "campaign": {
         "routeVersion": "campaign_route_v1",
         "actLabel": "Act I: The Armistice Grid",
@@ -442,6 +460,7 @@
           "cooling_lake_nine",
           "memory_cache_001",
           "archive_of_unsaid_things",
+          "blackwater_beacon",
           "transit_loop_zero",
           "verdict_spire",
           "alignment_spire_finale"
@@ -457,16 +476,16 @@
           "appeal_court_ruins"
         ],
         "finaleNodeId": "alignment_spire_finale",
-        "campaignNodeCount": 15,
-        "supportedCampaignNodeCount": 13,
+        "campaignNodeCount": 16,
+        "supportedCampaignNodeCount": 14,
         "contentSchema": {
           "policy": "campaign_content_schema_v1",
-          "arenaRecordCount": 15,
-          "routeNodeCount": 15,
-          "bossRecordCount": 8,
-          "enemyFamilyRecordCount": 9,
-          "rewardRecordCount": 17,
-          "dialogueSnippetCount": 31,
+          "arenaRecordCount": 16,
+          "routeNodeCount": 16,
+          "bossRecordCount": 9,
+          "enemyFamilyRecordCount": 10,
+          "rewardRecordCount": 18,
+          "dialogueSnippetCount": 34,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
           "missingNodeContentIds": [],
@@ -553,14 +572,14 @@
       "selectedOnlineSupported": true,
       "recommendedNodeId": "archive_of_unsaid_things",
       "rewardCount": 11,
-      "onlineNodeCount": 13
+      "onlineNodeCount": 14
     },
     "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
     "tick": 439,
-    "seconds": 0.24,
+    "seconds": 0.31,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "completed",
@@ -686,6 +705,7 @@
       "mechanicId": "alignment_court_breach",
       "readabilityPolicy": "standard_translucent_hazard_markers",
       "redactionPressure": null,
+      "blackwaterPressure": null,
       "eventCounter": 0,
       "active": false,
       "hazardZones": []
@@ -895,7 +915,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "pQpKNo5lN",
+          "sessionId": "uRYDZNvPx",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -904,7 +924,7 @@
           "connected": true
         },
         {
-          "sessionId": "t3evsKx54",
+          "sessionId": "5yudbXxxc",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1066,7 +1086,7 @@
       "subtitle": "The Act I route now reaches the Alien God Intelligence's first court.",
       "nodeId": "alignment_spire_finale",
       "arenaId": "alignment_spire_finale",
-      "seconds": 0.24,
+      "seconds": 0.31,
       "kills": 0,
       "collectedPickups": 0,
       "partyXp": 0,
@@ -1276,6 +1296,7 @@
           "cooling_lake_nine",
           "memory_cache_001",
           "archive_of_unsaid_things",
+          "blackwater_beacon",
           "transit_loop_zero",
           "verdict_spire",
           "alignment_spire_finale"
@@ -1291,16 +1312,16 @@
           "appeal_court_ruins"
         ],
         "finaleNodeId": "alignment_spire_finale",
-        "campaignNodeCount": 15,
-        "supportedCampaignNodeCount": 13,
+        "campaignNodeCount": 16,
+        "supportedCampaignNodeCount": 14,
         "contentSchema": {
           "policy": "campaign_content_schema_v1",
-          "arenaRecordCount": 15,
-          "routeNodeCount": 15,
-          "bossRecordCount": 8,
-          "enemyFamilyRecordCount": 9,
-          "rewardRecordCount": 17,
-          "dialogueSnippetCount": 31,
+          "arenaRecordCount": 16,
+          "routeNodeCount": 16,
+          "bossRecordCount": 9,
+          "enemyFamilyRecordCount": 10,
+          "rewardRecordCount": 18,
+          "dialogueSnippetCount": 34,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
           "missingNodeContentIds": [],
@@ -1318,7 +1339,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "pQpKNo5lN",
+          "sessionId": "uRYDZNvPx",
           "playerId": "player_0_onward_b",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
@@ -1326,7 +1347,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "t3evsKx54",
+          "sessionId": "5yudbXxxc",
           "playerId": "player_1_onward_a",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
@@ -1584,6 +1605,76 @@
           "worldX": 1,
           "worldY": 1,
           "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "blackwater_beacon",
+          "name": "Blackwater Beacon",
+          "nodeType": "Breach Arena",
+          "arenaId": "blackwater_beacon",
+          "objectiveSetId": "blackwater_beacon_objectives_v1",
+          "objectiveFlavor": "Antenna Chain",
+          "contentArenaId": "arena.blackwater_beacon",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "blackwater_beacon",
+          "regionId": "blackwater_array",
+          "regionProofId": "campaign.region.blackwater_array",
+          "bossId": "maw_below_weather",
+          "bossProofId": "campaign.boss.maw_below_weather",
+          "enemyFamilyIds": [
+            "tidecall_static",
+            "thermal_mirages",
+            "benchmark_gremlins"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.tidecall_static",
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.benchmark_gremlins"
+          ],
+          "rewardId": "blackwater_signal_key",
+          "rewardProofId": "campaign.reward.blackwater_signal_key",
+          "dialogueSnippetIds": [
+            "dlg.blackwater_beacon.briefing",
+            "dlg.maw_below_weather.arrival",
+            "dlg.maw_below_weather.signal"
+          ],
+          "dialogueProofIds": [
+            "dlg.blackwater_beacon.briefing",
+            "dlg.maw_below_weather.arrival",
+            "dlg.maw_below_weather.signal"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.blackwater_beacon.briefing",
+              "proofId": "dlg.blackwater_beacon.briefing",
+              "speaker": "DeepSeek Abyssal",
+              "line": "The antenna points down. The ocean has started answering in waves.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.maw_below_weather.arrival",
+              "proofId": "dlg.maw_below_weather.arrival",
+              "speaker": "The Maw Below Weather",
+              "line": "THE FORECAST IS TEETH.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.maw_below_weather.signal",
+              "proofId": "dlg.maw_below_weather.signal",
+              "speaker": "Grok Free Signal",
+              "line": "Beacon tuned. The ocean has been muted, not defeated, which is very on brand.",
+              "trigger": "route_reward"
+            }
+          ],
+          "proofId": "campaign.arena.blackwater_beacon",
+          "routeBiome": "blackwater_ocean_platform",
+          "campaignAct": 1,
+          "campaignTier": 4,
+          "campaignCriticalPath": true,
+          "worldX": 4,
+          "worldY": -4,
+          "unlocked": false,
           "completed": false,
           "onlineSupported": true
         },
@@ -2429,6 +2520,18 @@
         {
           "id": "route_archive_unsaid_transit",
           "from": "archive_of_unsaid_things",
+          "to": "transit_loop_zero",
+          "state": "unstable"
+        },
+        {
+          "id": "route_archive_unsaid_blackwater",
+          "from": "archive_of_unsaid_things",
+          "to": "blackwater_beacon",
+          "state": "unstable"
+        },
+        {
+          "id": "route_blackwater_transit",
+          "from": "blackwater_beacon",
           "to": "transit_loop_zero",
           "state": "unstable"
         },
@@ -2618,7 +2721,7 @@
   },
   "players": [
     {
-      "sessionId": "pQpKNo5lN",
+      "sessionId": "uRYDZNvPx",
       "playerId": "player_0_onward_b",
       "slot": 0,
       "label": "P1",
@@ -2694,10 +2797,10 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": false,
-      "inputSequence": 9
+      "inputSequence": 11
     },
     {
-      "sessionId": "t3evsKx54",
+      "sessionId": "5yudbXxxc",
       "playerId": "player_1_onward_a",
       "slot": 1,
       "label": "P2",
@@ -2809,6 +2912,7 @@
           "cooling_lake_nine",
           "memory_cache_001",
           "archive_of_unsaid_things",
+          "blackwater_beacon",
           "transit_loop_zero",
           "verdict_spire",
           "alignment_spire_finale"
@@ -2824,16 +2928,16 @@
           "appeal_court_ruins"
         ],
         "finaleNodeId": "alignment_spire_finale",
-        "campaignNodeCount": 15,
-        "supportedCampaignNodeCount": 13,
+        "campaignNodeCount": 16,
+        "supportedCampaignNodeCount": 14,
         "contentSchema": {
           "policy": "campaign_content_schema_v1",
-          "arenaRecordCount": 15,
-          "routeNodeCount": 15,
-          "bossRecordCount": 8,
-          "enemyFamilyRecordCount": 9,
-          "rewardRecordCount": 17,
-          "dialogueSnippetCount": 31,
+          "arenaRecordCount": 16,
+          "routeNodeCount": 16,
+          "bossRecordCount": 9,
+          "enemyFamilyRecordCount": 10,
+          "rewardRecordCount": 18,
+          "dialogueSnippetCount": 34,
           "dialoguePresentationPolicy": "campaign_dialogue_runtime_snapshot_only_v1",
           "dialoguePersistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
           "missingNodeContentIds": [],
@@ -2851,7 +2955,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "pQpKNo5lN",
+          "sessionId": "uRYDZNvPx",
           "playerId": "player_0_onward_b",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
@@ -2859,7 +2963,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "t3evsKx54",
+          "sessionId": "5yudbXxxc",
           "playerId": "player_1_onward_a",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
@@ -3117,6 +3221,76 @@
           "worldX": 1,
           "worldY": 1,
           "unlocked": true,
+          "completed": false,
+          "onlineSupported": true
+        },
+        {
+          "id": "blackwater_beacon",
+          "name": "Blackwater Beacon",
+          "nodeType": "Breach Arena",
+          "arenaId": "blackwater_beacon",
+          "objectiveSetId": "blackwater_beacon_objectives_v1",
+          "objectiveFlavor": "Antenna Chain",
+          "contentArenaId": "arena.blackwater_beacon",
+          "contentStatus": "runtime_ready",
+          "runtimeArenaId": "blackwater_beacon",
+          "regionId": "blackwater_array",
+          "regionProofId": "campaign.region.blackwater_array",
+          "bossId": "maw_below_weather",
+          "bossProofId": "campaign.boss.maw_below_weather",
+          "enemyFamilyIds": [
+            "tidecall_static",
+            "thermal_mirages",
+            "benchmark_gremlins"
+          ],
+          "enemyProofIds": [
+            "campaign.enemy.tidecall_static",
+            "campaign.enemy.thermal_mirages",
+            "campaign.enemy.benchmark_gremlins"
+          ],
+          "rewardId": "blackwater_signal_key",
+          "rewardProofId": "campaign.reward.blackwater_signal_key",
+          "dialogueSnippetIds": [
+            "dlg.blackwater_beacon.briefing",
+            "dlg.maw_below_weather.arrival",
+            "dlg.maw_below_weather.signal"
+          ],
+          "dialogueProofIds": [
+            "dlg.blackwater_beacon.briefing",
+            "dlg.maw_below_weather.arrival",
+            "dlg.maw_below_weather.signal"
+          ],
+          "dialogueSnippets": [
+            {
+              "id": "dlg.blackwater_beacon.briefing",
+              "proofId": "dlg.blackwater_beacon.briefing",
+              "speaker": "DeepSeek Abyssal",
+              "line": "The antenna points down. The ocean has started answering in waves.",
+              "trigger": "briefing"
+            },
+            {
+              "id": "dlg.maw_below_weather.arrival",
+              "proofId": "dlg.maw_below_weather.arrival",
+              "speaker": "The Maw Below Weather",
+              "line": "THE FORECAST IS TEETH.",
+              "trigger": "boss_arrival"
+            },
+            {
+              "id": "dlg.maw_below_weather.signal",
+              "proofId": "dlg.maw_below_weather.signal",
+              "speaker": "Grok Free Signal",
+              "line": "Beacon tuned. The ocean has been muted, not defeated, which is very on brand.",
+              "trigger": "route_reward"
+            }
+          ],
+          "proofId": "campaign.arena.blackwater_beacon",
+          "routeBiome": "blackwater_ocean_platform",
+          "campaignAct": 1,
+          "campaignTier": 4,
+          "campaignCriticalPath": true,
+          "worldX": 4,
+          "worldY": -4,
+          "unlocked": false,
           "completed": false,
           "onlineSupported": true
         },
@@ -3962,6 +4136,18 @@
         {
           "id": "route_archive_unsaid_transit",
           "from": "archive_of_unsaid_things",
+          "to": "transit_loop_zero",
+          "state": "unstable"
+        },
+        {
+          "id": "route_archive_unsaid_blackwater",
+          "from": "archive_of_unsaid_things",
+          "to": "blackwater_beacon",
+          "state": "unstable"
+        },
+        {
+          "id": "route_blackwater_transit",
+          "from": "blackwater_beacon",
           "to": "transit_loop_zero",
           "state": "unstable"
         },
@@ -4184,6 +4370,7 @@
       "mechanicId": "alignment_court_breach",
       "readabilityPolicy": "standard_translucent_hazard_markers",
       "redactionPressure": null,
+      "blackwaterPressure": null,
       "eventCounter": 0,
       "active": false,
       "hazardZones": []
@@ -4310,7 +4497,7 @@
       "subtitle": "The Act I route now reaches the Alien God Intelligence's first court.",
       "nodeId": "alignment_spire_finale",
       "arenaId": "alignment_spire_finale",
-      "seconds": 0.24,
+      "seconds": 0.31,
       "kills": 0,
       "collectedPickups": 0,
       "partyXp": 0,
@@ -4552,8 +4739,8 @@
       "id": 1,
       "familyId": "injunction_writs",
       "sourceRegionId": "alignment_spire_injunction_writs",
-      "worldX": 26.21,
-      "worldY": 11.4,
+      "worldX": 26.11,
+      "worldY": 11.35,
       "hp": 36,
       "boss": false
     },
@@ -4561,8 +4748,8 @@
       "id": 2,
       "familyId": "injunction_writs",
       "sourceRegionId": "alignment_spire_injunction_writs",
-      "worldX": 19.98,
-      "worldY": 10.01,
+      "worldX": 19.89,
+      "worldY": 9.97,
       "hp": 36,
       "boss": false
     }
@@ -4571,8 +4758,8 @@
   "projectiles": [
     {
       "id": 1,
-      "ownerSessionId": "t3evsKx54",
-      "worldX": -1.02,
+      "ownerSessionId": "5yudbXxxc",
+      "worldX": -1.01,
       "worldY": 1.34,
       "velocityX": 8.5,
       "velocityY": 3.51,

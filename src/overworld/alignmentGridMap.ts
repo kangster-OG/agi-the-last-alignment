@@ -16,7 +16,7 @@ export interface AlignmentGridNode {
   theme: string;
   arenaId: string;
   unlocks: string[];
-  visualKind: "plaza" | "relay" | "lake" | "camp" | "transit" | "cache" | "spire" | "sunfield" | "archive";
+  visualKind: "plaza" | "relay" | "lake" | "camp" | "transit" | "cache" | "spire" | "sunfield" | "archive" | "beacon";
   regionLabel: string;
   compactLabel?: string;
   labelOffsetX?: number;
@@ -51,7 +51,7 @@ export interface AlignmentGridPropCluster {
   spacingY: number;
   color: number;
   accent: number;
-  kind: "barricade" | "tower" | "tent" | "server_buoy" | "rail_sign" | "memory_shard" | "verdict_pylon" | "solar_mirror" | "redaction_stack";
+  kind: "barricade" | "tower" | "tent" | "server_buoy" | "rail_sign" | "memory_shard" | "verdict_pylon" | "solar_mirror" | "redaction_stack" | "antenna";
 }
 
 export interface AlignmentGridMap {
@@ -150,7 +150,7 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       worldY: 2,
       theme: "flickering treaty archive",
       arenaId: "memory_cache_001",
-      unlocks: ["guardrail_forge", "transit_loop_zero"],
+      unlocks: ["guardrail_forge", "archive_of_unsaid_things", "transit_loop_zero"],
       visualKind: "cache",
       regionLabel: "Memory",
       compactLabel: "CACHE",
@@ -165,12 +165,27 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       worldY: 1,
       theme: "memory vault where black bars try to steal coherence",
       arenaId: "archive_of_unsaid_things",
-      unlocks: ["transit_loop_zero"],
+      unlocks: ["blackwater_beacon", "transit_loop_zero"],
       visualKind: "archive",
       regionLabel: "Redaction Archive",
       compactLabel: "ARCHIVE",
       labelOffsetX: -12,
       labelOffsetY: -8
+    },
+    {
+      id: "blackwater_beacon",
+      name: "Blackwater Beacon",
+      nodeType: "Breach Arena",
+      worldX: 4,
+      worldY: -4,
+      theme: "ocean platform and cosmic antenna pointing the wrong way",
+      arenaId: "blackwater_beacon",
+      unlocks: ["transit_loop_zero"],
+      visualKind: "beacon",
+      regionLabel: "Blackwater Array",
+      compactLabel: "BEACON",
+      labelOffsetX: 8,
+      labelOffsetY: -14
     },
     {
       id: "thermal_archive",
@@ -405,6 +420,26 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       ]
     },
     {
+      id: "route_archive_unsaid_blackwater",
+      from: "archive_of_unsaid_things",
+      to: "blackwater_beacon",
+      label: "Blackwater Causeway",
+      checkpoints: [
+        { worldX: 1.8, worldY: -0.6 },
+        { worldX: 3.1, worldY: -2.4 }
+      ]
+    },
+    {
+      id: "route_blackwater_transit",
+      from: "blackwater_beacon",
+      to: "transit_loop_zero",
+      label: "Signal Ferry",
+      checkpoints: [
+        { worldX: 5.1, worldY: -3.9 },
+        { worldX: 6.2, worldY: -3.0 }
+      ]
+    },
+    {
       id: "route_relay_transit",
       from: "accord_relay",
       to: "transit_loop_zero",
@@ -523,6 +558,7 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     { id: "cooling_water", minX: -12, maxX: -5, minY: 4, maxY: 11, colorA: 0x164d61, colorB: 0x123f52 },
     { id: "camp_ground", minX: -3, maxX: 3, minY: 5, maxY: 10, colorA: 0x574c42, colorB: 0x493f38 },
     { id: "transit_ruins", minX: 4, maxX: 11, minY: -7, maxY: 2, colorA: 0x383c49, colorB: 0x303441 },
+    { id: "blackwater_array", minX: 1, maxX: 8, minY: -8, maxY: -1, colorA: 0x164d61, colorB: 0x0f2b3b },
     { id: "glass_sunfield", minX: 4, maxX: 10, minY: 6, maxY: 12, colorA: 0x5a5746, colorB: 0x3f4952 },
     { id: "redaction_archive", minX: -1, maxX: 4, minY: -1, maxY: 4, colorA: 0x2c3141, colorB: 0x111820 },
     { id: "archive_field", minX: -12, maxX: 0, minY: 0, maxY: 4, colorA: 0x3f3756, colorB: 0x332d49 },
@@ -536,6 +572,8 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     { id: "camp_tents", worldX: 0.2, worldY: 8.5, rows: 2, cols: 4, spacingX: 1.3, spacingY: 1.2, color: 0x69584c, accent: 0xfff4d6, kind: "tent" },
     { id: "transit_signs", worldX: 7.6, worldY: -4.0, rows: 2, cols: 4, spacingX: 1.2, spacingY: 1.2, color: 0x303441, accent: 0x7b61ff, kind: "rail_sign" },
     { id: "schedule_signs", worldX: 10.5, worldY: -7.0, rows: 2, cols: 4, spacingX: 1.2, spacingY: 1.2, color: 0x303441, accent: 0xffd166, kind: "rail_sign" },
+    { id: "blackwater_antennas", worldX: 4.4, worldY: -5.5, rows: 2, cols: 3, spacingX: 1.2, spacingY: 1.2, color: 0x203849, accent: 0x64e0b4, kind: "antenna" },
+    { id: "blackwater_buoys", worldX: 7.5, worldY: -2.6, rows: 2, cols: 3, spacingX: 1.2, spacingY: 1.2, color: 0x164d61, accent: 0xffd166, kind: "server_buoy" },
     { id: "sunfield_mirrors", worldX: 7.1, worldY: 9.2, rows: 2, cols: 4, spacingX: 1.2, spacingY: 1.1, color: 0x3f4952, accent: 0xffd166, kind: "solar_mirror" },
     { id: "unsaid_redactions", worldX: 1.1, worldY: 1.4, rows: 2, cols: 4, spacingX: 1.1, spacingY: 1.1, color: 0x111820, accent: 0xfff4d6, kind: "redaction_stack" },
     { id: "cache_shards", worldX: -3.4, worldY: 2.4, rows: 2, cols: 4, spacingX: 1.1, spacingY: 1.1, color: 0x332d49, accent: 0x45aaf2, kind: "memory_shard" },

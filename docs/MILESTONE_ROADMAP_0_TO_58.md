@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-43 are complete. Milestone 44 is next.
+Current repo status as of May 1, 2026: Milestones 0-44 are complete. Milestone 45 is next.
 
 ## Non-Negotiable Continuity
 
@@ -456,21 +456,29 @@ Readiness: complete.
 
 ### M44: Blackwater Beacon
 
-Goal: add the ocean-platform arena.
+Added the ocean-platform arena as the next critical-path route after Archive Of Unsaid Things.
 
-Expected scope:
+Delivered scope:
 
-- tidal waves;
-- signal towers;
-- DeepSeek/Grok focus rewards;
-- Maw Below Weather boss;
-- antenna objective chain;
-- co-op split-pressure proofs.
+- added `blackwater_beacon` to the online route graph and local Alignment Grid, with Archive-to-Blackwater and Blackwater-to-Transit route links while preserving the direct Archive-to-Transit compatibility route;
+- added campaign schema content for the Blackwater Array region, Tidecall Static enemy family, Maw Below Weather boss, Blackwater Signal Key reward, briefing/boss/reward dialogue, and objective set;
+- added server-authoritative tidal wave hazards with zero-damage Signal Tower readability markers and proof-visible Blackwater pressure telemetry;
+- added antenna/signal split-pressure objectives using existing server role-pressure authority;
+- added DeepSeek/Grok focus reward telemetry;
+- added local overworld Blackwater terrain/antenna/buoy presentation and online ocean-platform rendering;
+- corrected online boss name rendering for Maw Below Weather, Redactor Saint, and Wrong Sunrise so new bosses do not fall back to Oath-Eater labels;
+- preserved route-profile-only export/import boundaries for tidal, antenna, objective, combat, dialogue, route UI, and authority state.
 
-Proof expectations:
+Proof coverage:
 
-- split-pressure objectives remain server-authoritative;
-- tidal/antenna state is readable in solo/local/online snapshots.
+- `npm run proof:milestone44-blackwater-beacon`
+- `npm run proof:milestone43-archive-unsaid`
+- `npm run proof:milestone42-glass-sunfield`
+- `npm run proof:milestone40-campaign-route-ux`
+- `npm run proof:milestone36-campaign-content-schema`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M45: Outer Alignment Finale
 
