@@ -625,6 +625,7 @@ Goal: produce cleaned terrain, prop, hazard, enemy, and boss atlases for all eig
 Implemented:
 
 - added original transparent runtime atlases for campaign terrain, objective props, hazards, expanded enemy families, boss sprites, and boss portraits;
+- replaced the broad local/Pillow-authored M50 terrain, prop, enemy, boss, boss-portrait, and hazard atlases with PixelLab Create Object raw batches plus deterministic cleanup/packing, preserving every existing runtime frame contract;
 - wired the M50 art set into online campaign arena terrain, landmark props, enemy rendering, boss rendering, boss portrait presentation, region-event markers, and boss-event markers;
 - preserved production-art fallback ordering and placeholder opt-outs;
 - updated `assets/asset_manifest.json` and `ART_PROVENANCE.md` for all six new production atlases;
@@ -647,6 +648,7 @@ Goal: make the Alignment Grid feel like a true miniature world.
 Implemented:
 
 - added named biome regions, dense micro-landmarks, and richer terrain identity across the Alignment Grid;
+- replaced the broad local/Pillow-authored Alignment Grid and online route landmark atlases used by the M51 diorama with PixelLab Create Object raw batches plus deterministic cleanup/packing;
 - added local overworld route-state pulse markers, adjacent route labels, biome labels, and proof-visible diorama telemetry;
 - added online party-grid biome/micro-landmark rendering, vote rings, ready counts, and M51 route UI telemetry;
 - exposed finale corruption state as dormant, reachable teeth, or contained without persisting live UI state;

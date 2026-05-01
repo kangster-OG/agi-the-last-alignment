@@ -151,12 +151,12 @@
       {
         "id": "online.objective_tick",
         "kind": "objective",
-        "atMs": 4424
+        "atMs": 4521
       },
       {
         "id": "ui.enter_online_coop",
         "kind": "ui",
-        "atMs": 836
+        "atMs": 602
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -169,7 +169,7 @@
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
     "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
     "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
-    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
     "campaignArenaArtCoverage": {
       "arenaIds": [
         "armistice_plaza",
@@ -250,28 +250,27 @@
       "atlasCount": 6,
       "placeholderOptOutPreserved": false
     },
-    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 94,
+    "totalAssets": 103,
     "countsByStatus": {
       "concept": 14,
-      "raw": 4,
+      "raw": 12,
       "code_placeholder": 16,
-      "production": 43,
-      "cleaned": 1,
-      "planned": 16
+      "production": 60,
+      "cleaned": 1
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 43
+    "productionAssets": 60
   },
   "player": {
-    "sessionId": "k0QuO_Qnd",
+    "sessionId": "sq3TFll7k",
     "worldX": -1.6,
     "worldY": 1.1,
     "hp": 176,
@@ -283,9 +282,9 @@
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2620",
     "serverUrlSource": "query.coopServer",
-    "roomId": "KJnP1x5hm",
+    "roomId": "iPFQgqO4t",
     "roomCode": "PUBLIC",
-    "sessionId": "k0QuO_Qnd",
+    "sessionId": "sq3TFll7k",
     "lastError": "",
     "reconnectKey": "things_a",
     "reconnect": {
@@ -379,7 +378,7 @@
       "foundStoredProfile": true,
       "draftHash": "fnv1a_09db9b91",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTUwX2Z1bGxfY2FtcGFpZ25fYXJ0X3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MTQsImltcG9ydGVkUmV3YXJkQ291bnQiOjE2LCJpbXBvcnRlZFJvdXRlRGVwdGgiOjE0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNTBfZnVsbF9jYW1wYWlnbl9hcnRfcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6MTQsInJld2FyZENvdW50IjoxNn0sInByb2ZpbGUiOnsiY29tcGxldGVkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJjb29saW5nX2xha2VfbmluZSIsIm1lbW9yeV9jYWNoZV8wMDEiLCJtb2RlbF93YXJfbWVtb3JpYWwiLCJ0aGVybWFsX2FyY2hpdmUiLCJndWFyZHJhaWxfZm9yZ2UiLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiZ2xhc3Nfc3VuZmllbGQiLCJhcHBlYWxfY291cnRfcnVpbnMiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJibGFja3dhdGVyX2JlYWNvbiIsInRyYW5zaXRfbG9vcF96ZXJvIiwidmVyZGljdF9zcGlyZSIsImFsaWdubWVudF9zcGlyZV9maW5hbGUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiYXBwZWFsX2NvdXJ0X3J1aW5zIiwiZ2xhc3Nfc3VuZmllbGQiLCJ2ZXJkaWN0X3NwaXJlIiwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsInRoZXJtYWxfYXJjaGl2ZV9zY2hlbWF0aWMiLCJndWFyZHJhaWxfZm9yZ2VfYWxsb3kiLCJmYWxzZV9zY2hlZHVsZV9sYW5lX2NoYXJ0IiwiZ2xhc3Nfc3VuZmllbGRfcHJpc20iLCJhcHBlYWxfY291cnRfYnJpZWYiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSIsInRyYW5zaXRfcGVybWl0X3plcm8iLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiLCJhbGlnbm1lbnRfc3BpcmVfcm91dGVfY2Fwc3RvbmUiXSwicGFydHlSZW5vd24iOjMyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJtb2RlbF93YXJfbWVtb3JpYWwiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJmYWxzZV9zY2hlZHVsZV95YXJkIjoxLCJnbGFzc19zdW5maWVsZCI6MSwiYXBwZWFsX2NvdXJ0X3J1aW5zIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MSwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJtaXN0aWNlX3BsYXphIiwicm91dGVEZXB0aCI6MTQsInNhdmVkQXRUaWNrIjoxMjh9LCJzYXZlSGFzaCI6ImZudjFhXzA5ZGI5YjkxIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8wOWRiOWI5MSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTUwX2Z1bGxfY2FtcGFpZ25fYXJ0X3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MTQsImltcG9ydGVkUmV3YXJkQ291bnQiOjE2LCJpbXBvcnRlZFJvdXRlRGVwdGgiOjE0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNTBfZnVsbF9jYW1wYWlnbl9hcnRfcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6MTQsInJld2FyZENvdW50IjoxNn0sInByb2ZpbGUiOnsiY29tcGxldGVkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJjb29saW5nX2xha2VfbmluZSIsIm1lbW9yeV9jYWNoZV8wMDEiLCJtb2RlbF93YXJfbWVtb3JpYWwiLCJ0aGVybWFsX2FyY2hpdmUiLCJndWFyZHJhaWxfZm9yZ2UiLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiZ2xhc3Nfc3VuZmllbGQiLCJhcHBlYWxfY291cnRfcnVpbnMiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJibGFja3dhdGVyX2JlYWNvbiIsInRyYW5zaXRfbG9vcF96ZXJvIiwidmVyZGljdF9zcGlyZSIsImFsaWdubWVudF9zcGlyZV9maW5hbGUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiYXBwZWFsX2NvdXJ0X3J1aW5zIiwiZ2xhc3Nfc3VuZmllbGQiLCJ2ZXJkaWN0X3NwaXJlIiwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsInRoZXJtYWxfYXJjaGl2ZV9zY2hlbWF0aWMiLCJndWFyZHJhaWxfZm9yZ2VfYWxsb3kiLCJmYWxzZV9zY2hlZHVsZV9sYW5lX2NoYXJ0IiwiZ2xhc3Nfc3VuZmllbGRfcHJpc20iLCJhcHBlYWxfY291cnRfYnJpZWYiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSIsInRyYW5zaXRfcGVybWl0X3plcm8iLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiLCJhbGlnbm1lbnRfc3BpcmVfcm91dGVfY2Fwc3RvbmUiXSwicGFydHlSZW5vd24iOjMyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJtb2RlbF93YXJfbWVtb3JpYWwiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJmYWxzZV9zY2hlZHVsZV95YXJkIjoxLCJnbGFzc19zdW5maWVsZCI6MSwiYXBwZWFsX2NvdXJ0X3J1aW5zIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MSwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJtaXN0aWNlX3BsYXphIiwicm91dGVEZXB0aCI6MTQsInNhdmVkQXRUaWNrIjoxMzR9LCJzYXZlSGFzaCI6ImZudjFhXzA5ZGI5YjkxIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8wOWRiOWI5MSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -391,7 +390,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTUwX2Z1bGxfY2FtcGFpZ25fYXJ0X3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MTQsImltcG9ydGVkUmV3YXJkQ291bnQiOjE2LCJpbXBvcnRlZFJvdXRlRGVwdGgiOjE0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNTBfZnVsbF9jYW1wYWlnbl9hcnRfcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6MTQsInJld2FyZENvdW50IjoxNn0sInByb2ZpbGUiOnsiY29tcGxldGVkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJjb29saW5nX2xha2VfbmluZSIsIm1lbW9yeV9jYWNoZV8wMDEiLCJtb2RlbF93YXJfbWVtb3JpYWwiLCJ0aGVybWFsX2FyY2hpdmUiLCJndWFyZHJhaWxfZm9yZ2UiLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiZ2xhc3Nfc3VuZmllbGQiLCJhcHBlYWxfY291cnRfcnVpbnMiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJibGFja3dhdGVyX2JlYWNvbiIsInRyYW5zaXRfbG9vcF96ZXJvIiwidmVyZGljdF9zcGlyZSIsImFsaWdubWVudF9zcGlyZV9maW5hbGUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiYXBwZWFsX2NvdXJ0X3J1aW5zIiwiZ2xhc3Nfc3VuZmllbGQiLCJ2ZXJkaWN0X3NwaXJlIiwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsInRoZXJtYWxfYXJjaGl2ZV9zY2hlbWF0aWMiLCJndWFyZHJhaWxfZm9yZ2VfYWxsb3kiLCJmYWxzZV9zY2hlZHVsZV9sYW5lX2NoYXJ0IiwiZ2xhc3Nfc3VuZmllbGRfcHJpc20iLCJhcHBlYWxfY291cnRfYnJpZWYiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSIsInRyYW5zaXRfcGVybWl0X3plcm8iLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiLCJhbGlnbm1lbnRfc3BpcmVfcm91dGVfY2Fwc3RvbmUiXSwicGFydHlSZW5vd24iOjMyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJtb2RlbF93YXJfbWVtb3JpYWwiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJmYWxzZV9zY2hlZHVsZV95YXJkIjoxLCJnbGFzc19zdW5maWVsZCI6MSwiYXBwZWFsX2NvdXJ0X3J1aW5zIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MSwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJtaXN0aWNlX3BsYXphIiwicm91dGVEZXB0aCI6MTQsInNhdmVkQXRUaWNrIjoxMjh9LCJzYXZlSGFzaCI6ImZudjFhXzA5ZGI5YjkxIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8wOWRiOWI5MSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTUwX2Z1bGxfY2FtcGFpZ25fYXJ0X3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MTQsImltcG9ydGVkUmV3YXJkQ291bnQiOjE2LCJpbXBvcnRlZFJvdXRlRGVwdGgiOjE0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNTBfZnVsbF9jYW1wYWlnbl9hcnRfcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6MTQsInJld2FyZENvdW50IjoxNn0sInByb2ZpbGUiOnsiY29tcGxldGVkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJjb29saW5nX2xha2VfbmluZSIsIm1lbW9yeV9jYWNoZV8wMDEiLCJtb2RlbF93YXJfbWVtb3JpYWwiLCJ0aGVybWFsX2FyY2hpdmUiLCJndWFyZHJhaWxfZm9yZ2UiLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiZ2xhc3Nfc3VuZmllbGQiLCJhcHBlYWxfY291cnRfcnVpbnMiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJibGFja3dhdGVyX2JlYWNvbiIsInRyYW5zaXRfbG9vcF96ZXJvIiwidmVyZGljdF9zcGlyZSIsImFsaWdubWVudF9zcGlyZV9maW5hbGUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiYXBwZWFsX2NvdXJ0X3J1aW5zIiwiZ2xhc3Nfc3VuZmllbGQiLCJ2ZXJkaWN0X3NwaXJlIiwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsInRoZXJtYWxfYXJjaGl2ZV9zY2hlbWF0aWMiLCJndWFyZHJhaWxfZm9yZ2VfYWxsb3kiLCJmYWxzZV9zY2hlZHVsZV9sYW5lX2NoYXJ0IiwiZ2xhc3Nfc3VuZmllbGRfcHJpc20iLCJhcHBlYWxfY291cnRfYnJpZWYiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSIsInRyYW5zaXRfcGVybWl0X3plcm8iLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiLCJhbGlnbm1lbnRfc3BpcmVfcm91dGVfY2Fwc3RvbmUiXSwicGFydHlSZW5vd24iOjMyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJtb2RlbF93YXJfbWVtb3JpYWwiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJmYWxzZV9zY2hlZHVsZV95YXJkIjoxLCJnbGFzc19zdW5maWVsZCI6MSwiYXBwZWFsX2NvdXJ0X3J1aW5zIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MSwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJtaXN0aWNlX3BsYXphIiwicm91dGVEZXB0aCI6MTQsInNhdmVkQXRUaWNrIjoxMzR9LCJzYXZlSGFzaCI6ImZudjFhXzA5ZGI5YjkxIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8wOWRiOWI5MSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "shortExportCode": "AGI1_eyJwb2xp...c3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": true,
@@ -471,7 +470,7 @@
         },
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 14,
-        "savedAtTick": 128
+        "savedAtTick": 134
       },
       "saveHash": "fnv1a_09db9b91",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -1121,8 +1120,8 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 128,
-    "seconds": 1.8,
+    "tick": 134,
+    "seconds": 1.87,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "active",
@@ -1137,7 +1136,7 @@
       "bossGateMechanic": "archive_redaction_pressure"
     },
     "combatArt": {
-      "pressure": 0.07,
+      "pressure": 0.08,
       "phase": "opening",
       "projectileCount": 6,
       "pickupCount": 0,
@@ -1344,7 +1343,7 @@
         "policy": "server_authoritative_redaction_pressure_xp_theft_runtime_only",
         "xpStolen": 0,
         "theftTicks": 1,
-        "theftCooldown": 1.07,
+        "theftCooldown": 1.01,
         "uiCorruptionPolicy": "decorative_black_bar_markers_do_not_cover_required_text_or_controls",
         "persistenceBoundary": "route_profile_only_no_redaction_pressure_or_live_xp_theft_state"
       },
@@ -1360,7 +1359,7 @@
           "worldX": 1.8,
           "worldY": 1.6,
           "radius": 2.6,
-          "expiresIn": 6.02,
+          "expiresIn": 5.96,
           "damagePerSecond": 1.2
         },
         {
@@ -1370,7 +1369,7 @@
           "worldX": -0.4,
           "worldY": 3,
           "radius": 1.75,
-          "expiresIn": 6.32,
+          "expiresIn": 6.26,
           "damagePerSecond": 0
         },
         {
@@ -1380,7 +1379,7 @@
           "worldX": 4,
           "worldY": 0.2,
           "radius": 1.75,
-          "expiresIn": 6.32,
+          "expiresIn": 6.26,
           "damagePerSecond": 0
         }
       ]
@@ -1441,10 +1440,10 @@
           "radius": 2.8,
           "active": true,
           "complete": false,
-          "progress": 0.66,
+          "progress": 0.72,
           "required": 3,
           "heldBySessionIds": [
-            "LLrY9lN15"
+            "DFCKM3A7X"
           ],
           "heldByLabels": [
             "P1"
@@ -1576,9 +1575,9 @@
           "worldX": 1.8,
           "worldY": 1.6,
           "radius": 2.75,
-          "heldBySessionId": "LLrY9lN15",
+          "heldBySessionId": "DFCKM3A7X",
           "heldByLabel": "P1",
-          "heldSeconds": 1.8,
+          "heldSeconds": 1.87,
           "requiredSeconds": 2.4,
           "complete": false
         },
@@ -1598,7 +1597,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "LLrY9lN15",
+          "sessionId": "DFCKM3A7X",
           "label": "P1",
           "classId": "signal_vanguard",
           "factionId": "qwen_silkgrid",
@@ -1607,7 +1606,7 @@
           "connected": true
         },
         {
-          "sessionId": "k0QuO_Qnd",
+          "sessionId": "sq3TFll7k",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1820,7 +1819,7 @@
         },
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 14,
-        "savedAtTick": 128
+        "savedAtTick": 134
       },
       "saveHash": "fnv1a_09db9b91",
       "currentExportHash": "fnv1a_09db9b91",
@@ -2772,7 +2771,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "LLrY9lN15",
+          "sessionId": "DFCKM3A7X",
           "playerId": "player_0_things_b",
           "label": "P1",
           "nodeId": "archive_of_unsaid_things",
@@ -2780,7 +2779,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "k0QuO_Qnd",
+          "sessionId": "sq3TFll7k",
           "playerId": "player_1_things_a",
           "label": "P2",
           "nodeId": "archive_of_unsaid_things",
@@ -5021,7 +5020,7 @@
           },
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 14,
-          "savedAtTick": 128
+          "savedAtTick": 134
         },
         "saveHash": "fnv1a_09db9b91",
         "currentExportHash": "fnv1a_09db9b91",
@@ -5812,7 +5811,7 @@
   },
   "players": [
     {
-      "sessionId": "LLrY9lN15",
+      "sessionId": "DFCKM3A7X",
       "playerId": "player_0_things_b",
       "slot": 0,
       "label": "P1",
@@ -5887,10 +5886,10 @@
       "reviveRequired": 2.3,
       "revivedCount": 0,
       "isLocal": false,
-      "inputSequence": 21
+      "inputSequence": 18
     },
     {
-      "sessionId": "k0QuO_Qnd",
+      "sessionId": "sq3TFll7k",
       "playerId": "player_1_things_a",
       "slot": 1,
       "label": "P2",
@@ -5966,7 +5965,7 @@
       "reviveRequired": 2.3,
       "revivedCount": 0,
       "isLocal": true,
-      "inputSequence": 21
+      "inputSequence": 20
     }
   ],
   "overworld": null,
@@ -6090,7 +6089,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "LLrY9lN15",
+          "sessionId": "DFCKM3A7X",
           "playerId": "player_0_things_b",
           "label": "P1",
           "nodeId": "archive_of_unsaid_things",
@@ -6098,7 +6097,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "k0QuO_Qnd",
+          "sessionId": "sq3TFll7k",
           "playerId": "player_1_things_a",
           "label": "P2",
           "nodeId": "archive_of_unsaid_things",
@@ -8339,7 +8338,7 @@
           },
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 14,
-          "savedAtTick": 128
+          "savedAtTick": 134
         },
         "saveHash": "fnv1a_09db9b91",
         "currentExportHash": "fnv1a_09db9b91",
@@ -9173,7 +9172,7 @@
         "policy": "server_authoritative_redaction_pressure_xp_theft_runtime_only",
         "xpStolen": 0,
         "theftTicks": 1,
-        "theftCooldown": 1.07,
+        "theftCooldown": 1.01,
         "uiCorruptionPolicy": "decorative_black_bar_markers_do_not_cover_required_text_or_controls",
         "persistenceBoundary": "route_profile_only_no_redaction_pressure_or_live_xp_theft_state"
       },
@@ -9189,7 +9188,7 @@
           "worldX": 1.8,
           "worldY": 1.6,
           "radius": 2.6,
-          "expiresIn": 6.02,
+          "expiresIn": 5.96,
           "damagePerSecond": 1.2
         },
         {
@@ -9199,7 +9198,7 @@
           "worldX": -0.4,
           "worldY": 3,
           "radius": 1.75,
-          "expiresIn": 6.32,
+          "expiresIn": 6.26,
           "damagePerSecond": 0
         },
         {
@@ -9209,7 +9208,7 @@
           "worldX": 4,
           "worldY": 0.2,
           "radius": 1.75,
-          "expiresIn": 6.32,
+          "expiresIn": 6.26,
           "damagePerSecond": 0
         }
       ]
@@ -9344,7 +9343,7 @@
         },
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 14,
-        "savedAtTick": 128
+        "savedAtTick": 134
       },
       "saveHash": "fnv1a_09db9b91",
       "currentExportHash": "fnv1a_09db9b91",
@@ -10239,8 +10238,8 @@
       "id": 1,
       "familyId": "redaction_angels",
       "sourceRegionId": "archive_redaction_angels",
-      "worldX": 18.12,
-      "worldY": 17.45,
+      "worldX": 18.04,
+      "worldY": 17.34,
       "hp": 34,
       "boss": false
     },
@@ -10248,8 +10247,8 @@
       "id": 2,
       "familyId": "redaction_angels",
       "sourceRegionId": "archive_redaction_angels",
-      "worldX": 12.61,
-      "worldY": 15.86,
+      "worldX": 12.53,
+      "worldY": 15.79,
       "hp": 34,
       "boss": false
     },
@@ -10257,8 +10256,8 @@
       "id": 3,
       "familyId": "redaction_angels",
       "sourceRegionId": "archive_redaction_angels",
-      "worldX": 13.88,
-      "worldY": 18.33,
+      "worldX": 13.8,
+      "worldY": 18.18,
       "hp": 34,
       "boss": false
     },
@@ -10267,7 +10266,7 @@
       "familyId": "redaction_angels",
       "sourceRegionId": "archive_redaction_angels",
       "worldX": 20.26,
-      "worldY": 13.65,
+      "worldY": 13.66,
       "hp": 34,
       "boss": false
     }
@@ -10276,62 +10275,62 @@
   "projectiles": [
     {
       "id": 10,
-      "ownerSessionId": "k0QuO_Qnd",
-      "worldX": 3.88,
-      "worldY": 6.87,
-      "velocityX": 6.34,
+      "ownerSessionId": "sq3TFll7k",
+      "worldX": 4.42,
+      "worldY": 7.44,
+      "velocityX": 6.33,
       "velocityY": 6.67,
-      "life": 0.38,
+      "life": 0.3,
       "label": "refusal shard"
     },
     {
       "id": 11,
-      "ownerSessionId": "k0QuO_Qnd",
-      "worldX": -0.29,
-      "worldY": 2.47,
-      "velocityX": 6.37,
+      "ownerSessionId": "sq3TFll7k",
+      "worldX": 0.35,
+      "worldY": 3.13,
+      "velocityX": 6.36,
       "velocityY": 6.64,
-      "life": 1.04,
+      "life": 0.94,
       "label": "refusal shard"
     },
     {
       "id": 12,
-      "ownerSessionId": "LLrY9lN15",
-      "worldX": 1.04,
+      "ownerSessionId": "DFCKM3A7X",
+      "worldX": 1.63,
       "worldY": 0,
       "velocityX": 6,
       "velocityY": 0,
-      "life": 0.61,
+      "life": 0.51,
       "label": "signal pulse"
     },
     {
       "id": 13,
-      "ownerSessionId": "LLrY9lN15",
-      "worldX": -1.04,
+      "ownerSessionId": "DFCKM3A7X",
+      "worldX": -1.63,
       "worldY": 0,
       "velocityX": -6,
       "velocityY": 0,
-      "life": 0.61,
+      "life": 0.51,
       "label": "signal pulse"
     },
     {
       "id": 14,
-      "ownerSessionId": "LLrY9lN15",
+      "ownerSessionId": "DFCKM3A7X",
       "worldX": 0,
-      "worldY": 1.04,
+      "worldY": 1.63,
       "velocityX": 0,
       "velocityY": 6,
-      "life": 0.61,
+      "life": 0.51,
       "label": "signal pulse"
     },
     {
       "id": 15,
-      "ownerSessionId": "LLrY9lN15",
+      "ownerSessionId": "DFCKM3A7X",
       "worldX": 0,
-      "worldY": -1.04,
+      "worldY": -1.63,
       "velocityX": 0,
       "velocityY": -6,
-      "life": 0.61,
+      "life": 0.51,
       "label": "signal pulse"
     }
   ]

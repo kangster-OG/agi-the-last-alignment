@@ -84,7 +84,7 @@ export function renderGameToText(game: Game): string {
       playerFrameArtSet: game.useMilestone10Art ? "milestone49_class_roster_and_comind_modules" : "placeholder_safe_opt_out",
       campaignArenaArtSet: game.useMilestone10Art ? "milestone50_production_arena_and_boss_art" : "placeholder_safe_opt_out",
       playerFrameArtPolicy: "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
-      campaignArenaArtPolicy: "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+      campaignArenaArtPolicy: "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
       campaignArenaArtCoverage: {
         arenaIds: [...MILESTONE50_ARENA_IDS],
         majorProofArenaIds: [...MILESTONE50_MAJOR_PROOF_ARENA_IDS],

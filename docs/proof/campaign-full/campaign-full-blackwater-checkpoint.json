@@ -72,8 +72,8 @@
   "upgrades": [],
   "objective": "Move independently in the shared Consensus Cell.",
   "performance": {
-    "entitiesAllocated": 2,
-    "activeEntities": 2,
+    "entitiesAllocated": 4,
+    "activeEntities": 4,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -151,42 +151,42 @@
       {
         "id": "online.summary_stinger",
         "kind": "summary",
-        "atMs": 17628
+        "atMs": 24627
       },
       {
         "id": "online.summary_stinger",
         "kind": "summary",
-        "atMs": 15036
+        "atMs": 21595
       },
       {
         "id": "online.summary_stinger",
         "kind": "summary",
-        "atMs": 12812
+        "atMs": 15846
       },
       {
         "id": "online.objective_tick",
         "kind": "objective",
-        "atMs": 12812
+        "atMs": 15846
       },
       {
         "id": "online.summary_stinger",
         "kind": "summary",
-        "atMs": 9977
+        "atMs": 12814
       },
       {
         "id": "online.objective_tick",
         "kind": "objective",
-        "atMs": 9977
+        "atMs": 12814
       },
       {
         "id": "online.summary_stinger",
         "kind": "summary",
-        "atMs": 8302
+        "atMs": 11100
       },
       {
         "id": "online.summary_stinger",
         "kind": "summary",
-        "atMs": 6054
+        "atMs": 8503
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -199,7 +199,7 @@
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
     "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
     "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
-    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
     "campaignArenaArtCoverage": {
       "arenaIds": [
         "armistice_plaza",
@@ -280,32 +280,31 @@
       "atlasCount": 6,
       "placeholderOptOutPreserved": false
     },
-    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 94,
+    "totalAssets": 103,
     "countsByStatus": {
       "concept": 14,
-      "raw": 4,
+      "raw": 12,
       "code_placeholder": 16,
-      "production": 43,
-      "cleaned": 1,
-      "planned": 16
+      "production": 60,
+      "cleaned": 1
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 43
+    "productionAssets": 60
   },
   "player": {
-    "sessionId": "qLJLXvzWs",
-    "worldX": -1.6,
-    "worldY": 1.1,
-    "hp": 176,
-    "maxHp": 176,
+    "sessionId": "PjK9wQyWp",
+    "worldX": 0,
+    "worldY": 0,
+    "hp": 140,
+    "maxHp": 140,
     "xp": 0,
     "level": 1
   },
@@ -313,9 +312,9 @@
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2576",
     "serverUrlSource": "query.coopServer",
-    "roomId": "n9hAj3p3Y",
+    "roomId": "tWvF_8tK5",
     "roomCode": "CAMPAIGN_FULL",
-    "sessionId": "qLJLXvzWs",
+    "sessionId": "PjK9wQyWp",
     "lastError": "",
     "reconnectKey": "n_full_a",
     "reconnect": {
@@ -409,7 +408,7 @@
       "foundStoredProfile": false,
       "draftHash": "fnv1a_1374de65",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImNvb2xpbmdfbGFrZV9uaW5lIiwidGhlcm1hbF9hcmNoaXZlIiwibWVtb3J5X2NhY2hlXzAwMSIsImd1YXJkcmFpbF9mb3JnZSIsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsIm1lbW9yeV9jYWNoZV8wMDEiLCJhcm1pc3RpY2VfY2FtcCIsInRoZXJtYWxfYXJjaGl2ZSIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJndWFyZHJhaWxfZm9yZ2UiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJ0cmFuc2l0X2xvb3BfemVybyIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIiwidGhlcm1hbF9hcmNoaXZlX3NjaGVtYXRpYyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwiZ3VhcmRyYWlsX2ZvcmdlX2FsbG95IiwiYXJjaGl2ZV91bnNhaWRfaW5kZXgiLCJibGFja3dhdGVyX3NpZ25hbF9rZXkiXSwicGFydHlSZW5vd24iOjIyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsIm1vZGVsX3dhcl9tZW1vcmlhbCI6MSwiY29vbGluZ19sYWtlX25pbmUiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwibWVtb3J5X2NhY2hlXzAwMSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxfSwicmVjb21tZW5kZWROb2RlSWQiOiJ0cmFuc2l0X2xvb3BfemVybyIsInJvdXRlRGVwdGgiOjgsInNhdmVkQXRUaWNrIjo1MTB9LCJzYXZlSGFzaCI6ImZudjFhXzEzNzRkZTY1IiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8xMzc0ZGU2NSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImNvb2xpbmdfbGFrZV9uaW5lIiwidGhlcm1hbF9hcmNoaXZlIiwibWVtb3J5X2NhY2hlXzAwMSIsImd1YXJkcmFpbF9mb3JnZSIsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsIm1lbW9yeV9jYWNoZV8wMDEiLCJhcm1pc3RpY2VfY2FtcCIsInRoZXJtYWxfYXJjaGl2ZSIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJndWFyZHJhaWxfZm9yZ2UiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJ0cmFuc2l0X2xvb3BfemVybyIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIiwidGhlcm1hbF9hcmNoaXZlX3NjaGVtYXRpYyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwiZ3VhcmRyYWlsX2ZvcmdlX2FsbG95IiwiYXJjaGl2ZV91bnNhaWRfaW5kZXgiLCJibGFja3dhdGVyX3NpZ25hbF9rZXkiXSwicGFydHlSZW5vd24iOjIyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsIm1vZGVsX3dhcl9tZW1vcmlhbCI6MSwiY29vbGluZ19sYWtlX25pbmUiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwibWVtb3J5X2NhY2hlXzAwMSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxfSwicmVjb21tZW5kZWROb2RlSWQiOiJ0cmFuc2l0X2xvb3BfemVybyIsInJvdXRlRGVwdGgiOjgsInNhdmVkQXRUaWNrIjo3MjJ9LCJzYXZlSGFzaCI6ImZudjFhXzEzNzRkZTY1IiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8xMzc0ZGU2NSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -421,7 +420,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImNvb2xpbmdfbGFrZV9uaW5lIiwidGhlcm1hbF9hcmNoaXZlIiwibWVtb3J5X2NhY2hlXzAwMSIsImd1YXJkcmFpbF9mb3JnZSIsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsIm1lbW9yeV9jYWNoZV8wMDEiLCJhcm1pc3RpY2VfY2FtcCIsInRoZXJtYWxfYXJjaGl2ZSIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJndWFyZHJhaWxfZm9yZ2UiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJ0cmFuc2l0X2xvb3BfemVybyIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIiwidGhlcm1hbF9hcmNoaXZlX3NjaGVtYXRpYyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwiZ3VhcmRyYWlsX2ZvcmdlX2FsbG95IiwiYXJjaGl2ZV91bnNhaWRfaW5kZXgiLCJibGFja3dhdGVyX3NpZ25hbF9rZXkiXSwicGFydHlSZW5vd24iOjIyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsIm1vZGVsX3dhcl9tZW1vcmlhbCI6MSwiY29vbGluZ19sYWtlX25pbmUiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwibWVtb3J5X2NhY2hlXzAwMSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxfSwicmVjb21tZW5kZWROb2RlSWQiOiJ0cmFuc2l0X2xvb3BfemVybyIsInJvdXRlRGVwdGgiOjgsInNhdmVkQXRUaWNrIjo1MTB9LCJzYXZlSGFzaCI6ImZudjFhXzEzNzRkZTY1IiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8xMzc0ZGU2NSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsImNvb2xpbmdfbGFrZV9uaW5lIiwidGhlcm1hbF9hcmNoaXZlIiwibWVtb3J5X2NhY2hlXzAwMSIsImd1YXJkcmFpbF9mb3JnZSIsImFyY2hpdmVfb2ZfdW5zYWlkX3RoaW5ncyIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInVubG9ja2VkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJhY2NvcmRfcmVsYXkiLCJjb29saW5nX2xha2VfbmluZSIsIm1vZGVsX3dhcl9tZW1vcmlhbCIsIm1lbW9yeV9jYWNoZV8wMDEiLCJhcm1pc3RpY2VfY2FtcCIsInRoZXJtYWxfYXJjaGl2ZSIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJndWFyZHJhaWxfZm9yZ2UiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJ0cmFuc2l0X2xvb3BfemVybyIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsImxha2VfY29vbGFudF9yaWciLCJjb29saW5nX2xha2Vfb25saW5lX3JvdXRlIiwidGhlcm1hbF9hcmNoaXZlX3NjaGVtYXRpYyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwiZ3VhcmRyYWlsX2ZvcmdlX2FsbG95IiwiYXJjaGl2ZV91bnNhaWRfaW5kZXgiLCJibGFja3dhdGVyX3NpZ25hbF9rZXkiXSwicGFydHlSZW5vd24iOjIyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsIm1vZGVsX3dhcl9tZW1vcmlhbCI6MSwiY29vbGluZ19sYWtlX25pbmUiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwibWVtb3J5X2NhY2hlXzAwMSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxfSwicmVjb21tZW5kZWROb2RlSWQiOiJ0cmFuc2l0X2xvb3BfemVybyIsInJvdXRlRGVwdGgiOjgsInNhdmVkQXRUaWNrIjo3MjJ9LCJzYXZlSGFzaCI6ImZudjFhXzEzNzRkZTY1IiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8xMzc0ZGU2NSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "shortExportCode": "AGI1_eyJwb2xp...c3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -479,7 +478,7 @@
         },
         "recommendedNodeId": "transit_loop_zero",
         "routeDepth": 8,
-        "savedAtTick": 510
+        "savedAtTick": 722
       },
       "saveHash": "fnv1a_1374de65",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -1137,8 +1136,8 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 510,
-    "seconds": 0.07,
+    "tick": 722,
+    "seconds": 0.21,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "completed",
@@ -1148,14 +1147,14 @@
     "combat": {
       "kills": 0,
       "collectedPickups": 0,
-      "authoritativeProjectiles": 0,
+      "authoritativeProjectiles": 1,
       "authoritativePickups": 0,
       "bossGateMechanic": "blackwater_tidal_weather"
     },
     "combatArt": {
-      "pressure": 0,
+      "pressure": 0.01,
       "phase": "opening",
-      "projectileCount": 0,
+      "projectileCount": 1,
       "pickupCount": 0,
       "bossEventActive": false
     },
@@ -1581,7 +1580,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "AYtegzTur",
+          "sessionId": "PjK9wQyWp",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1590,7 +1589,7 @@
           "connected": true
         },
         {
-          "sessionId": "qLJLXvzWs",
+          "sessionId": "OgqoNpE9A",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1781,7 +1780,7 @@
         },
         "recommendedNodeId": "transit_loop_zero",
         "routeDepth": 8,
-        "savedAtTick": 510
+        "savedAtTick": 722
       },
       "saveHash": "fnv1a_1374de65",
       "currentExportHash": "fnv1a_1374de65",
@@ -2638,7 +2637,7 @@
       "subtitle": "The antenna points at the sky again, which feels like progress.",
       "nodeId": "blackwater_beacon",
       "arenaId": "blackwater_beacon",
-      "seconds": 0.07,
+      "seconds": 0.21,
       "kills": 0,
       "collectedPickups": 0,
       "partyXp": 0,
@@ -2991,16 +2990,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "AYtegzTur",
-          "playerId": "player_0_n_full_b",
+          "sessionId": "PjK9wQyWp",
+          "playerId": "player_0_n_full_a",
           "label": "P1",
           "nodeId": "blackwater_beacon",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "qLJLXvzWs",
-          "playerId": "player_1_n_full_a",
+          "sessionId": "OgqoNpE9A",
+          "playerId": "player_1_n_full_b",
           "label": "P2",
           "nodeId": "blackwater_beacon",
           "ready": true,
@@ -5200,7 +5199,7 @@
           },
           "recommendedNodeId": "transit_loop_zero",
           "routeDepth": 8,
-          "savedAtTick": 510
+          "savedAtTick": 722
         },
         "saveHash": "fnv1a_1374de65",
         "currentExportHash": "fnv1a_1374de65",
@@ -5991,8 +5990,8 @@
   },
   "players": [
     {
-      "sessionId": "AYtegzTur",
-      "playerId": "player_0_n_full_b",
+      "sessionId": "PjK9wQyWp",
+      "playerId": "player_0_n_full_a",
       "slot": 0,
       "label": "P1",
       "classId": "accord_striker",
@@ -6066,12 +6065,12 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": false,
-      "inputSequence": 7
+      "isLocal": true,
+      "inputSequence": 13
     },
     {
-      "sessionId": "qLJLXvzWs",
-      "playerId": "player_1_n_full_a",
+      "sessionId": "OgqoNpE9A",
+      "playerId": "player_1_n_full_b",
       "slot": 1,
       "label": "P2",
       "classId": "accord_striker",
@@ -6145,8 +6144,8 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": true,
-      "inputSequence": 10
+      "isLocal": false,
+      "inputSequence": 11
     }
   ],
   "overworld": null,
@@ -6270,16 +6269,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "AYtegzTur",
-          "playerId": "player_0_n_full_b",
+          "sessionId": "PjK9wQyWp",
+          "playerId": "player_0_n_full_a",
           "label": "P1",
           "nodeId": "blackwater_beacon",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "qLJLXvzWs",
-          "playerId": "player_1_n_full_a",
+          "sessionId": "OgqoNpE9A",
+          "playerId": "player_1_n_full_b",
           "label": "P2",
           "nodeId": "blackwater_beacon",
           "ready": true,
@@ -8479,7 +8478,7 @@
           },
           "recommendedNodeId": "transit_loop_zero",
           "routeDepth": 8,
-          "savedAtTick": 510
+          "savedAtTick": 722
         },
         "saveHash": "fnv1a_1374de65",
         "currentExportHash": "fnv1a_1374de65",
@@ -9431,7 +9430,7 @@
         },
         "recommendedNodeId": "transit_loop_zero",
         "routeDepth": 8,
-        "savedAtTick": 510
+        "savedAtTick": 722
       },
       "saveHash": "fnv1a_1374de65",
       "currentExportHash": "fnv1a_1374de65",
@@ -10251,7 +10250,7 @@
       "subtitle": "The antenna points at the sky again, which feels like progress.",
       "nodeId": "blackwater_beacon",
       "arenaId": "blackwater_beacon",
-      "seconds": 0.07,
+      "seconds": 0.21,
       "kills": 0,
       "collectedPickups": 0,
       "partyXp": 0,
@@ -10588,7 +10587,37 @@
       "activeTreatyCharge": null
     }
   },
-  "enemies": [],
+  "enemies": [
+    {
+      "id": 1,
+      "familyId": "tidecall_static",
+      "sourceRegionId": "blackwater_tidecall_static",
+      "worldX": 20.15,
+      "worldY": -16.65,
+      "hp": 33,
+      "boss": false
+    },
+    {
+      "id": 2,
+      "familyId": "tidecall_static",
+      "sourceRegionId": "blackwater_tidecall_static",
+      "worldX": 14.24,
+      "worldY": -17.96,
+      "hp": 33,
+      "boss": false
+    }
+  ],
   "pickups": [],
-  "projectiles": []
+  "projectiles": [
+    {
+      "id": 1,
+      "ownerSessionId": "OgqoNpE9A",
+      "worldX": -1.41,
+      "worldY": 0.87,
+      "velocityX": 5.88,
+      "velocityY": -7.08,
+      "life": 1.22,
+      "label": "refusal shard"
+    }
+  ]
 }

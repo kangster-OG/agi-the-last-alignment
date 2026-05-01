@@ -151,12 +151,12 @@
       {
         "id": "online.objective_tick",
         "kind": "objective",
-        "atMs": 3622
+        "atMs": 3869
       },
       {
         "id": "ui.enter_online_coop",
         "kind": "ui",
-        "atMs": 835
+        "atMs": 1213
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -169,7 +169,7 @@
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
     "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
     "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
-    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
     "campaignArenaArtCoverage": {
       "arenaIds": [
         "armistice_plaza",
@@ -250,32 +250,31 @@
       "atlasCount": 6,
       "placeholderOptOutPreserved": false
     },
-    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 94,
+    "totalAssets": 103,
     "countsByStatus": {
       "concept": 14,
-      "raw": 4,
+      "raw": 12,
       "code_placeholder": 16,
-      "production": 43,
-      "cleaned": 1,
-      "planned": 16
+      "production": 60,
+      "cleaned": 1
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 43
+    "productionAssets": 60
   },
   "player": {
-    "sessionId": "ZKwq2Ksp9",
-    "worldX": 0,
-    "worldY": 0,
-    "hp": 140,
-    "maxHp": 140,
+    "sessionId": "LsgKRC6At",
+    "worldX": -1.6,
+    "worldY": 1.1,
+    "hp": 176,
+    "maxHp": 176,
     "xp": 0,
     "level": 1
   },
@@ -283,9 +282,9 @@
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2620",
     "serverUrlSource": "query.coopServer",
-    "roomId": "6B345cYg_",
+    "roomId": "5I5KXw1cu",
     "roomCode": "PUBLIC",
-    "sessionId": "ZKwq2Ksp9",
+    "sessionId": "LsgKRC6At",
     "lastError": "",
     "reconnectKey": "e_nine_a",
     "reconnect": {
@@ -379,7 +378,7 @@
       "foundStoredProfile": true,
       "draftHash": "fnv1a_09db9b91",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTUwX2Z1bGxfY2FtcGFpZ25fYXJ0X3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MTQsImltcG9ydGVkUmV3YXJkQ291bnQiOjE2LCJpbXBvcnRlZFJvdXRlRGVwdGgiOjE0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNTBfZnVsbF9jYW1wYWlnbl9hcnRfcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6MTQsInJld2FyZENvdW50IjoxNn0sInByb2ZpbGUiOnsiY29tcGxldGVkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJjb29saW5nX2xha2VfbmluZSIsIm1lbW9yeV9jYWNoZV8wMDEiLCJtb2RlbF93YXJfbWVtb3JpYWwiLCJ0aGVybWFsX2FyY2hpdmUiLCJndWFyZHJhaWxfZm9yZ2UiLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiZ2xhc3Nfc3VuZmllbGQiLCJhcHBlYWxfY291cnRfcnVpbnMiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJibGFja3dhdGVyX2JlYWNvbiIsInRyYW5zaXRfbG9vcF96ZXJvIiwidmVyZGljdF9zcGlyZSIsImFsaWdubWVudF9zcGlyZV9maW5hbGUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiYXBwZWFsX2NvdXJ0X3J1aW5zIiwiZ2xhc3Nfc3VuZmllbGQiLCJ2ZXJkaWN0X3NwaXJlIiwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsInRoZXJtYWxfYXJjaGl2ZV9zY2hlbWF0aWMiLCJndWFyZHJhaWxfZm9yZ2VfYWxsb3kiLCJmYWxzZV9zY2hlZHVsZV9sYW5lX2NoYXJ0IiwiZ2xhc3Nfc3VuZmllbGRfcHJpc20iLCJhcHBlYWxfY291cnRfYnJpZWYiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSIsInRyYW5zaXRfcGVybWl0X3plcm8iLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiLCJhbGlnbm1lbnRfc3BpcmVfcm91dGVfY2Fwc3RvbmUiXSwicGFydHlSZW5vd24iOjMyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJtb2RlbF93YXJfbWVtb3JpYWwiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJmYWxzZV9zY2hlZHVsZV95YXJkIjoxLCJnbGFzc19zdW5maWVsZCI6MSwiYXBwZWFsX2NvdXJ0X3J1aW5zIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MSwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJtaXN0aWNlX3BsYXphIiwicm91dGVEZXB0aCI6MTQsInNhdmVkQXRUaWNrIjo5OX0sInNhdmVIYXNoIjoiZm52MWFfMDlkYjliOTEiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzA5ZGI5YjkxIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTUwX2Z1bGxfY2FtcGFpZ25fYXJ0X3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MTQsImltcG9ydGVkUmV3YXJkQ291bnQiOjE2LCJpbXBvcnRlZFJvdXRlRGVwdGgiOjE0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNTBfZnVsbF9jYW1wYWlnbl9hcnRfcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6MTQsInJld2FyZENvdW50IjoxNn0sInByb2ZpbGUiOnsiY29tcGxldGVkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJjb29saW5nX2xha2VfbmluZSIsIm1lbW9yeV9jYWNoZV8wMDEiLCJtb2RlbF93YXJfbWVtb3JpYWwiLCJ0aGVybWFsX2FyY2hpdmUiLCJndWFyZHJhaWxfZm9yZ2UiLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiZ2xhc3Nfc3VuZmllbGQiLCJhcHBlYWxfY291cnRfcnVpbnMiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJibGFja3dhdGVyX2JlYWNvbiIsInRyYW5zaXRfbG9vcF96ZXJvIiwidmVyZGljdF9zcGlyZSIsImFsaWdubWVudF9zcGlyZV9maW5hbGUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiYXBwZWFsX2NvdXJ0X3J1aW5zIiwiZ2xhc3Nfc3VuZmllbGQiLCJ2ZXJkaWN0X3NwaXJlIiwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsInRoZXJtYWxfYXJjaGl2ZV9zY2hlbWF0aWMiLCJndWFyZHJhaWxfZm9yZ2VfYWxsb3kiLCJmYWxzZV9zY2hlZHVsZV9sYW5lX2NoYXJ0IiwiZ2xhc3Nfc3VuZmllbGRfcHJpc20iLCJhcHBlYWxfY291cnRfYnJpZWYiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSIsInRyYW5zaXRfcGVybWl0X3plcm8iLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiLCJhbGlnbm1lbnRfc3BpcmVfcm91dGVfY2Fwc3RvbmUiXSwicGFydHlSZW5vd24iOjMyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJtb2RlbF93YXJfbWVtb3JpYWwiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJmYWxzZV9zY2hlZHVsZV95YXJkIjoxLCJnbGFzc19zdW5maWVsZCI6MSwiYXBwZWFsX2NvdXJ0X3J1aW5zIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MSwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJtaXN0aWNlX3BsYXphIiwicm91dGVEZXB0aCI6MTQsInNhdmVkQXRUaWNrIjoxMDd9LCJzYXZlSGFzaCI6ImZudjFhXzA5ZGI5YjkxIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8wOWRiOWI5MSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -391,8 +390,8 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTUwX2Z1bGxfY2FtcGFpZ25fYXJ0X3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MTQsImltcG9ydGVkUmV3YXJkQ291bnQiOjE2LCJpbXBvcnRlZFJvdXRlRGVwdGgiOjE0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNTBfZnVsbF9jYW1wYWlnbl9hcnRfcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6MTQsInJld2FyZENvdW50IjoxNn0sInByb2ZpbGUiOnsiY29tcGxldGVkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJjb29saW5nX2xha2VfbmluZSIsIm1lbW9yeV9jYWNoZV8wMDEiLCJtb2RlbF93YXJfbWVtb3JpYWwiLCJ0aGVybWFsX2FyY2hpdmUiLCJndWFyZHJhaWxfZm9yZ2UiLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiZ2xhc3Nfc3VuZmllbGQiLCJhcHBlYWxfY291cnRfcnVpbnMiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJibGFja3dhdGVyX2JlYWNvbiIsInRyYW5zaXRfbG9vcF96ZXJvIiwidmVyZGljdF9zcGlyZSIsImFsaWdubWVudF9zcGlyZV9maW5hbGUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiYXBwZWFsX2NvdXJ0X3J1aW5zIiwiZ2xhc3Nfc3VuZmllbGQiLCJ2ZXJkaWN0X3NwaXJlIiwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsInRoZXJtYWxfYXJjaGl2ZV9zY2hlbWF0aWMiLCJndWFyZHJhaWxfZm9yZ2VfYWxsb3kiLCJmYWxzZV9zY2hlZHVsZV9sYW5lX2NoYXJ0IiwiZ2xhc3Nfc3VuZmllbGRfcHJpc20iLCJhcHBlYWxfY291cnRfYnJpZWYiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSIsInRyYW5zaXRfcGVybWl0X3plcm8iLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiLCJhbGlnbm1lbnRfc3BpcmVfcm91dGVfY2Fwc3RvbmUiXSwicGFydHlSZW5vd24iOjMyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJtb2RlbF93YXJfbWVtb3JpYWwiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJmYWxzZV9zY2hlZHVsZV95YXJkIjoxLCJnbGFzc19zdW5maWVsZCI6MSwiYXBwZWFsX2NvdXJ0X3J1aW5zIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MSwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJtaXN0aWNlX3BsYXphIiwicm91dGVEZXB0aCI6MTQsInNhdmVkQXRUaWNrIjo5OX0sInNhdmVIYXNoIjoiZm52MWFfMDlkYjliOTEiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzA5ZGI5YjkxIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
-      "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbTUwX2Z1bGxfY2FtcGFpZ25fYXJ0X3Byb2ZpbGUiLCJpbXBvcnRlZENvbXBsZXRlZE5vZGVDb3VudCI6MTQsImltcG9ydGVkUmV3YXJkQ291bnQiOjE2LCJpbXBvcnRlZFJvdXRlRGVwdGgiOjE0LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9tNTBfZnVsbF9jYW1wYWlnbl9hcnRfcHJvZmlsZSIsImNvbXBsZXRlZE5vZGVDb3VudCI6MTQsInJld2FyZENvdW50IjoxNn0sInByb2ZpbGUiOnsiY29tcGxldGVkTm9kZUlkcyI6WyJhcm1pc3RpY2VfcGxhemEiLCJjb29saW5nX2xha2VfbmluZSIsIm1lbW9yeV9jYWNoZV8wMDEiLCJtb2RlbF93YXJfbWVtb3JpYWwiLCJ0aGVybWFsX2FyY2hpdmUiLCJndWFyZHJhaWxfZm9yZ2UiLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiZ2xhc3Nfc3VuZmllbGQiLCJhcHBlYWxfY291cnRfcnVpbnMiLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiLCJibGFja3dhdGVyX2JlYWNvbiIsInRyYW5zaXRfbG9vcF96ZXJvIiwidmVyZGljdF9zcGlyZSIsImFsaWdubWVudF9zcGlyZV9maW5hbGUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJmYWxzZV9zY2hlZHVsZV95YXJkIiwiYXBwZWFsX2NvdXJ0X3J1aW5zIiwiZ2xhc3Nfc3VuZmllbGQiLCJ2ZXJkaWN0X3NwaXJlIiwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsImJsYWNrd2F0ZXJfYmVhY29uIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNlYXNlZmlyZV9jYWNoZV9wZXJzaXN0ZW5jZV9zZWVkIiwicHJvdG90eXBlX3BlcnNpc3RlbmNlX2JvdW5kYXJ5IiwibW9kZWxfd2FyX21lbW9yaWFsX2NpcGhlciIsInRoZXJtYWxfYXJjaGl2ZV9zY2hlbWF0aWMiLCJndWFyZHJhaWxfZm9yZ2VfYWxsb3kiLCJmYWxzZV9zY2hlZHVsZV9sYW5lX2NoYXJ0IiwiZ2xhc3Nfc3VuZmllbGRfcHJpc20iLCJhcHBlYWxfY291cnRfYnJpZWYiLCJhcmNoaXZlX3Vuc2FpZF9pbmRleCIsImJsYWNrd2F0ZXJfc2lnbmFsX2tleSIsInRyYW5zaXRfcGVybWl0X3plcm8iLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiLCJhbGlnbm1lbnRfc3BpcmVfcm91dGVfY2Fwc3RvbmUiXSwicGFydHlSZW5vd24iOjMyLCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJtb2RlbF93YXJfbWVtb3JpYWwiOjEsInRoZXJtYWxfYXJjaGl2ZSI6MSwiZ3VhcmRyYWlsX2ZvcmdlIjoxLCJmYWxzZV9zY2hlZHVsZV95YXJkIjoxLCJnbGFzc19zdW5maWVsZCI6MSwiYXBwZWFsX2NvdXJ0X3J1aW5zIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MSwiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYXJtaXN0aWNlX3BsYXphIiwicm91dGVEZXB0aCI6MTQsInNhdmVkQXRUaWNrIjoxMDd9LCJzYXZlSGFzaCI6ImZudjFhXzA5ZGI5YjkxIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV8wOWRiOWI5MSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "shortExportCode": "AGI1_eyJwb2xp...c3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -471,7 +470,7 @@
         },
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 14,
-        "savedAtTick": 99
+        "savedAtTick": 107
       },
       "saveHash": "fnv1a_09db9b91",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -1121,8 +1120,8 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 99,
-    "seconds": 1.79,
+    "tick": 107,
+    "seconds": 1.88,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "active",
@@ -1137,7 +1136,7 @@
       "bossGateMechanic": "thermal_bloom"
     },
     "combatArt": {
-      "pressure": 0.08,
+      "pressure": 0.09,
       "phase": "opening",
       "projectileCount": 6,
       "pickupCount": 0,
@@ -1351,10 +1350,10 @@
           "id": 1,
           "familyId": "thermal_bloom",
           "label": "Thermal Bloom",
-          "worldX": -8.56,
-          "worldY": 7.8,
+          "worldX": -8.5,
+          "worldY": 7.83,
           "radius": 2.4,
-          "expiresIn": 6.12,
+          "expiresIn": 6.03,
           "damagePerSecond": 2.2
         }
       ]
@@ -1390,14 +1389,14 @@
           "heldBySessionIds": [],
           "heldByLabels": [],
           "heldByRoles": [
-            "support"
+            "runner"
           ],
           "preferredRoles": [
             "runner",
             "harrier"
           ],
-          "roleMatched": false,
-          "roleAssistMultiplier": 1,
+          "roleMatched": true,
+          "roleAssistMultiplier": 1.16,
           "runtimeArtId": "prop.objective.regroup_beacon_v1",
           "routeFlavor": "lake_survey",
           "runtimeArtReady": true,
@@ -1443,19 +1442,19 @@
           "radius": 2.65,
           "active": true,
           "complete": false,
-          "progress": 0.43,
+          "progress": 0.72,
           "required": 2.8,
           "heldBySessionIds": [
-            "ZKwq2Ksp9",
-            "q5kz5RvDL"
+            "WJwtWpi_V",
+            "LsgKRC6At"
           ],
           "heldByLabels": [
             "P1",
             "P2"
           ],
           "heldByRoles": [
-            "runner",
-            "support"
+            "support",
+            "runner"
           ],
           "preferredRoles": [
             "support",
@@ -1566,29 +1565,29 @@
           "worldX": 0.8,
           "worldY": 2.1,
           "radius": 2.75,
-          "heldBySessionId": "ZKwq2Ksp9",
+          "heldBySessionId": "WJwtWpi_V",
           "heldByLabel": "P1",
-          "heldSeconds": 1.79,
+          "heldSeconds": 1.88,
           "requiredSeconds": 2.4,
           "complete": false
         }
       ],
       "playerRoles": [
         {
-          "sessionId": "ZKwq2Ksp9",
+          "sessionId": "WJwtWpi_V",
           "label": "P1",
-          "classId": "accord_striker",
-          "factionId": "openai_accord",
-          "role": "runner",
+          "classId": "signal_vanguard",
+          "factionId": "qwen_silkgrid",
+          "role": "support",
           "downed": false,
           "connected": true
         },
         {
-          "sessionId": "q5kz5RvDL",
+          "sessionId": "LsgKRC6At",
           "label": "P2",
-          "classId": "signal_vanguard",
-          "factionId": "qwen_silkgrid",
-          "role": "support",
+          "classId": "accord_striker",
+          "factionId": "openai_accord",
+          "role": "runner",
           "downed": false,
           "connected": true
         }
@@ -1608,8 +1607,8 @@
       "currentComboId": null,
       "currentComboName": null,
       "participatingFactionIds": [
-        "openai_accord",
-        "qwen_silkgrid"
+        "qwen_silkgrid",
+        "openai_accord"
       ],
       "activeCombo": null,
       "comboCatalog": [
@@ -1797,7 +1796,7 @@
         },
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 14,
-        "savedAtTick": 99
+        "savedAtTick": 107
       },
       "saveHash": "fnv1a_09db9b91",
       "currentExportHash": "fnv1a_09db9b91",
@@ -2749,16 +2748,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "ZKwq2Ksp9",
-          "playerId": "player_0_e_nine_a",
+          "sessionId": "WJwtWpi_V",
+          "playerId": "player_0_e_nine_b",
           "label": "P1",
           "nodeId": "cooling_lake_nine",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "q5kz5RvDL",
-          "playerId": "player_1_e_nine_b",
+          "sessionId": "LsgKRC6At",
+          "playerId": "player_1_e_nine_a",
           "label": "P2",
           "nodeId": "cooling_lake_nine",
           "ready": true,
@@ -4998,7 +4997,7 @@
           },
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 14,
-          "savedAtTick": 99
+          "savedAtTick": 107
         },
         "saveHash": "fnv1a_09db9b91",
         "currentExportHash": "fnv1a_09db9b91",
@@ -5789,10 +5788,88 @@
   },
   "players": [
     {
-      "sessionId": "ZKwq2Ksp9",
-      "playerId": "player_0_e_nine_a",
+      "sessionId": "WJwtWpi_V",
+      "playerId": "player_0_e_nine_b",
       "slot": 0,
       "label": "P1",
+      "classId": "signal_vanguard",
+      "factionId": "qwen_silkgrid",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "signal_vanguard",
+        "factionId": "qwen_silkgrid",
+        "classRole": "support",
+        "factionRoleBias": [
+          "support",
+          "control"
+        ],
+        "resolvedRole": "support",
+        "startingWeaponId": "signal_pulse",
+        "passiveIds": [
+          "beacon_discipline",
+          "silkgrid_relay",
+          "shared_vocabulary"
+        ],
+        "partyAuraIds": [
+          "qwen_relay"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0.22,
+          "requiredSecondsScale": 0.96,
+          "reviveHpBonus": 0.08,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.support",
+          "faction_bias.support",
+          "faction_bias.control",
+          "role_match"
+        ],
+        "synergyId": "synergy.multilingual_rescue_net",
+        "effectScopes": {
+          "solo": [
+            "support solo weapon identity"
+          ],
+          "localCoop": [
+            "support local party role"
+          ],
+          "online": [
+            "server-owned kit telemetry and limited Recompile Ally modifiers"
+          ]
+        },
+        "hookStatus": {
+          "signal_pulse": "active",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "signal_pulse",
+      "worldX": 0,
+      "worldY": 0,
+      "velocityX": 0,
+      "velocityY": 0,
+      "facing": "south",
+      "hp": 140,
+      "maxHp": 140,
+      "xp": 0,
+      "level": 1,
+      "ready": true,
+      "votedNodeId": "cooling_lake_nine",
+      "connectionState": "connected",
+      "connected": true,
+      "reconnectCount": 0,
+      "disconnectedFor": 0,
+      "downed": false,
+      "reviveProgress": 0,
+      "reviveRequired": 2.3,
+      "revivedCount": 0,
+      "isLocal": false,
+      "inputSequence": 20
+    },
+    {
+      "sessionId": "LsgKRC6At",
+      "playerId": "player_1_e_nine_a",
+      "slot": 1,
+      "label": "P2",
       "classId": "accord_striker",
       "factionId": "openai_accord",
       "buildKit": {
@@ -5845,84 +5922,6 @@
         }
       },
       "weaponId": "refusal_shard",
-      "worldX": 0,
-      "worldY": 0,
-      "velocityX": 0,
-      "velocityY": 0,
-      "facing": "south",
-      "hp": 140,
-      "maxHp": 140,
-      "xp": 0,
-      "level": 1,
-      "ready": true,
-      "votedNodeId": "cooling_lake_nine",
-      "connectionState": "connected",
-      "connected": true,
-      "reconnectCount": 0,
-      "disconnectedFor": 0,
-      "downed": false,
-      "reviveProgress": 0,
-      "reviveRequired": 2.3,
-      "revivedCount": 0,
-      "isLocal": true,
-      "inputSequence": 23
-    },
-    {
-      "sessionId": "q5kz5RvDL",
-      "playerId": "player_1_e_nine_b",
-      "slot": 1,
-      "label": "P2",
-      "classId": "signal_vanguard",
-      "factionId": "qwen_silkgrid",
-      "buildKit": {
-        "schemaVersion": 1,
-        "classId": "signal_vanguard",
-        "factionId": "qwen_silkgrid",
-        "classRole": "support",
-        "factionRoleBias": [
-          "support",
-          "control"
-        ],
-        "resolvedRole": "support",
-        "startingWeaponId": "signal_pulse",
-        "passiveIds": [
-          "beacon_discipline",
-          "silkgrid_relay",
-          "shared_vocabulary"
-        ],
-        "partyAuraIds": [
-          "qwen_relay"
-        ],
-        "recompileModifiers": {
-          "radiusBonus": 0.22,
-          "requiredSecondsScale": 0.96,
-          "reviveHpBonus": 0.08,
-          "guardDamageReduction": 0
-        },
-        "rolePressureAffinity": [
-          "class_role.support",
-          "faction_bias.support",
-          "faction_bias.control",
-          "role_match"
-        ],
-        "synergyId": "synergy.multilingual_rescue_net",
-        "effectScopes": {
-          "solo": [
-            "support solo weapon identity"
-          ],
-          "localCoop": [
-            "support local party role"
-          ],
-          "online": [
-            "server-owned kit telemetry and limited Recompile Ally modifiers"
-          ]
-        },
-        "hookStatus": {
-          "signal_pulse": "active",
-          "recompileModifiers": "server_owned"
-        }
-      },
-      "weaponId": "signal_pulse",
       "worldX": -1.6,
       "worldY": 1.1,
       "velocityX": 0,
@@ -5942,8 +5941,8 @@
       "reviveProgress": 0,
       "reviveRequired": 2.3,
       "revivedCount": 0,
-      "isLocal": false,
-      "inputSequence": 22
+      "isLocal": true,
+      "inputSequence": 21
     }
   ],
   "overworld": null,
@@ -6067,16 +6066,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "ZKwq2Ksp9",
-          "playerId": "player_0_e_nine_a",
+          "sessionId": "WJwtWpi_V",
+          "playerId": "player_0_e_nine_b",
           "label": "P1",
           "nodeId": "cooling_lake_nine",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "q5kz5RvDL",
-          "playerId": "player_1_e_nine_b",
+          "sessionId": "LsgKRC6At",
+          "playerId": "player_1_e_nine_a",
           "label": "P2",
           "nodeId": "cooling_lake_nine",
           "ready": true,
@@ -8316,7 +8315,7 @@
           },
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 14,
-          "savedAtTick": 99
+          "savedAtTick": 107
         },
         "saveHash": "fnv1a_09db9b91",
         "currentExportHash": "fnv1a_09db9b91",
@@ -9156,10 +9155,10 @@
           "id": 1,
           "familyId": "thermal_bloom",
           "label": "Thermal Bloom",
-          "worldX": -8.56,
-          "worldY": 7.8,
+          "worldX": -8.5,
+          "worldY": 7.83,
           "radius": 2.4,
-          "expiresIn": 6.12,
+          "expiresIn": 6.03,
           "damagePerSecond": 2.2
         }
       ]
@@ -9294,7 +9293,7 @@
         },
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 14,
-        "savedAtTick": 99
+        "savedAtTick": 107
       },
       "saveHash": "fnv1a_09db9b91",
       "currentExportHash": "fnv1a_09db9b91",
@@ -10189,8 +10188,8 @@
       "id": 1,
       "familyId": "prompt_leeches",
       "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -20.95,
-      "worldY": 15.37,
+      "worldX": -20.8,
+      "worldY": 15.26,
       "hp": 18,
       "boss": false
     },
@@ -10198,8 +10197,8 @@
       "id": 2,
       "familyId": "prompt_leeches",
       "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -26.9,
-      "worldY": 14.42,
+      "worldX": -26.74,
+      "worldY": 14.35,
       "hp": 18,
       "boss": false
     },
@@ -10207,8 +10206,8 @@
       "id": 3,
       "familyId": "prompt_leeches",
       "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -28.64,
-      "worldY": 16.63,
+      "worldX": -28.59,
+      "worldY": 16.4,
       "hp": 18,
       "boss": false
     },
@@ -10216,8 +10215,8 @@
       "id": 4,
       "familyId": "prompt_leeches",
       "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -21.59,
-      "worldY": 11.31,
+      "worldX": -21.29,
+      "worldY": 11.4,
       "hp": 18,
       "boss": false
     }
@@ -10225,63 +10224,63 @@
   "pickups": [],
   "projectiles": [
     {
-      "id": 6,
-      "ownerSessionId": "ZKwq2Ksp9",
-      "worldX": -7.42,
-      "worldY": 5.44,
-      "velocityX": -7.42,
-      "velocityY": 5.44,
-      "life": 0.25,
+      "id": 10,
+      "ownerSessionId": "LsgKRC6At",
+      "worldX": -8.63,
+      "worldY": 6.28,
+      "velocityX": -7.4,
+      "velocityY": 5.46,
+      "life": 0.3,
       "label": "refusal shard"
     },
     {
       "id": 11,
-      "ownerSessionId": "ZKwq2Ksp9",
-      "worldX": -3.1,
-      "worldY": 1.62,
+      "ownerSessionId": "LsgKRC6At",
+      "worldX": -4.1,
+      "worldY": 2.41,
       "velocityX": -8.15,
       "velocityY": 4.27,
-      "life": 0.87,
+      "life": 0.94,
       "label": "refusal shard"
     },
     {
       "id": 12,
-      "ownerSessionId": "q5kz5RvDL",
-      "worldX": -1.19,
-      "worldY": 1.1,
+      "ownerSessionId": "WJwtWpi_V",
+      "worldX": 1.64,
+      "worldY": 0,
       "velocityX": 6,
       "velocityY": 0,
-      "life": 0.71,
+      "life": 0.51,
       "label": "signal pulse"
     },
     {
       "id": 13,
-      "ownerSessionId": "q5kz5RvDL",
-      "worldX": -2.01,
-      "worldY": 1.1,
+      "ownerSessionId": "WJwtWpi_V",
+      "worldX": -1.64,
+      "worldY": 0,
       "velocityX": -6,
       "velocityY": 0,
-      "life": 0.71,
+      "life": 0.51,
       "label": "signal pulse"
     },
     {
       "id": 14,
-      "ownerSessionId": "q5kz5RvDL",
-      "worldX": -1.6,
-      "worldY": 1.51,
+      "ownerSessionId": "WJwtWpi_V",
+      "worldX": 0,
+      "worldY": 1.64,
       "velocityX": 0,
       "velocityY": 6,
-      "life": 0.71,
+      "life": 0.51,
       "label": "signal pulse"
     },
     {
       "id": 15,
-      "ownerSessionId": "q5kz5RvDL",
-      "worldX": -1.6,
-      "worldY": 0.69,
+      "ownerSessionId": "WJwtWpi_V",
+      "worldX": 0,
+      "worldY": -1.64,
       "velocityX": 0,
       "velocityY": -6,
-      "life": 0.71,
+      "life": 0.51,
       "label": "signal pulse"
     }
   ]

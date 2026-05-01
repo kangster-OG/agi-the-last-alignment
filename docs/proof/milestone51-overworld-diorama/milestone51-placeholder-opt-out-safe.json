@@ -151,7 +151,7 @@
       {
         "id": "ui.enter_online_coop",
         "kind": "ui",
-        "atMs": 571
+        "atMs": 853
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -164,7 +164,7 @@
     "playerFrameArtSet": "placeholder_safe_opt_out",
     "campaignArenaArtSet": "placeholder_safe_opt_out",
     "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
-    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
     "campaignArenaArtCoverage": {
       "arenaIds": [
         "armistice_plaza",
@@ -245,28 +245,27 @@
       "atlasCount": 6,
       "placeholderOptOutPreserved": true
     },
-    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
     "productionArtDefaulted": false,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 94,
+    "totalAssets": 103,
     "countsByStatus": {
       "concept": 14,
-      "raw": 4,
+      "raw": 12,
       "code_placeholder": 16,
-      "production": 43,
-      "cleaned": 1,
-      "planned": 16
+      "production": 60,
+      "cleaned": 1
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 43
+    "productionAssets": 60
   },
   "player": {
-    "sessionId": "ck7DWp0-5",
+    "sessionId": "fjbIUjPb3",
     "worldX": -1.6,
     "worldY": 1.1,
     "hp": 176,
@@ -278,9 +277,9 @@
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2621",
     "serverUrlSource": "query.coopServer",
-    "roomId": "RhbgSnARo",
+    "roomId": "olJ4--e12",
     "roomCode": "PUBLIC",
-    "sessionId": "ck7DWp0-5",
+    "sessionId": "fjbIUjPb3",
     "lastError": "",
     "reconnectKey": "optout_a",
     "reconnect": {
@@ -374,7 +373,7 @@
       "foundStoredProfile": true,
       "draftHash": "fnv1a_4b6b2e83",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo0NX0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo0Nn0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -386,7 +385,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo0NX0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo0Nn0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": true,
@@ -446,7 +445,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 45
+        "savedAtTick": 46
       },
       "saveHash": "fnv1a_4b6b2e83",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -1122,7 +1121,7 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 45,
+    "tick": 46,
     "seconds": 0,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
@@ -1556,7 +1555,7 @@
       "anchors": [],
       "playerRoles": [
         {
-          "sessionId": "Xo2_vUPNw",
+          "sessionId": "UmukvcUcy",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1565,7 +1564,7 @@
           "connected": true
         },
         {
-          "sessionId": "ck7DWp0-5",
+          "sessionId": "fjbIUjPb3",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1746,7 +1745,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 45
+        "savedAtTick": 46
       },
       "saveHash": "fnv1a_4b6b2e83",
       "currentExportHash": "fnv1a_4b6b2e83",
@@ -2698,7 +2697,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "Xo2_vUPNw",
+          "sessionId": "UmukvcUcy",
           "playerId": "player_0_optout_b",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
@@ -2706,7 +2705,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "ck7DWp0-5",
+          "sessionId": "fjbIUjPb3",
           "playerId": "player_1_optout_a",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
@@ -4905,7 +4904,7 @@
           },
           "recommendedNodeId": "alignment_spire_finale",
           "routeDepth": 7,
-          "savedAtTick": 45
+          "savedAtTick": 46
         },
         "saveHash": "fnv1a_4b6b2e83",
         "currentExportHash": "fnv1a_4b6b2e83",
@@ -5696,7 +5695,7 @@
   },
   "players": [
     {
-      "sessionId": "Xo2_vUPNw",
+      "sessionId": "UmukvcUcy",
       "playerId": "player_0_optout_b",
       "slot": 0,
       "label": "P1",
@@ -5775,7 +5774,7 @@
       "inputSequence": 0
     },
     {
-      "sessionId": "ck7DWp0-5",
+      "sessionId": "fjbIUjPb3",
       "playerId": "player_1_optout_a",
       "slot": 1,
       "label": "P2",
@@ -5975,7 +5974,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "Xo2_vUPNw",
+          "sessionId": "UmukvcUcy",
           "playerId": "player_0_optout_b",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
@@ -5983,7 +5982,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "ck7DWp0-5",
+          "sessionId": "fjbIUjPb3",
           "playerId": "player_1_optout_a",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
@@ -8182,7 +8181,7 @@
           },
           "recommendedNodeId": "alignment_spire_finale",
           "routeDepth": 7,
-          "savedAtTick": 45
+          "savedAtTick": 46
         },
         "saveHash": "fnv1a_4b6b2e83",
         "currentExportHash": "fnv1a_4b6b2e83",
@@ -9117,7 +9116,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 45
+        "savedAtTick": 46
       },
       "saveHash": "fnv1a_4b6b2e83",
       "currentExportHash": "fnv1a_4b6b2e83",
