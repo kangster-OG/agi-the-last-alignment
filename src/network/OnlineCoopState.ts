@@ -18,6 +18,25 @@ import { milestone11EnemyTextureFor } from "../assets/milestone11Art";
 import { getMilestone12ArtTextures, loadMilestone12Art, milestone12NetworkPlayerTexture } from "../assets/milestone12Art";
 import { getMilestone14ArtTextures, loadMilestone14Art } from "../assets/milestone14Art";
 import { getMilestone49PlayableArtTextures, loadMilestone49PlayableArt, milestone49NetworkPlayerTextureFor } from "../assets/milestone49PlayableArt";
+import {
+  addMilestone50TerrainTile,
+  getMilestone50ArenaBossArtTextures,
+  isMilestone50ArenaBossArtReady,
+  loadMilestone50ArenaBossArt,
+  MILESTONE50_ARENA_IDS,
+  MILESTONE50_ASSET_IDS,
+  MILESTONE50_BOSS_IDS,
+  MILESTONE50_ENEMY_FAMILY_IDS,
+  MILESTONE50_HAZARD_IDS,
+  MILESTONE50_MAJOR_PROOF_ARENA_IDS,
+  milestone50ArenaPropTextureFor,
+  milestone50BossIdForArena,
+  milestone50BossPortraitTextureFor,
+  milestone50BossTextureFor,
+  milestone50EnemyTextureFor,
+  milestone50HazardTextureFor,
+  type Milestone50ArenaBossArtTextures
+} from "../assets/milestone50ArenaBossArt";
 import { placeWorldSprite, type PlayerFacing } from "../assets/milestone10Art";
 import { getMilestone25RouteArtTextures, loadMilestone25RouteArt } from "../assets/milestone25Art";
 import { getMilestone26VerdictArtTextures, loadMilestone26VerdictArt } from "../assets/milestone26Art";
@@ -117,6 +136,7 @@ export class OnlineCoopState implements GameState {
   private requestedOnlineRouteExpansionArtLoad = false;
   private requestedMilestone34ObjectiveArtLoad = false;
   private requestedMilestone41ArenaIdentityArtLoad = false;
+  private requestedMilestone50ArenaBossArtLoad = false;
   private readonly proofControlsEnabled = new URLSearchParams(window.location.search).get("proofOnlineFlow") === "1";
   private readonly entityGraphics = new Graphics();
   private readonly productionSpriteLayer = new Container();
@@ -444,6 +464,10 @@ export class OnlineCoopState implements GameState {
     bg.rect(-4200, -3600, 8400, 7200).fill(coolingFamily ? 0x10212b : transitFamily ? 0x17151e : solarFamily ? 0x171a20 : redactionFamily ? 0x10141d : blackwaterFamily ? 0x0d1c28 : memoryFamily ? 0x171b28 : outerAlignmentFamily ? 0x100817 : verdictFamily ? 0x161720 : 0x141922);
     game.layers.background.addChild(bg);
 
+    const milestone50Art = this.milestone50ArenaBossArt(game);
+    if (milestone50Art) {
+      this.drawMilestone50Terrain(game, arenaId, milestone50Art);
+    } else {
     if (!coolingFamily && !transitFamily && !solarFamily && !redactionFamily && !blackwaterFamily && !memoryFamily && !outerAlignmentFamily && !verdictFamily && !this.drawTextureGroundIfEnabled(game)) {
       const ground = new Graphics();
       for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
@@ -555,6 +579,7 @@ export class OnlineCoopState implements GameState {
       }
       game.layers.ground.addChild(ground);
     }
+    }
 
     const landmarks = new Graphics();
     const art = this.productionArt(game);
@@ -622,8 +647,11 @@ export class OnlineCoopState implements GameState {
       const p = worldToIso(landmark.worldX, landmark.worldY);
       landmarks.ellipse(p.screenX, p.screenY + 2, landmark.radius * 28, landmark.radius * 11).fill({ color: landmark.color, alpha: 0.18 });
       const arenaIdentityTexture = arenaIdentityTextureFor(arenaId, landmark.id, arenaIdentityArt);
+      const milestone50PropTexture = milestone50Art ? milestone50ArenaPropTextureFor(arenaId, landmark.id, milestone50Art) : null;
       const routeTexture =
-        arenaIdentityTexture
+        milestone50PropTexture
+          ? milestone50PropTexture
+          : arenaIdentityTexture
           ? arenaIdentityTexture
           : routeExpansionArt && coolingFamily && landmark.id === "cooling_lake"
           ? routeExpansionArt.routeBiomeLandmarks.cooling_tower
@@ -716,6 +744,19 @@ export class OnlineCoopState implements GameState {
       label.position.set(p.screenX, p.screenY - 102);
       game.layers.propsFront.addChild(label);
     }
+    if (milestone50Art) {
+      const bossPortrait = milestone50BossPortraitTextureFor(milestone50BossIdForArena(arenaId), milestone50Art);
+      const anchorLandmark = landmarksForArena[0];
+      if (bossPortrait && anchorLandmark) {
+        const p = worldToIso(anchorLandmark.worldX, anchorLandmark.worldY);
+        const sprite = new Sprite(bossPortrait);
+        sprite.anchor.set(0.5, 0.92);
+        sprite.scale.set(0.42);
+        sprite.alpha = 0.9;
+        sprite.position.set(p.screenX + 64, p.screenY - 30);
+        game.layers.propsFront.addChild(sprite);
+      }
+    }
   }
 
   private drawEntities(game: Game): void {
@@ -725,6 +766,7 @@ export class OnlineCoopState implements GameState {
     const art = game.useMilestone10Art ? getMilestone12ArtTextures() : null;
     const combatArt = game.useMilestone10Art ? getMilestone14ArtTextures() : null;
     const routeExpansionArt = this.onlineRouteExpansionArt(game);
+    const milestone50Art = this.milestone50ArenaBossArt(game);
     const recompileBySession = new Map((snapshot.recompile?.downedPlayers ?? []).map((entry) => [entry.sessionId, entry]));
 
     this.drawOnlineBossEvents(game);
@@ -776,7 +818,13 @@ export class OnlineCoopState implements GameState {
         draw: () => {
           const texture = art ? milestone11EnemyTextureFor({ id: enemy.id, enemyFamilyId: enemy.familyId } as Entity, art.base) : null;
           const onlineThreat = routeExpansionArt ? onlineThreatTextureFor(enemy, routeExpansionArt.onlineThreats) : null;
-          if (onlineThreat) {
+          const milestone50Boss = milestone50Art && enemy.boss ? milestone50BossTextureFor(enemy.familyId, milestone50Art) : null;
+          const milestone50Enemy = milestone50Art && !enemy.boss ? milestone50EnemyTextureFor(enemy.familyId, milestone50Art) : null;
+          if (milestone50Boss) {
+            this.drawProductionWorldSprite(`m50-boss:${enemy.id}`, milestone50Boss, enemy.worldX, enemy.worldY, enemy.familyId === "alien_god_intelligence" ? 1.34 : 1.2, 0.88);
+          } else if (milestone50Enemy) {
+            this.drawProductionWorldSprite(`m50-enemy:${enemy.id}`, milestone50Enemy, enemy.worldX, enemy.worldY, enemy.familyId === "context_rot_crabs" ? 1.16 : 1.08, 0.86);
+          } else if (onlineThreat) {
             this.drawProductionWorldSprite(`online-threat:${enemy.id}`, onlineThreat.texture, enemy.worldX, enemy.worldY, onlineThreat.scale, 0.86);
           } else if (art && enemy.boss) {
             this.drawProductionWorldSprite(`boss:${enemy.id}`, art.base.base.oathEater, enemy.worldX, enemy.worldY, 1.18, 0.88);
@@ -1539,6 +1587,21 @@ ${focus.focusDescription}`,
     return textures;
   }
 
+  private milestone50ArenaBossArt(game: Game): Milestone50ArenaBossArtTextures | null {
+    if (!game.useMilestone10Art || !isMilestone50ArenaBossArtReady()) return null;
+    const textures = getMilestone50ArenaBossArtTextures();
+    if (!textures && !this.requestedMilestone50ArenaBossArtLoad) {
+      this.requestedMilestone50ArenaBossArtLoad = true;
+      void loadMilestone50ArenaBossArt().then(() => {
+        if (game.state.current !== this) return;
+        this.staticSceneKey = "";
+        this.staticSceneSignature = "";
+        this.render(game);
+      });
+    }
+    return textures;
+  }
+
   private routeUiInfo() {
     const party = this.snapshot?.party;
     const persistence = this.snapshot?.persistence;
@@ -1557,8 +1620,11 @@ ${focus.focusDescription}`,
     const readyRuntimeArtIds = plannedRuntimeArtIds.filter((assetId) => isRuntimeReadyAsset(assetId));
     const milestone41RuntimeArtIds = ["prop.online_route.campaign_arena_identity_v1"];
     const readyMilestone41RuntimeArtIds = milestone41RuntimeArtIds.filter((assetId) => isRuntimeReadyAsset(assetId));
+    const milestone50RuntimeArtIds = Object.values(MILESTONE50_ASSET_IDS);
+    const readyMilestone50RuntimeArtIds = milestone50RuntimeArtIds.filter((assetId) => isRuntimeReadyAsset(assetId));
     const milestone34Textures = getMilestone34ObjectiveArtTextures();
     const milestone41Textures = getMilestone41ArenaIdentityArtTextures();
+    const milestone50Textures = getMilestone50ArenaBossArtTextures();
     const launchableIds = new Set(party.launchableNodeIds);
     const fullLabelIds = party.nodes
       .filter((node) => node.completed || node.id === party.selectedNodeId || launchableIds.has(node.id) || (node.unlocked && node.onlineSupported))
@@ -1679,6 +1745,21 @@ ${focus.focusDescription}`,
           serverMechanicPolicy: "server_authoritative_predictions_echoes_and_final_eval_victory",
           readabilityPolicy: "corrupted_overworld_markers_predictions_do_not_cover_controls",
           persistenceBoundary: "route_profile_only_no_outer_alignment_predictions_echoes_or_finale_authority_state"
+        },
+        milestone50: {
+          set: "milestone50_production_arena_and_boss_art",
+          enabled: Boolean(milestone50Textures),
+          policy: "runtime_uses_only_cleaned_production_transparent_pngs_with_manifest_and_provenance_records",
+          runtimeArtIds: milestone50RuntimeArtIds,
+          readyRuntimeArtIds: readyMilestone50RuntimeArtIds,
+          runtimeAtlasesReady: readyMilestone50RuntimeArtIds.length === milestone50RuntimeArtIds.length,
+          terrainArenaIds: [...MILESTONE50_ARENA_IDS],
+          majorProofArenaIds: [...MILESTONE50_MAJOR_PROOF_ARENA_IDS],
+          enemyFamilyIds: [...MILESTONE50_ENEMY_FAMILY_IDS],
+          bossIds: [...MILESTONE50_BOSS_IDS],
+          hazardIds: [...MILESTONE50_HAZARD_IDS],
+          placeholderOptOutSupported: true,
+          persistenceBoundary: "route_profile_only_no_runtime_art_or_live_arena_state"
         }
       },
       routeDepth: persistence?.profile.routeDepth ?? party.completedNodeIds.length,
@@ -1745,7 +1826,8 @@ ${focus.focusDescription}`,
 
   private prepareProductionSprites(game: Game): void {
     const art = this.productionArt(game);
-    if (!game.useMilestone10Art || !art) {
+    const milestone50Art = this.milestone50ArenaBossArt(game);
+    if (!game.useMilestone10Art || (!art && !milestone50Art)) {
       this.productionSpriteLayer.visible = false;
       return;
     }
@@ -1779,6 +1861,16 @@ ${focus.focusDescription}`,
     }
     game.layers.ground.addChild(ground);
     return true;
+  }
+
+  private drawMilestone50Terrain(game: Game, arenaId: string, textures: Milestone50ArenaBossArtTextures): void {
+    const ground = new Container();
+    for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
+      for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
+        addMilestone50TerrainTile(ground, textures, arenaId, x, y);
+      }
+    }
+    game.layers.ground.addChild(ground);
   }
 
   private terrainBandIdAt(x: number, y: number): string | undefined {
@@ -1833,9 +1925,14 @@ ${focus.focusDescription}`,
   private drawOnlineBossEvents(game: Game): void {
     const bossEvent = this.snapshot?.bossEvent;
     if (!bossEvent) return;
+    const milestone50Art = this.milestone50ArenaBossArt(game);
     for (const zone of bossEvent.brokenPromiseZones) {
       const p = worldToIso(zone.worldX, zone.worldY);
       const intensity = Math.max(0.24, Math.min(0.72, zone.expiresIn / 8.5));
+      const hazardTexture = milestone50Art ? milestone50HazardTextureFor("broken_promise", milestone50Art) : null;
+      if (hazardTexture) {
+        this.drawProductionEffectSprite(`m50-boss-zone:${zone.id}`, hazardTexture, zone.worldX, zone.worldY, Math.max(0.9, Math.min(1.5, zone.radius * 0.24)), 0.72, zone.worldX + zone.worldY + 0.03);
+      }
       this.entityGraphics
         .ellipse(p.screenX, p.screenY + 4, zone.radius * 28, zone.radius * 12)
         .fill({ color: palette.tomato, alpha: 0.14 + intensity * 0.1 })
@@ -1848,6 +1945,10 @@ ${focus.focusDescription}`,
     if (charge) {
       const a = worldToIso(charge.fromX, charge.fromY);
       const b = worldToIso(charge.toX, charge.toY);
+      const chargeTexture = milestone50Art ? milestone50HazardTextureFor("treaty_charge", milestone50Art) : null;
+      if (chargeTexture) {
+        this.drawProductionEffectSprite(`m50-treaty-charge:${charge.toX}:${charge.toY}`, chargeTexture, charge.toX, charge.toY, charge.resolved ? 1.2 : 0.9, 0.72, charge.toX + charge.toY + 0.04);
+      }
       this.entityGraphics
         .moveTo(a.screenX, a.screenY - 18)
         .lineTo(b.screenX, b.screenY - 18)
@@ -1899,6 +2000,7 @@ ${focus.focusDescription}`,
     const regionEvent = this.snapshot?.regionEvent;
     if (!regionEvent?.hazardZones?.length) return;
     const routeExpansionArt = this.onlineRouteExpansionArt(game);
+    const milestone50Art = this.milestone50ArenaBossArt(game);
     for (const zone of regionEvent.hazardZones) {
       const p = worldToIso(zone.worldX, zone.worldY);
       const color = zone.familyId === "boiling_cache" ? palette.tomato : zone.familyId === "false_track" || zone.familyId === "solar_beam" ? palette.lemon : zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" || zone.familyId === "prediction_ghost" || zone.familyId === "fake_upgrade" ? palette.mint : zone.familyId === "redaction_field" ? 0xfff4d6 : zone.familyId === "route_mouth" ? 0xff5d57 : zone.familyId === "tidal_wave" ? 0x45aaf2 : 0x45aaf2;
@@ -1906,7 +2008,10 @@ ${focus.focusDescription}`,
       const hazardColor = zone.familyId === "verdict_seal" ? 0xfff4d6 : color;
       const zoneAlpha = zone.familyId === "shade_zone" || zone.familyId === "redaction_anchor" || zone.familyId === "signal_tower" || zone.familyId === "prediction_ghost" || zone.familyId === "fake_upgrade" ? 0.1 : zone.familyId === "solar_beam" || zone.familyId === "redaction_field" || zone.familyId === "tidal_wave" || zone.familyId === "route_mouth" ? 0.11 : zone.familyId === "verdict_seal" ? 0.12 : 0.14;
       const markerFrame = hazardFrameForZone(zone.familyId);
-      if (routeExpansionArt && markerFrame) {
+      const milestone50Hazard = milestone50Art ? milestone50HazardTextureFor(zone.familyId, milestone50Art) : null;
+      if (milestone50Hazard) {
+        this.drawProductionEffectSprite(`m50-hazard:${zone.familyId}:${zone.id}`, milestone50Hazard, zone.worldX, zone.worldY, Math.max(0.72, Math.min(1.55, zone.radius * 0.3)), 0.72, zone.worldX + zone.worldY + 0.025);
+      } else if (routeExpansionArt && markerFrame) {
         this.drawProductionEffectSprite(`online-hazard:${zone.familyId}:${zone.id}`, routeExpansionArt.hazardMarkers[markerFrame], zone.worldX, zone.worldY, Math.max(0.72, Math.min(1.45, zone.radius * 0.28)), 0.72, zone.worldX + zone.worldY + 0.02);
       }
       this.entityGraphics

@@ -9,6 +9,7 @@ import type { OnlineCoopState } from "../network/OnlineCoopState";
 import { assetPipelineSummary } from "../assets";
 import type { BuildSelectState } from "../ui/buildSelect";
 import { MILESTONE49_CLASS_IDS, MILESTONE49_FACTION_IDS, MILESTONE49_ROLE_IDS } from "../assets/milestone49PlayableArt";
+import { MILESTONE50_ARENA_IDS, MILESTONE50_BOSS_IDS, MILESTONE50_ENEMY_FAMILY_IDS, MILESTONE50_HAZARD_IDS, MILESTONE50_MAJOR_PROOF_ARENA_IDS } from "../assets/milestone50ArenaBossArt";
 
 export function renderGameToText(game: Game): string {
   const state = game.state.current;
@@ -41,7 +42,18 @@ export function renderGameToText(game: Game): string {
       productionArtEnabled: game.useMilestone10Art,
       productionArtSet: game.useMilestone10Art ? "milestone14_combat_art_parity" : "placeholder_safe_opt_out",
       playerFrameArtSet: game.useMilestone10Art ? "milestone49_class_roster_and_comind_modules" : "placeholder_safe_opt_out",
+      campaignArenaArtSet: game.useMilestone10Art ? "milestone50_production_arena_and_boss_art" : "placeholder_safe_opt_out",
       playerFrameArtPolicy: "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+      campaignArenaArtPolicy: "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+      campaignArenaArtCoverage: {
+        arenaIds: [...MILESTONE50_ARENA_IDS],
+        majorProofArenaIds: [...MILESTONE50_MAJOR_PROOF_ARENA_IDS],
+        enemyFamilyIds: [...MILESTONE50_ENEMY_FAMILY_IDS],
+        bossIds: [...MILESTONE50_BOSS_IDS],
+        hazardIds: [...MILESTONE50_HAZARD_IDS],
+        atlasCount: 6,
+        placeholderOptOutPreserved: !game.useMilestone10Art
+      },
       coMindArtPolicy: "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
       productionArtDefaulted: game.productionArtDefaulted,
       armisticeTileAtlasDefaulted: game.armisticeTileAtlasDefaulted,

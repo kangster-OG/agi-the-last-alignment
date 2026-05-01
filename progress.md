@@ -2934,9 +2934,61 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone46-full-class-roster/milestone46-online-expanded-roster-a.png`
 - Milestone 49 readiness decision: ready. Playable frames and co-mind presentation now have manifest/provenance-backed production-art defaults, online/local rendering uses the new class roster atlas, and placeholder opt-out remains safe.
 
+- Implemented Milestone 50 Production Arena And Boss Art Pass.
+- Added original manifest/provenance-backed production atlases:
+  - `assets/tiles/campaign_arenas/terrain_m50.png`;
+  - `assets/props/campaign_arenas/arena_props_m50.png`;
+  - `assets/sprites/enemies/campaign_enemies_m50.png`;
+  - `assets/sprites/bosses/campaign_bosses_m50.png`;
+  - `assets/portraits/campaign_boss_portraits_m50.png`;
+  - `assets/sprites/effects/campaign_hazards_m50.png`.
+- Wired Milestone 50 terrain, props, boss portraits, boss sprites, enemy-family sprites, and hazard markers into the online campaign runtime while preserving legacy production-art fallbacks and placeholder opt-out rendering.
+- Added M50 campaign arena art telemetry to `render_game_to_text()` so proofs can confirm atlas coverage, runtime art policy, arena IDs, boss IDs, enemy-family IDs, and hazard IDs without importing or exporting live state.
+- Updated `assets/asset_manifest.json` and `ART_PROVENANCE.md` for the six new runtime atlases. PixelLab was not used in this pass because local original tooling produced the cleaned transparent PNG atlases; no third-party marks, credentials, browser profiles, or paid asset credits were used.
+- Added `npm run proof:milestone50-arena-boss-art`, covering:
+  - production-art defaults across Armistice Plaza, Cooling Lake Nine, Transit Loop Zero, Glass Sunfield, Archive of Unsaid Things, Blackwater Beacon, Verdict Spire, and the Outer Alignment finale;
+  - M50 atlas, arena, boss, enemy, and hazard coverage telemetry;
+  - online server authority during campaign arena launches;
+  - placeholder opt-out safety.
+- Verification after Milestone 50:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `node -e "JSON.parse(require('fs').readFileSync('assets/asset_manifest.json','utf8'))"`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:assets`
+  - `npm run proof:milestone50-arena-boss-art`
+  - `npm run proof:milestone48-enemy-family-expansion`
+  - `npm run proof:milestone49-player-comind-art`
+  - `npm run proof:smoke`
+- Milestone 50 proof artifacts:
+  - `docs/proof/milestone50-arena-boss-art/milestone50-armistice_plaza-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-cooling_lake_nine-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-transit_loop_zero-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-glass_sunfield-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-archive_of_unsaid_things-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-blackwater_beacon-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-verdict_spire-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-alignment_spire_finale-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-placeholder-opt-out-safe.png`
+- Screenshots inspected after Milestone 50:
+  - `docs/proof/milestone50-arena-boss-art/milestone50-armistice_plaza-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-cooling_lake_nine-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-transit_loop_zero-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-glass_sunfield-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-archive_of_unsaid_things-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-blackwater_beacon-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-verdict_spire-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-alignment_spire_finale-production-art.png`
+  - `docs/proof/milestone50-arena-boss-art/milestone50-placeholder-opt-out-safe.png`
+  - `docs/proof/smoke/arena.png`
+  - `docs/proof/milestone48-enemy-family-expansion/milestone48-armistice-eval-wraiths-a.png`
+  - `docs/proof/milestone48-enemy-family-expansion/milestone48-cooling-lake-families-a.png`
+  - `docs/proof/milestone49-player-comind-art/milestone49-rift-runtime-production-frame.png`
+- Milestone 50 readiness decision: ready. The main campaign encounters now have default production terrain, props, hazards, enemy sprites, boss sprites, and boss portraits backed by manifest/provenance records, while online authority, deterministic proof hooks, and placeholder opt-outs remain intact.
+
 ## TODO
 
-- Next recommended milestone: Milestone 50 Production Arena And Boss Art Pass. Produce cleaned terrain, prop, hazard, enemy, and boss atlases for all eight campaign encounters while preserving runtime art manifest/provenance rules and placeholder opt-outs.
+- Next recommended milestone: Milestone 51 Overworld Diorama 1.0. Make the Alignment Grid feel like a dense miniature world with richer landmarks, readable roads, regional biome identity, animated route states, unlock reveals, party voting polish, and finale corruption state.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

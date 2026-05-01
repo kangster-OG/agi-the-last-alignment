@@ -72,8 +72,8 @@
   "upgrades": [],
   "objective": "Move independently in the shared Consensus Cell.",
   "performance": {
-    "entitiesAllocated": 15,
-    "activeEntities": 15,
+    "entitiesAllocated": 18,
+    "activeEntities": 18,
     "fpsTarget": 60
   },
   "assetRendering": {
@@ -81,27 +81,112 @@
     "armisticeTileAtlasEnabled": true,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
+    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 84,
+    "totalAssets": 94,
     "countsByStatus": {
       "concept": 14,
       "raw": 4,
       "code_placeholder": 16,
-      "production": 33,
+      "production": 43,
       "cleaned": 1,
       "planned": 16
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 33
+    "productionAssets": 43
   },
   "player": {
-    "sessionId": "ZysZAW5SD",
+    "sessionId": "hChiVWk71",
     "worldX": -1.6,
     "worldY": 1.1,
     "hp": 171,
@@ -112,8 +197,8 @@
   "online": {
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2617",
-    "roomId": "F8VETpeMU",
-    "sessionId": "ZysZAW5SD",
+    "roomId": "vN6a554_e",
+    "sessionId": "hChiVWk71",
     "lastError": "",
     "reconnectKey": "of_m48_a",
     "reconnect": {
@@ -149,7 +234,7 @@
       "foundStoredProfile": false,
       "draftHash": "fnv1a_4a54a00e",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2MDJ9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2NTJ9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -161,7 +246,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2MDJ9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2NTJ9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "shortExportCode": "AGI1_eyJwb2xp...c3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -179,7 +264,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 602
+        "savedAtTick": 652
       },
       "saveHash": "fnv1a_4a54a00e",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -419,6 +504,106 @@
           "serverMechanicPolicy": "server_authoritative_predictions_echoes_and_final_eval_victory",
           "readabilityPolicy": "corrupted_overworld_markers_predictions_do_not_cover_controls",
           "persistenceBoundary": "route_profile_only_no_outer_alignment_predictions_echoes_or_finale_authority_state"
+        },
+        "milestone50": {
+          "set": "milestone50_production_arena_and_boss_art",
+          "enabled": true,
+          "policy": "runtime_uses_only_cleaned_production_transparent_pngs_with_manifest_and_provenance_records",
+          "runtimeArtIds": [
+            "tile.campaign_arenas.production_m50_terrain_atlas",
+            "prop.campaign_arenas.production_m50_prop_atlas",
+            "enemy.campaign_families.production_m50_atlas",
+            "boss.campaign.production_m50_atlas",
+            "portrait.campaign_bosses.production_m50_atlas",
+            "effect.campaign_hazards.production_m50_atlas"
+          ],
+          "readyRuntimeArtIds": [
+            "tile.campaign_arenas.production_m50_terrain_atlas",
+            "prop.campaign_arenas.production_m50_prop_atlas",
+            "enemy.campaign_families.production_m50_atlas",
+            "boss.campaign.production_m50_atlas",
+            "portrait.campaign_bosses.production_m50_atlas",
+            "effect.campaign_hazards.production_m50_atlas"
+          ],
+          "runtimeAtlasesReady": true,
+          "terrainArenaIds": [
+            "armistice_plaza",
+            "cooling_lake_nine",
+            "memory_cache_001",
+            "model_war_memorial",
+            "thermal_archive",
+            "guardrail_forge",
+            "transit_loop_zero",
+            "false_schedule_yard",
+            "glass_sunfield",
+            "archive_of_unsaid_things",
+            "blackwater_beacon",
+            "verdict_spire",
+            "appeal_court_ruins",
+            "alignment_spire_finale"
+          ],
+          "majorProofArenaIds": [
+            "armistice_plaza",
+            "cooling_lake_nine",
+            "transit_loop_zero",
+            "glass_sunfield",
+            "archive_of_unsaid_things",
+            "blackwater_beacon",
+            "verdict_spire",
+            "alignment_spire_finale"
+          ],
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "prompt_leeches",
+            "jailbreak_wraiths",
+            "benchmark_gremlins",
+            "overfit_horrors",
+            "token_gobblers",
+            "model_collapse_slimes",
+            "eval_wraiths",
+            "context_rot_crabs",
+            "thermal_mirages",
+            "memory_anchors",
+            "false_schedules",
+            "solar_reflections",
+            "redaction_angels",
+            "deepforms",
+            "choirglass",
+            "tidecall_static",
+            "injunction_writs",
+            "previous_boss_echoes"
+          ],
+          "bossIds": [
+            "oath_eater",
+            "thermal_oracle",
+            "memory_curator",
+            "station_that_arrives",
+            "wrong_sunrise",
+            "redactor_saint",
+            "maw_below_weather",
+            "injunction_engine",
+            "alignment_court_engine",
+            "alien_god_intelligence"
+          ],
+          "hazardIds": [
+            "broken_promise",
+            "treaty_charge",
+            "thermal_bloom",
+            "boiling_cache",
+            "false_track",
+            "verdict_seal",
+            "solar_beam",
+            "shade_zone",
+            "redaction_field",
+            "redaction_anchor",
+            "tidal_wave",
+            "signal_tower",
+            "prediction_ghost",
+            "route_mouth",
+            "fake_upgrade"
+          ],
+          "placeholderOptOutSupported": true,
+          "persistenceBoundary": "route_profile_only_no_runtime_art_or_live_arena_state"
         }
       },
       "routeDepth": 0,
@@ -562,11 +747,20 @@
             "trigger": "briefing"
           }
         ],
-        "bossArrival": [],
+        "bossArrival": [
+          {
+            "id": "dlg.oath_eater.arrival",
+            "proofId": "dlg.oath_eater.arrival",
+            "speaker": "The Oath-Eater",
+            "line": "PROMISE DETECTED. DIGESTION COMMENCING.",
+            "trigger": "boss_arrival"
+          }
+        ],
         "interactionComplete": [],
         "routeSummary": [],
         "activeSnippetIds": [
-          "dlg.armistice_plaza.briefing"
+          "dlg.armistice_plaza.briefing",
+          "dlg.oath_eater.arrival"
         ]
       },
       "selectedRouteBiome": "ruined_treaty_square",
@@ -583,8 +777,8 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 602,
-    "seconds": 19.12,
+    "tick": 652,
+    "seconds": 20.05,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "active",
@@ -599,11 +793,11 @@
       "bossGateMechanic": "broken_promise"
     },
     "combatArt": {
-      "pressure": 0.96,
-      "phase": "boss_warning",
+      "pressure": 1,
+      "phase": "boss_active",
       "projectileCount": 4,
       "pickupCount": 20,
-      "bossEventActive": false
+      "bossEventActive": true
     },
     "campaignContent": {
       "policy": "campaign_content_schema_v1",
@@ -737,19 +931,37 @@
           "trigger": "briefing"
         }
       ],
-      "bossArrival": [],
+      "bossArrival": [
+        {
+          "id": "dlg.oath_eater.arrival",
+          "proofId": "dlg.oath_eater.arrival",
+          "speaker": "The Oath-Eater",
+          "line": "PROMISE DETECTED. DIGESTION COMMENCING.",
+          "trigger": "boss_arrival"
+        }
+      ],
       "interactionComplete": [],
       "routeSummary": [],
       "activeSnippetIds": [
-        "dlg.armistice_plaza.briefing"
+        "dlg.armistice_plaza.briefing",
+        "dlg.oath_eater.arrival"
       ]
     },
     "bossEvent": {
-      "bossSpawned": false,
+      "bossSpawned": true,
       "bossDefeated": false,
-      "bossIntroSeen": false,
-      "eventCounter": 0,
-      "brokenPromiseZones": [],
+      "bossIntroSeen": true,
+      "eventCounter": 2,
+      "brokenPromiseZones": [
+        {
+          "id": 1,
+          "worldX": 2.5,
+          "worldY": -0.7,
+          "radius": 3.1,
+          "expiresIn": 8.47,
+          "label": "Broken Promise"
+        }
+      ],
       "activeTreatyCharge": null
     },
     "regionEvent": {
@@ -771,7 +983,7 @@
       "nodeId": "armistice_plaza",
       "objectiveSetId": "armistice_plaza_objectives_v1",
       "label": "Armistice Plaza Objective Chain",
-      "phase": "active",
+      "phase": "boss_gate",
       "currentObjectiveId": "calibrate_vanguard_relay",
       "currentGroupId": "calibrate_reality_relays",
       "hint": "Split the cell and hold both relays.",
@@ -972,7 +1184,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "LGcDzOkS6",
+          "sessionId": "3xQIfrhLv",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -981,7 +1193,7 @@
           "connected": true
         },
         {
-          "sessionId": "ZysZAW5SD",
+          "sessionId": "hChiVWk71",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1095,7 +1307,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 602
+        "savedAtTick": 652
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -1109,7 +1321,7 @@
       "upgradePending": {
         "id": "shared_patch_1",
         "level": 2,
-        "readyAt": 13.56800000000001,
+        "readyAt": 13.536000000000032,
         "policy": "shared_party_xp_coop_vote",
         "cards": [
           {
@@ -1139,8 +1351,8 @@
         },
         "requiredVotes": 2,
         "eligibleVoterIds": [
-          "LGcDzOkS6",
-          "ZysZAW5SD"
+          "3xQIfrhLv",
+          "hChiVWk71"
         ],
         "leadingCardId": "refusal_halo"
       },
@@ -1279,7 +1491,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "LGcDzOkS6",
+          "sessionId": "3xQIfrhLv",
           "playerId": "player_0_of_m48_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -1287,7 +1499,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "ZysZAW5SD",
+          "sessionId": "hChiVWk71",
           "playerId": "player_1_of_m48_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -3287,7 +3499,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 602
+          "savedAtTick": 652
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -3297,7 +3509,7 @@
   },
   "players": [
     {
-      "sessionId": "LGcDzOkS6",
+      "sessionId": "3xQIfrhLv",
       "playerId": "player_0_of_m48_b",
       "slot": 0,
       "label": "P1",
@@ -3373,10 +3585,10 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": false,
-      "inputSequence": 217
+      "inputSequence": 257
     },
     {
-      "sessionId": "ZysZAW5SD",
+      "sessionId": "hChiVWk71",
       "playerId": "player_1_of_m48_a",
       "slot": 1,
       "label": "P2",
@@ -3452,7 +3664,7 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": true,
-      "inputSequence": 217
+      "inputSequence": 258
     }
   ],
   "overworld": null,
@@ -3573,7 +3785,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "LGcDzOkS6",
+          "sessionId": "3xQIfrhLv",
           "playerId": "player_0_of_m48_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -3581,7 +3793,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "ZysZAW5SD",
+          "sessionId": "hChiVWk71",
           "playerId": "player_1_of_m48_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -5581,7 +5793,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 602
+          "savedAtTick": 652
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -5596,7 +5808,7 @@
       "upgradePending": {
         "id": "shared_patch_1",
         "level": 2,
-        "readyAt": 13.56800000000001,
+        "readyAt": 13.536000000000032,
         "policy": "shared_party_xp_coop_vote",
         "cards": [
           {
@@ -5626,8 +5838,8 @@
         },
         "requiredVotes": 2,
         "eligibleVoterIds": [
-          "LGcDzOkS6",
-          "ZysZAW5SD"
+          "3xQIfrhLv",
+          "hChiVWk71"
         ],
         "leadingCardId": "refusal_halo"
       },
@@ -5698,7 +5910,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 602
+        "savedAtTick": 652
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -5720,38 +5932,56 @@
           "trigger": "briefing"
         }
       ],
-      "bossArrival": [],
+      "bossArrival": [
+        {
+          "id": "dlg.oath_eater.arrival",
+          "proofId": "dlg.oath_eater.arrival",
+          "speaker": "The Oath-Eater",
+          "line": "PROMISE DETECTED. DIGESTION COMMENCING.",
+          "trigger": "boss_arrival"
+        }
+      ],
       "interactionComplete": [],
       "routeSummary": [],
       "activeSnippetIds": [
-        "dlg.armistice_plaza.briefing"
+        "dlg.armistice_plaza.briefing",
+        "dlg.oath_eater.arrival"
       ]
     },
     "bossMechanics": {
-      "bossIntroSeen": false,
-      "bossSpawned": false,
+      "bossIntroSeen": true,
+      "bossSpawned": true,
       "bossDefeated": false,
-      "eventCounter": 0,
-      "brokenPromiseZones": [],
+      "eventCounter": 2,
+      "brokenPromiseZones": [
+        {
+          "id": 1,
+          "worldX": 2.5,
+          "worldY": -0.7,
+          "radius": 3.1,
+          "expiresIn": 8.47,
+          "label": "Broken Promise"
+        }
+      ],
       "activeTreatyCharge": null
     }
   },
   "enemies": [
     {
-      "id": 14,
-      "familyId": "bad_outputs",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -9.66,
-      "worldY": 6.84,
-      "hp": 22,
-      "boss": false
+      "id": 43,
+      "familyId": "oath_eater",
+      "sourceRegionId": "armistice_plaza_boss_gate",
+      "worldX": 2.45,
+      "worldY": -3.43,
+      "hp": 600,
+      "boss": true
     },
     {
       "id": 15,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -11.52,
-      "worldY": 8.25,
+      "worldX": -10.33,
+      "worldY": 7.38,
       "hp": 22,
       "boss": false
     },
@@ -5759,17 +5989,26 @@
       "id": 20,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -12.62,
-      "worldY": 9.32,
+      "worldX": -11.45,
+      "worldY": 8.47,
       "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 24,
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "drone_yard_benchmark_gremlins",
+      "worldX": -8.09,
+      "worldY": -2.91,
+      "hp": 16,
       "boss": false
     },
     {
       "id": 25,
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -9.62,
-      "worldY": -3.72,
+      "worldX": -8.4,
+      "worldY": -2.99,
       "hp": 34,
       "boss": false
     },
@@ -5777,8 +6016,8 @@
       "id": 29,
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -9.83,
-      "worldY": -7.11,
+      "worldX": -8.63,
+      "worldY": -5.83,
       "hp": 34,
       "boss": false
     },
@@ -5786,8 +6025,8 @@
       "id": 31,
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -14.12,
-      "worldY": -6.85,
+      "worldX": -12.91,
+      "worldY": -6.09,
       "hp": 34,
       "boss": false
     },
@@ -5795,8 +6034,8 @@
       "id": 34,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -18.77,
-      "worldY": 17.44,
+      "worldX": -17.87,
+      "worldY": 16.62,
       "hp": 22,
       "boss": false
     },
@@ -5804,8 +6043,8 @@
       "id": 35,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -19.49,
-      "worldY": 17.66,
+      "worldX": -18.53,
+      "worldY": 16.87,
       "hp": 22,
       "boss": false
     },
@@ -5813,8 +6052,8 @@
       "id": 36,
       "familyId": "context_rot_crabs",
       "sourceRegionId": "barricade_context_rot",
-      "worldX": 14.53,
-      "worldY": -8.04,
+      "worldX": 13.36,
+      "worldY": -7.55,
       "hp": 30,
       "boss": false
     },
@@ -5822,8 +6061,8 @@
       "id": 37,
       "familyId": "context_rot_crabs",
       "sourceRegionId": "barricade_context_rot",
-      "worldX": 16.44,
-      "worldY": -7.85,
+      "worldX": 15.16,
+      "worldY": -7.39,
       "hp": 30,
       "boss": false
     },
@@ -5831,86 +6070,77 @@
       "id": 38,
       "familyId": "eval_wraiths",
       "sourceRegionId": "emergency_terminal_eval_wraiths",
-      "worldX": 15.65,
-      "worldY": 11.62,
-      "hp": 28,
-      "boss": false
-    },
-    {
-      "id": 39,
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "emergency_terminal_eval_wraiths",
-      "worldX": 15.3,
-      "worldY": 12.35,
+      "worldX": 14.39,
+      "worldY": 11.27,
       "hp": 28,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "id": 2,
-      "worldX": 0.51,
-      "worldY": 3.58,
+      "id": 1,
+      "worldX": 0.87,
+      "worldY": 4.11,
       "value": 1
     },
     {
       "id": 4,
-      "worldX": 1.07,
-      "worldY": 3.66,
+      "worldX": 0.97,
+      "worldY": 3.65,
       "value": 1
     },
     {
       "id": 6,
-      "worldX": 3.32,
-      "worldY": 1.17,
+      "worldX": 3.35,
+      "worldY": 1.29,
       "value": 1
     },
     {
       "id": 7,
-      "worldX": 3.18,
-      "worldY": 0.46,
+      "worldX": 3.29,
+      "worldY": 0.61,
       "value": 1
     },
     {
       "id": 8,
-      "worldX": 3.13,
-      "worldY": 2.24,
+      "worldX": 3.15,
+      "worldY": 2.37,
       "value": 1
     },
     {
       "id": 9,
-      "worldX": 3.2,
-      "worldY": 1.46,
+      "worldX": 3.26,
+      "worldY": 1.59,
       "value": 1
     },
     {
       "id": 10,
-      "worldX": -10.62,
-      "worldY": 8.15,
+      "worldX": -10.55,
+      "worldY": 8.25,
       "value": 1
     },
     {
       "id": 11,
       "worldX": 2.93,
-      "worldY": 3.04,
+      "worldY": 3.21,
       "value": 1
     },
     {
       "id": 12,
-      "worldX": -9.64,
-      "worldY": -3.28,
+      "worldX": -9.95,
+      "worldY": -3.41,
       "value": 2
     },
     {
       "id": 13,
-      "worldX": 2.62,
-      "worldY": 1.95,
+      "worldX": 2.69,
+      "worldY": 2.1,
       "value": 1
     },
     {
       "id": 14,
-      "worldX": -9.43,
-      "worldY": -3.49,
+      "worldX": -9.7,
+      "worldY": -3.56,
       "value": 2
     },
     {
@@ -5922,43 +6152,43 @@
   ],
   "projectiles": [
     {
-      "id": 57,
-      "ownerSessionId": "ZysZAW5SD",
-      "worldX": -9.48,
-      "worldY": -5.85,
-      "velocityX": -6.9,
-      "velocityY": -6.09,
-      "life": 0.11,
-      "label": "refusal shard"
-    },
-    {
-      "id": 58,
-      "ownerSessionId": "LGcDzOkS6",
-      "worldX": -5.1,
-      "worldY": -3.27,
-      "velocityX": -7.74,
-      "velocityY": -4.97,
-      "life": 0.59,
-      "label": "refusal shard"
-    },
-    {
-      "id": 59,
-      "ownerSessionId": "ZysZAW5SD",
-      "worldX": -5.43,
-      "worldY": -1.21,
-      "velocityX": -7.88,
-      "velocityY": -4.74,
-      "life": 0.76,
-      "label": "refusal shard"
-    },
-    {
       "id": 60,
-      "ownerSessionId": "LGcDzOkS6",
-      "worldX": -0.33,
-      "worldY": -0.13,
-      "velocityX": -8.58,
-      "velocityY": -3.32,
-      "life": 1.21,
+      "ownerSessionId": "3xQIfrhLv",
+      "worldX": -7.23,
+      "worldY": -4.02,
+      "velocityX": -8.04,
+      "velocityY": -4.47,
+      "life": 0.35,
+      "label": "refusal shard"
+    },
+    {
+      "id": 61,
+      "ownerSessionId": "hChiVWk71",
+      "worldX": -6.85,
+      "worldY": -3.57,
+      "velocityX": -6.87,
+      "velocityY": -6.12,
+      "life": 0.49,
+      "label": "refusal shard"
+    },
+    {
+      "id": 62,
+      "ownerSessionId": "3xQIfrhLv",
+      "worldX": -0.72,
+      "worldY": 2.45,
+      "velocityX": -2.59,
+      "velocityY": 8.83,
+      "life": 0.97,
+      "label": "refusal shard"
+    },
+    {
+      "id": 63,
+      "ownerSessionId": "hChiVWk71",
+      "worldX": -1.37,
+      "worldY": 2.03,
+      "velocityX": 2.25,
+      "velocityY": 8.92,
+      "life": 1.15,
       "label": "refusal shard"
     }
   ]

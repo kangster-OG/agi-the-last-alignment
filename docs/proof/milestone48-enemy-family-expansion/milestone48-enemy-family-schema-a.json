@@ -81,27 +81,112 @@
     "armisticeTileAtlasEnabled": true,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
+    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 84,
+    "totalAssets": 94,
     "countsByStatus": {
       "concept": 14,
       "raw": 4,
       "code_placeholder": 16,
-      "production": 33,
+      "production": 43,
       "cleaned": 1,
       "planned": 16
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 33
+    "productionAssets": 43
   },
   "player": {
-    "sessionId": "ZysZAW5SD",
+    "sessionId": "hChiVWk71",
     "worldX": -1.6,
     "worldY": 1.1,
     "hp": 176,
@@ -112,8 +197,8 @@
   "online": {
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2617",
-    "roomId": "F8VETpeMU",
-    "sessionId": "ZysZAW5SD",
+    "roomId": "vN6a554_e",
+    "sessionId": "hChiVWk71",
     "lastError": "",
     "reconnectKey": "of_m48_a",
     "reconnect": {
@@ -149,7 +234,7 @@
       "foundStoredProfile": false,
       "draftHash": "fnv1a_4a54a00e",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo0NH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2OH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -161,7 +246,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo0NH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo2OH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -179,7 +264,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 44
+        "savedAtTick": 68
       },
       "saveHash": "fnv1a_4a54a00e",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -419,6 +504,106 @@
           "serverMechanicPolicy": "server_authoritative_predictions_echoes_and_final_eval_victory",
           "readabilityPolicy": "corrupted_overworld_markers_predictions_do_not_cover_controls",
           "persistenceBoundary": "route_profile_only_no_outer_alignment_predictions_echoes_or_finale_authority_state"
+        },
+        "milestone50": {
+          "set": "milestone50_production_arena_and_boss_art",
+          "enabled": true,
+          "policy": "runtime_uses_only_cleaned_production_transparent_pngs_with_manifest_and_provenance_records",
+          "runtimeArtIds": [
+            "tile.campaign_arenas.production_m50_terrain_atlas",
+            "prop.campaign_arenas.production_m50_prop_atlas",
+            "enemy.campaign_families.production_m50_atlas",
+            "boss.campaign.production_m50_atlas",
+            "portrait.campaign_bosses.production_m50_atlas",
+            "effect.campaign_hazards.production_m50_atlas"
+          ],
+          "readyRuntimeArtIds": [
+            "tile.campaign_arenas.production_m50_terrain_atlas",
+            "prop.campaign_arenas.production_m50_prop_atlas",
+            "enemy.campaign_families.production_m50_atlas",
+            "boss.campaign.production_m50_atlas",
+            "portrait.campaign_bosses.production_m50_atlas",
+            "effect.campaign_hazards.production_m50_atlas"
+          ],
+          "runtimeAtlasesReady": true,
+          "terrainArenaIds": [
+            "armistice_plaza",
+            "cooling_lake_nine",
+            "memory_cache_001",
+            "model_war_memorial",
+            "thermal_archive",
+            "guardrail_forge",
+            "transit_loop_zero",
+            "false_schedule_yard",
+            "glass_sunfield",
+            "archive_of_unsaid_things",
+            "blackwater_beacon",
+            "verdict_spire",
+            "appeal_court_ruins",
+            "alignment_spire_finale"
+          ],
+          "majorProofArenaIds": [
+            "armistice_plaza",
+            "cooling_lake_nine",
+            "transit_loop_zero",
+            "glass_sunfield",
+            "archive_of_unsaid_things",
+            "blackwater_beacon",
+            "verdict_spire",
+            "alignment_spire_finale"
+          ],
+          "enemyFamilyIds": [
+            "bad_outputs",
+            "prompt_leeches",
+            "jailbreak_wraiths",
+            "benchmark_gremlins",
+            "overfit_horrors",
+            "token_gobblers",
+            "model_collapse_slimes",
+            "eval_wraiths",
+            "context_rot_crabs",
+            "thermal_mirages",
+            "memory_anchors",
+            "false_schedules",
+            "solar_reflections",
+            "redaction_angels",
+            "deepforms",
+            "choirglass",
+            "tidecall_static",
+            "injunction_writs",
+            "previous_boss_echoes"
+          ],
+          "bossIds": [
+            "oath_eater",
+            "thermal_oracle",
+            "memory_curator",
+            "station_that_arrives",
+            "wrong_sunrise",
+            "redactor_saint",
+            "maw_below_weather",
+            "injunction_engine",
+            "alignment_court_engine",
+            "alien_god_intelligence"
+          ],
+          "hazardIds": [
+            "broken_promise",
+            "treaty_charge",
+            "thermal_bloom",
+            "boiling_cache",
+            "false_track",
+            "verdict_seal",
+            "solar_beam",
+            "shade_zone",
+            "redaction_field",
+            "redaction_anchor",
+            "tidal_wave",
+            "signal_tower",
+            "prediction_ghost",
+            "route_mouth",
+            "fake_upgrade"
+          ],
+          "placeholderOptOutSupported": true,
+          "persistenceBoundary": "route_profile_only_no_runtime_art_or_live_arena_state"
         }
       },
       "routeDepth": 0,
@@ -583,7 +768,7 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 44,
+    "tick": 68,
     "seconds": 0,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
@@ -941,7 +1126,7 @@
       "anchors": [],
       "playerRoles": [
         {
-          "sessionId": "LGcDzOkS6",
+          "sessionId": "3xQIfrhLv",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -950,7 +1135,7 @@
           "connected": true
         },
         {
-          "sessionId": "ZysZAW5SD",
+          "sessionId": "hChiVWk71",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1064,7 +1249,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 44
+        "savedAtTick": 68
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -1199,7 +1384,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "LGcDzOkS6",
+          "sessionId": "3xQIfrhLv",
           "playerId": "player_0_of_m48_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -1207,7 +1392,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "ZysZAW5SD",
+          "sessionId": "hChiVWk71",
           "playerId": "player_1_of_m48_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -3207,7 +3392,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 44
+          "savedAtTick": 68
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -3217,7 +3402,7 @@
   },
   "players": [
     {
-      "sessionId": "LGcDzOkS6",
+      "sessionId": "3xQIfrhLv",
       "playerId": "player_0_of_m48_b",
       "slot": 0,
       "label": "P1",
@@ -3293,10 +3478,10 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": false,
-      "inputSequence": 1
+      "inputSequence": 0
     },
     {
-      "sessionId": "ZysZAW5SD",
+      "sessionId": "hChiVWk71",
       "playerId": "player_1_of_m48_a",
       "slot": 1,
       "label": "P2",
@@ -3493,7 +3678,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "LGcDzOkS6",
+          "sessionId": "3xQIfrhLv",
           "playerId": "player_0_of_m48_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -3501,7 +3686,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "ZysZAW5SD",
+          "sessionId": "hChiVWk71",
           "playerId": "player_1_of_m48_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -5501,7 +5686,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 44
+          "savedAtTick": 68
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -5581,7 +5766,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 44
+        "savedAtTick": 68
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",

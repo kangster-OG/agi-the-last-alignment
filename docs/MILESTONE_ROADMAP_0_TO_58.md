@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-49 are complete. Milestone 50 is next.
+Current repo status as of May 1, 2026: Milestones 0-50 are complete. Milestone 51 is next.
 
 ## Non-Negotiable Continuity
 
@@ -614,19 +614,23 @@ Readiness: complete.
 
 Goal: produce cleaned terrain, prop, hazard, enemy, and boss atlases for all eight campaign encounters.
 
-Expected scope:
+Implemented:
 
-- terrain atlases;
-- objective props;
-- hazards;
-- enemies;
-- boss sprites/portraits;
-- manifest/provenance updates.
+- added original transparent runtime atlases for campaign terrain, objective props, hazards, expanded enemy families, boss sprites, and boss portraits;
+- wired the M50 art set into online campaign arena terrain, landmark props, enemy rendering, boss rendering, boss portrait presentation, region-event markers, and boss-event markers;
+- preserved production-art fallback ordering and placeholder opt-outs;
+- updated `assets/asset_manifest.json` and `ART_PROVENANCE.md` for all six new production atlases;
+- added proof-visible campaign arena art telemetry for atlas coverage, arena IDs, boss IDs, enemy-family IDs, hazard IDs, and art policy.
 
-Proof expectations:
+Proof coverage:
 
-- each arena screenshot shows production art by default;
-- asset validator passes without warnings.
+- `npm run proof:assets`
+- `npm run proof:milestone50-arena-boss-art`
+- `npm run proof:milestone48-enemy-family-expansion`
+- `npm run proof:milestone49-player-comind-art`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M51: Overworld Diorama 1.0
 

@@ -625,6 +625,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone49PlayerCoMindArtScenario();
     return;
+  } else if (name === "milestone50-arena-boss-art") {
+    await closeBrowser(browser);
+    await runMilestone50ArenaBossArtScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -4229,6 +4233,95 @@ async function runMilestone49PlayerCoMindArtScenario() {
   }
 }
 
+async function runMilestone50ArenaBossArtScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+  const profileCode = encodeProofRouteProfileCode({
+    rewardIds: m46FullRosterRewardIds(),
+    completedNodeIds: m46FullRosterNodeIds(),
+    partyRenown: 32,
+    routeDepth: m46FullRosterNodeIds().length,
+    saveHash: "proof_m50_full_campaign_art_profile"
+  });
+  const proofNodes = [
+    "armistice_plaza",
+    "cooling_lake_nine",
+    "transit_loop_zero",
+    "glass_sunfield",
+    "archive_of_unsaid_things",
+    "blackwater_beacon",
+    "verdict_spire",
+    "alignment_spire_finale"
+  ];
+
+  try {
+    for (const nodeId of proofNodes) {
+      const pair = await openOnlinePairWithParamsInContext(
+        context,
+        `m50_${nodeId}`,
+        errors,
+        { profileCode, onlineClassId: "accord_striker", onlineFactionId: "openai_accord" },
+        { profileCode, onlineClassId: "signal_vanguard", onlineFactionId: "qwen_silkgrid" }
+      );
+      await waitForOnlineServerCombat(pair.pageA, (text) => text.online?.party?.availableNodeIds?.includes(nodeId) || text.online?.party?.selectedNodeId === nodeId, `M50 route availability for ${nodeId}`, 15_000);
+      await voteBothToNode(pair.pageA, pair.pageB, nodeId);
+      await Promise.all([pair.pageA.keyboard.press("Space"), pair.pageB.keyboard.press("Space")]);
+      await waitForOnlineServerCombat(
+        pair.pageA,
+        (text) =>
+          text.online?.runPhase === "active" &&
+          text.online?.party?.activeNodeId === nodeId &&
+          text.assetRendering?.campaignArenaArtSet === "milestone50_production_arena_and_boss_art" &&
+          text.enemies?.length > 0,
+        `M50 active production arena art for ${nodeId}`,
+        16_000
+      );
+      await pair.pageA.waitForTimeout(900);
+      await capture(pair.pageA, `milestone50-${nodeId}-production-art`);
+      const active = await state(pair.pageA);
+      assert(active.assetRendering?.campaignArenaArtCoverage?.atlasCount === 6, "expected six M50 runtime atlases");
+      assert(active.assetRendering?.campaignArenaArtCoverage?.majorProofArenaIds?.includes(nodeId), `expected M50 proof coverage to include ${nodeId}`);
+      assert(active.online?.campaignContent?.runtimeArenaId, "expected campaign runtime arena telemetry during M50 proof");
+      assert(active.online?.networkAuthority === "colyseus_room_server_combat", "expected server-authoritative online combat during M50 proof");
+      await pair.pageA.close();
+      await pair.pageB.close();
+    }
+
+    const optOut = await openOnlinePairWithParamsInContext(
+      context,
+      "m50_placeholder",
+      errors,
+      { resetOnlinePersistence: "1", productionArt: "0", placeholderArt: "1" },
+      { resetOnlinePersistence: "1", productionArt: "0", placeholderArt: "1" }
+    );
+    await launchOnlineArmistice(optOut.pageA, optOut.pageB);
+    await waitForOnlineServerCombat(
+      optOut.pageA,
+      (text) => text.online?.runPhase === "active" && text.assetRendering?.campaignArenaArtSet === "placeholder_safe_opt_out",
+      "M50 placeholder opt-out active run",
+      12_000
+    );
+    await capture(optOut.pageA, "milestone50-placeholder-opt-out-safe");
+    const placeholder = await state(optOut.pageA);
+    assert(placeholder.assetRendering?.productionArtEnabled === false, "expected M50 production art disabled by placeholder opt-out");
+    assert(placeholder.assetRendering?.campaignArenaArtCoverage?.placeholderOptOutPreserved === true, "expected M50 placeholder preservation telemetry");
+    await optOut.pageA.close();
+    await optOut.pageB.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone50 arena boss art");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
 async function runMilestone47FactionBurstsScenario() {
   const browser = await chromium.launch({
     headless: true,
@@ -5240,10 +5333,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion"].includes(name);
+  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone50-arena-boss-art"].includes(name);
 }

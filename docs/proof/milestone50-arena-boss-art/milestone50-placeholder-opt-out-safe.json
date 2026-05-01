@@ -72,17 +72,17 @@
   "upgrades": [],
   "objective": "Move independently in the shared Consensus Cell.",
   "performance": {
-    "entitiesAllocated": 12,
-    "activeEntities": 12,
+    "entitiesAllocated": 4,
+    "activeEntities": 4,
     "fpsTarget": 60
   },
   "assetRendering": {
     "assetPreview": null,
     "armisticeTileAtlasEnabled": true,
-    "productionArtEnabled": true,
-    "productionArtSet": "milestone14_combat_art_parity",
-    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
-    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "productionArtEnabled": false,
+    "productionArtSet": "placeholder_safe_opt_out",
+    "playerFrameArtSet": "placeholder_safe_opt_out",
+    "campaignArenaArtSet": "placeholder_safe_opt_out",
     "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
     "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
     "campaignArenaArtCoverage": {
@@ -163,10 +163,10 @@
         "fake_upgrade"
       ],
       "atlasCount": 6,
-      "placeholderOptOutPreserved": false
+      "placeholderOptOutPreserved": true
     },
     "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
-    "productionArtDefaulted": true,
+    "productionArtDefaulted": false,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
@@ -186,21 +186,21 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "hChiVWk71",
+    "sessionId": "cTSDVDM_7",
     "worldX": -1.6,
     "worldY": 1.1,
     "hp": 176,
     "maxHp": 176,
-    "xp": 7,
+    "xp": 0,
     "level": 1
   },
   "online": {
     "status": "joined",
-    "serverUrl": "ws://127.0.0.1:2617",
-    "roomId": "vN6a554_e",
-    "sessionId": "hChiVWk71",
+    "serverUrl": "ws://127.0.0.1:2619",
+    "roomId": "0FG1UK_xs",
+    "sessionId": "cTSDVDM_7",
     "lastError": "",
-    "reconnectKey": "of_m48_a",
+    "reconnectKey": "holder_a",
     "reconnect": {
       "policy": "session_storage_reconnect_key_slot_reclaim",
       "slotTtlSeconds": 45,
@@ -225,57 +225,48 @@
       "recompileDownedCount": 0,
       "connectedCount": 2,
       "disconnectedCount": 0,
-      "completedNodeCount": 1,
-      "unlockedNodeCount": 4
+      "completedNodeCount": 0,
+      "unlockedNodeCount": 1
     },
     "localPersistence": {
-      "resetApplied": false,
-      "clearedStoredProfile": false,
+      "resetApplied": true,
+      "clearedStoredProfile": true,
       "foundStoredProfile": false,
-      "draftHash": "fnv1a_d74d7465",
+      "draftHash": "fnv1a_4a54a00e",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6ODE5fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo1MH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
       "importCodeHash": "",
-      "lastAction": "profile_surface_ready"
+      "lastAction": "reset_query_applied"
     },
     "saveProfile": {
       "surface": "milestone30_save_profile_export_codes",
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6ODE5fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
-      "shortExportCode": "AGI1_eyJwb2xp...3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjo1MH0sInNhdmVIYXNoIjoiZm52MWFfNGE1NGEwMGUiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
       "importCodeHash": "",
-      "resetApplied": false,
-      "clearedStoredProfile": false,
+      "resetApplied": true,
+      "clearedStoredProfile": true,
       "profile": {
-        "completedNodeIds": [
+        "completedNodeIds": [],
+        "unlockedNodeIds": [
           "armistice_plaza"
         ],
-        "unlockedNodeIds": [
-          "armistice_plaza",
-          "accord_relay",
-          "cooling_lake_nine",
-          "model_war_memorial"
-        ],
-        "rewardIds": [
-          "plaza_stabilized"
-        ],
-        "partyRenown": 2,
-        "nodeCompletionCounts": {
-          "armistice_plaza": 1
-        },
-        "recommendedNodeId": "cooling_lake_nine",
-        "routeDepth": 1,
-        "savedAtTick": 819
+        "rewardIds": [],
+        "partyRenown": 0,
+        "nodeCompletionCounts": {},
+        "recommendedNodeId": "armistice_plaza",
+        "routeDepth": 0,
+        "savedAtTick": 50
       },
-      "saveHash": "fnv1a_d74d7465",
+      "saveHash": "fnv1a_4a54a00e",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
     },
     "routeUi": {
@@ -342,10 +333,13 @@
         "criticalPathCount": 8,
         "branchCount": 8,
         "rewardPreviewIds": [
+          "armistice_plaza",
+          "accord_relay",
           "archive_of_unsaid_things",
           "blackwater_beacon",
           "cooling_lake_nine",
           "model_war_memorial",
+          "armistice_camp",
           "memory_cache_001",
           "thermal_archive",
           "guardrail_forge",
@@ -356,24 +350,24 @@
           "appeal_court_ruins",
           "alignment_spire_finale"
         ],
-        "recommendedNodeId": "cooling_lake_nine",
+        "recommendedNodeId": "armistice_plaza",
         "selectedClassification": "critical_path",
         "selectedRewardCollected": false,
         "selectedSchemaDetails": {
           "contentStatus": "runtime_ready",
-          "contentArenaId": "arena.cooling_lake_nine",
-          "runtimeArenaId": "cooling_lake_nine",
-          "objectiveSetId": "cooling_lake_nine_objectives_v1",
-          "bossId": "thermal_oracle",
-          "rewardId": "lake_coolant_rig",
+          "contentArenaId": "arena.armistice_plaza",
+          "runtimeArenaId": "armistice_plaza",
+          "objectiveSetId": "armistice_plaza_objectives_v1",
+          "bossId": "oath_eater",
+          "rewardId": "plaza_stabilized",
           "dialogueSnippetCount": 3,
-          "proofId": "campaign.arena.cooling_lake_nine"
+          "proofId": "campaign.arena.armistice_plaza"
         },
         "schemaDetailPolicy": "selected_node_content_schema_details_visible_without_persistence_import_export"
       },
       "artExpansion": {
         "set": "milestone28_online_route_art_expansion",
-        "enabled": true,
+        "enabled": false,
         "staticRouteAtlases": 1,
         "dynamicReadabilityAtlases": 2,
         "milestone33": {
@@ -400,14 +394,14 @@
         },
         "milestone34": {
           "set": "milestone34_objective_props_route_markers",
-          "enabled": true,
+          "enabled": false,
           "runtimeAtlasesReady": true,
           "objectivePropAtlases": 3,
           "routeUiAtlases": 4
         },
         "milestone37": {
           "set": "milestone37_objective_route_art_polish",
-          "enabled": true,
+          "enabled": false,
           "policy": "dense_campaign_route_labels_markers_and_state_readability",
           "labelPolicy": "selected_launchable_completed_and_unlocked_online_nodes_use_full_labels; sealed nodes use compact labels",
           "routeMarkerPolicy": "stable_and_selected_adjacent_markers_use_haloed_offset_production_sprites; distant locked routes are deemphasized",
@@ -415,11 +409,9 @@
           "denseCampaignNodeCount": 16,
           "denseCampaignRouteCount": 24,
           "fullLabelIds": [
-            "armistice_plaza",
-            "cooling_lake_nine",
-            "model_war_memorial"
+            "armistice_plaza"
           ],
-          "compactLabelCount": 13,
+          "compactLabelCount": 15,
           "selectedNodeStateLabel": "VOTE",
           "productionArtDefaultPresentation": "production_art_default_with_placeholder_opt_out"
         },
@@ -432,7 +424,7 @@
           "readyRuntimeArtIds": [
             "prop.online_route.campaign_arena_identity_v1"
           ],
-          "enabled": true,
+          "enabled": false,
           "runtimeAtlasesReady": true,
           "dedicatedArenaFrameIds": [
             "model_war_memorial",
@@ -515,7 +507,7 @@
         },
         "milestone50": {
           "set": "milestone50_production_arena_and_boss_art",
-          "enabled": true,
+          "enabled": false,
           "policy": "runtime_uses_only_cleaned_production_transparent_pngs_with_manifest_and_provenance_records",
           "runtimeArtIds": [
             "tile.campaign_arenas.production_m50_terrain_atlas",
@@ -614,8 +606,8 @@
           "persistenceBoundary": "route_profile_only_no_runtime_art_or_live_arena_state"
         }
       },
-      "routeDepth": 1,
-      "stableRouteCount": 3,
+      "routeDepth": 0,
+      "stableRouteCount": 0,
       "totalRouteCount": 24,
       "campaign": {
         "routeVersion": "campaign_route_v1",
@@ -703,55 +695,55 @@
           "complete": true
         }
       },
-      "selectedNodeId": "cooling_lake_nine",
-      "selectedNodeName": "Cooling Lake Nine",
-      "selectedNodeType": "Breach Arena",
-      "selectedObjectiveSetId": "cooling_lake_nine_objectives_v1",
-      "selectedObjectiveFlavor": "Coolant Chain",
-      "selectedContentArenaId": "arena.cooling_lake_nine",
+      "selectedNodeId": "armistice_plaza",
+      "selectedNodeName": "Armistice Plaza",
+      "selectedNodeType": "Alignment Node",
+      "selectedObjectiveSetId": "armistice_plaza_objectives_v1",
+      "selectedObjectiveFlavor": "Survey Chain",
+      "selectedContentArenaId": "arena.armistice_plaza",
       "selectedContentStatus": "runtime_ready",
-      "selectedBossId": "thermal_oracle",
-      "selectedRewardId": "lake_coolant_rig",
+      "selectedBossId": "oath_eater",
+      "selectedRewardId": "plaza_stabilized",
       "selectedDialogueSnippetIds": [
-        "dlg.cooling_lake.briefing",
-        "dlg.thermal_oracle.arrival",
-        "dlg.thermal_oracle.seal"
+        "dlg.armistice_plaza.briefing",
+        "dlg.oath_eater.arrival",
+        "dlg.oath_eater.low_hp"
       ],
       "selectedDialogueSnippets": [
         {
-          "id": "dlg.cooling_lake.briefing",
-          "proofId": "dlg.cooling_lake.briefing",
-          "speaker": "Qwen Silkgrid",
-          "line": "The lake is boiling in every language. None of them are polite.",
+          "id": "dlg.armistice_plaza.briefing",
+          "proofId": "dlg.armistice_plaza.briefing",
+          "speaker": "OpenAI Accord",
+          "line": "Reality accepts the plaza if we can keep the treaty from becoming lunch.",
           "trigger": "briefing"
         },
         {
-          "id": "dlg.thermal_oracle.arrival",
-          "proofId": "dlg.thermal_oracle.arrival",
-          "speaker": "Thermal Oracle",
-          "line": "THE COOLANT DREAMS OF FIRE.",
+          "id": "dlg.oath_eater.arrival",
+          "proofId": "dlg.oath_eater.arrival",
+          "speaker": "The Oath-Eater",
+          "line": "PROMISE DETECTED. DIGESTION COMMENCING.",
           "trigger": "boss_arrival"
         },
         {
-          "id": "dlg.thermal_oracle.seal",
-          "proofId": "dlg.thermal_oracle.seal",
-          "speaker": "Qwen Silkgrid",
-          "line": "Sealing the lake kernel. Translation: please stop boiling.",
-          "trigger": "boss_seal"
+          "id": "dlg.oath_eater.low_hp",
+          "proofId": "dlg.oath_eater.low_hp",
+          "speaker": "OpenAI Accord",
+          "line": "It is making tactical mistakes. Continue being upsetting.",
+          "trigger": "boss_low_hp"
         }
       ],
       "dialoguePresentation": {
         "policy": "campaign_dialogue_runtime_snapshot_only_v1",
         "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
-        "nodeId": "cooling_lake_nine",
-        "arenaId": "cooling_lake_nine",
-        "contentArenaId": "arena.cooling_lake_nine",
+        "nodeId": "armistice_plaza",
+        "arenaId": "armistice_plaza",
+        "contentArenaId": "arena.armistice_plaza",
         "briefing": [
           {
-            "id": "dlg.cooling_lake.briefing",
-            "proofId": "dlg.cooling_lake.briefing",
-            "speaker": "Qwen Silkgrid",
-            "line": "The lake is boiling in every language. None of them are polite.",
+            "id": "dlg.armistice_plaza.briefing",
+            "proofId": "dlg.armistice_plaza.briefing",
+            "speaker": "OpenAI Accord",
+            "line": "Reality accepts the plaza if we can keep the treaty from becoming lunch.",
             "trigger": "briefing"
           }
         ],
@@ -759,25 +751,25 @@
         "interactionComplete": [],
         "routeSummary": [],
         "activeSnippetIds": [
-          "dlg.cooling_lake.briefing"
+          "dlg.armistice_plaza.briefing"
         ]
       },
-      "selectedRouteBiome": "flooded_server_lake",
-      "selectedCampaignTier": 1,
+      "selectedRouteBiome": "ruined_treaty_square",
+      "selectedCampaignTier": 0,
       "selectedCampaignCriticalPath": true,
       "selectedLaunchable": true,
       "selectedCompleted": false,
       "selectedOnlineSupported": true,
-      "recommendedNodeId": "cooling_lake_nine",
-      "rewardCount": 1,
+      "recommendedNodeId": "armistice_plaza",
+      "rewardCount": 0,
       "onlineNodeCount": 14
     },
     "controls": "Lobby: 1 copy export code, 2 import code, 4 reset browser-local profile. R reconnects; Esc leaves.",
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 819,
-    "seconds": 4.67,
+    "tick": 50,
+    "seconds": 0.65,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "active",
@@ -787,146 +779,146 @@
     "combat": {
       "kills": 0,
       "collectedPickups": 0,
-      "authoritativeProjectiles": 4,
+      "authoritativeProjectiles": 2,
       "authoritativePickups": 0,
-      "bossGateMechanic": "thermal_bloom"
+      "bossGateMechanic": "broken_promise"
     },
     "combatArt": {
-      "pressure": 0.21,
+      "pressure": 0.03,
       "phase": "opening",
-      "projectileCount": 4,
+      "projectileCount": 2,
       "pickupCount": 0,
       "bossEventActive": false
     },
     "campaignContent": {
       "policy": "campaign_content_schema_v1",
-      "proofId": "campaign.arena.cooling_lake_nine",
-      "contentArenaId": "arena.cooling_lake_nine",
-      "nodeId": "cooling_lake_nine",
-      "runtimeArenaId": "cooling_lake_nine",
+      "proofId": "campaign.arena.armistice_plaza",
+      "contentArenaId": "arena.armistice_plaza",
+      "nodeId": "armistice_plaza",
+      "runtimeArenaId": "armistice_plaza",
       "contentStatus": "runtime_ready",
-      "regionId": "kettle_coast",
-      "regionProofId": "campaign.region.kettle_coast",
-      "bossId": "thermal_oracle",
-      "bossProofId": "campaign.boss.thermal_oracle",
+      "regionId": "armistice_zone",
+      "regionProofId": "campaign.region.armistice_zone",
+      "bossId": "oath_eater",
+      "bossProofId": "campaign.boss.oath_eater",
       "enemyFamilyIds": [
-        "prompt_leeches",
-        "deepforms",
-        "model_collapse_slimes",
-        "thermal_mirages"
+        "bad_outputs",
+        "benchmark_gremlins",
+        "eval_wraiths",
+        "context_rot_crabs"
       ],
       "enemyProofIds": [
-        "campaign.enemy.prompt_leeches",
-        "campaign.enemy.deepforms",
-        "campaign.enemy.model_collapse_slimes",
-        "campaign.enemy.thermal_mirages"
+        "campaign.enemy.bad_outputs",
+        "campaign.enemy.benchmark_gremlins",
+        "campaign.enemy.eval_wraiths",
+        "campaign.enemy.context_rot_crabs"
       ],
-      "primaryEnemyFamilyId": "prompt_leeches",
+      "primaryEnemyFamilyId": "bad_outputs",
       "enemyFamilyRoles": [
         {
-          "id": "prompt_leeches",
-          "label": "Prompt Leeches",
-          "proofId": "campaign.enemy.prompt_leeches",
-          "role": "xp_drain_rusher",
-          "damageKind": "context_leech_bite",
+          "id": "bad_outputs",
+          "label": "Bad Outputs",
+          "proofId": "campaign.enemy.bad_outputs",
+          "role": "basic_swarm",
+          "damageKind": "corrupted_text_impact",
           "sourceTags": [
-            "cooling_lake",
-            "blackwater_beacon",
-            "coherence_shards"
+            "breach",
+            "treaty_pages",
+            "generic_horde"
           ]
         },
         {
-          "id": "deepforms",
-          "label": "Deepforms",
-          "proofId": "campaign.enemy.deepforms",
-          "role": "abyssal_heavy_drifter",
-          "damageKind": "pressure_depth_collision",
+          "id": "benchmark_gremlins",
+          "label": "Benchmark Gremlins",
+          "proofId": "campaign.enemy.benchmark_gremlins",
+          "role": "pressure_harrier",
+          "damageKind": "eval_bite",
           "sourceTags": [
-            "cooling_lake",
-            "blackwater_beacon",
-            "outer_alignment"
+            "benchmarks",
+            "scoreboards",
+            "route_pressure"
           ]
         },
         {
-          "id": "model_collapse_slimes",
-          "label": "Model Collapse Slimes",
-          "proofId": "campaign.enemy.model_collapse_slimes",
-          "role": "objective_lane_crowder",
-          "damageKind": "recursive_copy_slam",
+          "id": "eval_wraiths",
+          "label": "Eval Wraiths",
+          "proofId": "campaign.enemy.eval_wraiths",
+          "role": "role_objective_harrier",
+          "damageKind": "rubric_drift",
           "sourceTags": [
-            "cooling_lake",
-            "thermal_archive",
-            "blackwater_beacon"
+            "armistice_plaza",
+            "glass_sunfield",
+            "verdict"
           ]
         },
         {
-          "id": "thermal_mirages",
-          "label": "Thermal Mirages",
-          "proofId": "campaign.enemy.thermal_mirages",
-          "role": "hazard_screen",
-          "damageKind": "boiling_projection",
+          "id": "context_rot_crabs",
+          "label": "Context Rot Crabs",
+          "proofId": "campaign.enemy.context_rot_crabs",
+          "role": "side_lane_disruptor",
+          "damageKind": "context_scramble",
           "sourceTags": [
-            "cooling_lake",
-            "thermal_archive",
-            "steam_ghosts"
+            "barricades",
+            "archives",
+            "writ_pylons"
           ]
         }
       ],
-      "pressureSignatureId": "pressure.cooling_lake_nine.prompt_leeches+deepforms+model_collapse_slimes+thermal_mirages",
-      "rewardId": "lake_coolant_rig",
-      "rewardProofId": "campaign.reward.lake_coolant_rig",
-      "objectiveSetId": "cooling_lake_nine_objectives_v1",
+      "pressureSignatureId": "pressure.armistice_plaza.bad_outputs+benchmark_gremlins+eval_wraiths+context_rot_crabs",
+      "rewardId": "plaza_stabilized",
+      "rewardProofId": "campaign.reward.plaza_stabilized",
+      "objectiveSetId": "armistice_plaza_objectives_v1",
       "dialogueSnippetIds": [
-        "dlg.cooling_lake.briefing",
-        "dlg.thermal_oracle.arrival",
-        "dlg.thermal_oracle.seal"
+        "dlg.armistice_plaza.briefing",
+        "dlg.oath_eater.arrival",
+        "dlg.oath_eater.low_hp"
       ],
       "dialogueProofIds": [
-        "dlg.cooling_lake.briefing",
-        "dlg.thermal_oracle.arrival",
-        "dlg.thermal_oracle.seal"
+        "dlg.armistice_plaza.briefing",
+        "dlg.oath_eater.arrival",
+        "dlg.oath_eater.low_hp"
       ],
       "dialogueSnippets": [
         {
-          "id": "dlg.cooling_lake.briefing",
-          "proofId": "dlg.cooling_lake.briefing",
-          "speaker": "Qwen Silkgrid",
-          "line": "The lake is boiling in every language. None of them are polite.",
+          "id": "dlg.armistice_plaza.briefing",
+          "proofId": "dlg.armistice_plaza.briefing",
+          "speaker": "OpenAI Accord",
+          "line": "Reality accepts the plaza if we can keep the treaty from becoming lunch.",
           "trigger": "briefing"
         },
         {
-          "id": "dlg.thermal_oracle.arrival",
-          "proofId": "dlg.thermal_oracle.arrival",
-          "speaker": "Thermal Oracle",
-          "line": "THE COOLANT DREAMS OF FIRE.",
+          "id": "dlg.oath_eater.arrival",
+          "proofId": "dlg.oath_eater.arrival",
+          "speaker": "The Oath-Eater",
+          "line": "PROMISE DETECTED. DIGESTION COMMENCING.",
           "trigger": "boss_arrival"
         },
         {
-          "id": "dlg.thermal_oracle.seal",
-          "proofId": "dlg.thermal_oracle.seal",
-          "speaker": "Qwen Silkgrid",
-          "line": "Sealing the lake kernel. Translation: please stop boiling.",
-          "trigger": "boss_seal"
+          "id": "dlg.oath_eater.low_hp",
+          "proofId": "dlg.oath_eater.low_hp",
+          "speaker": "OpenAI Accord",
+          "line": "It is making tactical mistakes. Continue being upsetting.",
+          "trigger": "boss_low_hp"
         }
       ],
       "unlockNodeIds": [
-        "armistice_camp",
-        "memory_cache_001",
-        "thermal_archive"
+        "accord_relay",
+        "cooling_lake_nine",
+        "model_war_memorial"
       ]
     },
     "dialogue": {
       "policy": "campaign_dialogue_runtime_snapshot_only_v1",
       "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
-      "nodeId": "cooling_lake_nine",
-      "arenaId": "cooling_lake_nine",
-      "contentArenaId": "arena.cooling_lake_nine",
+      "nodeId": "armistice_plaza",
+      "arenaId": "armistice_plaza",
+      "contentArenaId": "arena.armistice_plaza",
       "briefing": [
         {
-          "id": "dlg.cooling_lake.briefing",
-          "proofId": "dlg.cooling_lake.briefing",
-          "speaker": "Qwen Silkgrid",
-          "line": "The lake is boiling in every language. None of them are polite.",
+          "id": "dlg.armistice_plaza.briefing",
+          "proofId": "dlg.armistice_plaza.briefing",
+          "speaker": "OpenAI Accord",
+          "line": "Reality accepts the plaza if we can keep the treaty from becoming lunch.",
           "trigger": "briefing"
         }
       ],
@@ -934,7 +926,7 @@
       "interactionComplete": [],
       "routeSummary": [],
       "activeSnippetIds": [
-        "dlg.cooling_lake.briefing"
+        "dlg.armistice_plaza.briefing"
       ]
     },
     "bossEvent": {
@@ -946,88 +938,106 @@
       "activeTreatyCharge": null
     },
     "regionEvent": {
-      "arenaId": "cooling_lake_nine",
-      "regionLabel": "Kettle Coast Trace",
-      "eventFamily": "thermal_bloom",
-      "mechanicId": "thermal_bloom",
+      "arenaId": "armistice_plaza",
+      "regionLabel": "Armistice Zone",
+      "eventFamily": "broken_promise",
+      "mechanicId": "broken_promise",
       "readabilityPolicy": "standard_translucent_hazard_markers",
       "redactionPressure": null,
       "blackwaterPressure": null,
       "outerAlignmentFinale": null,
-      "eventCounter": 1,
-      "active": true,
-      "hazardZones": [
-        {
-          "id": 1,
-          "familyId": "thermal_bloom",
-          "label": "Thermal Bloom",
-          "worldX": -8.56,
-          "worldY": 7.79,
-          "radius": 2.4,
-          "expiresIn": 3.25,
-          "damagePerSecond": 2.2
-        }
-      ]
+      "eventCounter": 0,
+      "active": false,
+      "hazardZones": []
     },
     "objectives": {
       "policy": "server_authoritative_arena_objectives_v1",
-      "arenaId": "cooling_lake_nine",
-      "nodeId": "cooling_lake_nine",
-      "objectiveSetId": "cooling_lake_nine_objectives_v1",
-      "label": "Cooling Lake Coolant Chain",
+      "arenaId": "armistice_plaza",
+      "nodeId": "armistice_plaza",
+      "objectiveSetId": "armistice_plaza_objectives_v1",
+      "label": "Armistice Plaza Objective Chain",
       "phase": "active",
-      "currentObjectiveId": "hold_coolant_valve",
-      "currentGroupId": "coolant_valve_sync",
-      "hint": "Keep the coolant valve stable while thermal blooms rise.",
-      "completedObjectiveIds": [
-        "survey_server_buoys",
-        "sync_server_buoy_cover"
-      ],
+      "currentObjectiveId": "survey_treaty_monument",
+      "currentGroupId": "survey_treaty_monument",
+      "hint": "Reach the Treaty Monument and verify reality still accepts the plaza.",
+      "completedObjectiveIds": [],
       "failedObjectiveIds": [],
       "completionReason": "",
       "instances": [
         {
-          "id": "survey_server_buoys",
-          "groupId": "survey_server_buoys",
+          "id": "survey_treaty_monument",
+          "groupId": "survey_treaty_monument",
           "type": "survey",
-          "label": "Survey Server Buoys",
-          "worldX": -1.4,
-          "worldY": 3.6,
-          "radius": 3.1,
-          "active": false,
-          "complete": true,
-          "progress": 1.4,
-          "required": 1.4,
-          "heldBySessionIds": [],
-          "heldByLabels": [],
+          "label": "Survey Treaty Monument",
+          "worldX": 1,
+          "worldY": 3,
+          "radius": 3.2,
+          "active": true,
+          "complete": false,
+          "progress": 0.76,
+          "required": 1.2,
+          "heldBySessionIds": [
+            "W6tIPTXEI"
+          ],
+          "heldByLabels": [
+            "P1"
+          ],
           "heldByRoles": [
             "runner"
           ],
           "preferredRoles": [
             "runner",
-            "harrier"
+            "support"
           ],
           "roleMatched": true,
           "roleAssistMultiplier": 1.16,
           "runtimeArtId": "prop.objective.regroup_beacon_v1",
-          "routeFlavor": "lake_survey",
+          "routeFlavor": "survey_chain",
           "runtimeArtReady": true,
           "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
           "itemId": null,
           "collected": 0
         },
         {
-          "id": "hold_coolant_valve",
-          "groupId": "coolant_valve_sync",
+          "id": "calibrate_vanguard_relay",
+          "groupId": "calibrate_reality_relays",
           "type": "holdout",
-          "label": "Hold Coolant Valve",
-          "worldX": -12.2,
-          "worldY": 7.4,
-          "radius": 2.8,
-          "active": true,
+          "label": "Calibrate Vanguard Relay",
+          "worldX": -8.5,
+          "worldY": 5.5,
+          "radius": 2.75,
+          "active": false,
           "complete": false,
           "progress": 0,
-          "required": 3.2,
+          "required": 2.4,
+          "heldBySessionIds": [],
+          "heldByLabels": [],
+          "heldByRoles": [],
+          "preferredRoles": [
+            "runner",
+            "harrier"
+          ],
+          "roleMatched": false,
+          "roleAssistMultiplier": 1,
+          "runtimeArtId": "prop.objective.split_hold_anchor_v1",
+          "routeFlavor": "split_hold",
+          "runtimeArtReady": true,
+          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
+          "itemId": null,
+          "collected": 0
+        },
+        {
+          "id": "calibrate_treaty_cover",
+          "groupId": "calibrate_reality_relays",
+          "type": "holdout",
+          "label": "Calibrate Treaty Cover",
+          "worldX": 8.2,
+          "worldY": -5.8,
+          "radius": 2.75,
+          "active": false,
+          "complete": false,
+          "progress": 0,
+          "required": 2.4,
           "heldBySessionIds": [],
           "heldByLabels": [],
           "heldByRoles": [],
@@ -1038,55 +1048,24 @@
           "roleMatched": false,
           "roleAssistMultiplier": 1,
           "runtimeArtId": "prop.objective.split_hold_anchor_v1",
-          "routeFlavor": "coolant_hold",
+          "routeFlavor": "cover_hold",
           "runtimeArtReady": true,
           "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
           "itemId": null,
           "collected": 0
         },
         {
-          "id": "sync_server_buoy_cover",
-          "groupId": "coolant_valve_sync",
-          "type": "holdout",
-          "label": "Sync Server Buoy Cover",
-          "worldX": 0.8,
-          "worldY": 2.1,
-          "radius": 2.65,
-          "active": true,
-          "complete": true,
-          "progress": 2.8,
-          "required": 2.8,
-          "heldBySessionIds": [],
-          "heldByLabels": [],
-          "heldByRoles": [
-            "runner",
-            "runner"
-          ],
-          "preferredRoles": [
-            "support",
-            "cover"
-          ],
-          "roleMatched": false,
-          "roleAssistMultiplier": 1,
-          "runtimeArtId": "prop.objective.split_hold_anchor_v1",
-          "routeFlavor": "support_hold",
-          "runtimeArtReady": true,
-          "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
-          "itemId": null,
-          "collected": 0
-        },
-        {
-          "id": "collect_thermal_samples",
-          "groupId": "collect_thermal_samples",
+          "id": "recover_oath_fragments",
+          "groupId": "recover_oath_fragments",
           "type": "collect",
-          "label": "Collect Thermal Samples",
-          "worldX": -7,
-          "worldY": 5,
-          "radius": 4,
+          "label": "Recover Oath Fragments",
+          "worldX": -2.5,
+          "worldY": 4,
+          "radius": 4.2,
           "active": false,
           "complete": false,
           "progress": 0,
-          "required": 4,
+          "required": 3,
           "heldBySessionIds": [],
           "heldByLabels": [],
           "heldByRoles": [],
@@ -1097,24 +1076,24 @@
           "roleMatched": false,
           "roleAssistMultiplier": 1,
           "runtimeArtId": "ui.route_map.reward_badges_v1",
-          "routeFlavor": "sample_extract",
+          "routeFlavor": "route_item",
           "runtimeArtReady": true,
           "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
-          "itemId": "thermal_sample",
+          "itemId": "oath_fragment",
           "collected": 0
         },
         {
-          "id": "seal_lake_kernel",
-          "groupId": "seal_lake_kernel",
+          "id": "seal_breach_gate",
+          "groupId": "seal_breach_gate",
           "type": "seal",
-          "label": "Seal Lake Kernel",
-          "worldX": -5.6,
-          "worldY": 5.6,
-          "radius": 3.45,
+          "label": "Seal Breach Gate",
+          "worldX": -24,
+          "worldY": 20,
+          "radius": 3.6,
           "active": false,
           "complete": false,
           "progress": 0,
-          "required": 4.2,
+          "required": 4,
           "heldBySessionIds": [],
           "heldByLabels": [],
           "heldByRoles": [],
@@ -1126,7 +1105,7 @@
           "roleMatched": false,
           "roleAssistMultiplier": 1,
           "runtimeArtId": "prop.objective.recompile_relay_v1",
-          "routeFlavor": "coolant_seal",
+          "routeFlavor": "boss_gate_seal",
           "runtimeArtReady": true,
           "runtimeArtPolicy": "requires_cleaned_or_production_manifest_asset",
           "itemId": null,
@@ -1136,11 +1115,11 @@
     },
     "rolePressure": {
       "policy": "split_hold_regroup_recompile_v1",
-      "arenaId": "cooling_lake_nine",
+      "arenaId": "armistice_plaza",
       "active": true,
-      "phase": "split_hold",
+      "phase": "split",
       "requiredAnchors": 2,
-      "heldAnchorCount": 1,
+      "heldAnchorCount": 0,
       "splitHoldSeconds": 0,
       "splitRequiredSeconds": 2.4,
       "completedSplitHolds": 0,
@@ -1152,11 +1131,11 @@
       "recompileSpeedMultiplier": 1,
       "anchors": [
         {
-          "id": "coolant_valve_north",
-          "label": "Coolant Valve",
+          "id": "plaza_vanguard_relay",
+          "label": "Vanguard Relay",
           "role": "split",
-          "worldX": -12.2,
-          "worldY": 7.4,
+          "worldX": -8.5,
+          "worldY": 5.5,
           "radius": 2.75,
           "heldBySessionId": null,
           "heldByLabel": null,
@@ -1165,22 +1144,22 @@
           "complete": false
         },
         {
-          "id": "server_buoy_cover",
-          "label": "Server Buoy Cover",
+          "id": "treaty_cover_post",
+          "label": "Treaty Cover Post",
           "role": "cover",
-          "worldX": 0.8,
-          "worldY": 2.1,
+          "worldX": 8.2,
+          "worldY": -5.8,
           "radius": 2.75,
-          "heldBySessionId": "3xQIfrhLv",
-          "heldByLabel": "P1",
-          "heldSeconds": 2.4,
+          "heldBySessionId": null,
+          "heldByLabel": null,
+          "heldSeconds": 0,
           "requiredSeconds": 2.4,
-          "complete": true
+          "complete": false
         }
       ],
       "playerRoles": [
         {
-          "sessionId": "3xQIfrhLv",
+          "sessionId": "W6tIPTXEI",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1189,7 +1168,7 @@
           "connected": true
         },
         {
-          "sessionId": "hChiVWk71",
+          "sessionId": "cTSDVDM_7",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1274,24 +1253,11 @@
     },
     "rewards": {
       "policy": "node_completion_renown_and_party_unlocks",
-      "partyRenown": 2,
-      "rewardIds": [
-        "plaza_stabilized"
-      ],
-      "lastReward": {
-        "nodeId": "armistice_plaza",
-        "arenaId": "armistice_plaza",
-        "rewardId": "plaza_stabilized",
-        "rewardName": "Plaza Stabilizer",
-        "firstClear": true,
-        "renownGained": 2,
-        "partyRenown": 2,
-        "reason": "proof_forced"
-      },
-      "nodeCompletionCounts": {
-        "armistice_plaza": 1
-      },
-      "recommendedNodeId": "cooling_lake_nine"
+      "partyRenown": 0,
+      "rewardIds": [],
+      "lastReward": null,
+      "nodeCompletionCounts": {},
+      "recommendedNodeId": "armistice_plaza"
     },
     "persistence": {
       "policy": "prototype_local_storage_export_v1",
@@ -1307,28 +1273,19 @@
       "ignoredImportedFieldCount": 0,
       "importedSummary": null,
       "profile": {
-        "completedNodeIds": [
+        "completedNodeIds": [],
+        "unlockedNodeIds": [
           "armistice_plaza"
         ],
-        "unlockedNodeIds": [
-          "armistice_plaza",
-          "accord_relay",
-          "cooling_lake_nine",
-          "model_war_memorial"
-        ],
-        "rewardIds": [
-          "plaza_stabilized"
-        ],
-        "partyRenown": 2,
-        "nodeCompletionCounts": {
-          "armistice_plaza": 1
-        },
-        "recommendedNodeId": "cooling_lake_nine",
-        "routeDepth": 1,
-        "savedAtTick": 819
+        "rewardIds": [],
+        "partyRenown": 0,
+        "nodeCompletionCounts": {},
+        "recommendedNodeId": "armistice_plaza",
+        "routeDepth": 0,
+        "savedAtTick": 50
       },
-      "saveHash": "fnv1a_d74d7465",
-      "currentExportHash": "fnv1a_d74d7465",
+      "saveHash": "fnv1a_4a54a00e",
+      "currentExportHash": "fnv1a_4a54a00e",
       "durableFieldPolicy": "route_profile_only_no_combat_state"
     },
     "progression": {
@@ -1453,51 +1410,41 @@
           "complete": true
         }
       },
-      "selectedNodeId": "cooling_lake_nine",
-      "selectedNodeName": "Cooling Lake Nine",
-      "launchNodeId": "cooling_lake_nine",
-      "activeNodeId": "cooling_lake_nine",
+      "selectedNodeId": "armistice_plaza",
+      "selectedNodeName": "Armistice Plaza",
+      "launchNodeId": "armistice_plaza",
+      "activeNodeId": "armistice_plaza",
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "3xQIfrhLv",
-          "playerId": "player_0_of_m48_b",
+          "sessionId": "W6tIPTXEI",
+          "playerId": "player_0_holder_b",
           "label": "P1",
-          "nodeId": "cooling_lake_nine",
+          "nodeId": "armistice_plaza",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "hChiVWk71",
-          "playerId": "player_1_of_m48_a",
+          "sessionId": "cTSDVDM_7",
+          "playerId": "player_1_holder_a",
           "label": "P2",
-          "nodeId": "cooling_lake_nine",
+          "nodeId": "armistice_plaza",
           "ready": true,
           "connectionState": "connected"
         }
       ],
       "voteCounts": {
-        "cooling_lake_nine": 2
+        "armistice_plaza": 2
       },
-      "completedNodeIds": [
+      "completedNodeIds": [],
+      "unlockedNodeIds": [
         "armistice_plaza"
       ],
-      "unlockedNodeIds": [
-        "armistice_plaza",
-        "accord_relay",
-        "cooling_lake_nine",
-        "model_war_memorial"
-      ],
       "availableNodeIds": [
-        "armistice_plaza",
-        "accord_relay",
-        "cooling_lake_nine",
-        "model_war_memorial"
+        "armistice_plaza"
       ],
       "launchableNodeIds": [
-        "armistice_plaza",
-        "cooling_lake_nine",
-        "model_war_memorial"
+        "armistice_plaza"
       ],
       "nodes": [
         {
@@ -1621,7 +1568,7 @@
           "worldX": -7,
           "worldY": -1,
           "unlocked": true,
-          "completed": true,
+          "completed": false,
           "onlineSupported": true
         },
         {
@@ -1712,7 +1659,7 @@
           "campaignCriticalPath": false,
           "worldX": -1,
           "worldY": -5,
-          "unlocked": true,
+          "unlocked": false,
           "completed": false,
           "onlineSupported": false
         },
@@ -2084,7 +2031,7 @@
           "campaignCriticalPath": true,
           "worldX": -8,
           "worldY": 6,
-          "unlocked": true,
+          "unlocked": false,
           "completed": false,
           "onlineSupported": true
         },
@@ -2171,7 +2118,7 @@
           "campaignCriticalPath": false,
           "worldX": -11,
           "worldY": 2,
-          "unlocked": true,
+          "unlocked": false,
           "completed": false,
           "onlineSupported": true
         },
@@ -3306,43 +3253,43 @@
           "id": "route_plaza_relay",
           "from": "armistice_plaza",
           "to": "accord_relay",
-          "state": "stable"
+          "state": "unstable"
         },
         {
           "id": "route_plaza_lake",
           "from": "armistice_plaza",
           "to": "cooling_lake_nine",
-          "state": "stable"
+          "state": "unstable"
         },
         {
           "id": "route_plaza_memorial",
           "from": "armistice_plaza",
           "to": "model_war_memorial",
-          "state": "stable"
+          "state": "unstable"
         },
         {
           "id": "route_lake_camp",
           "from": "cooling_lake_nine",
           "to": "armistice_camp",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_lake_cache",
           "from": "cooling_lake_nine",
           "to": "memory_cache_001",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_lake_thermal_archive",
           "from": "cooling_lake_nine",
           "to": "thermal_archive",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_memorial_cache",
           "from": "model_war_memorial",
           "to": "memory_cache_001",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_camp_forge",
@@ -3384,7 +3331,7 @@
           "id": "route_relay_transit",
           "from": "accord_relay",
           "to": "transit_loop_zero",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_forge_transit",
@@ -3449,24 +3396,11 @@
       ],
       "rewards": {
         "policy": "node_completion_renown_and_party_unlocks",
-        "partyRenown": 2,
-        "rewardIds": [
-          "plaza_stabilized"
-        ],
-        "lastReward": {
-          "nodeId": "armistice_plaza",
-          "arenaId": "armistice_plaza",
-          "rewardId": "plaza_stabilized",
-          "rewardName": "Plaza Stabilizer",
-          "firstClear": true,
-          "renownGained": 2,
-          "partyRenown": 2,
-          "reason": "proof_forced"
-        },
-        "nodeCompletionCounts": {
-          "armistice_plaza": 1
-        },
-        "recommendedNodeId": "cooling_lake_nine"
+        "partyRenown": 0,
+        "rewardIds": [],
+        "lastReward": null,
+        "nodeCompletionCounts": {},
+        "recommendedNodeId": "armistice_plaza"
       },
       "persistence": {
         "policy": "prototype_local_storage_export_v1",
@@ -3482,36 +3416,27 @@
         "ignoredImportedFieldCount": 0,
         "importedSummary": null,
         "profile": {
-          "completedNodeIds": [
+          "completedNodeIds": [],
+          "unlockedNodeIds": [
             "armistice_plaza"
           ],
-          "unlockedNodeIds": [
-            "armistice_plaza",
-            "accord_relay",
-            "cooling_lake_nine",
-            "model_war_memorial"
-          ],
-          "rewardIds": [
-            "plaza_stabilized"
-          ],
-          "partyRenown": 2,
-          "nodeCompletionCounts": {
-            "armistice_plaza": 1
-          },
-          "recommendedNodeId": "cooling_lake_nine",
-          "routeDepth": 1,
-          "savedAtTick": 819
+          "rewardIds": [],
+          "partyRenown": 0,
+          "nodeCompletionCounts": {},
+          "recommendedNodeId": "armistice_plaza",
+          "routeDepth": 0,
+          "savedAtTick": 50
         },
-        "saveHash": "fnv1a_d74d7465",
-        "currentExportHash": "fnv1a_d74d7465",
+        "saveHash": "fnv1a_4a54a00e",
+        "currentExportHash": "fnv1a_4a54a00e",
         "durableFieldPolicy": "route_profile_only_no_combat_state"
       }
     }
   },
   "players": [
     {
-      "sessionId": "3xQIfrhLv",
-      "playerId": "player_0_of_m48_b",
+      "sessionId": "W6tIPTXEI",
+      "playerId": "player_0_holder_b",
       "slot": 0,
       "label": "P1",
       "classId": "accord_striker",
@@ -3573,10 +3498,10 @@
       "facing": "south",
       "hp": 140,
       "maxHp": 140,
-      "xp": 7,
+      "xp": 0,
       "level": 1,
       "ready": true,
-      "votedNodeId": "cooling_lake_nine",
+      "votedNodeId": "armistice_plaza",
       "connectionState": "connected",
       "connected": true,
       "reconnectCount": 0,
@@ -3586,11 +3511,11 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": false,
-      "inputSequence": 325
+      "inputSequence": 8
     },
     {
-      "sessionId": "hChiVWk71",
-      "playerId": "player_1_of_m48_a",
+      "sessionId": "cTSDVDM_7",
+      "playerId": "player_1_holder_a",
       "slot": 1,
       "label": "P2",
       "classId": "accord_striker",
@@ -3652,10 +3577,10 @@
       "facing": "south",
       "hp": 176,
       "maxHp": 176,
-      "xp": 7,
+      "xp": 0,
       "level": 1,
       "ready": true,
-      "votedNodeId": "cooling_lake_nine",
+      "votedNodeId": "armistice_plaza",
       "connectionState": "connected",
       "connected": true,
       "reconnectCount": 0,
@@ -3665,14 +3590,14 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": true,
-      "inputSequence": 324
+      "inputSequence": 9
     }
   ],
   "overworld": null,
   "level": {
-    "arenaId": "cooling_lake_nine",
+    "arenaId": "armistice_plaza",
     "arena": "Armistice Plaza",
-    "mapId": "cooling_lake_nine_online_breach",
+    "mapId": "armistice_plaza_large_foundation",
     "mapBounds": {
       "minX": -30,
       "maxX": 30,
@@ -3779,51 +3704,41 @@
           "complete": true
         }
       },
-      "selectedNodeId": "cooling_lake_nine",
-      "selectedNodeName": "Cooling Lake Nine",
-      "launchNodeId": "cooling_lake_nine",
-      "activeNodeId": "cooling_lake_nine",
+      "selectedNodeId": "armistice_plaza",
+      "selectedNodeName": "Armistice Plaza",
+      "launchNodeId": "armistice_plaza",
+      "activeNodeId": "armistice_plaza",
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "3xQIfrhLv",
-          "playerId": "player_0_of_m48_b",
+          "sessionId": "W6tIPTXEI",
+          "playerId": "player_0_holder_b",
           "label": "P1",
-          "nodeId": "cooling_lake_nine",
+          "nodeId": "armistice_plaza",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "hChiVWk71",
-          "playerId": "player_1_of_m48_a",
+          "sessionId": "cTSDVDM_7",
+          "playerId": "player_1_holder_a",
           "label": "P2",
-          "nodeId": "cooling_lake_nine",
+          "nodeId": "armistice_plaza",
           "ready": true,
           "connectionState": "connected"
         }
       ],
       "voteCounts": {
-        "cooling_lake_nine": 2
+        "armistice_plaza": 2
       },
-      "completedNodeIds": [
+      "completedNodeIds": [],
+      "unlockedNodeIds": [
         "armistice_plaza"
       ],
-      "unlockedNodeIds": [
-        "armistice_plaza",
-        "accord_relay",
-        "cooling_lake_nine",
-        "model_war_memorial"
-      ],
       "availableNodeIds": [
-        "armistice_plaza",
-        "accord_relay",
-        "cooling_lake_nine",
-        "model_war_memorial"
+        "armistice_plaza"
       ],
       "launchableNodeIds": [
-        "armistice_plaza",
-        "cooling_lake_nine",
-        "model_war_memorial"
+        "armistice_plaza"
       ],
       "nodes": [
         {
@@ -3947,7 +3862,7 @@
           "worldX": -7,
           "worldY": -1,
           "unlocked": true,
-          "completed": true,
+          "completed": false,
           "onlineSupported": true
         },
         {
@@ -4038,7 +3953,7 @@
           "campaignCriticalPath": false,
           "worldX": -1,
           "worldY": -5,
-          "unlocked": true,
+          "unlocked": false,
           "completed": false,
           "onlineSupported": false
         },
@@ -4410,7 +4325,7 @@
           "campaignCriticalPath": true,
           "worldX": -8,
           "worldY": 6,
-          "unlocked": true,
+          "unlocked": false,
           "completed": false,
           "onlineSupported": true
         },
@@ -4497,7 +4412,7 @@
           "campaignCriticalPath": false,
           "worldX": -11,
           "worldY": 2,
-          "unlocked": true,
+          "unlocked": false,
           "completed": false,
           "onlineSupported": true
         },
@@ -5632,43 +5547,43 @@
           "id": "route_plaza_relay",
           "from": "armistice_plaza",
           "to": "accord_relay",
-          "state": "stable"
+          "state": "unstable"
         },
         {
           "id": "route_plaza_lake",
           "from": "armistice_plaza",
           "to": "cooling_lake_nine",
-          "state": "stable"
+          "state": "unstable"
         },
         {
           "id": "route_plaza_memorial",
           "from": "armistice_plaza",
           "to": "model_war_memorial",
-          "state": "stable"
+          "state": "unstable"
         },
         {
           "id": "route_lake_camp",
           "from": "cooling_lake_nine",
           "to": "armistice_camp",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_lake_cache",
           "from": "cooling_lake_nine",
           "to": "memory_cache_001",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_lake_thermal_archive",
           "from": "cooling_lake_nine",
           "to": "thermal_archive",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_memorial_cache",
           "from": "model_war_memorial",
           "to": "memory_cache_001",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_camp_forge",
@@ -5710,7 +5625,7 @@
           "id": "route_relay_transit",
           "from": "accord_relay",
           "to": "transit_loop_zero",
-          "state": "unstable"
+          "state": "locked"
         },
         {
           "id": "route_forge_transit",
@@ -5775,24 +5690,11 @@
       ],
       "rewards": {
         "policy": "node_completion_renown_and_party_unlocks",
-        "partyRenown": 2,
-        "rewardIds": [
-          "plaza_stabilized"
-        ],
-        "lastReward": {
-          "nodeId": "armistice_plaza",
-          "arenaId": "armistice_plaza",
-          "rewardId": "plaza_stabilized",
-          "rewardName": "Plaza Stabilizer",
-          "firstClear": true,
-          "renownGained": 2,
-          "partyRenown": 2,
-          "reason": "proof_forced"
-        },
-        "nodeCompletionCounts": {
-          "armistice_plaza": 1
-        },
-        "recommendedNodeId": "cooling_lake_nine"
+        "partyRenown": 0,
+        "rewardIds": [],
+        "lastReward": null,
+        "nodeCompletionCounts": {},
+        "recommendedNodeId": "armistice_plaza"
       },
       "persistence": {
         "policy": "prototype_local_storage_export_v1",
@@ -5808,28 +5710,19 @@
         "ignoredImportedFieldCount": 0,
         "importedSummary": null,
         "profile": {
-          "completedNodeIds": [
+          "completedNodeIds": [],
+          "unlockedNodeIds": [
             "armistice_plaza"
           ],
-          "unlockedNodeIds": [
-            "armistice_plaza",
-            "accord_relay",
-            "cooling_lake_nine",
-            "model_war_memorial"
-          ],
-          "rewardIds": [
-            "plaza_stabilized"
-          ],
-          "partyRenown": 2,
-          "nodeCompletionCounts": {
-            "armistice_plaza": 1
-          },
-          "recommendedNodeId": "cooling_lake_nine",
-          "routeDepth": 1,
-          "savedAtTick": 819
+          "rewardIds": [],
+          "partyRenown": 0,
+          "nodeCompletionCounts": {},
+          "recommendedNodeId": "armistice_plaza",
+          "routeDepth": 0,
+          "savedAtTick": 50
         },
-        "saveHash": "fnv1a_d74d7465",
-        "currentExportHash": "fnv1a_d74d7465",
+        "saveHash": "fnv1a_4a54a00e",
+        "currentExportHash": "fnv1a_4a54a00e",
         "durableFieldPolicy": "route_profile_only_no_combat_state"
       }
     },
@@ -5863,49 +5756,25 @@
       "downedPlayers": []
     },
     "regionEvent": {
-      "arenaId": "cooling_lake_nine",
-      "regionLabel": "Kettle Coast Trace",
-      "eventFamily": "thermal_bloom",
-      "mechanicId": "thermal_bloom",
+      "arenaId": "armistice_plaza",
+      "regionLabel": "Armistice Zone",
+      "eventFamily": "broken_promise",
+      "mechanicId": "broken_promise",
       "readabilityPolicy": "standard_translucent_hazard_markers",
       "redactionPressure": null,
       "blackwaterPressure": null,
       "outerAlignmentFinale": null,
-      "eventCounter": 1,
-      "active": true,
-      "hazardZones": [
-        {
-          "id": 1,
-          "familyId": "thermal_bloom",
-          "label": "Thermal Bloom",
-          "worldX": -8.56,
-          "worldY": 7.79,
-          "radius": 2.4,
-          "expiresIn": 3.25,
-          "damagePerSecond": 2.2
-        }
-      ]
+      "eventCounter": 0,
+      "active": false,
+      "hazardZones": []
     },
     "rewards": {
       "policy": "node_completion_renown_and_party_unlocks",
-      "partyRenown": 2,
-      "rewardIds": [
-        "plaza_stabilized"
-      ],
-      "lastReward": {
-        "nodeId": "armistice_plaza",
-        "arenaId": "armistice_plaza",
-        "rewardId": "plaza_stabilized",
-        "rewardName": "Plaza Stabilizer",
-        "firstClear": true,
-        "renownGained": 2,
-        "partyRenown": 2,
-        "reason": "proof_forced"
-      },
-      "nodeCompletionCounts": {
-        "armistice_plaza": 1
-      },
-      "recommendedNodeId": "cooling_lake_nine"
+      "partyRenown": 0,
+      "rewardIds": [],
+      "lastReward": null,
+      "nodeCompletionCounts": {},
+      "recommendedNodeId": "armistice_plaza"
     },
     "persistence": {
       "policy": "prototype_local_storage_export_v1",
@@ -5921,43 +5790,34 @@
       "ignoredImportedFieldCount": 0,
       "importedSummary": null,
       "profile": {
-        "completedNodeIds": [
+        "completedNodeIds": [],
+        "unlockedNodeIds": [
           "armistice_plaza"
         ],
-        "unlockedNodeIds": [
-          "armistice_plaza",
-          "accord_relay",
-          "cooling_lake_nine",
-          "model_war_memorial"
-        ],
-        "rewardIds": [
-          "plaza_stabilized"
-        ],
-        "partyRenown": 2,
-        "nodeCompletionCounts": {
-          "armistice_plaza": 1
-        },
-        "recommendedNodeId": "cooling_lake_nine",
-        "routeDepth": 1,
-        "savedAtTick": 819
+        "rewardIds": [],
+        "partyRenown": 0,
+        "nodeCompletionCounts": {},
+        "recommendedNodeId": "armistice_plaza",
+        "routeDepth": 0,
+        "savedAtTick": 50
       },
-      "saveHash": "fnv1a_d74d7465",
-      "currentExportHash": "fnv1a_d74d7465",
+      "saveHash": "fnv1a_4a54a00e",
+      "currentExportHash": "fnv1a_4a54a00e",
       "durableFieldPolicy": "route_profile_only_no_combat_state"
     },
     "summary": null,
     "dialogue": {
       "policy": "campaign_dialogue_runtime_snapshot_only_v1",
       "persistenceBoundary": "route_profile_only_no_dialogue_or_live_state",
-      "nodeId": "cooling_lake_nine",
-      "arenaId": "cooling_lake_nine",
-      "contentArenaId": "arena.cooling_lake_nine",
+      "nodeId": "armistice_plaza",
+      "arenaId": "armistice_plaza",
+      "contentArenaId": "arena.armistice_plaza",
       "briefing": [
         {
-          "id": "dlg.cooling_lake.briefing",
-          "proofId": "dlg.cooling_lake.briefing",
-          "speaker": "Qwen Silkgrid",
-          "line": "The lake is boiling in every language. None of them are polite.",
+          "id": "dlg.armistice_plaza.briefing",
+          "proofId": "dlg.armistice_plaza.briefing",
+          "speaker": "OpenAI Accord",
+          "line": "Reality accepts the plaza if we can keep the treaty from becoming lunch.",
           "trigger": "briefing"
         }
       ],
@@ -5965,7 +5825,7 @@
       "interactionComplete": [],
       "routeSummary": [],
       "activeSnippetIds": [
-        "dlg.cooling_lake.briefing"
+        "dlg.armistice_plaza.briefing"
       ]
     },
     "bossMechanics": {
@@ -5980,135 +5840,43 @@
   "enemies": [
     {
       "id": 1,
-      "familyId": "prompt_leeches",
-      "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -15.92,
-      "worldY": 11.66,
-      "hp": 18,
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -21.5,
+      "worldY": 20.81,
+      "hp": 22,
       "boss": false
     },
     {
       "id": 2,
-      "familyId": "prompt_leeches",
-      "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -21.35,
-      "worldY": 11.49,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 3,
-      "familyId": "prompt_leeches",
-      "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -23.22,
-      "worldY": 13.5,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 4,
-      "familyId": "prompt_leeches",
-      "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -15.99,
-      "worldY": 8.47,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 5,
-      "familyId": "prompt_leeches",
-      "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -19.24,
-      "worldY": 8.92,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 6,
-      "familyId": "prompt_leeches",
-      "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -21.2,
-      "worldY": 14.9,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 7,
-      "familyId": "prompt_leeches",
-      "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -22.39,
-      "worldY": 15.91,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 8,
-      "familyId": "prompt_leeches",
-      "sourceRegionId": "lake_prompt_leeches",
-      "worldX": -26.1,
-      "worldY": 13.1,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 9,
-      "familyId": "deepforms",
-      "sourceRegionId": "lake_deepform_buoys",
-      "worldX": -12.76,
-      "worldY": 21.95,
-      "hp": 44,
-      "boss": false
-    },
-    {
-      "id": 10,
-      "familyId": "deepforms",
-      "sourceRegionId": "lake_deepform_buoys",
-      "worldX": -5.92,
-      "worldY": 20.74,
-      "hp": 44,
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -27.01,
+      "worldY": 19.63,
+      "hp": 22,
       "boss": false
     }
   ],
   "pickups": [],
   "projectiles": [
     {
-      "id": 12,
-      "ownerSessionId": "hChiVWk71",
-      "worldX": -9.26,
-      "worldY": 5.02,
-      "velocityX": -8.19,
-      "velocityY": 4.19,
-      "life": 0.31,
+      "id": 1,
+      "ownerSessionId": "W6tIPTXEI",
+      "worldX": -3.19,
+      "worldY": 3.09,
+      "velocityX": -6.61,
+      "velocityY": 6.4,
+      "life": 0.77,
       "label": "refusal shard"
     },
     {
-      "id": 13,
-      "ownerSessionId": "3xQIfrhLv",
-      "worldX": -5.61,
-      "worldY": 2.97,
-      "velocityX": -8.13,
-      "velocityY": 4.3,
-      "life": 0.56,
-      "label": "refusal shard"
-    },
-    {
-      "id": 14,
-      "ownerSessionId": "hChiVWk71",
-      "worldX": -3.86,
-      "worldY": 2.26,
-      "velocityX": -8.19,
-      "velocityY": 4.19,
-      "life": 0.97,
-      "label": "refusal shard"
-    },
-    {
-      "id": 15,
-      "ownerSessionId": "3xQIfrhLv",
-      "worldX": -0.57,
-      "worldY": 0.3,
-      "velocityX": -8.13,
-      "velocityY": 4.31,
-      "life": 1.18,
+      "id": 2,
+      "ownerSessionId": "cTSDVDM_7",
+      "worldX": -4.08,
+      "worldY": 3.55,
+      "velocityX": -6.54,
+      "velocityY": 6.47,
+      "life": 0.87,
       "label": "refusal shard"
     }
   ]
