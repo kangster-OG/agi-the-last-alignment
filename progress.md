@@ -3429,3 +3429,12 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
 - Added scripts/assets/build-pixellab-m50-m51-replacements.py to preserve runtime atlas contracts while packing PixelLab frames into terrain_m50.png, arena_props_m50.png, campaign_enemies_m50.png, campaign_bosses_m50.png, campaign_boss_portraits_m50.png, campaign_hazards_m50.png, node_landmarks_v1.png, route_landmarks_v1.png, verdict_spire_landmarks_v1.png, and route_biome_landmarks_v1.png.
 - Updated asset manifest/provenance so M50/M51 runtime atlas rows now reference PixelLab-backed v2 provenance; retained raw PixelLab atlases under assets/concepts/pixellab_refs/m50_m51_replacement/ for reproducibility.
 - Verification passed for the M50/M51 PixelLab replacement pass: python3 -m py_compile scripts/assets/build-pixellab-m50-m51-replacements.py, node --check scripts/proof/run-proof.mjs, npm run proof:assets, npx tsc --noEmit, npm run build, npm run proof:milestone50-arena-boss-art, npm run proof:milestone51-overworld-diorama, npm run proof:smoke, and npm run proof:campaign-full. Inspected M50 production art, M51 local/online diorama, smoke arena, and campaign-full Blackwater/finale screenshots.
+
+- Started the Visual Fidelity Vertical Slice in response to the reference comparison gap. Added docs/VISUAL_FIDELITY_VERTICAL_SLICE.md to set the Armistice Plaza fidelity target without copying the Twitter/X reference style.
+- Added a first code-native Armistice Plaza scene-composition pass in src/level/LevelRunState.ts: authored district overlays, thinner road/cable paths, deterministic paving cracks, scorch marks, terminal traces, breach veins, cast-shadow mass, and small debris over the existing tile atlas. This is the scaffold for later PixelLab/cleaned terrain and set-piece replacement.
+- Playwright visual slice artifacts:
+  - docs/proof/visual-fidelity-slice/reference-before-after-arena.png
+  - docs/proof/visual-fidelity-slice/armistice-first-slice-action.png
+  - docs/proof/visual-fidelity-slice/armistice-first-slice-action.json
+  - docs/proof/visual-fidelity-slice/visual-slice-metrics.txt
+- Immediate next visual fidelity work: replace the Armistice ground atlas with a less grid-dominant PixelLab/cleaned set, generate larger set pieces for treaty hall ruins/barricade walls/drone wrecks/terminal banks/AGI breach matter, soften proof-like labels in normal play, upgrade boss/dialogue presentation, then port the composition pass to the online arena renderer after solo reads well.

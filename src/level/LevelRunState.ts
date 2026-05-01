@@ -4,7 +4,7 @@ import type { Game } from "../core/Game";
 import type { GameState } from "../core/StateMachine";
 import { clampToBounds } from "../collision/collide";
 import { byIsoDepth } from "../iso/depthSort";
-import { worldToIso } from "../iso/projection";
+import { TILE_HEIGHT, TILE_WIDTH, worldToIso } from "../iso/projection";
 import { drawIsoDiamond } from "../iso/tilemap";
 import type { Entity, Player } from "../ecs/components";
 import { World } from "../ecs/World";
@@ -584,8 +584,13 @@ export class LevelRunState implements GameState {
       game.layers.ground.addChild(ground);
     }
 
+    const groundDetails = new Graphics();
+    this.drawArmisticeVisualSliceGround(groundDetails);
+    game.layers.ground.addChild(groundDetails);
+
     const productionArt = this.productionArt(game);
     const props = new Graphics();
+    this.drawArmisticeSceneMass(props);
     for (const cluster of this.map.propClusters) {
       this.drawPropCluster(game, props, cluster, productionArt);
     }
@@ -666,6 +671,199 @@ export class LevelRunState implements GameState {
 
   private terrainBandIdAt(x: number, y: number): string | undefined {
     return this.map.terrainBands.find((candidate) => x >= candidate.minX && x <= candidate.maxX && y >= candidate.minY && y <= candidate.maxY)?.id;
+  }
+
+  private drawArmisticeVisualSliceGround(graphics: Graphics): void {
+    this.drawIsoWorldRect(graphics, -5.2, -30, 5.2, 30, 0x6f7478, 0.34, 0x151c24, 0.28);
+    this.drawIsoWorldRect(graphics, -30, -5.2, 30, 5.2, 0x74797c, 0.3, 0x151c24, 0.26);
+    this.drawIsoWorldRect(graphics, -2.8, -30, 2.8, 30, 0x9a8f75, 0.18, 0xffd166, 0.2);
+    this.drawIsoWorldRect(graphics, -30, -2.8, 30, 2.8, 0x9a8f75, 0.16, 0xffd166, 0.18);
+    this.drawIsoWorldRect(graphics, -8, -8, 8, 8, 0xb5ad95, 0.18, 0xfff4d6, 0.18);
+    this.drawIsoWorldRect(graphics, -27, -22, -9, -5, 0x1e3b4a, 0.36, 0x45aaf2, 0.28);
+    this.drawIsoWorldRect(graphics, 9, -19, 29, -2, 0x3d302d, 0.32, 0xff5d57, 0.22);
+    this.drawIsoWorldRect(graphics, 11, 9, 26, 24, 0x154f52, 0.34, 0x64e0b4, 0.28);
+    this.drawIsoWorldRect(graphics, -29, 10, -11, 28, 0x25142e, 0.44, 0x7b61ff, 0.34);
+
+    for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
+      for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
+        const hash = this.visualHash(x, y);
+        const band = this.terrainBandIdAt(x, y);
+        if (hash % 19 === 0) this.drawTileChip(graphics, x, y, 0x101821, 0.32, 0.18 + (hash % 4) * 0.05);
+        if ((band === "main_plaza_cross_x" || band === "main_plaza_cross_y") && hash % 11 === 0) {
+          this.drawPavingCrack(graphics, x, y, hash, 0x252a33, 0.46);
+        }
+        if (band === "drone_yard_floor" && hash % 5 === 0) {
+          this.drawScorchMark(graphics, x, y, hash, 0x07151d, 0.42);
+        }
+        if (band === "barricade_corridor_floor" && hash % 4 === 0) {
+          this.drawTileChip(graphics, x, y, 0xff5d57, 0.18, 0.24);
+        }
+        if (band === "terminal_pad" && hash % 6 === 0) {
+          this.drawTerminalTrace(graphics, x, y, hash);
+        }
+        if (band === "breach_corruption" && hash % 3 === 0) {
+          this.drawBreachVein(graphics, x, y, hash);
+        }
+      }
+    }
+
+    this.drawIsoPolyline(graphics, [
+      [-26, 20],
+      [-18, 15],
+      [-10, 9],
+      [-3, 5],
+      [3, 1],
+      [10, -3],
+      [18, -9],
+      [25, -13]
+    ], 0x111823, 9, 0.38);
+    this.drawIsoPolyline(graphics, [
+      [-24, 20],
+      [-16, 14],
+      [-7, 8],
+      [0, 3],
+      [8, -1],
+      [17, -7],
+      [24, -11]
+    ], 0x64e0b4, 3, 0.44);
+    this.drawIsoPolyline(graphics, [
+      [-20, -14],
+      [-12, -10],
+      [-4, -5],
+      [3, -1],
+      [12, 5],
+      [20, 13]
+    ], 0x101821, 7, 0.34);
+    this.drawIsoPolyline(graphics, [
+      [-21, -13],
+      [-12, -9],
+      [-4, -4],
+      [5, 1],
+      [14, 7],
+      [21, 14]
+    ], 0x45aaf2, 2, 0.3);
+  }
+
+  private drawArmisticeSceneMass(graphics: Graphics): void {
+    for (const landmark of this.map.landmarks) {
+      const p = worldToIso(landmark.worldX, landmark.worldY);
+      graphics
+        .ellipse(p.screenX + 9, p.screenY + 10, landmark.radius * 32, landmark.radius * 11)
+        .fill({ color: 0x05080d, alpha: landmark.kind === "breach" ? 0.34 : 0.24 });
+    }
+
+    for (const cluster of this.map.propClusters) {
+      const p = worldToIso(cluster.worldX, cluster.worldY);
+      const width = Math.max(30, cluster.cols * cluster.spacingX * 18);
+      const height = Math.max(12, cluster.rows * cluster.spacingY * 7);
+      graphics.ellipse(p.screenX + 8, p.screenY + 10, width, height).fill({ color: 0x05080d, alpha: 0.24 });
+    }
+
+    this.drawIsoPolyline(graphics, [
+      [-29, -18],
+      [-22, -14],
+      [-17, -13],
+      [-10, -9],
+      [-3, -4],
+      [0, 0]
+    ], 0x071015, 5, 0.42);
+    this.drawIsoPolyline(graphics, [
+      [0, 0],
+      [8, -3],
+      [16, -8],
+      [27, -12]
+    ], 0x071015, 5, 0.42);
+    this.drawIsoPolyline(graphics, [
+      [0, 0],
+      [7, 7],
+      [15, 14],
+      [24, 20]
+    ], 0x071015, 4, 0.38);
+
+    for (let i = 0; i < 34; i += 1) {
+      const x = -28 + (this.visualHash(i, 13) % 57);
+      const y = -23 + (this.visualHash(i, 29) % 48);
+      if (Math.hypot(x, y) < 8) continue;
+      const p = worldToIso(x + (i % 3) * 0.17, y - (i % 4) * 0.13);
+      const color = i % 5 === 0 ? 0xffd166 : i % 3 === 0 ? 0x64e0b4 : 0x596270;
+      graphics
+        .rect(p.screenX - 8, p.screenY - 13, 16 + (i % 4) * 5, 6 + (i % 3) * 3)
+        .fill({ color, alpha: 0.42 })
+        .stroke({ color: 0x05080d, width: 2, alpha: 0.72 });
+    }
+  }
+
+  private drawIsoWorldRect(graphics: Graphics, minX: number, minY: number, maxX: number, maxY: number, color: number, alpha: number, outline: number, outlineAlpha: number): void {
+    const a = worldToIso(minX, minY);
+    const b = worldToIso(maxX, minY);
+    const c = worldToIso(maxX, maxY);
+    const d = worldToIso(minX, maxY);
+    graphics
+      .poly([a.screenX, a.screenY, b.screenX, b.screenY, c.screenX, c.screenY, d.screenX, d.screenY])
+      .fill({ color, alpha })
+      .stroke({ color: outline, width: 2, alpha: outlineAlpha });
+  }
+
+  private drawIsoPolyline(graphics: Graphics, points: Array<[number, number]>, color: number, width: number, alpha: number): void {
+    if (points.length < 2) return;
+    const first = worldToIso(points[0][0], points[0][1]);
+    graphics.moveTo(first.screenX, first.screenY);
+    for (const [x, y] of points.slice(1)) {
+      const p = worldToIso(x, y);
+      graphics.lineTo(p.screenX, p.screenY);
+    }
+    graphics.stroke({ color, width, alpha, cap: "round", join: "round" });
+  }
+
+  private drawTileChip(graphics: Graphics, x: number, y: number, color: number, alpha: number, scale: number): void {
+    const p = worldToIso(x, y);
+    const hw = TILE_WIDTH * scale;
+    const hh = TILE_HEIGHT * scale * 0.55;
+    graphics
+      .poly([p.screenX, p.screenY - hh, p.screenX + hw, p.screenY, p.screenX, p.screenY + hh, p.screenX - hw, p.screenY])
+      .fill({ color, alpha });
+  }
+
+  private drawPavingCrack(graphics: Graphics, x: number, y: number, hash: number, color: number, alpha: number): void {
+    const p = worldToIso(x + ((hash % 5) - 2) * 0.08, y + (((hash >> 3) % 5) - 2) * 0.08);
+    const dx = hash % 2 === 0 ? 18 : -18;
+    const dy = hash % 3 === 0 ? 6 : -6;
+    graphics
+      .moveTo(p.screenX - dx * 0.5, p.screenY - dy * 0.5)
+      .lineTo(p.screenX, p.screenY + dy)
+      .lineTo(p.screenX + dx * 0.65, p.screenY - dy * 0.25)
+      .stroke({ color, width: 2, alpha });
+  }
+
+  private drawScorchMark(graphics: Graphics, x: number, y: number, hash: number, color: number, alpha: number): void {
+    const p = worldToIso(x, y);
+    graphics.ellipse(p.screenX + (hash % 9) - 4, p.screenY + ((hash >> 4) % 7) - 3, 22 + (hash % 4) * 5, 7 + (hash % 3) * 3).fill({ color, alpha });
+  }
+
+  private drawTerminalTrace(graphics: Graphics, x: number, y: number, hash: number): void {
+    const p = worldToIso(x, y);
+    const horizontal = hash % 2 === 0;
+    graphics
+      .moveTo(p.screenX - (horizontal ? 18 : 4), p.screenY - (horizontal ? 2 : 10))
+      .lineTo(p.screenX + (horizontal ? 18 : 4), p.screenY + (horizontal ? 2 : 10))
+      .stroke({ color: 0x64e0b4, width: 2, alpha: 0.42 });
+    graphics.circle(p.screenX, p.screenY, 3).fill({ color: 0xffd166, alpha: 0.55 });
+  }
+
+  private drawBreachVein(graphics: Graphics, x: number, y: number, hash: number): void {
+    const p = worldToIso(x, y);
+    const bend = ((hash % 7) - 3) * 4;
+    graphics
+      .moveTo(p.screenX - 20, p.screenY + 2)
+      .lineTo(p.screenX - 4, p.screenY - 5 + bend * 0.15)
+      .lineTo(p.screenX + 17, p.screenY + 4)
+      .stroke({ color: hash % 2 === 0 ? 0x7b61ff : 0xff5d57, width: hash % 5 === 0 ? 4 : 2, alpha: 0.58 });
+  }
+
+  private visualHash(x: number, y: number): number {
+    const xi = Math.trunc(x);
+    const yi = Math.trunc(y);
+    return Math.abs(Math.imul(xi + 101, 1103515245) ^ Math.imul(yi - 73, 12345));
   }
 
   private drawSpawnRegions(graphics: Graphics): void {
