@@ -2847,9 +2847,56 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone47-faction-bursts/milestone47-last-alignment-burst-a.png`
 - Milestone 47 readiness decision: ready. Consensus Burst is now an online server-owned party-combo system with deterministic proof coverage, readable HUD telemetry, and live-state export/import boundaries intact.
 
+- Implemented Milestone 48 Enemy Family Expansion.
+- Expanded the enemy-family slate across client content and server campaign content:
+  - Creative Bible families now covered: bad outputs, prompt leeches, jailbreak wraiths, benchmark gremlins, overfit horrors, token gobblers, model collapse slimes, eval wraiths, context rot crabs, redaction angels, deepforms, and choirglass;
+  - campaign-specific pressure families preserved: thermal mirages, memory anchors, false schedules, solar reflections, tidecall static, injunction writs, and previous boss echoes.
+- Added server-owned stat and behavior hooks for the new runtime families:
+  - token gobblers can pursue ordinary shard pickups;
+  - jailbreak wraiths side-slip while closing distance;
+  - eval wraiths bias toward unfinished role-pressure anchors;
+  - choirglass enemies drift on a lane pulse;
+  - deepforms, prompt leeches, overfit horrors, model collapse slimes, and redaction angels have distinct HP/speed pressure.
+- Reassigned major campaign arenas to distinct enemy pressure signatures:
+  - Armistice Plaza: bad outputs, benchmark gremlins, eval wraiths, context rot crabs;
+  - Cooling Lake Nine and Thermal Archive: prompt/deepform/model-collapse/thermal pressure;
+  - Transit Loop and False Schedule Yard: false schedule, token, jailbreak, eval pressure;
+  - Glass Sunfield: solar reflection, choirglass, eval, overfit pressure;
+  - Archive, Blackwater, Verdict, Appeal Court, and Finale each gained their own proof-visible family mix.
+- Surfaced primary enemy family, enemy-family role metadata, proof IDs, and pressure signatures through online campaign content snapshots and route UI nodes.
+- Added production-art fallback mapping for the expanded online threat families and a local Armistice eval-wraith spawn region while keeping placeholder rendering safe.
+- Added `npm run proof:milestone48-enemy-family-expansion`, covering:
+  - expanded schema family IDs and proof IDs;
+  - distinct pressure signatures across the eight main campaign arenas;
+  - live Armistice eval-wraith runtime pressure;
+  - live Cooling Lake prompt/deepform/model-collapse runtime pressure.
+- Verification after Milestone 48:
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check server/data/campaignContent.mjs`
+  - `node --check server/data/onlineArenas.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone48-enemy-family-expansion`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:milestone38-distinct-campaign-arenas`
+  - `npm run proof:smoke`
+- Milestone 48 proof artifacts:
+  - `docs/proof/milestone48-enemy-family-expansion/milestone48-enemy-family-schema-a.png`
+  - `docs/proof/milestone48-enemy-family-expansion/milestone48-armistice-eval-wraiths-a.png`
+  - `docs/proof/milestone48-enemy-family-expansion/milestone48-cooling-lake-families-a.png`
+- Screenshots inspected after Milestone 48:
+  - `docs/proof/milestone48-enemy-family-expansion/milestone48-enemy-family-schema-a.png`
+  - `docs/proof/milestone48-enemy-family-expansion/milestone48-armistice-eval-wraiths-a.png`
+  - `docs/proof/milestone48-enemy-family-expansion/milestone48-cooling-lake-families-a.png`
+  - `docs/proof/milestone36-campaign-content-schema/milestone36-content-schema-lobby-a.png`
+  - `docs/proof/milestone38-distinct-campaign-arenas/milestone38-distinct-runtime-schema-a.png`
+  - `docs/proof/smoke/arena.png`
+- Milestone 48 readiness decision: ready. The full enemy-family slate is schema-visible, live server-spawned in representative arenas, distinct across campaign pressure signatures, and still compatible with production-art defaults and placeholder fallback.
+
 ## TODO
 
-- Next recommended milestone: Milestone 48 Enemy Family Expansion. Add the full enemy family slate with proof-visible family IDs and distinct campaign-arena pressure while preserving solo/local/online co-op parity and existing authority/persistence boundaries.
+- Next recommended milestone: Milestone 49 Production Player And Co-Mind Art Pass. Produce cleaned PixelLab/manual atlases for playable frames and co-mind presentation while preserving production-art defaults, placeholder opt-outs, manifest/provenance rules, and deterministic proof coverage.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

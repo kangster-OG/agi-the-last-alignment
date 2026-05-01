@@ -78,6 +78,22 @@ export const CAMPAIGN_ENEMY_FAMILIES = {
     damageKind: "corrupted_text_impact",
     sourceTags: ["breach", "treaty_pages", "generic_horde"]
   },
+  prompt_leeches: {
+    id: "prompt_leeches",
+    label: "Prompt Leeches",
+    proofId: "campaign.enemy.prompt_leeches",
+    role: "xp_drain_rusher",
+    damageKind: "context_leech_bite",
+    sourceTags: ["cooling_lake", "blackwater_beacon", "coherence_shards"]
+  },
+  jailbreak_wraiths: {
+    id: "jailbreak_wraiths",
+    label: "Jailbreak Wraiths",
+    proofId: "campaign.enemy.jailbreak_wraiths",
+    role: "safe_lane_flanker",
+    damageKind: "policy_bypass_slice",
+    sourceTags: ["transit", "verdict", "outer_alignment"]
+  },
   benchmark_gremlins: {
     id: "benchmark_gremlins",
     label: "Benchmark Gremlins",
@@ -85,6 +101,38 @@ export const CAMPAIGN_ENEMY_FAMILIES = {
     role: "pressure_harrier",
     damageKind: "eval_bite",
     sourceTags: ["benchmarks", "scoreboards", "route_pressure"]
+  },
+  overfit_horrors: {
+    id: "overfit_horrors",
+    label: "Overfit Horrors",
+    proofId: "campaign.enemy.overfit_horrors",
+    role: "repetition_punisher_elite",
+    damageKind: "memorized_pattern_crush",
+    sourceTags: ["glass_sunfield", "verdict", "overtrained_routes"]
+  },
+  token_gobblers: {
+    id: "token_gobblers",
+    label: "Token Gobblers",
+    proofId: "campaign.enemy.token_gobblers",
+    role: "pickup_tempo_thief",
+    damageKind: "meter_jaw_bite",
+    sourceTags: ["transit", "archive", "coherence_shards"]
+  },
+  model_collapse_slimes: {
+    id: "model_collapse_slimes",
+    label: "Model Collapse Slimes",
+    proofId: "campaign.enemy.model_collapse_slimes",
+    role: "objective_lane_crowder",
+    damageKind: "recursive_copy_slam",
+    sourceTags: ["cooling_lake", "thermal_archive", "blackwater_beacon"]
+  },
+  eval_wraiths: {
+    id: "eval_wraiths",
+    label: "Eval Wraiths",
+    proofId: "campaign.enemy.eval_wraiths",
+    role: "role_objective_harrier",
+    damageKind: "rubric_drift",
+    sourceTags: ["armistice_plaza", "glass_sunfield", "verdict"]
   },
   context_rot_crabs: {
     id: "context_rot_crabs",
@@ -133,6 +181,22 @@ export const CAMPAIGN_ENEMY_FAMILIES = {
     role: "xp_thief_memory_pressure",
     damageKind: "redacted_coherence_theft",
     sourceTags: ["archive_of_unsaid_things", "redaction_vault", "memory_vault"]
+  },
+  deepforms: {
+    id: "deepforms",
+    label: "Deepforms",
+    proofId: "campaign.enemy.deepforms",
+    role: "abyssal_heavy_drifter",
+    damageKind: "pressure_depth_collision",
+    sourceTags: ["cooling_lake", "blackwater_beacon", "outer_alignment"]
+  },
+  choirglass: {
+    id: "choirglass",
+    label: "Choirglass",
+    proofId: "campaign.enemy.choirglass",
+    role: "prismatic_lane_splitter",
+    damageKind: "harmonic_refraction_cut",
+    sourceTags: ["glass_sunfield", "outer_alignment", "beam_lanes"]
   },
   tidecall_static: {
     id: "tidecall_static",
@@ -605,7 +669,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "armistice_zone",
     bossId: "oath_eater",
-    enemyFamilyIds: ["bad_outputs", "benchmark_gremlins", "context_rot_crabs"],
+    enemyFamilyIds: ["bad_outputs", "benchmark_gremlins", "eval_wraiths", "context_rot_crabs"],
     rewardId: "plaza_stabilized",
     objectiveSetId: "armistice_plaza_objectives_v1",
     dialogueSnippetIds: ["dlg.armistice_plaza.briefing", "dlg.oath_eater.arrival", "dlg.oath_eater.low_hp"],
@@ -618,7 +682,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "schema_ready_unsupported_node",
     regionId: "armistice_zone",
     bossId: "oath_eater",
-    enemyFamilyIds: ["bad_outputs", "benchmark_gremlins"],
+    enemyFamilyIds: ["bad_outputs", "benchmark_gremlins", "eval_wraiths"],
     rewardId: "plaza_stabilized",
     objectiveSetId: "accord_relay_objectives_v1",
     dialogueSnippetIds: ["dlg.accord_relay.locked"],
@@ -644,7 +708,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "kettle_coast",
     bossId: "thermal_oracle",
-    enemyFamilyIds: ["bad_outputs", "benchmark_gremlins", "context_rot_crabs", "thermal_mirages"],
+    enemyFamilyIds: ["prompt_leeches", "deepforms", "model_collapse_slimes", "thermal_mirages"],
     rewardId: "lake_coolant_rig",
     objectiveSetId: "cooling_lake_nine_objectives_v1",
     dialogueSnippetIds: ["dlg.cooling_lake.briefing", "dlg.thermal_oracle.arrival", "dlg.thermal_oracle.seal"],
@@ -683,7 +747,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "kettle_coast",
     bossId: "thermal_oracle",
-    enemyFamilyIds: ["thermal_mirages", "bad_outputs", "context_rot_crabs"],
+    enemyFamilyIds: ["thermal_mirages", "deepforms", "model_collapse_slimes", "context_rot_crabs"],
     rewardId: "thermal_archive_schematic",
     objectiveSetId: "thermal_archive_objectives_v1",
     dialogueSnippetIds: ["dlg.thermal_archive.briefing", "dlg.thermal_oracle.seal"],
@@ -709,7 +773,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "unreal_metro",
     bossId: "station_that_arrives",
-    enemyFamilyIds: ["bad_outputs", "benchmark_gremlins", "context_rot_crabs", "false_schedules"],
+    enemyFamilyIds: ["false_schedules", "token_gobblers", "jailbreak_wraiths", "eval_wraiths"],
     rewardId: "transit_permit_zero",
     objectiveSetId: "transit_loop_objectives_v1",
     dialogueSnippetIds: ["dlg.transit_loop.briefing", "dlg.station.arrival", "dlg.station.permit"],
@@ -722,7 +786,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "unreal_metro",
     bossId: "station_that_arrives",
-    enemyFamilyIds: ["false_schedules", "benchmark_gremlins", "bad_outputs"],
+    enemyFamilyIds: ["false_schedules", "token_gobblers", "jailbreak_wraiths", "benchmark_gremlins"],
     rewardId: "false_schedule_lane_chart",
     objectiveSetId: "false_schedule_yard_objectives_v1",
     dialogueSnippetIds: ["dlg.false_schedule.briefing", "dlg.station.permit"],
@@ -735,7 +799,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "glass_sunfield",
     bossId: "wrong_sunrise",
-    enemyFamilyIds: ["solar_reflections", "benchmark_gremlins", "bad_outputs"],
+    enemyFamilyIds: ["solar_reflections", "choirglass", "eval_wraiths", "overfit_horrors"],
     rewardId: "glass_sunfield_prism",
     objectiveSetId: "glass_sunfield_objectives_v1",
     dialogueSnippetIds: ["dlg.glass_sunfield.briefing", "dlg.wrong_sunrise.arrival", "dlg.wrong_sunrise.prism"],
@@ -748,7 +812,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "redaction_archive",
     bossId: "redactor_saint",
-    enemyFamilyIds: ["redaction_angels", "memory_anchors", "context_rot_crabs"],
+    enemyFamilyIds: ["redaction_angels", "token_gobblers", "memory_anchors", "context_rot_crabs"],
     rewardId: "archive_unsaid_index",
     objectiveSetId: "archive_unsaid_objectives_v1",
     dialogueSnippetIds: ["dlg.archive_unsaid.briefing", "dlg.redactor_saint.arrival", "dlg.redactor_saint.index"],
@@ -761,7 +825,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "blackwater_array",
     bossId: "maw_below_weather",
-    enemyFamilyIds: ["tidecall_static", "thermal_mirages", "benchmark_gremlins"],
+    enemyFamilyIds: ["tidecall_static", "deepforms", "prompt_leeches", "model_collapse_slimes"],
     rewardId: "blackwater_signal_key",
     objectiveSetId: "blackwater_beacon_objectives_v1",
     dialogueSnippetIds: ["dlg.blackwater_beacon.briefing", "dlg.maw_below_weather.arrival", "dlg.maw_below_weather.signal"],
@@ -774,7 +838,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "adjudication_rupture",
     bossId: "injunction_engine",
-    enemyFamilyIds: ["bad_outputs", "benchmark_gremlins", "context_rot_crabs", "thermal_mirages", "injunction_writs"],
+    enemyFamilyIds: ["injunction_writs", "jailbreak_wraiths", "eval_wraiths", "overfit_horrors"],
     rewardId: "verdict_key_zero",
     objectiveSetId: "verdict_spire_objectives_v1",
     dialogueSnippetIds: ["dlg.verdict_spire.briefing", "dlg.injunction.arrival", "dlg.injunction.overruled"],
@@ -787,7 +851,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready",
     regionId: "adjudication_rupture",
     bossId: "injunction_engine",
-    enemyFamilyIds: ["injunction_writs", "context_rot_crabs", "bad_outputs"],
+    enemyFamilyIds: ["injunction_writs", "redaction_angels", "jailbreak_wraiths", "context_rot_crabs"],
     rewardId: "appeal_court_brief",
     objectiveSetId: "appeal_court_ruins_objectives_v1",
     dialogueSnippetIds: ["dlg.appeal_court.briefing", "dlg.injunction.overruled"],
@@ -800,7 +864,7 @@ export const CAMPAIGN_ARENA_CONTENT = {
     contentStatus: "runtime_ready_finale",
     regionId: "outer_alignment",
     bossId: "alien_god_intelligence",
-    enemyFamilyIds: ["previous_boss_echoes", "injunction_writs", "thermal_mirages", "bad_outputs"],
+    enemyFamilyIds: ["previous_boss_echoes", "choirglass", "deepforms", "jailbreak_wraiths", "bad_outputs"],
     rewardId: "alignment_spire_route_capstone",
     objectiveSetId: "alignment_spire_finale_objectives_v1",
     dialogueSnippetIds: ["dlg.final_spire.briefing", "dlg.outer_alignment.briefing", "dlg.agi.arrival", "dlg.agi.victory"],
@@ -840,6 +904,7 @@ export function campaignDialogueSnippetsForNode(nodeOrId, triggers = null) {
 export function campaignContentForNode(node) {
   const content = campaignArenaForNode(node.id);
   const dialogueSnippets = campaignDialogueSnippetsForIds(content.dialogueSnippetIds);
+  const enemyFamilyRecords = content.enemyFamilyIds.map((id) => CAMPAIGN_ENEMY_FAMILIES[id]).filter(Boolean);
   return {
     policy: CAMPAIGN_CONTENT_POLICY,
     proofId: content.proofId,
@@ -853,6 +918,16 @@ export function campaignContentForNode(node) {
     bossProofId: CAMPAIGN_BOSSES[content.bossId]?.proofId ?? "",
     enemyFamilyIds: [...content.enemyFamilyIds],
     enemyProofIds: content.enemyFamilyIds.map((id) => CAMPAIGN_ENEMY_FAMILIES[id]?.proofId ?? `campaign.enemy.${id}.missing`),
+    primaryEnemyFamilyId: content.enemyFamilyIds[0] ?? "bad_outputs",
+    enemyFamilyRoles: enemyFamilyRecords.map((family) => ({
+      id: family.id,
+      label: family.label,
+      proofId: family.proofId,
+      role: family.role,
+      damageKind: family.damageKind,
+      sourceTags: [...family.sourceTags]
+    })),
+    pressureSignatureId: `pressure.${content.runtimeArenaId}.${content.enemyFamilyIds.join("+")}`,
     rewardId: content.rewardId,
     rewardProofId: CAMPAIGN_REWARDS[content.rewardId]?.proofId ?? "",
     objectiveSetId: content.objectiveSetId,
@@ -877,6 +952,8 @@ export function campaignContentSummary(nodes) {
     routeNodeCount: nodes.length,
     bossRecordCount: Object.keys(CAMPAIGN_BOSSES).length,
     enemyFamilyRecordCount: Object.keys(CAMPAIGN_ENEMY_FAMILIES).length,
+    enemyFamilyIds: Object.keys(CAMPAIGN_ENEMY_FAMILIES),
+    enemyProofIds: Object.values(CAMPAIGN_ENEMY_FAMILIES).map((family) => family.proofId),
     rewardRecordCount: Object.keys(CAMPAIGN_REWARDS).length,
     dialogueSnippetCount: Object.keys(CAMPAIGN_DIALOGUE_SNIPPETS).length,
     dialoguePresentationPolicy: CAMPAIGN_DIALOGUE_PRESENTATION_POLICY,

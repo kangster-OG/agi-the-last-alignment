@@ -508,6 +508,8 @@ export interface OnlinePartySnapshot {
       routeNodeCount: number;
       bossRecordCount: number;
       enemyFamilyRecordCount: number;
+      enemyFamilyIds?: string[];
+      enemyProofIds?: string[];
       rewardRecordCount: number;
       dialogueSnippetCount: number;
       missingNodeContentIds: string[];
@@ -554,6 +556,16 @@ export interface OnlinePartySnapshot {
     bossProofId?: string;
     enemyFamilyIds?: string[];
     enemyProofIds?: string[];
+    primaryEnemyFamilyId?: string;
+    pressureSignatureId?: string;
+    enemyFamilyRoles?: Array<{
+      id: string;
+      label: string;
+      proofId: string;
+      role: string;
+      damageKind: string;
+      sourceTags: string[];
+    }>;
     rewardId?: string;
     rewardProofId?: string;
     dialogueSnippetIds?: string[];
@@ -593,6 +605,16 @@ export interface OnlineCampaignContentNodeSnapshot {
   bossProofId: string;
   enemyFamilyIds: string[];
   enemyProofIds: string[];
+  primaryEnemyFamilyId?: string;
+  pressureSignatureId?: string;
+  enemyFamilyRoles?: Array<{
+    id: string;
+    label: string;
+    proofId: string;
+    role: string;
+    damageKind: string;
+    sourceTags: string[];
+  }>;
   rewardId: string;
   rewardProofId: string;
   objectiveSetId: string;

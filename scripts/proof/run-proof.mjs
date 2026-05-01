@@ -617,6 +617,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone47FactionBurstsScenario();
     return;
+  } else if (name === "milestone48-enemy-family-expansion") {
+    await closeBrowser(browser);
+    await runMilestone48EnemyFamilyExpansionScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -4226,6 +4230,112 @@ async function runMilestone47FactionBurstsScenario() {
   }
 }
 
+async function runMilestone48EnemyFamilyExpansionScenario() {
+  const { browser, pageA, pageB, errors } = await openOnlinePair("m48");
+  try {
+    const creativeBibleFamilyIds = [
+      "bad_outputs",
+      "prompt_leeches",
+      "jailbreak_wraiths",
+      "benchmark_gremlins",
+      "overfit_horrors",
+      "token_gobblers",
+      "model_collapse_slimes",
+      "eval_wraiths",
+      "context_rot_crabs",
+      "redaction_angels",
+      "deepforms",
+      "choirglass"
+    ];
+    const campaignArenaIds = [
+      "armistice_plaza",
+      "cooling_lake_nine",
+      "transit_loop_zero",
+      "glass_sunfield",
+      "archive_of_unsaid_things",
+      "blackwater_beacon",
+      "verdict_spire",
+      "alignment_spire_finale"
+    ];
+    const expectedPressure = {
+      armistice_plaza: ["bad_outputs", "benchmark_gremlins", "eval_wraiths", "context_rot_crabs"],
+      cooling_lake_nine: ["prompt_leeches", "deepforms", "model_collapse_slimes", "thermal_mirages"],
+      transit_loop_zero: ["false_schedules", "token_gobblers", "jailbreak_wraiths", "eval_wraiths"],
+      glass_sunfield: ["solar_reflections", "choirglass", "eval_wraiths", "overfit_horrors"],
+      archive_of_unsaid_things: ["redaction_angels", "token_gobblers", "memory_anchors", "context_rot_crabs"],
+      blackwater_beacon: ["tidecall_static", "deepforms", "prompt_leeches", "model_collapse_slimes"],
+      verdict_spire: ["injunction_writs", "jailbreak_wraiths", "eval_wraiths", "overfit_horrors"],
+      alignment_spire_finale: ["previous_boss_echoes", "choirglass", "deepforms", "jailbreak_wraiths", "bad_outputs"]
+    };
+
+    const lobby = await state(pageA);
+    const schema = lobby.online?.party?.campaign?.contentSchema;
+    assert(schema?.policy === "campaign_content_schema_v1", "expected M48 campaign content schema");
+    assert(schema.complete === true, "expected M48 campaign content schema complete");
+    assert(schema.enemyFamilyRecordCount >= 19, "expected expanded enemy-family records including M48 slate");
+    for (const familyId of creativeBibleFamilyIds) {
+      assert(schema.enemyFamilyIds?.includes(familyId), `expected schema enemy family ${familyId}`);
+      assert(schema.enemyProofIds?.includes(`campaign.enemy.${familyId}`), `expected schema enemy proof for ${familyId}`);
+    }
+
+    const nodeById = new Map((lobby.online?.party?.nodes ?? []).map((node) => [node.id, node]));
+    const pressureSignatures = new Set();
+    for (const arenaId of campaignArenaIds) {
+      const node = nodeById.get(arenaId);
+      assert(node, `expected campaign node ${arenaId}`);
+      const expectedFamilies = expectedPressure[arenaId];
+      for (const familyId of expectedFamilies) {
+        assert(node.enemyFamilyIds?.includes(familyId), `expected ${arenaId} pressure family ${familyId}`);
+      }
+      assert(node.enemyFamilyRoles?.length === node.enemyFamilyIds?.length, `expected family role metadata for ${arenaId}`);
+      assert(node.enemyProofIds?.every((proofId) => !proofId.endsWith(".missing")), `expected valid enemy proof IDs for ${arenaId}`);
+      assert(node.pressureSignatureId?.includes(node.runtimeArenaId ?? arenaId), `expected pressure signature for ${arenaId}`);
+      pressureSignatures.add(node.pressureSignatureId);
+    }
+    assert(pressureSignatures.size === campaignArenaIds.length, "expected distinct enemy pressure signatures for all campaign arenas");
+    await capture(pageA, "milestone48-enemy-family-schema-a");
+
+    await launchOnlineArmistice(pageA, pageB);
+    await waitForOnlineServerCombat(
+      pageA,
+      (text) => text.enemies?.some((enemy) => enemy.familyId === "eval_wraiths") && text.online?.campaignContent?.enemyFamilyRoles?.some((family) => family.id === "eval_wraiths"),
+      "Armistice runtime eval wraith pressure",
+      22_000
+    );
+    await capture(pageA, "milestone48-armistice-eval-wraiths-a");
+    await pageA.keyboard.press("Digit3");
+    await waitForOnlineRunPhase(pageA, "completed");
+    await pageA.keyboard.press("Space");
+    await waitForOnlineRunPhase(pageA, "lobby");
+    await waitForOnlineRunPhase(pageB, "lobby");
+
+    await voteBothToNode(pageA, pageB, "cooling_lake_nine");
+    await Promise.all([pageA.keyboard.press("Space"), pageB.keyboard.press("Space")]);
+    await waitForOnlineRunPhase(pageA, "active");
+    await waitForOnlineServerCombat(
+      pageA,
+      (text) => {
+        const liveFamilies = new Set((text.enemies ?? []).map((enemy) => enemy.familyId));
+        return (
+          text.online?.campaignContent?.primaryEnemyFamilyId === "prompt_leeches" &&
+          liveFamilies.has("prompt_leeches") &&
+          (liveFamilies.has("deepforms") || liveFamilies.has("model_collapse_slimes"))
+        );
+      },
+      "Cooling Lake runtime M48 enemy families",
+      14_000
+    );
+    await capture(pageA, "milestone48-cooling-lake-families-a");
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone48 enemy family expansion");
+    }
+  } finally {
+    await closeBrowser(browser);
+  }
+}
+
 async function runMilestone32PartyBuildsScenario() {
   const browser = await chromium.launch({
     headless: true,
@@ -5039,10 +5149,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts"].includes(name);
+  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion"].includes(name);
 }

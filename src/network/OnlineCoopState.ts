@@ -85,6 +85,16 @@ function consensusBurstHudLabel(snapshot: OnlineConsensusSnapshot): string {
   return `  B ${percent}%${active}`;
 }
 
+function compactRegionEventLabel(eventFamily: string): string {
+  if (eventFamily.includes("thermal")) return "THERM";
+  if (eventFamily.includes("false")) return "FALSE";
+  if (eventFamily.includes("solar")) return "SOLAR";
+  if (eventFamily.includes("redaction")) return "REDACT";
+  if (eventFamily.includes("tidal")) return "TIDE";
+  if (eventFamily.includes("prediction") || eventFamily.includes("outer")) return "OUTER";
+  return eventFamily.replace(/_/g, " ").slice(0, 8).toUpperCase();
+}
+
 export class OnlineCoopState implements GameState {
   readonly mode = "OnlineCoop" as const;
   status: ConnectionStatus = "connecting";
@@ -1118,8 +1128,9 @@ export class OnlineCoopState implements GameState {
       bar.rect(x + 12, y + 13, (barWidth - 24) * Math.max(0, Math.min(1, combat.pressure)), 7).fill(combat.bossEventActive ? palette.tomato : palette.lemon);
       game.layers.hud.addChild(bar);
 
+      const labelText = `${phase === "active" ? "SRV" : "FLOW"} ${combat.phase.toUpperCase()}  ${combat.projectileCount}P  ${combat.pickupCount}S${consensusBurstHudLabel(snapshot)}${snapshot.regionEvent?.active ? `  ${compactRegionEventLabel(snapshot.regionEvent.eventFamily)}` : ""}${snapshot.objectives ? `  OBJ ${snapshot.objectives.phase.toUpperCase()}` : ""}${rolePressure?.active ? `  ROLE ${rolePressure.phase.toUpperCase()} ${rolePressure.heldAnchorCount}/${rolePressure.requiredAnchors}` : ""}`;
       const label = new Text({
-        text: `${phase === "active" ? "SERVER COMBAT" : "RUN FLOW"} ${combat.phase.toUpperCase()}  ${combat.projectileCount} PROJ  ${combat.pickupCount} SHARDS${consensusBurstHudLabel(snapshot)}${snapshot.regionEvent?.active ? `  ${snapshot.regionEvent.eventFamily.toUpperCase()}` : ""}${snapshot.objectives ? `  OBJ ${snapshot.objectives.phase.toUpperCase()}` : ""}${rolePressure?.active ? `  ROLE ${rolePressure.phase.toUpperCase()} ${rolePressure.heldAnchorCount}/${rolePressure.requiredAnchors}` : ""}`,
+        text: labelText,
         style: { ...fontStyle, fontSize: 10, fill: "#fff4d6" }
       });
       label.position.set(x + 12, y - 1);
@@ -2067,6 +2078,14 @@ function onlineThreatTextureFor(
   if (enemy.boss && enemy.familyId === "alien_god_intelligence") return { texture: textures.injunction_engine, scale: 1.34 };
   if (enemy.sourceRegionId?.startsWith("outer_alignment_echo:") || enemy.familyId.endsWith("_echo") || enemy.familyId === "previous_boss_echoes") return { texture: textures.shard_lurker, scale: 0.84 };
   if (enemy.sourceRegionId?.includes("injunction_writs") || enemy.familyId === "injunction_writs") return { texture: textures.verdict_writ, scale: 0.82 };
+  if (enemy.familyId === "jailbreak_wraiths") return { texture: textures.verdict_writ, scale: 0.7 };
+  if (enemy.familyId === "eval_wraiths") return { texture: textures.shard_lurker, scale: 0.68 };
+  if (enemy.familyId === "overfit_horrors") return { texture: textures.bad_output_elite, scale: 0.86 };
+  if (enemy.familyId === "token_gobblers") return { texture: textures.false_track, scale: 0.7 };
+  if (enemy.familyId === "model_collapse_slimes") return { texture: textures.boiling_cache, scale: 0.82 };
+  if (enemy.familyId === "prompt_leeches") return { texture: textures.boiling_cache, scale: 0.62 };
+  if (enemy.familyId === "deepforms") return { texture: textures.thermal_oracle, scale: 0.72 };
+  if (enemy.familyId === "choirglass") return { texture: textures.false_track, scale: 0.76 };
   if (enemy.sourceRegionId?.includes("sunfield") || enemy.familyId === "solar_reflections") return { texture: textures.false_track, scale: 0.76 };
   if (enemy.sourceRegionId?.includes("archive") || enemy.familyId === "redaction_angels") return { texture: textures.shard_lurker, scale: 0.78 };
   if (enemy.sourceRegionId?.includes("blackwater") || enemy.familyId === "tidecall_static") return { texture: textures.false_track, scale: 0.78 };

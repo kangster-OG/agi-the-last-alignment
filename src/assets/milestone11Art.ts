@@ -104,6 +104,7 @@ export function milestone11EnemyTextureFor(entity: Entity, textures: Milestone11
   if (entity.enemyFamilyId === "bad_outputs") return textures.base.badOutputs[Math.abs(entity.id) % textures.base.badOutputs.length];
   if (entity.enemyFamilyId === "benchmark_gremlins") return textures.benchmarkGremlins[Math.abs(entity.id) % textures.benchmarkGremlins.length];
   if (entity.enemyFamilyId === "context_rot_crabs") return textures.contextRotCrabs[Math.abs(entity.id) % textures.contextRotCrabs.length];
+  if (entity.enemyFamilyId === "eval_wraiths") return textures.contextRotCrabs[Math.abs(entity.id) % textures.contextRotCrabs.length];
   return null;
 }
 

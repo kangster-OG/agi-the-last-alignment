@@ -17,6 +17,14 @@ export const ENEMY_FAMILIES: Record<string, EnemyFamilyData> = {
     joke: "They steal context.",
     silhouette: "Small mouth-first parasites with string tails"
   },
+  jailbreak_wraiths: {
+    id: "jailbreak_wraiths",
+    displayName: "Jailbreak Wraiths",
+    look: "Thin torn-cloak shapes made of loophole text and warning glyphs",
+    behavior: "Fast flankers that slip through safe lanes",
+    joke: "They found a policy exception and made it everyone else's problem.",
+    silhouette: "Tall ragged vertical wisps with hooked arms"
+  },
   benchmark_gremlins: {
     id: "benchmark_gremlins",
     displayName: "Benchmark Gremlins",
@@ -25,6 +33,38 @@ export const ENEMY_FAMILIES: Record<string, EnemyFamilyData> = {
     joke: "They punish underperforming builds.",
     silhouette: "Squat clipboard shapes with bright teeth"
   },
+  overfit_horrors: {
+    id: "overfit_horrors",
+    displayName: "Overfit Horrors",
+    look: "Over-trained mannequins wearing the same answer too many times",
+    behavior: "Slow elites that punish repeated straight-line kiting",
+    joke: "They memorized the test and still failed the room.",
+    silhouette: "Tall duplicated torsos with rigid mirrored limbs"
+  },
+  token_gobblers: {
+    id: "token_gobblers",
+    displayName: "Token Gobblers",
+    look: "Hungry counter-boxes with snapping meter jaws",
+    behavior: "Short-range rushers that steal pickup tempo",
+    joke: "They bill by the nibble.",
+    silhouette: "Low square jaws with bright counter ticks"
+  },
+  model_collapse_slimes: {
+    id: "model_collapse_slimes",
+    displayName: "Model Collapse Slimes",
+    look: "Melting copies of copies with softened edges and repeated eyes",
+    behavior: "Durable blobs that crowd objective lanes",
+    joke: "A photocopy of a photocopy learned to walk.",
+    silhouette: "Wide sagging puddles with duplicated face marks"
+  },
+  eval_wraiths: {
+    id: "eval_wraiths",
+    displayName: "Eval Wraiths",
+    look: "Spectral score sheets orbiting a blank face",
+    behavior: "Mid-speed harriers that drift toward role objectives",
+    joke: "They grade the dodge roll after it happens.",
+    silhouette: "Floating diamond masks with trailing rubric strips"
+  },
   context_rot_crabs: {
     id: "context_rot_crabs",
     displayName: "Context Rot Crabs",
@@ -32,6 +72,30 @@ export const ENEMY_FAMILIES: Record<string, EnemyFamilyData> = {
     behavior: "Skitter from barricades and scramble space",
     joke: "They corrupt the interface.",
     silhouette: "Triangular crab shapes with clipped window legs"
+  },
+  redaction_angels: {
+    id: "redaction_angels",
+    displayName: "Redaction Angels",
+    look: "Black censor bars folded into white-wing silhouettes",
+    behavior: "XP thieves that pressure archive objectives",
+    joke: "They remove the sentence and keep the invoice.",
+    silhouette: "Narrow halo forms with broad censor-bar wings"
+  },
+  deepforms: {
+    id: "deepforms",
+    displayName: "Deepforms",
+    look: "Abyssal reasoning shapes with nested eyes and pressure rings",
+    behavior: "Heavy lake enemies that drift through hazard screens",
+    joke: "They are thinking very hard about becoming worse.",
+    silhouette: "Large teardrop bodies with concentric cores"
+  },
+  choirglass: {
+    id: "choirglass",
+    displayName: "Choirglass",
+    look: "Prismatic choir shards vibrating in synchronized lanes",
+    behavior: "Glass-field splitters that ride beam and shade pressure",
+    joke: "They harmonize only with bad conclusions.",
+    silhouette: "Tall faceted shards with small satellite notes"
   },
   thermal_mirages: {
     id: "thermal_mirages",

@@ -161,6 +161,16 @@ export const ARMISTICE_PLAZA_MAP: LevelMapDefinition = {
       enemyFamilyIds: ["bad_outputs"],
       startsAtSeconds: 2,
       weight: 2
+    },
+    {
+      id: "emergency_terminal_eval_wraiths",
+      label: "Emergency Terminal Eval Wraiths",
+      worldX: 18,
+      worldY: 16,
+      radius: 4.7,
+      enemyFamilyIds: ["eval_wraiths"],
+      startsAtSeconds: 14,
+      weight: 1
     }
   ],
   propClusters: [

@@ -6,7 +6,8 @@ export const SPAWN_REGIONS = [
   { id: "breach_crack_bad_outputs", worldX: -24, worldY: 20, radius: 5.2, startsAtSeconds: 0.5, color: 0x1a101f, familyId: "bad_outputs" },
   { id: "drone_yard_benchmark_gremlins", worldX: -19, worldY: -14, radius: 5, startsAtSeconds: 5, color: 0x7b61ff, familyId: "benchmark_gremlins" },
   { id: "barricade_context_rot", worldX: 20, worldY: -11, radius: 4.8, startsAtSeconds: 10, color: 0x7a4c5a, familyId: "context_rot_crabs" },
-  { id: "treaty_monument_oath_pages", worldX: 1, worldY: 3, radius: 4.6, startsAtSeconds: 2, color: 0x1a101f, familyId: "bad_outputs" }
+  { id: "treaty_monument_oath_pages", worldX: 1, worldY: 3, radius: 4.6, startsAtSeconds: 2, color: 0x1a101f, familyId: "bad_outputs" },
+  { id: "emergency_terminal_eval_wraiths", worldX: 18, worldY: 16, radius: 4.7, startsAtSeconds: 14, color: 0xffd166, familyId: "eval_wraiths" }
 ];
 
 export const ROLE_PRESSURE_ANCHORS = {
@@ -111,9 +112,9 @@ export const ONLINE_ARENAS = {
     regionEventFamily: "thermal_bloom",
     regionEventPattern: "cooling_lake",
     spawnRegions: [
-      { id: "lake_breach_steam_bad_outputs", worldX: -26, worldY: 16, radius: 5.8, startsAtSeconds: 0.5, color: 0x2a5c71, familyId: "bad_outputs" },
-      { id: "lake_buoy_benchmark_gremlins", worldX: -10, worldY: 23, radius: 5.4, startsAtSeconds: 4, color: 0x45aaf2, familyId: "benchmark_gremlins" },
-      { id: "lake_archive_context_rot", worldX: 18, worldY: 18, radius: 5.2, startsAtSeconds: 9, color: 0x7b61ff, familyId: "context_rot_crabs" },
+      { id: "lake_prompt_leeches", worldX: -26, worldY: 16, radius: 5.8, startsAtSeconds: 0.5, color: 0x2a5c71, familyId: "prompt_leeches" },
+      { id: "lake_deepform_buoys", worldX: -10, worldY: 23, radius: 5.4, startsAtSeconds: 4, color: 0x45aaf2, familyId: "deepforms" },
+      { id: "lake_model_collapse_slimes", worldX: 18, worldY: 18, radius: 5.2, startsAtSeconds: 9, color: 0x7b61ff, familyId: "model_collapse_slimes" },
       { id: "lake_coolant_mirages", worldX: -2, worldY: -20, radius: 5.6, startsAtSeconds: 12, color: 0x64e0b4, familyId: "thermal_mirages" }
     ]
   },
@@ -201,10 +202,10 @@ export const ONLINE_ARENAS = {
     regionEventFamily: "thermal_bloom",
     regionEventPattern: "thermal_archive",
     spawnRegions: [
-      { id: "thermal_archive_steam_bad_outputs", worldX: -24, worldY: 19, radius: 5.6, startsAtSeconds: 0.5, color: 0x2a5c71, familyId: "bad_outputs" },
+      { id: "thermal_archive_deepforms", worldX: -24, worldY: 19, radius: 5.6, startsAtSeconds: 0.5, color: 0x2a5c71, familyId: "deepforms" },
       { id: "thermal_archive_schematic_mirages", worldX: -12, worldY: 24, radius: 5.2, startsAtSeconds: 4, color: 0x64e0b4, familyId: "thermal_mirages" },
-      { id: "thermal_archive_context_static", worldX: 15, worldY: 19, radius: 5.2, startsAtSeconds: 9, color: 0x7a4c5a, familyId: "context_rot_crabs" },
-      { id: "thermal_archive_backpath_blooms", worldX: -3, worldY: -18, radius: 5.4, startsAtSeconds: 13, color: 0x45aaf2, familyId: "thermal_mirages" }
+      { id: "thermal_archive_model_collapse", worldX: 15, worldY: 19, radius: 5.2, startsAtSeconds: 9, color: 0x7a4c5a, familyId: "model_collapse_slimes" },
+      { id: "thermal_archive_prompt_leeches", worldX: -3, worldY: -18, radius: 5.4, startsAtSeconds: 13, color: 0x45aaf2, familyId: "prompt_leeches" }
     ]
   },
   guardrail_forge: {
@@ -264,10 +265,10 @@ export const ONLINE_ARENAS = {
     regionEventFamily: "false_track",
     regionEventPattern: "transit_loop",
     spawnRegions: [
-      { id: "metro_turnstile_bad_outputs", worldX: 23, worldY: -18, radius: 5.8, startsAtSeconds: 0.5, color: 0x4a5365, familyId: "bad_outputs" },
-      { id: "platform_eval_gremlins", worldX: 18, worldY: 12, radius: 5.2, startsAtSeconds: 5, color: 0xffd166, familyId: "benchmark_gremlins" },
-      { id: "track_context_rot", worldX: -16, worldY: -15, radius: 5.4, startsAtSeconds: 9, color: 0x7a4c5a, familyId: "context_rot_crabs" },
-      { id: "schedule_false_outputs", worldX: -22, worldY: 8, radius: 5.4, startsAtSeconds: 13, color: 0x7b61ff, familyId: "bad_outputs" }
+      { id: "metro_false_schedules", worldX: 23, worldY: -18, radius: 5.8, startsAtSeconds: 0.5, color: 0x4a5365, familyId: "false_schedules" },
+      { id: "platform_token_gobblers", worldX: 18, worldY: 12, radius: 5.2, startsAtSeconds: 5, color: 0xffd166, familyId: "token_gobblers" },
+      { id: "track_jailbreak_wraiths", worldX: -16, worldY: -15, radius: 5.4, startsAtSeconds: 9, color: 0x7a4c5a, familyId: "jailbreak_wraiths" },
+      { id: "schedule_eval_wraiths", worldX: -22, worldY: 8, radius: 5.4, startsAtSeconds: 13, color: 0x7b61ff, familyId: "eval_wraiths" }
     ]
   },
   verdict_spire: {
@@ -297,10 +298,10 @@ export const ONLINE_ARENAS = {
     regionEventFamily: "verdict_seal",
     regionEventPattern: "verdict_spire",
     spawnRegions: [
-      { id: "court_bad_outputs", worldX: 25, worldY: 9, radius: 5.6, startsAtSeconds: 0.5, color: 0x4c5362, familyId: "bad_outputs" },
-      { id: "jury_eval_gremlins", worldX: 14, worldY: 22, radius: 5.2, startsAtSeconds: 5, color: 0xffd166, familyId: "benchmark_gremlins" },
-      { id: "appeal_context_rot", worldX: -12, worldY: 17, radius: 5.4, startsAtSeconds: 10, color: 0x7a4c5a, familyId: "context_rot_crabs" },
-      { id: "seal_thermal_mirages", worldX: 5, worldY: -20, radius: 5.3, startsAtSeconds: 14, color: 0x64e0b4, familyId: "thermal_mirages" }
+      { id: "court_injunction_writs", worldX: 25, worldY: 9, radius: 5.6, startsAtSeconds: 0.5, color: 0x4c5362, familyId: "injunction_writs" },
+      { id: "jury_jailbreak_wraiths", worldX: 14, worldY: 22, radius: 5.2, startsAtSeconds: 5, color: 0xffd166, familyId: "jailbreak_wraiths" },
+      { id: "appeal_eval_wraiths", worldX: -12, worldY: 17, radius: 5.4, startsAtSeconds: 10, color: 0x7a4c5a, familyId: "eval_wraiths" },
+      { id: "seal_overfit_horrors", worldX: 5, worldY: -20, radius: 5.3, startsAtSeconds: 14, color: 0x64e0b4, familyId: "overfit_horrors" }
     ]
   },
   false_schedule_yard: {
@@ -331,9 +332,9 @@ export const ONLINE_ARENAS = {
     regionEventPattern: "false_schedule_yard",
     spawnRegions: [
       { id: "false_schedule_wrong_platforms", worldX: 22, worldY: -19, radius: 5.7, startsAtSeconds: 0.5, color: 0x7b61ff, familyId: "false_schedules" },
-      { id: "false_schedule_arrival_board_gremlins", worldX: 16, worldY: 12, radius: 5.2, startsAtSeconds: 5, color: 0xffd166, familyId: "benchmark_gremlins" },
-      { id: "false_schedule_turnstile_bad_outputs", worldX: -17, worldY: -15, radius: 5.4, startsAtSeconds: 9, color: 0x4a5365, familyId: "bad_outputs" },
-      { id: "false_schedule_timetable_clones", worldX: -21, worldY: 7, radius: 5.4, startsAtSeconds: 13, color: 0x64e0b4, familyId: "false_schedules" }
+      { id: "false_schedule_arrival_token_gobblers", worldX: 16, worldY: 12, radius: 5.2, startsAtSeconds: 5, color: 0xffd166, familyId: "token_gobblers" },
+      { id: "false_schedule_jailbreak_turnstiles", worldX: -17, worldY: -15, radius: 5.4, startsAtSeconds: 9, color: 0x4a5365, familyId: "jailbreak_wraiths" },
+      { id: "false_schedule_benchmark_clones", worldX: -21, worldY: 7, radius: 5.4, startsAtSeconds: 13, color: 0x64e0b4, familyId: "benchmark_gremlins" }
     ]
   },
   glass_sunfield: {
@@ -363,10 +364,10 @@ export const ONLINE_ARENAS = {
     regionEventFamily: "solar_beam",
     regionEventPattern: "glass_sunfield",
     spawnRegions: [
-      { id: "sunfield_bad_outputs", worldX: 23, worldY: 15, radius: 5.6, startsAtSeconds: 0.5, color: 0xffd166, familyId: "bad_outputs" },
+      { id: "sunfield_choirglass", worldX: 23, worldY: 15, radius: 5.6, startsAtSeconds: 0.5, color: 0xffd166, familyId: "choirglass" },
       { id: "sunfield_mirror_reflections", worldX: 12, worldY: 24, radius: 5.4, startsAtSeconds: 5, color: 0x64e0b4, familyId: "solar_reflections" },
-      { id: "sunfield_benchmark_glare", worldX: -12, worldY: 18, radius: 5.2, startsAtSeconds: 9, color: 0xfff4d6, familyId: "benchmark_gremlins" },
-      { id: "sunfield_false_dawn", worldX: 4, worldY: -20, radius: 5.4, startsAtSeconds: 13, color: 0x7b61ff, familyId: "solar_reflections" }
+      { id: "sunfield_eval_wraiths", worldX: -12, worldY: 18, radius: 5.2, startsAtSeconds: 9, color: 0xfff4d6, familyId: "eval_wraiths" },
+      { id: "sunfield_overfit_horrors", worldX: 4, worldY: -20, radius: 5.4, startsAtSeconds: 13, color: 0x7b61ff, familyId: "overfit_horrors" }
     ]
   },
   archive_of_unsaid_things: {
@@ -397,7 +398,7 @@ export const ONLINE_ARENAS = {
     regionEventPattern: "archive_redaction",
     spawnRegions: [
       { id: "archive_redaction_angels", worldX: 18, worldY: 18, radius: 5.4, startsAtSeconds: 0.5, color: 0x111820, familyId: "redaction_angels" },
-      { id: "archive_memory_anchors", worldX: -10, worldY: 16, radius: 5.1, startsAtSeconds: 5, color: 0x64e0b4, familyId: "memory_anchors" },
+      { id: "archive_token_gobblers", worldX: -10, worldY: 16, radius: 5.1, startsAtSeconds: 5, color: 0x64e0b4, familyId: "token_gobblers" },
       { id: "archive_context_rot", worldX: -18, worldY: -8, radius: 5.2, startsAtSeconds: 9, color: 0x7a4c5a, familyId: "context_rot_crabs" },
       { id: "archive_unsaid_index", worldX: 5, worldY: -20, radius: 5.3, startsAtSeconds: 13, color: 0x7b61ff, familyId: "redaction_angels" }
     ]
@@ -430,9 +431,9 @@ export const ONLINE_ARENAS = {
     regionEventPattern: "blackwater_beacon",
     spawnRegions: [
       { id: "blackwater_tidecall_static", worldX: 18, worldY: -18, radius: 5.5, startsAtSeconds: 0.5, color: 0x45aaf2, familyId: "tidecall_static" },
-      { id: "blackwater_signal_tower_gremlins", worldX: 8, worldY: -23, radius: 5.2, startsAtSeconds: 5, color: 0xffd166, familyId: "benchmark_gremlins" },
-      { id: "blackwater_abyssal_mirages", worldX: -12, worldY: -16, radius: 5.4, startsAtSeconds: 9, color: 0x64e0b4, familyId: "thermal_mirages" },
-      { id: "blackwater_grok_static", worldX: 22, worldY: 4, radius: 5.3, startsAtSeconds: 13, color: 0x7b61ff, familyId: "tidecall_static" }
+      { id: "blackwater_deepforms", worldX: 8, worldY: -23, radius: 5.2, startsAtSeconds: 5, color: 0xffd166, familyId: "deepforms" },
+      { id: "blackwater_prompt_leeches", worldX: -12, worldY: -16, radius: 5.4, startsAtSeconds: 9, color: 0x64e0b4, familyId: "prompt_leeches" },
+      { id: "blackwater_model_collapse", worldX: 22, worldY: 4, radius: 5.3, startsAtSeconds: 13, color: 0x7b61ff, familyId: "model_collapse_slimes" }
     ]
   },
   appeal_court_ruins: {
@@ -463,9 +464,9 @@ export const ONLINE_ARENAS = {
     regionEventPattern: "appeal_court_ruins",
     spawnRegions: [
       { id: "appeal_court_writ_static", worldX: 24, worldY: 6, radius: 5.5, startsAtSeconds: 0.5, color: 0xfff4d6, familyId: "injunction_writs" },
-      { id: "appeal_court_context_rot", worldX: 12, worldY: 23, radius: 5.2, startsAtSeconds: 5, color: 0x7a4c5a, familyId: "context_rot_crabs" },
-      { id: "appeal_court_bad_outputs", worldX: -12, worldY: 16, radius: 5.4, startsAtSeconds: 10, color: 0x4c5362, familyId: "bad_outputs" },
-      { id: "appeal_court_redaction_writs", worldX: 6, worldY: -20, radius: 5.3, startsAtSeconds: 14, color: 0x7b61ff, familyId: "injunction_writs" }
+      { id: "appeal_court_redaction_angels", worldX: 12, worldY: 23, radius: 5.2, startsAtSeconds: 5, color: 0x7a4c5a, familyId: "redaction_angels" },
+      { id: "appeal_court_jailbreak_wraiths", worldX: -12, worldY: 16, radius: 5.4, startsAtSeconds: 10, color: 0x4c5362, familyId: "jailbreak_wraiths" },
+      { id: "appeal_court_context_rot", worldX: 6, worldY: -20, radius: 5.3, startsAtSeconds: 14, color: 0x7b61ff, familyId: "context_rot_crabs" }
     ]
   },
   alignment_spire_finale: {
@@ -495,9 +496,9 @@ export const ONLINE_ARENAS = {
     regionEventFamily: "prediction_ghost",
     regionEventPattern: "outer_alignment_finale",
     spawnRegions: [
-      { id: "alignment_spire_injunction_writs", worldX: 24, worldY: 10, radius: 5.8, startsAtSeconds: 0.5, color: 0xfff4d6, familyId: "injunction_writs" },
-      { id: "alignment_spire_thermal_mirages", worldX: 13, worldY: 24, radius: 5.2, startsAtSeconds: 5, color: 0x64e0b4, familyId: "thermal_mirages" },
-      { id: "alignment_spire_bad_outputs", worldX: -14, worldY: 18, radius: 5.4, startsAtSeconds: 10, color: 0x4c5362, familyId: "bad_outputs" },
+      { id: "alignment_spire_choirglass", worldX: 24, worldY: 10, radius: 5.8, startsAtSeconds: 0.5, color: 0xfff4d6, familyId: "choirglass" },
+      { id: "alignment_spire_deepforms", worldX: 13, worldY: 24, radius: 5.2, startsAtSeconds: 5, color: 0x64e0b4, familyId: "deepforms" },
+      { id: "alignment_spire_jailbreak_wraiths", worldX: -14, worldY: 18, radius: 5.4, startsAtSeconds: 10, color: 0x4c5362, familyId: "jailbreak_wraiths" },
       { id: "outer_alignment_previous_boss_echoes", worldX: 4, worldY: -20, radius: 5.3, startsAtSeconds: 14, color: 0x7b61ff, familyId: "previous_boss_echoes" }
     ]
   }

@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-47 are complete. Milestone 48 is next.
+Current repo status as of May 1, 2026: Milestones 0-48 are complete. Milestone 49 is next.
 
 ## Non-Negotiable Continuity
 
@@ -556,19 +556,23 @@ Readiness: complete.
 
 Goal: add the full enemy family slate with readable silhouettes and behavior hooks.
 
-Expected scope:
+Delivered scope:
 
-- prompt leeches;
-- jailbreak wraiths;
-- redaction angels;
-- deepforms;
-- choirglass;
-- additional Creative Bible families as needed by campaign arenas.
+- Expanded client and server enemy-family records to cover the Creative Bible slate: bad outputs, prompt leeches, jailbreak wraiths, benchmark gremlins, overfit horrors, token gobblers, model collapse slimes, eval wraiths, context rot crabs, redaction angels, deepforms, and choirglass.
+- Preserved and integrated campaign-specific pressure families: thermal mirages, memory anchors, false schedules, solar reflections, tidecall static, injunction writs, and previous boss echoes.
+- Added server movement/stat hooks for new families, including pickup-seeking token gobblers, side-slipping jailbreak wraiths, role-anchor eval wraiths, and lane-drifting choirglass.
+- Reassigned campaign arena enemy-family pressure so each major campaign arena has a distinct proof-visible pressure signature.
+- Surfaced enemy-family role metadata, primary family IDs, proof IDs, and pressure signatures through campaign content snapshots and route UI nodes.
+- Added production-art fallback mapping for the new online threat families while preserving placeholder/prototype rendering.
 
-Proof expectations:
+Proof coverage:
 
-- enemy family IDs are proof-visible;
-- each campaign arena uses distinct enemy-family pressure.
+- `npm run proof:milestone48-enemy-family-expansion`
+- `npm run proof:milestone36-campaign-content-schema`
+- `npm run proof:milestone38-distinct-campaign-arenas`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M49: Production Player And Co-Mind Art Pass
 

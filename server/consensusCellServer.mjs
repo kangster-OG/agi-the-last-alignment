@@ -478,13 +478,37 @@ class ConsensusCellRoom extends Room {
     for (const enemy of this.enemies) {
       const target = nearestPlayer(enemy.worldX, enemy.worldY, this.players);
       if (!target) continue;
-      const dx = target.worldX - enemy.worldX;
-      const dy = target.worldY - enemy.worldY;
-      const len = Math.hypot(dx, dy) || 1;
-      enemy.worldX += (dx / len) * enemy.speed * dt;
-      enemy.worldY += (dy / len) * enemy.speed * dt;
+      const movement = this.enemyMovementVector(enemy, target);
+      enemy.worldX += movement.x * enemy.speed * dt;
+      enemy.worldY += movement.y * enemy.speed * dt;
     }
     this.enemies = this.enemies.filter((enemy) => enemy.boss || enemy.life > this.seconds - 42);
+  }
+
+  enemyMovementVector(enemy, target) {
+    const pickupTarget = enemy.familyId === "token_gobblers" ? nearestPickup(enemy.worldX, enemy.worldY, this.pickups) : null;
+    const tx = pickupTarget?.worldX ?? target.worldX;
+    const ty = pickupTarget?.worldY ?? target.worldY;
+    let dx = tx - enemy.worldX;
+    let dy = ty - enemy.worldY;
+    const len = Math.hypot(dx, dy) || 1;
+    dx /= len;
+    dy /= len;
+    if (enemy.familyId === "jailbreak_wraiths") {
+      const phase = Math.sin(this.seconds * 4.6 + enemy.id * 0.7) * 0.48;
+      return normalizedVector(dx - dy * phase, dy + dx * phase);
+    }
+    if (enemy.familyId === "eval_wraiths") {
+      const anchor = this.rolePressureAnchors.find((candidate) => candidate.heldSeconds < ROLE_PRESSURE_SPLIT_SECONDS);
+      if (anchor) {
+        return normalizedVector(anchor.worldX - enemy.worldX, anchor.worldY - enemy.worldY);
+      }
+    }
+    if (enemy.familyId === "choirglass") {
+      const lanePulse = Math.sin(this.seconds * 3.2 + enemy.id) > 0 ? 0.35 : -0.35;
+      return normalizedVector(dx + lanePulse, dy - lanePulse);
+    }
+    return { x: dx, y: dy };
   }
 
   spawnEnemies(dt) {
@@ -517,11 +541,19 @@ class ConsensusCellRoom extends Room {
   }
 
   enemyStatsForFamily(familyId) {
+    if (familyId === "prompt_leeches") return { hp: 18, speed: 2.18 };
+    if (familyId === "jailbreak_wraiths") return { hp: 24, speed: 2.02 };
     if (familyId === "benchmark_gremlins") return { hp: 34, speed: 1.85 };
+    if (familyId === "overfit_horrors") return { hp: 42, speed: 1.26 };
+    if (familyId === "token_gobblers") return { hp: 26, speed: 1.92 };
+    if (familyId === "model_collapse_slimes") return { hp: 38, speed: 1.18 };
+    if (familyId === "eval_wraiths") return { hp: 28, speed: 1.74 };
     if (familyId === "thermal_mirages") return { hp: 28, speed: 2.05 };
     if (familyId === "false_schedules") return { hp: 30, speed: 1.95 };
     if (familyId === "solar_reflections") return { hp: 32, speed: 1.88 };
     if (familyId === "redaction_angels") return { hp: 34, speed: 1.72 };
+    if (familyId === "deepforms") return { hp: 44, speed: 1.34 };
+    if (familyId === "choirglass") return { hp: 30, speed: 1.82 };
     if (familyId === "tidecall_static") return { hp: 33, speed: 1.9 };
     if (familyId === "injunction_writs") return { hp: 36, speed: 1.62 };
     if (familyId === "previous_boss_echoes") return { hp: 40, speed: 1.55 };
@@ -2477,6 +2509,9 @@ class ConsensusCellRoom extends Room {
           bossProofId: campaignContent.bossProofId,
           enemyFamilyIds: campaignContent.enemyFamilyIds,
           enemyProofIds: campaignContent.enemyProofIds,
+          primaryEnemyFamilyId: campaignContent.primaryEnemyFamilyId,
+          pressureSignatureId: campaignContent.pressureSignatureId,
+          enemyFamilyRoles: campaignContent.enemyFamilyRoles,
           rewardId: campaignContent.rewardId,
           rewardProofId: campaignContent.rewardProofId,
           dialogueSnippetIds: campaignContent.dialogueSnippetIds,
@@ -2828,6 +2863,25 @@ function nearestPlayer(worldX, worldY, players) {
     }
   }
   return nearest;
+}
+
+function nearestPickup(worldX, worldY, pickups) {
+  let nearest = null;
+  let best = Number.POSITIVE_INFINITY;
+  for (const pickup of pickups) {
+    if (pickup.collected || pickup.objectiveItemId) continue;
+    const distance = Math.hypot(pickup.worldX - worldX, pickup.worldY - worldY);
+    if (distance < best) {
+      best = distance;
+      nearest = pickup;
+    }
+  }
+  return nearest;
+}
+
+function normalizedVector(x, y) {
+  const len = Math.hypot(x, y) || 1;
+  return { x: x / len, y: y / len };
 }
 
 function sanitizeReconnectKey(value) {
