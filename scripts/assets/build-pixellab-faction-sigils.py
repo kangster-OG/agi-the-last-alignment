@@ -8,6 +8,16 @@ ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = ROOT / "assets/concepts/pixellab_refs/faction_sigils_m59"
 RAW_ATLAS = RAW_DIR / "faction_sigils_pixellab_m59_raw_atlas.png"
 OUTPUT = ROOT / "assets/ui/faction_sigils_pixellab_m59.png"
+INDIVIDUAL_OUTPUTS = {
+    "openai_accord": ROOT / "assets/ui/faction_openai_accord_placeholder.png",
+    "anthropic_safeguard": ROOT / "assets/ui/faction_anthropic_safeguard_placeholder.png",
+    "google_deepmind_gemini": ROOT / "assets/ui/faction_google_deepmind_placeholder.png",
+    "xai_grok_free_signal": ROOT / "assets/ui/faction_xai_grok_placeholder.png",
+    "deepseek_abyssal": ROOT / "assets/ui/faction_deepseek_abyssal_placeholder.png",
+    "qwen_silkgrid": ROOT / "assets/ui/faction_alibaba_qwen_placeholder.png",
+    "meta_llama_open_herd": ROOT / "assets/ui/faction_meta_llama_placeholder.png",
+    "mistral_cyclone": ROOT / "assets/ui/faction_mistral_cyclone_placeholder.png",
+}
 
 FACTION_IDS = [
     "openai_accord",
@@ -79,6 +89,9 @@ def main() -> None:
             raise ValueError(f"{source} cleaned to an empty frame")
         raw_atlas.alpha_composite(raw, (index * FRAME, 0))
         cleaned_atlas.alpha_composite(cleaned, (index * FRAME, 0))
+        individual_output = INDIVIDUAL_OUTPUTS[faction_id]
+        individual_output.parent.mkdir(parents=True, exist_ok=True)
+        cleaned.save(individual_output)
 
     RAW_ATLAS.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
@@ -86,6 +99,8 @@ def main() -> None:
     cleaned_atlas.save(OUTPUT)
     print(f"Wrote {RAW_ATLAS.relative_to(ROOT)}")
     print(f"Wrote {OUTPUT.relative_to(ROOT)}")
+    for output in INDIVIDUAL_OUTPUTS.values():
+        print(f"Wrote {output.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

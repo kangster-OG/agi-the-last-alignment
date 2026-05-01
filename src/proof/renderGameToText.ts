@@ -8,7 +8,13 @@ import type { UpgradeDraftState } from "../ui/draft";
 import type { OnlineCoopState } from "../network/OnlineCoopState";
 import { assetPipelineSummary } from "../assets";
 import type { BuildSelectState } from "../ui/buildSelect";
-import { MILESTONE49_CLASS_IDS, MILESTONE49_FACTION_IDS, MILESTONE49_ROLE_IDS } from "../assets/milestone49PlayableArt";
+import {
+  MILESTONE49_CLASS_IDS,
+  MILESTONE49_FACTION_IDS,
+  MILESTONE49_ORIGINAL_FACTION_MARK_IDS,
+  MILESTONE49_ROLE_IDS,
+  MILESTONE49_THIRD_PARTY_LOGO_IDS
+} from "../assets/milestone49PlayableArt";
 import { MILESTONE50_ARENA_IDS, MILESTONE50_BOSS_IDS, MILESTONE50_ENEMY_FAMILY_IDS, MILESTONE50_HAZARD_IDS, MILESTONE50_MAJOR_PROOF_ARENA_IDS } from "../assets/milestone50ArenaBossArt";
 
 export function renderGameToText(game: Game): string {
@@ -88,7 +94,7 @@ export function renderGameToText(game: Game): string {
         atlasCount: 6,
         placeholderOptOutPreserved: !game.useMilestone10Art
       },
-      coMindArtPolicy: "Original co-mind module art plus PixelLab-backed cleaned faction sigils; no official logos are imported for this runtime pass.",
+      coMindArtPolicy: "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
       productionArtDefaulted: game.productionArtDefaulted,
       armisticeTileAtlasDefaulted: game.armisticeTileAtlasDefaulted,
       optOutHint: "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
@@ -136,6 +142,10 @@ export function renderGameToText(game: Game): string {
             factionModuleIds: [...MILESTONE49_FACTION_IDS],
             factionSigilIds: [...MILESTONE49_FACTION_IDS],
             factionSigilSource: "pixellab_m59_cleaned_transparent_atlas",
+            originalFactionPlaceholderIds: [...MILESTONE49_ORIGINAL_FACTION_MARK_IDS],
+            thirdPartyLogoIds: [...MILESTONE49_THIRD_PARTY_LOGO_IDS],
+            officialLogoSource: "wikimedia_commons_third_party_svg_set",
+            thirdPartyLogoPolicy: "rendered only as small parody/faction badges; stored under assets/third_party/logos; not MIT-included",
             roleChipIds: [...MILESTONE49_ROLE_IDS],
             classFrameCount: MILESTONE49_CLASS_IDS.length * 4 * 3,
             placeholderOptOutPreserved: !game.useMilestone10Art

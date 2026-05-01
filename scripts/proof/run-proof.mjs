@@ -4212,11 +4212,15 @@ async function runMilestone49PlayerCoMindArtScenario() {
     assert(roster.assetRendering?.productionArtSet === "milestone14_combat_art_parity", "expected existing production art set compatibility label");
     assert(roster.assetRendering?.playerFrameArtSet === "milestone49_class_roster_and_comind_modules", "expected M49 player/co-mind art label");
     assert(roster.assets?.productionAssets >= 28, "expected production asset count to include M49 atlases");
+    assert((roster.assets?.countsByStatus?.planned ?? 0) === 0, "expected art recovery pass to close all planned asset records");
     assert(artCoverage?.classFrameCount === 144, "expected twelve classes times four directions times three frames");
     assert(artCoverage?.classAtlasIds?.length === 12, "expected all twelve class atlas IDs");
     assert(artCoverage?.factionModuleIds?.length === 8, "expected all eight co-mind module IDs");
     assert(artCoverage?.factionSigilIds?.length === 8, "expected all eight PixelLab faction sigil IDs");
     assert(artCoverage?.factionSigilSource === "pixellab_m59_cleaned_transparent_atlas", "expected PixelLab-cleaned faction sigil source");
+    assert(artCoverage?.originalFactionPlaceholderIds?.length === 8, "expected all eight original faction placeholder PNG records");
+    assert(artCoverage?.thirdPartyLogoIds?.length === 8, "expected all eight third-party official logo records");
+    assert(artCoverage?.officialLogoSource === "wikimedia_commons_third_party_svg_set", "expected documented third-party logo source set");
     assert(artCoverage?.roleChipIds?.length === 6, "expected all six role chips");
     assert(roster.buildSelection?.availableClasses?.every((entry) => entry.unlocked), "expected full route profile to unlock every playable frame");
     assert(roster.buildSelection?.availableFactions?.every((entry) => entry.unlocked), "expected full route profile to unlock every co-mind");
@@ -5491,11 +5495,11 @@ function decodeProofOnlineProfileCode(code) {
 async function selectBuildOption(page, kind, targetId) {
   const key = kind === "class" ? "ArrowDown" : "ArrowRight";
   const field = kind === "class" ? "selectedClassId" : "selectedFactionId";
-  for (let i = 0; i < 16; i += 1) {
+  for (let i = 0; i < 48; i += 1) {
     const text = await state(page);
     if (text.buildSelection?.[field] === targetId) return;
     await page.keyboard.press(key);
-    await page.waitForTimeout(170);
+    await page.waitForTimeout(220);
   }
   const final = await state(page);
   if (final.buildSelection?.[field] === targetId) return;

@@ -605,6 +605,9 @@ Post-launch art recovery:
 
 - Added a PixelLab-backed cleaned transparent 8-frame faction/co-mind sigil atlas and wired it into the build-select co-mind list and selected co-mind presentation.
 - Committed raw PixelLab source exports, prompt documentation, deterministic cleanup tooling, manifest entries, provenance rows, and proof-visible `pixellab_m59_cleaned_transparent_atlas` telemetry.
+- Generated individual transparent PixelLab-derived faction placeholder PNGs for every planned faction-logo placeholder record.
+- Imported all eight official/parody faction logo SVGs into `assets/third_party/logos/`, documented each source in `ART_PROVENANCE.md`, marked them as not MIT-included third-party assets, and wired them as small build-select badges while preserving PixelLab original sigils as the primary MIT-included runtime art.
+- Closed the remaining planned asset records in the manifest; deliberate `code_placeholder` opt-outs remain preserved for `?productionArt=0` / `?placeholderArt=1`.
 
 Proof coverage:
 

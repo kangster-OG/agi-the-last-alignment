@@ -12,6 +12,7 @@ import {
   milestone49FactionSigilTexture,
   milestone49CoMindPortraitTexture,
   milestone49NetworkPlayerTextureFor,
+  milestone49OfficialLogoTexture,
   milestone49RoleChipTexture,
   type Milestone49PlayableArtTextures
 } from "../assets/milestone49PlayableArt";
@@ -192,6 +193,15 @@ export class BuildSelectState implements GameState {
       sigil.scale.set(0.32);
       sigil.position.set(x + 476, y - 32);
       game.layers.hud.addChild(sigil);
+
+      const officialLogo = new Sprite(milestone49OfficialLogoTexture(FACTION_IDS[this.factionIndex] ?? FACTION_IDS[0], milestone49Art));
+      scaleSpriteToFit(officialLogo, 38, 16);
+      officialLogo.anchor.set(0.5);
+      officialLogo.position.set(x + 515, y - 12);
+      const logoPlate = new Graphics();
+      logoPlate.rect(x + 493, y - 23, 44, 20).fill({ color: 0xfff4d6, alpha: 0.86 }).stroke({ color: palette.ink, width: 2, alpha: 0.6 });
+      game.layers.hud.addChild(logoPlate);
+      game.layers.hud.addChild(officialLogo);
     }
 
     FACTION_IDS.forEach((id, index) => {
@@ -216,11 +226,24 @@ export class BuildSelectState implements GameState {
         sigil.alpha = unlocked ? 1 : 0.38;
         sigil.position.set(x + 32, top + 21);
         game.layers.hud.addChild(sigil);
+
+        const logoPlate = new Graphics();
+        logoPlate.rect(x + 452, top + 10, 56, 22)
+          .fill({ color: 0xfff4d6, alpha: unlocked ? 0.82 : 0.22 })
+          .stroke({ color: selected ? palette.lemon : 0x596270, width: selected ? 2 : 1, alpha: unlocked ? 0.82 : 0.36 });
+        game.layers.hud.addChild(logoPlate);
+
+        const officialLogo = new Sprite(milestone49OfficialLogoTexture(id, milestone49Art));
+        officialLogo.anchor.set(0.5);
+        officialLogo.alpha = unlocked ? 0.95 : 0.34;
+        scaleSpriteToFit(officialLogo, 48, 16);
+        officialLogo.position.set(x + 480, top + 21);
+        game.layers.hud.addChild(officialLogo);
       }
 
       const text = new Text({
         text: `${faction.shortName} Co-Mind${unlocked ? "" : "  LOCKED"} // ${unlocked ? faction.doctrine : entry?.requirementLabel ?? "Route reward required"}`,
-        style: { ...fontStyle, fontSize: 11, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: 440 }
+        style: { ...fontStyle, fontSize: 11, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: milestone49Art ? 382 : 440 }
       });
       text.position.set(x + 58, top + 9);
       game.layers.hud.addChild(text);
@@ -278,6 +301,12 @@ function factionColor(id: string): number {
   if (id === "deepseek_abyssal") return 0x2a9d8f;
   if (id === "xai_grok_free_signal") return palette.tomato;
   return palette.mint;
+}
+
+function scaleSpriteToFit(sprite: Sprite, maxWidth: number, maxHeight: number): void {
+  const width = Math.max(1, sprite.texture.width);
+  const height = Math.max(1, sprite.texture.height);
+  sprite.scale.set(Math.min(maxWidth / width, maxHeight / height));
 }
 
 function nextUnlockedIndex(ids: readonly string[], current: number, direction: number, unlocked: (id: string) => boolean): number {
