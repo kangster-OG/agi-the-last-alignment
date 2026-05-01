@@ -658,21 +658,27 @@ Readiness: complete.
 
 Goal: tune the complete campaign economy.
 
-Expected scope:
+Implemented:
 
-- route rewards;
-- renown;
-- unlock pacing;
-- upgrade pools;
-- class/co-mind synergies;
-- objective difficulty;
-- solo/local/online scaling;
-- failure/retry loops.
+- added a server-authored `progression_rewards_balance_1_0_route_profile_only_v1` balance contract;
+- exposed proof-visible party XP thresholds, route reward matrix, durable reward coverage, unlock rules, objective budgets, role targets, retry rules, and solo/local/online scaling policies;
+- tuned repeat-clear renown through a capped catch-up helper while preserving first-clear route rewards;
+- attached balance policy telemetry to progression, reward summaries, route UI, party snapshots, and `render_game_to_text()`;
+- preserved route-profile-only export/import boundaries and verified dirty imports ignore balance/objective/combat/build-kit/role-pressure/Recompile state;
+- refreshed the older M23 route-persistence proof to follow the current post-M43 critical-path recommendation while preserving Transit Loop launchability.
 
-Proof expectations:
+Proof coverage:
 
-- clean profile to campaign completion remains deterministic;
-- reward/unlock matrix is stable.
+- `npm run proof:milestone52-progression-balance`
+- `npm run proof:milestone23-route-persistence`
+- `npm run proof:milestone24-persistence-import`
+- `npm run proof:milestone27-metaprogression-unlocks`
+- `npm run proof:milestone30-save-profile-export-codes`
+- `npm run proof:milestone40-campaign-route-ux`
+- `npm run proof:milestone51-overworld-diorama`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M53: Dialogue, Boss Presentation, And Ending Pass
 

@@ -144,24 +144,109 @@
     "armisticeTileAtlasEnabled": true,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
+    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 84,
+    "totalAssets": 94,
     "countsByStatus": {
       "concept": 14,
       "raw": 4,
       "code_placeholder": 16,
-      "production": 33,
+      "production": 43,
       "cleaned": 1,
       "planned": 16
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 33
+    "productionAssets": 43
   },
   "player": {
     "worldX": 0,
@@ -298,9 +383,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 42,
+          "tick": 41,
           "playerId": "p1",
-          "sequence": 42,
+          "sequence": 41,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -309,8 +394,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 42,
-        "seconds": 0.7,
+        "tick": 41,
+        "seconds": 0.68,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -396,8 +481,8 @@
             "id": 1,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": 6.91,
-            "worldY": 4.78,
+            "worldX": 6.93,
+            "worldY": 4.79,
             "hp": 22,
             "boss": false
           },
@@ -405,7 +490,7 @@
             "id": 2,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": -9.39,
+            "worldX": -9.42,
             "worldY": -0.31,
             "hp": 22,
             "boss": false
@@ -430,7 +515,7 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 0.7,
+    "seconds": 0.68,
     "kills": 0,
     "bossSpawned": false,
     "bossDefeated": false
@@ -441,8 +526,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": 6.91,
-      "worldY": 4.78,
+      "worldX": 6.93,
+      "worldY": 4.79,
       "hp": 22,
       "boss": false
     },
@@ -451,7 +536,7 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": -9.39,
+      "worldX": -9.42,
       "worldY": -0.31,
       "hp": 22,
       "boss": false

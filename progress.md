@@ -3038,9 +3038,58 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone40-campaign-route-ux/milestone40-route-focus-all-a.png`
 - Milestone 51 readiness decision: ready. The Alignment Grid now reads as a denser isometric miniature world in local and online views, online party voting is clearer, finale corruption is proof-visible, and persistence/art opt-out boundaries remain intact.
 
+- Implemented Milestone 52 Progression, Rewards, And Balance 1.0.
+- Added `server/data/balance.mjs` as the server-authored 1.0 balance contract for:
+  - shared party XP thresholds and draft policy;
+  - full online route reward matrix, repeat-clear renown caps, and durable reward coverage;
+  - class, co-mind, and upgrade-seed unlock rules;
+  - objective required-value budgets by route node;
+  - role-pressure/class duty targets;
+  - solo/local/online scaling and failure/retry policy.
+- Integrated M52 telemetry into online snapshots:
+  - `progression.balancePolicy` and XP thresholds;
+  - reward summaries with balance policy, granted reward IDs, tier, and critical-path flags;
+  - `balance` snapshots on the room and party grid;
+  - route UI `artExpansion.milestone52` telemetry;
+  - `render_game_to_text()` online/level balance output.
+- Tuned repeat-clear renown through a capped catch-up helper while preserving first-clear campaign rewards and all compatibility reward markers.
+- Preserved route-profile-only persistence boundaries:
+  - no balance snapshot, live objectives, combat state, build kits, cooldowns, pets, role-pressure state, Recompile state, dialogue state, route UI focus state, portal query params, or authority state is exported/imported;
+  - dirty import proof confirms balance/objective/combat/build-kit/role-pressure/Recompile fields are ignored.
+- Refreshed the older M23 route-persistence proof so its post-cache recommendation follows the current M43+ critical path to Archive Of Unsaid Things while still verifying Transit Loop Zero remains launchable.
+- Added `npm run proof:milestone52-progression-balance`, covering:
+  - clean balance matrix telemetry;
+  - durable reward/unlock matrix completeness;
+  - deterministic clean critical-path completion through Outer Alignment Finale;
+  - final profile export boundaries;
+  - dirty import sanitization.
+- Verification after Milestone 52:
+  - `node --check server/data/balance.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone52-progression-balance`
+  - `npm run proof:milestone23-route-persistence`
+  - `npm run proof:milestone24-persistence-import`
+  - `npm run proof:milestone27-metaprogression-unlocks`
+  - `npm run proof:milestone30-save-profile-export-codes`
+  - `npm run proof:milestone40-campaign-route-ux`
+  - `npm run proof:milestone51-overworld-diorama`
+  - `npm run proof:smoke`
+- Milestone 52 proof artifacts:
+  - `docs/proof/milestone52-progression-balance/milestone52-clean-balance-matrix.png`
+  - `docs/proof/milestone52-progression-balance/milestone52-critical-path-complete.png`
+  - `docs/proof/milestone52-progression-balance/milestone52-sanitized-import-boundary.png`
+- Screenshots inspected after Milestone 52:
+  - `docs/proof/milestone52-progression-balance/milestone52-clean-balance-matrix.png`
+  - `docs/proof/milestone52-progression-balance/milestone52-critical-path-complete.png`
+  - `docs/proof/milestone52-progression-balance/milestone52-sanitized-import-boundary.png`
+- Milestone 52 readiness decision: ready. Campaign economy, reward/unlock coverage, scaling policy, retry policy, and deterministic completion are proof-visible while persistence remains route-profile-only.
+
 ## TODO
 
-- Next recommended milestone: Milestone 52 Progression, Rewards, And Balance 1.0. Tune campaign economy, route rewards, unlock pacing, class/co-mind balance, objective pacing, and proof-visible balance telemetry without expanding export/import beyond route-profile-only data.
+- Next recommended milestone: Milestone 53 Dialogue, Boss Presentation, And Ending Pass. Add authored presentation and writing across the full campaign, including boss title cards, co-mind banter, region intro/outro copy, finale writing, credits/legal/disclaimer flow, and proofed text snapshots.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

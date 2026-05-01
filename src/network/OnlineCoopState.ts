@@ -1733,6 +1733,7 @@ ${focus.focusDescription}`,
       .map((node) => node.id);
     const routeFocus = this.routeFocusInfo(party, persistence);
     const routeDiorama = this.routeDioramaInfo(party, routeFocus);
+    const balance = this.snapshot?.balance ?? party.balance ?? null;
     return {
       panel: "milestone25_route_profile_panel",
       milestone40: routeFocus,
@@ -1868,6 +1869,21 @@ ${focus.focusDescription}`,
           ...routeDiorama,
           enabled: true,
           placeholderOptOutSupported: true
+        },
+        milestone52: {
+          set: "milestone52_progression_rewards_balance_1_0",
+          enabled: balance?.policy === "progression_rewards_balance_1_0_route_profile_only_v1",
+          balancePolicy: balance?.policy ?? "",
+          rewardMatrixCount: balance?.rewards.rewardMatrix.length ?? 0,
+          missingDurableRewardIds: balance?.rewards.missingDurableRewardIds ?? [],
+          classRuleCount: balance?.unlocks.classRules.length ?? 0,
+          factionRuleCount: balance?.unlocks.factionRules.length ?? 0,
+          upgradeSeedRuleCount: balance?.unlocks.upgradeSeedRules.length ?? 0,
+          objectiveBudgetCount: balance?.objectives.matrix.length ?? 0,
+          activePartySize: balance?.scaling.activePartySize ?? 0,
+          xpThresholds: balance?.xp.thresholds ?? [],
+          repeatClearRenownCap: balance?.retry.repeatClearRenownCap ?? 0,
+          persistenceBoundary: balance?.persistenceBoundary ?? "route_profile_only_no_live_state"
         }
       },
       routeDepth: persistence?.profile.routeDepth ?? party.completedNodeIds.length,

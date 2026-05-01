@@ -12,6 +12,7 @@ import { ONLINE_ARENAS, ROLE_PRESSURE_ANCHORS } from "./data/onlineArenas.mjs";
 import { CAMPAIGN_ROUTE, DURABLE_REWARD_IDS, PARTY_NODES, PARTY_ROUTES, START_NODE_ID } from "./data/onlineRoutes.mjs";
 import { OBJECTIVE_POLICY, objectiveSetForRouteNode } from "./data/onlineObjectives.mjs";
 import { aggregateRecompileKitModifiers, onlineWeaponProfileForKit, resolveBuildKit } from "./data/buildKits.mjs";
+import { BALANCE_POLICY, PARTY_XP_THRESHOLDS, buildBalanceSnapshot, renownForNodeClear, rewardBalanceForNode, routeRewardIdsFor } from "./data/balance.mjs";
 
 const PORT = Number(process.env.CONSENSUS_PORT ?? 2567);
 const TICK_RATE = 30;
@@ -24,7 +25,6 @@ const ROLE_PRESSURE_REGROUP_SECONDS = 9.5;
 const ROLE_PRESSURE_RECOMPILE_RADIUS_BONUS = 0.85;
 const ROLE_PRESSURE_RECOMPILE_SPEED_MULTIPLIER = 1.65;
 const DISCONNECTED_SLOT_TTL_SECONDS = 45;
-const PARTY_XP_THRESHOLDS = [5, 12, 22];
 const PLAYER_PRESETS = [
   { label: "P1", classId: "accord_striker", factionId: "openai_accord", color: 0x3498db },
   { label: "P2", classId: "bastion_breaker", factionId: "anthropic_safeguard", color: 0xffd166 },
@@ -2039,9 +2039,11 @@ class ConsensusCellRoom extends Room {
       consensusBurst: this.consensusBurstSnapshot(),
       progression: {
         policy: "shared_party_xp_coop_vote",
+        balancePolicy: BALANCE_POLICY,
         partyXp: this.partyXp,
         partyLevel: this.partyLevel,
         nextLevelXp: PARTY_XP_THRESHOLDS[this.partyLevel - 1] ?? null,
+        thresholds: [...PARTY_XP_THRESHOLDS],
         upgradePending: this.upgradeDraftSnapshot(),
         chosenUpgrades: [...this.chosenUpgrades]
       },
@@ -2056,6 +2058,7 @@ class ConsensusCellRoom extends Room {
       },
       rewards: this.rewardsSnapshot(),
       persistence: this.persistenceSnapshot(),
+      balance: this.balanceSnapshot(),
       summary: this.runSummary,
       combatArt: {
         pressure: round(Math.min(1, this.seconds / this.activeArenaConfig().bossSeconds)),
@@ -2284,12 +2287,23 @@ class ConsensusCellRoom extends Room {
   rewardsSnapshot() {
     return {
       policy: "node_completion_renown_and_party_unlocks",
+      balancePolicy: BALANCE_POLICY,
       partyRenown: this.partyRenown,
       rewardIds: [...this.rewardInventory],
       lastReward: this.lastRewardSummary,
       nodeCompletionCounts: Object.fromEntries([...this.nodeCompletionCounts.entries()]),
       recommendedNodeId: this.recommendedNodeId()
     };
+  }
+
+  balanceSnapshot() {
+    return buildBalanceSnapshot({
+      completedNodeIds: [...this.completedNodeIds],
+      rewardIds: [...this.rewardInventory],
+      partyRenown: this.partyRenown,
+      partySize: this.connectedPlayers().length || this.players.size || 1,
+      selectedNodeId: this.partySelectedNodeId
+    });
   }
 
   persistenceSnapshot() {
@@ -2493,6 +2507,7 @@ class ConsensusCellRoom extends Room {
       nodes: PARTY_NODES.map((node) => {
         const objectiveSet = objectiveSetForRouteNode(node.id, node.arenaId);
         const campaignContent = campaignContentForNode(node);
+        const rewardBalance = rewardBalanceForNode(node.id);
         return {
           id: node.id,
           name: node.name,
@@ -2513,7 +2528,10 @@ class ConsensusCellRoom extends Room {
           pressureSignatureId: campaignContent.pressureSignatureId,
           enemyFamilyRoles: campaignContent.enemyFamilyRoles,
           rewardId: campaignContent.rewardId,
+          rewardIds: rewardBalance.rewardIds,
           rewardProofId: campaignContent.rewardProofId,
+          firstClearRenown: rewardBalance.firstClearRenown,
+          repeatClearRenown: rewardBalance.repeatClearRenown,
           dialogueSnippetIds: campaignContent.dialogueSnippetIds,
           dialogueProofIds: campaignContent.dialogueProofIds,
           dialogueSnippets: campaignContent.dialogueSnippets,
@@ -2536,7 +2554,8 @@ class ConsensusCellRoom extends Room {
         state: this.completedNodeIds.has(route.from) ? "stable" : this.isNodeAvailable(route.from) || this.isNodeAvailable(route.to) ? "unstable" : "locked"
       })),
       rewards: this.rewardsSnapshot(),
-      persistence: this.persistenceSnapshot()
+      persistence: this.persistenceSnapshot(),
+      balance: this.balanceSnapshot()
     };
   }
 
@@ -2552,10 +2571,13 @@ class ConsensusCellRoom extends Room {
     const rewardRenown = node?.rewardRenown ?? arena.rewardRenown;
     const previousCompletions = this.nodeCompletionCounts.get(nodeId) ?? 0;
     const firstClear = previousCompletions === 0;
-    const renownGained = firstClear ? rewardRenown : Math.max(1, Math.floor(rewardRenown / 2));
+    const renownGained = renownForNodeClear({ baseRenown: rewardRenown, previousCompletions });
+    const rewardIdsGranted = routeRewardIdsFor(nodeId);
     this.nodeCompletionCounts.set(nodeId, previousCompletions + 1);
     this.partyRenown += renownGained;
-    if (firstClear) this.rewardInventory.add(rewardId);
+    if (firstClear) {
+      for (const grantedRewardId of rewardIdsGranted) this.rewardInventory.add(grantedRewardId);
+    }
     if (arena.id === "cooling_lake_nine" && firstClear) {
       this.rewardInventory.add("cooling_lake_online_route");
     }
@@ -2572,9 +2594,14 @@ class ConsensusCellRoom extends Room {
       nodeId,
       arenaId: arena.id,
       rewardId,
+      rewardIdsGranted,
       rewardName,
       firstClear,
       renownGained,
+      repeatClearRenown: renownForNodeClear({ baseRenown: rewardRenown, previousCompletions: 1 }),
+      balancePolicy: BALANCE_POLICY,
+      campaignTier: node?.campaignTier ?? 0,
+      criticalPath: Boolean(node?.campaignCriticalPath),
       partyRenown: this.partyRenown,
       reason
     };

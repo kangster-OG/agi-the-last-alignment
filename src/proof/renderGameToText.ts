@@ -347,6 +347,7 @@ export function renderGameToText(game: Game): string {
           consensusBurst: snapshot?.consensusBurst ?? null,
           rewards: snapshot?.rewards ?? null,
           persistence: snapshot?.persistence ?? null,
+          balance: snapshot?.balance ?? null,
           progression: snapshot?.progression ?? null,
           upgradeDraft: snapshot?.progression?.upgradePending
             ? {
@@ -416,6 +417,7 @@ export function renderGameToText(game: Game): string {
           regionEvent: snapshot?.regionEvent ?? null,
           rewards: snapshot?.rewards ?? null,
           persistence: snapshot?.persistence ?? null,
+          balance: snapshot?.balance ?? null,
 	          summary: snapshot?.summary ?? null,
 	          dialogue: snapshot?.dialogue ?? null,
 	          bossMechanics: snapshot?.bossEvent

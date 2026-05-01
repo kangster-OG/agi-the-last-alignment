@@ -148,6 +148,7 @@ export interface OnlineConsensusSnapshot {
   reconnect?: OnlineReconnectSnapshot;
   rewards?: OnlineRewardsSnapshot;
   persistence?: OnlinePersistenceSnapshot;
+  balance?: OnlineBalanceSnapshot;
   summary?: OnlineRunSummary | null;
   party?: OnlinePartySnapshot;
   combatArt: {
@@ -350,15 +351,21 @@ export interface OnlineConsensusBurstSnapshot {
 
 export interface OnlineRewardsSnapshot {
   policy: "node_completion_renown_and_party_unlocks";
+  balancePolicy?: string;
   partyRenown: number;
   rewardIds: string[];
   lastReward: null | {
     nodeId: string;
     arenaId: string;
     rewardId: string;
+    rewardIdsGranted?: string[];
     rewardName: string;
     firstClear: boolean;
     renownGained: number;
+    repeatClearRenown?: number;
+    balancePolicy?: string;
+    campaignTier?: number;
+    criticalPath?: boolean;
     partyRenown: number;
     reason: string;
   };
@@ -409,9 +416,11 @@ export interface OnlineUpgradeCardSnapshot {
 
 export interface OnlineProgressionSnapshot {
   policy: "shared_party_xp_manual_choice" | "shared_party_xp_coop_vote";
+  balancePolicy?: string;
   partyXp: number;
   partyLevel: number;
   nextLevelXp: number | null;
+  thresholds?: number[];
   upgradePending: {
     id: string;
     level: number;
@@ -566,9 +575,12 @@ export interface OnlinePartySnapshot {
       damageKind: string;
       sourceTags: string[];
     }>;
-    rewardId?: string;
-    rewardProofId?: string;
-    dialogueSnippetIds?: string[];
+  rewardId?: string;
+  rewardIds?: string[];
+  rewardProofId?: string;
+  firstClearRenown?: number;
+  repeatClearRenown?: number;
+  dialogueSnippetIds?: string[];
     dialogueProofIds?: string[];
     dialogueSnippets?: OnlineDialogueSnippetSnapshot[];
     proofId?: string;
@@ -590,6 +602,75 @@ export interface OnlinePartySnapshot {
   }>;
   rewards?: OnlineRewardsSnapshot;
   persistence?: OnlinePersistenceSnapshot;
+  balance?: OnlineBalanceSnapshot;
+}
+
+export interface OnlineBalanceSnapshot {
+  policy: "progression_rewards_balance_1_0_route_profile_only_v1";
+  persistenceBoundary: string;
+  xp: {
+    policy: string;
+    thresholds: number[];
+    draftCardCount: number;
+    voteAuthority: string;
+  };
+  rewards: {
+    policy: string;
+    partyRenown: number;
+    rewardMatrix: Array<{
+      nodeId: string;
+      arenaId: string;
+      rewardId: string;
+      rewardName: string;
+      rewardIds: string[];
+      firstClearRenown: number;
+      repeatClearRenown: number;
+      campaignTier: number;
+      criticalPath: boolean;
+      onlineSupported: boolean;
+      unlocks: string[];
+    }>;
+    durableRewardIds: string[];
+    missingDurableRewardIds: string[];
+    expectedCriticalPathRenown: number;
+    completedCriticalPathCount: number;
+  };
+  unlocks: {
+    policy: string;
+    starterClassIds: string[];
+    starterFactionIds: string[];
+    classRules: Array<{ id: string; kind: string; rewardId: string | null; tier: number; unlocked: boolean }>;
+    factionRules: Array<{ id: string; kind: string; rewardId: string | null; tier: number; unlocked: boolean }>;
+    upgradeSeedRules: Array<{ id: string; rewardId: string; tier: number; unlocked: boolean }>;
+  };
+  objectives: {
+    policy: string;
+    matrix: Array<{
+      nodeId: string;
+      objectiveSetId: string;
+      campaignTier: number;
+      instanceCount: number;
+      requiredTotal: number;
+      preferredRoles: string[];
+    }>;
+  };
+  scaling: {
+    policy: string;
+    activePartySize: number;
+    solo: Record<string, string | number | boolean>;
+    localCoop: Record<string, string | number | boolean>;
+    online: Record<string, string | number | boolean>;
+  };
+  roles: {
+    policy: string;
+    targets: Array<{ role: string; duties: string[]; expectedClassIds: string[] }>;
+  };
+  retry: {
+    policy: string;
+    repeatClearRenownCap: number;
+    selectedNodeId: string;
+    completedNodeCount: number;
+  };
 }
 
 export interface OnlineCampaignContentNodeSnapshot {
