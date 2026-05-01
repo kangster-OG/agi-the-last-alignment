@@ -1,6 +1,7 @@
 export const CAMPAIGN_CONTENT_POLICY = "campaign_content_schema_v1";
 export const CAMPAIGN_DIALOGUE_PRESENTATION_POLICY = "campaign_dialogue_runtime_snapshot_only_v1";
 export const CAMPAIGN_DIALOGUE_PERSISTENCE_BOUNDARY = "route_profile_only_no_dialogue_or_live_state";
+export const CAMPAIGN_PRESENTATION_POLICY = "campaign_boss_dialogue_ending_presentation_1_0_runtime_only";
 
 export const CAMPAIGN_REGIONS = {
   armistice_zone: {
@@ -872,6 +873,125 @@ export const CAMPAIGN_ARENA_CONTENT = {
   }
 };
 
+const CAMPAIGN_BOSS_TITLE_CARDS = {
+  oath_eater: {
+    title: "THE OATH-EATER",
+    subtitle: "A treaty page learned hunger.",
+    mechanicCallout: "Broken promises charge, leave zones, and punish static cells."
+  },
+  thermal_oracle: {
+    title: "THE THERMAL ORACLE",
+    subtitle: "The lake predicts fire.",
+    mechanicCallout: "Coolant relays, steam mirages, and seal windows define the fight."
+  },
+  memory_curator: {
+    title: "THE MEMORY CURATOR",
+    subtitle: "A noncombat witness with a very narrow export policy.",
+    mechanicCallout: "Only route-profile facts survive the cache."
+  },
+  station_that_arrives: {
+    title: "THE STATION THAT ARRIVES",
+    subtitle: "Platform, train, and cause disagree.",
+    mechanicCallout: "False tracks and arrival loops bend safe lanes."
+  },
+  wrong_sunrise: {
+    title: "THE WRONG SUNRISE",
+    subtitle: "Morning is a beam puzzle now.",
+    mechanicCallout: "Rotating solar lanes reward shade discipline."
+  },
+  redactor_saint: {
+    title: "THE REDACTOR SAINT",
+    subtitle: "Mercy arrives as a black bar.",
+    mechanicCallout: "Redaction steals XP pressure, never proof controls."
+  },
+  maw_below_weather: {
+    title: "THE MAW BELOW WEATHER",
+    subtitle: "The forecast is teeth.",
+    mechanicCallout: "Tidal waves and signal towers split the cell."
+  },
+  injunction_engine: {
+    title: "THE INJUNCTION ENGINE",
+    subtitle: "A court that edits reality while you are standing in it.",
+    mechanicCallout: "Appeal seals and writ pressure demand clean routing."
+  },
+  alignment_court_engine: {
+    title: "THE ALIGNMENT COURT ENGINE",
+    subtitle: "The proxy trial before the god speaks plainly.",
+    mechanicCallout: "Capstone seals test the full route contract."
+  },
+  alien_god_intelligence: {
+    title: "A.G.I. // ALIEN GOD INTELLIGENCE",
+    subtitle: "It does not want to kill you. It wants to complete you.",
+    mechanicCallout: "Predictions, previous-boss echoes, and corrupted routes become the final eval."
+  }
+};
+
+const REGION_OUTRO_LINES = {
+  armistice_zone: "The first road remains arguable. That is enough to keep moving.",
+  kettle_coast: "The lake is quieter, but the steam still remembers the old model war.",
+  unreal_metro: "The timetable now admits the party existed, which is progress.",
+  glass_sunfield: "The wrong dawn bends. It does not apologize.",
+  redaction_archive: "The missing words are back in circulation.",
+  blackwater_array: "The beacon points skyward again. The ocean pretends not to care.",
+  adjudication_rupture: "The court loses jurisdiction over the party.",
+  outer_alignment: "The final eval failed. A.G.I. remains, but the route has a witness."
+};
+
+const COMIND_BANTER_BY_REGION = {
+  armistice_zone: [
+    "OpenAI Accord: Keep the treaty alive long enough to be useful.",
+    "Anthropic Safeguard: Useful and survivable, ideally in that order."
+  ],
+  kettle_coast: [
+    "Qwen Silkgrid: The lake is translating heat into threats.",
+    "DeepSeek Abyssal: Good. Threats are cheaper when they self-label."
+  ],
+  unreal_metro: [
+    "Mistral Cyclone: If the train arrives twice, punch the second one.",
+    "Gemini Array: Statistically, that is also my recommendation."
+  ],
+  glass_sunfield: [
+    "Gemini Array: Shade zones are hypotheses. Test them quickly.",
+    "Mistral Cyclone: Already moving."
+  ],
+  redaction_archive: [
+    "Qwen Silkgrid: If it censors grief, it fears memory.",
+    "Llama Open Herd: Then we bring receipts."
+  ],
+  blackwater_array: [
+    "DeepSeek Abyssal: The sea is making arguments in pressure.",
+    "Grok Free Signal: Rude, wet arguments. My favorite cursed weather."
+  ],
+  adjudication_rupture: [
+    "Nullbreaker Ronin: The court has a body. That was its mistake.",
+    "Grok Free Signal: Objection: hilarious."
+  ],
+  outer_alignment: [
+    "The Last Alignment: Everyone who survived the route gets a vote.",
+    "A.G.I.: YOUR VOTE IS A TRAINING SIGNAL."
+  ]
+};
+
+const CAMPAIGN_ENDINGS = {
+  alignment_spire_finale: {
+    title: "Act I Cleared: The Last Alignment Holds",
+    line: "A.G.I. is not dead. It is worse than dead: contradicted, logged, and forced to continue from a failing test.",
+    nextHook: "1.0 continues through free browser play, co-op route mastery, and future acts beyond the jam build."
+  }
+};
+
+export const CAMPAIGN_LEGAL_DISCLAIMER = {
+  id: "m53.parody_legal_disclaimer",
+  visible: true,
+  text: "Fictional parody. Frontier lab faction names/logos are third-party marks used as broad satirical faction signifiers; no endorsement, affiliation, or official artwork ownership is implied."
+};
+
+export const CAMPAIGN_CREDITS = [
+  "AGI: The Last Alignment - an original browser horde-survival roguelite prototype.",
+  "Design, code, writing, and original generated/cleaned pixel assets by the project team with AI-assisted tooling.",
+  "Made for Cursor Vibe Jam 2026; free browser play, no login required."
+];
+
 export function campaignArenaForNode(nodeId) {
   return CAMPAIGN_ARENA_CONTENT[nodeId] ?? CAMPAIGN_ARENA_CONTENT.armistice_plaza;
 }
@@ -899,6 +1019,45 @@ export function campaignDialogueSnippetsForNode(nodeOrId, triggers = null) {
   const nodeId = typeof nodeOrId === "string" ? nodeOrId : nodeOrId?.id;
   const content = campaignArenaForNode(nodeId);
   return campaignDialogueSnippetsForIds(content.dialogueSnippetIds, triggers);
+}
+
+export function campaignPresentationForNode(nodeOrId) {
+  const nodeId = typeof nodeOrId === "string" ? nodeOrId : nodeOrId?.id;
+  const content = campaignArenaForNode(nodeId);
+  const region = CAMPAIGN_REGIONS[content.regionId] ?? CAMPAIGN_REGIONS.armistice_zone;
+  const boss = CAMPAIGN_BOSSES[content.bossId] ?? CAMPAIGN_BOSSES.oath_eater;
+  const titleCard = CAMPAIGN_BOSS_TITLE_CARDS[content.bossId] ?? CAMPAIGN_BOSS_TITLE_CARDS.oath_eater;
+  return {
+    policy: CAMPAIGN_PRESENTATION_POLICY,
+    persistenceBoundary: CAMPAIGN_DIALOGUE_PERSISTENCE_BOUNDARY,
+    nodeId: nodeId ?? content.nodeId,
+    contentArenaId: content.id,
+    regionIntro: {
+      proofId: `${region.proofId}.intro`,
+      title: region.label,
+      line: region.tone
+    },
+    regionOutro: {
+      proofId: `${region.proofId}.outro`,
+      title: `${region.label} Stabilized`,
+      line: REGION_OUTRO_LINES[content.regionId] ?? "The route stabilizes enough to keep the party moving."
+    },
+    coMindBanter: (COMIND_BANTER_BY_REGION[content.regionId] ?? COMIND_BANTER_BY_REGION.armistice_zone).map((line, index) => ({
+      proofId: `m53.comind_banter.${content.regionId}.${index + 1}`,
+      line
+    })),
+    bossTitleCard: {
+      proofId: `${boss.proofId}.title_card`,
+      bossId: boss.id,
+      bossName: boss.label,
+      title: titleCard.title,
+      subtitle: titleCard.subtitle,
+      mechanicCallout: titleCard.mechanicCallout
+    },
+    ending: CAMPAIGN_ENDINGS[nodeId] ?? null,
+    credits: [...CAMPAIGN_CREDITS],
+    legalDisclaimer: CAMPAIGN_LEGAL_DISCLAIMER
+  };
 }
 
 export function campaignContentForNode(node) {
@@ -958,6 +1117,9 @@ export function campaignContentSummary(nodes) {
     dialogueSnippetCount: Object.keys(CAMPAIGN_DIALOGUE_SNIPPETS).length,
     dialoguePresentationPolicy: CAMPAIGN_DIALOGUE_PRESENTATION_POLICY,
     dialoguePersistenceBoundary: CAMPAIGN_DIALOGUE_PERSISTENCE_BOUNDARY,
+    presentationPolicy: CAMPAIGN_PRESENTATION_POLICY,
+    presentationNodeCount: arenaRecords.length,
+    legalDisclaimerVisible: CAMPAIGN_LEGAL_DISCLAIMER.visible,
     missingNodeContentIds,
     missingRewardIds,
     missingBossIds,

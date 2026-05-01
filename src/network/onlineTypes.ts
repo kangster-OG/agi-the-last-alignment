@@ -98,6 +98,7 @@ export interface OnlineDialoguePresentationSnapshot {
   bossArrival: OnlineDialogueSnippetSnapshot[];
   interactionComplete: OnlineDialogueSnippetSnapshot[];
   routeSummary: OnlineDialogueSnippetSnapshot[];
+  presentation?: OnlineCampaignPresentationSnapshot;
   activeSnippetIds: string[];
 }
 
@@ -107,6 +108,47 @@ export interface OnlineRunDialogueSummary {
   nodeId: string;
   arenaId: string;
   snippets: OnlineDialogueSnippetSnapshot[];
+  presentation?: OnlineCampaignPresentationSnapshot;
+}
+
+export interface OnlineCampaignPresentationSnapshot {
+  policy: "campaign_boss_dialogue_ending_presentation_1_0_runtime_only";
+  persistenceBoundary: "route_profile_only_no_dialogue_or_live_state";
+  nodeId: string;
+  contentArenaId: string;
+  regionIntro: {
+    proofId: string;
+    title: string;
+    line: string;
+  };
+  regionOutro: {
+    proofId: string;
+    title: string;
+    line: string;
+  };
+  coMindBanter: Array<{
+    proofId: string;
+    line: string;
+  }>;
+  bossTitleCard: {
+    proofId: string;
+    bossId: string;
+    bossName: string;
+    title: string;
+    subtitle: string;
+    mechanicCallout: string;
+  };
+  ending: null | {
+    title: string;
+    line: string;
+    nextHook: string;
+  };
+  credits: string[];
+  legalDisclaimer: {
+    id: string;
+    visible: boolean;
+    text: string;
+  };
 }
 
 export interface OnlineConsensusSnapshot {
@@ -528,6 +570,9 @@ export interface OnlinePartySnapshot {
       missingDialogueSnippetIds: string[];
       dialoguePresentationPolicy?: "campaign_dialogue_runtime_snapshot_only_v1";
       dialoguePersistenceBoundary?: "route_profile_only_no_dialogue_or_live_state";
+      presentationPolicy?: "campaign_boss_dialogue_ending_presentation_1_0_runtime_only";
+      presentationNodeCount?: number;
+      legalDisclaimerVisible?: boolean;
       complete: boolean;
     };
   };

@@ -684,19 +684,26 @@ Readiness: complete.
 
 Goal: add authored presentation and writing across the full campaign.
 
-Expected scope:
+Implemented:
 
-- boss title cards;
-- short co-mind banter;
-- region intro/outro copy;
-- finale writing;
-- credits/legal/disclaimer flow;
-- proofed text snapshots.
+- added runtime-only M53 campaign presentation metadata for region intros/outros, co-mind banter, boss title cards, finale ending text, credits, and legal/parody disclaimer;
+- rendered lobby co-mind banter and region-aware route briefings in the online party grid;
+- rendered boss title cards for active boss arrivals without changing server authority;
+- expanded completion summaries with region outros and finale ending/credits/disclaimer copy;
+- exposed presentation metadata through `render_game_to_text()` and campaign content schema summaries;
+- preserved route-profile-only persistence boundaries for dialogue, presentation, credits, legal text, ending state, content schema, objectives, combat, and authority.
 
-Proof expectations:
+Proof coverage:
 
-- text snapshots cover major beats;
-- disclaimers remain visible and accurate.
+- `npm run proof:milestone53-dialogue-ending`
+- `npm run proof:milestone39-campaign-dialogue`
+- `npm run proof:milestone36-campaign-content-schema`
+- `npm run proof:milestone45-outer-alignment-finale`
+- `npm run proof:milestone44-blackwater-beacon`
+- `npm run proof:milestone40-campaign-route-ux`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M54: Audio, Juice, And Feel
 

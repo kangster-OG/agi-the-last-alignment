@@ -6,7 +6,8 @@ import {
   CAMPAIGN_DIALOGUE_PRESENTATION_POLICY,
   campaignContentForNode,
   campaignContentSummary,
-  campaignDialogueSnippetsForNode
+  campaignDialogueSnippetsForNode,
+  campaignPresentationForNode
 } from "./data/campaignContent.mjs";
 import { ONLINE_ARENAS, ROLE_PRESSURE_ANCHORS } from "./data/onlineArenas.mjs";
 import { CAMPAIGN_ROUTE, DURABLE_REWARD_IDS, PARTY_NODES, PARTY_ROUTES, START_NODE_ID } from "./data/onlineRoutes.mjs";
@@ -2088,6 +2089,7 @@ class ConsensusCellRoom extends Room {
           ? campaignDialogueSnippetsForNode(completedSummaryNodeId, ["interaction_complete", "cache_decode", "persistence_boundary"])
           : [],
       routeSummary: this.runSummary ? this.summaryDialogueSnippets(completedSummaryNodeId) : [],
+      presentation: campaignPresentationForNode(node?.id ?? nodeId),
       activeSnippetIds: [
         ...campaignDialogueSnippetsForNode(node?.id ?? nodeId, ["briefing", "unsupported_node"]).map((snippet) => snippet.id),
         ...(this.bossIntroSeen ? campaignDialogueSnippetsForNode(node?.id ?? nodeId, ["boss_arrival"]).map((snippet) => snippet.id) : []),
@@ -2102,7 +2104,8 @@ class ConsensusCellRoom extends Room {
       persistenceBoundary: CAMPAIGN_DIALOGUE_PERSISTENCE_BOUNDARY,
       nodeId,
       arenaId: this.arenaId,
-      snippets: this.summaryDialogueSnippets(nodeId)
+      snippets: this.summaryDialogueSnippets(nodeId),
+      presentation: campaignPresentationForNode(nodeId)
     };
   }
 

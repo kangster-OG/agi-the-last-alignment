@@ -1234,7 +1234,11 @@ export class OnlineCoopState implements GameState {
       if (snapshot.persistence && phase === "lobby") this.drawPersistencePanel(game, snapshot);
       if (phase === "lobby") this.drawRouteFocusPanel(game, snapshot);
       if (phase === "lobby" && snapshot.dialogue?.briefing?.length) {
-        this.drawCampaignDialoguePanel(game, "ROUTE BRIEFING", snapshot.dialogue.briefing, 16, 300, 418, palette.lemon);
+        const regionTitle = snapshot.dialogue.presentation?.regionIntro.title ?? "Route";
+        this.drawCampaignDialoguePanel(game, `ROUTE BRIEFING // ${regionTitle}`, snapshot.dialogue.briefing, 16, 300, 418, palette.lemon);
+      }
+      if (phase === "lobby" && snapshot.dialogue?.presentation?.coMindBanter?.length) {
+        this.drawPresentationLinePanel(game, "CO-MIND BANTER", snapshot.dialogue.presentation.coMindBanter.map((entry) => entry.line), 16, 390, 418, palette.mint);
       }
     }
 
@@ -1270,7 +1274,8 @@ export class OnlineCoopState implements GameState {
       this.drawUpgradeDraft(game, pendingUpgrade);
     }
     if (phase === "active" && snapshot?.bossEvent?.bossIntroSeen && snapshot.dialogue?.bossArrival?.length) {
-      this.drawCampaignDialoguePanel(game, "BOSS ARRIVAL", snapshot.dialogue.bossArrival, game.width / 2 - 340, 166, 680, palette.tomato);
+      if (snapshot.dialogue.presentation?.bossTitleCard) this.drawBossTitleCard(game, snapshot.dialogue.presentation.bossTitleCard);
+      this.drawCampaignDialoguePanel(game, "BOSS ARRIVAL", snapshot.dialogue.bossArrival, game.width / 2 - 340, 292, 680, palette.tomato);
     }
     if (snapshot?.summary && (phase === "completed" || phase === "failed")) {
       this.drawRunSummary(game, snapshot.summary.title ?? phase.toUpperCase(), snapshot.summary.subtitle ?? "", snapshot.summary);
@@ -1318,16 +1323,39 @@ export class OnlineCoopState implements GameState {
   private drawRunSummary(game: Game, title: string, subtitle: string, summary: NonNullable<OnlineConsensusSnapshot["summary"]>): void {
     const panel = new Graphics();
     const dialogueLines = summary.dialogue?.snippets?.slice(0, 2) ?? [];
+    const presentation = summary.dialogue?.presentation;
     const dialogueText = dialogueLines.length ? `\n\n${dialogueLines.map((snippet) => `${snippet.speaker.toUpperCase()}: ${snippet.line}`).join("\n")}` : "";
-    const height = dialogueLines.length ? 318 : 236;
+    const presentationText = presentation?.ending
+      ? `\n\nENDING: ${presentation.ending.title}\n${presentation.ending.line}\nCREDITS: ${presentation.credits.slice(0, 2).join(" / ")}\nDISCLAIMER: ${presentation.legalDisclaimer.text}`
+      : presentation?.regionOutro
+        ? `\n\n${presentation.regionOutro.title.toUpperCase()}: ${presentation.regionOutro.line}`
+        : "";
+    const height = presentation?.ending ? 452 : dialogueLines.length || presentationText ? 348 : 236;
     panel.rect(game.width / 2 - 330, game.height / 2 - height / 2, 660, height).fill({ color: palette.ink, alpha: 0.94 }).stroke({ color: summary.outcome === "failed" ? palette.tomato : palette.mint, width: 3 });
     game.layers.hud.addChild(panel);
     const label = new Text({
-      text: `${title}\n\n${subtitle}\n\nTime ${Math.floor(summary.seconds ?? 0)}s   KOs ${summary.kills ?? 0}   Shards ${summary.collectedPickups ?? 0}\nParty Lv ${summary.partyLevel ?? 1}   Revives ${summary.revivedPlayers ?? 0}${summary.rewards ? `\nReward ${summary.rewards.rewardName}   Renown +${summary.rewards.renownGained}` : ""}${dialogueText}\n\nSpace: return to party grid   Esc: leave   R: reconnect`,
-      style: { ...fontStyle, fontSize: dialogueLines.length ? 14 : 16, lineHeight: dialogueLines.length ? 18 : 20, fill: "#fff4d6", align: "center", wordWrap: true, wordWrapWidth: 596, breakWords: true }
+      text: `${title}\n\n${subtitle}\n\nTime ${Math.floor(summary.seconds ?? 0)}s   KOs ${summary.kills ?? 0}   Shards ${summary.collectedPickups ?? 0}\nParty Lv ${summary.partyLevel ?? 1}   Revives ${summary.revivedPlayers ?? 0}${summary.rewards ? `\nReward ${summary.rewards.rewardName}   Renown +${summary.rewards.renownGained}` : ""}${dialogueText}${presentationText}\n\nSpace: return to party grid   Esc: leave   R: reconnect`,
+      style: { ...fontStyle, fontSize: presentation?.ending ? 11 : dialogueLines.length || presentationText ? 13 : 16, lineHeight: presentation?.ending ? 15 : dialogueLines.length || presentationText ? 17 : 20, fill: "#fff4d6", align: "center", wordWrap: true, wordWrapWidth: 596, breakWords: true }
     });
     label.anchor.set(0.5);
     label.position.set(game.width / 2, game.height / 2);
+    game.layers.hud.addChild(label);
+  }
+
+  private drawBossTitleCard(game: Game, card: NonNullable<NonNullable<OnlineConsensusSnapshot["dialogue"]>["presentation"]>["bossTitleCard"]): void {
+    const width = Math.min(760, game.width - 120);
+    const x = (game.width - width) / 2;
+    const y = 166;
+    const panel = new Graphics();
+    panel.rect(x, y, width, 112).fill({ color: palette.ink, alpha: 0.94 }).stroke({ color: palette.tomato, width: 3, alpha: 0.95 });
+    panel.rect(x + 18, y + 18, width - 36, 2).fill({ color: palette.tomato, alpha: 0.62 });
+    game.layers.hud.addChild(panel);
+    const label = new Text({
+      text: `${card.title}\n${card.subtitle}\n${card.mechanicCallout}`,
+      style: { ...fontStyle, fontSize: 15, lineHeight: 20, fill: "#fff4d6", align: "center", wordWrap: true, wordWrapWidth: width - 48, breakWords: true }
+    });
+    label.anchor.set(0.5);
+    label.position.set(game.width / 2, y + 62);
     game.layers.hud.addChild(label);
   }
 
@@ -1342,6 +1370,21 @@ export class OnlineCoopState implements GameState {
     const label = new Text({
       text: `${title}\n${visible.map((snippet) => `${snippet.speaker.toUpperCase()}: ${snippet.line}`).join("\n")}`,
       style: { ...fontStyle, fontSize: 11, lineHeight: 17, fill: "#fff4d6", wordWrap: true, wordWrapWidth: width - 28, breakWords: true }
+    });
+    label.position.set(x + 14, y + 10);
+    game.layers.hud.addChild(label);
+  }
+
+  private drawPresentationLinePanel(game: Game, title: string, lines: string[], x: number, y: number, width: number, accent: number): void {
+    const visible = lines.slice(0, 2);
+    if (!visible.length) return;
+    const height = Math.min(128, 42 + visible.length * 34);
+    const panel = new Graphics();
+    panel.rect(x, y, width, height).fill({ color: palette.ink, alpha: 0.88 }).stroke({ color: accent, width: 2, alpha: 0.86 });
+    game.layers.hud.addChild(panel);
+    const label = new Text({
+      text: `${title}\n${visible.join("\n")}`,
+      style: { ...fontStyle, fontSize: 10, lineHeight: 15, fill: "#fff4d6", wordWrap: true, wordWrapWidth: width - 28, breakWords: true }
     });
     label.position.set(x + 14, y + 10);
     game.layers.hud.addChild(label);

@@ -3087,9 +3087,61 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone52-progression-balance/milestone52-sanitized-import-boundary.png`
 - Milestone 52 readiness decision: ready. Campaign economy, reward/unlock coverage, scaling policy, retry policy, and deterministic completion are proof-visible while persistence remains route-profile-only.
 
+- Implemented Milestone 53 Dialogue, Boss Presentation, And Ending Pass.
+- Added runtime-only campaign presentation metadata in `server/data/campaignContent.mjs` for:
+  - boss title cards and mechanic callouts for the full boss slate;
+  - region intro/outro copy;
+  - short co-mind banter by campaign region;
+  - finale ending copy;
+  - credits text;
+  - visible legal/parody disclaimer text for third-party faction/brand references.
+- Integrated M53 presentation into online snapshots:
+  - `dialogue.presentation` for lobby/active route presentation;
+  - `summary.dialogue.presentation` for completion/ending surfaces;
+  - campaign content schema summary fields for presentation policy, presentation node count, and disclaimer visibility.
+- Updated online HUD presentation:
+  - route briefings now include region context;
+  - lobby shows co-mind banter in a compact panel;
+  - boss arrivals show a centered title card plus the existing arrival line;
+  - completion summaries show region outros, and the finale summary shows ending, credits, and legal/parody disclaimer copy.
+- Preserved route-profile-only persistence boundaries:
+  - no dialogue, presentation metadata, credits, legal disclaimer text, ending state, campaign content schema, objectives, combat, or authority state is exported/imported.
+- Added `npm run proof:milestone53-dialogue-ending`, covering:
+  - Blackwater lobby presentation and co-mind banter;
+  - Blackwater boss title card;
+  - finale lobby presentation;
+  - finale boss title card;
+  - finale ending/credits/disclaimer summary;
+  - export profile boundaries.
+- Verification after Milestone 53:
+  - `node --check server/data/campaignContent.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `node --check scripts/proof/run-proof.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone53-dialogue-ending`
+  - `npm run proof:milestone39-campaign-dialogue`
+  - `npm run proof:milestone36-campaign-content-schema`
+  - `npm run proof:milestone45-outer-alignment-finale`
+  - `npm run proof:milestone44-blackwater-beacon`
+  - `npm run proof:milestone40-campaign-route-ux`
+  - `npm run proof:smoke`
+- Milestone 53 proof artifacts:
+  - `docs/proof/milestone53-dialogue-ending/milestone53-blackwater-lobby-presentation.png`
+  - `docs/proof/milestone53-dialogue-ending/milestone53-blackwater-boss-title-card.png`
+  - `docs/proof/milestone53-dialogue-ending/milestone53-finale-lobby-presentation.png`
+  - `docs/proof/milestone53-dialogue-ending/milestone53-finale-boss-title-card.png`
+  - `docs/proof/milestone53-dialogue-ending/milestone53-finale-ending-credits.png`
+- Screenshots inspected after Milestone 53:
+  - `docs/proof/milestone53-dialogue-ending/milestone53-blackwater-lobby-presentation.png`
+  - `docs/proof/milestone53-dialogue-ending/milestone53-blackwater-boss-title-card.png`
+  - `docs/proof/milestone53-dialogue-ending/milestone53-finale-boss-title-card.png`
+  - `docs/proof/milestone53-dialogue-ending/milestone53-finale-ending-credits.png`
+- Milestone 53 readiness decision: ready. Major campaign presentation beats, boss title cards, finale ending, credits, and legal/parody disclaimer text are proof-visible and remain runtime-only.
+
 ## TODO
 
-- Next recommended milestone: Milestone 53 Dialogue, Boss Presentation, And Ending Pass. Add authored presentation and writing across the full campaign, including boss title cards, co-mind banter, region intro/outro copy, finale writing, credits/legal/disclaimer flow, and proofed text snapshots.
+- Next recommended milestone: Milestone 54 Audio, Juice, And Feel. Add performance-safe feedback and audio hooks, including music/SFX hooks, hit feedback, pickup cadence, UI sounds, boss warnings, accessibility volume toggles, and reduced-flash compatibility.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

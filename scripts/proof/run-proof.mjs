@@ -637,6 +637,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone52ProgressionBalanceScenario();
     return;
+  } else if (name === "milestone53-dialogue-ending") {
+    await closeBrowser(browser);
+    await runMilestone53DialogueEndingScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -4546,6 +4550,117 @@ async function runMilestone52ProgressionBalanceScenario() {
   }
 }
 
+async function runMilestone53DialogueEndingScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+  const blackwaterProfileCode = encodeProofRouteProfileCode({
+    completedNodeIds: ["armistice_plaza", "cooling_lake_nine", "memory_cache_001", "archive_of_unsaid_things"],
+    rewardIds: [
+      "plaza_stabilized",
+      "lake_coolant_rig",
+      "cooling_lake_online_route",
+      "ceasefire_cache_persistence_seed",
+      "prototype_persistence_boundary",
+      "archive_unsaid_index"
+    ],
+    partyRenown: 14,
+    routeDepth: 4,
+    saveHash: "proof_m53_blackwater_presentation_profile"
+  });
+
+  try {
+    const blackwater = await openOnlinePairInContext(context, "m53_blackwater", errors, { importOnlineProfileCode: blackwaterProfileCode });
+    await voteBothToNode(blackwater.pageA, blackwater.pageB, "blackwater_beacon");
+    const blackwaterLobby = await waitForOnlineServerCombat(
+      blackwater.pageA,
+      (text) =>
+        text.online?.dialogue?.presentation?.policy === "campaign_boss_dialogue_ending_presentation_1_0_runtime_only" &&
+        text.online.dialogue.presentation.regionIntro?.title === "The Blackwater Array" &&
+        text.online.dialogue.presentation.coMindBanter?.some((entry) => entry.line.includes("weather")) &&
+        text.online.party?.campaign?.contentSchema?.presentationPolicy === "campaign_boss_dialogue_ending_presentation_1_0_runtime_only",
+      "M53 Blackwater lobby presentation",
+      12_000
+    );
+    assert(blackwaterLobby.online?.dialogue?.presentation?.legalDisclaimer?.visible === true, "expected M53 legal/parody disclaimer visible in runtime presentation");
+    assert(blackwaterLobby.online?.persistence?.profile && !("presentation" in blackwaterLobby.online.persistence.profile), "expected lobby profile to omit presentation state");
+    await capture(blackwater.pageA, "milestone53-blackwater-lobby-presentation");
+    await Promise.all([blackwater.pageA.keyboard.press("Space"), blackwater.pageB.keyboard.press("Space")]);
+    await waitForOnlineRunPhase(blackwater.pageA, "active");
+    await blackwater.pageA.keyboard.press("KeyF");
+    const blackwaterBoss = await waitForOnlineServerCombat(
+      blackwater.pageA,
+      (text) =>
+        text.online?.bossEvent?.bossIntroSeen === true &&
+        text.online?.dialogue?.presentation?.bossTitleCard?.title === "THE MAW BELOW WEATHER" &&
+        text.online.dialogue.presentation.bossTitleCard.mechanicCallout?.includes("Tidal waves"),
+      "M53 Blackwater boss title card",
+      10_000
+    );
+    assert(blackwaterBoss.online?.dialogue?.presentation?.persistenceBoundary === "route_profile_only_no_dialogue_or_live_state", "expected Blackwater presentation persistence boundary");
+    await capture(blackwater.pageA, "milestone53-blackwater-boss-title-card");
+    await blackwater.pageA.keyboard.press("Digit3");
+    await waitForOnlineRunPhase(blackwater.pageA, "completed");
+    const blackwaterSummary = await state(blackwater.pageA);
+    assert(blackwaterSummary.online?.summary?.dialogue?.presentation?.regionOutro?.line?.includes("beacon"), "expected Blackwater region outro in summary");
+    await blackwater.pageA.close();
+    await blackwater.pageB.close();
+
+    const finale = await openOnlinePairInContext(context, "m53_finale", errors, { importOnlineProfileCode: milestone37DenseRouteProfileCode() });
+    const finaleLobby = await waitForOnlineServerCombat(
+      finale.pageA,
+      (text) =>
+        text.online?.routeUi?.selectedNodeId === "alignment_spire_finale" &&
+        text.online?.dialogue?.presentation?.regionIntro?.title === "The Outer Alignment" &&
+        text.online.dialogue.presentation.bossTitleCard?.title === "A.G.I. // ALIEN GOD INTELLIGENCE" &&
+        text.online.dialogue.presentation.legalDisclaimer?.text?.includes("Fictional parody"),
+      "M53 finale lobby presentation",
+      12_000
+    );
+    assert(finaleLobby.online?.dialogue?.presentation?.credits?.some((line) => line.includes("Cursor Vibe Jam 2026")), "expected M53 credits in finale runtime presentation");
+    await capture(finale.pageA, "milestone53-finale-lobby-presentation");
+    await Promise.all([finale.pageA.keyboard.press("Space"), finale.pageB.keyboard.press("Space")]);
+    await waitForOnlineRunPhase(finale.pageA, "active");
+    await finale.pageA.keyboard.press("KeyF");
+    const finaleBoss = await waitForOnlineServerCombat(
+      finale.pageA,
+      (text) =>
+        text.online?.bossEvent?.bossIntroSeen === true &&
+        text.online?.dialogue?.presentation?.bossTitleCard?.bossId === "alien_god_intelligence" &&
+        text.online.dialogue.presentation.bossTitleCard.mechanicCallout?.includes("Predictions"),
+      "M53 finale boss title card",
+      10_000
+    );
+    assert(finaleBoss.online?.dialogue?.bossArrival?.some((snippet) => snippet.id === "dlg.agi.arrival"), "expected M53 finale boss arrival line retained");
+    await capture(finale.pageA, "milestone53-finale-boss-title-card");
+    await finale.pageA.keyboard.press("Digit3");
+    await waitForOnlineRunPhase(finale.pageA, "completed");
+    const finaleSummary = await state(finale.pageA);
+    assert(finaleSummary.online?.summary?.dialogue?.presentation?.ending?.title === "Act I Cleared: The Last Alignment Holds", "expected M53 finale ending title");
+    assert(finaleSummary.online?.summary?.dialogue?.presentation?.legalDisclaimer?.visible === true, "expected M53 disclaimer visible in finale summary");
+    assert(finaleSummary.online?.summary?.dialogue?.presentation?.credits?.length >= 3, "expected M53 credits in finale summary");
+    assert(finaleSummary.online?.dialogue?.routeSummary?.some((snippet) => snippet.id === "dlg.agi.victory"), "expected M53 route summary victory line");
+    const decoded = decodeProofOnlineProfileCode(finaleSummary.online?.saveProfile?.exportCode);
+    assert(decoded?.profile && !("dialogue" in decoded.profile), "expected M53 export profile to omit dialogue");
+    assert(decoded?.profile && !("presentation" in decoded.profile) && !("credits" in decoded.profile) && !("legalDisclaimer" in decoded.profile) && !("ending" in decoded.profile), "expected M53 export profile to omit presentation/credits/legal/ending");
+    assert(!("presentation" in decoded) && !("dialogue" in decoded), "expected M53 export draft to omit runtime presentation and dialogue");
+    await capture(finale.pageA, "milestone53-finale-ending-credits");
+    await finale.pageA.close();
+    await finale.pageB.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone53 dialogue ending");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
 async function runMilestone47FactionBurstsScenario() {
   const browser = await chromium.launch({
     headless: true,
@@ -5578,10 +5693,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance"].includes(name);
+  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending"].includes(name);
 }
