@@ -191,6 +191,7 @@ export interface OnlineConsensusSnapshot {
   rewards?: OnlineRewardsSnapshot;
   persistence?: OnlinePersistenceSnapshot;
   balance?: OnlineBalanceSnapshot;
+  feedback?: OnlineFeedbackSnapshot;
   summary?: OnlineRunSummary | null;
   party?: OnlinePartySnapshot;
   combatArt: {
@@ -715,6 +716,26 @@ export interface OnlineBalanceSnapshot {
     repeatClearRenownCap: number;
     selectedNodeId: string;
     completedNodeCount: number;
+  };
+}
+
+export interface OnlineFeedbackSnapshot {
+  policy: "audio_juice_feel_1_0_runtime_only";
+  persistenceBoundary: "runtime_feedback_not_route_profile";
+  audioHooks: string[];
+  visualJuice: {
+    reducedFlashSafe: boolean;
+    screenShakeAuthority: string;
+    maxHazardAlpha: number;
+    maxFloatingLabels: number;
+  };
+  counters: {
+    hit: number;
+    pickup: number;
+    boss_warning: number;
+    objective: number;
+    burst: number;
+    summary: number;
   };
 }
 

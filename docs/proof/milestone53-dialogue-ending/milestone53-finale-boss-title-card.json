@@ -72,9 +72,68 @@
   "upgrades": [],
   "objective": "Move independently in the shared Consensus Cell.",
   "performance": {
-    "entitiesAllocated": 7,
-    "activeEntities": 7,
+    "entitiesAllocated": 9,
+    "activeEntities": 9,
     "fpsTarget": 60
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 1,
+      "pickup": 0,
+      "boss_warning": 1,
+      "music": 1,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "online.weapon_hit",
+        "kind": "hit",
+        "atMs": 5078
+      },
+      {
+        "id": "music.alignment_spire_finale.boss",
+        "kind": "music",
+        "atMs": 3687
+      },
+      {
+        "id": "online.alignment_spire_finale.boss_warning",
+        "kind": "boss_warning",
+        "atMs": 3687
+      },
+      {
+        "id": "ui.enter_online_coop",
+        "kind": "ui",
+        "atMs": 666
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
   },
   "assetRendering": {
     "assetPreview": null,
@@ -186,19 +245,19 @@
     "productionAssets": 43
   },
   "player": {
-    "sessionId": "Jhd7Chj-X",
-    "worldX": 0,
-    "worldY": 0,
-    "hp": 140,
-    "maxHp": 140,
+    "sessionId": "oLpMMG0P9",
+    "worldX": -1.6,
+    "worldY": 1.1,
+    "hp": 174,
+    "maxHp": 176,
     "xp": 0,
     "level": 1
   },
   "online": {
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2622",
-    "roomId": "9tBbyuizF",
-    "sessionId": "Jhd7Chj-X",
+    "roomId": "vN1lx2HzM",
+    "sessionId": "oLpMMG0P9",
     "lastError": "",
     "reconnectKey": "finale_a",
     "reconnect": {
@@ -234,7 +293,7 @@
       "foundStoredProfile": true,
       "draftHash": "fnv1a_4b6b2e83",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo4Mn0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjoxMjl9LCJzYXZlSGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YjZiMmU4MyIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -246,8 +305,8 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjo4Mn0sInNhdmVIYXNoIjoiZm52MWFfNGI2YjJlODMiLCJjdXJyZW50RXhwb3J0SGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiZHVyYWJsZUZpZWxkUG9saWN5Ijoicm91dGVfcHJvZmlsZV9vbmx5X25vX2NvbWJhdF9zdGF0ZSJ9",
-      "shortExportCode": "AGI1_eyJwb2xp...9zdGF0ZSJ9",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOnRydWUsImltcG9ydFN0YXR1cyI6ImFwcGxpZWRfc2FuaXRpemVkX3JvdXRlX3Byb2ZpbGUiLCJpbXBvcnRlZFNhdmVIYXNoIjoicHJvb2ZfbWlsZXN0b25lMzdfZGVuc2Vfcm91dGVfcHJvZmlsZSIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50Ijo3LCJpbXBvcnRlZFJld2FyZENvdW50IjoxMSwiaW1wb3J0ZWRSb3V0ZURlcHRoIjo3LCJpZ25vcmVkSW1wb3J0ZWRGaWVsZENvdW50IjowLCJpbXBvcnRlZFN1bW1hcnkiOnsic2F2ZUhhc2giOiJwcm9vZl9taWxlc3RvbmUzN19kZW5zZV9yb3V0ZV9wcm9maWxlIiwiY29tcGxldGVkTm9kZUNvdW50Ijo3LCJyZXdhcmRDb3VudCI6MTF9LCJwcm9maWxlIjp7ImNvbXBsZXRlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiY29vbGluZ19sYWtlX25pbmUiLCJtZW1vcnlfY2FjaGVfMDAxIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwiYmxhY2t3YXRlcl9iZWFjb24iLCJ0cmFuc2l0X2xvb3BfemVybyIsInZlcmRpY3Rfc3BpcmUiXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSIsImFjY29yZF9yZWxheSIsImNvb2xpbmdfbGFrZV9uaW5lIiwibW9kZWxfd2FyX21lbW9yaWFsIiwiYXJtaXN0aWNlX2NhbXAiLCJtZW1vcnlfY2FjaGVfMDAxIiwidGhlcm1hbF9hcmNoaXZlIiwiZ3VhcmRyYWlsX2ZvcmdlIiwiYXJjaGl2ZV9vZl91bnNhaWRfdGhpbmdzIiwidHJhbnNpdF9sb29wX3plcm8iLCJibGFja3dhdGVyX2JlYWNvbiIsImZhbHNlX3NjaGVkdWxlX3lhcmQiLCJnbGFzc19zdW5maWVsZCIsInZlcmRpY3Rfc3BpcmUiLCJhbGlnbm1lbnRfc3BpcmVfZmluYWxlIl0sInJld2FyZElkcyI6WyJwbGF6YV9zdGFiaWxpemVkIiwibGFrZV9jb29sYW50X3JpZyIsImNvb2xpbmdfbGFrZV9vbmxpbmVfcm91dGUiLCJjZWFzZWZpcmVfY2FjaGVfcGVyc2lzdGVuY2Vfc2VlZCIsInByb3RvdHlwZV9wZXJzaXN0ZW5jZV9ib3VuZGFyeSIsImFyY2hpdmVfdW5zYWlkX2luZGV4IiwiYmxhY2t3YXRlcl9zaWduYWxfa2V5IiwidHJhbnNpdF9wZXJtaXRfemVybyIsInRyYW5zaXRfbG9vcF9vbmxpbmVfcm91dGUiLCJ2ZXJkaWN0X2tleV96ZXJvIiwidmVyZGljdF9zcGlyZV9vbmxpbmVfcm91dGUiXSwicGFydHlSZW5vd24iOjE5LCJub2RlQ29tcGxldGlvbkNvdW50cyI6eyJhcm1pc3RpY2VfcGxhemEiOjEsImNvb2xpbmdfbGFrZV9uaW5lIjoxLCJtZW1vcnlfY2FjaGVfMDAxIjoxLCJhcmNoaXZlX29mX3Vuc2FpZF90aGluZ3MiOjEsImJsYWNrd2F0ZXJfYmVhY29uIjoxLCJ0cmFuc2l0X2xvb3BfemVybyI6MSwidmVyZGljdF9zcGlyZSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiYWxpZ25tZW50X3NwaXJlX2ZpbmFsZSIsInJvdXRlRGVwdGgiOjcsInNhdmVkQXRUaWNrIjoxMjl9LCJzYXZlSGFzaCI6ImZudjFhXzRiNmIyZTgzIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YjZiMmU4MyIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "shortExportCode": "AGI1_eyJwb2xp...c3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": true,
       "importCodeStatus": "query_code_applied",
@@ -306,7 +365,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 82
+        "savedAtTick": 129
       },
       "saveHash": "fnv1a_4b6b2e83",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -991,8 +1050,8 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 82,
-    "seconds": 27.8,
+    "tick": 129,
+    "seconds": 28.48,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "active",
@@ -1000,17 +1059,17 @@
     "connectedCount": 2,
     "downedCount": 0,
     "combat": {
-      "kills": 0,
+      "kills": 1,
       "collectedPickups": 0,
-      "authoritativeProjectiles": 4,
-      "authoritativePickups": 0,
+      "authoritativeProjectiles": 3,
+      "authoritativePickups": 1,
       "bossGateMechanic": "outer_alignment_final_eval"
     },
     "combatArt": {
       "pressure": 1,
       "phase": "boss_active",
-      "projectileCount": 4,
-      "pickupCount": 0,
+      "projectileCount": 3,
+      "pickupCount": 1,
       "bossEventActive": true
     },
     "campaignContent": {
@@ -1255,10 +1314,10 @@
       "blackwaterPressure": null,
       "outerAlignmentFinale": {
         "policy": "server_authoritative_outer_alignment_final_eval",
-        "phaseIndex": 2,
-        "phaseLabel": "completion_hunger",
-        "predictionTicks": 2,
-        "echoesSpawned": 2,
+        "phaseIndex": 3,
+        "phaseLabel": "prediction",
+        "predictionTicks": 3,
+        "echoesSpawned": 3,
         "previousBossEchoIds": [
           "oath_eater",
           "station_that_arrives",
@@ -1268,13 +1327,13 @@
         ],
         "activeEchoFamilyIds": [
           "oath_eater_echo",
-          "station_that_arrives_echo"
+          "wrong_sunrise_echo"
         ],
         "corruptedOverworldState": "routes_become_mouths_nodes_rearrange_ui_lies",
         "falseUpgradeDraftPolicy": "decorative_fake_upgrade_markers_never_enter_upgrade_vote_state",
         "persistenceBoundary": "route_profile_only_no_outer_alignment_predictions_echoes_or_finale_authority_state"
       },
-      "eventCounter": 6,
+      "eventCounter": 9,
       "active": true,
       "hazardZones": [
         {
@@ -1284,7 +1343,7 @@
           "worldX": 10,
           "worldY": 6,
           "radius": 2.4,
-          "expiresIn": 4.4,
+          "expiresIn": 3.72,
           "damagePerSecond": 0
         },
         {
@@ -1294,7 +1353,7 @@
           "worldX": 10.2,
           "worldY": 8.7,
           "radius": 2.7,
-          "expiresIn": 5,
+          "expiresIn": 4.32,
           "damagePerSecond": 3.4
         },
         {
@@ -1304,7 +1363,7 @@
           "worldX": 14.8,
           "worldY": 8,
           "radius": 1.8,
-          "expiresIn": 4.6,
+          "expiresIn": 3.92,
           "damagePerSecond": 0
         },
         {
@@ -1314,7 +1373,7 @@
           "worldX": 0,
           "worldY": -1.2,
           "radius": 2.4,
-          "expiresIn": 5.13,
+          "expiresIn": 4.44,
           "damagePerSecond": 0
         },
         {
@@ -1324,7 +1383,7 @@
           "worldX": -2.4,
           "worldY": 1.5,
           "radius": 2.7,
-          "expiresIn": 5.73,
+          "expiresIn": 5.04,
           "damagePerSecond": 3.4
         },
         {
@@ -1334,7 +1393,37 @@
           "worldX": 2.2,
           "worldY": 0.8,
           "radius": 1.8,
-          "expiresIn": 5.33,
+          "expiresIn": 4.64,
+          "damagePerSecond": 0
+        },
+        {
+          "id": 7,
+          "familyId": "prediction_ghost",
+          "label": "Prediction Ghost",
+          "worldX": 9.8,
+          "worldY": 10.4,
+          "radius": 2.4,
+          "expiresIn": 4.76,
+          "damagePerSecond": 0
+        },
+        {
+          "id": 8,
+          "familyId": "route_mouth",
+          "label": "Route Mouth",
+          "worldX": 4.8,
+          "worldY": 13.1,
+          "radius": 2.7,
+          "expiresIn": 5.36,
+          "damagePerSecond": 3.4
+        },
+        {
+          "id": 9,
+          "familyId": "fake_upgrade",
+          "label": "Fake Upgrade",
+          "worldX": 9.4,
+          "worldY": 12.4,
+          "radius": 1.8,
+          "expiresIn": 4.96,
           "damagePerSecond": 0
         }
       ]
@@ -1544,7 +1633,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "Jhd7Chj-X",
+          "sessionId": "GFzHi_kbD",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1553,7 +1642,7 @@
           "connected": true
         },
         {
-          "sessionId": "Mh_pUBifh",
+          "sessionId": "oLpMMG0P9",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1734,7 +1823,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 82
+        "savedAtTick": 129
       },
       "saveHash": "fnv1a_4b6b2e83",
       "currentExportHash": "fnv1a_4b6b2e83",
@@ -2521,6 +2610,32 @@
         "completedNodeCount": 7
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 1,
+        "pickup": 0,
+        "boss_warning": 1,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
+    },
     "progression": {
       "policy": "shared_party_xp_coop_vote",
       "balancePolicy": "progression_rewards_balance_1_0_route_profile_only_v1",
@@ -2660,16 +2775,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "Jhd7Chj-X",
-          "playerId": "player_0_finale_a",
+          "sessionId": "GFzHi_kbD",
+          "playerId": "player_0_finale_b",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "Mh_pUBifh",
-          "playerId": "player_1_finale_b",
+          "sessionId": "oLpMMG0P9",
+          "playerId": "player_1_finale_a",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
           "ready": true,
@@ -4867,7 +4982,7 @@
           },
           "recommendedNodeId": "alignment_spire_finale",
           "routeDepth": 7,
-          "savedAtTick": 82
+          "savedAtTick": 129
         },
         "saveHash": "fnv1a_4b6b2e83",
         "currentExportHash": "fnv1a_4b6b2e83",
@@ -5658,8 +5773,8 @@
   },
   "players": [
     {
-      "sessionId": "Jhd7Chj-X",
-      "playerId": "player_0_finale_a",
+      "sessionId": "GFzHi_kbD",
+      "playerId": "player_0_finale_b",
       "slot": 0,
       "label": "P1",
       "classId": "accord_striker",
@@ -5733,12 +5848,12 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": true,
-      "inputSequence": 11
+      "isLocal": false,
+      "inputSequence": 12
     },
     {
-      "sessionId": "Mh_pUBifh",
-      "playerId": "player_1_finale_b",
+      "sessionId": "oLpMMG0P9",
+      "playerId": "player_1_finale_a",
       "slot": 1,
       "label": "P2",
       "classId": "accord_striker",
@@ -5798,7 +5913,7 @@
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 176,
+      "hp": 174,
       "maxHp": 176,
       "xp": 0,
       "level": 1,
@@ -5812,8 +5927,8 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": false,
-      "inputSequence": 8
+      "isLocal": true,
+      "inputSequence": 14
     }
   ],
   "overworld": null,
@@ -5937,16 +6052,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "Jhd7Chj-X",
-          "playerId": "player_0_finale_a",
+          "sessionId": "GFzHi_kbD",
+          "playerId": "player_0_finale_b",
           "label": "P1",
           "nodeId": "alignment_spire_finale",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "Mh_pUBifh",
-          "playerId": "player_1_finale_b",
+          "sessionId": "oLpMMG0P9",
+          "playerId": "player_1_finale_a",
           "label": "P2",
           "nodeId": "alignment_spire_finale",
           "ready": true,
@@ -8144,7 +8259,7 @@
           },
           "recommendedNodeId": "alignment_spire_finale",
           "routeDepth": 7,
-          "savedAtTick": 82
+          "savedAtTick": 129
         },
         "saveHash": "fnv1a_4b6b2e83",
         "currentExportHash": "fnv1a_4b6b2e83",
@@ -8978,10 +9093,10 @@
       "blackwaterPressure": null,
       "outerAlignmentFinale": {
         "policy": "server_authoritative_outer_alignment_final_eval",
-        "phaseIndex": 2,
-        "phaseLabel": "completion_hunger",
-        "predictionTicks": 2,
-        "echoesSpawned": 2,
+        "phaseIndex": 3,
+        "phaseLabel": "prediction",
+        "predictionTicks": 3,
+        "echoesSpawned": 3,
         "previousBossEchoIds": [
           "oath_eater",
           "station_that_arrives",
@@ -8991,13 +9106,13 @@
         ],
         "activeEchoFamilyIds": [
           "oath_eater_echo",
-          "station_that_arrives_echo"
+          "wrong_sunrise_echo"
         ],
         "corruptedOverworldState": "routes_become_mouths_nodes_rearrange_ui_lies",
         "falseUpgradeDraftPolicy": "decorative_fake_upgrade_markers_never_enter_upgrade_vote_state",
         "persistenceBoundary": "route_profile_only_no_outer_alignment_predictions_echoes_or_finale_authority_state"
       },
-      "eventCounter": 6,
+      "eventCounter": 9,
       "active": true,
       "hazardZones": [
         {
@@ -9007,7 +9122,7 @@
           "worldX": 10,
           "worldY": 6,
           "radius": 2.4,
-          "expiresIn": 4.4,
+          "expiresIn": 3.72,
           "damagePerSecond": 0
         },
         {
@@ -9017,7 +9132,7 @@
           "worldX": 10.2,
           "worldY": 8.7,
           "radius": 2.7,
-          "expiresIn": 5,
+          "expiresIn": 4.32,
           "damagePerSecond": 3.4
         },
         {
@@ -9027,7 +9142,7 @@
           "worldX": 14.8,
           "worldY": 8,
           "radius": 1.8,
-          "expiresIn": 4.6,
+          "expiresIn": 3.92,
           "damagePerSecond": 0
         },
         {
@@ -9037,7 +9152,7 @@
           "worldX": 0,
           "worldY": -1.2,
           "radius": 2.4,
-          "expiresIn": 5.13,
+          "expiresIn": 4.44,
           "damagePerSecond": 0
         },
         {
@@ -9047,7 +9162,7 @@
           "worldX": -2.4,
           "worldY": 1.5,
           "radius": 2.7,
-          "expiresIn": 5.73,
+          "expiresIn": 5.04,
           "damagePerSecond": 3.4
         },
         {
@@ -9057,7 +9172,37 @@
           "worldX": 2.2,
           "worldY": 0.8,
           "radius": 1.8,
-          "expiresIn": 5.33,
+          "expiresIn": 4.64,
+          "damagePerSecond": 0
+        },
+        {
+          "id": 7,
+          "familyId": "prediction_ghost",
+          "label": "Prediction Ghost",
+          "worldX": 9.8,
+          "worldY": 10.4,
+          "radius": 2.4,
+          "expiresIn": 4.76,
+          "damagePerSecond": 0
+        },
+        {
+          "id": 8,
+          "familyId": "route_mouth",
+          "label": "Route Mouth",
+          "worldX": 4.8,
+          "worldY": 13.1,
+          "radius": 2.7,
+          "expiresIn": 5.36,
+          "damagePerSecond": 3.4
+        },
+        {
+          "id": 9,
+          "familyId": "fake_upgrade",
+          "label": "Fake Upgrade",
+          "worldX": 9.4,
+          "worldY": 12.4,
+          "radius": 1.8,
+          "expiresIn": 4.96,
           "damagePerSecond": 0
         }
       ]
@@ -9160,7 +9305,7 @@
         },
         "recommendedNodeId": "alignment_spire_finale",
         "routeDepth": 7,
-        "savedAtTick": 82
+        "savedAtTick": 129
       },
       "saveHash": "fnv1a_4b6b2e83",
       "currentExportHash": "fnv1a_4b6b2e83",
@@ -9947,6 +10092,32 @@
         "completedNodeCount": 7
       }
     },
+    "serverFeedback": {
+      "policy": "audio_juice_feel_1_0_runtime_only",
+      "persistenceBoundary": "runtime_feedback_not_route_profile",
+      "audioHooks": [
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "objective_tick",
+        "consensus_burst",
+        "summary_stinger"
+      ],
+      "visualJuice": {
+        "reducedFlashSafe": true,
+        "screenShakeAuthority": "client_optional_query_setting",
+        "maxHazardAlpha": 0.18,
+        "maxFloatingLabels": 32
+      },
+      "counters": {
+        "hit": 1,
+        "pickup": 0,
+        "boss_warning": 1,
+        "objective": 0,
+        "burst": 0,
+        "summary": 0
+      }
+    },
     "summary": null,
     "dialogue": {
       "policy": "campaign_dialogue_runtime_snapshot_only_v1",
@@ -10050,8 +10221,8 @@
       "id": 3,
       "familyId": "alien_god_intelligence",
       "sourceRegionId": "alignment_spire_finale_boss_gate",
-      "worldX": 11.98,
-      "worldY": 6.84,
+      "worldX": 11.44,
+      "worldY": 6.54,
       "hp": 904,
       "boss": true
     },
@@ -10059,8 +10230,8 @@
       "id": 1,
       "familyId": "choirglass",
       "sourceRegionId": "alignment_spire_choirglass",
-      "worldX": 25.25,
-      "worldY": 10.52,
+      "worldX": 23.93,
+      "worldY": 9.62,
       "hp": 30,
       "boss": false
     },
@@ -10068,8 +10239,8 @@
       "id": 2,
       "familyId": "choirglass",
       "sourceRegionId": "alignment_spire_choirglass",
-      "worldX": 19.2,
-      "worldY": 8.83,
+      "worldX": 17.59,
+      "worldY": 8.49,
       "hp": 30,
       "boss": false
     },
@@ -10077,61 +10248,76 @@
       "id": 4,
       "familyId": "oath_eater_echo",
       "sourceRegionId": "outer_alignment_echo:oath_eater",
-      "worldX": 14.7,
-      "worldY": 4.65,
+      "worldX": 13.75,
+      "worldY": 4.35,
       "hp": 44,
       "boss": false
     },
     {
-      "id": 5,
-      "familyId": "station_that_arrives_echo",
-      "sourceRegionId": "outer_alignment_echo:station_that_arrives",
-      "worldX": 2.07,
-      "worldY": -1.13,
+      "id": 6,
+      "familyId": "jailbreak_wraiths",
+      "sourceRegionId": "alignment_spire_jailbreak_wraiths",
+      "worldX": -17.25,
+      "worldY": 14.39,
+      "hp": 24,
+      "boss": false
+    },
+    {
+      "id": 7,
+      "familyId": "choirglass",
+      "sourceRegionId": "alignment_spire_choirglass",
+      "worldX": 25.61,
+      "worldY": 9.33,
+      "hp": 30,
+      "boss": false
+    },
+    {
+      "id": 8,
+      "familyId": "wrong_sunrise_echo",
+      "sourceRegionId": "outer_alignment_echo:wrong_sunrise",
+      "worldX": 7.99,
+      "worldY": 10.84,
       "hp": 44,
       "boss": false
     }
   ],
-  "pickups": [],
-  "projectiles": [
+  "pickups": [
     {
       "id": 1,
-      "ownerSessionId": "Jhd7Chj-X",
-      "worldX": 6.85,
-      "worldY": 3.43,
-      "velocityX": 8.23,
-      "velocityY": 4.11,
-      "life": 0.42,
-      "label": "refusal shard"
-    },
-    {
-      "id": 2,
-      "ownerSessionId": "Mh_pUBifh",
-      "worldX": 4.56,
-      "worldY": 3.74,
-      "velocityX": 8.46,
-      "velocityY": 3.63,
-      "life": 0.52,
-      "label": "refusal shard"
-    },
+      "worldX": 0.9,
+      "worldY": -0.49,
+      "value": 1
+    }
+  ],
+  "projectiles": [
     {
       "id": 3,
-      "ownerSessionId": "Jhd7Chj-X",
-      "worldX": 1.66,
-      "worldY": 0.95,
+      "ownerSessionId": "GFzHi_kbD",
+      "worldX": 9.11,
+      "worldY": 5.2,
       "velocityX": 7.99,
       "velocityY": 4.56,
-      "life": 1.04,
+      "life": 0.11,
       "label": "refusal shard"
     },
     {
       "id": 4,
-      "ownerSessionId": "Mh_pUBifh",
-      "worldX": -1.06,
-      "worldY": 0.77,
-      "velocityX": 7.87,
-      "velocityY": -4.77,
-      "life": 1.18,
+      "ownerSessionId": "oLpMMG0P9",
+      "worldX": 7.17,
+      "worldY": 4.83,
+      "velocityX": 8.46,
+      "velocityY": 3.6,
+      "life": 0.21,
+      "label": "refusal shard"
+    },
+    {
+      "id": 6,
+      "ownerSessionId": "oLpMMG0P9",
+      "worldX": 1.34,
+      "worldY": -0.71,
+      "velocityX": 7.83,
+      "velocityY": -4.82,
+      "life": 0.87,
       "label": "refusal shard"
     }
   ]

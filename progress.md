@@ -3139,9 +3139,67 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - `docs/proof/milestone53-dialogue-ending/milestone53-finale-ending-credits.png`
 - Milestone 53 readiness decision: ready. Major campaign presentation beats, boss title cards, finale ending, credits, and legal/parody disclaimer text are proof-visible and remain runtime-only.
 
+- Implemented Milestone 54 Audio, Juice, And Feel.
+- Added a runtime-only feedback system in `src/core/feedback.ts` with:
+  - dry audio hook cues for UI, weapon hits, pickup chimes, boss warnings, route music, objective ticks, and summary stingers;
+  - query-param defaults for `audio`, `masterVolume`, `sfxVolume`, `musicVolume`, `reducedFlash`, and `screenShake`;
+  - proof-visible counters, recent cues, accessibility limits, and reduced-flash-safe visual budgets.
+- Added main-menu controls for feedback settings:
+  - `1` cycles master volume;
+  - `2` cycles SFX volume;
+  - `3` cycles music volume;
+  - `4` toggles reduced flash.
+- Wired local runtime feedback through gameplay:
+  - menu entry;
+  - arena entry;
+  - weapon hits;
+  - pickups;
+  - boss warnings and boss music hooks;
+  - upgrade drafts;
+  - completed/failed summaries.
+- Added server-authored online feedback telemetry:
+  - `snapshot.feedback` advertises server-side audio hooks, reduced-flash-safe visual policy, and runtime counters;
+  - client feedback mirrors online server counter changes into local dry cues without making client feedback authoritative.
+- Added a compact online M54 settings/counter panel so audio/juice settings and server counters are visible during lobby, active combat, and summary states.
+- Preserved persistence boundaries:
+  - audio settings, reduced-flash settings, feedback counters, visual-juice policy, and server feedback are runtime/query-only;
+  - export/import remains route-profile-only and omits live feedback/audio/visual state.
+- Added `npm run proof:milestone54-audio-juice-feel`, covering:
+  - menu settings visibility from query params;
+  - mixer toggle feedback;
+  - local combat feedback cues with reduced-flash performance budget;
+  - online lobby feedback policy;
+  - online boss warning/music/objective cue mirroring;
+  - online summary feedback;
+  - export-code omission of feedback/audio/reduced-flash state.
+- Verification after Milestone 54:
+  - `node --check scripts/proof/run-proof.mjs`
+  - `node --check server/consensusCellServer.mjs`
+  - `npx tsc --noEmit`
+  - `npm run build` (passed with the existing Vite chunk-size warning)
+  - `npm run proof:milestone54-audio-juice-feel`
+  - `npm run proof:milestone14-combat-art`
+  - `npm run proof:milestone15-online-combat`
+  - `npm run proof:milestone53-dialogue-ending`
+  - `npm run proof:smoke`
+- Milestone 54 proof artifacts:
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-menu-settings.png`
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-menu-toggle-feedback.png`
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-local-combat-feedback.png`
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-online-lobby-settings.png`
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-online-boss-warning-feedback.png`
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-online-summary-feedback.png`
+- Screenshots inspected after Milestone 54:
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-menu-settings.png`
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-local-combat-feedback.png`
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-online-lobby-settings.png`
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-online-boss-warning-feedback.png`
+  - `docs/proof/milestone54-audio-juice-feel/milestone54-online-summary-feedback.png`
+- Milestone 54 readiness decision: ready. Feedback hooks, mixer controls, reduced-flash budgets, online server counters, and route-profile-only boundaries are proof-visible and stable.
+
 ## TODO
 
-- Next recommended milestone: Milestone 54 Audio, Juice, And Feel. Add performance-safe feedback and audio hooks, including music/SFX hooks, hit feedback, pickup cadence, UI sounds, boss warnings, accessibility volume toggles, and reduced-flash compatibility.
+- Next recommended milestone: Milestone 55 Online Robustness And Deployment. Harden hosted online play, room codes, reconnect/leave/rejoin robustness, latency tolerance, server config, deployment docs, and no-account export-code profile flow.
 - Follow-up polish for Milestone 17: add a richer party map voting UI, improve overlapping party token labels near crowded nodes, add host/vote rules for unsupported nodes, and make newly unlocked online nodes launch real distinct arenas once those arenas exist.
 - Follow-up polish for Milestone 16: replace proof-only forced down/XP/complete controls with dedicated dev harness hooks, implement reconnect-to-existing-slot semantics, and migrate durable online lifecycle data to Schema-backed collections where useful.
 - Immediate playtest focus: have the user retry the browser build after the render hotfix and report any remaining freeze/crash timing, especially browser/device and whether it happens in solo or online co-op.

@@ -2060,6 +2060,7 @@ class ConsensusCellRoom extends Room {
       rewards: this.rewardsSnapshot(),
       persistence: this.persistenceSnapshot(),
       balance: this.balanceSnapshot(),
+      feedback: this.feedbackSnapshot(),
       summary: this.runSummary,
       combatArt: {
         pressure: round(Math.min(1, this.seconds / this.activeArenaConfig().bossSeconds)),
@@ -2307,6 +2308,28 @@ class ConsensusCellRoom extends Room {
       partySize: this.connectedPlayers().length || this.players.size || 1,
       selectedNodeId: this.partySelectedNodeId
     });
+  }
+
+  feedbackSnapshot() {
+    return {
+      policy: "audio_juice_feel_1_0_runtime_only",
+      persistenceBoundary: "runtime_feedback_not_route_profile",
+      audioHooks: ["weapon_hit", "pickup_chime", "boss_warning", "objective_tick", "consensus_burst", "summary_stinger"],
+      visualJuice: {
+        reducedFlashSafe: true,
+        screenShakeAuthority: "client_optional_query_setting",
+        maxHazardAlpha: 0.18,
+        maxFloatingLabels: 32
+      },
+      counters: {
+        hit: this.kills,
+        pickup: this.collectedPickups,
+        boss_warning: this.bossIntroSeen ? 1 : 0,
+        objective: this.objectiveRuntime?.completedObjectiveIds?.length ?? 0,
+        burst: this.consensusBurstActivations,
+        summary: this.runSummary ? 1 : 0
+      }
+    };
   }
 
   persistenceSnapshot() {

@@ -143,6 +143,7 @@ export class OnlineCoopState implements GameState {
   private readonly productionSprites = new Map<string, Sprite>();
   private readonly map = ARMISTICE_PLAZA_MAP;
   private routeFocusMode: RouteFocusMode = "all";
+  private lastFeedbackCounters = { hit: 0, pickup: 0, boss_warning: 0, objective: 0, burst: 0, summary: 0 };
 
   enter(game: Game): void {
     this.serverUrl = onlineServerUrl();
@@ -306,6 +307,7 @@ export class OnlineCoopState implements GameState {
       this.sessionId = room.sessionId;
       this.status = "joined";
       room.onMessage("snapshot", (snapshot: OnlineConsensusSnapshot) => {
+        this.updateFeedbackFromSnapshot(game, snapshot);
         this.snapshot = snapshot;
         writeOnlineProgressionDraft(snapshot);
       });
@@ -1240,6 +1242,7 @@ export class OnlineCoopState implements GameState {
       if (phase === "lobby" && snapshot.dialogue?.presentation?.coMindBanter?.length) {
         this.drawPresentationLinePanel(game, "CO-MIND BANTER", snapshot.dialogue.presentation.coMindBanter.map((entry) => entry.line), 16, 390, 418, palette.mint);
       }
+      this.drawFeedbackSettingsPanel(game, snapshot);
     }
 
     const combat = snapshot?.combatArt;
@@ -1318,6 +1321,38 @@ export class OnlineCoopState implements GameState {
       cardLabel.position.set(cardX + 9, cardY + 8);
       game.layers.hud.addChild(cardLabel);
     }
+  }
+
+  private updateFeedbackFromSnapshot(game: Game, snapshot: OnlineConsensusSnapshot): void {
+    const counters = snapshot.feedback?.counters;
+    if (!counters) return;
+    if (counters.hit > this.lastFeedbackCounters.hit) game.feedback.cue("online.weapon_hit", "hit");
+    if (counters.pickup > this.lastFeedbackCounters.pickup) game.feedback.cue("online.pickup_chime", "pickup");
+    if (counters.boss_warning > this.lastFeedbackCounters.boss_warning) {
+      game.feedback.cue(`online.${snapshot.arenaId}.boss_warning`, "boss_warning");
+      game.feedback.cue(`music.${snapshot.arenaId}.boss`, "music");
+    }
+    if (counters.objective > this.lastFeedbackCounters.objective) game.feedback.cue("online.objective_tick", "objective");
+    if (counters.burst > this.lastFeedbackCounters.burst) game.feedback.cue("online.consensus_burst", "ui");
+    if (counters.summary > this.lastFeedbackCounters.summary) game.feedback.cue("online.summary_stinger", "summary");
+    this.lastFeedbackCounters = { ...counters };
+  }
+
+  private drawFeedbackSettingsPanel(game: Game, snapshot: OnlineConsensusSnapshot): void {
+    const feedback = game.feedback.snapshot();
+    const serverFeedback = snapshot.feedback;
+    const width = 352;
+    const x = game.width - width - 16;
+    const y = game.height - 86;
+    const panel = new Graphics();
+    panel.rect(x, y, width, 70).fill({ color: palette.ink, alpha: 0.82 }).stroke({ color: feedback.accessibility.reducedFlash ? palette.mint : palette.blue, width: 2, alpha: 0.82 });
+    game.layers.hud.addChild(panel);
+    const text = new Text({
+      text: `M54 AUDIO/JUICE  ${feedback.audio.enabled ? "AUDIO HOOKS" : "MUTED HOOKS"}  RF ${feedback.accessibility.reducedFlash ? "ON" : "OFF"}  SHAKE ${feedback.accessibility.screenShake ? "ON" : "OFF"}\nVOL ${Math.round(feedback.audio.masterVolume * 100)}  SFX ${Math.round(feedback.audio.sfxVolume * 100)}  MUSIC ${Math.round(feedback.audio.musicVolume * 100)}  FLASH ${Math.round(feedback.accessibility.maxFlashAlpha * 100)}%\nSERVER H${serverFeedback?.counters.hit ?? 0} P${serverFeedback?.counters.pickup ?? 0} B${serverFeedback?.counters.boss_warning ?? 0} O${serverFeedback?.counters.objective ?? 0}`,
+      style: { ...fontStyle, fontSize: 9, lineHeight: 13, fill: "#fff4d6", wordWrap: true, wordWrapWidth: width - 24, breakWords: true }
+    });
+    text.position.set(x + 12, y + 10);
+    game.layers.hud.addChild(text);
   }
 
   private drawRunSummary(game: Game, title: string, subtitle: string, summary: NonNullable<OnlineConsensusSnapshot["summary"]>): void {

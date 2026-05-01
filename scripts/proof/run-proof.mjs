@@ -641,6 +641,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone53DialogueEndingScenario();
     return;
+  } else if (name === "milestone54-audio-juice-feel") {
+    await closeBrowser(browser);
+    await runMilestone54AudioJuiceFeelScenario();
+    return;
   } else if (name === "milestone32-party-builds") {
     await closeBrowser(browser);
     await runMilestone32PartyBuildsScenario();
@@ -4661,6 +4665,101 @@ async function runMilestone53DialogueEndingScenario() {
   }
 }
 
+async function runMilestone54AudioJuiceFeelScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+  try {
+    const local = await context.newPage();
+    local.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    local.on("pageerror", (error) => errors.push(String(error)));
+    await local.goto(`${url}?audio=0&masterVolume=0.4&sfxVolume=0.3&musicVolume=0.2&reducedFlash=1`, { waitUntil: "domcontentloaded" });
+    await local.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await local.waitForSelector("canvas");
+    const menu = await state(local);
+    assert(menu.feedback?.policy === "audio_juice_feel_1_0_runtime_only", "expected M54 feedback policy on menu");
+    assert(menu.feedback?.audio?.enabled === false, "expected muted audio hook setting from query");
+    assert(menu.feedback?.accessibility?.reducedFlash === true, "expected reduced-flash setting from query");
+    assert(menu.feedback?.audio?.hooks?.includes("boss_warning"), "expected boss-warning audio hook catalog");
+    await capture(local, "milestone54-menu-settings");
+    await local.keyboard.press("Digit1");
+    await waitForFeedback(local, (text) => (text.feedback?.counters?.ui ?? 0) >= 1 && text.feedback?.audio?.masterVolume !== 0.4, "M54 menu mixer toggle");
+    await capture(local, "milestone54-menu-toggle-feedback");
+    await enterArena(local);
+    const localFeedback = await waitForLocalFeedbackActivity(local);
+    assert((localFeedback.feedback?.counters?.hit ?? 0) > 0 || (localFeedback.feedback?.counters?.pickup ?? 0) > 0, "expected local hit or pickup feedback cues");
+    const visualCounters =
+      (localFeedback.level?.combatArt?.impactCount ?? 0) +
+      (localFeedback.level?.combatArt?.damageBadgeCount ?? 0) +
+      (localFeedback.level?.combatArt?.pickupSparkleCount ?? 0);
+    assert(
+      visualCounters > 0 ||
+        ((localFeedback.feedback?.accessibility?.maxTransientParticlesPerFrame ?? 99) <= 36 &&
+          (localFeedback.feedback?.accessibility?.maxFlashAlpha ?? 1) <= 0.08 &&
+          (localFeedback.performance?.activeEntities ?? 0) < 260),
+      "expected visual juice counters or reduced-flash performance budget"
+    );
+    await capture(local, "milestone54-local-combat-feedback");
+    await local.close();
+
+    const pair = await openOnlinePairInContext(context, "m54_online", errors, {
+      resetOnlinePersistence: "1",
+      audio: "0",
+      masterVolume: "0.4",
+      sfxVolume: "0.3",
+      musicVolume: "0.2",
+      reducedFlash: "1"
+    });
+    const lobby = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.feedback?.accessibility?.reducedFlash === true &&
+        text.feedback?.audio?.enabled === false &&
+        text.online?.serverFeedback?.policy === "audio_juice_feel_1_0_runtime_only",
+      "M54 online feedback lobby",
+      12_000
+    );
+    assert(lobby.online?.serverFeedback?.visualJuice?.reducedFlashSafe === true, "expected server feedback to advertise reduced-flash-safe visual juice");
+    await capture(pair.pageA, "milestone54-online-lobby-settings");
+    await launchOnlineArmistice(pair.pageA, pair.pageB);
+    await pair.pageA.keyboard.press("KeyF");
+    const onlineBoss = await waitForOnlineServerCombat(
+      pair.pageA,
+      (text) =>
+        text.online?.serverFeedback?.counters?.boss_warning === 1 &&
+        (text.feedback?.counters?.boss_warning ?? 0) >= 1 &&
+        text.online?.bossEvent?.bossIntroSeen === true,
+      "M54 online boss warning feedback",
+      12_000
+    );
+    assert(onlineBoss.feedback?.recentCues?.some((cue) => cue.kind === "boss_warning"), "expected client feedback bus to record online boss warning cue");
+    await capture(pair.pageA, "milestone54-online-boss-warning-feedback");
+    await pair.pageA.keyboard.press("Digit3");
+    await waitForOnlineRunPhase(pair.pageA, "completed");
+    const completed = await state(pair.pageA);
+    assert((completed.feedback?.counters?.summary ?? 0) >= 1, "expected summary stinger cue after online completion");
+    assert(completed.online?.persistence?.profile && !("feedback" in completed.online.persistence.profile), "expected online route profile to omit feedback state");
+    const decoded = decodeProofOnlineProfileCode(completed.online?.saveProfile?.exportCode);
+    assert(decoded?.profile && !("feedback" in decoded.profile) && !("audio" in decoded.profile) && !("reducedFlash" in decoded.profile), "expected export profile to omit M54 feedback/audio settings");
+    await capture(pair.pageA, "milestone54-online-summary-feedback");
+    await pair.pageA.close();
+    await pair.pageB.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for milestone54 audio juice feel");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
 async function runMilestone47FactionBurstsScenario() {
   const browser = await chromium.launch({
     headless: true,
@@ -5379,6 +5478,27 @@ async function completeOnlineNodeWithProofControls(pageA, pageB, nodeId) {
   );
 }
 
+async function waitForFeedback(page, predicate, label, timeoutMs = 10_000) {
+  const start = Date.now();
+  let latest = null;
+  while (Date.now() - start < timeoutMs) {
+    latest = await state(page);
+    if (predicate(latest)) return latest;
+    await page.waitForTimeout(250);
+  }
+  throw new Error(`Timed out waiting for ${label}; last=${JSON.stringify(latest?.feedback ?? null)}`);
+}
+
+async function waitForLocalFeedbackActivity(page) {
+  let latest = null;
+  for (let i = 0; i < 16; i += 1) {
+    latest = await state(page);
+    if ((latest.feedback?.counters?.hit ?? 0) > 0 || (latest.feedback?.counters?.pickup ?? 0) > 0) return latest;
+    await advanceRunHandlingDrafts(page, 700);
+  }
+  return latest ?? state(page);
+}
+
 async function voteBothToNode(pageA, pageB, nodeId) {
   await Promise.all([voteClientToNode(pageA, nodeId), voteClientToNode(pageB, nodeId)]);
   const finalA = await state(pageA);
@@ -5693,10 +5813,10 @@ function assert(condition, message) {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel"];
   return Math.max(0, names.indexOf(name));
 }
 
 function usesCoopServer(name) {
-  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending"].includes(name);
+  return ["network", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel"].includes(name);
 }

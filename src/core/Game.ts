@@ -17,6 +17,7 @@ import { STARTER_CLASS_ID, STARTER_FACTION_ID } from "../content";
 import { clampConsensusCellSize } from "../sim/consensusCell";
 import { OnlineCoopState } from "../network/OnlineCoopState";
 import { AssetPreviewState, type AssetPreviewKind } from "../ui/assetPreview";
+import { createFeedbackSystem } from "./feedback";
 
 declare global {
   interface Window {
@@ -36,10 +37,16 @@ class MainMenuState implements GameState {
   exit(): void {}
 
   update(game: Game): void {
+    if (game.input.wasPressed("one")) game.feedback.cycleMasterVolume();
+    if (game.input.wasPressed("two")) game.feedback.cycleSfxVolume();
+    if (game.input.wasPressed("three")) game.feedback.cycleMusicVolume();
+    if (game.input.wasPressed("four")) game.feedback.toggleReducedFlash();
     if (game.input.wasPressed("interact")) {
+      game.feedback.cue("ui.enter_build_select", "ui");
       game.state.set(new BuildSelectState());
     }
     if (game.input.wasPressed("coop")) {
+      game.feedback.cue("ui.enter_online_coop", "ui");
       game.state.set(new OnlineCoopState());
     }
   }
@@ -66,7 +73,7 @@ class MainMenuState implements GameState {
     game.layers.hud.addChild(title);
 
     const subtitle = new Text({
-      text: `${GAME_TAGLINE}\n\nEnter: Alignment Grid  C: online Consensus Cell  WASD/arrows: move  Space: dash  1/2/3: emergency patches`,
+      text: `${GAME_TAGLINE}\n\nEnter: Alignment Grid  C: online Consensus Cell  WASD/arrows: move  Space: dash\n1 master ${Math.round(game.feedback.snapshot().audio.masterVolume * 100)}%  2 sfx ${Math.round(game.feedback.snapshot().audio.sfxVolume * 100)}%  3 music ${Math.round(game.feedback.snapshot().audio.musicVolume * 100)}%  4 reduced flash ${game.feedback.snapshot().accessibility.reducedFlash ? "ON" : "OFF"}`,
       style: { ...fontStyle, fontSize: 17, align: "center", wordWrap: true, wordWrapWidth: 760, fill: "#64e0b4" }
     });
     subtitle.anchor.set(0.5);
@@ -99,6 +106,7 @@ export class Game {
   selectedFactionId = STARTER_FACTION_ID;
   consensusCellSize = 1;
   private readonly query = new URLSearchParams(window.location.search);
+  readonly feedback = createFeedbackSystem(this.query);
   readonly assetPreview = this.query.get("assetPreview");
   readonly productionArtDefaulted = !isDisabledQueryFlag(this.query, "productionArt") && !isEnabledQueryFlag(this.query, "placeholderArt");
   readonly armisticeTileAtlasDefaulted = !isDisabledQueryFlag(this.query, "armisticeTiles") && !isEnabledQueryFlag(this.query, "placeholderTiles");

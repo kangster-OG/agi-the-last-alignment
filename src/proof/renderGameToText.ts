@@ -36,6 +36,7 @@ export function renderGameToText(game: Game): string {
       activeEntities: 0,
       fpsTarget: 60
     },
+    feedback: game.feedback.snapshot(),
     assetRendering: {
       assetPreview: game.assetPreview,
       armisticeTileAtlasEnabled: game.useArmisticeTileAtlas,
@@ -348,6 +349,7 @@ export function renderGameToText(game: Game): string {
           rewards: snapshot?.rewards ?? null,
           persistence: snapshot?.persistence ?? null,
           balance: snapshot?.balance ?? null,
+          serverFeedback: snapshot?.feedback ?? null,
           progression: snapshot?.progression ?? null,
           upgradeDraft: snapshot?.progression?.upgradePending
             ? {
@@ -418,6 +420,7 @@ export function renderGameToText(game: Game): string {
           rewards: snapshot?.rewards ?? null,
           persistence: snapshot?.persistence ?? null,
           balance: snapshot?.balance ?? null,
+          serverFeedback: snapshot?.feedback ?? null,
 	          summary: snapshot?.summary ?? null,
 	          dialogue: snapshot?.dialogue ?? null,
 	          bossMechanics: snapshot?.bossEvent

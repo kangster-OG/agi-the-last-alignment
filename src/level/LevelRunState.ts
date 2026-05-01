@@ -207,6 +207,8 @@ export class LevelRunState implements GameState {
       boss.enemyFamilyId = "oath_eater";
       this.bossSpawned = true;
       this.bossIntroSeen = true;
+      game.feedback.cue("boss.oath_eater.warning", "boss_warning");
+      game.feedback.cue(`music.${this.arena.id}.boss`, "music");
       this.bossMechanicTimer = 0.7;
       this.oathPageTimer = 0.4;
       this.spawnBrokenPromiseZone(this.map.bossSpawn.worldX, this.map.bossSpawn.worldY + 2.8, 3.1);
@@ -223,7 +225,9 @@ export class LevelRunState implements GameState {
       if (runtime.downed) continue;
       updateAutoWeapon(this.world, runtime.weapon, runtime.player, runtime.build, dt, runtime.buildKit.startingWeaponId);
     }
-    this.kills += resolveProjectileHits(this.world);
+    const hits = resolveProjectileHits(this.world);
+    if (hits > 0) game.feedback.cue("combat.weapon_hit", "hit");
+    this.kills += hits;
     this.bossDefeated = this.bossSpawned && !this.world.entities.some((entity) => entity.active && entity.kind === "enemy" && entity.boss);
 
     for (const pickup of this.world.entities) {
@@ -231,6 +235,7 @@ export class LevelRunState implements GameState {
         const collector = this.nearestRuntime(pickup.worldX, pickup.worldY);
         const collected = updatePickup(pickup, collector.player, collector.build, dt);
         if (collected) {
+          game.feedback.cue("pickup.coherence_shard", "pickup");
           this.spawnPickupSparkle(pickup.worldX, pickup.worldY);
           for (const runtime of this.players) {
             if (runtime.id !== collector.id && !runtime.downed) runtime.player.xp += pickup.value;
@@ -250,11 +255,13 @@ export class LevelRunState implements GameState {
     if (this.player.xp >= xpNeeded(this.player.level)) {
       this.player.xp -= xpNeeded(this.player.level);
       this.player.level += 1;
+      game.feedback.cue("ui.upgrade_draft", "ui");
       game.state.set(new UpgradeDraftState(this));
       return;
     }
 
     if (this.players.every((runtime) => runtime.downed || runtime.player.hp <= 0)) {
+      game.feedback.cue("summary.failed", "summary");
       game.state.set(
         new SummaryState({
           nodeId: this.nodeId,
@@ -271,6 +278,7 @@ export class LevelRunState implements GameState {
     }
 
     if (this.seconds >= this.arena.targetSeconds && (this.bossDefeated || this.kills >= 42 + (this.players.length - 1) * 10)) {
+      game.feedback.cue("summary.completed", "summary");
       game.state.set(
         new SummaryState({
           nodeId: this.nodeId,

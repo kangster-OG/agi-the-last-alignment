@@ -4,7 +4,7 @@ This is the durable repo roadmap for `AGI: The Last Alignment`.
 
 Target: a maximal-quality free browser-playable 1.0 with a full campaign route, solo/local co-op/online Colyseus co-op, production-art defaults, placeholder opt-outs, deterministic proof coverage, and browser-local/export-code persistence. Persistence remains prototype-local/export-code based unless a future explicit product decision changes that.
 
-Current repo status as of May 1, 2026: Milestones 0-51 are complete. Milestone 52 is next.
+Current repo status as of May 1, 2026: Milestones 0-54 are complete. Milestone 55 is next.
 
 ## Non-Negotiable Continuity
 
@@ -709,20 +709,25 @@ Readiness: complete.
 
 Goal: add performance-safe feedback and audio hooks.
 
-Expected scope:
+Implemented:
 
-- music/SFX hooks;
-- hit feedback;
-- pickup cadence;
-- UI sounds;
-- boss warnings;
-- accessibility volume toggles;
-- reduced-flash compatibility.
+- added an `audio_juice_feel_1_0_runtime_only` feedback system with dry audio hook cues for UI, hits, pickups, boss warnings, route music, objective ticks, and summary stingers;
+- added main-menu mixer/reduced-flash controls and query-param defaults for automation and accessibility checks;
+- connected local combat, pickups, upgrade drafts, boss arrivals, and run summaries to the feedback cue bus;
+- exposed server-authored online feedback counters and visual-juice policy without making client feedback authoritative;
+- mirrored online server counter changes into client-local dry cues for hit, pickup, boss, objective, burst, music, and summary feedback;
+- added a compact online M54 settings/counter panel;
+- preserved route-profile-only persistence by keeping audio, reduced-flash, runtime counters, and feedback policy out of export/import payloads.
 
-Proof expectations:
+Proof coverage:
 
-- audio settings are visible and stable;
-- visual juice does not break render performance or accessibility rules.
+- `npm run proof:milestone54-audio-juice-feel`
+- `npm run proof:milestone14-combat-art`
+- `npm run proof:milestone15-online-combat`
+- `npm run proof:milestone53-dialogue-ending`
+- `npm run proof:smoke`
+
+Readiness: complete.
 
 ### M55: Online Robustness And Deployment
 
