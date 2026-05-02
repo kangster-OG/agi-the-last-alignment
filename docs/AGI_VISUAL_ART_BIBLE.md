@@ -67,6 +67,16 @@ If an asset looks bad after cleanup, regenerate it. Do not paint over failure wi
 - Large objects must have obvious bases and believable occlusion.
 - Props are part of the place, not icons on a board.
 
+### Camera Shot Scale
+
+Maps should be larger than the benchmark reference games, but the normal combat point of view should feel similarly close and readable.
+
+- Do not solve larger maps by pulling the camera far back.
+- The camera should follow the player through a large authored world, showing a dense local crop rather than the whole arena.
+- First-screen screenshots should contain 3-5 recognizable set pieces or material zones without sacrificing player/enemy readability.
+- Terrain, props, sprites, pickups, and VFX must be generated with enough detail to survive this closer view.
+- Debug, proof, route, and overview cameras may zoom out when needed, but production screenshots and art gates use the normal combat shot scale.
+
 ### Pixel Density
 
 Use larger source art than the final runtime size, then normalize down only after the object reads.
@@ -398,4 +408,3 @@ Rebuild in this order:
    - runtime material patch composition.
 
 No further broad art replacement should be accepted until this target board exists and looks good.
-

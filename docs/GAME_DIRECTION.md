@@ -98,6 +98,21 @@ Treat this as a durable requirement:
 
 Implementation implication: move toward larger tilemaps, camera-follow exploration, chunked/streamed prop rendering if needed, spawn regions, and distributed objectives.
 
+## Camera Scale Versus World Scale
+
+The user likes that our maps are larger than the reference, but wants the moment-to-moment point of view to match the reference's closer tactical read.
+
+Treat this as a durable camera requirement:
+
+- Keep the world larger than the benchmark clips; do not shrink arenas back into single-screen combat boxes.
+- Tune the normal gameplay camera so the on-screen scale feels close to the benchmark: characters, enemies, props, and terrain materials should read as authored objects, not tiny tokens on a distant board.
+- Use a follow camera across the larger world rather than zooming out to show the full map.
+- The first playable camera should feel like a dense diorama crop inside a much larger place.
+- Zooming out is reserved for map/overworld/route context, debug views, or explicit strategic UI, not normal combat.
+- Screenshot gates should judge the normal combat camera, not an artificially zoomed-out proof view.
+
+Asset implication: because the camera is closer, production assets need more true pixel detail and larger source art. Bigger maps increase content quantity, while the closer camera increases per-asset fidelity requirements.
+
 ## Creative Identity
 
 The Creative Bible has now locked the high-level identity:

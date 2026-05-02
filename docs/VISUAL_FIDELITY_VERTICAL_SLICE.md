@@ -14,6 +14,7 @@ Armistice is considered production-ready for this slice only when a normal-play 
 - Tech Bros is used only as a benchmark for density, material richness, prop scale, and sprite readability, not as a style sheet to copy;
 - the terrain no longer reads as a flat gray prototype grid;
 - three to five recognizable set pieces are visible in the first playable camera;
+- the camera shows a close tactical crop comparable to the benchmark while the full arena remains much larger than one screen;
 - HUD chrome is small enough that the arena, not proof telemetry, owns the frame;
 - player and enemy silhouettes are readable instantly at screenshot scale.
 

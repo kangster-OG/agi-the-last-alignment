@@ -79,6 +79,17 @@ Do not use Python/Pillow to create final expressive art. If the generated source
 - Large props need collision bodies when they are visually large enough to block movement.
 - A production asset that reads as code-generated rectangles is rejected even if it passes manifest/provenance checks.
 
+## Camera-Scale Asset Implications
+
+The game should keep maps larger than the benchmark references while matching the references' closer moment-to-moment camera scale. This changes asset generation in several ways:
+
+- Sprites and props cannot rely on distant-view simplification. Generate them with visible internal material detail, strong silhouettes, and clean contact shadows.
+- Terrain needs broad material chunks, transition masks, and edge variation because repeated tiles are more obvious at the closer camera.
+- Large set pieces should be authored as vehicle/building-scale objects with collision footprints, not small decorative icons.
+- The asset budget increases in two directions: more assets are needed for larger worlds, and each visible asset needs enough fidelity for the closer camera.
+- PixelLab prompts should describe the intended gameplay scale, for example: "readable in a close 2:1 isometric combat camera, 80 px character scale, dense authored terrain crop."
+- Visual gates should use the normal gameplay camera. A zoomed-out proof screenshot is not acceptable for judging production art quality.
+
 ## Suggested Paths
 
 ```txt
