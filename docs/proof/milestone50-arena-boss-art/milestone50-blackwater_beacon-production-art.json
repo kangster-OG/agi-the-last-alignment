@@ -151,7 +151,7 @@
       {
         "id": "ui.enter_online_coop",
         "kind": "ui",
-        "atMs": 841
+        "atMs": 882
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -265,11 +265,11 @@
     "productionAssets": 60
   },
   "player": {
-    "sessionId": "k5jdoI1Oj",
-    "worldX": -1.6,
-    "worldY": 1.1,
-    "hp": 176,
-    "maxHp": 176,
+    "sessionId": "smWcfeXg0",
+    "worldX": 0,
+    "worldY": 0,
+    "hp": 140,
+    "maxHp": 140,
     "xp": 0,
     "level": 1
   },
@@ -277,9 +277,9 @@
     "status": "joined",
     "serverUrl": "ws://127.0.0.1:2620",
     "serverUrlSource": "query.coopServer",
-    "roomId": "QhiuoYG5N",
+    "roomId": "KhU5be6KL",
     "roomCode": "PUBLIC",
-    "sessionId": "k5jdoI1Oj",
+    "sessionId": "smWcfeXg0",
     "lastError": "",
     "reconnectKey": "beacon_a",
     "reconnect": {
@@ -1116,7 +1116,7 @@
     "maxClients": 4,
     "playerCount": 2,
     "tick": 140,
-    "seconds": 1.81,
+    "seconds": 1.84,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "active",
@@ -1353,7 +1353,7 @@
           "worldX": 1,
           "worldY": -7.8,
           "radius": 2.85,
-          "expiresIn": 5.7,
+          "expiresIn": 5.69,
           "damagePerSecond": 3
         },
         {
@@ -1363,7 +1363,7 @@
           "worldX": 0.9,
           "worldY": -5,
           "radius": 1.8,
-          "expiresIn": 6.1,
+          "expiresIn": 6.09,
           "damagePerSecond": 0
         },
         {
@@ -1373,7 +1373,7 @@
           "worldX": 5.9,
           "worldY": -5,
           "radius": 1.8,
-          "expiresIn": 6.1,
+          "expiresIn": 6.09,
           "damagePerSecond": 0
         }
       ]
@@ -1581,20 +1581,20 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "G8v81Rir_",
+          "sessionId": "smWcfeXg0",
           "label": "P1",
-          "classId": "signal_vanguard",
-          "factionId": "qwen_silkgrid",
-          "role": "support",
+          "classId": "accord_striker",
+          "factionId": "openai_accord",
+          "role": "runner",
           "downed": false,
           "connected": true
         },
         {
-          "sessionId": "k5jdoI1Oj",
+          "sessionId": "GPPn06T0W",
           "label": "P2",
-          "classId": "accord_striker",
-          "factionId": "openai_accord",
-          "role": "runner",
+          "classId": "signal_vanguard",
+          "factionId": "qwen_silkgrid",
+          "role": "support",
           "downed": false,
           "connected": true
         }
@@ -1614,8 +1614,8 @@
       "currentComboId": null,
       "currentComboName": null,
       "participatingFactionIds": [
-        "qwen_silkgrid",
-        "openai_accord"
+        "openai_accord",
+        "qwen_silkgrid"
       ],
       "activeCombo": null,
       "comboCatalog": [
@@ -2755,16 +2755,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "G8v81Rir_",
-          "playerId": "player_0_beacon_b",
+          "sessionId": "smWcfeXg0",
+          "playerId": "player_0_beacon_a",
           "label": "P1",
           "nodeId": "blackwater_beacon",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "k5jdoI1Oj",
-          "playerId": "player_1_beacon_a",
+          "sessionId": "GPPn06T0W",
+          "playerId": "player_1_beacon_b",
           "label": "P2",
           "nodeId": "blackwater_beacon",
           "ready": true,
@@ -5795,88 +5795,10 @@
   },
   "players": [
     {
-      "sessionId": "G8v81Rir_",
-      "playerId": "player_0_beacon_b",
+      "sessionId": "smWcfeXg0",
+      "playerId": "player_0_beacon_a",
       "slot": 0,
       "label": "P1",
-      "classId": "signal_vanguard",
-      "factionId": "qwen_silkgrid",
-      "buildKit": {
-        "schemaVersion": 1,
-        "classId": "signal_vanguard",
-        "factionId": "qwen_silkgrid",
-        "classRole": "support",
-        "factionRoleBias": [
-          "support",
-          "control"
-        ],
-        "resolvedRole": "support",
-        "startingWeaponId": "signal_pulse",
-        "passiveIds": [
-          "beacon_discipline",
-          "silkgrid_relay",
-          "shared_vocabulary"
-        ],
-        "partyAuraIds": [
-          "qwen_relay"
-        ],
-        "recompileModifiers": {
-          "radiusBonus": 0.22,
-          "requiredSecondsScale": 0.96,
-          "reviveHpBonus": 0.08,
-          "guardDamageReduction": 0
-        },
-        "rolePressureAffinity": [
-          "class_role.support",
-          "faction_bias.support",
-          "faction_bias.control",
-          "role_match"
-        ],
-        "synergyId": "synergy.multilingual_rescue_net",
-        "effectScopes": {
-          "solo": [
-            "support solo weapon identity"
-          ],
-          "localCoop": [
-            "support local party role"
-          ],
-          "online": [
-            "server-owned kit telemetry and limited Recompile Ally modifiers"
-          ]
-        },
-        "hookStatus": {
-          "signal_pulse": "active",
-          "recompileModifiers": "server_owned"
-        }
-      },
-      "weaponId": "signal_pulse",
-      "worldX": 0,
-      "worldY": 0,
-      "velocityX": 0,
-      "velocityY": 0,
-      "facing": "south",
-      "hp": 140,
-      "maxHp": 140,
-      "xp": 0,
-      "level": 1,
-      "ready": true,
-      "votedNodeId": "blackwater_beacon",
-      "connectionState": "connected",
-      "connected": true,
-      "reconnectCount": 0,
-      "disconnectedFor": 0,
-      "downed": false,
-      "reviveProgress": 0,
-      "reviveRequired": 2.3,
-      "revivedCount": 0,
-      "isLocal": false,
-      "inputSequence": 17
-    },
-    {
-      "sessionId": "k5jdoI1Oj",
-      "playerId": "player_1_beacon_a",
-      "slot": 1,
-      "label": "P2",
       "classId": "accord_striker",
       "factionId": "openai_accord",
       "buildKit": {
@@ -5929,6 +5851,84 @@
         }
       },
       "weaponId": "refusal_shard",
+      "worldX": 0,
+      "worldY": 0,
+      "velocityX": 0,
+      "velocityY": 0,
+      "facing": "south",
+      "hp": 140,
+      "maxHp": 140,
+      "xp": 0,
+      "level": 1,
+      "ready": true,
+      "votedNodeId": "blackwater_beacon",
+      "connectionState": "connected",
+      "connected": true,
+      "reconnectCount": 0,
+      "disconnectedFor": 0,
+      "downed": false,
+      "reviveProgress": 0,
+      "reviveRequired": 2.3,
+      "revivedCount": 0,
+      "isLocal": true,
+      "inputSequence": 20
+    },
+    {
+      "sessionId": "GPPn06T0W",
+      "playerId": "player_1_beacon_b",
+      "slot": 1,
+      "label": "P2",
+      "classId": "signal_vanguard",
+      "factionId": "qwen_silkgrid",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "signal_vanguard",
+        "factionId": "qwen_silkgrid",
+        "classRole": "support",
+        "factionRoleBias": [
+          "support",
+          "control"
+        ],
+        "resolvedRole": "support",
+        "startingWeaponId": "signal_pulse",
+        "passiveIds": [
+          "beacon_discipline",
+          "silkgrid_relay",
+          "shared_vocabulary"
+        ],
+        "partyAuraIds": [
+          "qwen_relay"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0.22,
+          "requiredSecondsScale": 0.96,
+          "reviveHpBonus": 0.08,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.support",
+          "faction_bias.support",
+          "faction_bias.control",
+          "role_match"
+        ],
+        "synergyId": "synergy.multilingual_rescue_net",
+        "effectScopes": {
+          "solo": [
+            "support solo weapon identity"
+          ],
+          "localCoop": [
+            "support local party role"
+          ],
+          "online": [
+            "server-owned kit telemetry and limited Recompile Ally modifiers"
+          ]
+        },
+        "hookStatus": {
+          "signal_pulse": "active",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "signal_pulse",
       "worldX": -1.6,
       "worldY": 1.1,
       "velocityX": 0,
@@ -5948,8 +5948,8 @@
       "reviveProgress": 0,
       "reviveRequired": 2.3,
       "revivedCount": 0,
-      "isLocal": true,
-      "inputSequence": 18
+      "isLocal": false,
+      "inputSequence": 20
     }
   ],
   "overworld": null,
@@ -6073,16 +6073,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "G8v81Rir_",
-          "playerId": "player_0_beacon_b",
+          "sessionId": "smWcfeXg0",
+          "playerId": "player_0_beacon_a",
           "label": "P1",
           "nodeId": "blackwater_beacon",
           "ready": true,
           "connectionState": "connected"
         },
         {
-          "sessionId": "k5jdoI1Oj",
-          "playerId": "player_1_beacon_a",
+          "sessionId": "GPPn06T0W",
+          "playerId": "player_1_beacon_b",
           "label": "P2",
           "nodeId": "blackwater_beacon",
           "ready": true,
@@ -9172,7 +9172,7 @@
           "worldX": 1,
           "worldY": -7.8,
           "radius": 2.85,
-          "expiresIn": 5.7,
+          "expiresIn": 5.69,
           "damagePerSecond": 3
         },
         {
@@ -9182,7 +9182,7 @@
           "worldX": 0.9,
           "worldY": -5,
           "radius": 1.8,
-          "expiresIn": 6.1,
+          "expiresIn": 6.09,
           "damagePerSecond": 0
         },
         {
@@ -9192,7 +9192,7 @@
           "worldX": 5.9,
           "worldY": -5,
           "radius": 1.8,
-          "expiresIn": 6.1,
+          "expiresIn": 6.09,
           "damagePerSecond": 0
         }
       ]
@@ -10222,8 +10222,8 @@
       "id": 1,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 17.8,
-      "worldY": -14.7,
+      "worldX": 17.76,
+      "worldY": -14.68,
       "hp": 33,
       "boss": false
     },
@@ -10231,8 +10231,8 @@
       "id": 2,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 12.36,
-      "worldY": -15.6,
+      "worldX": 12.31,
+      "worldY": -15.52,
       "hp": 33,
       "boss": false
     },
@@ -10240,8 +10240,8 @@
       "id": 3,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 13.68,
-      "worldY": -16.14,
+      "worldX": 13.65,
+      "worldY": -15.95,
       "hp": 33,
       "boss": false
     },
@@ -10249,8 +10249,8 @@
       "id": 4,
       "familyId": "tidecall_static",
       "sourceRegionId": "blackwater_tidecall_static",
-      "worldX": 20.52,
-      "worldY": -20.96,
+      "worldX": 20.34,
+      "worldY": -21,
       "hp": 33,
       "boss": false
     }
@@ -10258,63 +10258,63 @@
   "pickups": [],
   "projectiles": [
     {
-      "id": 10,
-      "ownerSessionId": "k5jdoI1Oj",
-      "worldX": 3.6,
-      "worldY": -5.14,
-      "velocityX": 5.89,
-      "velocityY": -7.07,
-      "life": 0.37,
+      "id": 6,
+      "ownerSessionId": "smWcfeXg0",
+      "worldX": 5.88,
+      "worldY": -7.41,
+      "velocityX": 5.72,
+      "velocityY": -7.21,
+      "life": 0.22,
       "label": "refusal shard"
     },
     {
       "id": 11,
-      "ownerSessionId": "k5jdoI1Oj",
-      "worldX": -0.22,
-      "worldY": -0.55,
-      "velocityX": 5.9,
-      "velocityY": -7.06,
-      "life": 1.02,
+      "ownerSessionId": "smWcfeXg0",
+      "worldX": 2.17,
+      "worldY": -2.74,
+      "velocityX": 5.72,
+      "velocityY": -7.21,
+      "life": 0.87,
       "label": "refusal shard"
     },
     {
       "id": 12,
-      "ownerSessionId": "G8v81Rir_",
-      "worldX": 1.21,
-      "worldY": 0,
+      "ownerSessionId": "GPPn06T0W",
+      "worldX": -0.99,
+      "worldY": 1.1,
       "velocityX": 6,
       "velocityY": 0,
-      "life": 0.58,
+      "life": 0.68,
       "label": "signal pulse"
     },
     {
       "id": 13,
-      "ownerSessionId": "G8v81Rir_",
-      "worldX": -1.21,
-      "worldY": 0,
+      "ownerSessionId": "GPPn06T0W",
+      "worldX": -2.21,
+      "worldY": 1.1,
       "velocityX": -6,
       "velocityY": 0,
-      "life": 0.58,
+      "life": 0.68,
       "label": "signal pulse"
     },
     {
       "id": 14,
-      "ownerSessionId": "G8v81Rir_",
-      "worldX": 0,
-      "worldY": 1.21,
+      "ownerSessionId": "GPPn06T0W",
+      "worldX": -1.6,
+      "worldY": 1.71,
       "velocityX": 0,
       "velocityY": 6,
-      "life": 0.58,
+      "life": 0.68,
       "label": "signal pulse"
     },
     {
       "id": 15,
-      "ownerSessionId": "G8v81Rir_",
-      "worldX": 0,
-      "worldY": -1.21,
+      "ownerSessionId": "GPPn06T0W",
+      "worldX": -1.6,
+      "worldY": 0.49,
       "velocityX": 0,
       "velocityY": -6,
-      "life": 0.58,
+      "life": 0.68,
       "label": "signal pulse"
     }
   ]

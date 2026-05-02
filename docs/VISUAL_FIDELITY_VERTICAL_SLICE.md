@@ -50,10 +50,27 @@ The second pass rebuilds the starter Armistice runtime atlas and set pieces from
 
 The builder is `scripts/assets/build-armistice-visual-slice-assets.py`. It preserves existing runtime dimensions, import paths, and opt-out behavior while making the arena look less like a repeated proof grid.
 
+## Terrain And HUD Pass
+
+The third pass reduces tile-by-tile repetition in normal play:
+
+- `src/level/LevelRunState.ts` now paints broad terrain zones first, then uses the Armistice ground atlas as sparse accent material instead of a full-screen grid carpet.
+- The Armistice tile builder keeps the same runtime atlas contract while lowering edge contrast so repeated pavers stop dominating the camera.
+- `src/network/OnlineCoopState.ts` now applies the same broad-surface idea to M50 production arenas, including online Armistice and the finale, so online proofs no longer show full-screen repeated local atlases.
+- Normal play shows a compact `CELL 1/4` co-op strip. Proof/dev telemetry remains available with `?debugHud=1` or `?proofHud=1`, preserving deterministic screenshot and state inspection workflows.
+
+Proof artifacts:
+
+- `docs/proof/visual-fidelity-slice/reference-asset-terrain-ui-arena.png`
+- `docs/proof/visual-fidelity-slice/armistice-terrain-ui-pass-action.png`
+- `docs/proof/visual-fidelity-slice/armistice-terrain-ui-pass-action.json`
+- `docs/proof/visual-fidelity-slice/terrain-ui-console-errors.json`
+- `docs/proof/visual-fidelity-slice/terrain-ui-metrics.txt`
+- `docs/proof/visual-fidelity-slice/online-m50-terrain-before-after.png`
+
 ## Next Art Passes
 
-1. Add a normal-play UI mode that softens proof labels while keeping telemetry available in proof/dev modes.
-2. Build a second terrain atlas with real biome-transition tiles, not only per-tile texture variation.
-3. Generate larger isometric set pieces for treaty hall ruins and foreground silhouettes.
-4. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
-5. Port the same visual-composition helpers into the online arena renderer once the solo slice reads well.
+1. Build real biome-transition tiles and edge masks for plaza-to-terminal and plaza-to-breach joins.
+2. Generate larger isometric set pieces for treaty hall ruins and foreground silhouettes.
+3. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
+4. Port the same visual-composition helpers into the online arena renderer once the solo slice reads well.

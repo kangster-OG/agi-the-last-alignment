@@ -112,6 +112,7 @@ export class Game {
   readonly armisticeTileAtlasDefaulted = !isDisabledQueryFlag(this.query, "armisticeTiles") && !isEnabledQueryFlag(this.query, "placeholderTiles");
   readonly useArmisticeTileAtlas = this.armisticeTileAtlasDefaulted || isEnabledQueryFlag(this.query, "armisticeTiles");
   readonly useMilestone10Art = this.productionArtDefaulted || isEnabledQueryFlag(this.query, "productionArt");
+  readonly showDebugHud = isEnabledQueryFlag(this.query, "debugHud") || isEnabledQueryFlag(this.query, "proofHud");
   private booted = false;
 
   constructor(private readonly root: HTMLElement) {}

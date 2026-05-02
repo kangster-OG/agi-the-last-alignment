@@ -54,7 +54,7 @@ def tile_from_source(source: Image.Image, fill: tuple[int, int, int], accent: tu
     base.putalpha(mask)
     tile.alpha_composite(base)
     draw = ImageDraw.Draw(tile)
-    draw.line([(32, 1), (63, 16), (32, 31), (0, 16), (32, 1)], fill=(15, 24, 31, 66), width=1)
+    draw.line([(32, 1), (63, 16), (32, 31), (0, 16), (32, 1)], fill=(15, 24, 31, 28), width=1)
     for i in range(2):
         x = 10 + ((seed * 17 + i * 13) % 42)
         y = 7 + ((seed * 11 + i * 7) % 18)

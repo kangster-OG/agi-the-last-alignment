@@ -141,7 +141,7 @@
   "upgrades": [],
   "objective": "AGI pressure in 23s",
   "performance": {
-    "entitiesAllocated": 8,
+    "entitiesAllocated": 9,
     "activeEntities": 8,
     "fpsTarget": 60
   },
@@ -209,7 +209,7 @@
     },
     "counters": {
       "ui": 1,
-      "hit": 0,
+      "hit": 1,
       "pickup": 0,
       "boss_warning": 0,
       "music": 0,
@@ -218,9 +218,14 @@
     },
     "recentCues": [
       {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 5264
+      },
+      {
         "id": "ui.enter_build_select",
         "kind": "ui",
-        "atMs": 1458
+        "atMs": 1368
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -473,9 +478,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 103,
+          "tick": 108,
           "playerId": "p1",
-          "sequence": 103,
+          "sequence": 108,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -484,8 +489,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 103,
-        "seconds": 1.72,
+        "tick": 108,
+        "seconds": 1.8,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -571,19 +576,10 @@
         ],
         "enemies": [
           {
-            "id": 1,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "",
-            "worldX": 5.66,
-            "worldY": 3.91,
-            "hp": 4,
-            "boss": false
-          },
-          {
             "id": 2,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": -7.87,
+            "worldX": -7.75,
             "worldY": -0.26,
             "hp": 22,
             "boss": false
@@ -592,8 +588,8 @@
             "id": 5,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -26.36,
-            "worldY": 20.46,
+            "worldX": -26.26,
+            "worldY": 20.38,
             "hp": 22,
             "boss": false
           },
@@ -601,34 +597,35 @@
             "id": 6,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -20.81,
-            "worldY": 16.49,
+            "worldX": -20.71,
+            "worldY": 16.41,
             "hp": 22,
             "boss": false
           }
         ],
-        "pickups": [],
+        "pickups": [
+          {
+            "id": 1,
+            "worldX": 5.57,
+            "worldY": 3.85,
+            "value": 1
+          }
+        ],
         "projectiles": [
           {
             "id": 3,
-            "worldX": 1.98,
-            "worldY": 1.37,
-            "pierce": 1
-          },
-          {
-            "id": 4,
-            "worldX": 4.78,
-            "worldY": 3.3,
+            "worldX": 2.56,
+            "worldY": 1.77,
             "pierce": 1
           }
         ]
       }
     },
     "combatArt": {
-      "projectileCount": 2,
+      "projectileCount": 1,
       "impactCount": 1,
       "pickupSparkleCount": 0,
-      "damageBadgeCount": 1,
+      "damageBadgeCount": 2,
       "refusalAuraPlayers": 0
     },
     "bossMechanics": {
@@ -639,28 +636,18 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 1.72,
-    "kills": 0,
+    "seconds": 1.8,
+    "kills": 1,
     "bossSpawned": false,
     "bossDefeated": false
   },
   "enemies": [
     {
-      "id": 1,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "",
-      "worldX": 5.66,
-      "worldY": 3.91,
-      "hp": 4,
-      "boss": false
-    },
-    {
       "id": 2,
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": -7.87,
+      "worldX": -7.75,
       "worldY": -0.26,
       "hp": 22,
       "boss": false
@@ -670,8 +657,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -26.36,
-      "worldY": 20.46,
+      "worldX": -26.26,
+      "worldY": 20.38,
       "hp": 22,
       "boss": false
     },
@@ -680,23 +667,23 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -20.81,
-      "worldY": 16.49,
+      "worldX": -20.71,
+      "worldY": 16.41,
       "hp": 22,
       "boss": false
     }
   ],
-  "pickups": [],
+  "pickups": [
+    {
+      "worldX": 5.57,
+      "worldY": 3.85,
+      "value": 1
+    }
+  ],
   "projectiles": [
     {
-      "worldX": 1.98,
-      "worldY": 1.37,
-      "pierce": 1,
-      "label": "refusal shard"
-    },
-    {
-      "worldX": 4.78,
-      "worldY": 3.3,
+      "worldX": 2.56,
+      "worldY": 1.77,
       "pierce": 1,
       "label": "refusal shard"
     }

@@ -634,9 +634,28 @@ export class LevelRunState implements GameState {
     }
 
     const ground = new Container();
+    const base = new Graphics();
+    this.drawIsoWorldRect(base, this.map.bounds.minX, this.map.bounds.minY, this.map.bounds.maxX, this.map.bounds.maxY, 0x596164, 0.98, 0x111821, 0.18);
+    this.drawIsoWorldRect(base, -7.5, -30, 7.5, 30, 0x737779, 0.74, 0x151c24, 0.12);
+    this.drawIsoWorldRect(base, -30, -7.5, 30, 7.5, 0x747979, 0.7, 0x151c24, 0.12);
+    this.drawIsoWorldRect(base, -28, -22, -8, -5, 0x344b56, 0.72, 0x45aaf2, 0.12);
+    this.drawIsoWorldRect(base, 9, -20, 30, -1, 0x4b3a34, 0.72, 0xff5d57, 0.12);
+    this.drawIsoWorldRect(base, 10, 8, 27, 25, 0x225a5e, 0.76, 0x64e0b4, 0.14);
+    this.drawIsoWorldRect(base, -30, 9, -10, 29, 0x29183c, 0.78, 0x7b61ff, 0.14);
+    ground.addChild(base);
     for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
       for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
-        addArmisticeTileSprite(ground, textures, x, y, armisticeTileKeyForTerrain(x, y, this.terrainBandIdAt(x, y)));
+        const band = this.terrainBandIdAt(x, y);
+        const hash = this.visualHash(x, y);
+        const shouldPlace =
+          band === "terminal_pad" ||
+          band === "breach_corruption" ||
+          band === "barricade_corridor_floor" ||
+          ((band === "main_plaza_cross_x" || band === "main_plaza_cross_y") && hash % 3 === 0) ||
+          hash % 17 === 0;
+        if (!shouldPlace) continue;
+        const sprite = addArmisticeTileSprite(ground, textures, x, y, armisticeTileKeyForTerrain(x, y, band));
+        sprite.alpha = band ? 0.82 : 0.42;
       }
     }
     game.layers.ground.addChild(ground);
@@ -677,6 +696,40 @@ export class LevelRunState implements GameState {
   private drawArmisticeVisualSliceGround(graphics: Graphics): void {
     this.drawIsoWorldRect(graphics, -5.2, -30, 5.2, 30, 0x6f7478, 0.34, 0x151c24, 0.28);
     this.drawIsoWorldRect(graphics, -30, -5.2, 30, 5.2, 0x74797c, 0.3, 0x151c24, 0.26);
+    this.drawSoftTerrainPatch(graphics, [
+      [-12, -25],
+      [6, -27],
+      [18, -16],
+      [8, -4],
+      [-9, -6],
+      [-23, -17]
+    ], 0x53636a, 0.34, 0x202833, 0.18);
+    this.drawSoftTerrainPatch(graphics, [
+      [-28, -10],
+      [-9, -14],
+      [6, -2],
+      [-3, 11],
+      [-24, 8]
+    ], 0x68706e, 0.3, 0xfff4d6, 0.12);
+    this.drawSoftTerrainPatch(graphics, [
+      [3, 7],
+      [22, 4],
+      [29, 20],
+      [12, 27],
+      [-2, 18]
+    ], 0x22545a, 0.26, 0x64e0b4, 0.18);
+    this.drawSoftTerrainPatch(graphics, [
+      [9, -18],
+      [29, -20],
+      [30, -2],
+      [12, 1]
+    ], 0x4a3933, 0.28, 0xff5d57, 0.14);
+    this.drawSoftTerrainPatch(graphics, [
+      [-30, 11],
+      [-14, 8],
+      [-8, 24],
+      [-25, 30]
+    ], 0x2c183c, 0.36, 0x7b61ff, 0.2);
     this.drawIsoWorldRect(graphics, -2.8, -30, 2.8, 30, 0x9a8f75, 0.18, 0xffd166, 0.2);
     this.drawIsoWorldRect(graphics, -30, -2.8, 30, 2.8, 0x9a8f75, 0.16, 0xffd166, 0.18);
     this.drawIsoWorldRect(graphics, -8, -8, 8, 8, 0xb5ad95, 0.18, 0xfff4d6, 0.18);
@@ -803,6 +856,15 @@ export class LevelRunState implements GameState {
       .poly([a.screenX, a.screenY, b.screenX, b.screenY, c.screenX, c.screenY, d.screenX, d.screenY])
       .fill({ color, alpha })
       .stroke({ color: outline, width: 2, alpha: outlineAlpha });
+  }
+
+  private drawSoftTerrainPatch(graphics: Graphics, points: Array<[number, number]>, color: number, alpha: number, outline: number, outlineAlpha: number): void {
+    if (points.length < 3) return;
+    const screenPoints = points.flatMap(([x, y]) => {
+      const p = worldToIso(x, y);
+      return [p.screenX, p.screenY];
+    });
+    graphics.poly(screenPoints).fill({ color, alpha }).stroke({ color: outline, width: 2, alpha: outlineAlpha });
   }
 
   private drawIsoPolyline(graphics: Graphics, points: Array<[number, number]>, color: number, width: number, alpha: number): void {
@@ -1220,7 +1282,8 @@ export class LevelRunState implements GameState {
   private drawConsensusCellStrip(game: Game): void {
     const g = new Graphics();
     const y = 126;
-    g.rect(24, y, 292, 30).fill({ color: palette.ink, alpha: 0.76 }).stroke({ color: palette.mint, width: 2, alpha: 0.8 });
+    const width = game.showDebugHud ? 292 : 182;
+    g.rect(24, y, width, 30).fill({ color: palette.ink, alpha: game.showDebugHud ? 0.76 : 0.58 }).stroke({ color: palette.mint, width: 2, alpha: game.showDebugHud ? 0.8 : 0.52 });
     this.players.forEach((runtime, index) => {
       const x = 38 + index * 64;
       g.rect(x, y + 8, 16, 14).fill(runtime.downed ? 0x596270 : runtime.color).stroke({ color: palette.ink, width: 2 });
@@ -1228,7 +1291,7 @@ export class LevelRunState implements GameState {
     game.layers.hud.addChild(g);
 
     const text = new Text({
-      text: `CONSENSUS CELL ${this.players.length}/4  SNAPSHOT T${this.simulationTick}`,
+      text: game.showDebugHud ? `CONSENSUS CELL ${this.players.length}/4  SNAPSHOT T${this.simulationTick}` : `CELL ${this.players.length}/4`,
       style: { ...fontStyle, fontSize: 11, fill: "#fff4d6" }
     });
     text.position.set(62, y + 8);

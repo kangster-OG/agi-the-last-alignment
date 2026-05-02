@@ -3448,3 +3448,13 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - docs/proof/visual-fidelity-slice/armistice-assets-after.png
   - docs/proof/visual-fidelity-slice/visual-slice-next-metrics.txt
 - Current visual read: asset density and prop silhouettes are substantially better, but the tile-by-tile ground grid is now the obvious next bottleneck. Next pass should add larger terrain chunks/transition overlays or reduce per-tile repetition rather than adding more small decals.
+- Continued the Visual Fidelity Vertical Slice with a terrain/HUD readability pass. Armistice ground rendering now paints broad authored terrain zones first, then places the existing production atlas as sparse accent material instead of filling every isometric tile. The Armistice tile builder also lowers repeated edge contrast while preserving the same runtime atlas contract.
+- Added a normal-play HUD mode for the co-op cell strip: regular play now shows the compact `CELL 1/4` label, while `?debugHud=1` or `?proofHud=1` restores the long deterministic proof telemetry label.
+- Ported the same broad-terrain/sparse-accent idea into the online M50 production arena renderer after proof inspection showed online Armistice and the finale still using full-screen repeated local atlases. Online combat/objective authority and production-art opt-outs are unchanged.
+- Playwright visual terrain/HUD artifacts:
+  - docs/proof/visual-fidelity-slice/reference-asset-terrain-ui-arena.png
+  - docs/proof/visual-fidelity-slice/armistice-terrain-ui-pass-action.png
+  - docs/proof/visual-fidelity-slice/armistice-terrain-ui-pass-action.json
+  - docs/proof/visual-fidelity-slice/terrain-ui-console-errors.json
+  - docs/proof/visual-fidelity-slice/terrain-ui-metrics.txt
+  - docs/proof/visual-fidelity-slice/online-m50-terrain-before-after.png

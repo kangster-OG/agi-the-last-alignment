@@ -2091,9 +2091,22 @@ ${focus.focusDescription}`,
     }
 
     const ground = new Container();
+    const base = new Graphics();
+    this.drawArmisticeTerrainBase(base);
+    ground.addChild(base);
     for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
       for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
-        addArmisticeTileSprite(ground, textures, x, y, armisticeTileKeyForTerrain(x, y, this.terrainBandIdAt(x, y)));
+        const band = this.terrainBandIdAt(x, y);
+        const hash = this.visualHash(x, y);
+        const shouldPlace =
+          band === "terminal_pad" ||
+          band === "breach_corruption" ||
+          band === "barricade_corridor_floor" ||
+          ((band === "main_plaza_cross_x" || band === "main_plaza_cross_y") && hash % 3 === 0) ||
+          hash % 17 === 0;
+        if (!shouldPlace) continue;
+        const sprite = addArmisticeTileSprite(ground, textures, x, y, armisticeTileKeyForTerrain(x, y, band));
+        sprite.alpha = band ? 0.82 : 0.42;
       }
     }
     game.layers.ground.addChild(ground);
@@ -2102,12 +2115,114 @@ ${focus.focusDescription}`,
 
   private drawMilestone50Terrain(game: Game, arenaId: string, textures: Milestone50ArenaBossArtTextures): void {
     const ground = new Container();
+    const base = new Graphics();
+    this.drawMilestone50TerrainBase(base, arenaId);
+    ground.addChild(base);
     for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
       for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
-        addMilestone50TerrainTile(ground, textures, arenaId, x, y);
+        const hash = this.visualHash(x, y);
+        const band = this.terrainBandIdAt(x, y);
+        const majorLane = Math.abs(x) <= 2 || Math.abs(y) <= 2 || (arenaId !== "armistice_plaza" && (Math.abs((x + y) % 9) <= 1 || Math.abs((x - y) % 11) <= 1));
+        const bandAccent = band === "terminal_pad" || band === "breach_corruption" || band === "barricade_corridor_floor";
+        const shouldPlace = (bandAccent && hash % 3 === 0) || (majorLane && hash % 13 === 0) || hash % 97 === 0;
+        if (!shouldPlace) continue;
+        const sprite = addMilestone50TerrainTile(ground, textures, arenaId, x, y);
+        sprite.alpha = band || majorLane ? 0.78 : 0.42;
       }
     }
     game.layers.ground.addChild(ground);
+  }
+
+  private drawArmisticeTerrainBase(graphics: Graphics): void {
+    this.drawIsoWorldRect(graphics, this.map.bounds.minX, this.map.bounds.minY, this.map.bounds.maxX, this.map.bounds.maxY, 0x596164, 0.98, 0x111821, 0.18);
+    this.drawIsoWorldRect(graphics, -7.5, -30, 7.5, 30, 0x737779, 0.74, 0x151c24, 0.12);
+    this.drawIsoWorldRect(graphics, -30, -7.5, 30, 7.5, 0x747979, 0.7, 0x151c24, 0.12);
+    this.drawIsoWorldRect(graphics, -28, -22, -8, -5, 0x344b56, 0.72, 0x45aaf2, 0.12);
+    this.drawIsoWorldRect(graphics, 9, -20, 30, -1, 0x4b3a34, 0.72, 0xff5d57, 0.12);
+    this.drawIsoWorldRect(graphics, 10, 8, 27, 25, 0x225a5e, 0.76, 0x64e0b4, 0.14);
+    this.drawIsoWorldRect(graphics, -30, 9, -10, 29, 0x29183c, 0.78, 0x7b61ff, 0.14);
+  }
+
+  private drawMilestone50TerrainBase(graphics: Graphics, arenaId: string): void {
+    if (arenaId === "armistice_plaza") {
+      this.drawArmisticeTerrainBase(graphics);
+      return;
+    }
+    const palette = this.milestone50TerrainPalette(arenaId);
+    this.drawIsoWorldRect(graphics, this.map.bounds.minX, this.map.bounds.minY, this.map.bounds.maxX, this.map.bounds.maxY, palette.base, 0.98, palette.outline, 0.18);
+    this.drawIsoWorldRect(graphics, -30, -4, 30, 4, palette.lane, 0.58, palette.accent, 0.12);
+    this.drawIsoWorldRect(graphics, -4, -30, 4, 30, palette.lane, 0.52, palette.accent, 0.1);
+    this.drawSoftTerrainPatch(graphics, [
+      [-28, -18],
+      [-8, -24],
+      [8, -13],
+      [-2, 2],
+      [-24, 4]
+    ], palette.patchA, 0.5, palette.accent, 0.14);
+    this.drawSoftTerrainPatch(graphics, [
+      [7, -17],
+      [29, -18],
+      [29, -1],
+      [13, 4]
+    ], palette.patchB, 0.52, palette.hot, 0.14);
+    this.drawSoftTerrainPatch(graphics, [
+      [-25, 10],
+      [-9, 6],
+      [2, 21],
+      [-16, 30],
+      [-30, 25]
+    ], palette.patchC, 0.54, palette.cool, 0.14);
+  }
+
+  private milestone50TerrainPalette(arenaId: string): { base: number; lane: number; patchA: number; patchB: number; patchC: number; outline: number; accent: number; hot: number; cool: number } {
+    if (arenaId === "cooling_lake_nine" || arenaId === "thermal_archive") {
+      return { base: 0x183443, lane: 0x2f4653, patchA: 0x164d61, patchB: 0x23525e, patchC: 0x102c3a, outline: 0x0f3441, accent: 0x45aaf2, hot: 0xffd166, cool: 0x64e0b4 };
+    }
+    if (arenaId === "transit_loop_zero" || arenaId === "false_schedule_yard") {
+      return { base: 0x252b38, lane: 0x50586a, patchA: 0x303747, patchB: 0x2a2538, patchC: 0x454d5d, outline: 0x161b24, accent: 0xffd166, hot: 0x7b61ff, cool: 0x64e0b4 };
+    }
+    if (arenaId === "glass_sunfield") {
+      return { base: 0x323d45, lane: 0x5a5746, patchA: 0x3f4952, patchB: 0x273947, patchC: 0x4b4f43, outline: 0x171a20, accent: 0xffd166, hot: 0xfff4d6, cool: 0x45aaf2 };
+    }
+    if (arenaId === "archive_of_unsaid_things") {
+      return { base: 0x1b2230, lane: 0x111820, patchA: 0x262d3c, patchB: 0x2c3141, patchC: 0x141925, outline: 0x10141d, accent: 0xfff4d6, hot: 0xff5d57, cool: 0x64e0b4 };
+    }
+    if (arenaId === "blackwater_beacon") {
+      return { base: 0x0f2b3b, lane: 0x203849, patchA: 0x164d61, patchB: 0x314452, patchC: 0x0d1c28, outline: 0x0b2330, accent: 0x45aaf2, hot: 0xffd166, cool: 0x64e0b4 };
+    }
+    if (arenaId === "verdict_spire" || arenaId === "appeal_court_ruins") {
+      return { base: 0x242b38, lane: 0x313844, patchA: 0x4a4652, patchB: 0x393743, patchC: 0x55505f, outline: 0x161b24, accent: 0xfff4d6, hot: 0xffd166, cool: 0x64e0b4 };
+    }
+    if (arenaId === "alignment_spire_finale") {
+      return { base: 0x120b1a, lane: 0x271638, patchA: 0x2b1220, patchB: 0x393743, patchC: 0x25142e, outline: 0x100817, accent: 0x7b61ff, hot: 0xff5d57, cool: 0x64e0b4 };
+    }
+    return { base: 0x202936, lane: 0x2f4653, patchA: 0x273242, patchB: 0x31475d, patchC: 0x171b28, outline: 0x161b24, accent: 0x64e0b4, hot: 0xffd166, cool: 0x45aaf2 };
+  }
+
+  private drawIsoWorldRect(graphics: Graphics, minX: number, minY: number, maxX: number, maxY: number, color: number, alpha: number, outline: number, outlineAlpha: number): void {
+    const p1 = worldToIso(minX, minY);
+    const p2 = worldToIso(maxX, minY);
+    const p3 = worldToIso(maxX, maxY);
+    const p4 = worldToIso(minX, maxY);
+    graphics
+      .poly([p1.screenX, p1.screenY, p2.screenX, p2.screenY, p3.screenX, p3.screenY, p4.screenX, p4.screenY])
+      .fill({ color, alpha })
+      .stroke({ color: outline, width: 2, alpha: outlineAlpha });
+  }
+
+  private drawSoftTerrainPatch(graphics: Graphics, points: Array<[number, number]>, color: number, alpha: number, outline: number, outlineAlpha: number): void {
+    if (points.length < 3) return;
+    const screenPoints = points.flatMap(([x, y]) => {
+      const p = worldToIso(x, y);
+      return [p.screenX, p.screenY];
+    });
+    graphics.poly(screenPoints).fill({ color, alpha }).stroke({ color: outline, width: 2, alpha: outlineAlpha });
+  }
+
+  private visualHash(x: number, y: number): number {
+    const xi = Math.trunc(x);
+    const yi = Math.trunc(y);
+    return Math.abs(Math.imul(xi + 101, 1103515245) ^ Math.imul(yi - 73, 12345));
   }
 
   private terrainBandIdAt(x: number, y: number): string | undefined {
