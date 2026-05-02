@@ -142,6 +142,7 @@ First region/arena target:
 - Short punchy boss dialogue and character moments.
 - Humans use rough physical shapes. Labs use clean geometry. Alien God Intelligence uses organic impossible curves.
 - Visual clarity must survive heavy enemy/projectile/pickup density.
+- Visual art production is governed by `docs/AGI_VISUAL_ART_BIBLE.md`: ChatGPT Images and PixelLab are the primary art sources; Python/Pillow is only a mechanical cleanup, slicing, packing, and validation tool.
 
 ## Technical North Stars
 

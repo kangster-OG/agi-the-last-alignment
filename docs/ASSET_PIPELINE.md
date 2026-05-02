@@ -1,5 +1,9 @@
 # Asset Pipeline
 
+Primary art-direction source: `docs/AGI_VISUAL_ART_BIBLE.md`.
+
+The visual art bible is now the production gate for all major runtime art. The old pattern of using Python/Pillow to invent production props, sprites, terrain, or rubble is deprecated.
+
 The Creative Bible recommends:
 
 > ChatGPT Images for art direction. PixelLab for production pixel assets. Manual cleanup for game readiness.
@@ -49,6 +53,19 @@ Use Aseprite or Pixelorama for manual cleanup:
 - make tile edges actually seamless
 - export consistent PNG sheets
 
+Use Python/Pillow only for mechanical pipeline work:
+
+- chroma-key or flood-fill background cleanup
+- alpha validation
+- trimming and padding
+- nearest-neighbor resizing when scale is already approved
+- slicing generated sheets
+- packing atlases
+- contact-sheet generation
+- manifest dimension checks
+
+Do not use Python/Pillow to create final expressive art. If the generated source is not good enough, regenerate it in ChatGPT Images or PixelLab instead of drawing around it with code.
+
 ## Asset Rules
 
 - Official company logos may be used for parody/faction presentation because the user explicitly wants them in the game. Treat them as third-party/parody brand assets, not original MIT-created artwork.
@@ -57,6 +74,10 @@ Use Aseprite or Pixelorama for manual cleanup:
 - Record source/provenance for every official logo in `ART_PROVENANCE.md`.
 - Keep placeholder assets clearly labeled until replaced.
 - Prefer readable silhouettes over detailed noise.
+- Runtime production art must come from ChatGPT Images, PixelLab, or manual pixel cleanup, then be mechanically packed.
+- Every major art batch needs a visual gate: benchmark fidelity reference, previous game shot, new game shot, and asset contact sheet.
+- Large props need collision bodies when they are visually large enough to block movement.
+- A production asset that reads as code-generated rectangles is rejected even if it passes manifest/provenance checks.
 
 ## Suggested Paths
 

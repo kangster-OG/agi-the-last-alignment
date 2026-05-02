@@ -3497,3 +3497,5 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - docs/proof/visual-fidelity-slice/armistice-corrective-sprite-prop-collision-action.json
   - docs/proof/visual-fidelity-slice/armistice-corrective-collision-terminal-check.png
   - docs/proof/visual-fidelity-slice/armistice-corrective-collision-terminal-check.json
+- Rebuilt the art-direction process after user feedback that the current game art still does not meet the desired visual standard. Added `docs/AGI_VISUAL_ART_BIBLE.md` as the new production visual source of truth. The new rule is that ChatGPT Images, PixelLab, and manual pixel cleanup are the primary art sources; Python/Pillow is limited to mechanical cleanup, slicing, packing, alpha validation, and contact sheets.
+- Updated `docs/ASSET_PIPELINE.md` and `docs/GAME_DIRECTION.md` to enforce the new art workflow. Future major runtime assets must have generated/hand-cleaned source art, manifest/provenance, runtime screenshots, and a visual gate before being accepted as production-ready.
