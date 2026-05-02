@@ -28,6 +28,8 @@ The right next move is to convert the prototype into a durable AGI foundation:
 5. Upgrade the overworld from abstract nodes into a dense Alignment Grid diorama.
 6. Add art/asset pipeline hooks while still using placeholder/generated art.
 
+Camera-scale rule: larger maps do not mean a zoomed-out combat board. Normal arena play should keep a close tactical isometric crop comparable to the reference point of view while the follow camera moves through a much larger authored level. This raises asset requirements because visible sprites, props, terrain, pickups, and VFX need enough real pixel detail to survive the closer camera.
+
 ## Milestone 0 — Repo Canonicalization
 
 Goal: make the repo clearly become `AGI: The Last Alignment`.
@@ -115,6 +117,7 @@ Implement:
 
 - Larger arena dimensions.
 - Camera-follow exploration with sensible bounds.
+- Normal combat camera scale close enough that sprites, props, and terrain read as authored objects rather than tiny tokens.
 - Spawn regions instead of center/near-player-only spawning.
 - Off-screen enemy entry points.
 - Landmark/sub-zone definitions inside an arena.
@@ -134,6 +137,7 @@ Exit criteria:
 
 - The player can roam significantly before hitting boundaries.
 - Enemies approach from believable off-screen or landmark sources.
+- The player cannot see the whole arena at once, but the normal camera still feels close and readable.
 - Proof scripts validate long traversal, not just static survival.
 
 ## Milestone 4 — Alignment Grid Overworld

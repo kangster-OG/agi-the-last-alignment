@@ -22,6 +22,7 @@ This project is `AGI: The Last Alignment`, a free browser-playable 2D isometric 
 - The current snack/coupon/receipt theme is placeholder only. Replace it with AGI content.
 - The game should feel like a dense isometric diorama, not a sparse prototype board.
 - Maps and individual levels must become much, much bigger than the current milestone arena. Avoid single-screen combat boxes.
+- Larger maps must not be solved by pulling the combat camera far back. Normal arena play should keep a close tactical isometric crop comparable to the reference point of view, with the camera following through a much larger world.
 - Co-op is part of the game direction. Target 1-4 players per run/session.
 - Use Colyseus as the intended multiplayer framework when networking is implemented. Treat "Colossus" mentions from conversation as referring to Colyseus.
 - Asset workflow target: ChatGPT Images for art direction, PixelLab for production pixel assets, manual cleanup in Aseprite or Pixelorama. For PixelLab login, use an automated browser and let the user log in manually.

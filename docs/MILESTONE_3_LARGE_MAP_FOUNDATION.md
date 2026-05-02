@@ -8,10 +8,13 @@ Make `Armistice Plaza` feel like a large explorable isometric place, not a singl
 
 The user explicitly wants maps and individual levels to be much, much bigger than both the current prototype and the X/Twitter reference videos. Treat this as a core design requirement.
 
+The user also wants the normal combat point of view to stay close to the reference scale. Larger maps should be explored with a follow camera, not presented by zooming far out.
+
 ## Non-Negotiables
 
 - Do not treat "larger map" as simply increasing `halfSize`.
 - The arena needs authored sub-areas, landmarks, spawn sources, and camera-follow traversal.
+- Do not solve larger maps by pulling the normal combat camera back until players, enemies, props, and terrain read as tiny board tokens.
 - The player should be able to roam, kite, discover landmarks, and move through a place that feels like a ruined treaty district.
 - Enemy pressure should come from believable off-screen or landmark sources, not only near-player math.
 - Keep proof hooks working.
@@ -48,6 +51,7 @@ Milestone 3 target:
 
 - at least `halfSize: 28` or equivalent authored tilemap bounds
 - camera follows player over a large space
+- normal combat camera scale remains close enough for player/enemy silhouettes, prop detail, and terrain materials to read instantly
 - player cannot see the whole level at once
 - traversal from one landmark to another should take several seconds
 
@@ -96,6 +100,7 @@ For this milestone, the enemy art can remain placeholder, but the spawn source n
 Add:
 
 - camera follow over large arena
+- a production/default zoom target that frames a dense local diorama crop instead of the whole arena
 - clamp player to authored map bounds
 - ensure HUD does not obscure core play
 - proof that moving right/down/up/left changes camera and traverses real distance
@@ -157,6 +162,7 @@ Avoid:
 Milestone 3 is done when:
 
 - `Armistice Plaza` is visibly and mechanically much larger.
+- The normal screenshot camera remains close and readable, not a zoomed-out map overview.
 - It has named landmarks/sub-areas.
 - Enemy spawns are tied to spawn regions.
 - The boss is tied to the level space.
