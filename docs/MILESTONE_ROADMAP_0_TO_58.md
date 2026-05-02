@@ -627,6 +627,7 @@ Implemented:
 - added original transparent runtime atlases for campaign terrain, objective props, hazards, expanded enemy families, boss sprites, and boss portraits;
 - replaced the broad local/Pillow-authored M50 terrain, prop, enemy, boss, boss-portrait, and hazard atlases with PixelLab Create Object raw batches plus deterministic cleanup/packing, preserving every existing runtime frame contract;
 - completed a post-launch Armistice visual-fidelity polish pass that adds large PixelLab-backed local set pieces, terrain transition masks, title/backdrop presentation, compact normal HUD, and bigger animated starter combat sprites while preserving opt-outs and proof hooks;
+- completed an asset-first Armistice production rebuild: expanded the starter terrain atlas from 8 to 32 material frames, restored dense varied terrain coverage, rebuilt vehicle/building-scale set pieces, and added a Tech Bros benchmark visual gate while retaining the AGI identity and production-art opt-outs;
 - wired the M50 art set into online campaign arena terrain, landmark props, enemy rendering, boss rendering, boss portrait presentation, region-event markers, and boss-event markers;
 - preserved production-art fallback ordering and placeholder opt-outs;
 - updated `assets/asset_manifest.json` and `ART_PROVENANCE.md` for all six new production atlases;
@@ -640,6 +641,7 @@ Proof coverage:
 - `npm run proof:milestone49-player-comind-art`
 - `npm run proof:smoke`
 - `docs/proof/visual-fidelity-slice/reference-vs-armistice-production-polish-board.png`
+- `docs/proof/visual-fidelity-slice/techbros-vs-armistice-production-rebuild-gate.png`
 
 Readiness: complete.
 

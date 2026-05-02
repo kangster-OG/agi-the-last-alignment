@@ -664,15 +664,8 @@ export class LevelRunState implements GameState {
       for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
         const band = this.terrainBandIdAt(x, y);
         const hash = this.visualHash(x, y);
-        const shouldPlace =
-          band === "terminal_pad" ||
-          band === "breach_corruption" ||
-          band === "barricade_corridor_floor" ||
-          ((band === "main_plaza_cross_x" || band === "main_plaza_cross_y") && hash % 3 === 0) ||
-          hash % 17 === 0;
-        if (!shouldPlace) continue;
         const sprite = addArmisticeTileSprite(ground, textures, x, y, armisticeTileKeyForTerrain(x, y, band));
-        sprite.alpha = band ? 0.82 : 0.42;
+        sprite.alpha = band ? 0.88 : hash % 11 === 0 ? 0.8 : 0.68;
       }
     }
     if (transitionTextures) this.drawTerrainTransitionSprites(ground, transitionTextures);
@@ -1068,11 +1061,11 @@ export class LevelRunState implements GameState {
 
   private drawArmisticeHeroSetPieces(game: Game, art: Milestone11ArtTextures): void {
     const pieces: Array<[Milestone11PropId, number, number, number, number, number]> = [
-      ["crashed_drone_yard", -6.5, 2.5, 1.32, 4, -0.18],
-      ["emergency_alignment_terminal", 9.2, -0.4, 1.26, 8, 0.08],
-      ["barricade_corridor", -4.5, 6.2, 1.16, 6, -0.05],
-      ["cosmic_breach_crack", -13.5, 11.2, 1.25, 10, 0.06],
-      ["barricade_corridor", 15, -8.5, 1.12, 3, -0.08]
+      ["crashed_drone_yard", -6.5, 2.5, 0.94, 4, -0.18],
+      ["emergency_alignment_terminal", 9.2, -0.4, 0.82, 8, 0.08],
+      ["barricade_corridor", -4.5, 6.2, 0.9, 6, -0.05],
+      ["cosmic_breach_crack", -13.5, 11.2, 0.86, 10, 0.06],
+      ["barricade_corridor", 15, -8.5, 0.78, 3, -0.08]
     ];
     for (const [propId, x, y, scale, yOffset, zOffset] of pieces) {
       const p = worldToIso(x, y);
@@ -1150,7 +1143,7 @@ export class LevelRunState implements GameState {
       if (art) {
         const sprite = new Sprite(art.base.treatyMonument);
         sprite.anchor.set(0.5, 0.88);
-        sprite.scale.set(0.92);
+        sprite.scale.set(0.68);
         sprite.position.set(p.screenX, p.screenY + 6);
         game.layers.propsBehind.addChild(sprite);
         return;
@@ -1441,7 +1434,7 @@ export class LevelRunState implements GameState {
       : milestone11PlayerTextureFor(runtime.player, this.seconds + runtime.slot * 0.17, art);
     const moving = Math.hypot(runtime.player.vx, runtime.player.vy) > 0.05;
     const breath = moving ? 0 : Math.sin(this.seconds * 4.2 + runtime.slot) * 0.025;
-    this.drawProductionWorldSprite(`player:${runtime.id}`, texture, runtime.player.worldX, runtime.player.worldY, 1.38 + breath, 0.9);
+    this.drawProductionWorldSprite(`player:${runtime.id}`, texture, runtime.player.worldX, runtime.player.worldY, 1.58 + breath, 0.9);
   }
 
   private drawProductionWorldSprite(key: string, texture: Texture, worldX: number, worldY: number, scale: number, anchorY: number): void {
@@ -1594,10 +1587,10 @@ function productionPropIdForLandmark(landmark: LandmarkDefinition): Milestone11P
 
 function propScaleForCluster(cluster: PropClusterDefinition, index: number): number {
   const variation = index % 2 === 0 ? 1 : 0.88;
-  if (cluster.kind === "terminal_array") return 0.48 * variation;
-  if (cluster.kind === "breach_shard") return 0.58 * variation;
-  if (cluster.kind === "drone_wreck") return 0.58 * variation;
-  return 0.52 * variation;
+  if (cluster.kind === "terminal_array") return 0.32 * variation;
+  if (cluster.kind === "breach_shard") return 0.38 * variation;
+  if (cluster.kind === "drone_wreck") return 0.38 * variation;
+  return 0.34 * variation;
 }
 
 function propYOffsetForCluster(cluster: PropClusterDefinition): number {
@@ -1607,11 +1600,11 @@ function propYOffsetForCluster(cluster: PropClusterDefinition): number {
 }
 
 function clusterSetPieceScale(cluster: PropClusterDefinition): number {
-  if (cluster.kind === "terminal_array") return 0.72;
-  if (cluster.kind === "breach_shard") return 0.82;
-  if (cluster.kind === "drone_wreck") return 0.78;
-  if (cluster.kind === "barricade") return 0.78;
-  return 0.68;
+  if (cluster.kind === "terminal_array") return 0.48;
+  if (cluster.kind === "breach_shard") return 0.56;
+  if (cluster.kind === "drone_wreck") return 0.52;
+  if (cluster.kind === "barricade") return 0.52;
+  return 0.46;
 }
 
 function clusterSetPieceYOffset(cluster: PropClusterDefinition): number {
@@ -1622,10 +1615,10 @@ function clusterSetPieceYOffset(cluster: PropClusterDefinition): number {
 }
 
 function landmarkPropScale(propId: Milestone11PropId): number {
-  if (propId === "emergency_alignment_terminal") return 0.88;
-  if (propId === "cosmic_breach_crack") return 0.96;
-  if (propId === "crashed_drone_yard") return 0.92;
-  return 0.9;
+  if (propId === "emergency_alignment_terminal") return 0.6;
+  if (propId === "cosmic_breach_crack") return 0.66;
+  if (propId === "crashed_drone_yard") return 0.62;
+  return 0.62;
 }
 
 function landmarkPropYOffset(propId: Milestone11PropId): number {

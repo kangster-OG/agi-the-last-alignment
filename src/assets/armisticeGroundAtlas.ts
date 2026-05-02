@@ -9,18 +9,43 @@ export const ARMISTICE_TRANSITION_ATLAS_ID = "tile.armistice_plaza.production_tr
 export const ARMISTICE_TRANSITION_ATLAS_URL = transitionAtlasUrl;
 export const ARMISTICE_TILE_FRAME_WIDTH = 64;
 export const ARMISTICE_TILE_FRAME_HEIGHT = 32;
+export const ARMISTICE_GROUND_ATLAS_COLUMNS = 8;
 export const ARMISTICE_TRANSITION_FRAME_WIDTH = 96;
 export const ARMISTICE_TRANSITION_FRAME_HEIGHT = 48;
 
 export type ArmisticeTileKey =
-  | "stone"
-  | "stoneCracked"
-  | "stoneRoad"
+  | "concreteA"
+  | "concreteB"
+  | "concreteC"
+  | "plazaInlay"
+  | "plazaStone"
+  | "dust"
+  | "scorch"
+  | "roadStripe"
+  | "roadPlain"
+  | "rubbleA"
+  | "rubbleB"
+  | "rubbleWarning"
+  | "terminal"
+  | "terminalPanel"
+  | "cableBlue"
+  | "cableMint"
   | "breachLight"
   | "breachMedium"
   | "breachHeavy"
   | "breach"
-  | "terminal";
+  | "breachMint"
+  | "concreteWorn"
+  | "plazaMoss"
+  | "dustGrit"
+  | "concreteCracked"
+  | "rubbleDark"
+  | "roadPlain2"
+  | "terminalPanel2"
+  | "breachMedium2"
+  | "scorchDark"
+  | "plazaInlay2"
+  | "concreteD";
 
 export type ArmisticeTerrainBandId =
   | "main_plaza_cross_x"
@@ -42,14 +67,38 @@ export type ArmisticeTransitionKey =
   | "plazaWear";
 
 const TILE_INDEX_BY_KEY: Record<ArmisticeTileKey, number> = {
-  stone: 0,
-  stoneCracked: 1,
-  stoneRoad: 2,
-  breachLight: 3,
-  breachMedium: 4,
-  breachHeavy: 5,
-  breach: 6,
-  terminal: 7
+  concreteA: 0,
+  concreteB: 1,
+  concreteC: 2,
+  plazaInlay: 3,
+  plazaStone: 4,
+  dust: 5,
+  scorch: 6,
+  roadStripe: 7,
+  roadPlain: 8,
+  rubbleA: 9,
+  rubbleB: 10,
+  rubbleWarning: 11,
+  terminal: 12,
+  terminalPanel: 13,
+  cableBlue: 14,
+  cableMint: 15,
+  breachLight: 16,
+  breachMedium: 17,
+  breachHeavy: 18,
+  breach: 19,
+  breachMint: 20,
+  concreteWorn: 21,
+  plazaMoss: 22,
+  dustGrit: 23,
+  concreteCracked: 24,
+  rubbleDark: 25,
+  roadPlain2: 26,
+  terminalPanel2: 27,
+  breachMedium2: 28,
+  scorchDark: 29,
+  plazaInlay2: 30,
+  concreteD: 31
 };
 
 const TRANSITION_INDEX_BY_KEY: Record<ArmisticeTransitionKey, number> = {
@@ -84,8 +133,8 @@ export function loadArmisticeGroundAtlas(): Promise<Record<ArmisticeTileKey, Tex
   atlasPromise ??= Assets.load<Texture>(ARMISTICE_GROUND_ATLAS_URL).then((baseTexture) => {
     const textures = {} as Record<ArmisticeTileKey, Texture>;
     for (const [key, index] of Object.entries(TILE_INDEX_BY_KEY) as [ArmisticeTileKey, number][]) {
-      const col = index % 4;
-      const row = Math.floor(index / 4);
+      const col = index % ARMISTICE_GROUND_ATLAS_COLUMNS;
+      const row = Math.floor(index / ARMISTICE_GROUND_ATLAS_COLUMNS);
       textures[key] = new Texture({
         source: baseTexture.source,
         frame: new Rectangle(col * ARMISTICE_TILE_FRAME_WIDTH, row * ARMISTICE_TILE_FRAME_HEIGHT, ARMISTICE_TILE_FRAME_WIDTH, ARMISTICE_TILE_FRAME_HEIGHT)
@@ -126,29 +175,41 @@ export function armisticeTileKeyForWorld(x: number, y: number): ArmisticeTileKey
 export function armisticeTileKeyForTerrain(x: number, y: number, terrainBandId?: ArmisticeTerrainBandId): ArmisticeTileKey {
   const hash = tileHash(x, y);
   if (terrainBandId === "breach_corruption") {
-    if (hash % 7 === 0) return "breach";
-    if (hash % 3 === 0) return "breachHeavy";
-    return hash % 2 === 0 ? "breachMedium" : "breachLight";
+    if (hash % 11 === 0) return "breach";
+    if (hash % 7 === 0) return "breachHeavy";
+    if (hash % 5 === 0) return "breachMint";
+    return hash % 2 === 0 ? "breachMedium" : "breachMedium2";
   }
   if (terrainBandId === "terminal_pad") {
     if (hash % 5 === 0) return "terminal";
-    return hash % 3 === 0 ? "stoneCracked" : "stone";
+    if (hash % 3 === 0) return "terminalPanel";
+    return hash % 2 === 0 ? "terminalPanel2" : "cableMint";
   }
   if (terrainBandId === "barricade_corridor_floor") {
-    return hash % 3 === 0 ? "stoneRoad" : hash % 5 === 0 ? "stoneCracked" : "stone";
+    if (hash % 7 === 0) return "rubbleWarning";
+    if (hash % 5 === 0) return "rubbleDark";
+    return hash % 2 === 0 ? "rubbleA" : "roadPlain";
   }
   if (terrainBandId === "drone_yard_floor") {
-    return hash % 4 === 0 ? "stoneCracked" : "stone";
+    if (hash % 6 === 0) return "scorchDark";
+    if (hash % 4 === 0) return "scorch";
+    return hash % 2 === 0 ? "roadPlain2" : "concreteCracked";
   }
   if (terrainBandId === "main_plaza_cross_x" || terrainBandId === "main_plaza_cross_y") {
-    return hash % 7 === 0 ? "stoneCracked" : "stone";
+    if (hash % 23 === 0) return "plazaInlay";
+    if (hash % 17 === 0) return "plazaInlay2";
+    if (hash % 7 === 0) return "plazaStone";
+    return hash % 2 === 0 ? "concreteA" : "concreteWorn";
   }
-  if (x >= 6 && y >= 5) return hash % 4 === 0 ? "terminal" : "stone";
-  if (x <= -22 && y >= 12) return hash % 3 === 0 ? "breachHeavy" : "breachMedium";
-  if (x >= 10 && y <= -3) return hash % 2 === 0 ? "stoneRoad" : "stoneCracked";
-  if (hash % 13 === 0) return "stoneCracked";
+  if (x >= 6 && y >= 5) return hash % 4 === 0 ? "terminalPanel" : hash % 3 === 0 ? "cableMint" : "concreteB";
+  if (x <= -22 && y >= 12) return hash % 3 === 0 ? "breachHeavy" : hash % 2 === 0 ? "breachMedium" : "breachLight";
+  if (x >= 10 && y <= -3) return hash % 4 === 0 ? "roadStripe" : hash % 2 === 0 ? "roadPlain" : "rubbleB";
+  if (x < -12 && y < -8) return hash % 3 === 0 ? "scorch" : "concreteC";
+  if (x < -10 && y > 7) return hash % 3 === 0 ? "dustGrit" : "rubbleA";
+  if (hash % 17 === 0) return "plazaMoss";
+  if (hash % 13 === 0) return "concreteCracked";
   if (hash % 29 === 0) return "breachLight";
-  return "stone";
+  return hash % 3 === 0 ? "concreteD" : hash % 2 === 0 ? "concreteB" : "concreteA";
 }
 
 function tileHash(x: number, y: number): number {
@@ -185,8 +246,8 @@ export function addArmisticeTransitionSprite(
 
 export function addArmisticeAtlasPreview(container: Container, textures: Record<ArmisticeTileKey, Texture>, originX: number, originY: number, scale = 2): void {
   for (const [key, index] of Object.entries(TILE_INDEX_BY_KEY) as [ArmisticeTileKey, number][]) {
-    const col = index % 4;
-    const row = Math.floor(index / 4);
+    const col = index % ARMISTICE_GROUND_ATLAS_COLUMNS;
+    const row = Math.floor(index / ARMISTICE_GROUND_ATLAS_COLUMNS);
     const sprite = new Sprite(textures[key]);
     sprite.anchor.set(0.5);
     sprite.scale.set(scale);

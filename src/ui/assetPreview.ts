@@ -275,7 +275,7 @@ export class AssetPreviewState implements GameState {
     const floor = new Graphics();
     floor.ellipse(260, 472, 190, 48).fill({ color: palette.shadow, alpha: 0.28 });
     floor.ellipse(670, 462, 250, 58).fill({ color: palette.shadow, alpha: 0.22 });
-    floor.ellipse(1030, 464, 165, 46).fill({ color: palette.shadow, alpha: 0.26 });
+    floor.ellipse(1010, 468, 235, 56).fill({ color: palette.shadow, alpha: 0.26 });
     preview.addChild(floor);
 
     const playerDirections = ["south", "east", "north", "west"] as const;
@@ -296,11 +296,11 @@ export class AssetPreviewState implements GameState {
     addMilestone11PreviewSprite(preview, textures.base.badOutputs[0], 640, 268, 2.7);
     addMilestone11PreviewSprite(preview, textures.base.badOutputs[1], 640, 382, 2.7);
 
-    addMilestone11PreviewSprite(preview, textures.props.barricade_corridor, 840, 306, 1.65, 0.86);
-    addMilestone11PreviewSprite(preview, textures.props.crashed_drone_yard, 1024, 306, 1.5, 0.86);
-    addMilestone11PreviewSprite(preview, textures.props.emergency_alignment_terminal, 842, 518, 1.25, 0.86);
-    addMilestone11PreviewSprite(preview, textures.props.cosmic_breach_crack, 1036, 520, 1.35, 0.86);
-    addMilestone11PreviewSprite(preview, textures.openaiAccordMark, 1110, 170, 1.5, 0.5);
+    addMilestone11PreviewSprite(preview, textures.props.barricade_corridor, 830, 300, 0.92, 0.86);
+    addMilestone11PreviewSprite(preview, textures.props.crashed_drone_yard, 1042, 298, 0.82, 0.86);
+    addMilestone11PreviewSprite(preview, textures.props.emergency_alignment_terminal, 842, 520, 0.78, 0.86);
+    addMilestone11PreviewSprite(preview, textures.props.cosmic_breach_crack, 1040, 520, 0.82, 0.86);
+    addMilestone11PreviewSprite(preview, textures.openaiAccordMark, 1120, 172, 1.25, 0.5);
 
     const labels = new Text({
       text: [

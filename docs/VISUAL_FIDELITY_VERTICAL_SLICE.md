@@ -6,6 +6,17 @@ Bring one playable area to a finished-looking AGI identity before spreading poli
 
 The reference clips are not style targets to copy. They are fidelity targets: dense authored terrain, readable silhouettes, grounded props, varied biome materials, clear camera composition, and presentation moments that feel intentional rather than proof-only.
 
+## Locked Fidelity Target
+
+Armistice is considered production-ready for this slice only when a normal-play screenshot satisfies all of these at once:
+
+- it keeps the AGI identity: ruined treaty square, frontier-lab emergency geometry, co-mind residue, and AGI breach corruption;
+- Tech Bros is used only as a benchmark for density, material richness, prop scale, and sprite readability, not as a style sheet to copy;
+- the terrain no longer reads as a flat gray prototype grid;
+- three to five recognizable set pieces are visible in the first playable camera;
+- HUD chrome is small enough that the arena, not proof telemetry, owns the frame;
+- player and enemy silhouettes are readable instantly at screenshot scale.
+
 ## First Target
 
 Armistice Plaza is the first vertical slice because it is the starter arena, the proof baseline, and the first place where players decide whether the game looks real.
@@ -106,9 +117,28 @@ Proof artifacts:
 - `docs/proof/visual-fidelity-slice/armistice-production-polish-action-r5.png`
 - `docs/proof/visual-fidelity-slice/armistice-production-polish-action-r5.json`
 
+## Armistice Production Rebuild
+
+The sixth pass changes the method from sparse polish to asset-first rebuild:
+
+- the Armistice ground atlas expands from 8 frames to 32 frames, covering cracked civic concrete, treaty plaza stone, asphalt/road, rubble fields, terminal flooring, cable trenches, scorch, dust/grit, and AGI corruption variants;
+- dense terrain rendering now uses the 32-frame family across the full arena, with softer repeated markings so the material is rich without reverting to an obvious prototype grid;
+- large set pieces are rebuilt from PixelLab raw batches plus deterministic hand-authored cleanup into vehicle/building-scale props: crashed drone carrier, treaty ruins, barricade wall cluster, terminal server bank, and AGI breach sculpture;
+- the starter camera is recomposed so those set pieces appear in the first playable view;
+- the normal HUD remains compact and player/enemy runtime scale is increased for screenshot readability;
+- the visual gate compares Tech Bros benchmark shots, the previous Armistice r5 shot, the new rebuild shot, and the rebuilt asset contact sheet.
+
+Proof artifacts:
+
+- `docs/proof/visual-fidelity-slice/techbros-vs-armistice-production-rebuild-gate.png`
+- `docs/proof/visual-fidelity-slice/techbros-vs-armistice-production-rebuild-gate.json`
+- `docs/proof/visual-fidelity-slice/armistice-production-rebuild-r2-action.png`
+- `docs/proof/visual-fidelity-slice/armistice-production-rebuild-r2-action.json`
+- `docs/proof/visual-fidelity-slice/armistice-production-rebuild-asset-contact.png`
+
 ## Next Art Passes
 
-1. Commission or generate true larger illustrated pixel props for Armistice, especially a vehicle-scale wreck, terminal stack, and breach sculpture with Tech-Bros-level internal detail.
-2. Replace the gray plaza material with a richer authored tile family: cracked concrete, dust, moss/corruption, scorch, road, and civic inlays with less repeated diamond geometry.
-3. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
-4. Add stronger player attack/effect animation frames once the scene itself is no longer the bottleneck.
+1. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
+2. Add stronger player attack/effect animation frames and higher-detail 64px/80px sprite sheets for the full playable roster.
+3. Carry the 32-frame material-family approach into Blackwater and finale arenas.
+4. Replace the remaining simple flag poles and pickup icons with production pixel props/effects.

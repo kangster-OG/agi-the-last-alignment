@@ -3477,3 +3477,13 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - docs/proof/visual-fidelity-slice/techbros-vs-armistice-r5-comparison.json
   - docs/proof/visual-fidelity-slice/armistice-production-polish-action-r5.png
   - docs/proof/visual-fidelity-slice/armistice-production-polish-action-r5.json
+- Locked the Armistice fidelity target in docs/VISUAL_FIDELITY_VERTICAL_SLICE.md: AGI identity stays primary; Tech Bros is only a benchmark for density, material richness, prop scale, and sprite readability; done means no obvious prototype grid, 3-5 recognizable set pieces in the first frame, small HUD, and instantly readable player/enemy silhouettes.
+- Completed an asset-first Armistice production rebuild pass. The ground atlas now has 32 material frames covering cracked civic concrete, treaty plaza stone, asphalt/road, rubble, terminal flooring, cable trenches, scorch, dust/grit, and AGI corruption. Runtime terrain now uses the expanded material family across the full arena instead of sparse accent tiles.
+- Rebuilt the Armistice set pieces as larger PixelLab-backed transparent props: crashed drone carrier/wreck pile, treaty monument ruins, barricade wall cluster, terminal server bank, and AGI breach sculpture. Repositioned and rescaled them so the starter camera reads as a place first and combat board second.
+- Increased runtime player readability scale and preserved compact HUD/debug opt-in boundaries. `render_game_to_text()` and `advanceTime()` remain intact.
+- Armistice production rebuild visual gate:
+  - docs/proof/visual-fidelity-slice/techbros-vs-armistice-production-rebuild-gate.png
+  - docs/proof/visual-fidelity-slice/techbros-vs-armistice-production-rebuild-gate.json
+  - docs/proof/visual-fidelity-slice/armistice-production-rebuild-r2-action.png
+  - docs/proof/visual-fidelity-slice/armistice-production-rebuild-r2-action.json
+  - docs/proof/visual-fidelity-slice/armistice-production-rebuild-asset-contact.png
