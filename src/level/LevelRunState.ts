@@ -606,6 +606,7 @@ export class LevelRunState implements GameState {
       this.drawPropCluster(game, props, cluster, productionArt);
     }
     game.layers.propsBehind.addChild(props);
+    if (productionArt) this.drawArmisticeHeroSetPieces(game, productionArt);
     for (const landmark of this.map.landmarks) {
       this.drawLandmark(game, props, landmark, productionArt);
     }
@@ -785,7 +786,7 @@ export class LevelRunState implements GameState {
       for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
         const hash = this.visualHash(x, y);
         const band = this.terrainBandIdAt(x, y);
-        if (hash % 19 === 0) this.drawTileChip(graphics, x, y, 0x101821, 0.32, 0.18 + (hash % 4) * 0.05);
+        if (hash % 19 === 0) this.drawTileChip(graphics, x, y, 0x101821, 0.22, 0.18 + (hash % 4) * 0.05);
         if ((band === "main_plaza_cross_x" || band === "main_plaza_cross_y") && hash % 11 === 0) {
           this.drawPavingCrack(graphics, x, y, hash, 0x252a33, 0.46);
         }
@@ -813,7 +814,7 @@ export class LevelRunState implements GameState {
       [10, -3],
       [18, -9],
       [25, -13]
-    ], 0x111823, 9, 0.38);
+    ], 0x111823, 6, 0.22);
     this.drawIsoPolyline(graphics, [
       [-24, 20],
       [-16, 14],
@@ -822,7 +823,7 @@ export class LevelRunState implements GameState {
       [8, -1],
       [17, -7],
       [24, -11]
-    ], 0x64e0b4, 3, 0.44);
+    ], 0x64e0b4, 2, 0.26);
     this.drawIsoPolyline(graphics, [
       [-20, -14],
       [-12, -10],
@@ -830,7 +831,7 @@ export class LevelRunState implements GameState {
       [3, -1],
       [12, 5],
       [20, 13]
-    ], 0x101821, 7, 0.34);
+    ], 0x101821, 4, 0.2);
     this.drawIsoPolyline(graphics, [
       [-21, -13],
       [-12, -9],
@@ -838,7 +839,21 @@ export class LevelRunState implements GameState {
       [5, 1],
       [14, 7],
       [21, 14]
-    ], 0x45aaf2, 2, 0.3);
+    ], 0x45aaf2, 1.5, 0.18);
+
+    for (let i = 0; i < 180; i += 1) {
+      const x = -30 + (this.visualHash(i * 3 + 1, i + 17) % 61);
+      const y = -30 + (this.visualHash(i + 29, i * 5 + 7) % 61);
+      const p = worldToIso(x + ((i % 5) - 2) * 0.08, y + (((i >> 1) % 5) - 2) * 0.08);
+      const kind = i % 9;
+      const color = kind === 0 ? 0xffd166 : kind < 4 ? 0x2b3135 : kind < 7 ? 0x7f8581 : 0x64e0b4;
+      const alpha = kind === 0 ? 0.2 : kind < 4 ? 0.28 : 0.16;
+      if (i % 6 === 0) {
+        graphics.ellipse(p.screenX, p.screenY, 12 + (i % 4) * 4, 4 + (i % 3)).fill({ color, alpha });
+      } else {
+        graphics.rect(p.screenX, p.screenY, 3 + (i % 5), 2 + (i % 3)).fill({ color, alpha });
+      }
+    }
   }
 
   private drawArmisticeSceneMass(graphics: Graphics): void {
@@ -863,19 +878,19 @@ export class LevelRunState implements GameState {
       [-10, -9],
       [-3, -4],
       [0, 0]
-    ], 0x071015, 5, 0.42);
+    ], 0x071015, 3, 0.22);
     this.drawIsoPolyline(graphics, [
       [0, 0],
       [8, -3],
       [16, -8],
       [27, -12]
-    ], 0x071015, 5, 0.42);
+    ], 0x071015, 3, 0.22);
     this.drawIsoPolyline(graphics, [
       [0, 0],
       [7, 7],
       [15, 14],
       [24, 20]
-    ], 0x071015, 4, 0.38);
+    ], 0x071015, 3, 0.18);
 
     for (let i = 0; i < 34; i += 1) {
       const x = -28 + (this.visualHash(i, 13) % 57);
@@ -1049,6 +1064,26 @@ export class LevelRunState implements GameState {
       }
     }
     return true;
+  }
+
+  private drawArmisticeHeroSetPieces(game: Game, art: Milestone11ArtTextures): void {
+    const pieces: Array<[Milestone11PropId, number, number, number, number, number]> = [
+      ["crashed_drone_yard", -6.5, 2.5, 1.32, 4, -0.18],
+      ["emergency_alignment_terminal", 9.2, -0.4, 1.26, 8, 0.08],
+      ["barricade_corridor", -4.5, 6.2, 1.16, 6, -0.05],
+      ["cosmic_breach_crack", -13.5, 11.2, 1.25, 10, 0.06],
+      ["barricade_corridor", 15, -8.5, 1.12, 3, -0.08]
+    ];
+    for (const [propId, x, y, scale, yOffset, zOffset] of pieces) {
+      const p = worldToIso(x, y);
+      const sprite = new Sprite(art.props[propId]);
+      sprite.anchor.set(0.5, 0.88);
+      sprite.scale.set(scale);
+      sprite.position.set(p.screenX, p.screenY + yOffset);
+      sprite.alpha = 0.94;
+      sprite.zIndex = x + y + zOffset;
+      game.layers.propsBehind.addChild(sprite);
+    }
   }
 
   private drawClusterDebris(graphics: Graphics, cluster: PropClusterDefinition): void {
@@ -1337,14 +1372,18 @@ export class LevelRunState implements GameState {
   private drawAgiPressureStrip(game: Game): void {
     const pressure = this.bossSpawned ? (this.bossDefeated ? 0.25 : 1) : clamp(this.seconds / this.arena.bossSeconds, 0, 1);
     const g = new Graphics();
-    g.rect(game.width - 294, 100, 278, 30).fill({ color: palette.ink, alpha: 0.82 }).stroke({ color: palette.paper, width: 2 });
-    g.rect(game.width - 282, 111, 254 * pressure, 8).fill(this.bossSpawned && !this.bossDefeated ? palette.tomato : palette.lemon);
+    const debug = game.showDebugHud;
+    const width = debug ? 278 : 150;
+    const x = game.width - width - 16;
+    const y = debug ? 100 : 56;
+    g.rect(x, y, width, debug ? 30 : 18).fill({ color: palette.ink, alpha: debug ? 0.82 : 0.32 }).stroke({ color: palette.paper, width: 2, alpha: debug ? 1 : 0.28 });
+    g.rect(x + 12, y + (debug ? 11 : 7), (width - 24) * pressure, debug ? 8 : 5).fill(this.bossSpawned && !this.bossDefeated ? palette.tomato : palette.lemon);
     game.layers.hud.addChild(g);
     const label = new Text({
-      text: this.bossSpawned && !this.bossDefeated ? "AGI PRESSURE: CANONICAL" : "AGI PRESSURE",
-      style: { ...fontStyle, fontSize: 11, fill: "#fff4d6" }
+      text: debug ? (this.bossSpawned && !this.bossDefeated ? "AGI PRESSURE: CANONICAL" : "AGI PRESSURE") : "AGI",
+      style: { ...fontStyle, fontSize: debug ? 11 : 8, fill: "#fff4d6" }
     });
-    label.position.set(game.width - 282, 98);
+    label.position.set(x + 12, y - (debug ? 2 : 1));
     game.layers.hud.addChild(label);
   }
 
@@ -1355,34 +1394,34 @@ export class LevelRunState implements GameState {
     if (art && this.factionId === "openai_accord") {
       const mark = new Sprite(art.openaiAccordMark);
       mark.anchor.set(0.5);
-      mark.scale.set(0.42);
-      mark.position.set(38, game.showDebugHud ? 108 : 82);
+      mark.scale.set(game.showDebugHud ? 0.42 : 0.32);
+      mark.position.set(38, game.showDebugHud ? 108 : 68);
       game.layers.hud.addChild(mark);
     }
     const label = new Text({
       text: game.showDebugHud ? `${combatClass.displayName} + ${faction.shortName} Co-Mind` : `${combatClass.displayName} // ${faction.shortName}`,
-      style: { ...fontStyle, fontSize: game.showDebugHud ? 13 : 10, fill: "#64e0b4" }
+      style: { ...fontStyle, fontSize: game.showDebugHud ? 13 : 8, fill: "#64e0b4" }
     });
-    label.position.set(art && this.factionId === "openai_accord" ? 60 : 24, game.showDebugHud ? 102 : 76);
+    label.position.set(art && this.factionId === "openai_accord" ? 60 : 24, game.showDebugHud ? 102 : 63);
     game.layers.hud.addChild(label);
   }
 
   private drawConsensusCellStrip(game: Game): void {
     const g = new Graphics();
-    const y = game.showDebugHud ? 126 : 94;
-    const width = game.showDebugHud ? 292 : 118;
-    g.rect(24, y, width, game.showDebugHud ? 30 : 22).fill({ color: palette.ink, alpha: game.showDebugHud ? 0.76 : 0.42 }).stroke({ color: palette.mint, width: 2, alpha: game.showDebugHud ? 0.8 : 0.36 });
+    const y = game.showDebugHud ? 126 : 82;
+    const width = game.showDebugHud ? 292 : 90;
+    g.rect(24, y, width, game.showDebugHud ? 30 : 18).fill({ color: palette.ink, alpha: game.showDebugHud ? 0.76 : 0.28 }).stroke({ color: palette.mint, width: 2, alpha: game.showDebugHud ? 0.8 : 0.24 });
     this.players.forEach((runtime, index) => {
-      const x = 38 + index * (game.showDebugHud ? 64 : 22);
-      g.rect(x, y + (game.showDebugHud ? 8 : 6), 16, game.showDebugHud ? 14 : 10).fill(runtime.downed ? 0x596270 : runtime.color).stroke({ color: palette.ink, width: 2 });
+      const x = 38 + index * (game.showDebugHud ? 64 : 16);
+      g.rect(x, y + (game.showDebugHud ? 8 : 6), game.showDebugHud ? 16 : 10, game.showDebugHud ? 14 : 8).fill(runtime.downed ? 0x596270 : runtime.color).stroke({ color: palette.ink, width: 2 });
     });
     game.layers.hud.addChild(g);
 
     const text = new Text({
       text: game.showDebugHud ? `CONSENSUS CELL ${this.players.length}/4  SNAPSHOT T${this.simulationTick}` : `CELL ${this.players.length}/4`,
-      style: { ...fontStyle, fontSize: game.showDebugHud ? 11 : 9, fill: "#fff4d6" }
+      style: { ...fontStyle, fontSize: game.showDebugHud ? 11 : 8, fill: "#fff4d6" }
     });
-    text.position.set(game.showDebugHud ? 62 : 86, y + (game.showDebugHud ? 8 : 6));
+    text.position.set(game.showDebugHud ? 62 : 62, y + (game.showDebugHud ? 8 : 5));
     game.layers.hud.addChild(text);
   }
 

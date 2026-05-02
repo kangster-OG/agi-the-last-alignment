@@ -3470,3 +3470,10 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - docs/proof/visual-fidelity-slice/armistice-production-polish-action.png
   - docs/proof/visual-fidelity-slice/armistice-production-polish-metrics.json
   - docs/proof/visual-fidelity-slice/armistice-production-polish-console-errors.json
+- Ran a direct Tech Bros vs current Armistice visual comparison after user feedback that production completeness still fell far below the reference. The comparison confirmed the gap: Tech Bros is still stronger in terrain material richness, prop recognizability/detail, low HUD footprint, and finished sprite/object rendering.
+- Applied a follow-up r5 comparison pass: reduced normal HUD and AGI pressure chrome again, softened long road/cable strokes, moved large Armistice set pieces into the starting camera, and added more deterministic grit/noise to the static ground. This improves the shot but does not close the fidelity gap by itself; the next true leap needs larger illustrated pixel props and a richer authored Armistice material tile family.
+- Tech Bros comparison artifacts:
+  - docs/proof/visual-fidelity-slice/techbros-vs-armistice-r5-comparison.png
+  - docs/proof/visual-fidelity-slice/techbros-vs-armistice-r5-comparison.json
+  - docs/proof/visual-fidelity-slice/armistice-production-polish-action-r5.png
+  - docs/proof/visual-fidelity-slice/armistice-production-polish-action-r5.json

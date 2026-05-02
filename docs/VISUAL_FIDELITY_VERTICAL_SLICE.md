@@ -89,9 +89,26 @@ Proof artifacts:
 - `docs/proof/visual-fidelity-slice/armistice-production-polish-metrics.json`
 - `docs/proof/visual-fidelity-slice/armistice-production-polish-console-errors.json`
 
+## Tech Bros Comparison Pass
+
+The fifth pass is a direct screenshot comparison response rather than a milestone checklist item. The comparison still shows a material fidelity gap: Tech Bros has stronger hand-textured terrain, warmer local color, more recognizable large props, and more production-complete character/object rendering. This pass moves Armistice in that direction without copying its style:
+
+- normal HUD chrome and AGI pressure UI were reduced again;
+- long road/cable strokes were softened so they stop reading like debug construction lines;
+- large Armistice set pieces were repositioned into the starting camera instead of living mostly offscreen;
+- static ground received more deterministic grit/noise and small material marks;
+- the comparison board records Tech Bros references, the previous Armistice shot, and the updated r5 shot.
+
+Proof artifacts:
+
+- `docs/proof/visual-fidelity-slice/techbros-vs-armistice-r5-comparison.png`
+- `docs/proof/visual-fidelity-slice/techbros-vs-armistice-r5-comparison.json`
+- `docs/proof/visual-fidelity-slice/armistice-production-polish-action-r5.png`
+- `docs/proof/visual-fidelity-slice/armistice-production-polish-action-r5.json`
+
 ## Next Art Passes
 
-1. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
-2. Expand the Armistice set-piece language to Blackwater and finale arenas.
-3. Add stronger player attack/effect animation frames once the scene itself is no longer the bottleneck.
-4. Port the Armistice-specific transition overlay idea into online/local campaign terrain where a route needs authored edge masks.
+1. Commission or generate true larger illustrated pixel props for Armistice, especially a vehicle-scale wreck, terminal stack, and breach sculpture with Tech-Bros-level internal detail.
+2. Replace the gray plaza material with a richer authored tile family: cracked concrete, dust, moss/corruption, scorch, road, and civic inlays with less repeated diamond geometry.
+3. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
+4. Add stronger player attack/effect animation frames once the scene itself is no longer the bottleneck.
