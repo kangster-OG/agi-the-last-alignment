@@ -3,6 +3,7 @@ import type { Entity, Player } from "../ecs/components";
 import { addPreviewSprite, loadMilestone10Art, type Milestone10ArtTextures, type PlayerFacing } from "./milestone10Art";
 
 import accordStrikerWalkV2Url from "../../assets/sprites/players/accord_striker_walk_v2.png";
+import badOutputsSheetUrl from "../../assets/sprites/enemies/bad_outputs_sheet.png";
 import benchmarkGremlinsSheetUrl from "../../assets/sprites/enemies/benchmark_gremlins_sheet.png";
 import contextRotCrabsSheetUrl from "../../assets/sprites/enemies/context_rot_crabs_sheet.png";
 import barricadeCorridorUrl from "../../assets/props/armistice_plaza/barricade_corridor_set.png";
@@ -13,6 +14,7 @@ import openaiAccordMarkUrl from "../../assets/ui/openai_accord_mark.png";
 
 export const MILESTONE11_ASSET_IDS = {
   playerV2: "player.accord_striker.production_walk_sheet_v2",
+  badOutputs: "enemy.bad_outputs.production_sheet_v1",
   benchmarkGremlins: "enemy.benchmark_gremlin.production_sheet_v1",
   contextRotCrabs: "enemy.context_rot_crab.production_sheet_v1",
   barricadeCorridor: "prop.armistice_plaza.barricade_corridor_v1",
@@ -24,6 +26,7 @@ export const MILESTONE11_ASSET_IDS = {
 
 export const MILESTONE11_ASSET_URLS = {
   playerV2: accordStrikerWalkV2Url,
+  badOutputs: badOutputsSheetUrl,
   benchmarkGremlins: benchmarkGremlinsSheetUrl,
   contextRotCrabs: contextRotCrabsSheetUrl,
   barricadeCorridor: barricadeCorridorUrl,
@@ -38,6 +41,7 @@ export type Milestone11PropId = "barricade_corridor" | "crashed_drone_yard" | "e
 export interface Milestone11ArtTextures {
   base: Milestone10ArtTextures;
   playerV2: Record<PlayerFacing, Texture[]>;
+  badOutputs: Texture[];
   benchmarkGremlins: Texture[];
   contextRotCrabs: Texture[];
   props: Record<Milestone11PropId, Texture>;
@@ -45,11 +49,11 @@ export interface Milestone11ArtTextures {
 }
 
 const PLAYER_DIRECTIONS: PlayerFacing[] = ["south", "east", "north", "west"];
-const PLAYER_FRAME_WIDTH = 48;
-const PLAYER_FRAME_HEIGHT = 48;
+const PLAYER_FRAME_WIDTH = 80;
+const PLAYER_FRAME_HEIGHT = 80;
 const PLAYER_FRAMES_PER_DIRECTION = 3;
-const ENEMY_FRAME_WIDTH = 32;
-const ENEMY_FRAME_HEIGHT = 32;
+const ENEMY_FRAME_WIDTH = 64;
+const ENEMY_FRAME_HEIGHT = 64;
 const ENEMY_FRAME_COUNT = 3;
 
 let milestone11Promise: Promise<Milestone11ArtTextures> | null = null;
@@ -67,6 +71,7 @@ export function loadMilestone11Art(): Promise<Milestone11ArtTextures> {
   milestone11Promise ??= Promise.all([
     loadMilestone10Art(),
     Assets.load<Texture>(MILESTONE11_ASSET_URLS.playerV2),
+    Assets.load<Texture>(MILESTONE11_ASSET_URLS.badOutputs),
     Assets.load<Texture>(MILESTONE11_ASSET_URLS.benchmarkGremlins),
     Assets.load<Texture>(MILESTONE11_ASSET_URLS.contextRotCrabs),
     Assets.load<Texture>(MILESTONE11_ASSET_URLS.barricadeCorridor),
@@ -74,10 +79,11 @@ export function loadMilestone11Art(): Promise<Milestone11ArtTextures> {
     Assets.load<Texture>(MILESTONE11_ASSET_URLS.emergencyAlignmentTerminal),
     Assets.load<Texture>(MILESTONE11_ASSET_URLS.cosmicBreachCrack),
     Assets.load<Texture>(MILESTONE11_ASSET_URLS.openaiAccordMark)
-  ]).then(([base, playerSheet, benchmarkSheet, crabSheet, barricadeCorridor, crashedDroneYard, emergencyAlignmentTerminal, cosmicBreachCrack, openaiAccordMark]) => {
+  ]).then(([base, playerSheet, badOutputsSheet, benchmarkSheet, crabSheet, barricadeCorridor, crashedDroneYard, emergencyAlignmentTerminal, cosmicBreachCrack, openaiAccordMark]) => {
     milestone11Textures = {
       base,
       playerV2: slicePlayerSheet(playerSheet),
+      badOutputs: sliceEnemySheet(badOutputsSheet),
       benchmarkGremlins: sliceEnemySheet(benchmarkSheet),
       contextRotCrabs: sliceEnemySheet(crabSheet),
       props: {
@@ -102,7 +108,7 @@ export function milestone11PlayerTextureFor(player: Player, seconds: number, tex
 
 export function milestone11EnemyTextureFor(entity: Entity, textures: Milestone11ArtTextures, seconds = 0): Texture | null {
   const frame = Math.floor(seconds * 7 + Math.abs(entity.id)) % ENEMY_FRAME_COUNT;
-  if (entity.enemyFamilyId === "bad_outputs") return textures.base.badOutputs[frame % textures.base.badOutputs.length];
+  if (entity.enemyFamilyId === "bad_outputs") return textures.badOutputs[frame % textures.badOutputs.length];
   if (entity.enemyFamilyId === "benchmark_gremlins") return textures.benchmarkGremlins[frame % textures.benchmarkGremlins.length];
   if (entity.enemyFamilyId === "context_rot_crabs") return textures.contextRotCrabs[frame % textures.contextRotCrabs.length];
   if (entity.enemyFamilyId === "eval_wraiths") return textures.contextRotCrabs[frame % textures.contextRotCrabs.length];

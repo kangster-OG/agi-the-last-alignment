@@ -136,9 +136,30 @@ Proof artifacts:
 - `docs/proof/visual-fidelity-slice/armistice-production-rebuild-r2-action.json`
 - `docs/proof/visual-fidelity-slice/armistice-production-rebuild-asset-contact.png`
 
+## Corrective Sprite, Prop, And Collision Pass
+
+The seventh pass responds to playtest feedback that the previous slice still read as prototype art because sprites and props were too blocky and props had no physical presence:
+
+- player runtime atlases now use 80x80 frames instead of 48x48 frames, with clearer class silhouettes, larger bodies, stronger outlines, readable visors, weapon arms, and ground-contact alignment;
+- the Milestone 11 enemy families now use 64x64 frame strips instead of 32x32 strips, including a larger Bad Outputs sheet, so enemy families read as distinct silhouettes at gameplay scale;
+- Armistice set pieces were redrawn from PixelLab-backed source material plus local cleanup into larger illustrated objects: the drone wreck has hull/rotor mass, the barricade is angled and braced, the terminal bank has stacked cabinets and cables, and the breach is irregular instead of a line of blocks;
+- the south rubble box-grid path is replaced with an irregular debris/cable field during production-art play;
+- starter set pieces now have static obstacle bodies, and the milestone proof includes a terminal collision check so the player stops/slides at the physical edge instead of passing through the prop;
+- `render_game_to_text()` exposes the Armistice static obstacle count/ids for deterministic proof without exporting or importing gameplay state.
+
+Proof artifacts:
+
+- `docs/proof/visual-fidelity-slice/techbros-vs-armistice-corrective-gate.png`
+- `docs/proof/visual-fidelity-slice/techbros-vs-armistice-corrective-gate.json`
+- `docs/proof/visual-fidelity-slice/armistice-corrective-sprite-prop-collision-action.png`
+- `docs/proof/visual-fidelity-slice/armistice-corrective-sprite-prop-collision-action.json`
+- `docs/proof/visual-fidelity-slice/armistice-corrective-collision-terminal-check.png`
+- `docs/proof/visual-fidelity-slice/armistice-corrective-collision-terminal-check.json`
+- `docs/proof/milestone11-art/milestone11-art-collision-terminal.png`
+
 ## Next Art Passes
 
 1. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
-2. Add stronger player attack/effect animation frames and higher-detail 64px/80px sprite sheets for the full playable roster.
+2. Add true attack/hurt/dash frames and secondary animation passes for the 80px class roster.
 3. Carry the 32-frame material-family approach into Blackwater and finale arenas.
 4. Replace the remaining simple flag poles and pickup icons with production pixel props/effects.

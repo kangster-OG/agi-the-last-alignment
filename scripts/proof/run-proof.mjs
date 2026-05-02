@@ -309,8 +309,38 @@ async function runScenario(name) {
     assert(arena.mode === "LevelRun", `expected LevelRun for Milestone 11 arena, got ${arena.mode}`);
     assert(arena.assetRendering?.productionArtEnabled === true, "expected gated production art flag enabled");
     assert(arena.assetRendering?.productionArtSet === "milestone14_combat_art_parity", "expected Milestone 14 combat art parity in text state");
+    assert(arena.level?.staticObstacles?.enabled === true, "expected Armistice production set-piece collision to be enabled");
+    assert(arena.level?.staticObstacles?.count >= 5, "expected at least five Armistice static set-piece blockers");
 
+    await page.goto(`${url}?productionArt=1&armisticeTiles=1&proofCollision=terminal`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await enterArena(page);
+    const terminalObstacle = { worldX: 9.2, worldY: -0.4, radiusX: 2.15, radiusY: 1.65, padding: 0.42 };
+    let minTerminalDistance = Number.POSITIVE_INFINITY;
+    await page.keyboard.down("ArrowRight");
+    await page.keyboard.down("ArrowDown");
+    for (let elapsed = 0; elapsed < 2200; elapsed += 100) {
+      await advance(page, 100);
+      const collision = await state(page);
+      const player = collision.player;
+      const distance = Math.hypot((player.worldX - terminalObstacle.worldX) / (terminalObstacle.radiusX + terminalObstacle.padding), (player.worldY - terminalObstacle.worldY) / (terminalObstacle.radiusY + terminalObstacle.padding));
+      minTerminalDistance = Math.min(minTerminalDistance, distance);
+    }
+    await page.keyboard.up("ArrowRight");
+    await page.keyboard.up("ArrowDown");
+    await capture(page, "milestone11-art-collision-terminal");
+    assert(minTerminalDistance >= 0.98 && minTerminalDistance <= 1.08, `expected terminal collision to stop player at obstacle edge, got ${minTerminalDistance}`);
+
+    await page.goto(`${url}?productionArt=1&armisticeTiles=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await enterArena(page);
     await survivalDance(page, 13000);
+    await chooseDraftIfNeeded(page);
+    await advanceRunHandlingDrafts(page, 2500);
+    await chooseDraftIfNeeded(page);
+    await advance(page, 400);
     await capture(page, "milestone11-art-horde");
     const horde = await state(page);
     assert(horde.assetRendering?.productionArtEnabled === true, "expected production art flag to remain enabled during Milestone 11 horde proof");

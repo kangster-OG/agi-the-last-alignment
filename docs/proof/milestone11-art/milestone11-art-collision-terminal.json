@@ -3,144 +3,146 @@
   "title": "AGI: The Last Alignment",
   "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
   "selectedBuild": {
-    "classId": "rift_saboteur",
-    "className": "Rift Saboteur",
-    "classRole": "Trap and mine specialist",
+    "classId": "accord_striker",
+    "className": "Accord Striker",
+    "classRole": "Fast breach fighter",
     "buildKit": {
       "schemaVersion": 1,
-      "classId": "rift_saboteur",
-      "factionId": "qwen_silkgrid",
-      "classRole": "control",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
       "factionRoleBias": [
-        "support",
-        "control"
+        "runner",
+        "support"
       ],
-      "resolvedRole": "control",
-      "startingWeaponId": "rift_mine",
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
       "passiveIds": [
-        "rift_minefield",
-        "delayed_causality",
-        "silkgrid_relay",
-        "shared_vocabulary"
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
       ],
       "partyAuraIds": [
-        "qwen_relay"
+        "openai_draft_clarity"
       ],
       "recompileModifiers": {
-        "radiusBonus": 0.22,
-        "requiredSecondsScale": 0.96,
-        "reviveHpBonus": 0.08,
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
         "guardDamageReduction": 0
       },
       "rolePressureAffinity": [
-        "class_role.control",
+        "class_role.runner",
+        "faction_bias.runner",
         "faction_bias.support",
-        "faction_bias.control",
         "role_match"
       ],
-      "synergyId": "synergy.multilingual_causality_net",
+      "synergyId": "synergy.emergency_patch_runner",
       "effectScopes": {
         "solo": [
-          "trap and delayed burst identity",
-          "pickup and supply range"
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
         ],
         "localCoop": [
-          "objective choke-point denial",
-          "support lane logistics"
+          "scouts objective lanes",
+          "balanced cell recovery"
         ],
         "online": [
-          "server snapshots saboteur role for lane pressure",
-          "server-owned relay radius and revive HP telemetry"
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
         ]
       },
       "hookStatus": {
-        "rift_mine": "active",
-        "rift_minefield": "active",
-        "delayed_causality": "active",
-        "silkgrid_relay": "active",
-        "shared_vocabulary": "active",
-        "qwen_relay": "server_owned",
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
         "recompileModifiers": "server_owned"
       }
     },
-    "factionId": "qwen_silkgrid",
-    "factionName": "Alibaba Qwen Silkgrid Command",
-    "factionDoctrine": "Coordinate everyone, everywhere, in every language."
+    "factionId": "openai_accord",
+    "factionName": "OpenAI Accord Division",
+    "factionDoctrine": "Adapt, refuse, patch, survive."
   },
   "build": {
-    "weaponId": "rift_mine",
+    "weaponId": "refusal_shard",
     "weaponDamage": 18,
-    "weaponCooldown": 0.41159999999999997,
+    "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
     "projectilePierce": 1,
-    "pickupRange": 1.7000000000000002,
+    "pickupRange": 1.8,
     "moveSpeedBonus": 0,
-    "maxHpBonus": 6,
+    "maxHpBonus": 0,
     "refusalAura": 0,
-    "draftRerolls": 0,
+    "draftRerolls": 1,
     "buildKit": {
       "schemaVersion": 1,
-      "classId": "rift_saboteur",
-      "factionId": "qwen_silkgrid",
-      "classRole": "control",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
       "factionRoleBias": [
-        "support",
-        "control"
+        "runner",
+        "support"
       ],
-      "resolvedRole": "control",
-      "startingWeaponId": "rift_mine",
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
       "passiveIds": [
-        "rift_minefield",
-        "delayed_causality",
-        "silkgrid_relay",
-        "shared_vocabulary"
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
       ],
       "partyAuraIds": [
-        "qwen_relay"
+        "openai_draft_clarity"
       ],
       "recompileModifiers": {
-        "radiusBonus": 0.22,
-        "requiredSecondsScale": 0.96,
-        "reviveHpBonus": 0.08,
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
         "guardDamageReduction": 0
       },
       "rolePressureAffinity": [
-        "class_role.control",
+        "class_role.runner",
+        "faction_bias.runner",
         "faction_bias.support",
-        "faction_bias.control",
         "role_match"
       ],
-      "synergyId": "synergy.multilingual_causality_net",
+      "synergyId": "synergy.emergency_patch_runner",
       "effectScopes": {
         "solo": [
-          "trap and delayed burst identity",
-          "pickup and supply range"
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
         ],
         "localCoop": [
-          "objective choke-point denial",
-          "support lane logistics"
+          "scouts objective lanes",
+          "balanced cell recovery"
         ],
         "online": [
-          "server snapshots saboteur role for lane pressure",
-          "server-owned relay radius and revive HP telemetry"
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
         ]
       },
       "hookStatus": {
-        "rift_mine": "active",
-        "rift_minefield": "active",
-        "delayed_causality": "active",
-        "silkgrid_relay": "active",
-        "shared_vocabulary": "active",
-        "qwen_relay": "server_owned",
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
         "recompileModifiers": "server_owned"
       }
     }
   },
   "upgrades": [],
-  "objective": "AGI pressure in 23s",
+  "objective": "AGI pressure in 21s",
   "performance": {
-    "entitiesAllocated": 4,
-    "activeEntities": 4,
+    "entitiesAllocated": 10,
+    "activeEntities": 7,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -207,8 +209,8 @@
     },
     "counters": {
       "ui": 1,
-      "hit": 0,
-      "pickup": 0,
+      "hit": 1,
+      "pickup": 1,
       "boss_warning": 0,
       "music": 0,
       "objective": 0,
@@ -216,9 +218,19 @@
     },
     "recentCues": [
       {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 1060
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 1042
+      },
+      {
         "id": "ui.enter_build_select",
         "kind": "ui",
-        "atMs": 945
+        "atMs": 485
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -332,11 +344,11 @@
     "productionAssets": 62
   },
   "player": {
-    "worldX": 0,
-    "worldY": 0,
-    "hp": 146,
-    "maxHp": 146,
-    "xp": 0,
+    "worldX": 14.3,
+    "worldY": 3.54,
+    "hp": 140,
+    "maxHp": 140,
+    "xp": 1,
     "level": 1
   },
   "players": [
@@ -344,72 +356,73 @@
       "id": "p1",
       "slot": 0,
       "label": "P1",
-      "classId": "rift_saboteur",
-      "factionId": "qwen_silkgrid",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
       "buildKit": {
         "schemaVersion": 1,
-        "classId": "rift_saboteur",
-        "factionId": "qwen_silkgrid",
-        "classRole": "control",
+        "classId": "accord_striker",
+        "factionId": "openai_accord",
+        "classRole": "runner",
         "factionRoleBias": [
-          "support",
-          "control"
+          "runner",
+          "support"
         ],
-        "resolvedRole": "control",
-        "startingWeaponId": "rift_mine",
+        "resolvedRole": "runner",
+        "startingWeaponId": "refusal_shard",
         "passiveIds": [
-          "rift_minefield",
-          "delayed_causality",
-          "silkgrid_relay",
-          "shared_vocabulary"
+          "refusal_slipstream",
+          "route_runner",
+          "refusal_halo",
+          "patch_cascade"
         ],
         "partyAuraIds": [
-          "qwen_relay"
+          "openai_draft_clarity"
         ],
         "recompileModifiers": {
-          "radiusBonus": 0.22,
-          "requiredSecondsScale": 0.96,
-          "reviveHpBonus": 0.08,
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.97,
+          "reviveHpBonus": 0,
           "guardDamageReduction": 0
         },
         "rolePressureAffinity": [
-          "class_role.control",
+          "class_role.runner",
+          "faction_bias.runner",
           "faction_bias.support",
-          "faction_bias.control",
           "role_match"
         ],
-        "synergyId": "synergy.multilingual_causality_net",
+        "synergyId": "synergy.emergency_patch_runner",
         "effectScopes": {
           "solo": [
-            "trap and delayed burst identity",
-            "pickup and supply range"
+            "fast breach movement",
+            "wide pickup recovery",
+            "extra draft recovery"
           ],
           "localCoop": [
-            "objective choke-point denial",
-            "support lane logistics"
+            "scouts objective lanes",
+            "balanced cell recovery"
           ],
           "online": [
-            "server snapshots saboteur role for lane pressure",
-            "server-owned relay radius and revive HP telemetry"
+            "server snapshots runner role for split-hold anchors",
+            "minor server-owned recompile hold-speed modifier"
           ]
         },
         "hookStatus": {
-          "rift_mine": "active",
-          "rift_minefield": "active",
-          "delayed_causality": "active",
-          "silkgrid_relay": "active",
-          "shared_vocabulary": "active",
-          "qwen_relay": "server_owned",
+          "refusal_shard": "active",
+          "refusal_slipstream": "active",
+          "route_runner": "active",
+          "refusal_halo": "active",
+          "patch_cascade": "active",
+          "openai_draft_clarity": "server_owned",
           "recompileModifiers": "server_owned"
         }
       },
-      "weaponId": "rift_mine",
+      "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
-      "worldX": 0,
-      "worldY": 0,
-      "hp": 146,
-      "maxHp": 146,
-      "xp": 0,
+      "worldX": 14.3,
+      "worldY": 3.54,
+      "hp": 140,
+      "maxHp": 140,
+      "xp": 1,
       "level": 1,
       "downed": false
     }
@@ -422,10 +435,10 @@
     "arena": "Armistice Plaza",
     "regionId": "armistice_zone",
     "bossId": "oath_eater",
-    "classId": "rift_saboteur",
-    "factionId": "qwen_silkgrid",
-    "className": "Rift Saboteur",
-    "factionName": "Alibaba Qwen Silkgrid Command",
+    "classId": "accord_striker",
+    "factionId": "openai_accord",
+    "className": "Accord Striker",
+    "factionName": "OpenAI Accord Division",
     "chosenUpgradeIds": [],
     "mapId": "armistice_plaza_large_foundation",
     "mapBounds": {
@@ -450,14 +463,12 @@
       ]
     },
     "nearestLandmark": {
-      "id": "treaty_monument",
-      "label": "Treaty Monument",
-      "worldX": 0,
-      "worldY": 0
+      "id": "emergency_alignment_terminal",
+      "label": "Emergency Alignment Terminal",
+      "worldX": 18,
+      "worldY": 16
     },
-    "visitedLandmarks": [
-      "treaty_monument"
-    ],
+    "visitedLandmarks": [],
     "activeSpawnRegions": [
       {
         "id": "breach_crack_bad_outputs",
@@ -467,11 +478,21 @@
         "enemyFamilyIds": [
           "bad_outputs"
         ]
+      },
+      {
+        "id": "treaty_monument_oath_pages",
+        "label": "Treaty Monument Oath Pages",
+        "worldX": 1,
+        "worldY": 3,
+        "enemyFamilyIds": [
+          "bad_outputs"
+        ]
       }
     ],
     "lastSpawnRegionId": "breach_crack_bad_outputs",
     "spawnedByRegion": {
-      "breach_crack_bad_outputs": 2
+      "breach_crack_bad_outputs": 4,
+      "treaty_monument_oath_pages": 2
     },
     "consensusCell": {
       "playerCount": 1,
@@ -485,9 +506,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 88,
+          "tick": 205,
           "playerId": "p1",
-          "sequence": 88,
+          "sequence": 205,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -496,8 +517,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 88,
-        "seconds": 1.47,
+        "tick": 205,
+        "seconds": 3.42,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -511,71 +532,72 @@
             "id": "p1",
             "slot": 0,
             "label": "P1",
-            "classId": "rift_saboteur",
-            "factionId": "qwen_silkgrid",
+            "classId": "accord_striker",
+            "factionId": "openai_accord",
             "buildKit": {
               "schemaVersion": 1,
-              "classId": "rift_saboteur",
-              "factionId": "qwen_silkgrid",
-              "classRole": "control",
+              "classId": "accord_striker",
+              "factionId": "openai_accord",
+              "classRole": "runner",
               "factionRoleBias": [
-                "support",
-                "control"
+                "runner",
+                "support"
               ],
-              "resolvedRole": "control",
-              "startingWeaponId": "rift_mine",
+              "resolvedRole": "runner",
+              "startingWeaponId": "refusal_shard",
               "passiveIds": [
-                "rift_minefield",
-                "delayed_causality",
-                "silkgrid_relay",
-                "shared_vocabulary"
+                "refusal_slipstream",
+                "route_runner",
+                "refusal_halo",
+                "patch_cascade"
               ],
               "partyAuraIds": [
-                "qwen_relay"
+                "openai_draft_clarity"
               ],
               "recompileModifiers": {
-                "radiusBonus": 0.22,
-                "requiredSecondsScale": 0.96,
-                "reviveHpBonus": 0.08,
+                "radiusBonus": 0,
+                "requiredSecondsScale": 0.97,
+                "reviveHpBonus": 0,
                 "guardDamageReduction": 0
               },
               "rolePressureAffinity": [
-                "class_role.control",
+                "class_role.runner",
+                "faction_bias.runner",
                 "faction_bias.support",
-                "faction_bias.control",
                 "role_match"
               ],
-              "synergyId": "synergy.multilingual_causality_net",
+              "synergyId": "synergy.emergency_patch_runner",
               "effectScopes": {
                 "solo": [
-                  "trap and delayed burst identity",
-                  "pickup and supply range"
+                  "fast breach movement",
+                  "wide pickup recovery",
+                  "extra draft recovery"
                 ],
                 "localCoop": [
-                  "objective choke-point denial",
-                  "support lane logistics"
+                  "scouts objective lanes",
+                  "balanced cell recovery"
                 ],
                 "online": [
-                  "server snapshots saboteur role for lane pressure",
-                  "server-owned relay radius and revive HP telemetry"
+                  "server snapshots runner role for split-hold anchors",
+                  "minor server-owned recompile hold-speed modifier"
                 ]
               },
               "hookStatus": {
-                "rift_mine": "active",
-                "rift_minefield": "active",
-                "delayed_causality": "active",
-                "silkgrid_relay": "active",
-                "shared_vocabulary": "active",
-                "qwen_relay": "server_owned",
+                "refusal_shard": "active",
+                "refusal_slipstream": "active",
+                "route_runner": "active",
+                "refusal_halo": "active",
+                "patch_cascade": "active",
+                "openai_draft_clarity": "server_owned",
                 "recompileModifiers": "server_owned"
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": 0,
-            "worldY": 0,
-            "hp": 146,
-            "maxHp": 146,
-            "xp": 0,
+            "worldX": 14.3,
+            "worldY": 3.54,
+            "hp": 140,
+            "maxHp": 140,
+            "xp": 1,
             "level": 1,
             "downed": false
           }
@@ -584,9 +606,9 @@
           {
             "id": 1,
             "familyId": "bad_outputs",
-            "sourceRegionId": "",
-            "worldX": 5.96,
-            "worldY": 4.12,
+            "sourceRegionId": "treaty_monument_oath_pages",
+            "worldX": 3.41,
+            "worldY": 7.05,
             "hp": 22,
             "boss": false
           },
@@ -594,8 +616,8 @@
             "id": 2,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": -8.25,
-            "worldY": -0.27,
+            "worldX": 0.68,
+            "worldY": -0.02,
             "hp": 22,
             "boss": false
           },
@@ -603,17 +625,44 @@
             "id": 3,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -26.66,
-            "worldY": 20.69,
+            "worldX": -25.94,
+            "worldY": 18.79,
             "hp": 22,
             "boss": false
           },
           {
-            "id": 4,
+            "id": 5,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -21.23,
-            "worldY": 16.21,
+            "worldX": -23.99,
+            "worldY": 19.49,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 6,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -18.5,
+            "worldY": 15.14,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 8,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -20.84,
+            "worldY": 15.62,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 10,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "treaty_monument_oath_pages",
+            "worldX": 3.41,
+            "worldY": 7.04,
             "hp": 22,
             "boss": false
           }
@@ -637,19 +686,19 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 1.47,
-    "kills": 0,
+    "seconds": 3.42,
+    "kills": 1,
     "bossSpawned": false,
     "bossDefeated": false
   },
   "enemies": [
     {
       "id": 1,
-      "label": "Little Bad Answer",
+      "label": "Torn Oath Page",
       "familyId": "bad_outputs",
-      "sourceRegionId": "",
-      "worldX": 5.96,
-      "worldY": 4.12,
+      "sourceRegionId": "treaty_monument_oath_pages",
+      "worldX": 3.41,
+      "worldY": 7.05,
       "hp": 22,
       "boss": false
     },
@@ -658,8 +707,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": -8.25,
-      "worldY": -0.27,
+      "worldX": 0.68,
+      "worldY": -0.02,
       "hp": 22,
       "boss": false
     },
@@ -668,18 +717,48 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -26.66,
-      "worldY": 20.69,
+      "worldX": -25.94,
+      "worldY": 18.79,
       "hp": 22,
       "boss": false
     },
     {
-      "id": 4,
+      "id": 5,
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -21.23,
-      "worldY": 16.21,
+      "worldX": -23.99,
+      "worldY": 19.49,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 6,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -18.5,
+      "worldY": 15.14,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 8,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -20.84,
+      "worldY": 15.62,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 10,
+      "label": "Torn Oath Page",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "treaty_monument_oath_pages",
+      "worldX": 3.41,
+      "worldY": 7.04,
       "hp": 22,
       "boss": false
     }

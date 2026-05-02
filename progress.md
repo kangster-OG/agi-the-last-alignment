@@ -3487,3 +3487,13 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - docs/proof/visual-fidelity-slice/armistice-production-rebuild-r2-action.png
   - docs/proof/visual-fidelity-slice/armistice-production-rebuild-r2-action.json
   - docs/proof/visual-fidelity-slice/armistice-production-rebuild-asset-contact.png
+- Corrected the Armistice vertical slice after playtest feedback that sprites/props still looked prototype-like and props had no collision. Rebuilt the runtime player atlas contract from 48x48 to 80x80 frames, rebuilt the Milestone 11 enemy-family strips from 32x32 to 64x64 frames, and updated runtime slicing/scales so normal play uses the larger readable silhouettes.
+- Redrew the Armistice set pieces from PixelLab-backed M50/M51 source material plus local cleanup into larger illustrated objects with stronger internal detail and ground contact. Replaced the remaining south-rubble box-grid with an irregular debris/cable field.
+- Added static obstacle bodies for the starter/landmark Armistice set pieces and deterministic proof telemetry under `level.staticObstacles`; `proof:milestone11-art` now includes a terminal collision edge check. Export/import boundaries are unchanged.
+- Corrective visual proof artifacts:
+  - docs/proof/visual-fidelity-slice/techbros-vs-armistice-corrective-gate.png
+  - docs/proof/visual-fidelity-slice/techbros-vs-armistice-corrective-gate.json
+  - docs/proof/visual-fidelity-slice/armistice-corrective-sprite-prop-collision-action.png
+  - docs/proof/visual-fidelity-slice/armistice-corrective-sprite-prop-collision-action.json
+  - docs/proof/visual-fidelity-slice/armistice-corrective-collision-terminal-check.png
+  - docs/proof/visual-fidelity-slice/armistice-corrective-collision-terminal-check.json

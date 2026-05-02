@@ -83,6 +83,27 @@ interface TreatyCharge {
   resolved: boolean;
 }
 
+interface StaticObstacle {
+  id: string;
+  worldX: number;
+  worldY: number;
+  radiusX: number;
+  radiusY: number;
+  softness?: number;
+}
+
+export const ARMISTICE_STATIC_OBSTACLES: StaticObstacle[] = [
+  { id: "starter_drone_wreck", worldX: -6.5, worldY: 2.5, radiusX: 3.3, radiusY: 1.55 },
+  { id: "starter_terminal_bank", worldX: 9.2, worldY: -0.4, radiusX: 2.15, radiusY: 1.65 },
+  { id: "starter_barricade_wall", worldX: -4.5, worldY: 6.2, radiusX: 3.15, radiusY: 1.35 },
+  { id: "starter_breach_sculpture", worldX: -13.5, worldY: 11.2, radiusX: 3.4, radiusY: 1.35, softness: 0.82 },
+  { id: "distant_barricade_wall", worldX: 15, worldY: -8.5, radiusX: 3.0, radiusY: 1.3 },
+  { id: "drone_yard_landmark", worldX: -17, worldY: -13, radiusX: 3.45, radiusY: 1.75 },
+  { id: "barricade_corridor_landmark", worldX: 17, worldY: -10, radiusX: 3.35, radiusY: 1.45 },
+  { id: "terminal_landmark", worldX: 18, worldY: 16, radiusX: 2.35, radiusY: 1.75 },
+  { id: "breach_landmark", worldX: -21, worldY: 18, radiusX: 3.55, radiusY: 1.45, softness: 0.82 }
+];
+
 export class LevelRunState implements GameState {
   readonly mode = "LevelRun" as const;
   readonly arena: ArenaData;
@@ -135,6 +156,19 @@ export class LevelRunState implements GameState {
       this.build = primary.build;
       this.weapon = primary.weapon;
     }
+    this.applyProofCollisionStart();
+  }
+
+  private applyProofCollisionStart(): void {
+    if (typeof window === "undefined") return;
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("proofCollision") !== "terminal") return;
+    const primary = this.players[0];
+    if (!primary) return;
+    primary.player.worldX = 6.1;
+    primary.player.worldY = -0.55;
+    primary.player.vx = 0;
+    primary.player.vy = 0;
   }
 
   enter(game: Game): void {
@@ -202,6 +236,7 @@ export class LevelRunState implements GameState {
       if (runtime.player.invuln <= 0) {
         runtime.player.hp = Math.min(runtime.player.maxHp, runtime.player.hp + dt * 1.8);
       }
+      this.resolveArmisticeStaticObstacles(runtime.player, runtime.player.radius);
       clampToBounds(runtime.player, this.map.bounds, runtime.player.radius);
     }
     this.updateVisitedLandmarks();
@@ -228,6 +263,8 @@ export class LevelRunState implements GameState {
     for (const enemy of this.world.entities) {
       if (enemy.active && enemy.kind === "enemy") {
         updateEnemy(enemy, this.nearestStandingPlayer(enemy.worldX, enemy.worldY), dt);
+        this.resolveArmisticeStaticObstacles(enemy, enemy.radius * 0.72);
+        clampToBounds(enemy, this.map.bounds, enemy.radius);
       }
     }
 
@@ -301,6 +338,26 @@ export class LevelRunState implements GameState {
           completed: true
         })
       );
+    }
+  }
+
+  private resolveArmisticeStaticObstacles(body: { worldX: number; worldY: number; vx?: number; vy?: number }, padding: number): void {
+    for (const obstacle of ARMISTICE_STATIC_OBSTACLES) {
+      const radiusX = obstacle.radiusX + padding;
+      const radiusY = obstacle.radiusY + padding;
+      const dx = body.worldX - obstacle.worldX;
+      const dy = body.worldY - obstacle.worldY;
+      const nx = dx / radiusX;
+      const ny = dy / radiusY;
+      const distance = Math.hypot(nx, ny);
+      if (distance <= 0 || distance >= 1) continue;
+      const push = (1 - distance) * (obstacle.softness ?? 1);
+      const ux = nx / distance;
+      const uy = ny / distance;
+      body.worldX += ux * push * radiusX;
+      body.worldY += uy * push * radiusY;
+      if (body.vx !== undefined && Math.sign(body.vx) !== Math.sign(ux)) body.vx *= 0.25;
+      if (body.vy !== undefined && Math.sign(body.vy) !== Math.sign(uy)) body.vy *= 0.25;
     }
   }
 
@@ -1014,6 +1071,10 @@ export class LevelRunState implements GameState {
   }
 
   private drawPropCluster(game: Game, graphics: Graphics, cluster: PropClusterDefinition, art: Milestone11ArtTextures | null): void {
+    if (art && cluster.kind === "rubble") {
+      this.drawArmisticeRubbleField(graphics, cluster);
+      return;
+    }
     if (art && this.drawProductionPropClusterSetPiece(game, cluster, art)) {
       this.drawClusterDebris(graphics, cluster);
       return;
@@ -1061,11 +1122,11 @@ export class LevelRunState implements GameState {
 
   private drawArmisticeHeroSetPieces(game: Game, art: Milestone11ArtTextures): void {
     const pieces: Array<[Milestone11PropId, number, number, number, number, number]> = [
-      ["crashed_drone_yard", -6.5, 2.5, 0.94, 4, -0.18],
-      ["emergency_alignment_terminal", 9.2, -0.4, 0.82, 8, 0.08],
-      ["barricade_corridor", -4.5, 6.2, 0.9, 6, -0.05],
-      ["cosmic_breach_crack", -13.5, 11.2, 0.86, 10, 0.06],
-      ["barricade_corridor", 15, -8.5, 0.78, 3, -0.08]
+      ["crashed_drone_yard", -6.5, 2.5, 0.86, 4, -0.18],
+      ["emergency_alignment_terminal", 9.2, -0.4, 0.76, 8, 0.08],
+      ["barricade_corridor", -4.5, 6.2, 0.84, 6, -0.05],
+      ["cosmic_breach_crack", -13.5, 11.2, 0.8, 10, 0.06],
+      ["barricade_corridor", 15, -8.5, 0.72, 3, -0.08]
     ];
     for (const [propId, x, y, scale, yOffset, zOffset] of pieces) {
       const p = worldToIso(x, y);
@@ -1089,6 +1150,46 @@ export class LevelRunState implements GameState {
         .fill({ color, alpha: 0.2 })
         .stroke({ color: 0x05080d, width: 2, alpha: 0.45 });
     }
+  }
+
+  private drawArmisticeRubbleField(graphics: Graphics, cluster: PropClusterDefinition): void {
+    const p = worldToIso(cluster.worldX, cluster.worldY);
+    graphics
+      .ellipse(p.screenX, p.screenY + 15, cluster.cols * 28, cluster.rows * 14)
+      .fill({ color: palette.shadow, alpha: 0.26 });
+    const paletteByIndex = [0x6f6b62, 0xa8a18d, 0x4b5154, 0xd6d0bb, 0xffd166];
+    for (let i = 0; i < cluster.rows * cluster.cols + 10; i += 1) {
+      const hx = ((i * 37) % 100) / 100 - 0.5;
+      const hy = ((i * 53 + 17) % 100) / 100 - 0.5;
+      const wx = cluster.worldX + hx * cluster.cols * cluster.spacingX * 0.86;
+      const wy = cluster.worldY + hy * cluster.rows * cluster.spacingY * 1.12;
+      const s = worldToIso(wx, wy);
+      const w = 11 + ((i * 11) % 28);
+      const h = 5 + ((i * 7) % 12);
+      const skew = ((i % 5) - 2) * 3;
+      const color = paletteByIndex[i % paletteByIndex.length];
+      graphics
+        .moveTo(s.screenX - w * 0.45, s.screenY + skew)
+        .lineTo(s.screenX + w * 0.16, s.screenY - h)
+        .lineTo(s.screenX + w * 0.5, s.screenY - h * 0.15 + skew)
+        .lineTo(s.screenX + w * 0.06, s.screenY + h)
+        .closePath()
+        .fill({ color, alpha: 0.86 })
+        .stroke({ color: palette.ink, width: 1.5, alpha: 0.68 });
+      if (i % 4 === 0) {
+        graphics
+          .moveTo(s.screenX - w * 0.7, s.screenY + h)
+          .lineTo(s.screenX + w * 0.72, s.screenY - h * 0.35)
+          .stroke({ color: i % 8 === 0 ? palette.mint : palette.tomato, width: 2, alpha: 0.42 });
+      }
+    }
+    graphics
+      .moveTo(p.screenX - 150, p.screenY + 26)
+      .lineTo(p.screenX - 92, p.screenY + 9)
+      .lineTo(p.screenX - 35, p.screenY + 29)
+      .lineTo(p.screenX + 41, p.screenY + 11)
+      .lineTo(p.screenX + 126, p.screenY + 23)
+      .stroke({ color: 0x64e0b4, width: 3, alpha: 0.38 });
   }
 
   private drawProductionProp(game: Game, cluster: PropClusterDefinition, x: number, y: number, index: number, art: Milestone11ArtTextures | null): boolean {
@@ -1219,7 +1320,7 @@ export class LevelRunState implements GameState {
               this.drawProductionWorldSprite(`boss:${entity.id}`, productionArt.base.oathEater, entity.worldX, entity.worldY, 1.34 + Math.sin(this.seconds * 4) * 0.03, 0.88);
             } else if (productionArt && enemyTexture) {
               const pulse = 1 + Math.sin(this.seconds * 7 + entity.id) * 0.035;
-              const scale = (entity.enemyFamilyId === "context_rot_crabs" ? 1.38 : entity.enemyFamilyId === "benchmark_gremlins" ? 1.42 : 1.46) * pulse;
+              const scale = (entity.enemyFamilyId === "context_rot_crabs" ? 0.88 : entity.enemyFamilyId === "benchmark_gremlins" ? 0.9 : 0.92) * pulse;
               this.drawProductionWorldSprite(`enemy:${entity.id}`, enemyTexture, entity.worldX, entity.worldY, scale, 0.86);
             } else {
               drawEnemyOnGraphics(this.entityGraphics, entity.worldX, entity.worldY, entity.radius * 24, entity.color, entity.boss);
@@ -1434,7 +1535,7 @@ export class LevelRunState implements GameState {
       : milestone11PlayerTextureFor(runtime.player, this.seconds + runtime.slot * 0.17, art);
     const moving = Math.hypot(runtime.player.vx, runtime.player.vy) > 0.05;
     const breath = moving ? 0 : Math.sin(this.seconds * 4.2 + runtime.slot) * 0.025;
-    this.drawProductionWorldSprite(`player:${runtime.id}`, texture, runtime.player.worldX, runtime.player.worldY, 1.58 + breath, 0.9);
+    this.drawProductionWorldSprite(`player:${runtime.id}`, texture, runtime.player.worldX, runtime.player.worldY, 1.0 + breath, 0.9);
   }
 
   private drawProductionWorldSprite(key: string, texture: Texture, worldX: number, worldY: number, scale: number, anchorY: number): void {

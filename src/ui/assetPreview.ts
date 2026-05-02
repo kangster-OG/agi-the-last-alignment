@@ -281,31 +281,30 @@ export class AssetPreviewState implements GameState {
     const playerDirections = ["south", "east", "north", "west"] as const;
     playerDirections.forEach((direction, row) => {
       textures.playerV2[direction].forEach((texture, frame) => {
-        addMilestone11PreviewSprite(preview, texture, 92 + frame * 58, 234 + row * 66, 2.25);
+        addMilestone11PreviewSprite(preview, texture, 92 + frame * 64, 216 + row * 82, 1.32);
       });
       const label = new Text({
         text: direction.toUpperCase(),
         style: { ...fontStyle, fontSize: 10, fill: "#fff4d6" }
       });
-      label.position.set(270, 202 + row * 66);
+      label.position.set(286, 176 + row * 82);
       game.layers.hud.addChild(label);
     });
 
-    textures.benchmarkGremlins.forEach((texture, index) => addMilestone11PreviewSprite(preview, texture, 430 + index * 72, 268, 2.9));
-    textures.contextRotCrabs.forEach((texture, index) => addMilestone11PreviewSprite(preview, texture, 430 + index * 72, 382, 2.9));
-    addMilestone11PreviewSprite(preview, textures.base.badOutputs[0], 640, 268, 2.7);
-    addMilestone11PreviewSprite(preview, textures.base.badOutputs[1], 640, 382, 2.7);
+    textures.badOutputs.forEach((texture, index) => addMilestone11PreviewSprite(preview, texture, 422 + index * 74, 244, 1.48));
+    textures.benchmarkGremlins.forEach((texture, index) => addMilestone11PreviewSprite(preview, texture, 422 + index * 74, 348, 1.48));
+    textures.contextRotCrabs.forEach((texture, index) => addMilestone11PreviewSprite(preview, texture, 422 + index * 74, 452, 1.48));
 
-    addMilestone11PreviewSprite(preview, textures.props.barricade_corridor, 830, 300, 0.92, 0.86);
-    addMilestone11PreviewSprite(preview, textures.props.crashed_drone_yard, 1042, 298, 0.82, 0.86);
-    addMilestone11PreviewSprite(preview, textures.props.emergency_alignment_terminal, 842, 520, 0.78, 0.86);
-    addMilestone11PreviewSprite(preview, textures.props.cosmic_breach_crack, 1040, 520, 0.82, 0.86);
+    addMilestone11PreviewSprite(preview, textures.props.barricade_corridor, 850, 310, 0.76, 0.86);
+    addMilestone11PreviewSprite(preview, textures.props.crashed_drone_yard, 1050, 308, 0.7, 0.86);
+    addMilestone11PreviewSprite(preview, textures.props.emergency_alignment_terminal, 858, 524, 0.66, 0.86);
+    addMilestone11PreviewSprite(preview, textures.props.cosmic_breach_crack, 1054, 524, 0.7, 0.86);
     addMilestone11PreviewSprite(preview, textures.openaiAccordMark, 1120, 172, 1.25, 0.5);
 
     const labels = new Text({
       text: [
         "left: Accord Striker v2 4-direction/3-frame readability pass",
-        "center: Benchmark Gremlins + Context Rot Crabs beside Bad Outputs",
+        "center: 64px Bad Outputs, Benchmark Gremlins, Context Rot Crabs",
         "right: cached landmark prop set + original OpenAI Accord mark",
         "gameplay replacement: ON by default; opt out with ?productionArt=0"
       ].join("    "),
@@ -315,8 +314,8 @@ export class AssetPreviewState implements GameState {
     game.layers.hud.addChild(labels);
 
     const outline = new Graphics();
-    outline.rect(58, 132, 272, 380).stroke({ color: palette.mint, width: 2, alpha: 0.45 });
-    outline.rect(382, 196, 348, 260).stroke({ color: palette.lemon, width: 2, alpha: 0.45 });
+    outline.rect(58, 118, 292, 430).stroke({ color: palette.mint, width: 2, alpha: 0.45 });
+    outline.rect(382, 166, 348, 340).stroke({ color: palette.lemon, width: 2, alpha: 0.45 });
     outline.rect(776, 136, 388, 440).stroke({ color: palette.tomato, width: 2, alpha: 0.45 });
     game.layers.hud.addChild(outline);
   }

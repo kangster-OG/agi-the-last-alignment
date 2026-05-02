@@ -143,6 +143,41 @@ def shadow(size: tuple[int, int], bbox: tuple[int, int, int, int], alpha: int = 
     return layer.filter(ImageFilter.GaussianBlur(1.2))
 
 
+def polygon(draw: ImageDraw.ImageDraw, points: list[tuple[int, int]], fill: tuple[int, int, int, int], outline: tuple[int, int, int, int] = (8, 12, 18, 255), width: int = 2) -> None:
+    draw.polygon(points, fill=fill)
+    draw.line(points + [points[0]], fill=outline, width=width, joint="curve")
+
+
+def draw_iso_plate(draw: ImageDraw.ImageDraw, cx: int, cy: int, w: int, h: int, color: tuple[int, int, int], accent: tuple[int, int, int], alpha: int = 240) -> None:
+    polygon(draw, [(cx, cy - h // 2), (cx + w // 2, cy), (cx, cy + h // 2), (cx - w // 2, cy)], color + (alpha,), (8, 12, 18, 230), 2)
+    draw.line([(cx - w // 2 + 12, cy), (cx, cy + h // 2 - 7), (cx + w // 2 - 12, cy)], fill=(255, 244, 214, 58), width=1)
+    draw.line([(cx - w // 2 + 16, cy - 4), (cx + w // 2 - 18, cy - 4)], fill=accent + (118,), width=2)
+
+
+def draw_cable(draw: ImageDraw.ImageDraw, points: list[tuple[int, int]], color: tuple[int, int, int], glow: tuple[int, int, int], width: int = 4) -> None:
+    draw.line(points, fill=(6, 9, 14, 235), width=width + 3, joint="curve")
+    draw.line(points, fill=color + (245,), width=width, joint="curve")
+    draw.line(points, fill=glow + (180,), width=max(1, width // 2), joint="curve")
+
+
+def draw_small_debris(draw: ImageDraw.ImageDraw, seed: int, count: int, bounds: tuple[int, int, int, int], palette_colors: list[tuple[int, int, int]]) -> None:
+    x0, y0, x1, y1 = bounds
+    for i in range(count):
+        x = x0 + ((seed * 37 + i * 29) % max(1, x1 - x0))
+        y = y0 + ((seed * 23 + i * 17) % max(1, y1 - y0))
+        w = 5 + ((seed + i * 5) % 15)
+        h = 3 + ((seed + i * 7) % 9)
+        color = palette_colors[(seed + i) % len(palette_colors)]
+        pts = [(x, y), (x + w, y - h // 2), (x + w + 5, y + h // 2), (x + 2, y + h)]
+        polygon(draw, pts, color + (214,), (8, 12, 18, 190), 1)
+
+
+def add_pixel_rivet_field(draw: ImageDraw.ImageDraw, points: list[tuple[int, int]], color: tuple[int, int, int], seed: int) -> None:
+    for i, (x, y) in enumerate(points):
+        r = 2 + ((seed + i) % 2)
+        draw.rectangle((x - r, y - r, x + r, y + r), fill=color + (236,), outline=(8, 12, 18, 220))
+
+
 def build_ground_atlas() -> None:
     sources = [open_rgba(PIXELLAB / "m50_unknown_isometric_b_raw" / f"frame_{i}.png") for i in range(16)]
     specs = [
@@ -238,78 +273,96 @@ def build_transition_atlas() -> None:
 
 
 def build_treaty_monument() -> None:
-    src = open_rgba(PIXELLAB / "m50_unknown_isometric_a_raw" / "frame_0.png")
-    core = hard_outline(fit_subject(src, (240, 216), 148, 130, 0.87), width=2)
-    canvas = Image.new("RGBA", (240, 216), (0, 0, 0, 0))
-    canvas.alpha_composite(shadow((240, 216), (24, 158, 216, 208), 132))
+    size = (280, 236)
+    canvas = Image.new("RGBA", size, (0, 0, 0, 0))
+    canvas.alpha_composite(shadow(size, (22, 170, 258, 228), 142))
     draw = ImageDraw.Draw(canvas)
-    draw.polygon([(120, 133), (206, 170), (120, 212), (34, 170)], fill=(49, 58, 61, 255), outline=(8, 12, 18, 255))
-    draw.polygon([(120, 144), (188, 170), (120, 202), (52, 170)], fill=(81, 183, 156, 220), outline=(10, 26, 29, 180))
-    draw.ellipse((62, 119, 178, 184), outline=(255, 244, 214, 150), width=3)
-    for i in range(6):
-        x = 58 + i * 22
-        draw.line([(x, 164), (x + 24, 151)], fill=(14, 22, 27, 130), width=2)
-    canvas.alpha_composite(core)
-    draw.rectangle((96, 48, 141, 132), fill=(207, 202, 184, 250), outline=(8, 12, 18, 255), width=3)
-    draw.rectangle((84, 32, 154, 54), fill=(255, 93, 87, 250), outline=(8, 12, 18, 255), width=3)
-    draw.rectangle((105, 73, 129, 111), fill=(69, 170, 242, 248), outline=(8, 12, 18, 255), width=2)
-    draw.line([(56, 145), (96, 124), (132, 139), (183, 110)], fill=(255, 209, 102, 232), width=5)
-    draw.line([(116, 50), (101, 116), (132, 148)], fill=(20, 24, 31, 218), width=4)
-    for x, y in [(74, 152), (91, 158), (160, 139), (178, 153)]:
-        draw.rectangle((x, y, x + 22, y + 9), fill=(91, 80, 68, 220), outline=(8, 12, 18, 220), width=1)
+    draw_iso_plate(draw, 140, 179, 224, 78, (58, 63, 64), (100, 224, 180), 250)
+    draw_iso_plate(draw, 140, 164, 164, 56, (105, 112, 108), (255, 209, 102), 246)
+    polygon(draw, [(76, 146), (115, 128), (149, 138), (108, 160)], (140, 133, 113, 242), width=2)
+    polygon(draw, [(172, 132), (221, 111), (238, 123), (190, 149)], (104, 94, 80, 242), width=2)
+    polygon(draw, [(110, 87), (138, 70), (169, 86), (169, 140), (137, 157), (109, 140)], (212, 206, 185, 255), width=3)
+    polygon(draw, [(127, 43), (157, 31), (186, 45), (158, 61)], (255, 93, 87, 250), width=3)
+    polygon(draw, [(119, 61), (158, 62), (158, 91), (136, 103), (118, 91)], (160, 166, 154, 250), width=3)
+    polygon(draw, [(137, 79), (158, 68), (178, 80), (158, 92)], (69, 170, 242, 240), width=2)
+    draw.line([(67, 159), (109, 135), (151, 151), (214, 113)], fill=(255, 209, 102, 230), width=5)
+    draw.line([(69, 165), (111, 141), (151, 156), (217, 119)], fill=(8, 12, 18, 150), width=2)
+    draw_cable(draw, [(119, 102), (96, 134), (70, 161), (46, 172)], (37, 59, 66), (100, 224, 180), 4)
+    draw_cable(draw, [(171, 90), (197, 119), (235, 141), (258, 158)], (45, 31, 55), (123, 97, 255), 4)
+    add_pixel_rivet_field(draw, [(129, 111), (147, 119), (160, 112), (101, 151), (181, 143), (206, 133)], (255, 244, 214), 7)
+    draw_small_debris(draw, 19, 18, (52, 154, 225, 206), [(86, 80, 70), (184, 178, 158), (47, 56, 60)])
     canvas.save(ROOT / "assets" / "props" / "armistice_plaza" / "treaty_monument.png")
 
 
 def build_prop(name: str, frame: int, out_name: str, size: tuple[int, int], max_w: int, max_h: int, tint_color: tuple[int, int, int], accents: str) -> None:
     src = open_rgba(PIXELLAB / "m50_unknown_isometric_a_raw" / f"frame_{frame}.png")
-    subject = hard_outline(tint(fit_subject(src, size, max_w, max_h, 0.9), tint_color, 0.2), width=2)
+    subject = hard_outline(tint(fit_subject(src, size, max_w, max_h, 0.9), tint_color, 0.08), width=1, alpha=160)
     canvas = Image.new("RGBA", size, (0, 0, 0, 0))
     canvas.alpha_composite(shadow(size, (8, int(size[1] * 0.72), size[0] - 7, size[1] - 4), 104))
-    canvas.alpha_composite(subject)
     draw = ImageDraw.Draw(canvas)
     if accents == "barricade":
-        draw.polygon([(18, 100), (124, 55), (216, 91), (108, 142)], fill=(58, 49, 43, 236), outline=(8, 12, 18, 255))
-        for x, y, w in ((22, 92, 54), (68, 73, 62), (124, 78, 58), (176, 95, 50)):
-            draw.rectangle((x, y, x + w, y + 19), fill=(255, 93, 87, 242), outline=(8, 12, 18, 255), width=2)
-            draw.rectangle((x + 10, y + 21, x + w + 12, y + 33), fill=(255, 209, 102, 228), outline=(8, 12, 18, 255))
-        for x in (46, 96, 151, 202):
-            draw.line([(x, 68), (x - 8, 127)], fill=(20, 24, 31, 230), width=4)
+        draw_iso_plate(draw, 128, 117, 218, 66, (67, 55, 47), (255, 209, 102), 238)
+        segments = [
+            [(21, 96), (75, 74), (93, 85), (39, 112)],
+            [(66, 84), (124, 59), (145, 71), (87, 100)],
+            [(119, 78), (179, 76), (198, 91), (138, 101)],
+            [(168, 91), (224, 101), (238, 119), (181, 115)],
+        ]
+        colors = [(214, 69, 66), (255, 93, 87), (217, 181, 93), (255, 209, 102)]
+        for i, pts in enumerate(segments):
+            polygon(draw, pts, colors[i % len(colors)] + (246,), width=3)
+            draw.line([pts[0], pts[2]], fill=(8, 12, 18, 150), width=2)
+        for x, y, h in [(37, 79, 57), (94, 61, 66), (151, 67, 60), (211, 92, 44)]:
+            draw.line([(x, y), (x - 10, y + h)], fill=(15, 20, 25, 245), width=5)
+            draw.line([(x + 4, y + 8), (x - 6, y + h + 2)], fill=(91, 98, 96, 210), width=2)
+        draw_cable(draw, [(25, 124), (86, 110), (144, 127), (219, 121)], (30, 35, 39), (255, 93, 87), 3)
+        draw_small_debris(draw, 31, 22, (18, 108, 232, 148), [(63, 52, 45), (151, 121, 76), (190, 64, 62)])
     elif accents == "drone":
-        draw.line([(34, 100), (113, 63), (206, 101)], fill=(69, 170, 242, 226), width=7)
-        draw.line([(42, 66), (209, 132)], fill=(8, 12, 18, 236), width=7)
-        draw.rectangle((101, 48, 149, 80), fill=(69, 170, 242, 242), outline=(8, 12, 18, 255), width=3)
-        draw.rectangle((113, 82, 137, 122), fill=(188, 196, 184, 232), outline=(8, 12, 18, 255), width=3)
-        draw.arc((92, 72, 156, 144), 190, 360, fill=(188, 196, 184, 200), width=5)
-        for x, y in ((28, 112), (174, 110), (67, 94), (209, 94)):
-            draw.ellipse((x, y, x + 54, y + 30), fill=(22, 31, 38, 236), outline=(8, 12, 18, 255), width=3)
-        for x, y in ((87, 126), (147, 130), (119, 138)):
-            draw.rectangle((x, y, x + 24, y + 7), fill=(34, 44, 50, 232), outline=(8, 12, 18, 230))
+        draw_iso_plate(draw, 128, 135, 190, 60, (43, 51, 55), (69, 170, 242), 228)
+        polygon(draw, [(77, 84), (130, 53), (188, 82), (152, 118), (95, 112)], (43, 63, 75, 250), width=3)
+        polygon(draw, [(101, 50), (138, 34), (174, 51), (137, 68)], (69, 170, 242, 245), width=3)
+        polygon(draw, [(103, 72), (143, 56), (159, 92), (119, 109)], (183, 195, 188, 242), width=3)
+        draw.line([(37, 96), (93, 84), (155, 93), (222, 86)], fill=(11, 17, 24, 245), width=8)
+        draw.line([(50, 69), (102, 88), (156, 107), (220, 137)], fill=(11, 17, 24, 240), width=7)
+        for x, y, w, h in [(25, 103, 66, 31), (166, 101, 70, 31), (52, 78, 57, 27), (199, 83, 44, 24)]:
+            draw.ellipse((x, y, x + w, y + h), fill=(23, 31, 37, 244), outline=(8, 12, 18, 255), width=3)
+            draw.arc((x + 8, y + 5, x + w - 8, y + h - 3), 180, 360, fill=(80, 95, 100, 190), width=2)
+        draw_cable(draw, [(76, 124), (116, 144), (153, 135), (196, 154)], (25, 34, 42), (69, 170, 242), 4)
+        draw_small_debris(draw, 43, 18, (54, 128, 213, 165), [(38, 48, 54), (94, 113, 116), (56, 73, 83)])
     elif accents == "terminal":
-        draw.polygon([(45, 142), (126, 109), (203, 146), (124, 187)], fill=(16, 66, 72, 240), outline=(8, 12, 18, 255))
-        for x, y, h in ((55, 78, 70), (99, 58, 88), (146, 82, 65)):
-            draw.rectangle((x, y, x + 42, y + h), fill=(29, 78, 82, 242), outline=(8, 12, 18, 255), width=3)
-            draw.rectangle((x + 9, y + 14, x + 32, y + 42), fill=(100, 224, 180, 248), outline=(8, 12, 18, 255), width=2)
-            draw.line([(x + 8, y + h - 14), (x + 33, y + h - 14)], fill=(255, 244, 214, 145), width=2)
-        draw.line([(126, 58), (126, 18)], fill=(255, 209, 102, 245), width=5)
-        draw.ellipse((117, 7, 135, 25), fill=(255, 209, 102, 248), outline=(8, 12, 18, 255), width=2)
-        for x, y in ((34, 154), (188, 155), (73, 169), (154, 174)):
-            draw.line([(x, y), (x + 25, y - 8)], fill=(100, 224, 180, 120), width=2)
+        draw_iso_plate(draw, 124, 157, 186, 76, (17, 70, 77), (100, 224, 180), 246)
+        cabinets = [(47, 82, 48, 74), (96, 55, 52, 105), (150, 88, 50, 70)]
+        for i, (x, y, w, h) in enumerate(cabinets):
+            polygon(draw, [(x, y + 12), (x + w // 2, y), (x + w, y + 12), (x + w, y + h), (x + w // 2, y + h + 14), (x, y + h)], (24, 78, 84, 248), width=3)
+            draw.rectangle((x + 10, y + 20, x + w - 10, y + 46), fill=(100, 224, 180, 246), outline=(8, 12, 18, 230), width=2)
+            for n in range(4):
+                yy = y + 52 + n * 8
+                draw.line([(x + 9, yy), (x + w - 9, yy)], fill=((255, 244, 214) if n % 2 else (69, 170, 242)) + (130,), width=1)
+        draw.line([(124, 56), (124, 19)], fill=(255, 209, 102, 245), width=5)
+        draw.line([(118, 20), (130, 20)], fill=(8, 12, 18, 255), width=7)
+        draw.ellipse((114, 6, 136, 28), fill=(255, 209, 102, 248), outline=(8, 12, 18, 255), width=2)
+        draw_cable(draw, [(36, 167), (78, 153), (128, 173), (191, 159), (226, 170)], (21, 44, 52), (100, 224, 180), 4)
+        draw_small_debris(draw, 57, 16, (28, 157, 220, 190), [(19, 56, 62), (73, 121, 116), (207, 194, 149)])
     elif accents == "breach":
-        draw.polygon([(24, 97), (86, 53), (145, 96), (210, 61), (257, 86), (158, 145)], fill=(31, 12, 48, 236), outline=(8, 12, 18, 255))
-        draw.line([(18, 109), (58, 84), (92, 106), (136, 64), (187, 104), (265, 76)], fill=(123, 97, 255, 250), width=8)
-        draw.line([(78, 107), (97, 143), (119, 88)], fill=(255, 93, 87, 230), width=5)
-        draw.line([(167, 101), (189, 139), (215, 85)], fill=(100, 224, 180, 214), width=4)
-        for x, y in ((42, 123), (132, 132), (213, 106), (102, 74)):
-            draw.polygon([(x, y), (x + 9, y - 6), (x + 18, y), (x + 9, y + 6)], fill=(123, 97, 255, 135), outline=(8, 12, 18, 120))
+        polygon(draw, [(18, 111), (73, 73), (120, 96), (172, 58), (229, 93), (274, 73), (260, 116), (178, 154), (94, 139)], (30, 12, 47, 246), width=3)
+        draw.line([(19, 116), (59, 92), (92, 108), (133, 70), (184, 109), (268, 78)], fill=(123, 97, 255, 255), width=9)
+        draw.line([(22, 117), (59, 96), (92, 112), (134, 75), (182, 114), (265, 83)], fill=(223, 213, 255, 195), width=2)
+        draw.line([(78, 108), (98, 151), (120, 91)], fill=(255, 93, 87, 232), width=5)
+        draw.line([(168, 103), (192, 146), (218, 87)], fill=(100, 224, 180, 218), width=4)
+        for x, y, s in [(43, 128, 10), (132, 134, 15), (213, 108, 12), (103, 76, 9), (235, 126, 8)]:
+            polygon(draw, [(x, y), (x + s, y - s // 2), (x + s * 2, y), (x + s, y + s // 2)], (123, 97, 255, 145), (8, 12, 18, 115), 1)
+        draw_cable(draw, [(52, 148), (98, 135), (151, 154), (230, 139)], (26, 18, 40), (255, 93, 87), 3)
+        draw_small_debris(draw, 71, 20, (18, 116, 260, 158), [(49, 24, 63), (80, 47, 97), (38, 31, 48)])
+    canvas.alpha_composite(subject)
     canvas.save(ROOT / "assets" / "props" / "armistice_plaza" / out_name)
 
 
 def build_props() -> None:
     build_treaty_monument()
-    build_prop("barricade", 3, "barricade_corridor_set.png", (256, 160), 190, 112, (255, 93, 87), "barricade")
-    build_prop("drone", 1, "crashed_drone_yard_wreck.png", (256, 184), 206, 136, (69, 170, 242), "drone")
-    build_prop("terminal", 2, "emergency_alignment_terminal.png", (248, 208), 184, 152, (100, 224, 180), "terminal")
-    build_prop("breach", 15, "cosmic_breach_crack.png", (288, 168), 236, 126, (123, 97, 255), "breach")
+    build_prop("barricade", 3, "barricade_corridor_set.png", (284, 184), 136, 86, (255, 93, 87), "barricade")
+    build_prop("drone", 1, "crashed_drone_yard_wreck.png", (286, 210), 150, 98, (69, 170, 242), "drone")
+    build_prop("terminal", 2, "emergency_alignment_terminal.png", (268, 226), 126, 108, (100, 224, 180), "terminal")
+    build_prop("breach", 15, "cosmic_breach_crack.png", (304, 184), 150, 82, (123, 97, 255), "breach")
 
 
 def enhance_runtime_sheet(source_path: Path, target_path: Path, frame_w: int, frame_h: int, contrast: float, color: float, outline_width: int = 1) -> None:
@@ -326,6 +379,181 @@ def enhance_runtime_sheet(source_path: Path, target_path: Path, frame_w: int, fr
             boosted = sprite_outline(boosted, width=outline_width)
             out.alpha_composite(boosted, (x, y))
     out.save(target_path)
+
+
+CLASS_IDS = [
+    "accord_striker",
+    "bastion_breaker",
+    "drone_reaver",
+    "signal_vanguard",
+    "bonecode_executioner",
+    "redline_surgeon",
+    "moonframe_juggernaut",
+    "vector_interceptor",
+    "nullbreaker_ronin",
+    "overclock_marauder",
+    "prism_gunner",
+    "rift_saboteur",
+]
+
+CLASS_PALETTES = [
+    ((58, 214, 191), (69, 170, 242), (255, 209, 102)),
+    ((164, 177, 174), (255, 209, 102), (255, 93, 87)),
+    ((67, 154, 190), (100, 224, 180), (178, 140, 255)),
+    ((82, 198, 159), (255, 244, 214), (69, 170, 242)),
+    ((184, 190, 188), (255, 93, 87), (123, 97, 255)),
+    ((220, 225, 210), (255, 93, 87), (100, 224, 180)),
+    ((132, 151, 168), (255, 209, 102), (69, 170, 242)),
+    ((88, 160, 210), (123, 97, 255), (255, 244, 214)),
+    ((118, 124, 134), (123, 97, 255), (255, 93, 87)),
+    ((173, 106, 72), (255, 93, 87), (255, 209, 102)),
+    ((206, 218, 219), (69, 170, 242), (255, 244, 214)),
+    ((86, 93, 118), (123, 97, 255), (100, 224, 180)),
+]
+
+
+def shade(color: tuple[int, int, int], factor: float) -> tuple[int, int, int]:
+    return tuple(max(0, min(255, int(channel * factor))) for channel in color)
+
+
+def draw_limb(draw: ImageDraw.ImageDraw, a: tuple[int, int], b: tuple[int, int], color: tuple[int, int, int], width: int) -> None:
+    draw.line([a, b], fill=(7, 9, 15, 255), width=width + 3)
+    draw.line([a, b], fill=color + (255,), width=width)
+    draw.rectangle((b[0] - 3, b[1] - 2, b[0] + 3, b[1] + 3), fill=shade(color, 0.7) + (255,), outline=(7, 9, 15, 245))
+
+
+def draw_player_frame(class_index: int, direction: int, frame_index: int) -> Image.Image:
+    frame = Image.new("RGBA", (80, 80), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(frame)
+    primary, accent, glow = CLASS_PALETTES[class_index]
+    bob = [-1, 1, 0][frame_index]
+    step = [-4, 4, 0][frame_index]
+    cx = 40
+    foot_y = 68 + bob
+    bulky = class_index in {1, 6, 9}
+    lean = class_index in {4, 8, 11}
+    torso_w = 20 + (8 if bulky else -2 if lean else 2)
+    torso_h = 28 + (4 if bulky else 0)
+    shoulder_w = torso_w + 12 + (7 if bulky else 0)
+    side = 1 if direction == 1 else -1 if direction == 3 else 0
+    back = direction == 2
+    facing_scale = 0.88 if back else 1.0
+    draw.ellipse((20, 64, 60, 75), fill=(0, 0, 0, 92))
+    leg_color = shade(primary, 0.72)
+    draw_limb(draw, (cx - 8, foot_y - 20), (cx - 13 - step // 2, foot_y), leg_color, 5)
+    draw_limb(draw, (cx + 8, foot_y - 20), (cx + 13 + step // 2, foot_y), leg_color, 5)
+    if side:
+        draw_limb(draw, (cx - side * 7, foot_y - 36), (cx - side * 26, foot_y - 28 + step // 3), shade(primary, 0.82), 5)
+        draw_limb(draw, (cx + side * 8, foot_y - 35), (cx + side * 24, foot_y - 48 - step // 3), accent, 5)
+    else:
+        draw_limb(draw, (cx - 11, foot_y - 35), (cx - 25, foot_y - 27 + step // 3), shade(primary, 0.82), 5)
+        draw_limb(draw, (cx + 11, foot_y - 35), (cx + 25, foot_y - 27 - step // 3), accent, 5)
+    polygon(
+        draw,
+        [(cx, foot_y - torso_h - 9), (cx + shoulder_w // 2, foot_y - torso_h + 1), (cx + torso_w // 2, foot_y - 10), (cx, foot_y - 2), (cx - torso_w // 2, foot_y - 10), (cx - shoulder_w // 2, foot_y - torso_h + 1)],
+        shade(primary, 0.86) + (255,),
+        width=3,
+    )
+    polygon(
+        draw,
+        [(cx, foot_y - torso_h - 3), (cx + int(torso_w * facing_scale) // 2, foot_y - torso_h + 6), (cx + torso_w // 3, foot_y - 16), (cx, foot_y - 8), (cx - torso_w // 3, foot_y - 16), (cx - int(torso_w * facing_scale) // 2, foot_y - torso_h + 6)],
+        primary + (255,),
+        width=2,
+    )
+    draw.rectangle((cx - 5, foot_y - 31, cx + 5, foot_y - 20), fill=glow + (245,), outline=(7, 9, 15, 230), width=1)
+    head_y = foot_y - torso_h - 18
+    polygon(draw, [(cx, head_y - 10), (cx + 12, head_y - 3), (cx + 10, head_y + 10), (cx, head_y + 16), (cx - 10, head_y + 10), (cx - 12, head_y - 3)], shade(primary, 0.92) + (255,), width=3)
+    visor = (255, 244, 214) if back else glow
+    draw.rectangle((cx - 7 + side * 3, head_y - 3, cx + 7 + side * 3, head_y + 4), fill=visor + (250,), outline=(7, 9, 15, 230), width=1)
+    if class_index == 0:
+        draw.line([(cx - 10, head_y - 8), (cx - 25, head_y - 20)], fill=accent + (245,), width=3)
+        draw.line([(cx + 10, head_y - 8), (cx + 25, head_y - 20)], fill=accent + (245,), width=3)
+        draw.rectangle((cx - 19, foot_y - 22, cx + 19, foot_y - 16), fill=(19, 34, 42, 245), outline=(7, 9, 15, 220))
+    elif class_index == 1:
+        draw.rectangle((cx - 28, foot_y - 49, cx - 17, foot_y - 23), fill=accent + (245,), outline=(7, 9, 15, 230), width=2)
+        draw.rectangle((cx + 17, foot_y - 49, cx + 28, foot_y - 23), fill=accent + (245,), outline=(7, 9, 15, 230), width=2)
+    elif class_index == 2:
+        for dx, dy in [(-25, -49), (25, -47), (0, -58)]:
+            draw.ellipse((cx + dx - 5, foot_y + dy - 4, cx + dx + 5, foot_y + dy + 4), fill=accent + (245,), outline=(7, 9, 15, 230), width=2)
+    elif class_index == 3:
+        draw.arc((cx - 24, head_y - 20, cx + 24, head_y + 18), 205, 335, fill=glow + (220,), width=3)
+        draw.line([(cx + 18, foot_y - 44), (cx + 31, foot_y - 60)], fill=accent + (245,), width=4)
+    elif class_index == 4:
+        draw.line([(cx + 17, foot_y - 42), (cx + 35, foot_y - 66)], fill=accent + (250,), width=4)
+        draw.line([(cx + 31, foot_y - 64), (cx + 39, foot_y - 68)], fill=(255, 244, 214, 230), width=3)
+    elif class_index == 5:
+        draw_cable(draw, [(cx - 18, foot_y - 45), (cx - 5, foot_y - 33), (cx + 19, foot_y - 52)], (255, 93, 87), (255, 244, 214), 3)
+    elif class_index == 6:
+        draw.rectangle((cx - 22, foot_y - 44, cx + 22, foot_y - 20), fill=shade(primary, 0.68) + (245,), outline=(7, 9, 15, 240), width=2)
+        draw.rectangle((cx - 8, foot_y - 49, cx + 8, foot_y - 39), fill=glow + (240,), outline=(7, 9, 15, 230), width=1)
+    elif class_index == 7:
+        draw.line([(cx - 30, foot_y - 27), (cx + 33, foot_y - 52)], fill=accent + (245,), width=4)
+        draw.line([(cx - 19, foot_y - 20), (cx + 24, foot_y - 61)], fill=glow + (150,), width=2)
+    elif class_index == 8:
+        draw.line([(cx + 21, foot_y - 34), (cx + 37, foot_y - 60)], fill=accent + (245,), width=5)
+        draw.line([(cx - 20, foot_y - 40), (cx - 34, foot_y - 58)], fill=(255, 93, 87, 220), width=3)
+    elif class_index == 9:
+        for dx in (-21, 21):
+            draw.rectangle((cx + dx - 5, foot_y - 58, cx + dx + 5, foot_y - 39), fill=(255, 93, 87, 245), outline=(7, 9, 15, 230))
+    elif class_index == 10:
+        draw.polygon([(cx + 18, foot_y - 42), (cx + 39, foot_y - 48), (cx + 31, foot_y - 36)], fill=accent + (245,), outline=(7, 9, 15, 230))
+        draw.line([(cx + 30, foot_y - 43), (cx + 47, foot_y - 47)], fill=glow + (225,), width=3)
+    else:
+        draw.arc((cx - 27, foot_y - 56, cx + 20, foot_y - 12), 210, 340, fill=accent + (210,), width=3)
+        draw.rectangle((cx - 28, foot_y - 23, cx - 17, foot_y - 15), fill=glow + (235,), outline=(7, 9, 15, 220))
+    return hard_outline(frame, width=1)
+
+
+def build_player_roster() -> None:
+    sheet = Image.new("RGBA", (240, len(CLASS_IDS) * 4 * 80), (0, 0, 0, 0))
+    for class_index in range(len(CLASS_IDS)):
+        for direction in range(4):
+            for frame_index in range(3):
+                frame = draw_player_frame(class_index, direction, frame_index)
+                sheet.alpha_composite(frame, (frame_index * 80, (class_index * 4 + direction) * 80))
+    sheet.save(ROOT / "assets" / "sprites" / "players" / "class_roster_m49.png")
+    accord = sheet.crop((0, 0, 240, 320))
+    accord.save(ROOT / "assets" / "sprites" / "players" / "accord_striker_walk_v2.png")
+
+
+def draw_enemy_frame(kind: str, frame_index: int) -> Image.Image:
+    frame = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(frame)
+    bob = [-1, 1, 0][frame_index]
+    draw.ellipse((15, 49, 50, 58), fill=(0, 0, 0, 95))
+    if kind == "bad_outputs":
+        polygon(draw, [(31, 11 + bob), (48, 27), (42, 48), (24, 53), (13, 35)], (112, 64, 91, 255), width=3)
+        draw.polygon([(25, 24), (35, 19), (45, 25), (34, 31)], fill=(255, 93, 87, 230), outline=(7, 9, 15, 220))
+        draw.rectangle((22, 35, 43, 41), fill=(255, 244, 214, 230), outline=(7, 9, 15, 220))
+        draw.line([(16, 39), (7, 49)], fill=(123, 97, 255, 230), width=4)
+        draw.line([(44, 40), (55, 50)], fill=(123, 97, 255, 230), width=4)
+    elif kind == "benchmark_gremlins":
+        polygon(draw, [(31, 13 + bob), (47, 22), (50, 42), (36, 53), (18, 49), (14, 29)], (59, 54, 112, 255), width=3)
+        draw.rectangle((21, 24, 43, 35), fill=(123, 97, 255, 240), outline=(7, 9, 15, 230), width=2)
+        for x in (20, 31, 42):
+            draw.line([(x, 42), (x - 5 + frame_index * 2, 55)], fill=(46, 42, 86, 245), width=4)
+        draw.line([(31, 14), (26, 5)], fill=(100, 224, 180, 230), width=3)
+        draw.line([(34, 14), (42, 6)], fill=(100, 224, 180, 230), width=3)
+    else:
+        polygon(draw, [(13, 39), (24, 23 + bob), (44, 23 + bob), (55, 40), (43, 51), (25, 51)], (42, 86, 87, 255), width=3)
+        draw.rectangle((23, 29, 44, 38), fill=(100, 224, 180, 235), outline=(7, 9, 15, 230), width=2)
+        for x, sign in [(17, -1), (25, -1), (39, 1), (48, 1)]:
+            draw.line([(x, 44), (x + sign * (9 + frame_index), 55)], fill=(28, 57, 58, 245), width=4)
+        draw.line([(16, 25), (6, 18)], fill=(255, 209, 102, 220), width=3)
+        draw.line([(48, 25), (58, 18)], fill=(255, 209, 102, 220), width=3)
+    return hard_outline(frame, width=1)
+
+
+def build_enemy_sheets() -> None:
+    for kind, filename in [
+        ("bad_outputs", "bad_outputs_sheet.png"),
+        ("benchmark_gremlins", "benchmark_gremlins_sheet.png"),
+        ("context_rot_crabs", "context_rot_crabs_sheet.png"),
+    ]:
+        sheet = Image.new("RGBA", (192, 64), (0, 0, 0, 0))
+        for frame_index in range(3):
+            sheet.alpha_composite(draw_enemy_frame(kind, frame_index), (frame_index * 64, 0))
+        sheet.save(ROOT / "assets" / "sprites" / "enemies" / filename)
 
 
 def build_title_backdrop() -> None:
@@ -376,16 +604,8 @@ def build_title_backdrop() -> None:
 
 
 def enhance_player_and_enemies() -> None:
-    source_dir = ROOT / "assets" / "concepts" / "visual_fidelity_sources"
-    pairs = [
-        ("class_roster_m49.png", ROOT / "assets" / "sprites" / "players" / "class_roster_m49.png", 48, 48, 1.28, 1.12),
-        ("accord_striker_walk_v2.png", ROOT / "assets" / "sprites" / "players" / "accord_striker_walk_v2.png", 48, 48, 1.3, 1.12),
-        ("bad_outputs_sheet.png", ROOT / "assets" / "sprites" / "enemies" / "bad_outputs_sheet.png", 32, 32, 1.42, 1.15),
-        ("benchmark_gremlins_sheet.png", ROOT / "assets" / "sprites" / "enemies" / "benchmark_gremlins_sheet.png", 32, 32, 1.42, 1.18),
-        ("context_rot_crabs_sheet.png", ROOT / "assets" / "sprites" / "enemies" / "context_rot_crabs_sheet.png", 32, 32, 1.38, 1.14),
-    ]
-    for source_name, target_path, frame_w, frame_h, contrast, color in pairs:
-        enhance_runtime_sheet(source_dir / source_name, target_path, frame_w, frame_h, contrast, color, 1)
+    build_player_roster()
+    build_enemy_sheets()
 
 
 def main() -> None:

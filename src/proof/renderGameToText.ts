@@ -1,5 +1,5 @@
 import type { Game } from "../core/Game";
-import type { LevelRunState } from "../level/LevelRunState";
+import { ARMISTICE_STATIC_OBSTACLES, type LevelRunState } from "../level/LevelRunState";
 import type { OverworldState } from "../overworld/OverworldState";
 import { COMBAT_CLASSES, FACTIONS, GAME_TITLE, resolveBuildKit } from "../content";
 import type { SummaryState } from "../ui/summary";
@@ -267,6 +267,11 @@ export function renderGameToText(game: Game): string {
           chosenUpgradeIds: [...run.chosenUpgradeIds],
           mapId: run.map.id,
           mapBounds: run.map.bounds,
+          staticObstacles: {
+            enabled: true,
+            count: ARMISTICE_STATIC_OBSTACLES.length,
+            ids: ARMISTICE_STATIC_OBSTACLES.map((obstacle) => obstacle.id)
+          },
           nearestLandmark: {
             id: run.nearestLandmark().id,
             label: run.nearestLandmark().label,

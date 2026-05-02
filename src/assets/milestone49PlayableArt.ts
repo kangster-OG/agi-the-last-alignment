@@ -106,8 +106,8 @@ export interface Milestone49PlayableArtTextures {
 }
 
 const PLAYER_DIRECTIONS: PlayerFacing[] = ["south", "east", "north", "west"];
-const PLAYER_FRAME_WIDTH = 48;
-const PLAYER_FRAME_HEIGHT = 48;
+const PLAYER_FRAME_WIDTH = 80;
+const PLAYER_FRAME_HEIGHT = 80;
 const PLAYER_FRAMES_PER_DIRECTION = 3;
 const PLAYER_ROWS_PER_CLASS = 4;
 const MODULE_FRAME_SIZE = 64;
