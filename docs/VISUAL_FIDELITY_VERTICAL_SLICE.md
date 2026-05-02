@@ -68,9 +68,30 @@ Proof artifacts:
 - `docs/proof/visual-fidelity-slice/terrain-ui-metrics.txt`
 - `docs/proof/visual-fidelity-slice/online-m50-terrain-before-after.png`
 
+## Production Set-Piece Polish Pass
+
+The fourth pass replaces the most symbolic Armistice presentation surfaces with larger production pieces and proves the first-screen flow:
+
+- `assets/tiles/armistice_plaza/transition_atlas.png` adds road, rubble, cable, breach, and plaza-wear transition masks so terrain joins read as authored edges instead of isolated accent tiles.
+- `assets/props/armistice_plaza/*.png` now use larger transparent set-piece compositions for the treaty monument, barricade corridor, drone wreck, terminal bank, and cosmic breach matter.
+- `src/level/LevelRunState.ts` composes large set pieces for dense prop clusters, hides landmark/debug labels in normal play, and keeps compact HUD presentation unless debug/proof HUD is requested.
+- `assets/ui/armistice_title_backdrop.png` gives the title screen a scene-backed Armistice plaza composition.
+- `src/ui/buildSelect.ts` gives the fighter/co-mind selection screen larger sprite cards, primary co-mind art, official/parody logo plates, and a quieter footer.
+- `src/assets/milestone11Art.ts` and runtime scaling make player/enemy sprites larger, higher contrast, and frame-cycled in play.
+- `scripts/assets/build-armistice-visual-slice-assets.py` is now idempotent for sprite readability: it rebuilds from stable source sheets under `assets/concepts/visual_fidelity_sources/` instead of compounding contrast if rerun.
+
+Proof artifacts:
+
+- `docs/proof/visual-fidelity-slice/reference-vs-armistice-production-polish-board.png`
+- `docs/proof/visual-fidelity-slice/armistice-production-polish-title.png`
+- `docs/proof/visual-fidelity-slice/armistice-production-polish-build-select.png`
+- `docs/proof/visual-fidelity-slice/armistice-production-polish-action.png`
+- `docs/proof/visual-fidelity-slice/armistice-production-polish-metrics.json`
+- `docs/proof/visual-fidelity-slice/armistice-production-polish-console-errors.json`
+
 ## Next Art Passes
 
-1. Build real biome-transition tiles and edge masks for plaza-to-terminal and plaza-to-breach joins.
-2. Generate larger isometric set pieces for treaty hall ruins and foreground silhouettes.
-3. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
-4. Port the same visual-composition helpers into the online arena renderer once the solo slice reads well.
+1. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
+2. Expand the Armistice set-piece language to Blackwater and finale arenas.
+3. Add stronger player attack/effect animation frames once the scene itself is no longer the bottleneck.
+4. Port the Armistice-specific transition overlay idea into online/local campaign terrain where a route needs authored edge masks.

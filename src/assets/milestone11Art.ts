@@ -100,11 +100,12 @@ export function milestone11PlayerTextureFor(player: Player, seconds: number, tex
   return textures.playerV2[facing][frame];
 }
 
-export function milestone11EnemyTextureFor(entity: Entity, textures: Milestone11ArtTextures): Texture | null {
-  if (entity.enemyFamilyId === "bad_outputs") return textures.base.badOutputs[Math.abs(entity.id) % textures.base.badOutputs.length];
-  if (entity.enemyFamilyId === "benchmark_gremlins") return textures.benchmarkGremlins[Math.abs(entity.id) % textures.benchmarkGremlins.length];
-  if (entity.enemyFamilyId === "context_rot_crabs") return textures.contextRotCrabs[Math.abs(entity.id) % textures.contextRotCrabs.length];
-  if (entity.enemyFamilyId === "eval_wraiths") return textures.contextRotCrabs[Math.abs(entity.id) % textures.contextRotCrabs.length];
+export function milestone11EnemyTextureFor(entity: Entity, textures: Milestone11ArtTextures, seconds = 0): Texture | null {
+  const frame = Math.floor(seconds * 7 + Math.abs(entity.id)) % ENEMY_FRAME_COUNT;
+  if (entity.enemyFamilyId === "bad_outputs") return textures.base.badOutputs[frame % textures.base.badOutputs.length];
+  if (entity.enemyFamilyId === "benchmark_gremlins") return textures.benchmarkGremlins[frame % textures.benchmarkGremlins.length];
+  if (entity.enemyFamilyId === "context_rot_crabs") return textures.contextRotCrabs[frame % textures.contextRotCrabs.length];
+  if (entity.enemyFamilyId === "eval_wraiths") return textures.contextRotCrabs[frame % textures.contextRotCrabs.length];
   return null;
 }
 

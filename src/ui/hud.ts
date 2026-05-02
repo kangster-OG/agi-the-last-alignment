@@ -11,28 +11,32 @@ export function drawHud(
   seconds: number,
   kills: number,
   build: BuildStats,
-  objective: string
+  objective: string,
+  debugHud = false
 ): void {
   const chrome = new Graphics();
-  chrome.rect(16, 16, 300, 78).fill({ color: palette.ink, alpha: 0.84 }).stroke({ color: palette.paper, width: 2 });
-  chrome.rect(28, 32, 190, 13).fill(0x33191c);
-  chrome.rect(28, 32, 190 * Math.max(0, player.hp / player.maxHp), 13).fill(palette.tomato);
-  chrome.rect(28, 56, 190, 11).fill(0x192833);
-  chrome.rect(28, 56, 190 * Math.min(1, player.xp / xpNeeded(player.level)), 11).fill(palette.blue);
-  chrome.rect(width - 294, 16, 278, 78).fill({ color: palette.ink, alpha: 0.84 }).stroke({ color: palette.paper, width: 2 });
+  const leftWidth = debugHud ? 300 : 204;
+  const rightWidth = debugHud ? 278 : 196;
+  chrome.rect(16, 16, leftWidth, debugHud ? 78 : 48).fill({ color: palette.ink, alpha: debugHud ? 0.84 : 0.58 }).stroke({ color: palette.paper, width: 2, alpha: debugHud ? 1 : 0.42 });
+  chrome.rect(28, 30, debugHud ? 190 : 150, 10).fill(0x33191c);
+  chrome.rect(28, 30, (debugHud ? 190 : 150) * Math.max(0, player.hp / player.maxHp), 10).fill(palette.tomato);
+  chrome.rect(28, 48, debugHud ? 190 : 150, 8).fill(0x192833);
+  chrome.rect(28, 48, (debugHud ? 190 : 150) * Math.min(1, player.xp / xpNeeded(player.level)), 8).fill(palette.blue);
+  chrome.rect(width - rightWidth - 16, 16, rightWidth, debugHud ? 78 : 48).fill({ color: palette.ink, alpha: debugHud ? 0.84 : 0.58 }).stroke({ color: palette.paper, width: 2, alpha: debugHud ? 1 : 0.42 });
   layer.addChild(chrome);
 
   const left = new Text({
-    text: `HP ${Math.ceil(player.hp)}/${player.maxHp}  LV ${player.level}\nSHARDS ${player.xp}/${xpNeeded(player.level)}  KOs ${kills}`,
-    style: { ...fontStyle, fontSize: 14 }
+    text: debugHud ? `HP ${Math.ceil(player.hp)}/${player.maxHp}  LV ${player.level}\nSHARDS ${player.xp}/${xpNeeded(player.level)}  KOs ${kills}` : `LV ${player.level}  KO ${kills}`,
+    style: { ...fontStyle, fontSize: debugHud ? 14 : 11, fill: "#fff4d6" }
   });
-  left.position.set(230, 28);
+  left.position.set(debugHud ? 230 : 30, debugHud ? 28 : 61);
   layer.addChild(left);
 
   const right = new Text({
-    text: `${Math.floor(seconds)}s  ${objective}\nDMG ${build.weaponDamage}  CD ${build.weaponCooldown.toFixed(2)}  PIERCE ${build.projectilePierce}`,
-    style: { ...fontStyle, fontSize: 14, align: "right" }
+    text: debugHud ? `${Math.floor(seconds)}s  ${objective}\nDMG ${build.weaponDamage}  CD ${build.weaponCooldown.toFixed(2)}  PIERCE ${build.projectilePierce}` : `${Math.floor(seconds)}s  ${objective}`,
+    style: { ...fontStyle, fontSize: debugHud ? 14 : 11, align: "right", fill: "#fff4d6" }
   });
-  right.position.set(width - 282, 29);
+  right.anchor.set(1, 0);
+  right.position.set(width - 28, debugHud ? 29 : 31);
   layer.addChild(right);
 }

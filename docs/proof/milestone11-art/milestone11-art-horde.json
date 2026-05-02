@@ -141,8 +141,8 @@
   "upgrades": [],
   "objective": "AGI pressure in 7s",
   "performance": {
-    "entitiesAllocated": 35,
-    "activeEntities": 34,
+    "entitiesAllocated": 34,
+    "activeEntities": 31,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -209,8 +209,8 @@
     },
     "counters": {
       "ui": 1,
-      "hit": 13,
-      "pickup": 6,
+      "hit": 12,
+      "pickup": 7,
       "boss_warning": 0,
       "music": 0,
       "objective": 0,
@@ -220,42 +220,42 @@
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 9403
+        "atMs": 4720
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 6964
+        "atMs": 4720
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 6929
+        "atMs": 4709
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 6926
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 6864
+        "atMs": 4692
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 6822
+        "atMs": 4669
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 6821
+        "atMs": 4669
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 6742
+        "atMs": 4642
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 4636
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -356,24 +356,24 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 103,
+    "totalAssets": 105,
     "countsByStatus": {
       "concept": 14,
       "raw": 12,
       "code_placeholder": 16,
-      "production": 60,
+      "production": 62,
       "cleaned": 1
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 60
+    "productionAssets": 62
   },
   "player": {
-    "worldX": 2.1,
-    "worldY": 2.1,
-    "hp": 140,
+    "worldX": 1.81,
+    "worldY": 3.09,
+    "hp": 138,
     "maxHp": 140,
-    "xp": 6,
+    "xp": 7,
     "level": 1
   },
   "players": [
@@ -443,11 +443,11 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
-      "worldX": 2.1,
-      "worldY": 2.1,
-      "hp": 140,
+      "worldX": 1.81,
+      "worldY": 3.09,
+      "hp": 138,
       "maxHp": 140,
-      "xp": 6,
+      "xp": 7,
       "level": 1,
       "downed": false
     }
@@ -528,13 +528,12 @@
         ]
       }
     ],
-    "lastSpawnRegionId": "emergency_terminal_eval_wraiths",
+    "lastSpawnRegionId": "drone_yard_benchmark_gremlins",
     "spawnedByRegion": {
-      "breach_crack_bad_outputs": 15,
-      "treaty_monument_oath_pages": 9,
-      "drone_yard_benchmark_gremlins": 5,
-      "barricade_context_rot": 4,
-      "emergency_terminal_eval_wraiths": 1
+      "breach_crack_bad_outputs": 13,
+      "treaty_monument_oath_pages": 10,
+      "drone_yard_benchmark_gremlins": 6,
+      "barricade_context_rot": 3
     },
     "consensusCell": {
       "playerCount": 1,
@@ -548,9 +547,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 1038,
+          "tick": 1032,
           "playerId": "p1",
-          "sequence": 1038,
+          "sequence": 1032,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -559,8 +558,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 1038,
-        "seconds": 17.3,
+        "tick": 1032,
+        "seconds": 17.2,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -635,22 +634,40 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": 2.1,
-            "worldY": 2.1,
-            "hp": 140,
+            "worldX": 1.81,
+            "worldY": 3.09,
+            "hp": 138,
             "maxHp": 140,
-            "xp": 6,
+            "xp": 7,
             "level": 1,
             "downed": false
           }
         ],
         "enemies": [
           {
+            "id": 3,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "drone_yard_benchmark_gremlins",
+            "worldX": -0.57,
+            "worldY": -1.53,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 4,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -18.55,
+            "worldY": 18.4,
+            "hp": 22,
+            "boss": false
+          },
+          {
             "id": 5,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -7.37,
-            "worldY": 6.94,
+            "worldX": -7.33,
+            "worldY": 7.27,
             "hp": 22,
             "boss": false
           },
@@ -658,26 +675,26 @@
             "id": 6,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -1.82,
-            "worldY": 3.18,
-            "hp": 22,
+            "worldX": -1.71,
+            "worldY": 3.68,
+            "hp": 4,
             "boss": false
           },
           {
             "id": 7,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "drone_yard_benchmark_gremlins",
-            "worldX": -5.54,
-            "worldY": -3.64,
-            "hp": 34,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -13.16,
+            "worldY": 10.92,
+            "hp": 22,
             "boss": false
           },
           {
             "id": 8,
             "familyId": "benchmark_gremlins",
             "sourceRegionId": "drone_yard_benchmark_gremlins",
-            "worldX": -9.53,
-            "worldY": -9.18,
+            "worldX": -5.95,
+            "worldY": -3.23,
             "hp": 34,
             "boss": false
           },
@@ -685,8 +702,8 @@
             "id": 9,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -3.64,
-            "worldY": 4.03,
+            "worldX": -3.56,
+            "worldY": 4.47,
             "hp": 22,
             "boss": false
           },
@@ -694,53 +711,62 @@
             "id": 11,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -8.62,
-            "worldY": 7.31,
+            "worldX": -8.59,
+            "worldY": 7.64,
             "hp": 22,
             "boss": false
           },
           {
             "id": 12,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -21.79,
-            "worldY": 13.74,
-            "hp": 22,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "drone_yard_benchmark_gremlins",
+            "worldX": -9.92,
+            "worldY": -8.99,
+            "hp": 34,
             "boss": false
           },
           {
             "id": 13,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "barricade_context_rot",
-            "worldX": 11.47,
-            "worldY": -4.93,
-            "hp": 27,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -5.49,
+            "worldY": 6.74,
+            "hp": 22,
             "boss": false
           },
           {
             "id": 14,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -10.64,
-            "worldY": 10.06,
+            "worldX": -9.44,
+            "worldY": 10.21,
             "hp": 22,
             "boss": false
           },
           {
-            "id": 15,
+            "id": 16,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -5.56,
-            "worldY": 6.4,
+            "worldX": -18.84,
+            "worldY": 11.98,
             "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 17,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "barricade_context_rot",
+            "worldX": 11.78,
+            "worldY": -4.72,
+            "hp": 27,
             "boss": false
           },
           {
             "id": 18,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -15.39,
-            "worldY": 14.84,
+            "worldX": -21.86,
+            "worldY": 13.93,
             "hp": 22,
             "boss": false
           },
@@ -748,63 +774,36 @@
             "id": 19,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "barricade_context_rot",
-            "worldX": 12.87,
-            "worldY": -6.35,
+            "worldX": 13.16,
+            "worldY": -6.18,
             "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 20,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -13.16,
-            "worldY": 10.64,
-            "hp": 22,
-            "boss": false
-          },
-          {
-            "id": 21,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -9.47,
-            "worldY": 9.94,
-            "hp": 22,
             "boss": false
           },
           {
             "id": 22,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "barricade_context_rot",
-            "worldX": 17.1,
-            "worldY": -12.92,
-            "hp": 27,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -10.62,
+            "worldY": 10.34,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 23,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -15.4,
+            "worldY": 15.07,
+            "hp": 22,
             "boss": false
           },
           {
             "id": 24,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -18.52,
-            "worldY": 18.19,
+            "worldX": -23.38,
+            "worldY": 20.19,
             "hp": 22,
-            "boss": false
-          },
-          {
-            "id": 25,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -18.8,
-            "worldY": 11.74,
-            "hp": 22,
-            "boss": false
-          },
-          {
-            "id": 26,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "drone_yard_benchmark_gremlins",
-            "worldX": -10.48,
-            "worldY": -6.16,
-            "hp": 34,
             "boss": false
           }
         ],
@@ -818,45 +817,33 @@
           {
             "id": 2,
             "worldX": -6.1,
-            "worldY": -0.31,
-            "value": 1
-          },
-          {
-            "id": 3,
-            "worldX": -0.22,
-            "worldY": -2.33,
-            "value": 2
-          },
-          {
-            "id": 4,
-            "worldX": 2.3,
-            "worldY": 4.82,
+            "worldY": -0.33,
             "value": 1
           },
           {
             "id": 10,
-            "worldX": 2.29,
-            "worldY": 4.84,
+            "worldX": 2.31,
+            "worldY": 4.91,
             "value": 1
           },
           {
-            "id": 16,
-            "worldX": -2.9,
-            "worldY": -2.5,
+            "id": 15,
+            "worldX": -1.04,
+            "worldY": -0.92,
             "value": 2
           },
           {
             "id": 30,
-            "worldX": 2.39,
-            "worldY": -1.35,
+            "worldX": 2.72,
+            "worldY": -0.41,
             "value": 1
           }
         ],
         "projectiles": [
           {
-            "id": 17,
-            "worldX": -0.77,
-            "worldY": 2.89,
+            "id": 27,
+            "worldX": -1.67,
+            "worldY": -1.63,
             "pierce": 1
           }
         ]
@@ -877,19 +864,39 @@
       "brokenPromiseHits": 0,
       "treatyChargeImpacts": 0
     },
-    "seconds": 17.3,
-    "kills": 13,
+    "seconds": 17.2,
+    "kills": 12,
     "bossSpawned": false,
     "bossDefeated": false
   },
   "enemies": [
     {
+      "id": 3,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "drone_yard_benchmark_gremlins",
+      "worldX": -0.57,
+      "worldY": -1.53,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 4,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -18.55,
+      "worldY": 18.4,
+      "hp": 22,
+      "boss": false
+    },
+    {
       "id": 5,
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -7.37,
-      "worldY": 6.94,
+      "worldX": -7.33,
+      "worldY": 7.27,
       "hp": 22,
       "boss": false
     },
@@ -898,19 +905,19 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -1.82,
-      "worldY": 3.18,
-      "hp": 22,
+      "worldX": -1.71,
+      "worldY": 3.68,
+      "hp": 4,
       "boss": false
     },
     {
       "id": 7,
-      "label": "Benchmark Gremlin",
-      "familyId": "benchmark_gremlins",
-      "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -5.54,
-      "worldY": -3.64,
-      "hp": 34,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -13.16,
+      "worldY": 10.92,
+      "hp": 22,
       "boss": false
     },
     {
@@ -918,8 +925,8 @@
       "label": "Benchmark Gremlin",
       "familyId": "benchmark_gremlins",
       "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -9.53,
-      "worldY": -9.18,
+      "worldX": -5.95,
+      "worldY": -3.23,
       "hp": 34,
       "boss": false
     },
@@ -928,8 +935,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -3.64,
-      "worldY": 4.03,
+      "worldX": -3.56,
+      "worldY": 4.47,
       "hp": 22,
       "boss": false
     },
@@ -938,29 +945,29 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -8.62,
-      "worldY": 7.31,
+      "worldX": -8.59,
+      "worldY": 7.64,
       "hp": 22,
       "boss": false
     },
     {
       "id": 12,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -21.79,
-      "worldY": 13.74,
-      "hp": 22,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "drone_yard_benchmark_gremlins",
+      "worldX": -9.92,
+      "worldY": -8.99,
+      "hp": 34,
       "boss": false
     },
     {
       "id": 13,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "barricade_context_rot",
-      "worldX": 11.47,
-      "worldY": -4.93,
-      "hp": 27,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -5.49,
+      "worldY": 6.74,
+      "hp": 22,
       "boss": false
     },
     {
@@ -968,39 +975,19 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -10.64,
-      "worldY": 10.06,
+      "worldX": -9.44,
+      "worldY": 10.21,
       "hp": 22,
       "boss": false
     },
     {
-      "id": 15,
+      "id": 16,
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -5.56,
-      "worldY": 6.4,
+      "worldX": -18.84,
+      "worldY": 11.98,
       "hp": 22,
-      "boss": false
-    },
-    {
-      "id": 18,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -15.39,
-      "worldY": 14.84,
-      "hp": 22,
-      "boss": false
-    },
-    {
-      "id": 19,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "barricade_context_rot",
-      "worldX": 12.87,
-      "worldY": -6.35,
-      "hp": 27,
       "boss": false
     }
   ],
@@ -1012,39 +999,29 @@
     },
     {
       "worldX": -6.1,
-      "worldY": -0.31,
+      "worldY": -0.33,
       "value": 1
     },
     {
-      "worldX": -0.22,
-      "worldY": -2.33,
+      "worldX": 2.31,
+      "worldY": 4.91,
+      "value": 1
+    },
+    {
+      "worldX": -1.04,
+      "worldY": -0.92,
       "value": 2
     },
     {
-      "worldX": 2.3,
-      "worldY": 4.82,
-      "value": 1
-    },
-    {
-      "worldX": 2.29,
-      "worldY": 4.84,
-      "value": 1
-    },
-    {
-      "worldX": -2.9,
-      "worldY": -2.5,
-      "value": 2
-    },
-    {
-      "worldX": 2.39,
-      "worldY": -1.35,
+      "worldX": 2.72,
+      "worldY": -0.41,
       "value": 1
     }
   ],
   "projectiles": [
     {
-      "worldX": -0.77,
-      "worldY": 2.89,
+      "worldX": -1.67,
+      "worldY": -1.63,
       "pierce": 1,
       "label": "refusal shard"
     }

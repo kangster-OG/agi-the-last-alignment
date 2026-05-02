@@ -1,11 +1,16 @@
 import { Assets, Container, Rectangle, Sprite, Texture } from "pixi.js";
 import groundAtlasUrl from "../../assets/tiles/armistice_plaza/ground_atlas.png";
+import transitionAtlasUrl from "../../assets/tiles/armistice_plaza/transition_atlas.png";
 import { TILE_HEIGHT, TILE_WIDTH, worldToIso } from "../iso/projection";
 
 export const ARMISTICE_GROUND_ATLAS_ID = "tile.armistice_plaza.production_ground_atlas";
 export const ARMISTICE_GROUND_ATLAS_URL = groundAtlasUrl;
+export const ARMISTICE_TRANSITION_ATLAS_ID = "tile.armistice_plaza.production_transition_atlas";
+export const ARMISTICE_TRANSITION_ATLAS_URL = transitionAtlasUrl;
 export const ARMISTICE_TILE_FRAME_WIDTH = 64;
 export const ARMISTICE_TILE_FRAME_HEIGHT = 32;
+export const ARMISTICE_TRANSITION_FRAME_WIDTH = 96;
+export const ARMISTICE_TRANSITION_FRAME_HEIGHT = 48;
 
 export type ArmisticeTileKey =
   | "stone"
@@ -26,6 +31,16 @@ export type ArmisticeTerrainBandId =
   | "breach_corruption"
   | string;
 
+export type ArmisticeTransitionKey =
+  | "terminalNorth"
+  | "terminalSouth"
+  | "breachWest"
+  | "breachEast"
+  | "roadEdge"
+  | "rubbleEdge"
+  | "cableEdge"
+  | "plazaWear";
+
 const TILE_INDEX_BY_KEY: Record<ArmisticeTileKey, number> = {
   stone: 0,
   stoneCracked: 1,
@@ -37,8 +52,21 @@ const TILE_INDEX_BY_KEY: Record<ArmisticeTileKey, number> = {
   terminal: 7
 };
 
+const TRANSITION_INDEX_BY_KEY: Record<ArmisticeTransitionKey, number> = {
+  terminalNorth: 0,
+  terminalSouth: 1,
+  breachWest: 2,
+  breachEast: 3,
+  roadEdge: 4,
+  rubbleEdge: 5,
+  cableEdge: 6,
+  plazaWear: 7
+};
+
 let atlasPromise: Promise<Record<ArmisticeTileKey, Texture>> | null = null;
 let atlasTextures: Record<ArmisticeTileKey, Texture> | null = null;
+let transitionPromise: Promise<Record<ArmisticeTransitionKey, Texture>> | null = null;
+let transitionTextures: Record<ArmisticeTransitionKey, Texture> | null = null;
 
 export function armisticeGroundAtlasReady(): boolean {
   return atlasTextures !== null;
@@ -46,6 +74,10 @@ export function armisticeGroundAtlasReady(): boolean {
 
 export function getArmisticeGroundAtlasTextures(): Record<ArmisticeTileKey, Texture> | null {
   return atlasTextures;
+}
+
+export function getArmisticeTransitionAtlasTextures(): Record<ArmisticeTransitionKey, Texture> | null {
+  return transitionTextures;
 }
 
 export function loadArmisticeGroundAtlas(): Promise<Record<ArmisticeTileKey, Texture>> {
@@ -63,6 +95,28 @@ export function loadArmisticeGroundAtlas(): Promise<Record<ArmisticeTileKey, Tex
     return textures;
   });
   return atlasPromise;
+}
+
+export function loadArmisticeTransitionAtlas(): Promise<Record<ArmisticeTransitionKey, Texture>> {
+  transitionPromise ??= Assets.load<Texture>(ARMISTICE_TRANSITION_ATLAS_URL).then((baseTexture) => {
+    const textures = {} as Record<ArmisticeTransitionKey, Texture>;
+    for (const [key, index] of Object.entries(TRANSITION_INDEX_BY_KEY) as [ArmisticeTransitionKey, number][]) {
+      const col = index % 4;
+      const row = Math.floor(index / 4);
+      textures[key] = new Texture({
+        source: baseTexture.source,
+        frame: new Rectangle(
+          col * ARMISTICE_TRANSITION_FRAME_WIDTH,
+          row * ARMISTICE_TRANSITION_FRAME_HEIGHT,
+          ARMISTICE_TRANSITION_FRAME_WIDTH,
+          ARMISTICE_TRANSITION_FRAME_HEIGHT
+        )
+      });
+    }
+    transitionTextures = textures;
+    return textures;
+  });
+  return transitionPromise;
 }
 
 export function armisticeTileKeyForWorld(x: number, y: number): ArmisticeTileKey {
@@ -107,6 +161,23 @@ export function addArmisticeTileSprite(container: Container, textures: Record<Ar
   const point = worldToIso(x, y);
   const sprite = new Sprite(textures[key]);
   sprite.anchor.set(0.5);
+  sprite.position.set(point.screenX, point.screenY);
+  container.addChild(sprite);
+  return sprite;
+}
+
+export function addArmisticeTransitionSprite(
+  container: Container,
+  textures: Record<ArmisticeTransitionKey, Texture>,
+  x: number,
+  y: number,
+  key: ArmisticeTransitionKey,
+  alpha = 0.84
+): Sprite {
+  const point = worldToIso(x, y);
+  const sprite = new Sprite(textures[key]);
+  sprite.anchor.set(0.5);
+  sprite.alpha = alpha;
   sprite.position.set(point.screenX, point.screenY);
   container.addChild(sprite);
   return sprite;

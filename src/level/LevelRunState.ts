@@ -21,7 +21,16 @@ import { UpgradeDraftState } from "../ui/draft";
 import { SummaryState } from "../ui/summary";
 import { clearLayer } from "../render/layers";
 import { drawEnemyOnGraphics, drawPixelPersonOnGraphics } from "../render/sprites";
-import { addArmisticeTileSprite, armisticeTileKeyForTerrain, getArmisticeGroundAtlasTextures, loadArmisticeGroundAtlas } from "../assets/armisticeGroundAtlas";
+import {
+  addArmisticeTileSprite,
+  addArmisticeTransitionSprite,
+  armisticeTileKeyForTerrain,
+  getArmisticeGroundAtlasTextures,
+  getArmisticeTransitionAtlasTextures,
+  loadArmisticeGroundAtlas,
+  loadArmisticeTransitionAtlas,
+  type ArmisticeTransitionKey
+} from "../assets/armisticeGroundAtlas";
 import { placeWorldSprite } from "../assets/milestone10Art";
 import {
   getMilestone11ArtTextures,
@@ -106,6 +115,7 @@ export class LevelRunState implements GameState {
   private brokenPromiseId = 1;
   private staticArenaDrawn = false;
   private requestedAtlasLoad = false;
+  private requestedTransitionAtlasLoad = false;
   private requestedProductionArtLoad = false;
   private readonly decalsGraphics = new Graphics();
   private readonly entityGraphics = new Graphics();
@@ -307,7 +317,7 @@ export class LevelRunState implements GameState {
 
     this.drawDynamicDecals(game);
     this.drawEntities(game);
-    drawHud(game.layers.hud, game.width, this.player, this.seconds, this.kills, this.build, this.objective());
+    drawHud(game.layers.hud, game.width, this.player, this.seconds, this.kills, this.build, this.objective(), game.showDebugHud);
   }
 
   objective(): string {
@@ -621,6 +631,7 @@ export class LevelRunState implements GameState {
   private drawTextureGroundIfEnabled(game: Game): boolean {
     if (!game.useArmisticeTileAtlas) return false;
     const textures = getArmisticeGroundAtlasTextures();
+    const transitionTextures = getArmisticeTransitionAtlasTextures();
     if (!textures) {
       if (!this.requestedAtlasLoad) {
         this.requestedAtlasLoad = true;
@@ -630,18 +641,23 @@ export class LevelRunState implements GameState {
           this.render(game);
         });
       }
-      return false;
+      const loadingGround = new Graphics();
+      this.drawArmisticeVisualSliceGround(loadingGround);
+      game.layers.ground.addChild(loadingGround);
+      return true;
+    }
+    if (!transitionTextures && !this.requestedTransitionAtlasLoad) {
+      this.requestedTransitionAtlasLoad = true;
+      void loadArmisticeTransitionAtlas().then(() => {
+        if (game.state.current !== this) return;
+        this.staticArenaDrawn = false;
+        this.render(game);
+      });
     }
 
     const ground = new Container();
     const base = new Graphics();
-    this.drawIsoWorldRect(base, this.map.bounds.minX, this.map.bounds.minY, this.map.bounds.maxX, this.map.bounds.maxY, 0x596164, 0.98, 0x111821, 0.18);
-    this.drawIsoWorldRect(base, -7.5, -30, 7.5, 30, 0x737779, 0.74, 0x151c24, 0.12);
-    this.drawIsoWorldRect(base, -30, -7.5, 30, 7.5, 0x747979, 0.7, 0x151c24, 0.12);
-    this.drawIsoWorldRect(base, -28, -22, -8, -5, 0x344b56, 0.72, 0x45aaf2, 0.12);
-    this.drawIsoWorldRect(base, 9, -20, 30, -1, 0x4b3a34, 0.72, 0xff5d57, 0.12);
-    this.drawIsoWorldRect(base, 10, 8, 27, 25, 0x225a5e, 0.76, 0x64e0b4, 0.14);
-    this.drawIsoWorldRect(base, -30, 9, -10, 29, 0x29183c, 0.78, 0x7b61ff, 0.14);
+    this.drawArmisticeVisualSliceGround(base);
     ground.addChild(base);
     for (let y = this.map.bounds.minY; y <= this.map.bounds.maxY; y += 1) {
       for (let x = this.map.bounds.minX; x <= this.map.bounds.maxX; x += 1) {
@@ -658,8 +674,35 @@ export class LevelRunState implements GameState {
         sprite.alpha = band ? 0.82 : 0.42;
       }
     }
+    if (transitionTextures) this.drawTerrainTransitionSprites(ground, transitionTextures);
     game.layers.ground.addChild(ground);
     return true;
+  }
+
+  private drawTerrainTransitionSprites(container: Container, textures: Record<ArmisticeTransitionKey, Texture>): void {
+    const placements: Array<[number, number, ArmisticeTransitionKey, number]> = [
+      [11, 9, "terminalNorth", 0.74],
+      [16, 8, "terminalNorth", 0.8],
+      [22, 10, "terminalSouth", 0.78],
+      [27, 18, "terminalSouth", 0.68],
+      [-29, 13, "breachWest", 0.82],
+      [-24, 10, "breachWest", 0.72],
+      [-14, 25, "breachEast", 0.82],
+      [-9, 21, "breachEast", 0.74],
+      [9, -19, "roadEdge", 0.74],
+      [17, -17, "roadEdge", 0.76],
+      [25, -10, "rubbleEdge", 0.78],
+      [-23, -20, "rubbleEdge", 0.7],
+      [-12, -13, "cableEdge", 0.72],
+      [4, 2, "cableEdge", 0.78],
+      [-6, 8, "plazaWear", 0.62],
+      [6, -7, "plazaWear", 0.58]
+    ];
+    for (const [x, y, key, alpha] of placements) {
+      const sprite = addArmisticeTransitionSprite(container, textures, x, y, key, alpha);
+      sprite.zIndex = x + y - 0.04;
+    }
+    container.sortableChildren = true;
   }
 
   private productionArt(game: Game): Milestone11ArtTextures | null {
@@ -963,6 +1006,10 @@ export class LevelRunState implements GameState {
   }
 
   private drawPropCluster(game: Game, graphics: Graphics, cluster: PropClusterDefinition, art: Milestone11ArtTextures | null): void {
+    if (art && this.drawProductionPropClusterSetPiece(game, cluster, art)) {
+      this.drawClusterDebris(graphics, cluster);
+      return;
+    }
     const startX = cluster.worldX - ((cluster.cols - 1) * cluster.spacingX) / 2;
     const startY = cluster.worldY - ((cluster.rows - 1) * cluster.spacingY) / 2;
     for (let row = 0; row < cluster.rows; row += 1) {
@@ -974,6 +1021,45 @@ export class LevelRunState implements GameState {
           this.drawProp(graphics, cluster, x, y, row + col);
         }
       }
+    }
+  }
+
+  private drawProductionPropClusterSetPiece(game: Game, cluster: PropClusterDefinition, art: Milestone11ArtTextures): boolean {
+    const propId = productionPropIdForCluster(cluster);
+    if (!propId) return false;
+    const p = worldToIso(cluster.worldX, cluster.worldY);
+    const sprite = new Sprite(art.props[propId]);
+    sprite.anchor.set(0.5, 0.88);
+    sprite.scale.set(clusterSetPieceScale(cluster));
+    sprite.position.set(p.screenX, p.screenY + clusterSetPieceYOffset(cluster));
+    sprite.zIndex = cluster.worldX + cluster.worldY;
+    game.layers.propsBehind.addChild(sprite);
+
+    if (cluster.cols * cluster.rows > 8) {
+      for (let i = 0; i < 2; i += 1) {
+        const offset = i === 0 ? -1 : 1;
+        const satellite = new Sprite(art.props[propId]);
+        satellite.anchor.set(0.5, 0.88);
+        satellite.scale.set(clusterSetPieceScale(cluster) * (i === 0 ? 0.48 : 0.38));
+        const sp = worldToIso(cluster.worldX + offset * cluster.spacingX * 1.6, cluster.worldY - offset * cluster.spacingY * 0.8);
+        satellite.position.set(sp.screenX, sp.screenY + clusterSetPieceYOffset(cluster) * 0.5);
+        satellite.alpha = 0.82;
+        satellite.zIndex = cluster.worldX + cluster.worldY + offset * 0.03;
+        game.layers.propsBehind.addChild(satellite);
+      }
+    }
+    return true;
+  }
+
+  private drawClusterDebris(graphics: Graphics, cluster: PropClusterDefinition): void {
+    const p = worldToIso(cluster.worldX, cluster.worldY);
+    const color = cluster.kind === "breach_shard" ? 0x7b61ff : cluster.kind === "terminal_array" ? 0x64e0b4 : cluster.kind === "drone_wreck" ? 0x45aaf2 : 0xffd166;
+    for (let i = 0; i < Math.min(10, cluster.cols * cluster.rows); i += 1) {
+      const dx = ((this.visualHash(i, cluster.rows) % 90) - 45) * 0.7;
+      const dy = ((this.visualHash(cluster.cols, i) % 32) - 16) * 0.7;
+      graphics.rect(p.screenX + dx, p.screenY + dy - 14, 14 + (i % 3) * 5, 5 + (i % 2) * 3)
+        .fill({ color, alpha: 0.2 })
+        .stroke({ color: 0x05080d, width: 2, alpha: 0.45 });
     }
   }
 
@@ -1029,7 +1115,7 @@ export class LevelRunState implements GameState {
       if (art) {
         const sprite = new Sprite(art.base.treatyMonument);
         sprite.anchor.set(0.5, 0.88);
-        sprite.scale.set(1.08);
+        sprite.scale.set(0.92);
         sprite.position.set(p.screenX, p.screenY + 6);
         game.layers.propsBehind.addChild(sprite);
         return;
@@ -1066,6 +1152,7 @@ export class LevelRunState implements GameState {
   }
 
   private drawLandmarkLabel(game: Game, landmark: LandmarkDefinition): void {
+    if (!game.showDebugHud) return;
     const p = worldToIso(landmark.worldX, landmark.worldY);
     const label = new Text({
       text: landmark.label.toUpperCase(),
@@ -1099,11 +1186,12 @@ export class LevelRunState implements GameState {
         drawables.push({
           depthY: entity.worldX + entity.worldY,
           draw: () => {
-            const enemyTexture = productionArt ? milestone11EnemyTextureFor(entity, productionArt) : null;
+            const enemyTexture = productionArt ? milestone11EnemyTextureFor(entity, productionArt, this.seconds) : null;
             if (productionArt && entity.boss) {
-              this.drawProductionWorldSprite(`boss:${entity.id}`, productionArt.base.oathEater, entity.worldX, entity.worldY, 1.18, 0.88);
+              this.drawProductionWorldSprite(`boss:${entity.id}`, productionArt.base.oathEater, entity.worldX, entity.worldY, 1.34 + Math.sin(this.seconds * 4) * 0.03, 0.88);
             } else if (productionArt && enemyTexture) {
-              const scale = entity.enemyFamilyId === "context_rot_crabs" ? 1.18 : entity.enemyFamilyId === "benchmark_gremlins" ? 1.2 : 1.24;
+              const pulse = 1 + Math.sin(this.seconds * 7 + entity.id) * 0.035;
+              const scale = (entity.enemyFamilyId === "context_rot_crabs" ? 1.38 : entity.enemyFamilyId === "benchmark_gremlins" ? 1.42 : 1.46) * pulse;
               this.drawProductionWorldSprite(`enemy:${entity.id}`, enemyTexture, entity.worldX, entity.worldY, scale, 0.86);
             } else {
               drawEnemyOnGraphics(this.entityGraphics, entity.worldX, entity.worldY, entity.radius * 24, entity.color, entity.boss);
@@ -1268,33 +1356,33 @@ export class LevelRunState implements GameState {
       const mark = new Sprite(art.openaiAccordMark);
       mark.anchor.set(0.5);
       mark.scale.set(0.42);
-      mark.position.set(38, 108);
+      mark.position.set(38, game.showDebugHud ? 108 : 82);
       game.layers.hud.addChild(mark);
     }
     const label = new Text({
-      text: `${combatClass.displayName} + ${faction.shortName} Co-Mind`,
-      style: { ...fontStyle, fontSize: 13, fill: "#64e0b4" }
+      text: game.showDebugHud ? `${combatClass.displayName} + ${faction.shortName} Co-Mind` : `${combatClass.displayName} // ${faction.shortName}`,
+      style: { ...fontStyle, fontSize: game.showDebugHud ? 13 : 10, fill: "#64e0b4" }
     });
-    label.position.set(art && this.factionId === "openai_accord" ? 60 : 24, 102);
+    label.position.set(art && this.factionId === "openai_accord" ? 60 : 24, game.showDebugHud ? 102 : 76);
     game.layers.hud.addChild(label);
   }
 
   private drawConsensusCellStrip(game: Game): void {
     const g = new Graphics();
-    const y = 126;
-    const width = game.showDebugHud ? 292 : 182;
-    g.rect(24, y, width, 30).fill({ color: palette.ink, alpha: game.showDebugHud ? 0.76 : 0.58 }).stroke({ color: palette.mint, width: 2, alpha: game.showDebugHud ? 0.8 : 0.52 });
+    const y = game.showDebugHud ? 126 : 94;
+    const width = game.showDebugHud ? 292 : 118;
+    g.rect(24, y, width, game.showDebugHud ? 30 : 22).fill({ color: palette.ink, alpha: game.showDebugHud ? 0.76 : 0.42 }).stroke({ color: palette.mint, width: 2, alpha: game.showDebugHud ? 0.8 : 0.36 });
     this.players.forEach((runtime, index) => {
-      const x = 38 + index * 64;
-      g.rect(x, y + 8, 16, 14).fill(runtime.downed ? 0x596270 : runtime.color).stroke({ color: palette.ink, width: 2 });
+      const x = 38 + index * (game.showDebugHud ? 64 : 22);
+      g.rect(x, y + (game.showDebugHud ? 8 : 6), 16, game.showDebugHud ? 14 : 10).fill(runtime.downed ? 0x596270 : runtime.color).stroke({ color: palette.ink, width: 2 });
     });
     game.layers.hud.addChild(g);
 
     const text = new Text({
       text: game.showDebugHud ? `CONSENSUS CELL ${this.players.length}/4  SNAPSHOT T${this.simulationTick}` : `CELL ${this.players.length}/4`,
-      style: { ...fontStyle, fontSize: 11, fill: "#fff4d6" }
+      style: { ...fontStyle, fontSize: game.showDebugHud ? 11 : 9, fill: "#fff4d6" }
     });
-    text.position.set(62, y + 8);
+    text.position.set(game.showDebugHud ? 62 : 86, y + (game.showDebugHud ? 8 : 6));
     game.layers.hud.addChild(text);
   }
 
@@ -1312,7 +1400,9 @@ export class LevelRunState implements GameState {
       : milestone12Art
       ? milestone12PlayerTextureFor(runtime.player, runtime.slot, this.seconds + runtime.slot * 0.17, milestone12Art)
       : milestone11PlayerTextureFor(runtime.player, this.seconds + runtime.slot * 0.17, art);
-    this.drawProductionWorldSprite(`player:${runtime.id}`, texture, runtime.player.worldX, runtime.player.worldY, 1.16, 0.9);
+    const moving = Math.hypot(runtime.player.vx, runtime.player.vy) > 0.05;
+    const breath = moving ? 0 : Math.sin(this.seconds * 4.2 + runtime.slot) * 0.025;
+    this.drawProductionWorldSprite(`player:${runtime.id}`, texture, runtime.player.worldX, runtime.player.worldY, 1.38 + breath, 0.9);
   }
 
   private drawProductionWorldSprite(key: string, texture: Texture, worldX: number, worldY: number, scale: number, anchorY: number): void {
@@ -1477,11 +1567,26 @@ function propYOffsetForCluster(cluster: PropClusterDefinition): number {
   return 2;
 }
 
+function clusterSetPieceScale(cluster: PropClusterDefinition): number {
+  if (cluster.kind === "terminal_array") return 0.72;
+  if (cluster.kind === "breach_shard") return 0.82;
+  if (cluster.kind === "drone_wreck") return 0.78;
+  if (cluster.kind === "barricade") return 0.78;
+  return 0.68;
+}
+
+function clusterSetPieceYOffset(cluster: PropClusterDefinition): number {
+  if (cluster.kind === "terminal_array") return 10;
+  if (cluster.kind === "breach_shard") return 12;
+  if (cluster.kind === "drone_wreck") return 8;
+  return 7;
+}
+
 function landmarkPropScale(propId: Milestone11PropId): number {
-  if (propId === "emergency_alignment_terminal") return 1.1;
-  if (propId === "cosmic_breach_crack") return 1.25;
-  if (propId === "crashed_drone_yard") return 1.12;
-  return 1.08;
+  if (propId === "emergency_alignment_terminal") return 0.88;
+  if (propId === "cosmic_breach_crack") return 0.96;
+  if (propId === "crashed_drone_yard") return 0.92;
+  return 0.9;
 }
 
 function landmarkPropYOffset(propId: Milestone11PropId): number {

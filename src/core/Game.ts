@@ -1,4 +1,4 @@
-import { Application, Graphics, Text } from "pixi.js";
+import { Application, Assets, Graphics, Sprite, Text, Texture } from "pixi.js";
 import { Input } from "./Input";
 import { FixedTicker } from "./Ticker";
 import { StateMachine, type GameState } from "./StateMachine";
@@ -10,7 +10,7 @@ import { MAP_GRAPH } from "../overworld/mapGraph";
 import { START_NODE_ID } from "../overworld/mapGraph";
 import { LevelRunState } from "../level/LevelRunState";
 import { renderGameToText } from "../proof/renderGameToText";
-import { GAME_TAGLINE, GAME_TITLE, PARODY_DISCLAIMER } from "../content/uiText";
+import { GAME_TAGLINE, PARODY_DISCLAIMER } from "../content/uiText";
 import { ArenaBriefingState } from "../ui/briefing";
 import { BuildSelectState } from "../ui/buildSelect";
 import { STARTER_CLASS_ID, STARTER_FACTION_ID } from "../content";
@@ -18,6 +18,7 @@ import { clampConsensusCellSize } from "../sim/consensusCell";
 import { OnlineCoopState } from "../network/OnlineCoopState";
 import { AssetPreviewState, type AssetPreviewKind } from "../ui/assetPreview";
 import { createFeedbackSystem } from "./feedback";
+import titleBackdropUrl from "../../assets/ui/armistice_title_backdrop.png";
 
 declare global {
   interface Window {
@@ -29,8 +30,17 @@ declare global {
 
 class MainMenuState implements GameState {
   readonly mode = "MainMenu" as const;
+  private backdrop: Texture | null = null;
+  private requestedBackdrop = false;
 
   enter(game: Game): void {
+    if (!this.backdrop && !this.requestedBackdrop) {
+      this.requestedBackdrop = true;
+      void Assets.load<Texture>(titleBackdropUrl).then((texture) => {
+        this.backdrop = texture;
+        if (game.state.current === this) this.render(game);
+      });
+    }
     this.render(game);
   }
 
@@ -56,33 +66,67 @@ class MainMenuState implements GameState {
     game.layers.root.position.set(0, 0);
     game.layers.root.scale.set(1);
     const bg = new Graphics();
-    bg.rect(0, 0, game.width, game.height).fill(0x151820);
-    for (let i = 0; i < 34; i += 1) {
-      const x = (i * 137) % game.width;
-      const y = (i * 89) % game.height;
-      bg.rect(x, y, 42, 26).fill({ color: i % 2 ? palette.mint : palette.tomato, alpha: 0.24 });
-    }
+    bg.rect(0, 0, game.width, game.height).fill(0x0b0f17);
     game.layers.hud.addChild(bg);
+    if (this.backdrop) {
+      const sprite = new Sprite(this.backdrop);
+      sprite.anchor.set(0.5);
+      sprite.position.set(game.width / 2, game.height / 2);
+      sprite.scale.set(Math.max(game.width / this.backdrop.width, game.height / this.backdrop.height));
+      game.layers.hud.addChild(sprite);
+      const shade = new Graphics();
+      shade.rect(0, 0, game.width, game.height).fill({ color: 0x05080d, alpha: 0.28 });
+      game.layers.hud.addChild(shade);
+    } else {
+      for (let i = 0; i < 34; i += 1) {
+        const x = (i * 137) % game.width;
+        const y = (i * 89) % game.height;
+        bg.rect(x, y, 42, 26).fill({ color: i % 2 ? palette.mint : palette.tomato, alpha: 0.24 });
+      }
+    }
+
+    const panel = new Graphics();
+    panel.rect(game.width / 2 - 390, 136, 780, 356)
+      .fill({ color: 0x0b1019, alpha: 0.72 })
+      .stroke({ color: palette.mint, width: 3, alpha: 0.82 });
+    panel.rect(game.width / 2 - 340, 302, 680, 3).fill({ color: palette.lemon, alpha: 0.72 });
+    game.layers.hud.addChild(panel);
 
     const title = new Text({
-      text: GAME_TITLE.toUpperCase(),
-      style: { ...fontStyle, fontSize: 44, fill: "#ffd166" }
+      text: "AGI",
+      style: { ...fontStyle, fontSize: 72, fill: "#ff5d57", align: "center" }
     });
     title.anchor.set(0.5);
-    title.position.set(game.width / 2, game.height / 2 - 80);
+    title.position.set(game.width / 2, 210);
     game.layers.hud.addChild(title);
 
+    const title2 = new Text({
+      text: "THE LAST ALIGNMENT",
+      style: { ...fontStyle, fontSize: 30, fill: "#ffd166", align: "center" }
+    });
+    title2.anchor.set(0.5);
+    title2.position.set(game.width / 2, 272);
+    game.layers.hud.addChild(title2);
+
     const subtitle = new Text({
-      text: `${GAME_TAGLINE}\n\nEnter: Alignment Grid  C: online Consensus Cell  WASD/arrows: move  Space: dash\n1 master ${Math.round(game.feedback.snapshot().audio.masterVolume * 100)}%  2 sfx ${Math.round(game.feedback.snapshot().audio.sfxVolume * 100)}%  3 music ${Math.round(game.feedback.snapshot().audio.musicVolume * 100)}%  4 reduced flash ${game.feedback.snapshot().accessibility.reducedFlash ? "ON" : "OFF"}`,
-      style: { ...fontStyle, fontSize: 17, align: "center", wordWrap: true, wordWrapWidth: 760, fill: "#64e0b4" }
+      text: `${GAME_TAGLINE}\n\nSOLO FRAME  /  LOCAL CELL  /  ONLINE CO-OP`,
+      style: { ...fontStyle, fontSize: 15, align: "center", wordWrap: true, wordWrapWidth: 760, fill: "#64e0b4" }
     });
     subtitle.anchor.set(0.5);
-    subtitle.position.set(game.width / 2, game.height / 2 + 42);
+    subtitle.position.set(game.width / 2, 360);
     game.layers.hud.addChild(subtitle);
 
+    const start = new Text({
+      text: "PRESS ENTER",
+      style: { ...fontStyle, fontSize: 24, fill: "#fff4d6", align: "center" }
+    });
+    start.anchor.set(0.5);
+    start.position.set(game.width / 2, 436);
+    game.layers.hud.addChild(start);
+
     const disclaimer = new Text({
-      text: PARODY_DISCLAIMER,
-      style: { ...fontStyle, fontSize: 11, align: "center", wordWrap: true, wordWrapWidth: 900, fill: "#aab0bd" }
+      text: `${PARODY_DISCLAIMER}\n1/2/3 volume  4 reduced flash ${game.feedback.snapshot().accessibility.reducedFlash ? "ON" : "OFF"}`,
+      style: { ...fontStyle, fontSize: 9, align: "center", wordWrap: true, wordWrapWidth: 920, fill: "#aab0bd" }
     });
     disclaimer.anchor.set(0.5);
     disclaimer.position.set(game.width / 2, game.height - 40);

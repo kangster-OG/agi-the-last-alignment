@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "project": "AGI: The Last Alignment",
   "assetRoot": "assets",
-  "updated": "2026-05-01",
+  "updated": "2026-05-02",
   "idTaxonomy": {
     "concept": "concept.<subject_id>.<brief_role>",
     "player": "player.<class_id>.<variant>",
@@ -402,7 +402,7 @@
         "frameCount": 3,
         "animations": []
       },
-      "provenanceKey": "milestone10_bad_outputs_sheet_v1",
+      "provenanceKey": "visual_fidelity_player_enemy_readability_v1",
       "licenseNote": "Original project-created Milestone 10 enemy pixel sheet, MIT-included.",
       "mitIncluded": true,
       "tags": [
@@ -412,7 +412,7 @@
         "milestone_10",
         "flagged_runtime"
       ],
-      "notes": "Three small variants for corrupted output debris and Torn Oath Page support spawns. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+      "notes": "Readability-polished enemy sheet with higher contrast, hard outline, and runtime animated frame cycling; opt out with ?productionArt=0."
     },
     {
       "id": "enemy.benchmark_gremlin.placeholder_family",
@@ -666,7 +666,7 @@
         "frameCount": 8,
         "animations": []
       },
-      "provenanceKey": "pixellab_m50_armistice_visual_slice_ground_v2",
+      "provenanceKey": "pixellab_armistice_visual_fidelity_terrain_v3",
       "licenseNote": "PixelLab-backed original project art with deterministic Python/Pillow cleanup and packing; MIT-included for this project.",
       "mitIncluded": true,
       "tags": [
@@ -679,7 +679,38 @@
         "visual_fidelity_slice",
         "pixellab_backed"
       ],
-      "notes": "PixelLab-backed visual-fidelity-slice ground atlas derived from committed M50/M51 raw terrain frames; rebuilt by scripts/assets/build-armistice-visual-slice-assets.py. Runtime paths and placeholder opt-outs are unchanged."
+      "notes": "High-fidelity Armistice terrain atlas rebuilt by scripts/assets/build-armistice-visual-slice-assets.py; paired with transition edge-mask atlas for runtime terrain joins. Runtime paths and placeholder opt-outs are unchanged."
+    },
+    {
+      "id": "tile.armistice_plaza.production_transition_atlas",
+      "category": "map_tile",
+      "intendedUse": "Production Armistice Plaza terrain-transition and edge-mask atlas for plaza-to-terminal, plaza-to-breach, road, rubble, cable, and wear overlays.",
+      "status": "production",
+      "sourcePath": "assets/tiles/armistice_plaza/transition_atlas.png",
+      "dimensions": {
+        "width": 384,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 48,
+        "frameCount": 8,
+        "animations": []
+      },
+      "provenanceKey": "pixellab_armistice_visual_fidelity_terrain_v3",
+      "licenseNote": "PixelLab-backed original project art with deterministic Python/Pillow cleanup and packing; MIT-included for this project.",
+      "mitIncluded": true,
+      "tags": [
+        "armistice_plaza",
+        "tiles",
+        "transition",
+        "edge_masks",
+        "pixellab_derivative",
+        "production",
+        "visual_fidelity_slice"
+      ],
+      "notes": "Runtime transition overlays are loaded with the Armistice ground atlas and preserve ?armisticeTiles=0 placeholder opt-out behavior."
     },
     {
       "id": "tile.armistice_plaza.pixellab_breach_transition_raw",
@@ -742,17 +773,17 @@
       "status": "production",
       "sourcePath": "assets/props/armistice_plaza/treaty_monument.png",
       "dimensions": {
-        "width": 128,
-        "height": 128
+        "width": 192,
+        "height": 176
       },
       "frames": {
         "kind": "single",
-        "frameWidth": 128,
-        "frameHeight": 128,
+        "frameWidth": 192,
+        "frameHeight": 176,
         "frameCount": 1,
         "animations": []
       },
-      "provenanceKey": "pixellab_m50_armistice_visual_slice_treaty_monument_v2",
+      "provenanceKey": "pixellab_armistice_visual_fidelity_setpieces_v3",
       "licenseNote": "PixelLab-backed original project art with deterministic Python/Pillow cleanup and packing; MIT-included for this project.",
       "mitIncluded": true,
       "tags": [
@@ -765,7 +796,7 @@
         "visual_fidelity_slice",
         "pixellab_backed"
       ],
-      "notes": "PixelLab-backed visual-fidelity-slice Treaty Monument rebuilt from committed M50/M51 raw prop frames plus deterministic cleanup/packing. Runtime paths and placeholder opt-outs are unchanged."
+      "notes": "Large PixelLab-backed Treaty Monument set piece with authored base, signal beams, broken slab, and strong ground contact. Runtime path and placeholder opt-out are unchanged."
     },
     {
       "id": "prop.armistice_plaza.barricade_corridor_placeholder",
@@ -1558,7 +1589,7 @@
           }
         ]
       },
-      "provenanceKey": "milestone11_accord_striker_walk_sheet_v2",
+      "provenanceKey": "visual_fidelity_player_enemy_readability_v1",
       "licenseNote": "Original project-created Milestone 11 pixel sprite sheet, MIT-included.",
       "mitIncluded": true,
       "tags": [
@@ -1568,7 +1599,7 @@
         "milestone_11",
         "flagged_runtime"
       ],
-      "notes": "Four direction rows with three run frames each, readable antennas and boot accents. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+      "notes": "Readability-polished Accord Striker v2 sheet with stronger contrast and outline; opt out with ?productionArt=0."
     },
     {
       "id": "enemy.benchmark_gremlin.production_sheet_v1",
@@ -1587,7 +1618,7 @@
         "frameCount": 3,
         "animations": []
       },
-      "provenanceKey": "milestone11_benchmark_gremlins_sheet_v1",
+      "provenanceKey": "visual_fidelity_player_enemy_readability_v1",
       "licenseNote": "Original project-created Milestone 11 enemy pixel sheet, MIT-included.",
       "mitIncluded": true,
       "tags": [
@@ -1597,7 +1628,7 @@
         "milestone_11",
         "flagged_runtime"
       ],
-      "notes": "Compact purple evaluator silhouettes for Drone Yard spawns. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+      "notes": "Readability-polished enemy sheet with higher contrast, hard outline, and runtime animated frame cycling; opt out with ?productionArt=0."
     },
     {
       "id": "enemy.context_rot_crab.production_sheet_v1",
@@ -1616,7 +1647,7 @@
         "frameCount": 3,
         "animations": []
       },
-      "provenanceKey": "milestone11_context_rot_crabs_sheet_v1",
+      "provenanceKey": "visual_fidelity_player_enemy_readability_v1",
       "licenseNote": "Original project-created Milestone 11 enemy pixel sheet, MIT-included.",
       "mitIncluded": true,
       "tags": [
@@ -1626,7 +1657,7 @@
         "milestone_11",
         "flagged_runtime"
       ],
-      "notes": "Wide low crab silhouettes for Barricade Corridor spawns, distinct from Bad Outputs and Gremlins. Default runtime use began in Milestone 13; opt out with ?productionArt=0."
+      "notes": "Readability-polished enemy sheet with higher contrast, hard outline, and runtime animated frame cycling; opt out with ?productionArt=0."
     },
     {
       "id": "prop.armistice_plaza.barricade_corridor_v1",
@@ -1635,17 +1666,17 @@
       "status": "production",
       "sourcePath": "assets/props/armistice_plaza/barricade_corridor_set.png",
       "dimensions": {
-        "width": 96,
-        "height": 64
+        "width": 176,
+        "height": 112
       },
       "frames": {
         "kind": "single",
-        "frameWidth": 96,
-        "frameHeight": 64,
+        "frameWidth": 176,
+        "frameHeight": 112,
         "frameCount": 1,
         "animations": []
       },
-      "provenanceKey": "pixellab_m50_armistice_visual_slice_props_v2",
+      "provenanceKey": "pixellab_armistice_visual_fidelity_setpieces_v3",
       "licenseNote": "PixelLab-backed original project art with deterministic Python/Pillow cleanup and packing; MIT-included for this project.",
       "mitIncluded": true,
       "tags": [
@@ -1658,7 +1689,7 @@
         "visual_fidelity_slice",
         "pixellab_backed"
       ],
-      "notes": "PixelLab-backed visual-fidelity-slice Barricade Corridor rebuilt from committed M50/M51 raw prop frames plus deterministic cleanup/packing. Runtime paths and placeholder opt-outs are unchanged."
+      "notes": "Large PixelLab-backed barricade set piece replacing repeated symbolic blocks; runtime path and placeholder opt-out are unchanged."
     },
     {
       "id": "prop.armistice_plaza.crashed_drone_yard_v1",
@@ -1667,17 +1698,17 @@
       "status": "production",
       "sourcePath": "assets/props/armistice_plaza/crashed_drone_yard_wreck.png",
       "dimensions": {
-        "width": 96,
-        "height": 64
+        "width": 176,
+        "height": 112
       },
       "frames": {
         "kind": "single",
-        "frameWidth": 96,
-        "frameHeight": 64,
+        "frameWidth": 176,
+        "frameHeight": 112,
         "frameCount": 1,
         "animations": []
       },
-      "provenanceKey": "pixellab_m50_armistice_visual_slice_props_v2",
+      "provenanceKey": "pixellab_armistice_visual_fidelity_setpieces_v3",
       "licenseNote": "PixelLab-backed original project art with deterministic Python/Pillow cleanup and packing; MIT-included for this project.",
       "mitIncluded": true,
       "tags": [
@@ -1690,7 +1721,7 @@
         "visual_fidelity_slice",
         "pixellab_backed"
       ],
-      "notes": "PixelLab-backed visual-fidelity-slice Crashed Drone Yard rebuilt from committed M50/M51 raw prop frames plus deterministic cleanup/packing. Runtime paths and placeholder opt-outs are unchanged."
+      "notes": "Large PixelLab-backed crashed drone set piece with stronger silhouette and ground contact; runtime path and placeholder opt-out are unchanged."
     },
     {
       "id": "prop.armistice_plaza.emergency_alignment_terminal_v1",
@@ -1699,17 +1730,17 @@
       "status": "production",
       "sourcePath": "assets/props/armistice_plaza/emergency_alignment_terminal.png",
       "dimensions": {
-        "width": 96,
-        "height": 96
+        "width": 192,
+        "height": 144
       },
       "frames": {
         "kind": "single",
-        "frameWidth": 96,
-        "frameHeight": 96,
+        "frameWidth": 192,
+        "frameHeight": 144,
         "frameCount": 1,
         "animations": []
       },
-      "provenanceKey": "pixellab_m50_armistice_visual_slice_props_v2",
+      "provenanceKey": "pixellab_armistice_visual_fidelity_setpieces_v3",
       "licenseNote": "PixelLab-backed original project art with deterministic Python/Pillow cleanup and packing; MIT-included for this project.",
       "mitIncluded": true,
       "tags": [
@@ -1722,7 +1753,7 @@
         "visual_fidelity_slice",
         "pixellab_backed"
       ],
-      "notes": "PixelLab-backed visual-fidelity-slice Emergency Alignment Terminal rebuilt from committed M50/M51 raw prop frames plus deterministic cleanup/packing. Runtime paths and placeholder opt-outs are unchanged."
+      "notes": "Large PixelLab-backed terminal-bank set piece with three-screen silhouette and signal mast; runtime path and placeholder opt-out are unchanged."
     },
     {
       "id": "prop.armistice_plaza.cosmic_breach_crack_v1",
@@ -1731,17 +1762,17 @@
       "status": "production",
       "sourcePath": "assets/props/armistice_plaza/cosmic_breach_crack.png",
       "dimensions": {
-        "width": 128,
-        "height": 64
+        "width": 224,
+        "height": 120
       },
       "frames": {
         "kind": "single",
-        "frameWidth": 128,
-        "frameHeight": 64,
+        "frameWidth": 224,
+        "frameHeight": 120,
         "frameCount": 1,
         "animations": []
       },
-      "provenanceKey": "pixellab_m50_armistice_visual_slice_props_v2",
+      "provenanceKey": "pixellab_armistice_visual_fidelity_setpieces_v3",
       "licenseNote": "PixelLab-backed original project art with deterministic Python/Pillow cleanup and packing; MIT-included for this project.",
       "mitIncluded": true,
       "tags": [
@@ -1754,7 +1785,7 @@
         "visual_fidelity_slice",
         "pixellab_backed"
       ],
-      "notes": "PixelLab-backed visual-fidelity-slice Cosmic Breach Crack rebuilt from committed M50/M51 raw prop frames plus deterministic cleanup/packing. Runtime paths and placeholder opt-outs are unchanged."
+      "notes": "Large PixelLab-backed AGI breach set piece with fractured violet/red edge masks; runtime path and placeholder opt-out are unchanged."
     },
     {
       "id": "ui.faction.openai_accord_mark_v1",
@@ -2509,7 +2540,7 @@
           }
         ]
       },
-      "provenanceKey": "milestone49_class_roster_sheet_v1",
+      "provenanceKey": "visual_fidelity_player_enemy_readability_v1",
       "licenseNote": "Original project-created transparent class roster sprite sheet; no official logos, copied game art, generated text, or third-party brand marks. MIT-included.",
       "mitIncluded": true,
       "tags": [
@@ -2532,7 +2563,7 @@
         "prism_gunner",
         "rift_saboteur"
       ],
-      "notes": "Twelve class blocks, each with south/east/north/west rows and three walk/idle frames. Feet are aligned to the lower isometric contact point; runtime placeholder opt-out remains available with productionArt=0."
+      "notes": "Readability-polished class roster sheet with stronger contrast and outlines; runtime scale/breathing animation improved for the visual fidelity pass; opt out with ?productionArt=0."
     },
     {
       "id": "ui.comind_modules.production_m49_v1",
@@ -3064,6 +3095,35 @@
         "replacement"
       ],
       "notes": "Raw source atlas retained for reproducibility; runtime uses cleaned and packed production atlas files."
+    },
+    {
+      "id": "ui.title.armistice_backdrop_v1",
+      "category": "ui",
+      "intendedUse": "Production title-screen backdrop for the Armistice visual-fidelity pass.",
+      "status": "production",
+      "sourcePath": "assets/ui/armistice_title_backdrop.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "frames": {
+        "kind": "single",
+        "frameWidth": 1280,
+        "frameHeight": 720,
+        "frameCount": 1,
+        "animations": []
+      },
+      "provenanceKey": "visual_fidelity_title_backdrop_v1",
+      "licenseNote": "Original project-created pixel-art backdrop built with deterministic Python/Pillow tooling; no copied game art or third-party logos. MIT-included.",
+      "mitIncluded": true,
+      "tags": [
+        "ui",
+        "title",
+        "armistice_plaza",
+        "visual_fidelity_slice",
+        "production"
+      ],
+      "notes": "Used by the main menu to replace the flat proof-style title screen with a scene-backed first impression."
     }
   ]
 }

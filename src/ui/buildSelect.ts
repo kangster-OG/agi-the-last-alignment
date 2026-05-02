@@ -63,21 +63,24 @@ export class BuildSelectState implements GameState {
     game.layers.root.scale.set(1);
 
     const bg = new Graphics();
-    bg.rect(0, 0, game.width, game.height).fill(0x111923);
-    bg.rect(0, game.height - 165, game.width, 165).fill({ color: 0x203447, alpha: 0.9 });
+    bg.rect(0, 0, game.width, game.height).fill(0x0b0f17);
+    bg.poly([0, 520, 420, 330, game.width, 430, game.width, game.height, 0, game.height]).fill({ color: 0x243238, alpha: 0.88 });
+    bg.poly([0, 640, 280, 510, 740, 590, 420, 720, 0, 720]).fill({ color: 0x16484d, alpha: 0.82 });
+    bg.poly([760, 365, game.width, 310, game.width, 720, 980, 620]).fill({ color: 0x3a1d30, alpha: 0.82 });
+    bg.rect(0, game.height - 92, game.width, 92).fill({ color: 0x080c13, alpha: 0.62 });
     game.layers.hud.addChild(bg);
 
     const title = new Text({
-      text: "CONSENSUS CELL LOADOUT",
-      style: { ...fontStyle, fontSize: 34, fill: "#ffd166" }
+      text: "SELECT YOUR ALIGNMENT FRAME",
+      style: { ...fontStyle, fontSize: 30, fill: "#ff5d57" }
     });
     title.anchor.set(0.5);
     title.position.set(game.width / 2, 70);
     game.layers.hud.addChild(title);
 
     const subtitle = new Text({
-      text: "Choose combat body and frontier co-mind. Starter shell defaults to Accord Striker + OpenAI Accord Division.",
-      style: { ...fontStyle, fontSize: 15, fill: "#64e0b4", align: "center", wordWrap: true, wordWrapWidth: 860 }
+      text: "Combat body on the left. Co-mind doctrine on the right. Enter deploys.",
+      style: { ...fontStyle, fontSize: 12, fill: "#64e0b4", align: "center", wordWrap: true, wordWrapWidth: 860 }
     });
     subtitle.anchor.set(0.5);
     subtitle.position.set(game.width / 2, 108);
@@ -114,92 +117,100 @@ export class BuildSelectState implements GameState {
   }
 
   private drawClassPanel(game: Game, milestone49Art: Milestone49PlayableArtTextures | null): void {
-    const x = 70;
-    const y = 155;
+    const x = 42;
+    const y = 148;
     const header = new Text({
-      text: "COMBAT CLASS",
-      style: { ...fontStyle, fontSize: 20, fill: "#fff4d6" }
+      text: "FIGHTER",
+      style: { ...fontStyle, fontSize: 17, fill: "#fff4d6" }
     });
-    header.position.set(x, y - 42);
+    header.position.set(x, y - 34);
     game.layers.hud.addChild(header);
 
-    const cardWidth = 252;
-    const colGap = 18;
-    const rowHeight = 75;
-    const rows = Math.ceil(CLASS_IDS.length / 2);
+    const cardWidth = 132;
+    const cardHeight = 112;
+    const colGap = 10;
+    const rowGap = 10;
     CLASS_IDS.forEach((id, index) => {
       const combatClass = COMBAT_CLASSES[id];
       const selected = index === this.classIndex;
       const unlocked = this.classUnlocked(id);
       const entry = this.metaprogression.classes.find((candidate) => candidate.id === id);
-      const col = index >= rows ? 1 : 0;
-      const row = index % rows;
+      const col = index % 4;
+      const row = Math.floor(index / 4);
       const left = x + col * (cardWidth + colGap);
-      const top = y + row * rowHeight;
+      const top = y + row * (cardHeight + rowGap);
       const g = new Graphics();
-      g.rect(left, top, cardWidth, 62)
-        .fill(selected ? 0x263d44 : unlocked ? 0x202633 : 0x171c25)
-        .stroke({ color: selected ? palette.mint : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.72 });
+      g.rect(left, top, cardWidth, cardHeight)
+        .fill(selected ? 0x162b32 : unlocked ? 0x111823 : 0x0d1118)
+        .stroke({ color: selected ? palette.mint : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.68 });
+      g.rect(left + 8, top + 8, cardWidth - 16, 66).fill({ color: selected ? 0x203447 : 0x0b0f17, alpha: 0.82 });
       if (!milestone49Art) {
-        g.rect(left + 12, top + 14, 30, 34).fill(selected ? palette.blue : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
+        g.rect(left + 48, top + 22, 30, 34).fill(selected ? palette.blue : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
       }
       game.layers.hud.addChild(g);
 
       if (milestone49Art) {
         const sprite = new Sprite(milestone49NetworkPlayerTextureFor(id, "south", false, 0, milestone49Art));
         sprite.anchor.set(0.5, 0.88);
-        sprite.scale.set(0.9);
-        sprite.alpha = unlocked ? 1 : 0.35;
-        sprite.position.set(left + 28, top + 51);
+        sprite.scale.set(selected ? 2.05 : 1.64);
+        sprite.alpha = unlocked ? 1 : 0.58;
+        sprite.position.set(left + cardWidth / 2, top + 73);
         game.layers.hud.addChild(sprite);
 
         const roleId = resolveBuildKit(id, game.selectedFactionId).resolvedRole;
         const chip = new Sprite(milestone49RoleChipTexture(roleId, milestone49Art));
         chip.anchor.set(0.5);
-        chip.scale.set(0.72);
-        chip.alpha = unlocked ? 1 : 0.42;
-        chip.position.set(left + cardWidth - 27, top + 31);
+        chip.scale.set(0.56);
+        chip.alpha = unlocked ? 1 : 0.58;
+        chip.position.set(left + cardWidth - 22, top + 19);
         game.layers.hud.addChild(chip);
       }
 
       const text = new Text({
-        text: `${index + 1}. ${combatClass.displayName}${unlocked ? "" : "  LOCKED"}\n${combatClass.role} // ${unlocked ? combatClass.mechanicalIdentity : entry?.requirementLabel ?? "Route reward required"}`,
-        style: { ...fontStyle, fontSize: 10, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: milestone49Art ? 160 : 188 }
+        text: `${combatClass.displayName}${unlocked ? "" : "\nLOCKED"}`,
+        style: { ...fontStyle, fontSize: 8, fill: selected ? "#fff4d6" : unlocked ? "#cbd4df" : "#8b94a3", align: "center", wordWrap: true, wordWrapWidth: cardWidth - 14 }
       });
-      text.position.set(left + 52, top + 10);
+      text.anchor.set(0.5, 0);
+      text.position.set(left + cardWidth / 2, top + 80);
       game.layers.hud.addChild(text);
+      if (!unlocked && entry) {
+        const lock = new Text({ text: entry.requirementLabel, style: { ...fontStyle, fontSize: 7, fill: "#7d8796", align: "center", wordWrap: true, wordWrapWidth: cardWidth - 18 } });
+        lock.anchor.set(0.5, 0);
+        lock.position.set(left + cardWidth / 2, top + 96);
+        game.layers.hud.addChild(lock);
+      }
     });
   }
 
   private drawFactionPanel(game: Game, milestone49Art: Milestone49PlayableArtTextures | null): void {
     const x = game.width - 590;
-    const y = 155;
+    const y = 148;
     const header = new Text({
-      text: "FRONTIER CO-MIND",
-      style: { ...fontStyle, fontSize: 20, fill: "#fff4d6" }
+      text: "CO-MIND",
+      style: { ...fontStyle, fontSize: 17, fill: "#fff4d6" }
     });
-    header.position.set(x, y - 42);
+    header.position.set(x, y - 34);
     game.layers.hud.addChild(header);
 
     if (milestone49Art) {
       const portrait = new Sprite(milestone49CoMindPortraitTexture(FACTION_IDS[this.factionIndex] ?? FACTION_IDS[0], milestone49Art));
       portrait.anchor.set(0.5);
-      portrait.scale.set(0.5);
-      portrait.position.set(x + 476, y - 32);
+      portrait.scale.set(0.82);
+      portrait.position.set(x + 500, y + 22);
       game.layers.hud.addChild(portrait);
 
       const sigil = new Sprite(milestone49FactionSigilTexture(FACTION_IDS[this.factionIndex] ?? FACTION_IDS[0], milestone49Art));
       sigil.anchor.set(0.5);
-      sigil.scale.set(0.32);
-      sigil.position.set(x + 476, y - 32);
+      sigil.scale.set(0.5);
+      sigil.position.set(x + 500, y + 22);
       game.layers.hud.addChild(sigil);
 
       const officialLogo = new Sprite(milestone49OfficialLogoTexture(FACTION_IDS[this.factionIndex] ?? FACTION_IDS[0], milestone49Art));
-      scaleSpriteToFit(officialLogo, 38, 16);
+      scaleSpriteToFit(officialLogo, 40, 16);
       officialLogo.anchor.set(0.5);
-      officialLogo.position.set(x + 515, y - 12);
+      officialLogo.position.set(x + 500, y + 78);
       const logoPlate = new Graphics();
-      logoPlate.rect(x + 493, y - 23, 44, 20).fill({ color: 0xfff4d6, alpha: 0.86 }).stroke({ color: palette.ink, width: 2, alpha: 0.6 });
+      logoPlate.rect(x + 474, y + 67, 52, 22).fill({ color: 0xfff4d6, alpha: 0.86 }).stroke({ color: palette.ink, width: 2, alpha: 0.6 });
       game.layers.hud.addChild(logoPlate);
       game.layers.hud.addChild(officialLogo);
     }
@@ -209,43 +220,48 @@ export class BuildSelectState implements GameState {
       const selected = index === this.factionIndex;
       const unlocked = this.factionUnlocked(id);
       const entry = this.metaprogression.factions.find((candidate) => candidate.id === id);
-      const top = y + index * 53;
+      const cardWidth = 250;
+      const cardHeight = 82;
+      const col = index % 2;
+      const row = Math.floor(index / 2);
+      const left = x + col * (cardWidth + 16);
+      const top = y + 104 + row * (cardHeight + 10);
       const g = new Graphics();
-      g.rect(x, top, 520, 42)
-        .fill(selected ? 0x3a3327 : unlocked ? 0x202633 : 0x171c25)
-        .stroke({ color: selected ? palette.lemon : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.72 });
+      g.rect(left, top, cardWidth, cardHeight)
+        .fill(selected ? 0x33281d : unlocked ? 0x111823 : 0x0d1118)
+        .stroke({ color: selected ? palette.lemon : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.68 });
       if (!milestone49Art) {
-        g.circle(x + 32, top + 21, 13).fill(selected ? factionColor(id) : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
+        g.circle(left + 44, top + 44, 20).fill(selected ? factionColor(id) : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
       }
       game.layers.hud.addChild(g);
 
       if (milestone49Art) {
         const sigil = new Sprite(milestone49FactionSigilTexture(id, milestone49Art));
         sigil.anchor.set(0.5);
-        sigil.scale.set(0.44);
-        sigil.alpha = unlocked ? 1 : 0.38;
-        sigil.position.set(x + 32, top + 21);
+        sigil.scale.set(selected ? 0.76 : 0.62);
+        sigil.alpha = unlocked ? 1 : 0.58;
+        sigil.position.set(left + 45, top + 39);
         game.layers.hud.addChild(sigil);
 
         const logoPlate = new Graphics();
-        logoPlate.rect(x + 452, top + 10, 56, 22)
-          .fill({ color: 0xfff4d6, alpha: unlocked ? 0.82 : 0.22 })
+        logoPlate.rect(left + 182, top + 11, 54, 22)
+          .fill({ color: 0xfff4d6, alpha: unlocked ? 0.82 : 0.34 })
           .stroke({ color: selected ? palette.lemon : 0x596270, width: selected ? 2 : 1, alpha: unlocked ? 0.82 : 0.36 });
         game.layers.hud.addChild(logoPlate);
 
         const officialLogo = new Sprite(milestone49OfficialLogoTexture(id, milestone49Art));
         officialLogo.anchor.set(0.5);
-        officialLogo.alpha = unlocked ? 0.95 : 0.34;
+        officialLogo.alpha = unlocked ? 0.95 : 0.5;
         scaleSpriteToFit(officialLogo, 48, 16);
-        officialLogo.position.set(x + 480, top + 21);
+        officialLogo.position.set(left + 209, top + 22);
         game.layers.hud.addChild(officialLogo);
       }
 
       const text = new Text({
-        text: `${faction.shortName} Co-Mind${unlocked ? "" : "  LOCKED"} // ${unlocked ? faction.doctrine : entry?.requirementLabel ?? "Route reward required"}`,
-        style: { ...fontStyle, fontSize: 11, fill: selected ? "#fff4d6" : unlocked ? "#aab0bd" : "#596270", wordWrap: true, wordWrapWidth: milestone49Art ? 382 : 440 }
+        text: `${faction.shortName}${unlocked ? "" : " LOCKED"}\n${unlocked ? faction.doctrine : entry?.requirementLabel ?? "Route reward required"}`,
+        style: { ...fontStyle, fontSize: 8, fill: selected ? "#fff4d6" : unlocked ? "#cbd4df" : "#7f8998", wordWrap: true, wordWrapWidth: 166 }
       });
-      text.position.set(x + 58, top + 9);
+      text.position.set(left + 78, top + 39);
       game.layers.hud.addChild(text);
     });
   }
@@ -255,11 +271,11 @@ export class BuildSelectState implements GameState {
     const faction = FACTIONS[game.selectedFactionId];
     const meta = this.metaprogression;
     const text = new Text({
-      text: `Selected: ${combatClass.displayName} + ${faction.shortName} Co-Mind  //  Cell ${game.consensusCellSize}/4  //  Unlocks ${meta.unlockedClassIds.length}/${CLASS_IDS.length} frames ${meta.unlockedFactionIds.length}/${FACTION_IDS.length} co-minds\nRoute profile: ${meta.loaded ? `depth ${meta.routeDepth} renown ${meta.partyRenown} rewards ${meta.rewardIds.length}` : "clean starter profile"}  //  ${meta.disclaimer}\nUp/Down class  Left/Right co-mind  1/2/3 quick class  Space cell size  Enter Alignment Grid`,
-      style: { ...fontStyle, fontSize: 13, fill: "#fff4d6", align: "center", wordWrap: true, wordWrapWidth: 1100 }
+      text: `${combatClass.displayName} + ${faction.shortName} Co-Mind    CELL ${game.consensusCellSize}/4    ENTER DEPLOY    ARROWS SELECT    SPACE CELL SIZE\nRoute ${meta.loaded ? `depth ${meta.routeDepth} / renown ${meta.partyRenown}` : "starter"}    unlocks ${meta.unlockedClassIds.length}/${CLASS_IDS.length} frames ${meta.unlockedFactionIds.length}/${FACTION_IDS.length} co-minds`,
+      style: { ...fontStyle, fontSize: 10, fill: "#fff4d6", align: "center", wordWrap: true, wordWrapWidth: 1160 }
     });
     text.anchor.set(0.5);
-    text.position.set(game.width / 2, game.height - 86);
+    text.position.set(game.width / 2, game.height - 54);
     game.layers.hud.addChild(text);
   }
 

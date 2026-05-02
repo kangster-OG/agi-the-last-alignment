@@ -3458,3 +3458,15 @@ Original prompt: Build an original browser-playable 2D isometric pixel-art horde
   - docs/proof/visual-fidelity-slice/terrain-ui-console-errors.json
   - docs/proof/visual-fidelity-slice/terrain-ui-metrics.txt
   - docs/proof/visual-fidelity-slice/online-m50-terrain-before-after.png
+
+- Continued the Visual Fidelity Vertical Slice with a production set-piece polish pass. Rebuilt the Armistice starter props as larger PixelLab-backed set pieces, added a new transition/edge-mask atlas for plaza-to-road/rubble/cable/breach joins, and composed dense prop clusters as real set pieces instead of sparse symbolic accents.
+- Reduced normal-play HUD footprint further while preserving proof/debug HUD telemetry behind `?debugHud=1` / `?proofHud=1`; normal play now hides landmark labels and uses compact class/co-mind/cell presentation.
+- Made starter player/enemy sprites larger, higher contrast, and frame-cycled during runtime; added stable source sheets under `assets/concepts/visual_fidelity_sources/` so the Armistice builder can be rerun without compounding sprite cleanup.
+- Upgraded first-screen presentation with `assets/ui/armistice_title_backdrop.png` and a more finished title frame, then reworked the fighter/co-mind build-select screen around larger roster cards, primary co-mind art, official/parody logo plates, and a quieter footer.
+- Playwright production-polish artifacts:
+  - docs/proof/visual-fidelity-slice/reference-vs-armistice-production-polish-board.png
+  - docs/proof/visual-fidelity-slice/armistice-production-polish-title.png
+  - docs/proof/visual-fidelity-slice/armistice-production-polish-build-select.png
+  - docs/proof/visual-fidelity-slice/armistice-production-polish-action.png
+  - docs/proof/visual-fidelity-slice/armistice-production-polish-metrics.json
+  - docs/proof/visual-fidelity-slice/armistice-production-polish-console-errors.json
