@@ -13,12 +13,32 @@ import { renderGameToText } from "../proof/renderGameToText";
 import { GAME_TAGLINE, PARODY_DISCLAIMER } from "../content/uiText";
 import { ArenaBriefingState } from "../ui/briefing";
 import { BuildSelectState } from "../ui/buildSelect";
+import { LastAlignmentHubState } from "../ui/hub";
+import { RouteContractChoiceState } from "../ui/routeChoice";
 import { STARTER_CLASS_ID, STARTER_FACTION_ID } from "../content";
 import { clampConsensusCellSize } from "../sim/consensusCell";
 import { OnlineCoopState } from "../network/OnlineCoopState";
 import { AssetPreviewState, type AssetPreviewKind } from "../ui/assetPreview";
 import { createFeedbackSystem } from "./feedback";
+import { loadArmisticeAuthoredGround, loadArmisticeGroundAtlas, loadArmisticeTransitionAtlas } from "../assets/armisticeGroundAtlas";
+import { loadArmisticeSourceRebuildV2 } from "../assets/armisticeSourceRebuildV2";
+import { loadMilestone11Art } from "../assets/milestone11Art";
+import { loadMilestone12Art } from "../assets/milestone12Art";
+import { loadMilestone14Art } from "../assets/milestone14Art";
+import { loadMilestone49PlayableArt } from "../assets/milestone49PlayableArt";
+import { loadBuildWeaponVfxTextures } from "../assets/buildWeaponVfx";
 import titleBackdropUrl from "../../assets/ui/armistice_title_backdrop.png";
+import { DEFAULT_KERNEL_MODULE_IDS } from "../roguelite/kernel";
+import { DEFAULT_CONSENSUS_BURST_PATH, type ConsensusBurstPathId } from "../roguelite/burst";
+import {
+  evaluateMastery,
+  evaluateSecrets,
+  routeContractById,
+  routeContractForSelection,
+  type MasteryBadge,
+  type RunOutcomeForRoguelite,
+  type SecretUnlock
+} from "../roguelite/deepRoguelite";
 
 declare global {
   interface Window {
@@ -148,6 +168,29 @@ export class Game {
   lastNodeId = START_NODE_ID;
   selectedClassId = STARTER_CLASS_ID;
   selectedFactionId = STARTER_FACTION_ID;
+  selectedKernelModuleIds: string[] = [...DEFAULT_KERNEL_MODULE_IDS];
+  selectedEvalProtocolIds: string[] = [];
+  selectedConsensusBurstPathId: ConsensusBurstPathId = DEFAULT_CONSENSUS_BURST_PATH;
+  selectedRouteContractId = "stabilize_armistice";
+  lastRunMemory: {
+    completed: boolean;
+    nodeId: string;
+    kills: number;
+    seconds: number;
+    burstActivations?: number;
+    routeContractId?: string;
+    objectiveCompleted?: number;
+    objectiveTotal?: number;
+    thesis?: string;
+    proofTokensAwarded?: number;
+    proofTokensTotal?: number;
+    newSecrets?: SecretUnlock[];
+    newMastery?: MasteryBadge[];
+  } | null = null;
+  proofTokens = 0;
+  secretUnlockIds = new Set<string>();
+  masteryBadgeIds = new Set<string>();
+  campEvents: string[] = ["The camp is quiet. That is not reassuring."];
   consensusCellSize = 1;
   private readonly query = new URLSearchParams(window.location.search);
   readonly feedback = createFeedbackSystem(this.query);
@@ -207,14 +250,85 @@ export class Game {
     return new OverworldState();
   }
 
+  createHub(): LastAlignmentHubState {
+    return new LastAlignmentHubState();
+  }
+
+  createRouteChoice(): RouteContractChoiceState {
+    return new RouteContractChoiceState();
+  }
+
   startRun(nodeId: string): void {
     const node = MAP_GRAPH.nodes.find((candidate) => candidate.id === nodeId) ?? MAP_GRAPH.nodes[0];
     this.lastNodeId = node.id;
+    this.preloadRunArt();
     this.state.set(new ArenaBriefingState(node.id, node.arenaId));
   }
 
   createRun(nodeId: string, arenaId: string): LevelRunState {
-    return new LevelRunState(nodeId, arenaId, this.selectedClassId, this.selectedFactionId, this.consensusCellSize);
+    this.preloadRunArt();
+    const routeContract = routeContractForSelection(this.selectedEvalProtocolIds, this.completedNodes.size);
+    const selectedRouteContract = this.selectedRouteContractId ? routeContractById(this.selectedRouteContractId) : routeContract;
+    return new LevelRunState(
+      nodeId,
+      arenaId,
+      this.selectedClassId,
+      this.selectedFactionId,
+      this.consensusCellSize,
+      this.selectedKernelModuleIds,
+      this.selectedEvalProtocolIds,
+      this.selectedConsensusBurstPathId,
+      selectedRouteContract
+    );
+  }
+
+  recordRogueliteOutcome(outcome: RunOutcomeForRoguelite): void {
+    const newSecrets = evaluateSecrets(outcome, [...this.secretUnlockIds]);
+    const newMastery = evaluateMastery(outcome, [...this.masteryBadgeIds]);
+    for (const secret of newSecrets) this.secretUnlockIds.add(secret.id);
+    for (const badge of newMastery) this.masteryBadgeIds.add(badge.id);
+    let proofTokensAwarded = 0;
+    if (outcome.completed) {
+      proofTokensAwarded += 1;
+      proofTokensAwarded += outcome.evalProtocolIds.length;
+      if (outcome.routeContractId === "faction_relay_argument" && outcome.evalProtocolIds.length > 0) proofTokensAwarded += 1;
+      if (outcome.objective.anchors.every((anchor) => anchor.completed)) proofTokensAwarded += 1;
+      if (outcome.routeContractId === "resource_cache_detour") proofTokensAwarded += 1;
+    }
+    this.proofTokens += proofTokensAwarded;
+    const objectiveCompleted = outcome.objective.anchors.filter((anchor) => anchor.completed).length;
+    const objectiveTotal = outcome.objective.anchors.length;
+    this.lastRunMemory = {
+      completed: outcome.completed,
+      nodeId: outcome.nodeId,
+      kills: outcome.kills,
+      seconds: Math.floor(outcome.seconds),
+      burstActivations: outcome.burstActivations,
+      routeContractId: outcome.routeContractId,
+      objectiveCompleted,
+      objectiveTotal,
+      thesis: outcome.chosenTags.length > 0 ? outcome.chosenTags[0] : "uncommitted",
+      proofTokensAwarded,
+      proofTokensTotal: this.proofTokens,
+      newSecrets,
+      newMastery
+    };
+    this.campEvents = [
+      outcome.completed ? `Reality accepted ${outcome.nodeId}. Nobody said thank you, but the road stopped screaming.` : `The frame came back bent from ${outcome.nodeId}. The co-mind filed a complaint against physics.`,
+      objectiveCompleted === objectiveTotal ? "All Treaty Anchors rebooted. The camp engineers are pretending this was expected." : `${objectiveCompleted}/${objectiveTotal} Treaty Anchors rebooted. A faction relay is already arguing about the denominator.`,
+      newSecrets[0] ? `Secret unlocked: ${newSecrets[0].name}.` : newMastery[0] ? `Mastery recorded: ${newMastery[0].name}.` : `Proof Tokens: ${this.proofTokens}.`
+    ];
+  }
+
+  private preloadRunArt(): void {
+    if (this.useArmisticeTileAtlas) {
+      void loadArmisticeGroundAtlas();
+      void loadArmisticeTransitionAtlas();
+      void loadArmisticeAuthoredGround();
+    }
+    if (this.useMilestone10Art) {
+      void Promise.all([loadMilestone11Art(), loadMilestone12Art(), loadMilestone14Art(), loadMilestone49PlayableArt(), loadArmisticeSourceRebuildV2(), loadBuildWeaponVfxTextures()]);
+    }
   }
 
   showMainMenu(): void {

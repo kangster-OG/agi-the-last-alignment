@@ -140,6 +140,104 @@ Exit criteria:
 - The player cannot see the whole arena at once, but the normal camera still feels close and readable.
 - Proof scripts validate long traversal, not just static survival.
 
+## Cross-Milestone Map-Type Contract
+
+After the Armistice roguelite and reference-run passes, future arenas should be implemented as distinct map kinds, not palette swaps. Preserve the same core run language across all of them: close tactical camera, autocombat, horde pressure, emergency patch drafts, objective pressure, boss/event beats, and summary/camp carryover.
+
+Pair this section with `docs/DIFFICULTY_AND_MAP_SCALING.md` before implementing a new arena. Every future map should declare not only its map kind, but also its difficulty layers and top pressure levers.
+
+Every new playable map should declare:
+
+- map type;
+- objective type;
+- pressure source;
+- reward promise;
+- boss/event pattern;
+- proof path that validates those choices.
+
+Initial map-type targets:
+
+- `armistice_plaza`: Open Survival District. Treaty Anchors, faction relay pressure, Oath-Eater, Proof Token/mastery reward.
+- `cooling_lake_nine`: Hazard Ecology. Server buoys, coolant/cable pressure, Prompt Leech lanes, Motherboard Eel, economy/burst reward.
+- `transit_loop_zero`: Route / Transit. Platform alignment, false schedules, moving arrival events, Station That Arrives, movement/boss reward.
+- `memory_cache_001`: Expedition / Recovery. Memory shard records, context rot, lore/secret unlocks, optional curator pressure.
+- `accord_relay` / `guardrail_forge`: Faction Relay / Defense. Hold relay infrastructure, survive doctrine pressure, earn build or route rewards.
+- corrupted shortcuts: Micro-Run Challenge. Short high-risk modifier runs with secret/unlock pressure.
+
+Implementation note: build gameplay identity first with honest graybox/runtime systems, then do production-art source passes. Do not fake a new map's production look with code-authored terrain, filters, recolors, overlays, or procedural marks. Use Armistice as the fidelity contract when the art pass begins.
+
+## Cross-Milestone Difficulty Contract
+
+The post-Armistice campaign should use layered difficulty, not a single flat difficulty ladder.
+
+Every new playable map should define:
+
+- Baseline Contract;
+- Eval Pressure hooks;
+- Route Risk hooks;
+- World Tier assumptions;
+- Mastery Variant potential;
+- primary and secondary difficulty levers;
+- proof telemetry and screenshot path for those choices.
+
+The canonical difficulty levers are:
+
+- Density Pressure;
+- Spatial Pressure;
+- Objective Pressure;
+- Boss Pressure;
+- Draft Pressure;
+- Economy Pressure;
+- Information Pressure;
+- Time Pressure;
+- Co-op Pressure;
+- Route Memory Pressure.
+
+Implementation order for new maps:
+
+1. Define the map's kind and difficulty emphasis.
+2. Build the graybox/runtime objective honestly.
+3. Add telemetry that proves the map identity and pressure levers.
+4. Add a proof path and screenshots.
+5. Tune baseline contract difficulty.
+6. Only then begin production art using the Armistice accepted art baseline.
+
+## Cross-Milestone Build-System Contract
+
+Pair this section with `docs/BUILD_ARCHETYPES_AND_ITEMIZATION.md` before implementing new weapons, passives, emergency patches, route rewards, or fusions. Armistice proved the core loop; the full game now needs broad build identity.
+
+Every run should be able to express a build thesis through:
+
+- one primary auto-weapon;
+- two to four secondary weapon protocols;
+- six to ten passive processes;
+- one Consensus Burst path;
+- one to three protocol fusions/evolutions when the player builds intentionally;
+- a rare rule-breaker, route reward, Treaty Anchor reward, or boss relic when appropriate.
+
+Every build option must answer at least one player-facing question:
+
+- what do I shoot;
+- where do I move;
+- what do I collect;
+- how do I handle objectives;
+- what fusion am I chasing;
+- what risk am I accepting;
+- how does this affect co-op positioning or rescue.
+
+Full-game archetypes:
+
+- Refusal Tank;
+- Prediction Sniper;
+- Swarm Compiler;
+- Objective Engineer;
+- Chaos Red-Team;
+- Shard Economist;
+- Time / Protocol Control;
+- Co-op Relay.
+
+Implementation note: do not add filler stat cards as headline upgrades. Raw damage/cooldown/pierce/health increases are acceptable as ranks or minor modifiers, but draft-defining choices should change behavior, targeting, movement, objectives, economy, co-op play, or fusion paths.
+
 ## Milestone 4 — Alignment Grid Overworld
 
 Goal: evolve the overworld into a playable miniature world map.
@@ -169,7 +267,7 @@ Exit criteria:
 
 ## Milestone 5 — Combat Identity And Upgrade Drafts
 
-Goal: make builds feel like combat class + co-mind, not generic stat cards.
+Goal: make builds feel like combat class + co-mind + primary weapon + secondary protocols + passive processes, not generic stat cards.
 
 Implement:
 
@@ -179,17 +277,35 @@ Implement:
 - Faction upgrade pools.
 - General upgrade pool.
 - Emergency patch draft UI.
-- At least one upgrade evolution path.
+- Primary auto-weapon content records.
+- Secondary weapon protocol content records.
+- Passive process content records.
+- Major process / secondary protocol slot limits.
+- Fusion/evolution recipe display.
+- Rare rule-breaker content records.
+- At least three upgrade evolution/fusion paths.
 
 Starter build identity:
 
 - Accord Striker: fast breach fighter, evasive movement, pickup range.
 - OpenAI Accord Division: balanced, rerolls, shields, patch/refusal flavor.
 
+Initial full-game build expansion target:
+
+- Primary weapons: `vector_lance`, `signal_pulse`, `rift_mine`.
+- Secondary protocols: `context_saw`, `patch_mortar`, `red_team_spike`.
+- Passive processes: `coherence_indexer`, `field_triage_loop`, `anchor_bodyguard`, `prediction_priority`, `low_hp_adversary`.
+- Fusions: `cathedral_of_no`, `causal_railgun`, `armistice_artillery`.
+- Rare rule-breaker: `unbounded_context`.
+
 Exit criteria:
 
 - A run has visible class/faction identity.
-- Upgrade names and descriptions use AI terminology + combat words + cosmic stupidity.
+- A run has visible weapon/protocol/passive identity.
+- Draft cards show option family, protocol slot, tags, and fusion hints.
+- At least four archetypes are viable inside Armistice without changing autocombat.
+- Upgrade names and descriptions use stat-first gameplay copy plus AI terminology, combat words, and cosmic stupidity.
+- `render_game_to_text()` exposes equipped primary, secondary protocols, passives, fusions, and rare rule-breakers.
 
 ## Milestone 6 — Boss / Dialogue / UI Grammar
 

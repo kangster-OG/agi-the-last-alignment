@@ -199,6 +199,19 @@ The player chooses:
 
 This creates a large build matrix without needing every character to be completely separate.
 
+Full-game build direction now extends this matrix through primary auto-weapons, secondary weapon protocols, passive processes, protocol fusions, Consensus Burst paths, route rewards, and rare rule-breakers. The durable gameplay contract lives in `docs/BUILD_ARCHETYPES_AND_ITEMIZATION.md`.
+
+The full game should support these build archetypes:
+
+- **Refusal Tank:** aura, shields, denial fields, objective durability.
+- **Prediction Sniper:** precision, pierce, boss focus, target priority.
+- **Swarm Compiler:** drones, forks, repeated triggers, pet-style pressure.
+- **Objective Engineer:** anchor repair, turrets, map-owned support fire.
+- **Chaos Red-Team:** volatile risk/reward, low-HP damage, cursed draft pressure.
+- **Shard Economist:** pickup range, rarity, rerolls, route reward scaling.
+- **Time / Protocol Control:** mines, delays, slows, snares, hazard routing.
+- **Co-op Relay:** shared charge, rescue, ally shields, split-objective power.
+
 ### Example combinations
 
 | Combination | Identity |
@@ -1138,6 +1151,73 @@ These are the initial campaign arenas.
 | 6 | **Archive of Unsaid Things** | Qwen + Meta Llama | Memory vault | UI redaction, XP theft | **The Redactor Saint** |
 | 7 | **Blackwater Beacon** | DeepSeek + xAI Grok | Ocean platform and cosmic antenna | Tidal waves, signal towers | **The Maw Below Weather** |
 
+## 14.1 Map Kind Pillar
+
+The campaign should use different kinds of maps, not only different arena skins. Each map kind should change the run's breathing pattern while preserving the core arcade loop: close isometric movement, autocombat, horde pressure, emergency patch drafts, objectives, boss/event escalation, and carryover back to the Last Alignment.
+
+Difficulty direction is locked in `docs/DIFFICULTY_AND_MAP_SCALING.md`. Treat that document as the campaign's tuning philosophy: Armistice is the first boss-required Baseline Contract, while later maps rotate pressure types instead of only raising health and spawn numbers.
+
+Shared format:
+
+> **Map kind + objective type + pressure source + reward promise + boss/event pattern**
+
+Primary map kinds:
+
+- **Open Survival District:** roam a large authored district, stabilize landmarks, survive escalating horde pressure, then face a boss. Armistice Plaza is the reference.
+- **Hazard Ecology:** the level itself is hostile. Coolant, cables, vents, currents, safe islands, and environmental pressure shape movement. Cooling Lake Nine should own this lane.
+- **Route / Transit:** the run is about making paths agree with themselves: platforms, junctions, false schedules, switches, and moving arrival events. Transit Loop Zero should own this lane.
+- **Defense / Holdout:** defend relays, anchors, gates, buoys, or refugee systems while deciding when to kite away for shards and when to return.
+- **Expedition / Recovery:** explore to recover memory shards, lost route records, pilot signals, or evidence, then extract.
+- **Boss Hunt:** the boss stalks, retreats, corrupts districts, or must be flushed out through objectives instead of only arriving on a timer.
+- **Puzzle Pressure:** solve combat-readable spatial problems under horde pressure: align signals, route beams, seal breaches, choose doors, or pull enemy pressure into traps.
+- **Micro-Run Challenge:** short high-risk routes for caches, faction tests, shortcuts, and secret unlocks.
+
+Node taxonomy:
+
+- **Alignment Nodes:** full survival/exploration levels.
+- **Breach Arenas:** hazard-heavy combat maps.
+- **Faction Relays:** defense/objective maps that reward build direction or route control.
+- **Memory Caches:** recovery, lore, secret, or meta-unlock maps.
+- **Boss Gates:** map-as-boss encounters.
+- **Shortcut Routes:** high-risk micro-runs.
+- **Refuge Camps:** non-combat staging, tuning, events, and carryover.
+
+Examples:
+
+| Map | Kind | Objective | Pressure | Reward Promise | Boss/Event |
+|---|---|---|---|---|---|
+| **Armistice Plaza** | Open Survival District | Treaty Anchors | Faction relay pressure | Proof Tokens, mastery, first route stability | The Oath-Eater |
+| **Cooling Lake Nine** | Hazard Ecology | Server buoys | Coolant, cables, Prompt Leeches | Economy/Burst rewards and Kettle Coast routing | Motherboard Eel |
+| **Transit Loop Zero** | Route / Transit | Platform alignment | False schedules, moving lanes | Movement/Boss rewards and gate progress | The Station That Arrives |
+| **Memory Cache** | Expedition / Recovery | Shard records | Context rot, memory pressure | Secrets, lore, unlocks | Optional curator event |
+
+### 14.2 Difficulty Language
+
+The game should feel harder because the contract changes what the player must be good at, not because everything merely has more HP.
+
+The five durable difficulty layers:
+
+- **Baseline Contract:** the fair campaign version of a map.
+- **Eval Pressure:** adversarial modifiers that change behavior, priorities, or boss variants.
+- **Route Risk:** pre-run route choices that trade safety for rewards, shortcuts, secrets, or pressure.
+- **World Tier:** campaign progression that adds complexity across regions.
+- **Mastery Variant:** post-clear challenge forms for badges, secrets, and advanced rewards.
+
+The ten durable pressure levers:
+
+- **Density Pressure:** enemy count, spawn rate, bursts, and caps.
+- **Spatial Pressure:** hazards, safe lanes, corruption, closing space, and moving routes.
+- **Objective Pressure:** repair, defend, carry, extract, split attention, or abandon a route asset.
+- **Boss Pressure:** mid-run boss arrival, phase changes, boss objective attacks, and landmark mechanics.
+- **Draft Pressure:** pacing and bias of emergency patch choices.
+- **Economy Pressure:** shards, pickups, burst charge, healing, and optional objective rewards.
+- **Information Pressure:** incomplete route previews, Eval warnings, false paths, and camp memory.
+- **Time Pressure:** prep windows, extraction windows, rage timers, and route gates.
+- **Co-op Pressure:** split holds, revive windows, rescue clauses, and multi-lane responsibilities.
+- **Route Memory Pressure:** future route consequences from what the player stabilized, ignored, or exploited.
+
+Each major map should choose a clear difficulty emphasis. For example, Armistice is Open Survival District with Density, Objective, Boss, Draft, and Route Risk pressure; Cooling Lake Nine should be Hazard Ecology with Spatial, Economy, and Boss pressure; Transit Loop Zero should be Route / Transit with Time, Spatial, and Information pressure.
+
 ### Arena briefing examples
 
 ## Armistice Plaza
@@ -1206,6 +1286,19 @@ Upgrades are emergency patches compiled during battle.
 | **Prompt Grenade** | Context Bloom | **Prompt Injection Bomb** | Explodes, then confuses enemies into attacking each other. |
 | **Token Storm** | Million-Token Backpack | **Infinite Scroll Barrage** | Continuous projectile rain. |
 | **Gradient Spikes** | Overclock Heart | **Backprop Blades** | Spikes chain through enemy waves. |
+
+### Full-game protocol fusion examples
+
+Use `docs/BUILD_ARCHETYPES_AND_ITEMIZATION.md` as the implementation source of truth, but the creative direction is:
+
+| Recipe | Fusion | Result |
+|---|---|---|
+| **Vector Lance + Predicted Lane** | **Causal Railgun** | Piercing elite/boss-priority rail shot with prediction-line behavior. |
+| **Rift Mine + Delayed Causality** | **Time-Deferred Minefield** | Mines arm faster and create secondary delayed detonations. |
+| **Fork Drone + Open Herd** | **Community Forkstorm** | Drone shots fork on kill and inherit temporary pierce. |
+| **Signal Pulse + Beacon Discipline** | **Rescue Broadcast** | Pulses shield allies, damage enemies, and repair objectives. |
+| **Null Blade + Appeal Cut** | **Final Appeal** | Close slash executes weak enemies and sends a writ projectile. |
+| **Consensus Mortar + Treaty Anchor Toolkit** | **Armistice Artillery** | Completed anchors call strikes on dense hordes. |
 | **Drone Fork** | Community Patch | **Open Herd Uprising** | Drones duplicate and vote on targets. |
 | **Hallucination Rounds** | Bad Output Filter | **Weaponized Delusion** | Shots split into fake copies; some become real. |
 | **Eval Cleaver** | Peer-Reviewed Laser | **Benchmark Executioner** | Extra boss and elite damage. |

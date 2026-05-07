@@ -7,7 +7,17 @@ import { ALIGNMENT_GRID_MAP } from "../overworld/alignmentGridMap";
 import type { UpgradeDraftState } from "../ui/draft";
 import type { OnlineCoopState } from "../network/OnlineCoopState";
 import { assetPipelineSummary } from "../assets";
+import { getArmisticeAuthoredGroundTexture } from "../assets/armisticeGroundAtlas";
+import { getPlayerDamageVfxTextures } from "../assets/playerDamageVfx";
+import { getBuildWeaponVfxTextures } from "../assets/buildWeaponVfx";
 import type { BuildSelectState } from "../ui/buildSelect";
+import type { LastAlignmentHubState } from "../ui/hub";
+import type { RouteContractChoiceState } from "../ui/routeChoice";
+import { kernelSummary } from "../roguelite/kernel";
+import { evalSummary } from "../roguelite/evals";
+import { burstSummary, consensusBurstPath } from "../roguelite/burst";
+import { objectiveSummary, routeContractById, routeContractForSelection } from "../roguelite/deepRoguelite";
+import { NEXT_CONTENT_TARGET } from "../roguelite/nextContentTarget";
 import {
   MILESTONE49_CLASS_IDS,
   MILESTONE49_FACTION_IDS,
@@ -16,6 +26,7 @@ import {
   MILESTONE49_THIRD_PARTY_LOGO_IDS
 } from "../assets/milestone49PlayableArt";
 import { MILESTONE50_ARENA_IDS, MILESTONE50_BOSS_IDS, MILESTONE50_ENEMY_FAMILY_IDS, MILESTONE50_HAZARD_IDS, MILESTONE50_MAJOR_PROOF_ARENA_IDS } from "../assets/milestone50ArenaBossArt";
+import { buildSlotCapSummary } from "../gameplay/upgrades";
 
 export function renderGameToText(game: Game): string {
   const state = game.state.current;
@@ -76,9 +87,27 @@ export function renderGameToText(game: Game): string {
       persistenceBoundary: "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
     },
     feedback: game.feedback.snapshot(),
+      roguelite: {
+        alignmentKernel: kernelSummary(game.selectedKernelModuleIds),
+        adversarialEvals: evalSummary(game.selectedEvalProtocolIds),
+        consensusBurstPath: consensusBurstPath(game.selectedConsensusBurstPathId),
+        selectedRouteContract: routeContractById(game.selectedRouteContractId) ?? routeContractForSelection(game.selectedEvalProtocolIds, game.completedNodes.size),
+        selectedRouteContractId: game.selectedRouteContractId,
+        proofTokens: game.proofTokens,
+        secrets: [...game.secretUnlockIds],
+        masteryBadges: [...game.masteryBadgeIds],
+        campEvents: game.campEvents,
+        lastRunMemory: game.lastRunMemory,
+        nextContentTarget: NEXT_CONTENT_TARGET
+    },
     assetRendering: {
       assetPreview: game.assetPreview,
+      cameraZoom: round(game.camera.zoom),
+      normalCombatCameraPolicy: "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
       armisticeTileAtlasEnabled: game.useArmisticeTileAtlas,
+      armisticeAuthoredGroundReady: getArmisticeAuthoredGroundTexture() !== null,
+      playerDamageVfxReady: getPlayerDamageVfxTextures() !== null,
+      buildWeaponVfxReady: getBuildWeaponVfxTextures() !== null,
       productionArtEnabled: game.useMilestone10Art,
       productionArtSet: game.useMilestone10Art ? "milestone14_combat_art_parity" : "placeholder_safe_opt_out",
       playerFrameArtSet: game.useMilestone10Art ? "milestone49_class_roster_and_comind_modules" : "placeholder_safe_opt_out",
@@ -134,6 +163,7 @@ export function renderGameToText(game: Game): string {
           selectedFactionUnlocked: metaprogression.unlockedFactionIds.includes(selectedFaction.id),
           consensusCellSize: game.consensusCellSize,
           consensusCellHint: "Press Space to cycle local Consensus Cell size before networking.",
+          hubHint: "Press C to open the Last Alignment Camp for Kernel, Eval, and Burst setup.",
           confirmHint: "Press Enter to continue to the Alignment Grid.",
           metaprogression,
           artCoverage: {
@@ -156,6 +186,44 @@ export function renderGameToText(game: Game): string {
         enemies: [],
         pickups: [],
         projectiles: []
+      },
+      null,
+      2
+    );
+  }
+
+  if (state?.mode === "LastAlignmentHub") {
+    const hub = state as LastAlignmentHubState;
+    return JSON.stringify(
+      {
+        ...base,
+        player: null,
+        hub: hub.hubInfo(game),
+        overworld: null,
+        level: null,
+        enemies: [],
+        pickups: [],
+        projectiles: [],
+        objective: "Tune the Alignment Kernel, Adversarial Eval, and Consensus Burst before returning to the Alignment Grid."
+      },
+      null,
+      2
+    );
+  }
+
+  if (state?.mode === "RouteContractChoice") {
+    const routeChoice = state as RouteContractChoiceState;
+    return JSON.stringify(
+      {
+        ...base,
+        player: null,
+        routeChoice: routeChoice.routeInfo(game),
+        overworld: null,
+        level: null,
+        enemies: [],
+        pickups: [],
+        projectiles: [],
+        objective: "Choose the next route contract before deploying to the Alignment Grid."
       },
       null,
       2
@@ -232,10 +300,19 @@ export function renderGameToText(game: Game): string {
         player: {
           worldX: round(run.player.worldX),
           worldY: round(run.player.worldY),
+          velocityX: round(run.player.vx),
+          velocityY: round(run.player.vy),
+          facing: localFacing(run.player.vx, run.player.vy),
           hp: Math.ceil(run.player.hp),
           maxHp: run.player.maxHp,
           xp: run.player.xp,
-          level: run.player.level
+          level: run.player.level,
+          damageFeedback: {
+            flash: round(run.player.damageFlash),
+            hpPulse: round(run.player.hpPulse),
+            stagger: round(run.player.staggerTime),
+            lastDamage: round(run.player.lastDamage)
+          }
         },
         players: run.players.map((runtime) => ({
           id: runtime.id,
@@ -248,10 +325,19 @@ export function renderGameToText(game: Game): string {
           inputSource: runtime.inputSource,
           worldX: round(runtime.player.worldX),
           worldY: round(runtime.player.worldY),
+          velocityX: round(runtime.player.vx),
+          velocityY: round(runtime.player.vy),
+          facing: localFacing(runtime.player.vx, runtime.player.vy),
           hp: Math.ceil(runtime.player.hp),
           maxHp: runtime.player.maxHp,
           xp: runtime.player.xp,
           level: runtime.player.level,
+          damageFeedback: {
+            flash: round(runtime.player.damageFlash),
+            hpPulse: round(runtime.player.hpPulse),
+            stagger: round(runtime.player.staggerTime),
+            lastDamage: round(runtime.player.lastDamage)
+          },
           downed: runtime.downed
         })),
         overworld: { nodeId: run.nodeId },
@@ -288,6 +374,13 @@ export function renderGameToText(game: Game): string {
           })),
           lastSpawnRegionId: run.director.lastSpawnRegionId,
           spawnedByRegion: run.director.spawnedByRegion,
+          director: {
+            phase: run.director.cadencePhase,
+            totalSpawned: run.director.totalSpawned,
+            activeEnemyCap: run.director.activeEnemyCap,
+            lastBurstSize: run.director.lastBurstSize,
+            activeEnemyCount: run.world.entities.filter((entity) => entity.active && entity.kind === "enemy").length
+          },
           consensusCell: {
             playerCount: run.players.length,
             maxPlayers: 4,
@@ -332,6 +425,52 @@ export function renderGameToText(game: Game): string {
             brokenPromiseHits: run.brokenPromiseHits,
             treatyChargeImpacts: run.treatyChargeImpacts
           },
+          rogueliteRun: {
+            alignmentKernel: kernelSummary(run.kernelModuleIds),
+            adversarialEvals: evalSummary(run.evalProtocolIds),
+            effectivePressureCount: run.effectivePressureCount(),
+            victoryCondition: run.victoryConditionSummary(),
+            levelUpVacuum: {
+              active: run.levelUpVacuum.active,
+              absorbed: run.levelUpVacuum.absorbed,
+              triggerLevel: run.levelUpVacuum.triggerLevel,
+              remainingPickups: run.world.entities.filter((entity) => entity.active && entity.kind === "pickup").length
+            },
+            extractionGate: extractionGateSummary(run),
+            consensusBurst: burstSummary(run.consensusBurst, run.build),
+            routeContract: run.routeContract,
+            objective: objectiveSummary(run.treatyAnchorObjective),
+            objectiveReward: run.lastObjectiveRewardLabel,
+            playerFacingIntel: run.runIntel(),
+            firstRunArcPhase: run.firstRunArcPhase(),
+            buildGrammar: {
+              primaryWeaponId: run.build.weaponId,
+              secondaryProtocols: [...run.build.secondaryProtocols],
+              passiveProcesses: [...run.build.passiveProcesses],
+              fusions: [...run.build.fusions],
+              slotCaps: buildSlotCapSummary(run.build),
+              contextSawRank: run.build.contextSaw,
+              patchMortarRank: run.build.patchMortar,
+              coherenceIndexerRank: run.build.coherenceIndexer,
+              anchorBodyguardRank: run.build.anchorBodyguard,
+              predictionPriorityRank: run.build.predictionPriority,
+              causalRailgunRank: run.build.causalRailgun,
+              fusionHints: run.chosenUpgradeIds.includes("vector_lance") && !run.chosenUpgradeIds.includes("causal_railgun")
+                ? [{ id: "causal_railgun", requires: ["vector_lance", "predicted_lane"] }]
+                : []
+            },
+            buildThesis: run.synergySummary(),
+            synergyOnline: run.lastSynergyOnlineLabel,
+            draftBiasTags: run.draftBiasTags(),
+            bossVariant: run.bossVariant(),
+            enemyRolePressure: run.enemyRolePressure,
+            protocolSlotsInstalled: run.chosenUpgradeIds.map((id, index) => ({
+              id,
+              name: run.chosenUpgrades[index] ?? id,
+              protocolSlot: run.chosenProtocolSlots[index] ?? "unknown",
+              tags: run.chosenTags
+            }))
+          },
           seconds: round(run.seconds),
           kills: run.kills,
           bossSpawned: run.bossSpawned,
@@ -340,7 +479,7 @@ export function renderGameToText(game: Game): string {
         enemies,
         pickups,
         projectiles,
-        build: { ...run.build, buildKit: run.players[0]?.buildKit ?? resolveBuildKit(run.classId, run.factionId) },
+        build: { ...run.build, slotCaps: buildSlotCapSummary(run.build), buildKit: run.players[0]?.buildKit ?? resolveBuildKit(run.classId, run.factionId) },
         upgrades: run.chosenUpgrades,
         objective: run.objective(),
         performance: {
@@ -560,13 +699,21 @@ export function renderGameToText(game: Game): string {
           factionName: FACTIONS[run.factionId]?.displayName,
           chosenUpgradeIds: [...run.chosenUpgradeIds],
           seconds: round(run.seconds),
-          kills: run.kills
+          kills: run.kills,
+          levelUpVacuum: {
+            active: run.levelUpVacuum.active,
+            absorbed: run.levelUpVacuum.absorbed,
+            triggerLevel: run.levelUpVacuum.triggerLevel
+          },
+          extractionGate: extractionGateSummary(run)
         },
         draft: {
           cards: draft.cards.map((card) => ({
             id: card.id,
             name: card.name,
             source: card.source,
+            protocolSlot: card.protocolSlot,
+            tags: card.tags,
             factionId: card.factionId,
             classId: card.classId,
             requires: card.requires ?? []
@@ -576,7 +723,7 @@ export function renderGameToText(game: Game): string {
         enemies: [],
         pickups: [],
         projectiles: [],
-        build: { ...run.build, buildKit: run.players[0]?.buildKit ?? resolveBuildKit(run.classId, run.factionId) },
+        build: { ...run.build, slotCaps: buildSlotCapSummary(run.build), buildKit: run.players[0]?.buildKit ?? resolveBuildKit(run.classId, run.factionId) },
         upgrades: run.chosenUpgrades,
         objective: "Select one emergency patch."
       },
@@ -601,7 +748,9 @@ export function renderGameToText(game: Game): string {
           seconds: round(summary.seconds),
           kills: summary.kills,
           playerLevel: summary.level,
-          completed: summary.completed
+          completed: summary.completed,
+          carryover: game.lastRunMemory,
+          nextContentTarget: summary.completed && summary.nodeId === "armistice_plaza" ? NEXT_CONTENT_TARGET : null
         },
         enemies: [],
         pickups: [],
@@ -635,4 +784,29 @@ export function renderGameToText(game: Game): string {
 
 function round(value: number): number {
   return Math.round(value * 100) / 100;
+}
+
+function localFacing(vx: number, vy: number): "south" | "east" | "north" | "west" {
+  if (Math.hypot(vx, vy) <= 0.05) return "south";
+  const screenX = vx - vy;
+  const screenY = vx + vy;
+  if (Math.abs(screenY) >= Math.abs(screenX)) return screenY >= 0 ? "south" : "north";
+  return screenX >= 0 ? "east" : "west";
+}
+
+function extractionGateSummary(run: LevelRunState) {
+  if (!run.extractionGate.active) {
+    return {
+      active: false,
+      entered: run.extractionGate.entered
+    };
+  }
+  return {
+    active: true,
+    entered: run.extractionGate.entered,
+    worldX: round(run.extractionGate.worldX),
+    worldY: round(run.extractionGate.worldY),
+    age: round(Math.max(0, run.seconds - run.extractionGate.spawnedAt)),
+    distanceToPlayer: round(Math.hypot(run.player.worldX - run.extractionGate.worldX, run.player.worldY - run.extractionGate.worldY))
+  };
 }

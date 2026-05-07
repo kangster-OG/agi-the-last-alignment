@@ -128,7 +128,7 @@ export const ARMISTICE_PLAZA_MAP: LevelMapDefinition = {
       worldX: -24,
       worldY: 20,
       radius: 5.2,
-      enemyFamilyIds: ["bad_outputs"],
+      enemyFamilyIds: ["bad_outputs", "context_rot_crabs", "eval_wraiths"],
       startsAtSeconds: 0.5,
       weight: 3
     },
@@ -138,7 +138,7 @@ export const ARMISTICE_PLAZA_MAP: LevelMapDefinition = {
       worldX: -19,
       worldY: -14,
       radius: 5,
-      enemyFamilyIds: ["benchmark_gremlins"],
+      enemyFamilyIds: ["benchmark_gremlins", "bad_outputs", "eval_wraiths"],
       startsAtSeconds: 5,
       weight: 2
     },
@@ -148,7 +148,7 @@ export const ARMISTICE_PLAZA_MAP: LevelMapDefinition = {
       worldX: 20,
       worldY: -11,
       radius: 4.8,
-      enemyFamilyIds: ["context_rot_crabs"],
+      enemyFamilyIds: ["context_rot_crabs", "benchmark_gremlins", "bad_outputs"],
       startsAtSeconds: 10,
       weight: 2
     },
@@ -158,7 +158,7 @@ export const ARMISTICE_PLAZA_MAP: LevelMapDefinition = {
       worldX: 1,
       worldY: 3,
       radius: 4.6,
-      enemyFamilyIds: ["bad_outputs"],
+      enemyFamilyIds: ["bad_outputs", "benchmark_gremlins", "context_rot_crabs"],
       startsAtSeconds: 2,
       weight: 2
     },
@@ -168,9 +168,39 @@ export const ARMISTICE_PLAZA_MAP: LevelMapDefinition = {
       worldX: 18,
       worldY: 16,
       radius: 4.7,
-      enemyFamilyIds: ["eval_wraiths"],
+      enemyFamilyIds: ["eval_wraiths", "benchmark_gremlins", "context_rot_crabs"],
       startsAtSeconds: 14,
       weight: 1
+    },
+    {
+      id: "late_breach_recompile_swarm",
+      label: "Late Breach Recompile Swarm",
+      worldX: -24,
+      worldY: 20,
+      radius: 6.4,
+      enemyFamilyIds: ["eval_wraiths", "benchmark_gremlins", "context_rot_crabs", "bad_outputs"],
+      startsAtSeconds: 42,
+      weight: 3
+    },
+    {
+      id: "south_rubble_regression_surge",
+      label: "South Rubble Regression Surge",
+      worldX: 8,
+      worldY: 14,
+      radius: 5.8,
+      enemyFamilyIds: ["benchmark_gremlins", "bad_outputs", "context_rot_crabs"],
+      startsAtSeconds: 76,
+      weight: 3
+    },
+    {
+      id: "terminal_eval_overflow",
+      label: "Terminal Eval Overflow",
+      worldX: 18,
+      worldY: 16,
+      radius: 6.2,
+      enemyFamilyIds: ["eval_wraiths", "context_rot_crabs", "benchmark_gremlins"],
+      startsAtSeconds: 92,
+      weight: 2
     }
   ],
   propClusters: [

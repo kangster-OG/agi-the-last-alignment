@@ -34,7 +34,7 @@ export interface Milestone10ArtTextures {
   badOutputs: Texture[];
   coherenceShard: Texture;
   treatyMonument: Texture;
-  oathEater: Texture;
+  oathEater: Texture[];
   oathEaterPortrait: Texture;
 }
 
@@ -43,6 +43,8 @@ const PLAYER_FRAME_WIDTH = 48;
 const PLAYER_FRAME_HEIGHT = 48;
 const BAD_OUTPUT_FRAME_WIDTH = 32;
 const BAD_OUTPUT_FRAME_HEIGHT = 32;
+const OATH_EATER_FRAME_WIDTH = 224;
+const OATH_EATER_FRAME_HEIGHT = 224;
 
 let milestone10Promise: Promise<Milestone10ArtTextures> | null = null;
 let milestone10Textures: Milestone10ArtTextures | null = null;
@@ -88,12 +90,23 @@ export function loadMilestone10Art(): Promise<Milestone10ArtTextures> {
       badOutputs,
       coherenceShard,
       treatyMonument,
-      oathEater,
+      oathEater: sliceOathEaterSheet(oathEater),
       oathEaterPortrait
     };
     return milestone10Textures;
   });
   return milestone10Promise;
+}
+
+function sliceOathEaterSheet(sheet: Texture): Texture[] {
+  const width = sheet.source.width;
+  const frameCount = Math.max(1, Math.floor(width / OATH_EATER_FRAME_WIDTH));
+  return Array.from({ length: frameCount }, (_, col) => {
+    return new Texture({
+      source: sheet.source,
+      frame: new Rectangle(col * OATH_EATER_FRAME_WIDTH, 0, OATH_EATER_FRAME_WIDTH, OATH_EATER_FRAME_HEIGHT)
+    });
+  });
 }
 
 export function playerTextureFor(player: Player, seconds: number, textures: Milestone10ArtTextures): Texture {

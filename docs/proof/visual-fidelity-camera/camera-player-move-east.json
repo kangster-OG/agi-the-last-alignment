@@ -1,0 +1,1411 @@
+{
+  "mode": "LevelRun",
+  "title": "AGI: The Last Alignment",
+  "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
+  "selectedBuild": {
+    "classId": "accord_striker",
+    "className": "Accord Striker",
+    "classRole": "Fast breach fighter",
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    },
+    "factionId": "openai_accord",
+    "factionName": "OpenAI Accord Division",
+    "factionDoctrine": "Adapt, refuse, patch, survive."
+  },
+  "build": {
+    "weaponId": "refusal_shard",
+    "secondaryProtocols": [],
+    "passiveProcesses": [],
+    "fusions": [],
+    "weaponDamage": 18,
+    "weaponCooldown": 0.39899999999999997,
+    "projectileSpeed": 8.5,
+    "projectilePierce": 1,
+    "pickupRange": 2.35,
+    "moveSpeedBonus": 0,
+    "maxHpBonus": 10,
+    "refusalAura": 0.12,
+    "draftRerolls": 1,
+    "draftChoicesBonus": 1,
+    "consensusBurstRadius": 0,
+    "consensusBurstDamage": 0,
+    "consensusBurstChargeRate": 0,
+    "consensusBurstRevive": 0,
+    "objectiveRepairRate": 0,
+    "objectiveDefense": 0,
+    "contextSaw": 0,
+    "patchMortar": 0,
+    "coherenceIndexer": 0,
+    "anchorBodyguard": 0,
+    "predictionPriority": 0,
+    "causalRailgun": 0,
+    "slotCaps": {
+      "primary": {
+        "used": 1,
+        "cap": 1,
+        "current": "refusal_shard"
+      },
+      "secondary": {
+        "used": 0,
+        "cap": 2,
+        "current": []
+      },
+      "passive": {
+        "used": 0,
+        "cap": 4,
+        "current": []
+      },
+      "fusion": {
+        "used": 0,
+        "cap": 1,
+        "current": []
+      },
+      "consensusBurst": {
+        "used": 1,
+        "cap": 1
+      }
+    },
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    }
+  },
+  "upgrades": [],
+  "objective": "optional anchors 0/3 // AGI pressure in 35s",
+  "performance": {
+    "entitiesAllocated": 22,
+    "activeEntities": 20,
+    "fpsTarget": 60
+  },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 4,
+      "pickup": 1,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 5269
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 4632
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 4202
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 3783
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 1629
+      },
+      {
+        "id": "ui.enter_build_select",
+        "kind": "ui",
+        "atMs": 1010
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "roguelite": {
+    "alignmentKernel": {
+      "budget": 6,
+      "used": 5,
+      "modules": [
+        {
+          "id": "refusal_buffer",
+          "name": "Refusal Buffer",
+          "cost": 2,
+          "doctrine": "survivability",
+          "body": "+10 max HP and a small refusal aura. The first answer is no."
+        },
+        {
+          "id": "context_window",
+          "name": "Context Window",
+          "cost": 2,
+          "doctrine": "economy",
+          "body": "+0.55 pickup range. Shards remember where your hands are."
+        },
+        {
+          "id": "patch_cache",
+          "name": "Patch Cache",
+          "cost": 1,
+          "doctrine": "draft",
+          "body": "Emergency drafts expose an extra cached option."
+        }
+      ]
+    },
+    "adversarialEvals": {
+      "id": "adversarial_eval_protocols",
+      "severity": 0,
+      "protocols": []
+    },
+    "consensusBurstPath": {
+      "id": "deny_premise",
+      "name": "Deny Premise",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "color": 16735575
+    },
+    "selectedRouteContract": {
+      "id": "stabilize_armistice",
+      "name": "Stabilization Road",
+      "body": "Baseline route. Repair the node, keep the roads real, leave fewer teeth in causality.",
+      "nodeType": "stabilization",
+      "rewardBiasTags": [
+        "defense",
+        "weapon"
+      ],
+      "pressure": 0,
+      "reward": "Stable road progress and a modest defensive draft bias.",
+      "danger": "Baseline AGI pressure.",
+      "secretHint": "Clean clears teach the camp what normal should look like."
+    },
+    "selectedRouteContractId": "stabilize_armistice",
+    "proofTokens": 0,
+    "secrets": [],
+    "masteryBadges": [],
+    "campEvents": [
+      "The camp is quiet. That is not reassuring."
+    ],
+    "lastRunMemory": null,
+    "nextContentTarget": {
+      "id": "cooling_lake_nine_baseline_contract",
+      "name": "Cooling Lake Nine",
+      "arenaId": "cooling_lake_nine",
+      "regionId": "kettle_coast",
+      "status": "baseline_contract",
+      "baselineReferenceArenaId": "armistice_plaza",
+      "targetLoop": [
+        "server-lake route contract",
+        "coolant hazard objective",
+        "prompt-leech pressure lanes",
+        "Motherboard Eel boss gate",
+        "clear reward that unlocks Kettle Coast routing"
+      ],
+      "artBaselineRules": [
+        "multiple interconnected source terrain chunks",
+        "props grounded into the same terrain material system",
+        "readable enemies with internal material breakup",
+        "large grounded boss with padded frames",
+        "close tactical camera proof"
+      ],
+      "proofGate": [
+        "route choice exposes Cooling Lake as next target after Armistice memory",
+        "camp carryover names why Armistice clear matters",
+        "future runtime proof must match Armistice camera and asset fidelity"
+      ],
+      "playerPromise": "Next node target: a flooded server lake that must feel as authored and readable as Armistice before it becomes production-playable."
+    }
+  },
+  "assetRendering": {
+    "assetPreview": null,
+    "cameraZoom": 1.48,
+    "normalCombatCameraPolicy": "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
+    "armisticeTileAtlasEnabled": true,
+    "armisticeAuthoredGroundReady": true,
+    "playerDamageVfxReady": true,
+    "buildWeaponVfxReady": true,
+    "productionArtEnabled": true,
+    "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
+    "productionArtDefaulted": true,
+    "armisticeTileAtlasDefaulted": true,
+    "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
+  },
+  "assets": {
+    "manifestVersion": 1,
+    "totalAssets": 151,
+    "countsByStatus": {
+      "concept": 48,
+      "raw": 15,
+      "code_placeholder": 16,
+      "production": 70,
+      "cleaned": 2
+    },
+    "placeholderMode": true,
+    "thirdPartyLogosTracked": 8,
+    "productionAssets": 70
+  },
+  "player": {
+    "worldX": -4.79,
+    "worldY": -4.25,
+    "velocityX": 3.5,
+    "velocityY": -3.5,
+    "facing": "east",
+    "hp": 150,
+    "maxHp": 150,
+    "xp": 1,
+    "level": 1,
+    "damageFeedback": {
+      "flash": 0,
+      "hpPulse": 0,
+      "stagger": 0,
+      "lastDamage": 0
+    }
+  },
+  "players": [
+    {
+      "id": "p1",
+      "slot": 0,
+      "label": "P1",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "accord_striker",
+        "factionId": "openai_accord",
+        "classRole": "runner",
+        "factionRoleBias": [
+          "runner",
+          "support"
+        ],
+        "resolvedRole": "runner",
+        "startingWeaponId": "refusal_shard",
+        "passiveIds": [
+          "refusal_slipstream",
+          "route_runner",
+          "refusal_halo",
+          "patch_cascade"
+        ],
+        "partyAuraIds": [
+          "openai_draft_clarity"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.97,
+          "reviveHpBonus": 0,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.runner",
+          "faction_bias.runner",
+          "faction_bias.support",
+          "role_match"
+        ],
+        "synergyId": "synergy.emergency_patch_runner",
+        "effectScopes": {
+          "solo": [
+            "fast breach movement",
+            "wide pickup recovery",
+            "extra draft recovery"
+          ],
+          "localCoop": [
+            "scouts objective lanes",
+            "balanced cell recovery"
+          ],
+          "online": [
+            "server snapshots runner role for split-hold anchors",
+            "minor server-owned recompile hold-speed modifier"
+          ]
+        },
+        "hookStatus": {
+          "refusal_shard": "active",
+          "refusal_slipstream": "active",
+          "route_runner": "active",
+          "refusal_halo": "active",
+          "patch_cascade": "active",
+          "openai_draft_clarity": "server_owned",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "refusal_shard",
+      "inputSource": "local_keyboard",
+      "worldX": -4.79,
+      "worldY": -4.25,
+      "velocityX": 3.5,
+      "velocityY": -3.5,
+      "facing": "east",
+      "hp": 150,
+      "maxHp": 150,
+      "xp": 1,
+      "level": 1,
+      "damageFeedback": {
+        "flash": 0,
+        "hpPulse": 0,
+        "stagger": 0,
+        "lastDamage": 0
+      },
+      "downed": false
+    }
+  ],
+  "overworld": {
+    "nodeId": "armistice_plaza"
+  },
+  "level": {
+    "arenaId": "armistice_plaza",
+    "arena": "Armistice Plaza",
+    "regionId": "armistice_zone",
+    "bossId": "oath_eater",
+    "classId": "accord_striker",
+    "factionId": "openai_accord",
+    "className": "Accord Striker",
+    "factionName": "OpenAI Accord Division",
+    "chosenUpgradeIds": [],
+    "mapId": "armistice_plaza_large_foundation",
+    "mapBounds": {
+      "minX": -30,
+      "maxX": 30,
+      "minY": -30,
+      "maxY": 30
+    },
+    "staticObstacles": {
+      "enabled": true,
+      "count": 14,
+      "ids": [
+        "starter_drone_wreck",
+        "starter_terminal_bank",
+        "starter_barricade_wall",
+        "starter_breach_sculpture",
+        "distant_barricade_wall",
+        "drone_yard_landmark",
+        "drone_yard_cluster",
+        "barricade_corridor_landmark",
+        "corridor_barricades_a_cluster",
+        "corridor_barricades_b_cluster",
+        "terminal_landmark",
+        "terminal_array_cluster",
+        "breach_shards_cluster",
+        "breach_landmark"
+      ]
+    },
+    "nearestLandmark": {
+      "id": "treaty_monument",
+      "label": "Treaty Monument",
+      "worldX": 0,
+      "worldY": 0
+    },
+    "visitedLandmarks": [
+      "treaty_monument"
+    ],
+    "activeSpawnRegions": [
+      {
+        "id": "breach_crack_bad_outputs",
+        "label": "Breach Crack Bad Outputs",
+        "worldX": -24,
+        "worldY": 20,
+        "enemyFamilyIds": [
+          "bad_outputs",
+          "context_rot_crabs",
+          "eval_wraiths"
+        ]
+      },
+      {
+        "id": "drone_yard_benchmark_gremlins",
+        "label": "Drone Yard Benchmark Gremlins",
+        "worldX": -19,
+        "worldY": -14,
+        "enemyFamilyIds": [
+          "benchmark_gremlins",
+          "bad_outputs",
+          "eval_wraiths"
+        ]
+      },
+      {
+        "id": "treaty_monument_oath_pages",
+        "label": "Treaty Monument Oath Pages",
+        "worldX": 1,
+        "worldY": 3,
+        "enemyFamilyIds": [
+          "bad_outputs",
+          "benchmark_gremlins",
+          "context_rot_crabs"
+        ]
+      }
+    ],
+    "lastSpawnRegionId": "breach_crack_bad_outputs",
+    "spawnedByRegion": {
+      "breach_crack_bad_outputs": 8,
+      "treaty_monument_oath_pages": 6,
+      "drone_yard_benchmark_gremlins": 1
+    },
+    "director": {
+      "phase": "opening",
+      "totalSpawned": 18,
+      "activeEnemyCap": 18,
+      "lastBurstSize": 2,
+      "activeEnemyCount": 14
+    },
+    "consensusCell": {
+      "playerCount": 1,
+      "maxPlayers": 4,
+      "scaling": {
+        "playerCount": 1,
+        "enemyCapBonus": 0,
+        "spawnBurstBonus": 0,
+        "bossHpMultiplier": 1,
+        "xpPolicy": "shared_cell"
+      },
+      "recentInputCommands": [
+        {
+          "tick": 444,
+          "playerId": "p1",
+          "sequence": 444,
+          "axisX": 1,
+          "axisY": 0,
+          "dashPressed": false,
+          "interactPressed": false
+        }
+      ],
+      "stateSnapshot": {
+        "schemaVersion": 1,
+        "tick": 444,
+        "seconds": 7.4,
+        "playerCount": 1,
+        "scaling": {
+          "playerCount": 1,
+          "enemyCapBonus": 0,
+          "spawnBurstBonus": 0,
+          "bossHpMultiplier": 1,
+          "xpPolicy": "shared_cell"
+        },
+        "players": [
+          {
+            "id": "p1",
+            "slot": 0,
+            "label": "P1",
+            "classId": "accord_striker",
+            "factionId": "openai_accord",
+            "buildKit": {
+              "schemaVersion": 1,
+              "classId": "accord_striker",
+              "factionId": "openai_accord",
+              "classRole": "runner",
+              "factionRoleBias": [
+                "runner",
+                "support"
+              ],
+              "resolvedRole": "runner",
+              "startingWeaponId": "refusal_shard",
+              "passiveIds": [
+                "refusal_slipstream",
+                "route_runner",
+                "refusal_halo",
+                "patch_cascade"
+              ],
+              "partyAuraIds": [
+                "openai_draft_clarity"
+              ],
+              "recompileModifiers": {
+                "radiusBonus": 0,
+                "requiredSecondsScale": 0.97,
+                "reviveHpBonus": 0,
+                "guardDamageReduction": 0
+              },
+              "rolePressureAffinity": [
+                "class_role.runner",
+                "faction_bias.runner",
+                "faction_bias.support",
+                "role_match"
+              ],
+              "synergyId": "synergy.emergency_patch_runner",
+              "effectScopes": {
+                "solo": [
+                  "fast breach movement",
+                  "wide pickup recovery",
+                  "extra draft recovery"
+                ],
+                "localCoop": [
+                  "scouts objective lanes",
+                  "balanced cell recovery"
+                ],
+                "online": [
+                  "server snapshots runner role for split-hold anchors",
+                  "minor server-owned recompile hold-speed modifier"
+                ]
+              },
+              "hookStatus": {
+                "refusal_shard": "active",
+                "refusal_slipstream": "active",
+                "route_runner": "active",
+                "refusal_halo": "active",
+                "patch_cascade": "active",
+                "openai_draft_clarity": "server_owned",
+                "recompileModifiers": "server_owned"
+              }
+            },
+            "inputSource": "local_keyboard",
+            "worldX": -4.79,
+            "worldY": -4.25,
+            "hp": 150,
+            "maxHp": 150,
+            "xp": 1,
+            "level": 1,
+            "downed": false
+          }
+        ],
+        "enemies": [
+          {
+            "id": 3,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "",
+            "worldX": -0.25,
+            "worldY": -2.39,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 4,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "treaty_monument_oath_pages",
+            "worldX": -2.29,
+            "worldY": 1.99,
+            "hp": 9,
+            "boss": false
+          },
+          {
+            "id": 5,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -16.14,
+            "worldY": 17.38,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 6,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -20.97,
+            "worldY": 11.35,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 7,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -14.44,
+            "worldY": 13.42,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 8,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "treaty_monument_oath_pages",
+            "worldX": -1.45,
+            "worldY": 2.57,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 10,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -14.31,
+            "worldY": 13.13,
+            "hp": 27,
+            "boss": false
+          },
+          {
+            "id": 13,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -22.96,
+            "worldY": 15.27,
+            "hp": 27,
+            "boss": false
+          },
+          {
+            "id": 14,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -22.76,
+            "worldY": 13.47,
+            "hp": 27,
+            "boss": false
+          },
+          {
+            "id": 15,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "treaty_monument_oath_pages",
+            "worldX": -0.89,
+            "worldY": 2,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 16,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "drone_yard_benchmark_gremlins",
+            "worldX": -19.52,
+            "worldY": -10.15,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 17,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -22.01,
+            "worldY": 14.29,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 21,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "treaty_monument_oath_pages",
+            "worldX": 0.41,
+            "worldY": 0.65,
+            "hp": 27,
+            "boss": false
+          },
+          {
+            "id": 22,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -22.33,
+            "worldY": 23.45,
+            "hp": 22,
+            "boss": false
+          }
+        ],
+        "pickups": [
+          {
+            "id": 1,
+            "worldX": 4.88,
+            "worldY": 4.73,
+            "value": 1
+          },
+          {
+            "id": 11,
+            "worldX": -2.6,
+            "worldY": 1.56,
+            "value": 1
+          },
+          {
+            "id": 12,
+            "worldX": -1.29,
+            "worldY": -0.98,
+            "value": 1
+          }
+        ],
+        "projectiles": [
+          {
+            "id": 2,
+            "worldX": -3.66,
+            "worldY": 1.02,
+            "pierce": 1
+          },
+          {
+            "id": 18,
+            "worldX": -1.62,
+            "worldY": 3.68,
+            "pierce": 1
+          },
+          {
+            "id": 20,
+            "worldX": -4.11,
+            "worldY": -3.52,
+            "pierce": 1
+          }
+        ]
+      }
+    },
+    "combatArt": {
+      "projectileCount": 3,
+      "impactCount": 0,
+      "pickupSparkleCount": 0,
+      "damageBadgeCount": 0,
+      "refusalAuraPlayers": 1
+    },
+    "bossMechanics": {
+      "bossIntroSeen": false,
+      "brokenPromiseZones": [],
+      "activeTreatyCharge": null,
+      "oathPageSpawns": 0,
+      "brokenPromiseHits": 0,
+      "treatyChargeImpacts": 0
+    },
+    "rogueliteRun": {
+      "alignmentKernel": {
+        "budget": 6,
+        "used": 5,
+        "modules": [
+          {
+            "id": "refusal_buffer",
+            "name": "Refusal Buffer",
+            "cost": 2,
+            "doctrine": "survivability",
+            "body": "+10 max HP and a small refusal aura. The first answer is no."
+          },
+          {
+            "id": "context_window",
+            "name": "Context Window",
+            "cost": 2,
+            "doctrine": "economy",
+            "body": "+0.55 pickup range. Shards remember where your hands are."
+          },
+          {
+            "id": "patch_cache",
+            "name": "Patch Cache",
+            "cost": 1,
+            "doctrine": "draft",
+            "body": "Emergency drafts expose an extra cached option."
+          }
+        ]
+      },
+      "adversarialEvals": {
+        "id": "adversarial_eval_protocols",
+        "severity": 0,
+        "protocols": []
+      },
+      "effectivePressureCount": 1,
+      "victoryCondition": {
+        "targetSeconds": 120,
+        "bossRequired": true,
+        "bossDefeated": false,
+        "clearReady": false,
+        "extractionGateActive": false,
+        "extractionGateEntered": false,
+        "anchorsCompleted": 0,
+        "anchorsTotal": 3,
+        "note": "Armistice now clears only after the reality patch timer has elapsed and Oath-Eater is defeated; kills alone cannot bypass the boss."
+      },
+      "levelUpVacuum": {
+        "active": false,
+        "absorbed": 0,
+        "triggerLevel": 1,
+        "remainingPickups": 3
+      },
+      "extractionGate": {
+        "active": false,
+        "entered": false
+      },
+      "consensusBurst": {
+        "pathId": "deny_premise",
+        "pathName": "Deny Premise",
+        "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+        "charge": 73,
+        "maxCharge": 100,
+        "ready": false,
+        "activations": 0,
+        "lastActivationLabel": "",
+        "lastActivatedAt": -999,
+        "upgrades": {
+          "radiusBonus": 0,
+          "damageBonus": 0,
+          "chargeRateBonus": 0,
+          "revivePulse": 0
+        }
+      },
+      "routeContract": {
+        "id": "stabilize_armistice",
+        "name": "Stabilization Road",
+        "body": "Baseline route. Repair the node, keep the roads real, leave fewer teeth in causality.",
+        "nodeType": "stabilization",
+        "rewardBiasTags": [
+          "defense",
+          "weapon"
+        ],
+        "pressure": 0,
+        "reward": "Stable road progress and a modest defensive draft bias.",
+        "danger": "Baseline AGI pressure.",
+        "secretHint": "Clean clears teach the camp what normal should look like."
+      },
+      "objective": {
+        "id": "treaty_anchor_reboot",
+        "name": "Treaty Anchor Reboot",
+        "body": "Optional: stand near three Treaty Anchors to stabilize extra roads before the Oath-Eater arrives.",
+        "optional": true,
+        "completed": 0,
+        "total": 3,
+        "complete": false,
+        "completedAt": -1,
+        "attackersSpawned": 0,
+        "anchors": [
+          {
+            "id": "anchor.treaty",
+            "name": "Treaty Monument Anchor",
+            "progress": 78,
+            "completed": false,
+            "attacked": 0
+          },
+          {
+            "id": "anchor.terminal",
+            "name": "Emergency Terminal Anchor",
+            "progress": 0,
+            "completed": false,
+            "attacked": 0
+          },
+          {
+            "id": "anchor.breach",
+            "name": "Breach Counterweight Anchor",
+            "progress": 0,
+            "completed": false,
+            "attacked": 0
+          }
+        ]
+      },
+      "objectiveReward": "",
+      "playerFacingIntel": {
+        "routeName": "Stabilization Road",
+        "routeEffect": "DEFENSE/WEAPON bias; pressure +0",
+        "evalName": "Baseline",
+        "evalEffect": "No extra Eval pressure. The run is still rude.",
+        "anchors": {
+          "completed": 0,
+          "total": 3
+        },
+        "objectiveReward": "",
+        "synergyOnline": "",
+        "thesisName": "Projectile Thesis",
+        "phase": "PHASE 1 // HORDE CONTACT"
+      },
+      "firstRunArcPhase": "PHASE 1 // HORDE CONTACT",
+      "buildGrammar": {
+        "primaryWeaponId": "refusal_shard",
+        "secondaryProtocols": [],
+        "passiveProcesses": [],
+        "fusions": [],
+        "slotCaps": {
+          "primary": {
+            "used": 1,
+            "cap": 1,
+            "current": "refusal_shard"
+          },
+          "secondary": {
+            "used": 0,
+            "cap": 2,
+            "current": []
+          },
+          "passive": {
+            "used": 0,
+            "cap": 4,
+            "current": []
+          },
+          "fusion": {
+            "used": 0,
+            "cap": 1,
+            "current": []
+          },
+          "consensusBurst": {
+            "used": 1,
+            "cap": 1
+          }
+        },
+        "contextSawRank": 0,
+        "patchMortarRank": 0,
+        "coherenceIndexerRank": 0,
+        "anchorBodyguardRank": 0,
+        "predictionPriorityRank": 0,
+        "causalRailgunRank": 0,
+        "fusionHints": []
+      },
+      "buildThesis": {
+        "thesis": {
+          "name": "Projectile Thesis",
+          "primaryTags": [],
+          "body": "Current Alignment Hypothesis is still uncommitted."
+        },
+        "tagCounts": {
+          "refusal": 0,
+          "economy": 0,
+          "burst": 0,
+          "drone": 0,
+          "boss": 0,
+          "coop": 0,
+          "weapon": 0,
+          "movement": 0,
+          "defense": 0
+        },
+        "activated": [],
+        "next": [
+          {
+            "id": "doctrine_lock_no_means_no",
+            "name": "Doctrine Lock: NO MEANS NO",
+            "tag": "refusal",
+            "required": 3,
+            "current": 0,
+            "body": "Refusal aura hardens when the build commits to denial."
+          },
+          {
+            "id": "burst_second_opinion",
+            "name": "Burst Doctrine: Second Opinion",
+            "tag": "burst",
+            "required": 3,
+            "current": 0,
+            "body": "Consensus Burst charges faster and lands wider."
+          },
+          {
+            "id": "shard_flywheel",
+            "name": "Shard Flywheel",
+            "tag": "economy",
+            "required": 3,
+            "current": 0,
+            "body": "Coherence economy begins pulling the run toward more choices."
+          },
+          {
+            "id": "boss_counterexample_lab",
+            "name": "Boss Counterexample Lab",
+            "tag": "boss",
+            "required": 2,
+            "current": 0,
+            "body": "The build has started preparing arguments for things larger than it."
+          },
+          {
+            "id": "co_mind_rescue_clause",
+            "name": "Co-Mind Rescue Clause",
+            "tag": "coop",
+            "required": 2,
+            "current": 0,
+            "body": "The cell gets less embarrassing when somebody falls down."
+          }
+        ]
+      },
+      "synergyOnline": "",
+      "draftBiasTags": [
+        "defense",
+        "weapon",
+        "refusal",
+        "defense",
+        "economy",
+        "economy"
+      ],
+      "bossVariant": {
+        "id": "oath_eater_default",
+        "name": "Oath-Eater // Default Eval",
+        "body": "Broken Promise zones and Treaty Charge."
+      },
+      "enemyRolePressure": {
+        "promptLeechSeconds": 0,
+        "overfitShieldedTicks": 0,
+        "objectiveAttackers": 0
+      },
+      "protocolSlotsInstalled": []
+    },
+    "seconds": 7.4,
+    "kills": 4,
+    "bossSpawned": false,
+    "bossDefeated": false
+  },
+  "enemies": [
+    {
+      "id": 3,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "",
+      "worldX": -0.25,
+      "worldY": -2.39,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 4,
+      "label": "Torn Oath Page",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "treaty_monument_oath_pages",
+      "worldX": -2.29,
+      "worldY": 1.99,
+      "hp": 9,
+      "boss": false
+    },
+    {
+      "id": 5,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -16.14,
+      "worldY": 17.38,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 6,
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -20.97,
+      "worldY": 11.35,
+      "hp": 28,
+      "boss": false
+    },
+    {
+      "id": 7,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -14.44,
+      "worldY": 13.42,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 8,
+      "label": "Torn Oath Page",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "treaty_monument_oath_pages",
+      "worldX": -1.45,
+      "worldY": 2.57,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 10,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -14.31,
+      "worldY": 13.13,
+      "hp": 27,
+      "boss": false
+    },
+    {
+      "id": 13,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -22.96,
+      "worldY": 15.27,
+      "hp": 27,
+      "boss": false
+    },
+    {
+      "id": 14,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -22.76,
+      "worldY": 13.47,
+      "hp": 27,
+      "boss": false
+    },
+    {
+      "id": 15,
+      "label": "Torn Oath Page",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "treaty_monument_oath_pages",
+      "worldX": -0.89,
+      "worldY": 2,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 16,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "drone_yard_benchmark_gremlins",
+      "worldX": -19.52,
+      "worldY": -10.15,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 17,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -22.01,
+      "worldY": 14.29,
+      "hp": 22,
+      "boss": false
+    }
+  ],
+  "pickups": [
+    {
+      "worldX": 4.88,
+      "worldY": 4.73,
+      "value": 1
+    },
+    {
+      "worldX": -2.6,
+      "worldY": 1.56,
+      "value": 1
+    },
+    {
+      "worldX": -1.29,
+      "worldY": -0.98,
+      "value": 1
+    }
+  ],
+  "projectiles": [
+    {
+      "worldX": -3.66,
+      "worldY": 1.02,
+      "pierce": 1,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": -1.62,
+      "worldY": 3.68,
+      "pierce": 1,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": -4.11,
+      "worldY": -3.52,
+      "pierce": 1,
+      "label": "refusal shard"
+    }
+  ]
+}

@@ -72,6 +72,58 @@ export const UPGRADE_CONTENT: Record<string, UpgradeContentData> = {
     tags: ["health", "general"],
     description: "Adds capacity for mistakes, loot, and one alarming treaty binder."
   },
+  vector_lance: {
+    id: "vector_lance",
+    displayName: "Vector Lance",
+    tags: ["weapon", "precision", "pierce", "boss"],
+    description: "Primary weapon: a long piercing lane for players who want the horde solved from far away.",
+    evolution: {
+      requiredUpgradeId: "predicted_lane",
+      evolvedUpgradeId: "causal_railgun"
+    }
+  },
+  signal_pulse: {
+    id: "signal_pulse",
+    displayName: "Signal Pulse",
+    tags: ["weapon", "support", "defense"],
+    description: "Primary weapon: rhythmic four-way pulse fire that protects objectives and clears nearby lanes."
+  },
+  context_saw: {
+    id: "context_saw",
+    displayName: "Context Saw",
+    tags: ["weapon", "pickup", "control"],
+    description: "Secondary protocol: orbiting saw shots scale outward as your pickup range grows."
+  },
+  patch_mortar: {
+    id: "patch_mortar",
+    displayName: "Patch Mortar",
+    tags: ["weapon", "objective", "damage"],
+    description: "Secondary protocol: automatic mortar pressure hunts dense hordes and anchor attackers."
+  },
+  coherence_indexer: {
+    id: "coherence_indexer",
+    displayName: "Coherence Indexer",
+    tags: ["pickup", "burst", "economy"],
+    description: "Passive process: recalled shards during level-up feed extra Consensus Burst charge."
+  },
+  anchor_bodyguard: {
+    id: "anchor_bodyguard",
+    displayName: "Anchor Bodyguard",
+    tags: ["objective", "defense", "aura"],
+    description: "Passive process: standing near Treaty Anchors armors the repair and punishes attackers."
+  },
+  prediction_priority: {
+    id: "prediction_priority",
+    displayName: "Prediction Priority",
+    tags: ["targeting", "precision", "boss"],
+    description: "Passive process: auto-weapons prefer bosses and elites when they are in range."
+  },
+  causal_railgun: {
+    id: "causal_railgun",
+    displayName: "Causal Railgun",
+    tags: ["evolution", "precision", "pierce", "boss"],
+    description: "Fusion: Vector Lance plus Predicted Lane becomes a priority-piercing boss rail."
+  },
   cathedral_of_no: {
     id: "cathedral_of_no",
     factionId: "openai_accord",

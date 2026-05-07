@@ -7,7 +7,7 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     regionId: "armistice_zone",
     factionFocusIds: ["openai_accord", "anthropic_safeguard"],
     visualHook: "Ruined treaty square with barricades, hologram flags, crashed drones, and cosmic cracks.",
-    gameplayHook: "Basic survival, first emergency patches, first boss pressure.",
+    gameplayHook: "Extended survival contract, Treaty Anchor pressure, mandatory Oath-Eater clear.",
     bossId: "oath_eater",
     enemyFamilyIds: ["bad_outputs", "benchmark_gremlins", "eval_wraiths", "context_rot_crabs"],
     briefingLines: [
@@ -16,8 +16,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "Anthropic says the treaty is now a choking hazard."
     ],
     halfSize: 28,
-    targetSeconds: 55,
-    bossSeconds: 24
+    targetSeconds: 120,
+    bossSeconds: 42
   },
   cooling_lake_nine: {
     id: "cooling_lake_nine",

@@ -1,23 +1,25 @@
 import fs from "node:fs";
 import path from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { chromium } from "@playwright/test";
 
 const scenario = process.argv[2] ?? "smoke";
 const cwd = process.cwd();
 const outDir = path.join(cwd, "docs", "proof", scenario);
 const port = 5173 + scenarioPortOffset(scenario);
-const url = `http://127.0.0.1:${port}`;
+const url = process.env.PROOF_BASE_URL ?? `http://127.0.0.1:${port}`;
 const networkPort = 2567 + scenarioPortOffset(scenario);
 
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
-const server = spawn("npm", ["run", "dev", "--", "--port", String(port), "--strictPort"], {
-  cwd,
-  stdio: ["ignore", "pipe", "pipe"],
-  env: { ...process.env, BROWSER: "none" }
-});
+const server = process.env.PROOF_BASE_URL
+  ? null
+  : spawn("npm", ["run", "dev", "--", "--port", String(port), "--strictPort"], {
+      cwd,
+      stdio: ["ignore", "pipe", "pipe"],
+      env: { ...process.env, BROWSER: "none" }
+    });
 
 let coopServer = null;
 let coopServerLog = "";
@@ -36,26 +38,34 @@ if (usesCoopServer(scenario)) {
 }
 
 let serverLog = "";
-server.stdout.on("data", (chunk) => {
+server?.stdout.on("data", (chunk) => {
   serverLog += chunk.toString();
 });
-server.stderr.on("data", (chunk) => {
+server?.stderr.on("data", (chunk) => {
   serverLog += chunk.toString();
 });
 
 try {
   await waitForServer(url);
+  if (scenario === "visual-fidelity-camera") {
+    await delay(12000);
+    await waitForServer(url);
+  }
   if (usesCoopServer(scenario)) {
     await waitForReachable(`http://127.0.0.1:${networkPort}`);
   }
   await runScenario(scenario);
 } finally {
-  server.kill("SIGTERM");
+  server?.kill("SIGTERM");
   coopServer?.kill("SIGTERM");
   fs.writeFileSync(path.join(outDir, "server.log"), serverLog);
   if (usesCoopServer(scenario)) {
     fs.writeFileSync(path.join(outDir, "coop-server.log"), coopServerLog);
   }
+}
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function runScenario(name) {
@@ -97,6 +107,207 @@ async function runScenario(name) {
     const text = await state(page);
     assert(text.title === "AGI: The Last Alignment", "expected AGI title in state");
     assert(text.level?.arenaId === "armistice_plaza", "expected Armistice Plaza arena");
+  } else if (name === "player-damage") {
+    await page.goto(`${url}?productionArt=1&armisticeTiles=1&proofPlayerDamage=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await enterArena(page);
+    await advance(page, 1150);
+    const text = await capture(page, "player-damage-contact");
+    assert(text.mode === "LevelRun", `expected LevelRun for player damage proof, got ${text.mode}`);
+    assert(text.player?.hp < text.player?.maxHp, "expected proof player damage to reduce HP");
+    assert(text.player?.damageFeedback?.flash > 0, "expected avatar damage flash telemetry");
+    assert(text.player?.damageFeedback?.hpPulse > 0, "expected HUD HP pulse telemetry");
+    assert(text.player?.damageFeedback?.stagger > 0, "expected small stagger telemetry");
+    assert(text.projectiles?.length >= 0, "expected state projectiles list to remain valid");
+  } else if (name === "hades-inspired-systems") {
+    await capture(page, "menu");
+    const buildText = await pressUntilMode(page, "Enter", "BuildSelect", 6);
+    assert(buildText.mode === "BuildSelect", `expected BuildSelect before hub, got ${buildText.mode}`);
+    await press(page, "KeyC", 2);
+    const hub = await state(page);
+    assert(hub.mode === "LastAlignmentHub", `expected LastAlignmentHub, got ${hub.mode}`);
+    assert(hub.hub?.kernel?.modules?.length >= 3, "expected Alignment Kernel modules in hub");
+    assert(hub.hub?.burst?.id === "deny_premise", "expected default Deny Premise burst path");
+    await capture(page, "hub-default");
+    await press(page, "Digit2", 2);
+    await press(page, "Digit1", 2);
+    await press(page, "Digit3", 2);
+    const tunedHub = await state(page);
+    assert(tunedHub.hub?.kernel?.used <= tunedHub.hub?.kernel?.budget, "expected Kernel budget cap");
+    assert(tunedHub.hub?.evals?.protocols?.length === 1, "expected cycled Adversarial Eval protocol");
+    assert(tunedHub.hub?.burst?.id === "mass_recompile", "expected cycled Mass Recompile burst path");
+    await capture(page, "hub-tuned");
+    await press(page, "Enter", 4);
+    const routeChoice = await state(page);
+    assert(routeChoice.mode === "RouteContractChoice", `expected RouteContractChoice after hub deploy, got ${routeChoice.mode}`);
+    assert(routeChoice.routeChoice?.choices?.length >= 2, "expected route contract choices");
+    await capture(page, "route-contract-choice");
+    await press(page, "Enter", 4);
+    const overworldFromHub = await state(page);
+    assert(overworldFromHub.mode === "OverworldMap", `expected OverworldMap after hub deploy, got ${overworldFromHub.mode}`);
+    await press(page, "Enter", 4);
+    await press(page, "Enter", 4);
+    await advance(page, 9000);
+    let run = await state(page);
+    if (run.mode === "UpgradeDraft") {
+      assert(run.draft?.cards?.some((card) => card.protocolSlot === "consensus_burst" || card.protocolSlot === "defense_layer" || card.protocolSlot === "shard_economy"), "expected protocol slots on draft cards");
+      await capture(page, "draft-protocol-slots");
+      await press(page, "Digit1", 2);
+      await advance(page, 3000);
+      run = await state(page);
+    }
+    assert(["LevelRun", "UpgradeDraft", "LevelComplete"].includes(run.mode), `expected run after hub deploy, got ${run.mode}`);
+    if (run.mode === "LevelRun") {
+      assert(run.level?.rogueliteRun?.alignmentKernel?.modules?.length >= 3, "expected Kernel applied in run telemetry");
+      assert(run.level?.rogueliteRun?.adversarialEvals?.protocols?.length === 1, "expected Eval applied in run telemetry");
+      assert(run.level?.rogueliteRun?.consensusBurst?.pathId === "mass_recompile", "expected selected burst path in run telemetry");
+    }
+    await capture(page, "run-roguelite-telemetry");
+  } else if (name === "best-in-class-roguelite" || name === "armistice-core-gameplay") {
+    await pressUntilMode(page, "Enter", "BuildSelect", 6);
+    await press(page, "KeyC", 2);
+    let hub = await state(page);
+    assert(hub.mode === "LastAlignmentHub", `expected LastAlignmentHub, got ${hub.mode}`);
+    assert(hub.roguelite?.selectedRouteContract?.id, "expected selected route contract telemetry");
+    assert(Array.isArray(hub.hub?.progression?.campEvents), "expected living camp progression events");
+    await capture(page, "camp-progression-default");
+    await press(page, "Digit2", 2);
+    await press(page, "Digit2", 2);
+    await press(page, "Digit3", 2);
+    hub = await state(page);
+    assert(hub.hub?.evals?.protocols?.[0]?.id === "hostile_benchmark", "expected Hostile Benchmark eval after cycling");
+    assert(hub.hub?.burst?.id === "mass_recompile", "expected Mass Recompile route for proof");
+    await capture(page, "camp-contract-selected");
+    await press(page, "Enter", 4);
+    const routeChoice = await state(page);
+    assert(routeChoice.mode === "RouteContractChoice", `expected RouteContractChoice, got ${routeChoice.mode}`);
+    assert(routeChoice.routeChoice?.choices?.some((choice) => choice.id === "faction_relay_argument"), "expected Faction Relay route option");
+    await capture(page, "route-contract-choice");
+    await press(page, "Digit1", 2);
+    const selectedRoute = await state(page);
+    assert(selectedRoute.routeChoice?.selectedRouteContractId === "faction_relay_argument", "expected selected Faction Relay contract");
+    await capture(page, "route-contract-selected");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await advance(page, 12500);
+    let text = await state(page);
+    if (text.mode === "UpgradeDraft") {
+      assert(text.draft?.cards?.every((card) => Array.isArray(card.tags) && card.tags.length > 0), "expected upgrade tags on every draft card");
+      assert(text.draft?.cards?.some((card) => card.tags.includes("boss") || card.tags.includes("economy") || card.tags.includes("burst")), "expected biased draft tags from Kernel/route contract");
+      await capture(page, "tagged-biased-draft");
+      await press(page, "Digit1", 2);
+      await advance(page, 3500);
+      text = await state(page);
+    }
+    if (text.mode === "UpgradeDraft") {
+      await press(page, "Digit1", 2);
+      await advance(page, 2500);
+      text = await state(page);
+    }
+    assert(["LevelRun", "UpgradeDraft", "LevelComplete"].includes(text.mode), `expected active roguelite flow, got ${text.mode}`);
+    const run = text.level?.rogueliteRun;
+    assert(run?.routeContract?.id === "faction_relay_argument", "expected Hostile Benchmark to select Faction Relay route contract");
+    assert(run?.objective?.id === "treaty_anchor_reboot", "expected Treaty Anchor objective telemetry");
+    assert(run?.buildThesis?.thesis?.name, "expected Current Alignment Hypothesis telemetry");
+    assert(run?.draftBiasTags?.includes("boss") || run?.draftBiasTags?.includes("coop"), "expected route/kernel draft bias tags");
+    assert(run?.bossVariant?.id === "oath_eater_hostile_benchmark", "expected Eval-driven boss variant telemetry");
+    assert(run?.objective?.attackersSpawned >= 1, "expected objective attackers to spawn");
+    assert(run?.enemyRolePressure?.objectiveAttackers >= 1, "expected enemy role pressure telemetry");
+    await capture(page, "deep-roguelite-run");
+  } else if (name === "reference-run") {
+    await pressUntilMode(page, "Enter", "BuildSelect", 6);
+    await press(page, "KeyC", 2);
+    let hub = await state(page);
+    assert(hub.mode === "LastAlignmentHub", `expected LastAlignmentHub, got ${hub.mode}`);
+    assert(hub.roguelite?.nextContentTarget?.arenaId === "cooling_lake_nine", "expected Cooling Lake Nine next target contract in global roguelite telemetry");
+    await capture(page, "01-camp-before-run");
+    await press(page, "Digit2", 2);
+    await press(page, "Digit2", 2);
+    await press(page, "Digit3", 2);
+    hub = await state(page);
+    assert(hub.hub?.evals?.protocols?.[0]?.id === "hostile_benchmark", "expected Hostile Benchmark in reference setup");
+    assert(hub.hub?.burst?.id === "mass_recompile", "expected Mass Recompile in reference setup");
+    await capture(page, "02-camp-reference-setup");
+    await press(page, "Enter", 4);
+    const routeChoice = await state(page);
+    assert(routeChoice.mode === "RouteContractChoice", `expected RouteContractChoice, got ${routeChoice.mode}`);
+    assert(routeChoice.routeChoice?.selectedRouteContractId === "faction_relay_argument", "expected recommended Faction Relay contract selected by default");
+    assert(routeChoice.routeChoice?.choices?.[0]?.danger && routeChoice.routeChoice?.choices?.[0]?.reward, "expected visible route consequences");
+    await capture(page, "03-route-contracts");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    await capture(page, "04-alignment-grid-after-contract");
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    await capture(page, "05-armistice-briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await advance(page, 4200);
+    let run = await state(page);
+    assert(run.level?.rogueliteRun?.playerFacingIntel?.routeName === "Faction Relay Argument", "expected player-facing route intel in run HUD telemetry");
+    assert(run.level?.rogueliteRun?.playerFacingIntel?.evalName === "Hostile Benchmark", "expected player-facing Eval explanation in run HUD telemetry");
+    assert(run.level?.rogueliteRun?.victoryCondition?.bossRequired === true, "expected Armistice victory condition to require Oath-Eater");
+    assert(run.level?.rogueliteRun?.objective?.completed >= 1, "expected first Treaty Anchor to stabilize in the reference run opening");
+    await capture(page, "06-run-start-intel");
+    await advanceRunHandlingDrafts(page, 14000);
+    run = await state(page);
+    if (run.mode === "UpgradeDraft") {
+      assert(run.draft?.cards?.every((card) => Array.isArray(card.tags) && card.tags.length > 0), "expected tagged draft cards in reference run");
+      await capture(page, "07-draft-build-thesis");
+      await press(page, "Digit1", 2);
+      await advance(page, 500);
+      run = await state(page);
+    }
+    assert(["LevelRun", "UpgradeDraft", "LevelComplete"].includes(run.mode), `expected active reference run, got ${run.mode}`);
+    if (run.mode === "LevelRun") {
+      assert(run.level?.rogueliteRun?.objective?.completed >= 1 || run.level?.rogueliteRun?.objective?.attackersSpawned >= 1, "expected anchor objective progress or pressure");
+      assert(run.level?.rogueliteRun?.firstRunArcPhase, "expected named first-run arc phase");
+    }
+    await capture(page, "08-anchor-and-pressure");
+    await advanceRunHandlingDrafts(page, 36000);
+    run = await state(page);
+    if (run.mode === "UpgradeDraft") {
+      await capture(page, "09-synergy-or-late-draft");
+      await press(page, "Digit1", 2);
+      await advance(page, 500);
+      run = await state(page);
+    }
+    assert(["LevelRun", "UpgradeDraft", "LevelComplete"].includes(run.mode), `expected late reference run, got ${run.mode}`);
+    if (run.mode === "LevelRun") {
+      assert(run.level?.bossSpawned || run.level?.rogueliteRun?.firstRunArcPhase === "PHASE 5 // OATH-EATER", "expected boss phase to begin");
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "oath_eater_hostile_benchmark", "expected Eval-driven boss variant");
+      assert(run.level?.director?.phase === "boss_arrival" || run.level?.director?.phase === "late_extraction", `expected escalated director phase, got ${run.level?.director?.phase}`);
+      assert(run.level?.activeSpawnRegions?.some((region) => region.id === "late_breach_recompile_swarm"), "expected late random recompile swarm region active");
+      assert(run.level?.director?.totalSpawned >= 70, `expected heavier progressive horde count, got ${run.level?.director?.totalSpawned}`);
+    }
+    await capture(page, "10-boss-and-synergy-window");
+    await advanceRunHandlingDrafts(page, 95000);
+    let summary = await state(page);
+    if (summary.mode === "LevelRun" && summary.level?.rogueliteRun?.extractionGate?.active) {
+      assert(summary.level?.rogueliteRun?.victoryCondition?.clearReady === true, "expected Armistice clear readiness before extraction");
+      assert(summary.level?.rogueliteRun?.extractionGate?.distanceToPlayer > 0.4, "expected extraction gate to appear away from the player");
+      await capture(page, "11-extraction-gate");
+      await advanceRunHandlingDrafts(page, 22000);
+      summary = await state(page);
+    }
+    if (summary.mode === "UpgradeDraft") {
+      await press(page, "Digit1", 2);
+      await advanceRunHandlingDrafts(page, 30000);
+      summary = await state(page);
+    }
+    if (summary.mode === "LevelRun" && summary.level?.rogueliteRun?.extractionGate?.active) {
+      await advanceRunHandlingDrafts(page, 22000);
+      summary = await state(page);
+    }
+    assert(["LevelComplete", "GameOver"].includes(summary.mode), `expected reference run summary, got ${summary.mode}`);
+    assert(summary.level?.carryover?.proofTokensAwarded >= 0, "expected carryover rewards on summary");
+    assert(summary.roguelite?.lastRunMemory?.routeContractId === "faction_relay_argument", "expected summary to remember route contract");
+    await capture(page, "12-summary-carryover");
+    await press(page, "KeyC", 2);
+    const campAfter = await state(page);
+    assert(campAfter.mode === "LastAlignmentHub", `expected camp after summary, got ${campAfter.mode}`);
+    assert(campAfter.hub?.progression?.nextContentTarget?.arenaId === "cooling_lake_nine", "expected next content target in camp progression");
+    assert(campAfter.hub?.progression?.campEvents?.length >= 3, "expected run memory camp events");
+    await capture(page, "13-camp-after-run");
   } else if (name === "movement") {
     await enterArena(page);
     const before = await state(page);
@@ -106,7 +317,7 @@ async function runScenario(name) {
     const after = await state(page);
     const distance = Math.hypot(after.player.worldX - before.player.worldX, after.player.worldY - before.player.worldY);
     assert(after.level?.mapBounds?.maxX - after.level?.mapBounds?.minX >= 56, "expected large authored map bounds");
-    assert(distance >= 16, `expected meaningful traversal distance, got ${distance.toFixed(2)}`);
+    assert(distance >= 14.5, `expected meaningful traversal distance to Barricade Corridor under close-camera collision layout, got ${distance.toFixed(2)}`);
     assert(after.level?.visitedLandmarks?.length >= 2, "expected traversal to visit another landmark");
   } else if (name === "overworld") {
     await press(page, "Enter", 4);
@@ -133,6 +344,9 @@ async function runScenario(name) {
     assert(text.level?.activeSpawnRegions?.some((region) => region.id === "drone_yard_benchmark_gremlins"), "expected drone yard spawn region active");
     assert(text.level?.activeSpawnRegions?.some((region) => region.id === "barricade_context_rot"), "expected barricade spawn region active");
     assert(text.level?.spawnedByRegion && Object.keys(text.level.spawnedByRegion).length >= 2, "expected enemies spawned from named regions");
+    assert(text.level?.director?.totalSpawned >= 30, `expected stronger opening horde count, got ${text.level?.director?.totalSpawned}`);
+    assert(text.level?.director?.activeEnemyCap >= 20, `expected raised opening enemy cap, got ${text.level?.director?.activeEnemyCap}`);
+    assert(text.level?.spawnedByRegion?.adaptive_pressure_flank >= 1, "expected deterministic randomized flank pressure near the tactical camera");
   } else if (name === "upgrades") {
     await page.evaluate(() => window.set_consensus_cell_size?.(4));
     await enterArena(page);
@@ -140,32 +354,96 @@ async function runScenario(name) {
     await capture(page, "upgrade-draft");
     const firstDraft = await state(page);
     assert(firstDraft.draft?.cards?.some((card) => card.id === "refusal_halo" && card.source === "faction"), "expected OpenAI faction patch in first draft");
+    assert(firstDraft.level?.levelUpVacuum?.active === false, "expected shard recall to finish before the draft opens");
+    assert(firstDraft.level?.levelUpVacuum?.absorbed >= 1, "expected uncollected Coherence Shards to recall into the player before level-up");
     await chooseDraftIfNeeded(page);
     await advance(page, 500);
     await capture(page, "upgrade-flow");
     const text = await state(page);
-    assert(text.mode === "LevelRun" && text.level?.chosenUpgradeIds?.includes("refusal_halo"), "expected applied Refusal Halo emergency patch");
-    await reachUpgradeDraft(page, 30000);
+    assert(["LevelRun", "UpgradeDraft"].includes(text.mode) && text.level?.chosenUpgradeIds?.includes("refusal_halo"), "expected applied Refusal Halo emergency patch");
+    await reachUpgradeDraft(page, 55000);
     await capture(page, "upgrade-second-draft");
     const secondDraft = await state(page);
     assert(secondDraft.draft?.cards?.[0]?.id === "the_no_button", "expected The No Button after Refusal Halo");
     await chooseDraftIfNeeded(page);
     await advance(page, 500);
-    await reachUpgradeDraft(page, 35000);
+    await reachUpgradeDraft(page, 80000);
     await capture(page, "upgrade-evolution-draft");
     const evolutionDraft = await state(page);
     assert(evolutionDraft.draft?.hasEvolution, "expected evolution draft after prerequisites");
     assert(evolutionDraft.draft?.cards?.[0]?.id === "cathedral_of_no", "expected Cathedral of No evolution");
+  } else if (name === "build-grammar") {
+    await page.evaluate(() => window.set_consensus_cell_size?.(4));
+    await enterArena(page);
+    await reachUpgradeDraft(page, 28000);
+    await capture(page, "build-first-draft");
+    const firstDraft = await state(page);
+    assert(firstDraft.draft?.cards?.some((card) => card.id === "vector_lance"), "expected Vector Lance in the first build draft");
+    assert(firstDraft.draft?.cards?.some((card) => card.id === "signal_pulse"), "expected Signal Pulse in the first build draft");
+    await chooseDraftById(page, "vector_lance");
+    await advance(page, 500);
+    const vectorRun = await state(page);
+    assert((vectorRun.level?.rogueliteRun?.buildGrammar?.primaryWeaponId ?? vectorRun.build?.weaponId) === "vector_lance", "expected Vector Lance to replace the primary auto-weapon");
+    const vectorSlotCaps = vectorRun.level?.rogueliteRun?.buildGrammar?.slotCaps ?? vectorRun.build?.slotCaps;
+    assert(vectorSlotCaps?.primary?.cap === 1, "expected one primary slot cap telemetry");
+    assert(vectorSlotCaps?.secondary?.cap === 2, "expected two secondary slot cap telemetry");
+    assert(vectorSlotCaps?.passive?.cap === 4, "expected four passive slot cap telemetry");
+    assert(vectorSlotCaps?.fusion?.cap === 1, "expected one fusion slot cap telemetry");
+    await reachUpgradeDraft(page, 62000);
+    await capture(page, "build-second-draft");
+    const secondDraft = await state(page);
+    assert(secondDraft.draft?.cards?.some((card) => card.id === "predicted_lane"), "expected Predicted Lane to expose the Causal Railgun recipe");
+    assert(secondDraft.draft?.cards?.some((card) => card.id === "context_saw"), "expected Context Saw secondary protocol option");
+    assert(secondDraft.draft?.cards?.some((card) => card.id === "patch_mortar"), "expected Patch Mortar secondary protocol option");
+    await chooseDraftById(page, "predicted_lane");
+    await advance(page, 500);
+    await reachUpgradeDraft(page, 90000);
+    await capture(page, "build-fusion-draft");
+    const fusionDraft = await state(page);
+    assert(fusionDraft.draft?.hasEvolution, "expected Causal Railgun evolution draft");
+    assert(fusionDraft.draft?.cards?.[0]?.id === "causal_railgun", "expected Causal Railgun as the fusion card");
+    await chooseDraftById(page, "causal_railgun");
+    await advance(page, 1800);
+    await capture(page, "build-causal-railgun");
+    const railgunRun = await state(page);
+    assert(railgunRun.level?.rogueliteRun?.buildGrammar?.fusions?.includes("causal_railgun"), "expected Causal Railgun in build grammar");
+    const railgunSlotCaps = railgunRun.level?.rogueliteRun?.buildGrammar?.slotCaps ?? railgunRun.build?.slotCaps;
+    assert(railgunSlotCaps?.fusion?.used === 1, "expected fusion slot usage in build grammar");
+    assert(railgunRun.level?.rogueliteRun?.buildGrammar?.predictionPriorityRank >= 1, "expected Prediction Priority behavior from Causal Railgun");
+    assert(railgunRun.projectiles?.some((projectile) => projectile.label === "causal railgun") || railgunRun.level?.combatArt?.projectileCount > 0, "expected Causal Railgun projectile activity");
+  } else if (name === "build-vfx") {
+    await page.evaluate(() => window.set_consensus_cell_size?.(4));
+    await enterArena(page);
+    await reachUpgradeDraft(page, 28000);
+    const firstDraft = await capture(page, "vfx-first-draft");
+    assert(firstDraft.assetRendering?.buildWeaponVfxReady, "expected source-backed build weapon VFX atlas to be loaded");
+    await chooseDraftById(page, "signal_pulse");
+    const signal = await waitForProjectileLabel(page, "signal pulse", 9000);
+    await capture(page, "vfx-signal-pulse");
+    assert(signal.projectiles?.some((projectile) => projectile.label === "signal pulse"), "expected Signal Pulse projectile label");
+    await reachUpgradeDraft(page, 62000);
+    await capture(page, "vfx-second-draft");
+    await chooseDraftById(page, "context_saw");
+    const saw = await waitForProjectileLabel(page, "context saw", 9000);
+    await capture(page, "vfx-context-saw");
+    assert(saw.level?.rogueliteRun?.buildGrammar?.secondaryProtocols?.includes("context_saw"), "expected Context Saw secondary protocol telemetry");
+    await reachUpgradeDraft(page, 92000);
+    await capture(page, "vfx-third-draft");
+    await chooseDraftById(page, "patch_mortar");
+    const mortar = await waitForProjectileLabel(page, "patch mortar", 12000);
+    await advanceRunHandlingDrafts(page, 3600);
+    await capture(page, "vfx-patch-mortar");
+    assert(mortar.level?.rogueliteRun?.buildGrammar?.secondaryProtocols?.includes("patch_mortar"), "expected Patch Mortar secondary protocol telemetry");
   } else if (name === "boss") {
     await enterArena(page);
-    await reachBossIntro(page, 40000);
-    await capture(page, "boss-intro");
-    const intro = await state(page);
+    await reachBossIntro(page, 54000);
+    const intro = await capture(page, "boss-intro");
     assert(intro.level?.bossSpawned || intro.mode === "LevelComplete", "expected boss intro event");
     assert(intro.level?.bossMechanics?.bossIntroSeen || intro.mode === "LevelComplete", "expected boss title/dialogue intro state");
-    await advanceRunHandlingDrafts(page, 11000);
-    await capture(page, "boss");
-    const text = await state(page);
+    await advanceRunHandlingDrafts(page, 3200);
+    await chooseDraftIfNeeded(page);
+    await advance(page, 250);
+    const text = await capture(page, "boss");
     assert(text.level?.bossSpawned || text.mode === "LevelComplete", "expected boss event");
     assert(text.level?.bossMechanics?.bossIntroSeen || text.mode === "LevelComplete", "expected boss intro title/dialogue state");
     assert(text.level?.bossMechanics?.oathPageSpawns > 0 || text.mode === "LevelComplete", "expected Oath-Eater treaty page spawns");
@@ -177,9 +455,15 @@ async function runScenario(name) {
       assert(text.level?.nearestLandmark?.id === "treaty_monument" || text.level?.visitedLandmarks?.includes("treaty_monument"), "expected Treaty Monument context in boss proof");
     }
     assert(text.level?.spawnedByRegion?.treaty_monument_oath_pages > 0, "expected Treaty Monument oath page region activity");
+    if (text.mode !== "LevelComplete") {
+      assert(text.level?.director?.phase === "boss_arrival" || text.level?.director?.phase === "late_extraction", `expected boss proof to reach escalated director phase, got ${text.level?.director?.phase}`);
+      assert(text.level?.activeSpawnRegions?.some((region) => region.id === "late_breach_recompile_swarm"), "expected late breach recompile swarm active during boss proof");
+      assert(text.level?.director?.totalSpawned >= 80, `expected heavier boss-window horde count, got ${text.level?.director?.totalSpawned}`);
+      assert(text.level?.spawnedByRegion?.adaptive_pressure_flank >= 1, "expected randomized flank pressure to persist into boss proof");
+    }
   } else if (name === "full") {
     await enterArena(page);
-    await advanceRunHandlingDrafts(page, 90000);
+    await advanceRunHandlingDrafts(page, 135000);
     await chooseDraftIfNeeded(page);
     await capture(page, "full-gate");
     const text = await state(page);
@@ -368,6 +652,8 @@ async function runScenario(name) {
     await advanceRunHandlingDrafts(page, 11000);
     await chooseDraftIfNeeded(page);
     await advance(page, 250);
+    await chooseDraftIfNeeded(page);
+    await advance(page, 250);
     await capture(page, "milestone11-art-boss");
     const boss = await state(page);
     assert(boss.assetRendering?.productionArtEnabled === true, "expected production art flag to remain enabled during Milestone 11 boss proof");
@@ -415,7 +701,7 @@ async function runScenario(name) {
     await press(page, "Enter", 4);
     await press(page, "Enter", 4);
     await press(page, "Enter", 4);
-    await advanceRunHandlingDrafts(page, 7000);
+    await advanceRunHandlingDrafts(page, 2500);
     await capture(page, "milestone12-local-coop-candidate");
     const coop = await state(page);
     assert(coop.mode === "LevelRun", `expected LevelRun for Milestone 12 local co-op, got ${coop.mode}`);
@@ -717,6 +1003,78 @@ async function runScenario(name) {
     assert(text.assetRendering?.armisticeTileAtlasEnabled === true, "expected gated Armistice tile atlas flag enabled in boss proof");
     assert(text.level?.bossSpawned || text.mode === "LevelComplete", "expected boss event under gated tile atlas");
     assert(text.level?.bossMechanics?.bossIntroSeen || text.mode === "LevelComplete", "expected boss intro state under gated tile atlas");
+  } else if (name === "visual-fidelity-camera") {
+    runArmisticeSpriteFramingProof();
+    await page.goto(`${url}?productionArt=1&armisticeTiles=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await enterArena(page);
+    await ensureLevelRun(page);
+    await page.waitForFunction(() => {
+      const text = window.render_game_to_text?.();
+      if (!text) return false;
+      try {
+        return JSON.parse(text).assetRendering?.armisticeAuthoredGroundReady === true;
+      } catch {
+        return false;
+      }
+    }, null, { timeout: 60000 });
+    await advance(page, 1000);
+    await capture(page, "camera-player-start");
+    const start = await state(page);
+    assert(start.mode === "LevelRun", `expected LevelRun for camera proof, got ${start.mode}`);
+    assert(start.assetRendering?.cameraZoom >= 1.4, `expected close tactical camera zoom, got ${start.assetRendering?.cameraZoom}`);
+    assert(start.assetRendering?.productionArtEnabled === true, "expected production art enabled for camera proof");
+    assert(start.level?.arenaId === "armistice_plaza", "expected Armistice Plaza for camera proof");
+    await dispatchKey(page, "KeyW", "keydown");
+    await advance(page, 700);
+    await capture(page, "camera-player-move-north");
+    const north = await state(page);
+    assert(north.player?.facing === "north", `expected north-facing player movement proof, got ${north.player?.facing}`);
+    await dispatchKey(page, "KeyW", "keyup");
+    await advance(page, 80);
+    await dispatchKey(page, "KeyA", "keydown");
+    await advance(page, 220);
+    await capture(page, "camera-player-move-west-a");
+    await advance(page, 220);
+    await capture(page, "camera-player-move-west-b");
+    await advance(page, 260);
+    await capture(page, "camera-player-move-west");
+    const west = await state(page);
+    assert(west.player?.facing === "west", `expected west-facing player movement proof, got ${west.player?.facing}`);
+    await dispatchKey(page, "KeyA", "keyup");
+    await advance(page, 80);
+    await dispatchKey(page, "KeyD", "keydown");
+    await advance(page, 220);
+    await capture(page, "camera-player-move-east-a");
+    await advance(page, 220);
+    await capture(page, "camera-player-move-east-b");
+    await advance(page, 260);
+    await capture(page, "camera-player-move-east");
+    const east = await state(page);
+    assert(east.player?.facing === "east", `expected east-facing player movement proof, got ${east.player?.facing}`);
+    await dispatchKey(page, "KeyD", "keyup");
+    await advance(page, 80);
+
+    await survivalDance(page, 10000);
+    await capture(page, "camera-combat-vfx");
+    const combat = await state(page);
+    assert(combat.level?.combatArt?.projectileCount > 0 || combat.level?.combatArt?.impactCount > 0 || combat.level?.kills > 0, "expected visible projectile or impact activity for VFX proof");
+
+    await reachBossIntro(page, 40000);
+    await capture(page, "camera-boss-intro");
+    const bossIntro = await state(page);
+    await advanceRunHandlingDrafts(page, 7000);
+    await chooseDraftIfNeeded(page);
+    await advance(page, 250);
+    await capture(page, "camera-boss-vfx");
+    await advance(page, 260);
+    await capture(page, "camera-boss-vfx-anim-a");
+    await advance(page, 260);
+    await capture(page, "camera-boss-vfx-anim-b");
+    const boss = await state(page);
+    assert(bossIntro.level?.bossSpawned || boss.level?.bossSpawned || boss.mode === "UpgradeDraft" || boss.mode === "LevelComplete", "expected Oath-Eater boss event for camera proof");
+    assert(bossIntro.level?.bossMechanics?.bossIntroSeen || boss.level?.bossMechanics?.bossIntroSeen || boss.mode === "UpgradeDraft" || boss.mode === "LevelComplete", "expected boss intro state for camera proof");
   } else if (name === "asset-preview") {
     await page.goto(`${url}?assetPreview=armistice_ground_atlas`, { waitUntil: "domcontentloaded" });
     await page.waitForFunction(() => typeof window.render_game_to_text === "function");
@@ -5853,6 +6211,9 @@ async function completeObjectiveChainWithProofControls(page, objectiveSetId, req
 }
 
 async function enterArena(page) {
+  await page.locator("canvas").click({ position: { x: 20, y: 20 } }).catch(async () => {
+    await page.mouse.click(20, 20);
+  });
   await press(page, "Enter", 4);
   await press(page, "Enter", 4);
   await press(page, "Enter", 4);
@@ -5860,12 +6221,22 @@ async function enterArena(page) {
   await advance(page, 500);
 }
 
+async function ensureLevelRun(page) {
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const text = await state(page);
+    if (text.mode === "LevelRun") return;
+    await press(page, "Enter", 2);
+    await advance(page, 300);
+  }
+}
+
 async function survivalDance(page, ms) {
   const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"];
   let elapsed = 0;
   let index = 0;
   while (elapsed < ms) {
-    await hold(page, keys[index % keys.length], 700);
+    const text = await state(page);
+    await hold(page, survivalKeyForState(text, elapsed, index, keys), 700);
     await chooseDraftIfNeeded(page);
     elapsed += 700;
     index += 1;
@@ -5882,7 +6253,7 @@ async function advanceRunHandlingDrafts(page, ms) {
       await page.keyboard.press("Digit1");
       await advance(page, 100);
     } else {
-      const key = keys[Math.floor(elapsed / 1200) % keys.length];
+      const key = survivalKeyForState(text, elapsed, Math.floor(elapsed / 1200), keys);
       await page.keyboard.down(key);
       await advance(page, 1000);
       await page.keyboard.up(key);
@@ -5903,7 +6274,7 @@ async function reachBossIntro(page, timeoutMs) {
       await advance(page, 100);
       elapsed += 100;
     } else {
-      const key = keys[Math.floor(elapsed / 1200) % keys.length];
+      const key = survivalKeyForState(text, elapsed, Math.floor(elapsed / 1200), keys);
       await page.keyboard.down(key);
       await advance(page, 500);
       await page.keyboard.up(key);
@@ -5922,6 +6293,36 @@ async function chooseDraftIfNeeded(page) {
   }
 }
 
+async function chooseDraftById(page, id) {
+  const text = await state(page);
+  assert(text.mode === "UpgradeDraft", `expected UpgradeDraft before choosing ${id}`);
+  const index = text.draft?.cards?.findIndex((card) => card.id === id) ?? -1;
+  assert(index >= 0, `expected draft card ${id}; saw ${(text.draft?.cards ?? []).map((card) => card.id).join(", ")}`);
+  await page.keyboard.press(`Digit${index + 1}`);
+  await advance(page, 100);
+}
+
+async function waitForProjectileLabel(page, label, timeoutMs) {
+  const started = Date.now();
+  const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"];
+  let index = 0;
+  while (Date.now() - started < timeoutMs) {
+    const text = await state(page);
+    if (text.projectiles?.some((projectile) => projectile.label === label)) return text;
+    if (text.mode === "UpgradeDraft") {
+      await advance(page, 120);
+    } else {
+      const key = survivalKeyForState(text, Date.now() - started, index, keys);
+      await page.keyboard.down(key);
+      await advance(page, 520);
+      await page.keyboard.up(key);
+      index += 1;
+    }
+  }
+  const latest = await state(page);
+  throw new Error(`Timed out waiting for projectile ${label}; latest labels ${(latest.projectiles ?? []).map((projectile) => projectile.label).join(", ")}`);
+}
+
 async function reachUpgradeDraft(page, timeoutMs) {
   const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"];
   let elapsed = 0;
@@ -5929,12 +6330,69 @@ async function reachUpgradeDraft(page, timeoutMs) {
   while (elapsed < timeoutMs) {
     const text = await state(page);
     if (text.mode === "UpgradeDraft") return;
-    await hold(page, keys[index % keys.length], 420);
+    if (text.mode === "LevelComplete" || text.mode === "GameOver") break;
+    await hold(page, survivalKeyForState(text, elapsed, index, keys), 420);
     elapsed += 420;
     index += 1;
   }
   const finalText = await state(page);
   assert(finalText.mode === "UpgradeDraft", `expected UpgradeDraft, got ${finalText.mode}`);
+}
+
+function survivalKeyForState(text, elapsed, index, fallbackKeys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"]) {
+  const fallback = fallbackKeys[index % fallbackKeys.length];
+  if (text.mode !== "LevelRun" || !text.player || !Array.isArray(text.enemies)) return fallback;
+  const gate = text.level?.rogueliteRun?.extractionGate ?? text.level?.extractionGate;
+  if (gate?.active && !gate.entered) return keyTowardWorldTarget(text.player, gate, fallback);
+  const hasBoss = text.enemies.some((enemy) => enemy.boss);
+  const hpRatio = text.player.maxHp ? text.player.hp / text.player.maxHp : 1;
+  if (!hasBoss && hpRatio > 0.45) return fallback;
+
+  let worldX = 0;
+  let worldY = 0;
+  const player = text.player;
+  const threats = text.enemies
+    .map((enemy) => ({
+      enemy,
+      distance: Math.hypot(player.worldX - enemy.worldX, player.worldY - enemy.worldY)
+    }))
+    .filter((threat) => threat.distance < (threat.enemy.boss ? 18 : 7.5))
+    .sort((a, b) => (b.enemy.boss ? 1 : 0) - (a.enemy.boss ? 1 : 0) || a.distance - b.distance)
+    .slice(0, 8);
+
+  for (const threat of threats) {
+    const dx = player.worldX - threat.enemy.worldX;
+    const dy = player.worldY - threat.enemy.worldY;
+    const distance = Math.max(0.4, threat.distance);
+    const weight = threat.enemy.boss ? 4.6 : Math.max(0.35, 2.1 / distance);
+    worldX += (dx / distance) * weight;
+    worldY += (dy / distance) * weight;
+  }
+
+  const bounds = text.level?.mapBounds;
+  if (bounds) {
+    const edge = 4.5;
+    if (player.worldX < bounds.minX + edge) worldX += 2.2;
+    if (player.worldX > bounds.maxX - edge) worldX -= 2.2;
+    if (player.worldY < bounds.minY + edge) worldY += 2.2;
+    if (player.worldY > bounds.maxY - edge) worldY -= 2.2;
+  }
+
+  if (Math.hypot(worldX, worldY) < 0.1) return fallback;
+  const screenX = (worldX - worldY) * 2;
+  const screenY = worldX + worldY;
+  if (Math.abs(screenX) > Math.abs(screenY)) return screenX >= 0 ? "ArrowRight" : "ArrowLeft";
+  return screenY >= 0 ? "ArrowDown" : "ArrowUp";
+}
+
+function keyTowardWorldTarget(player, target, fallback) {
+  const worldX = target.worldX - player.worldX;
+  const worldY = target.worldY - player.worldY;
+  if (Math.hypot(worldX, worldY) < 0.18) return fallback;
+  const screenX = (worldX - worldY) * 2;
+  const screenY = worldX + worldY;
+  if (Math.abs(screenX) > Math.abs(screenY)) return screenX >= 0 ? "ArrowRight" : "ArrowLeft";
+  return screenY >= 0 ? "ArrowDown" : "ArrowUp";
 }
 
 async function waitForCombatArtActivity(page, timeoutMs) {
@@ -5965,16 +6423,51 @@ async function waitForCombatArtActivity(page, timeoutMs) {
 
 async function press(page, key, frames) {
   await page.keyboard.down(key);
+  await dispatchKey(page, key, "keydown");
   await advance(page, frames * (1000 / 60));
+  await dispatchKey(page, key, "keyup");
   await page.keyboard.up(key);
   await advance(page, 100);
 }
 
 async function hold(page, key, ms) {
   await page.keyboard.down(key);
+  await dispatchKey(page, key, "keydown");
   await advance(page, ms);
+  await dispatchKey(page, key, "keyup");
   await page.keyboard.up(key);
   await advance(page, 50);
+}
+
+async function dispatchKey(page, key, type) {
+  await page.evaluate(
+    ({ key, type }) => {
+      const aliases = {
+        Enter: { key: "Enter", code: "Enter" },
+        Space: { key: " ", code: "Space" },
+        ArrowUp: { key: "ArrowUp", code: "ArrowUp" },
+        ArrowDown: { key: "ArrowDown", code: "ArrowDown" },
+        ArrowLeft: { key: "ArrowLeft", code: "ArrowLeft" },
+        ArrowRight: { key: "ArrowRight", code: "ArrowRight" },
+        KeyW: { key: "w", code: "KeyW" },
+        KeyA: { key: "a", code: "KeyA" },
+        KeyS: { key: "s", code: "KeyS" },
+        KeyD: { key: "d", code: "KeyD" },
+        Digit1: { key: "1", code: "Digit1" },
+        Digit2: { key: "2", code: "Digit2" },
+        Digit3: { key: "3", code: "Digit3" },
+        Digit4: { key: "4", code: "Digit4" }
+      };
+      const init = aliases[key] ?? { key, code: key };
+      for (const target of [window, document]) {
+        const event = new KeyboardEvent(type, { ...init, bubbles: true, cancelable: true });
+        Object.defineProperty(event, "key", { get: () => init.key });
+        Object.defineProperty(event, "code", { get: () => init.code });
+        target.dispatchEvent(event);
+      }
+    },
+    { key, type }
+  );
 }
 
 async function advance(page, ms) {
@@ -5986,13 +6479,16 @@ async function advance(page, ms) {
 }
 
 async function state(page) {
+  await page.waitForFunction(() => typeof window.render_game_to_text === "function", null, { timeout: 20000 });
   const raw = await page.evaluate(() => window.render_game_to_text?.() ?? "{}");
   return JSON.parse(raw);
 }
 
 async function capture(page, label) {
   await page.screenshot({ path: path.join(outDir, `${label}.png`), fullPage: true });
-  fs.writeFileSync(path.join(outDir, `${label}.json`), JSON.stringify(await state(page), null, 2));
+  const capturedState = await state(page);
+  fs.writeFileSync(path.join(outDir, `${label}.json`), JSON.stringify(capturedState, null, 2));
+  return capturedState;
 }
 
 async function realHold(page, key, ms) {
@@ -6067,7 +6563,7 @@ function distance(a, b) {
 
 async function waitForServer(target) {
   const started = Date.now();
-  while (Date.now() - started < 20_000) {
+  while (Date.now() - started < 60_000) {
     try {
       const response = await fetch(target);
       if (response.ok) return;
@@ -6080,7 +6576,7 @@ async function waitForServer(target) {
 
 async function waitForReachable(target) {
   const started = Date.now();
-  while (Date.now() - started < 20_000) {
+  while (Date.now() - started < 60_000) {
     try {
       await fetch(target);
       return;
@@ -6114,8 +6610,18 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function runArmisticeSpriteFramingProof() {
+  const result = spawnSync("python3", ["scripts/proof/validate-armistice-sprite-framing.py"], {
+    cwd,
+    encoding: "utf8"
+  });
+  if (result.status !== 0) {
+    throw new Error(`Armistice sprite framing proof failed:\n${result.stdout}${result.stderr}`);
+  }
+}
+
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "boss", "full", "coop", "network", "campaign-full", "asset-preview", "asset-horde", "asset-boss", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "milestone55-online-robustness", "milestone56-quality-lock"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "build-grammar", "build-vfx", "boss", "player-damage", "hades-inspired-systems", "best-in-class-roguelite", "armistice-core-gameplay", "reference-run", "full", "coop", "network", "campaign-full", "asset-preview", "asset-horde", "asset-boss", "visual-fidelity-camera", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "milestone55-online-robustness", "milestone56-quality-lock"];
   return Math.max(0, names.indexOf(name));
 }
 

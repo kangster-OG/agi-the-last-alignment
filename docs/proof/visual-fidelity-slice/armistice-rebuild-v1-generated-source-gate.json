@@ -1,0 +1,41 @@
+{
+  "gateId": "armistice_rebuild_v1_generated_source_gate",
+  "date": "2026-05-02",
+  "sources": {
+    "benchmarkReference": "docs/proof/visual-fidelity-slice/techbros-vs-armistice-corrective-gate.png",
+    "previousAgiScreenshot": "docs/proof/visual-fidelity-slice/armistice-corrective-sprite-prop-collision-action.png",
+    "newAgiScreenshot": "docs/proof/smoke/arena.png",
+    "runtimeContactSheet": "assets/concepts/pixellab_refs/armistice_rebuild_v1/armistice_rebuild_v1_runtime_asset_contact.png",
+    "buildSelectScreenshot": "docs/proof/smoke/build-select.png",
+    "enemyPreview": "docs/proof/milestone11-art/milestone11-enemy-set-preview.png"
+  },
+  "output": "docs/proof/visual-fidelity-slice/armistice-rebuild-v1-generated-source-gate.png",
+  "verification": [
+    "python3 -m py_compile scripts/assets/pack-armistice-rebuild-v1-assets.py",
+    "npm run proof:assets",
+    "npx tsc --noEmit",
+    "npm run build",
+    "npm run proof:milestone11-art",
+    "npm run proof:smoke"
+  ],
+  "pixellabSession": {
+    "accountSecurityBlocker": false,
+    "contentPolicyRejectionEncountered": true,
+    "contentPolicyResolution": "Enemy prompt was reprompted with safe non-human game-obstacle/pose language and completed; later class-card/pose attempts were rejected as unusable source quality rather than account/security blockers, so final accepted polish source came from ChatGPT Images."
+  },
+  "assessment": {
+    "passesBaselineProofs": true,
+    "armisticeGateStatus": "runtime_visual_gate_passed_for_armistice_v1",
+    "notes": [
+      "Normal gameplay no longer reads as a blank prototype board: it shows broad generated-source terrain, large recognizable set pieces, and compact HUD/default proof labels hidden.",
+      "Build-select locked class cards now use ChatGPT Images production-source miniatures mechanically cropped into the south idle card rows, with card scale retuned for the 80px roster contract.",
+      "Starter enemy families now use three distinct coherent pose frames from a ChatGPT Images enemy animation source board instead of repeating one stable PixelLab silhouette.",
+      "Accord Striker remains PixelLab Character-backed for the full 4-direction walking sheet and default M49 roster bridge.",
+      "Large prop collision remains proofed through milestone11-art terminal edge coverage; render_game_to_text() and advanceTime() remain available."
+    ],
+    "remainingBeforeExpansion": [
+      "Armistice passes the current generated-source visual gate; broadening may proceed only by carrying the same source/provenance/proof pipeline forward.",
+      "Future quality work should still replace non-south locked-class gameplay rows with dedicated PixelLab/ChatGPT full animation sheets before those classes become playable by default."
+    ]
+  }
+}

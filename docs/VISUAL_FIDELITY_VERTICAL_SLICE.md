@@ -158,9 +158,62 @@ Proof artifacts:
 - `docs/proof/visual-fidelity-slice/armistice-corrective-collision-terminal-check.json`
 - `docs/proof/milestone11-art/milestone11-art-collision-terminal.png`
 
-## Next Art Passes
+## Camera, Player, Boss, And VFX Correction
 
-1. Add a boss/dialogue presentation upgrade with larger portraits and a scene-backed frame.
-2. Add true attack/hurt/dash frames and secondary animation passes for the 80px class roster.
-3. Carry the 32-frame material-family approach into Blackwater and finale arenas.
-4. Replace the remaining simple flag poles and pickup icons with production pixel props/effects.
+This pass responds to live playtest feedback that the map size was finally right, but the normal camera still did not match the close tactical reference read, the player changed visual identity while moving, the boss was still a symbolic icon, and attacks/telegraphs still felt prototype-like.
+
+- normal Armistice combat zoom is now `1.48`, with `assetRendering.cameraZoom` exposed through `render_game_to_text()`;
+- `proof:visual-fidelity-camera` captures the normal start crop, combat/VFX, boss intro, and live boss shot so camera changes are judged in gameplay rather than a zoomed-out board screenshot;
+- Accord Striker now uses a coherent generated-source 4-direction/3-frame armored sheet in both `accord_striker_walk_v2.png` and the top rows of `class_roster_m49.png`;
+- Oath-Eater now uses a generated-source 128x128 boss body and generated-source title portrait instead of the old symbolic 96px icon;
+- the combat-effect atlas keeps the existing 10-frame runtime contract but is repacked from generated projectile, impact, aura, crack, shard, and pickup sources;
+- the old normal-play flag cluster is hidden, the large floating boss HP label is debug-only, and the boss charge telegraph is thinner and less proof-like;
+- Armistice terrain and production art are preloaded when a run starts so the first playable frame is less likely to capture fallback slab terrain.
+
+Proof artifacts:
+
+- `docs/proof/visual-fidelity-camera/camera-player-start.png`
+- `docs/proof/visual-fidelity-camera/camera-combat-vfx.png`
+- `docs/proof/visual-fidelity-camera/camera-boss-intro.png`
+- `docs/proof/visual-fidelity-camera/camera-boss-vfx.png`
+
+## May 5 Accepted Armistice Baseline
+
+The May 4 gap list below is retained as rebuild history, but the current working baseline is now documented in `docs/ARMISTICE_ACCEPTED_ART_BASELINE.md`.
+
+Accepted direction as of May 5:
+
+- Armistice terrain uses V6/V7 multi-piece ChatGPT Images source art with dense overlapping prop-pad-extension terrain, no visible old low-fidelity floor, and an irregular outer silhouette.
+- Prop pads remain the calibration bar, while runtime prop grounding reads as contact dirt/shadow/debris rather than separate high-fidelity mats.
+- Major props are full-alpha, consistently scaled by family, and have static blockers at the production cluster centers.
+- Accord A/D side-walk uses the V8 east source mirrored for west; preserve it unless live held-key proof shows regression.
+- Oath-Eater uses the larger source-backed boss sheet, irregular contact/corruption language, and centered/front-contained runtime frames to avoid the boxed side-lurch read.
+- Benchmark Gremlin uses a dedicated detail source so it stays bright/readable while matching the internal material fidelity of the other enemy families.
+
+Future art should use Armistice as the fidelity baseline for new areas and actors, not as a problem to reopen by default.
+
+## Historical May 4 Gap Assessment
+
+The latest Tech Bros comparison and live Armistice review changed the priority order at the time. This section is retained for rebuild history; the May 5 baseline above supersedes it for current work.
+
+Historical high-priority gaps:
+
+- Terrain cohesion: the authored ground is better than stamped tiles, but the center field is still too soft and low-information. Add confident material storytelling: civic stone seams, asphalt/cable scars, rubble clusters, scorch/dirt accumulation, and blended plaza/road/breach/terminal transitions.
+- Prop grounding: the drone wreck, barricades, terminal, monument, and breach props have more scale, but still need local dirt/shadow/debris halos and prop-integrated ground damage so they feel planted rather than placed.
+- Actor motion: Accord A/D now use the V8 side-walk strip and should be preserved unless live testing proves otherwise. W/S are accepted for now, not final. Never fix player motion with partial lower-body art; use full-frame/full-row source and live held-key proof at zoom.
+- Enemy motion personality: starter enemies read as silhouettes, but need more family-specific walk, attack anticipation, hit, and idle motion before they feel as alive as the reference.
+- Combat channel separation: pickup/player shot/enemy shot/boss telegraph/XP/hazard colors are more distinct, but shape and animation should do more separation work so color is not the only channel.
+- Boss event language: Oath-Eater has a stronger mood wash and boss UI, but the arena should react more directly through local lighting, corruption spread, boss-tied particles, and material-edged telegraphs.
+- Camera composition: zoom is close enough, but first-frame and combat composition still sometimes leave Accord isolated in a broad empty floor. Stage props, terrain detail, enemies, and material zones so foreground/midground/background are consistently present.
+
+Do not use this historical gap list to reopen accepted Armistice work by default. Use `docs/ARMISTICE_ACCEPTED_ART_BASELINE.md` for the current gate.
+
+## Historical Next Art Passes
+
+1. Terrain and prop grounding pass: fewer visible authored-ground bands, richer material transitions, scuffed edges, embedded rubble, local prop halos, varied contact shadows, and prop-integrated ground damage.
+2. Combat channel pass: keep pickups, player shots, enemy shots, boss telegraphs, XP, and hazards distinct by shape, animation, luminance, and color.
+3. Boss arena reaction pass: make Oath-Eater change arena lighting, terrain mood, corruption spread, and telegraph material language, not only top UI and screen overlays.
+4. Enemy animation/personality pass: add family-specific motion and attack/hit reads to starter enemies while preserving silhouette clarity.
+5. Composition proof pass: update or add visual proofs that compare reference, previous Armistice, and new Armistice first-frame/combat/boss shots at the real close camera.
+6. Full coherent Accord sheet later, if reopened. Do not touch A/D again unless fresh live proof shows regression; W/S are known non-final but intentionally deferred.
+7. Carry the corrected camera/source-art gate into Blackwater and finale arenas only after Armistice holds up in normal play and the user accepts the art direction.

@@ -227,7 +227,9 @@ export class AssetPreviewState implements GameState {
     }
     addPreviewSprite(preview, textures.coherenceShard, 728, 326, 3.2);
     addPreviewSprite(preview, textures.treatyMonument, 966, 398, 1.75);
-    addPreviewSprite(preview, textures.oathEater, 570, 512, 1.6);
+    textures.oathEater.forEach((texture, index) => {
+      addPreviewSprite(preview, texture, 494 + index * 76, 512, 1.25);
+    });
     addPreviewSprite(preview, textures.oathEaterPortrait, 770, 520, 1.08);
 
     const labels = new Text({

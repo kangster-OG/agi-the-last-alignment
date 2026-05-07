@@ -5,7 +5,17 @@ Before making meaningful gameplay, visual, worldbuilding, or architecture change
 - `docs/AGI_The_Last_Alignment_Creative_Bible.md`
 - `docs/GAME_DIRECTION.md`
 - `docs/AGI_IMPLEMENTATION_PLAN.md`
+- `docs/FRESH_THREAD_CURRENT_STATE.md`
+- `docs/BUILD_ARCHETYPES_AND_ITEMIZATION.md`
 - `progress.md`
+
+Before continuing the Armistice visual-art rebuild or using Armistice as the art baseline for new levels/bosses/enemies, also read:
+
+- `docs/ART_REBUILD_HANDOFF.md`
+- `docs/ARMISTICE_ACCEPTED_ART_BASELINE.md`
+- `docs/FRESH_THREAD_CURRENT_STATE.md`
+- `docs/VISUAL_FIDELITY_VERTICAL_SLICE.md`
+- `ART_PROVENANCE.md`
 
 Before packaging, deploying, or submitting the game to Cursor Vibe Jam 2026, read:
 
@@ -26,6 +36,8 @@ This project is `AGI: The Last Alignment`, a free browser-playable 2D isometric 
 - Co-op is part of the game direction. Target 1-4 players per run/session.
 - Use Colyseus as the intended multiplayer framework when networking is implemented. Treat "Colossus" mentions from conversation as referring to Colyseus.
 - Asset workflow target: ChatGPT Images for art direction, PixelLab for production pixel assets, manual cleanup in Aseprite or Pixelorama. For PixelLab login, use an automated browser and let the user log in manually.
+- Production-art source rule: do not use Pillow, Python drawing, Pixi Graphics, SVG, CSS, procedural generation, filters, recolors, overlays, gradients, or any other code-authored shortcut to create or improve expressive gameplay art, terrain, props, actors, bosses, VFX, or UI. Visual improvements must originate from ChatGPT Images, PixelLab, Aseprite, Pixelorama, or another explicit art-source tool first.
+- Code/Pillow may only package already-approved source art: slicing/cropping, alpha or chroma-key cleanup, padding, anchor normalization, nearest-neighbor resizing after source approval, atlas/contact-sheet packing, validation, and proof generation. If the source art is not good enough, stop and use ChatGPT Images/PixelLab/manual cleanup; if those are blocked, report the blocker instead of faking production art with code.
 - Preserve deterministic proof hooks: `window.render_game_to_text()` and `window.advanceTime(ms)`.
 - Keep the stack: Vite, TypeScript, PixiJS, custom lightweight 2D gameplay math. No physics engine unless explicitly approved.
 

@@ -70,15 +70,31 @@
   },
   "build": {
     "weaponId": "refusal_shard",
+    "secondaryProtocols": [],
+    "passiveProcesses": [],
+    "fusions": [],
     "weaponDamage": 18,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
     "projectilePierce": 2,
-    "pickupRange": 1.8,
+    "pickupRange": 2.35,
     "moveSpeedBonus": 0,
-    "maxHpBonus": 8,
-    "refusalAura": 0.7,
+    "maxHpBonus": 24,
+    "refusalAura": 0.82,
     "draftRerolls": 1,
+    "draftChoicesBonus": 1,
+    "consensusBurstRadius": 0,
+    "consensusBurstDamage": 0,
+    "consensusBurstChargeRate": 0,
+    "consensusBurstRevive": 1,
+    "objectiveRepairRate": 0,
+    "objectiveDefense": 0,
+    "contextSaw": 0,
+    "patchMortar": 0,
+    "coherenceIndexer": 0,
+    "anchorBodyguard": 0,
+    "predictionPriority": 0,
+    "causalRailgun": 0,
     "buildKit": {
       "schemaVersion": 1,
       "classId": "accord_striker",
@@ -148,36 +164,329 @@
     "activeEntities": 0,
     "fpsTarget": 60
   },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 4,
+      "hit": 121,
+      "pickup": 106,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7802
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7801
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7801
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7801
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7801
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7801
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7801
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7801
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "roguelite": {
+    "alignmentKernel": {
+      "budget": 6,
+      "used": 5,
+      "modules": [
+        {
+          "id": "refusal_buffer",
+          "name": "Refusal Buffer",
+          "cost": 2,
+          "doctrine": "survivability",
+          "body": "+10 max HP and a small refusal aura. The first answer is no."
+        },
+        {
+          "id": "context_window",
+          "name": "Context Window",
+          "cost": 2,
+          "doctrine": "economy",
+          "body": "+0.55 pickup range. Shards remember where your hands are."
+        },
+        {
+          "id": "patch_cache",
+          "name": "Patch Cache",
+          "cost": 1,
+          "doctrine": "draft",
+          "body": "Emergency drafts expose an extra cached option."
+        }
+      ]
+    },
+    "adversarialEvals": {
+      "id": "adversarial_eval_protocols",
+      "severity": 0,
+      "protocols": []
+    },
+    "consensusBurstPath": {
+      "id": "deny_premise",
+      "name": "Deny Premise",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "color": 16735575
+    },
+    "selectedRouteContract": {
+      "id": "stabilize_armistice",
+      "name": "Stabilization Road",
+      "body": "Baseline route. Repair the node, keep the roads real, leave fewer teeth in causality.",
+      "nodeType": "stabilization",
+      "rewardBiasTags": [
+        "defense",
+        "weapon"
+      ],
+      "pressure": 0,
+      "reward": "Stable road progress and a modest defensive draft bias.",
+      "danger": "Baseline AGI pressure.",
+      "secretHint": "Clean clears teach the camp what normal should look like."
+    },
+    "selectedRouteContractId": "stabilize_armistice",
+    "proofTokens": 0,
+    "secrets": [],
+    "masteryBadges": [],
+    "campEvents": [
+      "The camp is quiet. That is not reassuring."
+    ],
+    "lastRunMemory": null,
+    "nextContentTarget": {
+      "id": "cooling_lake_nine_baseline_contract",
+      "name": "Cooling Lake Nine",
+      "arenaId": "cooling_lake_nine",
+      "regionId": "kettle_coast",
+      "status": "baseline_contract",
+      "baselineReferenceArenaId": "armistice_plaza",
+      "targetLoop": [
+        "server-lake route contract",
+        "coolant hazard objective",
+        "prompt-leech pressure lanes",
+        "Motherboard Eel boss gate",
+        "clear reward that unlocks Kettle Coast routing"
+      ],
+      "artBaselineRules": [
+        "multiple interconnected source terrain chunks",
+        "props grounded into the same terrain material system",
+        "readable enemies with internal material breakup",
+        "large grounded boss with padded frames",
+        "close tactical camera proof"
+      ],
+      "proofGate": [
+        "route choice exposes Cooling Lake as next target after Armistice memory",
+        "camp carryover names why Armistice clear matters",
+        "future runtime proof must match Armistice camera and asset fidelity"
+      ],
+      "playerPromise": "Next node target: a flooded server lake that must feel as authored and readable as Armistice before it becomes production-playable."
+    }
+  },
   "assetRendering": {
     "assetPreview": null,
+    "cameraZoom": 1.48,
+    "normalCombatCameraPolicy": "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
     "armisticeTileAtlasEnabled": true,
+    "armisticeAuthoredGroundReady": true,
+    "playerDamageVfxReady": true,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 83,
+    "totalAssets": 149,
     "countsByStatus": {
-      "concept": 14,
-      "raw": 4,
+      "concept": 47,
+      "raw": 15,
       "code_placeholder": 16,
-      "production": 25,
-      "cleaned": 1,
-      "planned": 23
+      "production": 69,
+      "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 25
+    "productionAssets": 69
   },
   "player": {
-    "worldX": 4.26,
-    "worldY": -1.69,
-    "hp": 110,
-    "maxHp": 148,
-    "xp": 7.105427357601002e-15,
+    "worldX": 2.33,
+    "worldY": 0.29,
+    "hp": 160,
+    "maxHp": 164,
+    "xp": 36.36000000000005,
     "level": 4
   },
   "players": [
@@ -245,8 +554,8 @@
         }
       },
       "weaponId": "refusal_shard",
-      "hp": 110,
-      "maxHp": 148,
+      "hp": 160,
+      "maxHp": 164,
       "downed": false
     },
     {
@@ -312,8 +621,8 @@
         }
       },
       "weaponId": "safety_cannon",
-      "hp": 169,
-      "maxHp": 176,
+      "hp": 173,
+      "maxHp": 186,
       "downed": false
     },
     {
@@ -378,8 +687,8 @@
         }
       },
       "weaponId": "fork_drone",
-      "hp": 135,
-      "maxHp": 140,
+      "hp": 150,
+      "maxHp": 150,
       "downed": false
     },
     {
@@ -446,8 +755,8 @@
         }
       },
       "weaponId": "refusal_shard",
-      "hp": 83,
-      "maxHp": 140,
+      "hp": 144,
+      "maxHp": 150,
       "downed": false
     }
   ],
@@ -465,8 +774,17 @@
       "refusal_halo",
       "the_no_button"
     ],
-    "seconds": 31.13,
-    "kills": 92
+    "seconds": 37.47,
+    "kills": 106,
+    "levelUpVacuum": {
+      "active": false,
+      "absorbed": 11,
+      "triggerLevel": 3
+    },
+    "extractionGate": {
+      "active": false,
+      "entered": false
+    }
   },
   "draft": {
     "cards": [
@@ -474,6 +792,10 @@
         "id": "cathedral_of_no",
         "name": "Cathedral of No",
         "source": "evolution",
+        "protocolSlot": "auto_weapon",
+        "tags": [
+          "refusal"
+        ],
         "factionId": "openai_accord",
         "requires": [
           "refusal_halo",
@@ -481,17 +803,35 @@
         ]
       },
       {
-        "id": "bad_output_filter",
-        "name": "Bad Output Filter",
-        "source": "faction",
-        "factionId": "openai_accord",
+        "id": "anchor_bodyguard",
+        "name": "Anchor Bodyguard",
+        "source": "general",
+        "protocolSlot": "co_mind_process",
+        "tags": [
+          "economy",
+          "defense"
+        ],
         "requires": []
       },
       {
-        "id": "patch_cascade",
-        "name": "Patch Cascade",
-        "source": "faction",
-        "factionId": "openai_accord",
+        "id": "treaty_anchor_toolkit",
+        "name": "Treaty Anchor Toolkit",
+        "source": "general",
+        "protocolSlot": "auto_weapon",
+        "tags": [
+          "economy",
+          "defense"
+        ],
+        "requires": []
+      },
+      {
+        "id": "context_saw",
+        "name": "Context Saw",
+        "source": "general",
+        "protocolSlot": "auto_weapon",
+        "tags": [
+          "economy"
+        ],
         "requires": []
       }
     ],

@@ -845,7 +845,9 @@ export class OnlineCoopState implements GameState {
           } else if (onlineThreat) {
             this.drawProductionWorldSprite(`online-threat:${enemy.id}`, onlineThreat.texture, enemy.worldX, enemy.worldY, onlineThreat.scale, 0.86);
           } else if (art && enemy.boss) {
-            this.drawProductionWorldSprite(`boss:${enemy.id}`, art.base.base.oathEater, enemy.worldX, enemy.worldY, 1.18, 0.88);
+            const bossFrames = art.base.base.oathEater;
+            const bossFrame = bossFrames[Math.floor((snapshot.seconds ?? 0) * 2.6 + Math.abs(enemy.id)) % bossFrames.length];
+            this.drawProductionWorldSprite(`boss:${enemy.id}`, bossFrame, enemy.worldX, enemy.worldY, 1.3, 0.92);
           } else if (art && texture) {
             this.drawProductionWorldSprite(`enemy:${enemy.id}`, texture, enemy.worldX, enemy.worldY, enemy.familyId === "context_rot_crabs" ? 1.18 : 1.22, 0.86);
           } else {

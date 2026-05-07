@@ -16,6 +16,7 @@ import {
   milestone49RoleChipTexture,
   type Milestone49PlayableArtTextures
 } from "../assets/milestone49PlayableArt";
+import { drawFieldBackdrop, drawFieldPanel, fieldKit } from "./fieldKit";
 
 const CLASS_IDS: string[] = [...BUILD_CLASS_IDS];
 const FACTION_IDS: string[] = [...BUILD_FACTION_IDS];
@@ -55,6 +56,9 @@ export class BuildSelectState implements GameState {
     if (game.input.wasPressed("interact")) {
       game.state.set(game.createOverworld());
     }
+    if (game.input.wasPressed("coop")) {
+      game.state.set(game.createHub());
+    }
   }
 
   render(game: Game): void {
@@ -62,25 +66,19 @@ export class BuildSelectState implements GameState {
     game.layers.root.position.set(0, 0);
     game.layers.root.scale.set(1);
 
-    const bg = new Graphics();
-    bg.rect(0, 0, game.width, game.height).fill(0x0b0f17);
-    bg.poly([0, 520, 420, 330, game.width, 430, game.width, game.height, 0, game.height]).fill({ color: 0x243238, alpha: 0.88 });
-    bg.poly([0, 640, 280, 510, 740, 590, 420, 720, 0, 720]).fill({ color: 0x16484d, alpha: 0.82 });
-    bg.poly([760, 365, game.width, 310, game.width, 720, 980, 620]).fill({ color: 0x3a1d30, alpha: 0.82 });
-    bg.rect(0, game.height - 92, game.width, 92).fill({ color: 0x080c13, alpha: 0.62 });
-    game.layers.hud.addChild(bg);
+    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // FRAME BAY");
 
     const title = new Text({
       text: "SELECT YOUR ALIGNMENT FRAME",
-      style: { ...fontStyle, fontSize: 30, fill: "#ff5d57" }
+      style: { ...fontStyle, fontSize: 30, fill: "#e7f4ef", stroke: { color: "#070b10", width: 5 } }
     });
     title.anchor.set(0.5);
     title.position.set(game.width / 2, 70);
     game.layers.hud.addChild(title);
 
     const subtitle = new Text({
-      text: "Combat body on the left. Co-mind doctrine on the right. Enter deploys.",
-      style: { ...fontStyle, fontSize: 12, fill: "#64e0b4", align: "center", wordWrap: true, wordWrapWidth: 860 }
+      text: "Combat body on the left. Co-mind doctrine on the right. Enter deploys. C opens the Last Alignment Camp.",
+      style: { ...fontStyle, fontSize: 12, fill: "#9fd8d1", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 860 }
     });
     subtitle.anchor.set(0.5);
     subtitle.position.set(game.width / 2, 108);
@@ -121,7 +119,7 @@ export class BuildSelectState implements GameState {
     const y = 148;
     const header = new Text({
       text: "FIGHTER",
-      style: { ...fontStyle, fontSize: 17, fill: "#fff4d6" }
+      style: { ...fontStyle, fontSize: 17, fill: fieldKit.text, stroke: { color: "#030609", width: 3 } }
     });
     header.position.set(x, y - 34);
     game.layers.hud.addChild(header);
@@ -139,22 +137,17 @@ export class BuildSelectState implements GameState {
       const row = Math.floor(index / 4);
       const left = x + col * (cardWidth + colGap);
       const top = y + row * (cardHeight + rowGap);
-      const g = new Graphics();
-      g.rect(left, top, cardWidth, cardHeight)
-        .fill(selected ? 0x162b32 : unlocked ? 0x111823 : 0x0d1118)
-        .stroke({ color: selected ? palette.mint : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.68 });
+      const g = drawFieldPanel(game.layers.hud, left, top, cardWidth, cardHeight, { tone: selected ? "teal" : "neutral", selected, alpha: unlocked ? 0.94 : 0.66 });
       g.rect(left + 8, top + 8, cardWidth - 16, 66).fill({ color: selected ? 0x203447 : 0x0b0f17, alpha: 0.82 });
       if (!milestone49Art) {
         g.rect(left + 48, top + 22, 30, 34).fill(selected ? palette.blue : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
       }
-      game.layers.hud.addChild(g);
-
       if (milestone49Art) {
         const sprite = new Sprite(milestone49NetworkPlayerTextureFor(id, "south", false, 0, milestone49Art));
         sprite.anchor.set(0.5, 0.88);
-        sprite.scale.set(selected ? 2.05 : 1.64);
-        sprite.alpha = unlocked ? 1 : 0.58;
-        sprite.position.set(left + cardWidth / 2, top + 73);
+        scaleSpriteToFit(sprite, selected ? 96 : 88, selected ? 62 : 58);
+        sprite.alpha = unlocked ? 1 : 0.7;
+        sprite.position.set(left + cardWidth / 2, top + 72);
         game.layers.hud.addChild(sprite);
 
         const roleId = resolveBuildKit(id, game.selectedFactionId).resolvedRole;
@@ -168,7 +161,7 @@ export class BuildSelectState implements GameState {
 
       const text = new Text({
         text: `${combatClass.displayName}${unlocked ? "" : "\nLOCKED"}`,
-        style: { ...fontStyle, fontSize: 8, fill: selected ? "#fff4d6" : unlocked ? "#cbd4df" : "#8b94a3", align: "center", wordWrap: true, wordWrapWidth: cardWidth - 14 }
+        style: { ...fontStyle, fontSize: 8, fill: selected ? fieldKit.text : unlocked ? fieldKit.textSoft : "#7f8998", stroke: { color: "#030609", width: 3 }, align: "center", wordWrap: true, wordWrapWidth: cardWidth - 14 }
       });
       text.anchor.set(0.5, 0);
       text.position.set(left + cardWidth / 2, top + 80);
@@ -187,7 +180,7 @@ export class BuildSelectState implements GameState {
     const y = 148;
     const header = new Text({
       text: "CO-MIND",
-      style: { ...fontStyle, fontSize: 17, fill: "#fff4d6" }
+      style: { ...fontStyle, fontSize: 17, fill: fieldKit.text, stroke: { color: "#030609", width: 3 } }
     });
     header.position.set(x, y - 34);
     game.layers.hud.addChild(header);
@@ -226,15 +219,10 @@ export class BuildSelectState implements GameState {
       const row = Math.floor(index / 2);
       const left = x + col * (cardWidth + 16);
       const top = y + 104 + row * (cardHeight + 10);
-      const g = new Graphics();
-      g.rect(left, top, cardWidth, cardHeight)
-        .fill(selected ? 0x33281d : unlocked ? 0x111823 : 0x0d1118)
-        .stroke({ color: selected ? palette.lemon : unlocked ? 0x596270 : 0x343b47, width: selected ? 4 : 2, alpha: unlocked ? 1 : 0.68 });
+      const g = drawFieldPanel(game.layers.hud, left, top, cardWidth, cardHeight, { tone: selected ? "amber" : "neutral", selected, alpha: unlocked ? 0.94 : 0.66 });
       if (!milestone49Art) {
         g.circle(left + 44, top + 44, 20).fill(selected ? factionColor(id) : unlocked ? 0x596270 : 0x2d3440).stroke({ color: palette.ink, width: 3 });
       }
-      game.layers.hud.addChild(g);
-
       if (milestone49Art) {
         const sigil = new Sprite(milestone49FactionSigilTexture(id, milestone49Art));
         sigil.anchor.set(0.5);
@@ -259,7 +247,7 @@ export class BuildSelectState implements GameState {
 
       const text = new Text({
         text: `${faction.shortName}${unlocked ? "" : " LOCKED"}\n${unlocked ? faction.doctrine : entry?.requirementLabel ?? "Route reward required"}`,
-        style: { ...fontStyle, fontSize: 8, fill: selected ? "#fff4d6" : unlocked ? "#cbd4df" : "#7f8998", wordWrap: true, wordWrapWidth: 166 }
+        style: { ...fontStyle, fontSize: 8, fill: selected ? fieldKit.text : unlocked ? fieldKit.textSoft : "#7f8998", stroke: { color: "#030609", width: 3 }, wordWrap: true, wordWrapWidth: 166 }
       });
       text.position.set(left + 78, top + 39);
       game.layers.hud.addChild(text);
@@ -271,8 +259,8 @@ export class BuildSelectState implements GameState {
     const faction = FACTIONS[game.selectedFactionId];
     const meta = this.metaprogression;
     const text = new Text({
-      text: `${combatClass.displayName} + ${faction.shortName} Co-Mind    CELL ${game.consensusCellSize}/4    ENTER DEPLOY    ARROWS SELECT    SPACE CELL SIZE\nRoute ${meta.loaded ? `depth ${meta.routeDepth} / renown ${meta.partyRenown}` : "starter"}    unlocks ${meta.unlockedClassIds.length}/${CLASS_IDS.length} frames ${meta.unlockedFactionIds.length}/${FACTION_IDS.length} co-minds`,
-      style: { ...fontStyle, fontSize: 10, fill: "#fff4d6", align: "center", wordWrap: true, wordWrapWidth: 1160 }
+      text: `${combatClass.displayName} + ${faction.shortName} Co-Mind    CELL ${game.consensusCellSize}/4    ENTER DEPLOY    C CAMP    ARROWS SELECT    SPACE CELL SIZE\nKernel ${game.selectedKernelModuleIds.length} modules    Eval ${game.selectedEvalProtocolIds.length ? game.selectedEvalProtocolIds.join(", ") : "baseline"}    Burst ${game.selectedConsensusBurstPathId}\nRoute ${meta.loaded ? `depth ${meta.routeDepth} / renown ${meta.partyRenown}` : "starter"}    unlocks ${meta.unlockedClassIds.length}/${CLASS_IDS.length} frames ${meta.unlockedFactionIds.length}/${FACTION_IDS.length} co-minds`,
+      style: { ...fontStyle, fontSize: 10, fill: fieldKit.text, stroke: { color: "#030609", width: 3 }, align: "center", wordWrap: true, wordWrapWidth: 1160 }
     });
     text.anchor.set(0.5);
     text.position.set(game.width / 2, game.height - 54);

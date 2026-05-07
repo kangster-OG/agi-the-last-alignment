@@ -66,6 +66,23 @@ Use Python/Pillow only for mechanical pipeline work:
 
 Do not use Python/Pillow to create final expressive art. If the generated source is not good enough, regenerate it in ChatGPT Images or PixelLab instead of drawing around it with code.
 
+## No Cheap Art Shortcuts
+
+For gameplay, terrain, props, actors, bosses, VFX, UI art, and any visual-fidelity pass, visual improvements must come from ChatGPT Images, PixelLab, Aseprite, Pixelorama, or another explicit art-source tool.
+
+Do not use Pillow, Python drawing, Pixi Graphics, SVG, CSS, procedural generation, filters, recolors, overlays, gradients, or code-drawn marks to make production art look better.
+
+Code/Pillow is allowed only for mechanical packaging of already-approved source art:
+
+- slicing/cropping;
+- alpha or chroma-key cleanup;
+- padding and anchor normalization;
+- nearest-neighbor resizing after source approval;
+- atlas/contact-sheet packing;
+- validation and proof generation.
+
+If source art is weak, blocked, or unavailable, stop and document the blocker. Do not rescue weak art with code and call it production.
+
 ## Asset Rules
 
 - Official company logos may be used for parody/faction presentation because the user explicitly wants them in the game. Treat them as third-party/parody brand assets, not original MIT-created artwork.

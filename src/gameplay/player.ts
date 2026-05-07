@@ -18,7 +18,12 @@ export function createPlayer(): Player {
     dashTime: 0,
     xp: 0,
     level: 1,
-    invuln: 0
+    invuln: 0,
+    damageFlash: 0,
+    hpPulse: 0,
+    staggerTime: 0,
+    lastDamage: 0,
+    damageFeedbackCooldown: 0
   };
 }
 
@@ -52,6 +57,10 @@ export function updatePlayerFromCommand(player: Player, command: PlayerInputComm
 
   player.dashCooldown = Math.max(0, player.dashCooldown - dt);
   player.invuln = Math.max(0, player.invuln - dt);
+  player.damageFlash = Math.max(0, player.damageFlash - dt);
+  player.hpPulse = Math.max(0, player.hpPulse - dt);
+  player.staggerTime = Math.max(0, player.staggerTime - dt);
+  player.damageFeedbackCooldown = Math.max(0, player.damageFeedbackCooldown - dt);
   if (command.dashPressed && player.dashCooldown <= 0) {
     player.dashTime = 0.16;
     player.dashCooldown = 1.2;
@@ -60,9 +69,10 @@ export function updatePlayerFromCommand(player: Player, command: PlayerInputComm
   player.dashTime = Math.max(0, player.dashTime - dt);
 
   const dashMultiplier = player.dashTime > 0 ? 2.9 : 1;
+  const staggerMultiplier = player.staggerTime > 0 ? 0.42 : 1;
   const speed = player.speed + build.moveSpeedBonus;
-  player.vx = vx * speed * dashMultiplier;
-  player.vy = vy * speed * dashMultiplier;
+  player.vx = vx * speed * dashMultiplier * staggerMultiplier;
+  player.vy = vy * speed * dashMultiplier * staggerMultiplier;
   if (axis.x === 0 && axis.y === 0) {
     player.vx = 0;
     player.vy = 0;
@@ -72,5 +82,7 @@ export function updatePlayerFromCommand(player: Player, command: PlayerInputComm
 }
 
 export function xpNeeded(level: number): number {
-  return 5 + level * 4;
+  if (level <= 3) return 9 + level * 4 + Math.max(0, level - 1) * 2;
+  const lateLevel = level - 3;
+  return 60 + lateLevel * 20 + lateLevel * lateLevel * 16;
 }

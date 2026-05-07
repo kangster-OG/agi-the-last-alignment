@@ -32,6 +32,7 @@ function enemyStatsForFamily(familyId: string, seconds: number): { hp: number; s
   if (familyId === "redaction_angels") return { hp: 34, speed: 1.72, damage: 8, radius: 0.4, color: 0x111820, value: 2 };
   if (familyId === "deepforms") return { hp: 44, speed: 1.34, damage: 9, radius: 0.52, color: 0x2a5c71, value: 2 };
   if (familyId === "choirglass") return { hp: 30, speed: 1.82, damage: 7, radius: 0.37, color: 0xb8f3ff, value: 1 };
+  if (familyId === "speculative_executors") return { hp: 30, speed: 1.95, damage: 8, radius: 0.39, color: 0xff8a3d, value: 2 };
   const tougher = seconds > 34;
   return { hp: tougher ? 34 : 22, speed: tougher ? 1.85 : 1.5, damage: tougher ? 8 : 5, radius: tougher ? 0.42 : 0.34, color: tougher ? palette.plum : 0x1a101f, value: tougher ? 2 : 1 };
 }
@@ -49,6 +50,7 @@ function enemyLabel(familyId: string, sourceRegionId: string): string {
   if (familyId === "redaction_angels") return "Redaction Angel";
   if (familyId === "deepforms") return "Deepform";
   if (familyId === "choirglass") return "Choirglass";
+  if (familyId === "speculative_executors") return "Speculative Executor";
   return "Little Bad Answer";
 }
 

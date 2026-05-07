@@ -4,6 +4,8 @@ export type GameMode =
   | "Boot"
   | "MainMenu"
   | "BuildSelect"
+  | "LastAlignmentHub"
+  | "RouteContractChoice"
   | "OverworldMap"
   | "OnlineCoop"
   | "AssetPreview"

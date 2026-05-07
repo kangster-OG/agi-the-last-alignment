@@ -54,7 +54,7 @@ const PLAYER_FRAME_HEIGHT = 80;
 const PLAYER_FRAMES_PER_DIRECTION = 3;
 const ENEMY_FRAME_WIDTH = 64;
 const ENEMY_FRAME_HEIGHT = 64;
-const ENEMY_FRAME_COUNT = 3;
+const ENEMY_FRAME_COUNT = 4;
 
 let milestone11Promise: Promise<Milestone11ArtTextures> | null = null;
 let milestone11Textures: Milestone11ArtTextures | null = null;

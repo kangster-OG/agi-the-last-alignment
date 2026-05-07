@@ -56,6 +56,23 @@ Pillow/Python must not be used for:
 - faking fidelity with outlines, recolors, rectangles, or synthetic debris;
 - replacing a failed PixelLab/ChatGPT generation with code art and calling it production.
 
+## 2.1 No Cheap Art Shortcuts
+
+This rule is mandatory for gameplay art, terrain, props, characters, bosses, VFX, UI art, and visual-fidelity work.
+
+Codex must not use Pillow, Python drawing, Pixi Graphics, SVG, CSS, procedural generation, filters, recolors, overlays, gradients, or code-drawn marks to make production art look better.
+
+Allowed code/Pillow use is limited to packaging already-approved source art:
+
+- slicing or cropping existing generated or hand-made source art;
+- alpha cleanup and chroma-key removal;
+- padding and anchor normalization;
+- nearest-neighbor resizing only after the source art is accepted;
+- atlas packing and contact-sheet generation;
+- validation, proof generation, and dimension checks.
+
+If an asset needs better visual quality, regenerate or repair it in ChatGPT Images, PixelLab, Aseprite, Pixelorama, or another explicit art-source tool first. If those tools are unavailable or blocked, stop and report the blocker. Do not fake production art with code.
+
 If an asset looks bad after cleanup, regenerate it. Do not paint over failure with scripts.
 
 ## 3. Pixel Style Target

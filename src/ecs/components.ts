@@ -36,4 +36,9 @@ export interface Player {
   xp: number;
   level: number;
   invuln: number;
+  damageFlash: number;
+  hpPulse: number;
+  staggerTime: number;
+  lastDamage: number;
+  damageFeedbackCooldown: number;
 }

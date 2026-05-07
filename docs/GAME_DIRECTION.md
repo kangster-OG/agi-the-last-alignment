@@ -98,6 +98,98 @@ Treat this as a durable requirement:
 
 Implementation implication: move toward larger tilemaps, camera-follow exploration, chunked/streamed prop rendering if needed, spawn regions, and distributed objectives.
 
+## Durable Map-Type Direction
+
+The campaign should not become a sequence of identical survival arenas with different backgrounds. Different map kinds are now a durable design pillar: each major map type should change how a run breathes while preserving the core contract of close isometric movement, autocombat, horde pressure, drafts, objectives, boss/event pressure, and run carryover.
+
+For full difficulty rules, use `docs/DIFFICULTY_AND_MAP_SCALING.md`. That document is the durable contract for how Armistice's 120-second boss-required vertical slice becomes a scalable campaign difficulty model.
+
+Shared contract for every playable map:
+
+- `map type + objective type + pressure source + reward promise + boss/event pattern`
+- normal play keeps the close tactical camera;
+- autocombat remains intact;
+- player decisions come from movement, positioning, route selection, objectives, drafts, risk/reward, and when to hold or leave a zone;
+- each map must expose enough telemetry/proof state to verify its identity without relying on vibes.
+
+Map kinds to build toward:
+
+- **Open Survival Districts:** large explorable districts with landmarks, spawn regions, optional objectives, and boss arrival. Armistice Plaza is the baseline.
+- **Hazard Ecology Maps:** the environment is a major enemy. Cooling Lake Nine should use coolant pools, flooded lanes, cable currents, server vents, and temporary safe islands without changing autocombat.
+- **Route / Transit Maps:** platforms, junctions, false paths, moving arrivals, route switches, and path alignment under horde pressure. Transit Loop Zero is the anchor example.
+- **Defense / Holdout Maps:** defend anchors, server buoys, gates, or relays while deciding when to kite for shards and when to return.
+- **Expedition / Recovery Maps:** explore larger spaces to recover memory shards, pilot signals, route records, or evidence, then extract.
+- **Boss-Hunt Maps:** the boss stalks, retreats, corrupts districts, or must be flushed out through objectives instead of only appearing on a timer.
+- **Puzzle-Pressure Maps:** combat-readable spatial puzzles such as aligning signals, routing beams through pylons, dragging enemies into breach seals, or choosing which corrupted door to stabilize.
+- **Micro-Run Challenge Maps:** shorter spicy route modifiers for caches, secret roads, faction tests, and high-risk shortcuts.
+
+Content taxonomy:
+
+- **Alignment Nodes:** full survival/exploration levels.
+- **Breach Arenas:** hazard-heavy combat maps.
+- **Faction Relays:** defense/objective maps with build or route rewards.
+- **Memory Caches:** recovery, lore, secret, or meta-unlock maps.
+- **Boss Gates:** map-as-boss encounters.
+- **Shortcut Routes:** high-risk micro-runs.
+- **Refuge Camps:** non-combat staging, tuning, events, and carryover.
+
+Examples:
+
+- Armistice Plaza: `Open Survival District + Treaty Anchors + faction relay pressure + Proof Tokens/mastery + Oath-Eater`.
+- Cooling Lake Nine: `Hazard Ecology + server buoys + coolant/cable pressure + economy/burst rewards + Motherboard Eel`.
+- Transit Loop Zero: `Route/Transit + platform alignment + false schedules + movement/boss rewards + Station That Arrives`.
+- Memory Cache: `Expedition/Recovery + shard records + context rot + secrets/lore unlocks + optional curator event`.
+
+## Durable Difficulty Direction
+
+Armistice Plaza is now the difficulty reference contract, not just the art reference:
+
+- 120-second minimum contract;
+- Oath-Eater arrives mid-run;
+- the boss must be defeated to clear;
+- kills cannot bypass the boss;
+- optional Treaty Anchors add pressure and reward but do not replace the clear condition;
+- early drafts establish a build, while late drafts slow down so power spikes feel earned.
+
+Future levels should scale with layered difficulty instead of flat stat inflation:
+
+- **Baseline Contract:** the campaign version of the map.
+- **Eval Pressure:** behavior-changing adversarial modifiers.
+- **Route Risk:** strategic pre-run risk/reward contracts.
+- **World Tier:** campaign progression complexity.
+- **Mastery Variant:** post-clear challenge versions for secrets, badges, and harder rewards.
+
+Rotate difficulty levers by map kind so the game does not become stale: Density Pressure, Spatial Pressure, Objective Pressure, Boss Pressure, Draft Pressure, Economy Pressure, Information Pressure, Time Pressure, Co-op Pressure, and Route Memory Pressure. Later maps should usually emphasize two or three levers clearly rather than simply increasing every number.
+
+## Durable Build-System Direction
+
+The full game should treat itemization as a build grammar, not a larger pile of stat cards. Use `docs/BUILD_ARCHETYPES_AND_ITEMIZATION.md` as the source of truth before adding new weapons, passives, emergency patches, route rewards, fusions, or rare rule-breakers.
+
+Core rules:
+
+- autocombat stays intact;
+- every run should form a readable combat thesis;
+- primary auto-weapons define the run's combat body;
+- secondary weapon protocols add additional automated behaviors;
+- passive processes change economy, defense, objectives, targeting, movement, risk, or co-op play;
+- protocol fusions/evolutions must be legible and behavior-changing;
+- rare rule-breakers should create memorable run identities and be called out in Summary/Camp;
+- descriptions stay stat-first and player-facing, with AGI flavor second;
+- build state must be proof-visible through `render_game_to_text()`.
+
+Full-game archetypes to support:
+
+- **Refusal Tank:** aura, shields, denial fields, objective durability.
+- **Prediction Sniper:** long-range precision, pierce, boss focus, target priority.
+- **Swarm Compiler:** drones, forks, repeated triggers, pet-style pressure.
+- **Objective Engineer:** anchor repair, turrets, map-owned support fire, extraction safety.
+- **Chaos Red-Team:** volatile risk/reward, low-HP damage, cursed draft pressure.
+- **Shard Economist:** pickup range, rarity, rerolls, route reward scaling.
+- **Time / Protocol Control:** mines, delays, slows, snares, hazard routing.
+- **Co-op Relay:** shared charge, rescue, ally shields, split-objective power.
+
+The first runtime expansion target should prioritize `vector_lance`, `signal_pulse`, `rift_mine`, `context_saw`, `patch_mortar`, `red_team_spike`, `coherence_indexer`, `field_triage_loop`, `anchor_bodyguard`, `prediction_priority`, `low_hp_adversary`, `cathedral_of_no`, `causal_railgun`, `armistice_artillery`, and `unbounded_context`.
+
 ## Camera Scale Versus World Scale
 
 The user likes that our maps are larger than the reference, but wants the moment-to-moment point of view to match the reference's closer tactical read.

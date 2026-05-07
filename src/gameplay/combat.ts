@@ -3,6 +3,13 @@ import type { Entity, Player } from "../ecs/components";
 import type { World } from "../ecs/World";
 import { spawnXp } from "./pickups";
 
+export interface PlayerDamageEvent {
+  damage: number;
+  source: "contact";
+  sourceX: number;
+  sourceY: number;
+}
+
 export function resolveProjectileHits(world: World): number {
   let kills = 0;
   for (const projectile of world.entities) {
@@ -19,7 +26,7 @@ export function resolveProjectileHits(world: World): number {
       if (!circlesOverlap(projectile.worldX, projectile.worldY, projectile.radius, enemy.worldX, enemy.worldY, enemy.radius)) continue;
       enemy.hp -= projectile.damage;
       projectile.value -= 1;
-      spawnCombatHitEffect(world, enemy.worldX, enemy.worldY, projectile.damage);
+      spawnCombatHitEffect(world, enemy.worldX, enemy.worldY, projectile.damage, projectile.label);
       if (enemy.hp <= 0) {
         enemy.active = false;
         kills += 1;
@@ -34,7 +41,7 @@ export function resolveProjectileHits(world: World): number {
   return kills;
 }
 
-function spawnCombatHitEffect(world: World, worldX: number, worldY: number, damage: number): void {
+function spawnCombatHitEffect(world: World, worldX: number, worldY: number, damage: number, projectileLabel = ""): void {
   const text = world.spawn("damageText");
   text.worldX = worldX;
   text.worldY = worldY;
@@ -51,11 +58,11 @@ function spawnCombatHitEffect(world: World, worldX: number, worldY: number, dama
   burst.life = 0.34;
   burst.value = 0.34;
   burst.color = 0xffd166;
-  burst.label = "impact";
+  burst.label = projectileLabel ? `impact:${projectileLabel}` : "impact";
 }
 
-export function resolveEnemyPlayerHits(world: World, player: Player): void {
-  if (player.invuln > 0) return;
+export function resolveEnemyPlayerHits(world: World, player: Player): PlayerDamageEvent | null {
+  if (player.invuln > 0) return null;
   for (const enemy of world.entities) {
     if (!enemy.active || enemy.kind !== "enemy") continue;
     if (!circlesOverlap(enemy.worldX, enemy.worldY, enemy.radius, player.worldX, player.worldY, player.radius)) continue;
@@ -66,6 +73,7 @@ export function resolveEnemyPlayerHits(world: World, player: Player): void {
     const len = Math.hypot(dx, dy) || 1;
     enemy.worldX += (dx / len) * 0.75;
     enemy.worldY += (dy / len) * 0.75;
-    break;
+    return { damage: enemy.damage, source: "contact", sourceX: enemy.worldX, sourceY: enemy.worldY };
   }
+  return null;
 }
