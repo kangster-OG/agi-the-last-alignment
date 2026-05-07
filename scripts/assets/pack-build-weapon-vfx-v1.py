@@ -5,39 +5,39 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCE_DIR = ROOT / "assets/concepts/chatgpt_refs/build_weapon_vfx_v1"
-SOURCE = SOURCE_DIR / "build_weapon_vfx_source_v1.png"
-KEYED = SOURCE_DIR / "build_weapon_vfx_source_v1_keyed.png"
+SOURCE_DIR = ROOT / "assets/concepts/chatgpt_refs/build_weapon_vfx_v2"
+SOURCE = SOURCE_DIR / "build_weapon_vfx_source_v2.png"
+KEYED = SOURCE_DIR / "build_weapon_vfx_source_v2_keyed.png"
 OUT = ROOT / "assets/sprites/effects/build_weapon_vfx_v1.png"
 
 FRAME_W = 192
 FRAME_H = 128
 
 CELLS = [
-    ("vectorProjectile", (0, 0, 384, 175)),
-    ("vectorTrail", (384, 0, 768, 175)),
-    ("vectorChargedTrail", (768, 0, 1152, 175)),
-    ("vectorImpact", (1152, 0, 1536, 175)),
-    ("signalProjectile", (0, 175, 384, 360)),
-    ("signalRing", (384, 175, 768, 360)),
-    ("signalBurst", (768, 175, 1152, 360)),
-    ("signalImpact", (1152, 175, 1536, 360)),
-    ("contextSaw", (0, 360, 384, 535)),
-    ("contextSawSpin", (384, 360, 768, 535)),
-    ("contextSawLarge", (768, 360, 1152, 535)),
-    ("contextSawShardField", (1152, 360, 1536, 535)),
-    ("patchMortarShell", (0, 535, 384, 690)),
-    ("patchMortarTrail", (384, 535, 768, 690)),
-    ("patchMortarArc", (768, 535, 1152, 690)),
-    ("patchMortarImpact", (1152, 535, 1536, 690)),
-    ("causalRailgunProjectile", (0, 690, 384, 830)),
-    ("causalRailgunBeam", (384, 690, 768, 830)),
-    ("causalRailgunChargedBeam", (768, 690, 1152, 830)),
-    ("causalRailgunImpact", (1152, 690, 1536, 830)),
-    ("coherenceIndexerIcon", (0, 830, 384, 1024)),
-    ("anchorBodyguardIcon", (384, 830, 768, 1024)),
-    ("predictionPriorityIcon", (768, 830, 1152, 1024)),
-    ("causalRailgunIcon", (1152, 830, 1536, 1024)),
+    ("vectorProjectile", (8, 250, 92, 430)),
+    ("vectorTrail", (82, 235, 180, 435)),
+    ("vectorChargedTrail", (172, 220, 300, 450)),
+    ("vectorImpact", (288, 205, 430, 455)),
+    ("signalProjectile", (420, 260, 505, 425)),
+    ("signalRing", (505, 235, 625, 435)),
+    ("signalBurst", (615, 220, 750, 450)),
+    ("signalImpact", (620, 220, 758, 450)),
+    ("contextSaw", (760, 230, 850, 450)),
+    ("contextSawSpin", (860, 230, 960, 450)),
+    ("contextSawLarge", (965, 230, 1080, 450)),
+    ("contextSawShardField", (960, 230, 1085, 450)),
+    ("patchMortarShell", (1090, 245, 1176, 465)),
+    ("patchMortarTrail", (1172, 215, 1265, 485)),
+    ("patchMortarArc", (1260, 145, 1470, 520)),
+    ("patchMortarImpact", (1475, 260, 1595, 465)),
+    ("causalRailgunProjectile", (1595, 230, 1705, 475)),
+    ("causalRailgunBeam", (1698, 205, 1798, 500)),
+    ("causalRailgunChargedBeam", (1810, 175, 1915, 520)),
+    ("causalRailgunImpact", (1915, 250, 2020, 470)),
+    ("coherenceIndexerIcon", (2018, 275, 2092, 430)),
+    ("anchorBodyguardIcon", (2090, 240, 2170, 465)),
+    ("predictionPriorityIcon", (1478, 250, 1555, 435)),
+    ("causalRailgunIcon", (2090, 240, 2170, 465)),
 ]
 
 KEEP_LARGEST_COMPONENT = {

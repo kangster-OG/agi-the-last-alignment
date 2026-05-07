@@ -1106,6 +1106,7 @@ export class LevelRunState implements GameState {
           projectile.radius = 0.22;
           projectile.damage = damage * 0.58;
           projectile.life = 0.92;
+          projectile.maxLife = projectile.life;
           projectile.value = Math.max(1, this.build.projectilePierce);
           projectile.color = path.color;
           projectile.label = path.name;
@@ -2082,7 +2083,7 @@ export class LevelRunState implements GameState {
           }
           this.drawProductionEffectSprite(`projectile:${entity.id}`, combatArt.combatEffects.projectile, entity.worldX, entity.worldY, 1.02 + pierceScale, 0.72, entity.worldX + entity.worldY);
         }
-      } else {
+      } else if (game.showDebugHud) {
         this.projectileGraphics.rect(p.screenX - 5, p.screenY - 22, 10, 8).fill(entity.color).stroke({ color: palette.ink, width: 2 });
       }
     }
@@ -2283,11 +2284,14 @@ export class LevelRunState implements GameState {
     this.entityGraphics.ellipse(p.screenX, p.screenY + 7, 17, 6).stroke({ color: runtime.color, width: 2, alpha: 0.75 });
     const milestone49Art = getMilestone49PlayableArtTextures();
     const milestone12Art = getMilestone12ArtTextures();
-    const texture = milestone49Art
-      ? milestone49PlayerTextureFor(runtime.classId, runtime.player, this.seconds + runtime.slot * 0.17, milestone49Art)
-      : milestone12Art
-      ? milestone12PlayerTextureFor(runtime.player, runtime.slot, this.seconds + runtime.slot * 0.17, milestone12Art)
-      : milestone11PlayerTextureFor(runtime.player, this.seconds + runtime.slot * 0.17, art);
+    const texture =
+      runtime.inputSource === "local_simulated_peer"
+        ? milestone11PlayerTextureFor(runtime.player, this.seconds + runtime.slot * 0.17, art)
+        : milestone49Art
+          ? milestone49PlayerTextureFor(runtime.classId, runtime.player, this.seconds + runtime.slot * 0.17, milestone49Art)
+          : milestone12Art
+            ? milestone12PlayerTextureFor(runtime.player, runtime.slot, this.seconds + runtime.slot * 0.17, milestone12Art)
+            : milestone11PlayerTextureFor(runtime.player, this.seconds + runtime.slot * 0.17, art);
     const moving = Math.hypot(runtime.player.vx, runtime.player.vy) > 0.05;
     const breath = moving ? 0 : Math.sin(this.seconds * 4.2 + runtime.slot) * 0.025;
     const sprite = this.drawProductionWorldSprite(`player:${runtime.id}`, texture, runtime.player.worldX, runtime.player.worldY, 1.0 + breath, 0.9);
@@ -2345,6 +2349,26 @@ export class LevelRunState implements GameState {
     sprite.tint = 0xffffff;
     sprite.rotation = rotation;
     placeWorldSprite(sprite, worldX, worldY, scale, zIndex, anchorY);
+  }
+
+  private drawProductionEffectSpriteOffset(
+    key: string,
+    texture: Texture,
+    worldX: number,
+    worldY: number,
+    scale: number,
+    anchorY: number,
+    zIndex: number,
+    alpha = 1,
+    rotation = 0,
+    screenOffsetY = 0
+  ): void {
+    const sprite = this.spriteForProductionAsset(key, texture);
+    sprite.alpha = alpha;
+    sprite.tint = 0xffffff;
+    sprite.rotation = rotation;
+    placeWorldSprite(sprite, worldX, worldY, scale, zIndex, anchorY);
+    sprite.y += screenOffsetY;
   }
 
   private drawOathEventSprite(key: string, frame: OathEaterEventDecalKey, worldX: number, worldY: number, scale: number, anchorY: number, zIndex: number, alpha = 1, rotation = 0): void {
@@ -2440,18 +2464,29 @@ export class LevelRunState implements GameState {
       return true;
     }
     if (entity.label === "signal pulse") {
-      const frame = entity.life > 0.42 ? "signalProjectile" : "signalRing";
-      this.drawProductionEffectSprite(`build-vfx:signal:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.48 + pierceScale, 0.58, z, 0.92, rotation);
+      const maxLife = Math.max(0.01, entity.maxLife || 0.72);
+      const progress = clamp(1 - entity.life / maxLife, 0, 1);
+      const frame: BuildWeaponVfxFrame = progress < 0.28 ? "signalProjectile" : progress < 0.68 ? "signalRing" : "signalBurst";
+      const echoAlpha = Math.max(0.18, 0.42 - progress * 0.22);
+      this.drawProductionEffectSprite(`build-vfx:signal-echo:${entity.id}`, buildArt.frames.signalRing, entity.worldX - entity.vx * 0.028, entity.worldY - entity.vy * 0.028, 0.42 + progress * 0.16 + pierceScale, 0.58, z - 0.03, echoAlpha, rotation);
+      this.drawProductionEffectSprite(`build-vfx:signal:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.44 + progress * 0.16 + pierceScale, 0.58, z, 0.92, rotation + progress * 0.22);
       return true;
     }
     if (entity.label === "context saw") {
-      const frame: BuildWeaponVfxFrame = Math.floor((this.seconds * 12 + entity.id) % 3) === 0 ? "contextSawSpin" : "contextSaw";
-      this.drawProductionEffectSprite(`build-vfx:saw:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.44 + pierceScale, 0.6, z, 0.96, this.seconds * 5 + entity.id);
+      const frameCycle = Math.floor((this.seconds * 18 + entity.id) % 3);
+      const frame: BuildWeaponVfxFrame = frameCycle === 0 ? "contextSaw" : frameCycle === 1 ? "contextSawSpin" : "contextSawLarge";
+      this.drawProductionEffectSprite(`build-vfx:saw-ghost:${entity.id}`, buildArt.frames.contextSawSpin, entity.worldX - entity.vx * 0.025, entity.worldY - entity.vy * 0.025, 0.38 + pierceScale, 0.6, z - 0.03, 0.34, this.seconds * 7 + entity.id);
+      this.drawProductionEffectSprite(`build-vfx:saw:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.42 + pierceScale + frameCycle * 0.015, 0.6, z, 0.98, this.seconds * 9 + entity.id);
       return true;
     }
     if (entity.label === "patch mortar") {
-      this.drawProductionEffectSprite(`build-vfx:mortar-trail:${entity.id}`, buildArt.frames.patchMortarTrail, entity.worldX - entity.vx * 0.04, entity.worldY - entity.vy * 0.04, 0.5, 0.62, z - 0.02, 0.66, rotation);
-      this.drawProductionEffectSprite(`build-vfx:mortar:${entity.id}`, buildArt.frames.patchMortarArc, entity.worldX, entity.worldY, 0.44 + pierceScale, 0.62, z, 0.96, rotation);
+      const maxLife = Math.max(0.01, entity.maxLife || 1.45);
+      const progress = clamp(1 - entity.life / maxLife, 0, 1);
+      const arcLift = -Math.sin(progress * Math.PI) * 54;
+      const frame: BuildWeaponVfxFrame = progress < 0.18 ? "patchMortarShell" : progress < 0.72 ? "patchMortarArc" : "patchMortarTrail";
+      this.drawProductionEffectSprite(`build-vfx:mortar-shadow:${entity.id}`, buildArt.frames.patchMortarTrail, entity.worldX, entity.worldY, 0.44 + progress * 0.1, 0.72, z - 0.08, 0.18 + progress * 0.16, rotation);
+      this.drawProductionEffectSpriteOffset(`build-vfx:mortar-trail:${entity.id}`, buildArt.frames.patchMortarTrail, entity.worldX - entity.vx * 0.05, entity.worldY - entity.vy * 0.05, 0.52 + progress * 0.14, 0.62, z - 0.02, 0.62, rotation, arcLift + 12);
+      this.drawProductionEffectSpriteOffset(`build-vfx:mortar:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.56 + pierceScale + progress * 0.14, 0.62, z, 0.98, rotation + progress * 0.8, arcLift);
       return true;
     }
     if (entity.label === "causal railgun") {

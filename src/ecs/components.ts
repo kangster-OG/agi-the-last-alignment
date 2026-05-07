@@ -14,6 +14,7 @@ export interface Entity {
   damage: number;
   speed: number;
   life: number;
+  maxLife: number;
   value: number;
   color: number;
   boss: boolean;

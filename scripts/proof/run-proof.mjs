@@ -112,7 +112,7 @@ async function runScenario(name) {
     await page.waitForFunction(() => typeof window.render_game_to_text === "function");
     await page.waitForSelector("canvas");
     await enterArena(page);
-    await advance(page, 1150);
+    await advance(page, 1300);
     const text = await capture(page, "player-damage-contact");
     assert(text.mode === "LevelRun", `expected LevelRun for player damage proof, got ${text.mode}`);
     assert(text.player?.hp < text.player?.maxHp, "expected proof player damage to reduce HP");
@@ -280,22 +280,22 @@ async function runScenario(name) {
       assert(run.level?.director?.totalSpawned >= 70, `expected heavier progressive horde count, got ${run.level?.director?.totalSpawned}`);
     }
     await capture(page, "10-boss-and-synergy-window");
-    await advanceRunHandlingDrafts(page, 95000);
+    await advanceRunHandlingDrafts(page, 125000);
     let summary = await state(page);
     if (summary.mode === "LevelRun" && summary.level?.rogueliteRun?.extractionGate?.active) {
       assert(summary.level?.rogueliteRun?.victoryCondition?.clearReady === true, "expected Armistice clear readiness before extraction");
       assert(summary.level?.rogueliteRun?.extractionGate?.distanceToPlayer > 0.4, "expected extraction gate to appear away from the player");
       await capture(page, "11-extraction-gate");
-      await advanceRunHandlingDrafts(page, 22000);
+      await advanceRunHandlingDrafts(page, 36000);
       summary = await state(page);
     }
     if (summary.mode === "UpgradeDraft") {
       await press(page, "Digit1", 2);
-      await advanceRunHandlingDrafts(page, 30000);
+      await advanceRunHandlingDrafts(page, 42000);
       summary = await state(page);
     }
     if (summary.mode === "LevelRun" && summary.level?.rogueliteRun?.extractionGate?.active) {
-      await advanceRunHandlingDrafts(page, 22000);
+      await advanceRunHandlingDrafts(page, 36000);
       summary = await state(page);
     }
     assert(["LevelComplete", "GameOver"].includes(summary.mode), `expected reference run summary, got ${summary.mode}`);
@@ -6288,8 +6288,7 @@ async function reachBossIntro(page, timeoutMs) {
 async function chooseDraftIfNeeded(page) {
   const text = await state(page);
   if (text.mode === "UpgradeDraft") {
-    await page.keyboard.press("Digit1");
-    await advance(page, 100);
+    await press(page, "Digit1", 4);
   }
 }
 
@@ -6298,8 +6297,7 @@ async function chooseDraftById(page, id) {
   assert(text.mode === "UpgradeDraft", `expected UpgradeDraft before choosing ${id}`);
   const index = text.draft?.cards?.findIndex((card) => card.id === id) ?? -1;
   assert(index >= 0, `expected draft card ${id}; saw ${(text.draft?.cards ?? []).map((card) => card.id).join(", ")}`);
-  await page.keyboard.press(`Digit${index + 1}`);
-  await advance(page, 100);
+  await press(page, `Digit${index + 1}`, 4);
 }
 
 async function waitForProjectileLabel(page, label, timeoutMs) {
@@ -6310,7 +6308,7 @@ async function waitForProjectileLabel(page, label, timeoutMs) {
     const text = await state(page);
     if (text.projectiles?.some((projectile) => projectile.label === label)) return text;
     if (text.mode === "UpgradeDraft") {
-      await advance(page, 120);
+      await chooseDraftIfNeeded(page);
     } else {
       const key = survivalKeyForState(text, Date.now() - started, index, keys);
       await page.keyboard.down(key);

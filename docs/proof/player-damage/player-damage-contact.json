@@ -70,6 +70,9 @@
   },
   "build": {
     "weaponId": "refusal_shard",
+    "secondaryProtocols": [],
+    "passiveProcesses": [],
+    "fusions": [],
     "weaponDamage": 18,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
@@ -86,6 +89,38 @@
     "consensusBurstRevive": 0,
     "objectiveRepairRate": 0,
     "objectiveDefense": 0,
+    "contextSaw": 0,
+    "patchMortar": 0,
+    "coherenceIndexer": 0,
+    "anchorBodyguard": 0,
+    "predictionPriority": 0,
+    "causalRailgun": 0,
+    "slotCaps": {
+      "primary": {
+        "used": 1,
+        "cap": 1,
+        "current": "refusal_shard"
+      },
+      "secondary": {
+        "used": 0,
+        "cap": 2,
+        "current": []
+      },
+      "passive": {
+        "used": 0,
+        "cap": 4,
+        "current": []
+      },
+      "fusion": {
+        "used": 0,
+        "cap": 1,
+        "current": []
+      },
+      "consensusBurst": {
+        "used": 1,
+        "cap": 1
+      }
+    },
     "buildKit": {
       "schemaVersion": 1,
       "classId": "accord_striker",
@@ -149,7 +184,7 @@
   "objective": "optional anchors 0/3 // AGI pressure in 40s",
   "performance": {
     "entitiesAllocated": 13,
-    "activeEntities": 13,
+    "activeEntities": 12,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -227,17 +262,17 @@
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 5012
+        "atMs": 3883
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 2157
+        "atMs": 1650
       },
       {
         "id": "ui.enter_build_select",
         "kind": "ui",
-        "atMs": 1631
+        "atMs": 1217
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -339,6 +374,7 @@
     "armisticeTileAtlasEnabled": true,
     "armisticeAuthoredGroundReady": true,
     "playerDamageVfxReady": true,
+    "buildWeaponVfxReady": true,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
@@ -432,17 +468,17 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 149,
+    "totalAssets": 152,
     "countsByStatus": {
-      "concept": 47,
+      "concept": 49,
       "raw": 15,
       "code_placeholder": 16,
-      "production": 69,
+      "production": 70,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 69
+    "productionAssets": 70
   },
   "player": {
     "worldX": 0.14,
@@ -455,9 +491,9 @@
     "xp": 0,
     "level": 1,
     "damageFeedback": {
-      "flash": 0.3,
-      "hpPulse": 0.43,
-      "stagger": 0.06,
+      "flash": 0.25,
+      "hpPulse": 0.38,
+      "stagger": 0.01,
       "lastDamage": 12
     }
   },
@@ -538,9 +574,9 @@
       "xp": 0,
       "level": 1,
       "damageFeedback": {
-        "flash": 0.3,
-        "hpPulse": 0.43,
-        "stagger": 0.06,
+        "flash": 0.25,
+        "hpPulse": 0.38,
+        "stagger": 0.01,
         "lastDamage": 12
       },
       "downed": false
@@ -643,9 +679,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 146,
+          "tick": 149,
           "playerId": "p1",
-          "sequence": 146,
+          "sequence": 149,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -654,8 +690,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 146,
-        "seconds": 2.43,
+        "tick": 149,
+        "seconds": 2.48,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -744,8 +780,8 @@
             "id": 2,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": -6.38,
-            "worldY": -2.35,
+            "worldX": -6.31,
+            "worldY": -2.32,
             "hp": 22,
             "boss": false
           },
@@ -753,8 +789,8 @@
             "id": 3,
             "familyId": "bad_outputs",
             "sourceRegionId": "",
-            "worldX": 7.04,
-            "worldY": -3.35,
+            "worldX": 6.98,
+            "worldY": -3.32,
             "hp": 22,
             "boss": false
           },
@@ -762,8 +798,8 @@
             "id": 6,
             "familyId": "eval_wraiths",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -27.4,
-            "worldY": 17.12,
+            "worldX": -27.32,
+            "worldY": 17.07,
             "hp": 28,
             "boss": false
           },
@@ -771,8 +807,8 @@
             "id": 7,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -18.12,
-            "worldY": 19.97,
+            "worldX": -18.05,
+            "worldY": 19.92,
             "hp": 22,
             "boss": false
           },
@@ -780,8 +816,8 @@
             "id": 12,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -18.7,
-            "worldY": 20.37,
+            "worldX": -18.61,
+            "worldY": 20.32,
             "hp": 27,
             "boss": false
           },
@@ -789,8 +825,8 @@
             "id": 13,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "treaty_monument_oath_pages",
-            "worldX": -0.78,
-            "worldY": 4.94,
+            "worldX": -0.77,
+            "worldY": 4.86,
             "hp": 27,
             "boss": false
           }
@@ -806,20 +842,20 @@
         "projectiles": [
           {
             "id": 5,
-            "worldX": -4.92,
-            "worldY": -1.81,
+            "worldX": -5.32,
+            "worldY": -1.96,
             "pierce": 1
           },
           {
             "id": 8,
-            "worldX": 6.21,
-            "worldY": 6.01,
+            "worldX": 6.51,
+            "worldY": 6.31,
             "pierce": 1
           },
           {
             "id": 9,
-            "worldX": -1.73,
-            "worldY": -0.64,
+            "worldX": -2.13,
+            "worldY": -0.78,
             "pierce": 1
           }
         ]
@@ -829,7 +865,7 @@
       "projectileCount": 3,
       "impactCount": 0,
       "pickupSparkleCount": 0,
-      "damageBadgeCount": 2,
+      "damageBadgeCount": 1,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
@@ -940,7 +976,7 @@
           {
             "id": "anchor.treaty",
             "name": "Treaty Monument Anchor",
-            "progress": 68,
+            "progress": 70,
             "completed": false,
             "attacked": 0
           },
@@ -976,6 +1012,45 @@
         "phase": "PHASE 1 // HORDE CONTACT"
       },
       "firstRunArcPhase": "PHASE 1 // HORDE CONTACT",
+      "buildGrammar": {
+        "primaryWeaponId": "refusal_shard",
+        "secondaryProtocols": [],
+        "passiveProcesses": [],
+        "fusions": [],
+        "slotCaps": {
+          "primary": {
+            "used": 1,
+            "cap": 1,
+            "current": "refusal_shard"
+          },
+          "secondary": {
+            "used": 0,
+            "cap": 2,
+            "current": []
+          },
+          "passive": {
+            "used": 0,
+            "cap": 4,
+            "current": []
+          },
+          "fusion": {
+            "used": 0,
+            "cap": 1,
+            "current": []
+          },
+          "consensusBurst": {
+            "used": 1,
+            "cap": 1
+          }
+        },
+        "contextSawRank": 0,
+        "patchMortarRank": 0,
+        "coherenceIndexerRank": 0,
+        "anchorBodyguardRank": 0,
+        "predictionPriorityRank": 0,
+        "causalRailgunRank": 0,
+        "fusionHints": []
+      },
       "buildThesis": {
         "thesis": {
           "name": "Projectile Thesis",
@@ -1058,7 +1133,7 @@
       },
       "protocolSlotsInstalled": []
     },
-    "seconds": 2.43,
+    "seconds": 2.48,
     "kills": 1,
     "bossSpawned": false,
     "bossDefeated": false
@@ -1069,8 +1144,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": -6.38,
-      "worldY": -2.35,
+      "worldX": -6.31,
+      "worldY": -2.32,
       "hp": 22,
       "boss": false
     },
@@ -1079,8 +1154,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "",
-      "worldX": 7.04,
-      "worldY": -3.35,
+      "worldX": 6.98,
+      "worldY": -3.32,
       "hp": 22,
       "boss": false
     },
@@ -1089,8 +1164,8 @@
       "label": "Eval Wraith",
       "familyId": "eval_wraiths",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -27.4,
-      "worldY": 17.12,
+      "worldX": -27.32,
+      "worldY": 17.07,
       "hp": 28,
       "boss": false
     },
@@ -1099,8 +1174,8 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -18.12,
-      "worldY": 19.97,
+      "worldX": -18.05,
+      "worldY": 19.92,
       "hp": 22,
       "boss": false
     },
@@ -1109,8 +1184,8 @@
       "label": "Context Crab",
       "familyId": "context_rot_crabs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -18.7,
-      "worldY": 20.37,
+      "worldX": -18.61,
+      "worldY": 20.32,
       "hp": 27,
       "boss": false
     },
@@ -1119,8 +1194,8 @@
       "label": "Torn Oath Page",
       "familyId": "context_rot_crabs",
       "sourceRegionId": "treaty_monument_oath_pages",
-      "worldX": -0.78,
-      "worldY": 4.94,
+      "worldX": -0.77,
+      "worldY": 4.86,
       "hp": 27,
       "boss": false
     }
@@ -1134,20 +1209,20 @@
   ],
   "projectiles": [
     {
-      "worldX": -4.92,
-      "worldY": -1.81,
+      "worldX": -5.32,
+      "worldY": -1.96,
       "pierce": 1,
       "label": "refusal shard"
     },
     {
-      "worldX": 6.21,
-      "worldY": 6.01,
+      "worldX": 6.51,
+      "worldY": 6.31,
       "pierce": 1,
       "label": "refusal shard"
     },
     {
-      "worldX": -1.73,
-      "worldY": -0.64,
+      "worldX": -2.13,
+      "worldY": -0.78,
       "pierce": 1,
       "label": "refusal shard"
     }

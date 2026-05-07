@@ -24,6 +24,7 @@ Use these as structural inspiration only. Do not copy names, art, UI, jokes, cha
 - Full-game itemization must support solo and 1-4 player Consensus Cell play.
 - Future production weapon/item/VFX art must follow the source-art pipeline. No code-authored expressive production art.
 - Build systems must be proof-visible through `render_game_to_text()` before they are considered real.
+- Production gameplay must not use rectangle/color-block placeholder fallbacks for weapons, peers, icons, or impacts. Debug-only fallbacks are allowed only when explicitly gated by debug HUD/proof flags.
 
 ## Run Shape Target
 
@@ -65,6 +66,30 @@ Every weapon, passive, item, or reward should answer at least one of these:
 - Does this change co-op positioning or rescue logic?
 
 If the answer is only "more damage" or "less cooldown," it belongs as a minor level-up on an existing thing, not as a headline draft card.
+
+## Weapon Visual And Animation Standard
+
+The first expanded build-grammar pass exposed an important failure mode: mechanics can be real while the player still reads them as placeholder boxes or static floating art. That is not acceptable for full-game weapons.
+
+Every new primary, secondary, passive-triggered attack, fusion, or major rule-breaker that creates gameplay visuals must ship with:
+
+- source-backed icon art for draft cards and the current-build HUD;
+- source-backed projectile, travel, trail, or aura frames as appropriate;
+- source-backed impact, detonation, payoff, or field frames;
+- runtime animation driven by lifetime/progress or state, not just a single sprite sliding across the map;
+- close-camera proof captures showing the effect during live play;
+- `render_game_to_text()` telemetry sufficient for proofs to know which weapon/fusion is active.
+
+The current accepted build VFX runtime atlas path is `assets/sprites/effects/build_weapon_vfx_v1.png`, but the active source is `assets/concepts/chatgpt_refs/build_weapon_vfx_v2/build_weapon_vfx_source_v2.png`. The path stayed stable to avoid broad import churn. Future threads should treat the v2 source and its README/provenance as the current active weapon VFX baseline.
+
+Specific standards from the current runtime slice:
+
+- `signal_pulse` should read as pulse/ring/burst behavior with enough pierce/lifetime to be visible.
+- `context_saw` should read as orbiting animated saw frames with motion echo.
+- `patch_mortar` should read as launch, arc, descent, ground shadow, and impact detonation.
+- `causal_railgun` should read as a distinct charged/piercing rail behavior, not a recolored Refusal Shard.
+
+If a future weapon lacks source art, keep it planned or proof/debug-only. Do not fill the live playfield with Pixi rectangles, orange boxes, SVG marks, CSS effects, procedural particles, or Pillow-drawn expressive art.
 
 ## Option Families
 

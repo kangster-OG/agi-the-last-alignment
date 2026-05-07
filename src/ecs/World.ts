@@ -15,6 +15,7 @@ function makeEntity(id: number): Entity {
     damage: 1,
     speed: 1,
     life: 0,
+    maxLife: 0,
     value: 0,
     color: 0xffffff,
     boss: false,
@@ -40,6 +41,7 @@ export class World {
     entity.vx = 0;
     entity.vy = 0;
     entity.life = 0;
+    entity.maxLife = 0;
     entity.value = 0;
     entity.boss = false;
     entity.label = "";

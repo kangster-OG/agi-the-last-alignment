@@ -1,6 +1,6 @@
 # Fresh Thread Current State
 
-Date: 2026-05-06
+Date: 2026-05-07
 
 Purpose: give a fresh Codex thread the current working truth without forcing it to reconstruct weeks of decisions from chat history or the full `progress.md` chronology.
 
@@ -51,8 +51,9 @@ Armistice Plaza is the accepted vertical-slice reference for future work.
 It proves:
 
 - close tactical isometric camera inside a larger authored map;
-- source-backed terrain, props, player, enemies, boss, VFX, extraction gate, damage feedback, and patch-item icons;
+- source-backed terrain, props, player, enemies, boss, VFX, extraction gate, damage feedback, patch-item icons, and build-weapon VFX;
 - route contract choice, Alignment Kernel, Adversarial Eval, Consensus Burst, tagged drafts, Treaty Anchors, Oath-Eater boss, extraction gate, summary, camp carryover, and Proof Token reward loop;
+- source-backed draft icons, projectile/trail/impact frames, and progress-based animation for the first expanded weapon grammar;
 - deterministic proof hooks: `window.render_game_to_text()` and `window.advanceTime(ms)`.
 
 Do not reopen these Armistice areas by default:
@@ -63,6 +64,8 @@ Do not reopen these Armistice areas by default:
 - Oath-Eater boss scale, centered-frame runtime choice, and current presentation;
 - Benchmark Gremlin fidelity/readability direction;
 - current combat visual-channel separation;
+- current orange-box/projectile-fallback fix;
+- current build VFX v2 runtime atlas derivation and source-backed weapon animation timing;
 - close-camera proof framing.
 
 Reopen them only if the user's new task targets them or fresh live proof shows a regression.
@@ -76,6 +79,7 @@ Armistice's accepted art lesson is not "copy Armistice everywhere." It is the pr
 - enemies need readable silhouettes plus internal material breakup, not flat recolors;
 - bosses need large padded grounded frames, no square rugs/platforms, no boxed motion, and live chase/combat proof;
 - visual channels must separate pickups, player attacks, enemy pressure, boss hazards, objective markers, and rewards by silhouette, animation, luminance, and color;
+- weapon VFX need distinct source-backed launch, travel, impact, and payoff beats in the close camera;
 - proof must use the close tactical camera, not a zoom-out that hides asset problems.
 
 Use ChatGPT Images, PixelLab, Aseprite, Pixelorama, or another explicit art-source tool before any production visual improvement. Code may only mechanically crop, key, pad, resize, pack, validate, and proof accepted source art.
@@ -95,6 +99,8 @@ Rejected or superseded:
 - HUD copy that overlaps terrain or itself.
 
 Current active UI is a readable dark functional field interface with source-backed emergency patch item icons. It is playable and proofed, but it is not a final premium UI art lock in the same way Armistice terrain/props/boss/player/enemy direction is locked.
+
+The current build HUD is useful and player-facing, but still belongs to the provisional UI category. It shows active primary, secondary, passive, and fusion slots with source-backed icons. Do not replace it with pale pasted-on panels or tiny unreadable terminal copy.
 
 If future work targets UI:
 
@@ -143,10 +149,33 @@ The first runtime build-grammar expansion is in:
 - secondary protocols: `context_saw`, `patch_mortar`;
 - passives: `coherence_indexer`, `anchor_bodyguard`, `prediction_priority`;
 - fusion: `causal_railgun` from `vector_lance + predicted_lane`;
-- proof: `npm run proof:build-grammar`;
+- default slot caps: one primary auto-weapon, two secondary protocols, four passive processes, one major fusion, and one Consensus Burst path;
+- player-facing current build HUD strip;
+- proofs: `npm run proof:build-grammar` and `npm run proof:build-vfx`;
 - telemetry: `render_game_to_text()` exposes build grammar under roguelite run state.
 
 Important bug fixed: draftable primary weapons now persist in runtime. Do not reintroduce a call that forces the class starting weapon every frame.
+
+Important visual bug fixed: small orange boxes in the playfield were production fallback rectangles from missing/unready projectile art. Production mode must not draw those rectangles again. If a source-backed weapon asset is missing, show the fallback only in explicit debug HUD/proof mode, fail the proof, or document the blocker.
+
+Current build VFX source state:
+
+- accepted active source: `assets/concepts/chatgpt_refs/build_weapon_vfx_v2/build_weapon_vfx_source_v2.png`;
+- mechanical keyed intermediate: `assets/concepts/chatgpt_refs/build_weapon_vfx_v2/build_weapon_vfx_source_v2_keyed.png`;
+- runtime atlas path, preserved for compatibility: `assets/sprites/effects/build_weapon_vfx_v1.png`;
+- packer: `scripts/assets/pack-build-weapon-vfx-v1.py`;
+- provenance key: `chatgpt_build_weapon_vfx_v2_source`.
+
+Although the runtime atlas path still says `v1`, the active pack now derives from the v2 source. Do not "clean up" that path name casually unless the import graph, manifest, provenance, proofs, and docs are updated together.
+
+Weapon animation expectations now in force:
+
+- Signal Pulse should read as a radial pulse/echo/burst, not a tiny projectile that vanishes instantly.
+- Context Saw should cycle source-backed saw/spin frames with visible orbit/ghosting.
+- Patch Mortar should show launch, arcing travel, descent, shadow, and impact detonation. A static shell sliding through the air is not acceptable.
+- Future weapons need the same source-backed motion beats before being called production-ready.
+
+Local simulated Consensus Cell peers currently use the accepted Accord Striker art path. Do not bring back simple colored peer bars/boxes as production visuals. Co-op-specific actor art can be added later through the same source-art pipeline.
 
 ## Expansion Direction
 
@@ -207,6 +236,8 @@ When finishing, run the relevant subset and state exactly what passed:
 - `npm run proof:boss`
 - `npm run proof:reference-run`
 - `npm run proof:build-grammar` when build systems change
+- `npm run proof:build-vfx` when weapon visuals or draft icons change
+- `npm run proof:player-damage` when player feedback changes
 - `git diff --check`
 - `./node_modules/.bin/vite build`
 

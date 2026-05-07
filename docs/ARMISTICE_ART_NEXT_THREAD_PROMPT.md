@@ -14,6 +14,9 @@ Before doing meaningful work, read:
 - `docs/VISUAL_FIDELITY_VERTICAL_SLICE.md`
 - `docs/AGI_VISUAL_ART_BIBLE.md`
 - `docs/ASSET_PIPELINE.md`
+- `docs/BUILD_ARCHETYPES_AND_ITEMIZATION.md`
+- `docs/DIFFICULTY_AND_MAP_SCALING.md`
+- `docs/MAP_KIND_EXPANSION_CHECKLIST.md`
 - `docs/GAME_DIRECTION.md`
 - `docs/AGI_The_Last_Alignment_Creative_Bible.md`
 - `docs/AGI_IMPLEMENTATION_PLAN.md`
@@ -43,6 +46,10 @@ Important accepted state:
 - Oath-Eater is accepted in direction: larger 224px source-backed boss, irregular contact/corruption, no square purple platform, current runtime using centered/front-contained frames to avoid the boxed side-lurch read.
 - Benchmark Gremlin is accepted in direction: bright/readable monitor enemy with internal material breakup from `enemy_benchmark_gremlin/benchmark_gremlin_detail_source_v1.png`, not a flat broad recolor.
 - Current visual channels are accepted as a baseline: blue XP/pickups, orange/magenta player shots, violet/pink/red boss/enemy pressure, with silhouette/animation separation where possible.
+- Current orange-box/projectile fallback issue is fixed: normal production gameplay must not draw placeholder rectangles for projectiles, peers, item art, or impacts. Debug-only fallbacks are acceptable only behind explicit debug/proof flags.
+- Current build-weapon VFX runtime atlas derives from `assets/concepts/chatgpt_refs/build_weapon_vfx_v2/build_weapon_vfx_source_v2.png`, even though the import-compatible runtime atlas path remains `assets/sprites/effects/build_weapon_vfx_v1.png`.
+- Weapon visuals must show source-backed motion beats in close camera: launch/travel/impact for Patch Mortar, pulse/ring/burst for Signal Pulse, spin/orbit/echo for Context Saw, and distinct payoff for fusions.
+- Build slot caps are now part of the playable grammar: one primary, two secondaries, four passives, one major fusion, and one Consensus Burst path. The current build HUD is player-facing but still provisional UI, not final premium UI art lock.
 
 Next feature I want to tackle:
 
@@ -80,6 +87,6 @@ Working rules:
 - Use ChatGPT Images, PixelLab, Aseprite, Pixelorama, or another explicit art-source tool for expressive art source. Use Python/Pillow only for mechanical packing, slicing, cleanup, alpha validation, contact sheets, and dimension checks after source acceptance.
 - If the source art is weak or blocked, regenerate/use a real art tool or report the blocker. Do not fake production art with code.
 - Update `assets/asset_manifest.json`, `ART_PROVENANCE.md`, relevant README/provenance notes, and `progress.md` for accepted assets/runtime changes.
-- Run targeted proof/build checks before finishing. At minimum for art/runtime changes: `npm run proof:assets`, `npm run proof:visual-fidelity-camera`, `npm run proof:movement`, `npm run proof:smoke`, relevant boss/framing proofs, `./node_modules/.bin/tsc --noEmit --pretty false`, and `./node_modules/.bin/vite build`. If a check cannot be run or hangs, say so explicitly.
+- Run targeted proof/build checks before finishing. At minimum for art/runtime changes: `npm run proof:assets`, `npm run proof:visual-fidelity-camera`, `npm run proof:movement`, `npm run proof:smoke`, relevant boss/framing proofs, `./node_modules/.bin/tsc --noEmit --pretty false`, and `./node_modules/.bin/vite build`. For build/item/weapon work also run `npm run proof:build-grammar` and `npm run proof:build-vfx`. If a check cannot be run or hangs, say so explicitly.
 
 Do not reopen accepted Armistice terrain/sprites/boss/props unless the next feature specifically requires it or fresh live proof shows a regression.

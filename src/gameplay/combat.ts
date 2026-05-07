@@ -18,6 +18,9 @@ export function resolveProjectileHits(world: World): number {
     projectile.worldY += projectile.vy * (1 / 60);
     projectile.life -= 1 / 60;
     if (projectile.life <= 0) {
+      if (projectile.label === "patch mortar") {
+        kills += detonatePatchMortar(world, projectile);
+      }
       projectile.active = false;
       continue;
     }
@@ -36,6 +39,25 @@ export function resolveProjectileHits(world: World): number {
         projectile.active = false;
         break;
       }
+    }
+  }
+  return kills;
+}
+
+function detonatePatchMortar(world: World, projectile: Entity): number {
+  let kills = 0;
+  const radius = 1.18 + Math.min(0.45, projectile.value * 0.08);
+  spawnCombatHitEffect(world, projectile.worldX, projectile.worldY, projectile.damage, projectile.label);
+  for (const enemy of world.entities) {
+    if (!enemy.active || enemy.kind !== "enemy") continue;
+    const dx = enemy.worldX - projectile.worldX;
+    const dy = enemy.worldY - projectile.worldY;
+    if (dx * dx + dy * dy > (radius + enemy.radius) * (radius + enemy.radius)) continue;
+    enemy.hp -= projectile.damage * 0.72;
+    if (enemy.hp <= 0) {
+      enemy.active = false;
+      kills += 1;
+      spawnXp(world, enemy.worldX, enemy.worldY, enemy.value);
     }
   }
   return kills;

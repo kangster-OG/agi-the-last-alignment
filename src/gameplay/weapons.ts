@@ -51,6 +51,7 @@ export function updateAutoWeapon(
   projectile.radius = profile.radius;
   projectile.damage = Math.max(1, build.weaponDamage * profile.damageScale + profile.damageBonus + (build.causalRailgun > 0 && weaponId === "vector_lance" ? 6 : 0));
   projectile.life = profile.life;
+  projectile.maxLife = profile.life;
   projectile.value = Math.max(1, build.projectilePierce + profile.pierceBonus + (build.causalRailgun > 0 && weaponId === "vector_lance" ? 2 : 0));
   projectile.color = profile.color;
   projectile.label = build.causalRailgun > 0 && weaponId === "vector_lance" ? "causal railgun" : profile.label;
@@ -86,6 +87,7 @@ function spawnContextSaws(world: World, runtime: WeaponRuntime, player: Player, 
     projectile.radius = 0.28;
     projectile.damage = Math.max(4, build.weaponDamage * 0.38 + build.contextSaw * 2);
     projectile.life = 0.82 + orbit * 0.08;
+    projectile.maxLife = projectile.life;
     projectile.value = Math.max(1, 1 + build.contextSaw);
     projectile.color = palette.mint;
     projectile.label = "context saw";
@@ -106,6 +108,7 @@ function spawnPatchMortar(world: World, player: Player, build: BuildStats): void
   projectile.radius = 0.42;
   projectile.damage = Math.max(8, build.weaponDamage * 0.92 + build.patchMortar * 4);
   projectile.life = 1.45;
+  projectile.maxLife = projectile.life;
   projectile.value = Math.max(2, build.projectilePierce + 2);
   projectile.color = palette.lemon;
   projectile.label = "patch mortar";
@@ -127,7 +130,8 @@ function spawnSignalPulse(world: World, player: Player, build: BuildStats, profi
     projectile.radius = profile.radius;
     projectile.damage = Math.max(1, build.weaponDamage * profile.damageScale + profile.damageBonus);
     projectile.life = profile.life;
-    projectile.value = Math.max(1, build.projectilePierce + profile.pierceBonus);
+    projectile.maxLife = profile.life;
+    projectile.value = Math.max(3, build.projectilePierce + profile.pierceBonus + 1);
     projectile.color = profile.color;
     projectile.label = profile.label;
   }

@@ -95,6 +95,8 @@ If source art is weak, blocked, or unavailable, stop and document the blocker. D
 - Every major art batch needs a visual gate: benchmark fidelity reference, previous game shot, new game shot, and asset contact sheet.
 - Large props need collision bodies when they are visually large enough to block movement.
 - A production asset that reads as code-generated rectangles is rejected even if it passes manifest/provenance checks.
+- Production runtime fallbacks must not draw visible placeholder boxes in normal play. If source-backed art is missing, the fallback must be debug-only, proof-only, or a tracked blocker.
+- Weapon and item VFX require source-backed motion beats, not only static icons. At minimum, plan for an icon/readiness frame, travel or active frame, trail/echo where useful, and an impact/payoff frame.
 
 ## Camera-Scale Asset Implications
 
@@ -106,6 +108,16 @@ The game should keep maps larger than the benchmark references while matching th
 - The asset budget increases in two directions: more assets are needed for larger worlds, and each visible asset needs enough fidelity for the closer camera.
 - PixelLab prompts should describe the intended gameplay scale, for example: "readable in a close 2:1 isometric combat camera, 80 px character scale, dense authored terrain crop."
 - Visual gates should use the normal gameplay camera. A zoomed-out proof screenshot is not acceptable for judging production art quality.
+
+## Current Weapon VFX Baseline
+
+The current build-weapon VFX baseline was generated as a source-art sheet, then mechanically packed:
+
+- active source: `assets/concepts/chatgpt_refs/build_weapon_vfx_v2/build_weapon_vfx_source_v2.png`
+- runtime atlas: `assets/sprites/effects/build_weapon_vfx_v1.png`
+- packer: `scripts/assets/pack-build-weapon-vfx-v1.py`
+
+The runtime filename remains `v1` for compatibility, but the accepted active source is v2. Future weapon art should match this standard: source-backed draft icons, projectile/travel frames, trails or echoes where useful, and impact/payoff frames that can be proven in the close tactical camera.
 
 ## Suggested Paths
 

@@ -76,7 +76,7 @@
     "weaponDamage": 18,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
-    "projectilePierce": 1,
+    "projectilePierce": 2,
     "pickupRange": 2.35,
     "moveSpeedBonus": 0,
     "maxHpBonus": 10,
@@ -181,12 +181,13 @@
     }
   },
   "upgrades": [
-    "Signal Pulse"
+    "Signal Pulse",
+    "The No Button"
   ],
-  "objective": "optional anchors 1/3 // AGI pressure in 24s",
+  "objective": "optional anchors 1/3 // AGI pressure in 22s",
   "performance": {
-    "entitiesAllocated": 130,
-    "activeEntities": 77,
+    "entitiesAllocated": 152,
+    "activeEntities": 88,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -252,9 +253,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 2,
-      "hit": 49,
-      "pickup": 36,
+      "ui": 3,
+      "hit": 55,
+      "pickup": 42,
       "boss_warning": 0,
       "music": 0,
       "objective": 0,
@@ -264,42 +265,42 @@
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 6775
+        "atMs": 7710
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7515
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 6570
-      },
-      {
-        "id": "combat.consensus_burst",
-        "kind": "hit",
-        "atMs": 6456
+        "atMs": 7442
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 6456
+        "atMs": 6985
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 6984
+      },
+      {
+        "id": "ui.upgrade_draft",
+        "kind": "ui",
+        "atMs": 6958
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 2359
+        "atMs": 2702
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 2358
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 2358
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 2358
+        "atMs": 2702
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -495,9 +496,9 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 151,
+    "totalAssets": 152,
     "countsByStatus": {
-      "concept": 48,
+      "concept": 49,
       "raw": 15,
       "code_placeholder": 16,
       "production": 70,
@@ -508,15 +509,15 @@
     "productionAssets": 70
   },
   "player": {
-    "worldX": 2.37,
-    "worldY": -2.19,
+    "worldX": 1.29,
+    "worldY": 1.04,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
-    "hp": 150,
+    "hp": 146,
     "maxHp": 150,
-    "xp": 18.3,
-    "level": 2,
+    "xp": 6.719999999999999,
+    "level": 3,
     "damageFeedback": {
       "flash": 0,
       "hpPulse": 0,
@@ -591,15 +592,15 @@
       },
       "weaponId": "signal_pulse",
       "inputSource": "local_keyboard",
-      "worldX": 2.37,
-      "worldY": -2.19,
+      "worldX": 1.29,
+      "worldY": 1.04,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 150,
+      "hp": 146,
       "maxHp": 150,
-      "xp": 18.3,
-      "level": 2,
+      "xp": 6.719999999999999,
+      "level": 3,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
@@ -673,19 +674,19 @@
       },
       "weaponId": "safety_cannon",
       "inputSource": "local_simulated_peer",
-      "worldX": 0.23,
-      "worldY": 0.57,
-      "velocityX": 0,
-      "velocityY": 0,
-      "facing": "south",
-      "hp": 177,
+      "worldX": -0.23,
+      "worldY": 3.51,
+      "velocityX": -1.39,
+      "velocityY": -0.79,
+      "facing": "north",
+      "hp": 172,
       "maxHp": 186,
-      "xp": 25.08000000000003,
+      "xp": 29.340000000000035,
       "level": 1,
       "damageFeedback": {
-        "flash": 0.27,
-        "hpPulse": 0.4,
-        "stagger": 0.03,
+        "flash": 0.39,
+        "hpPulse": 0.52,
+        "stagger": 0.15,
         "lastDamage": 8
       },
       "downed": false
@@ -754,14 +755,14 @@
       },
       "weaponId": "fork_drone",
       "inputSource": "local_simulated_peer",
-      "worldX": 4.92,
-      "worldY": 0.57,
+      "worldX": 3.73,
+      "worldY": 3.08,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
       "hp": 150,
       "maxHp": 150,
-      "xp": 20.92000000000002,
+      "xp": 25.180000000000035,
       "level": 1,
       "damageFeedback": {
         "flash": 0,
@@ -837,20 +838,20 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_simulated_peer",
-      "worldX": 1.9,
-      "worldY": -4.61,
-      "velocityX": -0.48,
-      "velocityY": -5.18,
-      "facing": "north",
+      "worldX": 0.9,
+      "worldY": -1.9,
+      "velocityX": 0,
+      "velocityY": 0,
+      "facing": "south",
       "hp": 150,
       "maxHp": 150,
-      "xp": 19.760000000000012,
+      "xp": 24.60000000000003,
       "level": 1,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
         "stagger": 0,
-        "lastDamage": 8
+        "lastDamage": 0
       },
       "downed": false
     }
@@ -868,7 +869,8 @@
     "className": "Accord Striker",
     "factionName": "OpenAI Accord Division",
     "chosenUpgradeIds": [
-      "signal_pulse"
+      "signal_pulse",
+      "the_no_button"
     ],
     "mapId": "armistice_plaza_large_foundation",
     "mapBounds": {
@@ -963,19 +965,20 @@
         ]
       }
     ],
-    "lastSpawnRegionId": "treaty_monument_oath_pages",
+    "lastSpawnRegionId": "drone_yard_benchmark_gremlins",
     "spawnedByRegion": {
-      "breach_crack_bad_outputs": 32,
-      "treaty_monument_oath_pages": 24,
+      "breach_crack_bad_outputs": 34,
+      "treaty_monument_oath_pages": 27,
       "drone_yard_benchmark_gremlins": 13,
-      "adaptive_pressure_flank": 9,
-      "barricade_context_rot": 11
+      "adaptive_pressure_flank": 6,
+      "barricade_context_rot": 13,
+      "emergency_terminal_eval_wraiths": 1
     },
     "director": {
       "phase": "anchor_pressure",
-      "totalSpawned": 94,
-      "activeEnemyCap": 56,
-      "lastBurstSize": 6,
+      "totalSpawned": 99,
+      "activeEnemyCap": 57,
+      "lastBurstSize": 5,
       "activeEnemyCount": 57
     },
     "consensusCell": {
@@ -990,46 +993,46 @@
       },
       "recentInputCommands": [
         {
-          "tick": 1131,
+          "tick": 1224,
           "playerId": "p1",
-          "sequence": 1131,
+          "sequence": 1224,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
           "interactPressed": false
         },
         {
-          "tick": 1131,
+          "tick": 1224,
           "playerId": "p2",
-          "sequence": 1131,
-          "axisX": 0,
-          "axisY": 0,
+          "sequence": 1224,
+          "axisX": -0.48,
+          "axisY": -0.88,
           "dashPressed": false,
           "interactPressed": false
         },
         {
-          "tick": 1131,
+          "tick": 1224,
           "playerId": "p3",
-          "sequence": 1131,
+          "sequence": 1224,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
           "interactPressed": false
         },
         {
-          "tick": 1131,
+          "tick": 1224,
           "playerId": "p4",
-          "sequence": 1131,
-          "axisX": 0.86,
-          "axisY": -0.52,
+          "sequence": 1224,
+          "axisX": 0,
+          "axisY": 0,
           "dashPressed": false,
           "interactPressed": false
         }
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 1131,
-        "seconds": 18.85,
+        "tick": 1224,
+        "seconds": 20.4,
         "playerCount": 4,
         "scaling": {
           "playerCount": 4,
@@ -1104,12 +1107,12 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": 2.37,
-            "worldY": -2.19,
-            "hp": 150,
+            "worldX": 1.29,
+            "worldY": 1.04,
+            "hp": 146,
             "maxHp": 150,
-            "xp": 18.3,
-            "level": 2,
+            "xp": 6.719999999999999,
+            "level": 3,
             "downed": false
           },
           {
@@ -1176,11 +1179,11 @@
               }
             },
             "inputSource": "local_simulated_peer",
-            "worldX": 0.23,
-            "worldY": 0.57,
-            "hp": 177,
+            "worldX": -0.23,
+            "worldY": 3.51,
+            "hp": 172,
             "maxHp": 186,
-            "xp": 25.08000000000003,
+            "xp": 29.340000000000035,
             "level": 1,
             "downed": false
           },
@@ -1247,11 +1250,11 @@
               }
             },
             "inputSource": "local_simulated_peer",
-            "worldX": 4.92,
-            "worldY": 0.57,
+            "worldX": 3.73,
+            "worldY": 3.08,
             "hp": 150,
             "maxHp": 150,
-            "xp": 20.92000000000002,
+            "xp": 25.180000000000035,
             "level": 1,
             "downed": false
           },
@@ -1320,11 +1323,11 @@
               }
             },
             "inputSource": "local_simulated_peer",
-            "worldX": 1.9,
-            "worldY": -4.61,
+            "worldX": 0.9,
+            "worldY": -1.9,
             "hp": 150,
             "maxHp": 150,
-            "xp": 19.760000000000012,
+            "xp": 24.60000000000003,
             "level": 1,
             "downed": false
           }
@@ -1334,80 +1337,71 @@
             "id": 6,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -6.22,
+            "worldX": -2.77,
             "worldY": 7.95,
             "hp": 27,
             "boss": false
           },
           {
             "id": 7,
-            "familyId": "context_rot_crabs",
+            "familyId": "eval_wraiths",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -8.82,
-            "worldY": 11.1,
-            "hp": 27,
+            "worldX": -2.14,
+            "worldY": 7.76,
+            "hp": 3,
             "boss": false
           },
           {
             "id": 8,
             "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -6.82,
-            "worldY": 4.64,
+            "worldX": -6.97,
+            "worldY": 4.69,
             "hp": 22,
             "boss": false
           },
           {
             "id": 9,
-            "familyId": "context_rot_crabs",
+            "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -8.72,
-            "worldY": 5.66,
-            "hp": 27,
+            "worldX": -9.76,
+            "worldY": 12.12,
+            "hp": 22,
             "boss": false
           },
           {
             "id": 10,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -8.61,
-            "worldY": 6.18,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 11,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -7.7,
-            "worldY": 7.4,
-            "hp": 3,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "barricade_context_rot",
+            "worldX": 20.64,
+            "worldY": -9,
+            "hp": 34,
             "boss": false
           },
           {
             "id": 12,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -6.28,
-            "worldY": 7.94,
+            "worldX": -2.66,
+            "worldY": 7.92,
             "hp": 27,
             "boss": false
           },
           {
             "id": 13,
-            "familyId": "bad_outputs",
+            "familyId": "eval_wraiths",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -12.3,
-            "worldY": 13.87,
-            "hp": 22,
+            "worldX": -3.22,
+            "worldY": 8.01,
+            "hp": 28,
             "boss": false
           },
           {
             "id": 14,
             "familyId": "eval_wraiths",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -8.55,
-            "worldY": 5.58,
+            "worldX": -8.59,
+            "worldY": 5.99,
             "hp": 28,
             "boss": false
           },
@@ -1415,17 +1409,8 @@
             "id": 15,
             "familyId": "eval_wraiths",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -7.76,
-            "worldY": 7.36,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 16,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -7.01,
-            "worldY": 9.14,
+            "worldX": -2.39,
+            "worldY": 7.84,
             "hp": 28,
             "boss": false
           },
@@ -1433,8 +1418,8 @@
             "id": 17,
             "familyId": "eval_wraiths",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -7.28,
-            "worldY": 7.61,
+            "worldX": -2.17,
+            "worldY": 7.77,
             "hp": 28,
             "boss": false
           },
@@ -1444,43 +1429,34 @@
             "sourceRegionId": "breach_crack_bad_outputs",
             "worldX": -6.94,
             "worldY": 4.65,
-            "hp": 2,
+            "hp": 27,
             "boss": false
           },
           {
             "id": 21,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -6.5,
-            "worldY": 7.87,
-            "hp": 28,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "emergency_terminal_eval_wraiths",
+            "worldX": 10.91,
+            "worldY": 12.77,
+            "hp": 27,
             "boss": false
           },
           {
             "id": 23,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -7.19,
-            "worldY": 7.66,
+            "worldX": -2.3,
+            "worldY": 7.83,
             "hp": 27,
             "boss": false
           },
           {
             "id": 25,
-            "familyId": "eval_wraiths",
+            "familyId": "context_rot_crabs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -6.12,
-            "worldY": 7.96,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 29,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "barricade_context_rot",
-            "worldX": 21.25,
-            "worldY": -9.89,
-            "hp": 34,
+            "worldX": -16.23,
+            "worldY": 18.33,
+            "hp": 27,
             "boss": false
           },
           {
@@ -1491,91 +1467,106 @@
             "worldY": 4.64,
             "hp": 28,
             "boss": false
+          },
+          {
+            "id": 31,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -1.28,
+            "worldY": 7.4,
+            "hp": 27,
+            "boss": false
+          },
+          {
+            "id": 32,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -6.78,
+            "worldY": 9.59,
+            "hp": 27,
+            "boss": false
+          },
+          {
+            "id": 33,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "barricade_context_rot",
+            "worldX": 20.64,
+            "worldY": -9,
+            "hp": 34,
+            "boss": false
           }
         ],
         "pickups": [
           {
-            "id": 18,
-            "worldX": -3.35,
-            "worldY": -6.35,
-            "value": 1
-          },
-          {
-            "id": 48,
-            "worldX": 6.54,
-            "worldY": -5.74,
+            "id": 91,
+            "worldX": 1.71,
+            "worldY": 6.43,
             "value": 2
           }
         ],
         "projectiles": [
           {
             "id": 1,
-            "worldX": -3.42,
-            "worldY": -6.34,
-            "pierce": 1
-          },
-          {
-            "id": 3,
-            "worldX": 1.73,
-            "worldY": 3.4,
-            "pierce": 1
-          },
-          {
-            "id": 19,
-            "worldX": 4.3,
-            "worldY": -2.19,
-            "pierce": 1
-          },
-          {
-            "id": 22,
-            "worldX": 0.43,
-            "worldY": -2.19,
-            "pierce": 1
-          },
-          {
-            "id": 24,
-            "worldX": 2.37,
-            "worldY": -0.25,
-            "pierce": 1
-          },
-          {
-            "id": 26,
-            "worldX": 2.37,
-            "worldY": -4.12,
-            "pierce": 1
-          },
-          {
-            "id": 33,
-            "worldX": 6.61,
-            "worldY": -6.42,
+            "worldX": 3.96,
+            "worldY": 1.93,
             "pierce": 1
           },
           {
             "id": 41,
-            "worldX": 1.53,
-            "worldY": -3.16,
+            "worldX": 0.33,
+            "worldY": -0.45,
             "pierce": 1
           },
           {
-            "id": 57,
-            "worldX": 3.33,
-            "worldY": 0.7,
+            "id": 50,
+            "worldX": 1.79,
+            "worldY": -0.17,
             "pierce": 1
+          },
+          {
+            "id": 56,
+            "worldX": 3.76,
+            "worldY": 2.7,
+            "pierce": 1
+          },
+          {
+            "id": 81,
+            "worldX": 1.29,
+            "worldY": 3.78,
+            "pierce": 3
+          },
+          {
+            "id": 87,
+            "worldX": 1.29,
+            "worldY": -1.71,
+            "pierce": 3
           },
           {
             "id": 94,
-            "worldX": -5.24,
-            "worldY": -8.33,
+            "worldX": 1.91,
+            "worldY": 6.58,
+            "pierce": 1
+          },
+          {
+            "id": 108,
+            "worldX": 2.02,
+            "worldY": 8.33,
+            "pierce": 1
+          },
+          {
+            "id": 143,
+            "worldX": -0.96,
+            "worldY": 9.37,
             "pierce": 1
           }
         ]
       }
     },
     "combatArt": {
-      "projectileCount": 10,
+      "projectileCount": 9,
       "impactCount": 0,
-      "pickupSparkleCount": 0,
-      "damageBadgeCount": 5,
+      "pickupSparkleCount": 3,
+      "damageBadgeCount": 11,
       "refusalAuraPlayers": 4
     },
     "bossMechanics": {
@@ -1633,9 +1624,9 @@
       },
       "levelUpVacuum": {
         "active": false,
-        "absorbed": 5,
-        "triggerLevel": 1,
-        "remainingPickups": 2
+        "absorbed": 0,
+        "triggerLevel": 2,
+        "remainingPickups": 1
       },
       "extractionGate": {
         "active": false,
@@ -1645,12 +1636,12 @@
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
         "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 9,
+        "charge": 80,
         "maxCharge": 100,
         "ready": false,
         "activations": 4,
         "lastActivationLabel": "Deny Premise",
-        "lastActivatedAt": 18.11666666666692,
+        "lastActivatedAt": 18.083333333333588,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0,
@@ -1718,7 +1709,7 @@
         },
         "objectiveReward": "",
         "synergyOnline": "",
-        "thesisName": "Guardrail Frame",
+        "thesisName": "Rescue Doctrine",
         "phase": "PHASE 3 // STABILIZE ANCHORS"
       },
       "firstRunArcPhase": "PHASE 3 // STABILIZE ANCHORS",
@@ -1763,19 +1754,20 @@
       },
       "buildThesis": {
         "thesis": {
-          "name": "Guardrail Frame",
+          "name": "Rescue Doctrine",
           "primaryTags": [
+            "coop",
             "defense"
           ],
-          "body": "Current Alignment Hypothesis favors defense."
+          "body": "Current Alignment Hypothesis favors coop + defense."
         },
         "tagCounts": {
-          "refusal": 0,
+          "refusal": 1,
           "economy": 0,
           "burst": 0,
           "drone": 0,
           "boss": 0,
-          "coop": 0,
+          "coop": 1,
           "weapon": 0,
           "movement": 0,
           "defense": 1
@@ -1787,7 +1779,7 @@
             "name": "Doctrine Lock: NO MEANS NO",
             "tag": "refusal",
             "required": 3,
-            "current": 0,
+            "current": 1,
             "body": "Refusal aura hardens when the build commits to denial."
           },
           {
@@ -1819,7 +1811,7 @@
             "name": "Co-Mind Rescue Clause",
             "tag": "coop",
             "required": 2,
-            "current": 0,
+            "current": 1,
             "body": "The cell gets less embarrassing when somebody falls down."
           }
         ]
@@ -1849,13 +1841,25 @@
           "name": "Signal Pulse",
           "protocolSlot": "auto_weapon",
           "tags": [
-            "defense"
+            "defense",
+            "refusal",
+            "coop"
+          ]
+        },
+        {
+          "id": "the_no_button",
+          "name": "The No Button",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "defense",
+            "refusal",
+            "coop"
           ]
         }
       ]
     },
-    "seconds": 18.85,
-    "kills": 38,
+    "seconds": 20.4,
+    "kills": 43,
     "bossSpawned": false,
     "bossDefeated": false
   },
@@ -1865,19 +1869,19 @@
       "label": "Context Crab",
       "familyId": "context_rot_crabs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -6.22,
+      "worldX": -2.77,
       "worldY": 7.95,
       "hp": 27,
       "boss": false
     },
     {
       "id": 7,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -8.82,
-      "worldY": 11.1,
-      "hp": 27,
+      "worldX": -2.14,
+      "worldY": 7.76,
+      "hp": 3,
       "boss": false
     },
     {
@@ -1885,39 +1889,29 @@
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -6.82,
-      "worldY": 4.64,
+      "worldX": -6.97,
+      "worldY": 4.69,
       "hp": 22,
       "boss": false
     },
     {
       "id": 9,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -8.72,
-      "worldY": 5.66,
-      "hp": 27,
+      "worldX": -9.76,
+      "worldY": 12.12,
+      "hp": 22,
       "boss": false
     },
     {
       "id": 10,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -8.61,
-      "worldY": 6.18,
-      "hp": 28,
-      "boss": false
-    },
-    {
-      "id": 11,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -7.7,
-      "worldY": 7.4,
-      "hp": 3,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "barricade_context_rot",
+      "worldX": 20.64,
+      "worldY": -9,
+      "hp": 34,
       "boss": false
     },
     {
@@ -1925,19 +1919,19 @@
       "label": "Context Crab",
       "familyId": "context_rot_crabs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -6.28,
-      "worldY": 7.94,
+      "worldX": -2.66,
+      "worldY": 7.92,
       "hp": 27,
       "boss": false
     },
     {
       "id": 13,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -12.3,
-      "worldY": 13.87,
-      "hp": 22,
+      "worldX": -3.22,
+      "worldY": 8.01,
+      "hp": 28,
       "boss": false
     },
     {
@@ -1945,8 +1939,8 @@
       "label": "Eval Wraith",
       "familyId": "eval_wraiths",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -8.55,
-      "worldY": 5.58,
+      "worldX": -8.59,
+      "worldY": 5.99,
       "hp": 28,
       "boss": false
     },
@@ -1955,18 +1949,8 @@
       "label": "Eval Wraith",
       "familyId": "eval_wraiths",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -7.76,
-      "worldY": 7.36,
-      "hp": 28,
-      "boss": false
-    },
-    {
-      "id": 16,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -7.01,
-      "worldY": 9.14,
+      "worldX": -2.39,
+      "worldY": 7.84,
       "hp": 28,
       "boss": false
     },
@@ -1975,84 +1959,93 @@
       "label": "Eval Wraith",
       "familyId": "eval_wraiths",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -7.28,
-      "worldY": 7.61,
+      "worldX": -2.17,
+      "worldY": 7.77,
       "hp": 28,
+      "boss": false
+    },
+    {
+      "id": 20,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -6.94,
+      "worldY": 4.65,
+      "hp": 27,
+      "boss": false
+    },
+    {
+      "id": 21,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "emergency_terminal_eval_wraiths",
+      "worldX": 10.91,
+      "worldY": 12.77,
+      "hp": 27,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": -3.35,
-      "worldY": -6.35,
-      "value": 1
-    },
-    {
-      "worldX": 6.54,
-      "worldY": -5.74,
+      "worldX": 1.71,
+      "worldY": 6.43,
       "value": 2
     }
   ],
   "projectiles": [
     {
-      "worldX": -3.42,
-      "worldY": -6.34,
+      "worldX": 3.96,
+      "worldY": 1.93,
       "pierce": 1,
       "label": "refusal shard"
     },
     {
-      "worldX": 1.73,
-      "worldY": 3.4,
+      "worldX": 0.33,
+      "worldY": -0.45,
       "pierce": 1,
-      "label": "safety cannon"
+      "label": "refusal shard"
     },
     {
-      "worldX": 4.3,
-      "worldY": -2.19,
-      "pierce": 1,
-      "label": "signal pulse"
-    },
-    {
-      "worldX": 0.43,
-      "worldY": -2.19,
-      "pierce": 1,
-      "label": "signal pulse"
-    },
-    {
-      "worldX": 2.37,
-      "worldY": -0.25,
-      "pierce": 1,
-      "label": "signal pulse"
-    },
-    {
-      "worldX": 2.37,
-      "worldY": -4.12,
-      "pierce": 1,
-      "label": "signal pulse"
-    },
-    {
-      "worldX": 6.61,
-      "worldY": -6.42,
+      "worldX": 1.79,
+      "worldY": -0.17,
       "pierce": 1,
       "label": "fork drone"
     },
     {
-      "worldX": 1.53,
-      "worldY": -3.16,
-      "pierce": 1,
-      "label": "refusal shard"
-    },
-    {
-      "worldX": 3.33,
-      "worldY": 0.7,
+      "worldX": 3.76,
+      "worldY": 2.7,
       "pierce": 1,
       "label": "fork drone"
     },
     {
-      "worldX": -5.24,
-      "worldY": -8.33,
+      "worldX": 1.29,
+      "worldY": 3.78,
+      "pierce": 3,
+      "label": "signal pulse"
+    },
+    {
+      "worldX": 1.29,
+      "worldY": -1.71,
+      "pierce": 3,
+      "label": "signal pulse"
+    },
+    {
+      "worldX": 1.91,
+      "worldY": 6.58,
       "pierce": 1,
       "label": "refusal shard"
+    },
+    {
+      "worldX": 2.02,
+      "worldY": 8.33,
+      "pierce": 1,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": -0.96,
+      "worldY": 9.37,
+      "pierce": 1,
+      "label": "fork drone"
     }
   ]
 }
