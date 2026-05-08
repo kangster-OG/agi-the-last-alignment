@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "project": "AGI: The Last Alignment",
   "assetRoot": "assets",
-  "updated": "2026-05-07",
+  "updated": "2026-05-08",
   "idTaxonomy": {
     "concept": "concept.<subject_id>.<brief_role>",
     "player": "player.<class_id>.<variant>",
@@ -4396,7 +4396,14 @@
         "animations": [
           {
             "name": "player_damage_feedback",
-            "frames": [0, 1, 2, 3, 4, 5]
+            "frames": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
           }
         ]
       },
@@ -4480,11 +4487,37 @@
         "animations": [
           {
             "name": "build_weapon_protocol_fusion_vfx",
-            "frames": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+            "frames": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19
+            ]
           },
           {
             "name": "build_passive_fusion_icons",
-            "frames": [20, 21, 22, 23]
+            "frames": [
+              20,
+              21,
+              22,
+              23
+            ]
           }
         ]
       },
@@ -4520,7 +4553,11 @@
         "animations": [
           {
             "name": "closed_opening_active",
-            "frames": [0, 1, 2]
+            "frames": [
+              0,
+              1,
+              2
+            ]
           }
         ]
       },
@@ -4536,6 +4573,2413 @@
         "vertical_slice"
       ],
       "notes": "Appears only after Armistice's timer and boss-required clear are satisfied, giving the player a source-backed exit destination instead of an instant summary transition."
+    },
+    {
+      "id": "concept.cooling_lake_nine.source_v1",
+      "category": "concept_art",
+      "intendedUse": "ChatGPT Images source boards for Cooling Lake Nine production-art terrain, props, actors, boss, and hazard VFX.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/chatgpt_refs/cooling_lake_nine_source_v1/cooling_terrain_source_v1.png",
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "frames": null,
+      "provenanceKey": "chatgpt_cooling_lake_nine_source_v1",
+      "licenseNote": "ChatGPT Images source-art boards for original AGI Cooling Lake Nine production art; generated on flat chroma-key backgrounds for mechanical cleanup.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "chatgpt_images",
+        "cooling_lake_nine",
+        "hazard_ecology",
+        "source_art"
+      ],
+      "notes": "Primary source set also includes cooling_props_objectives_source_v1.png, cooling_prompt_leech_eel_source_v1.png, and cooling_hazard_vfx_source_v1.png in the same folder. Authenticated PixelLab refinement now supersedes some runtime prop and Prompt Leech frames while this folder remains the base Cooling source set."
+    },
+    {
+      "id": "concept.cooling_lake_nine.pixellab_refinement_v1",
+      "category": "concept_art",
+      "intendedUse": "Authenticated PixelLab refinement source for Cooling Lake Nine terrain reference, props, and Prompt Leech frames.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/cooling_lake_nine_refinement_v1/cooling_terrain_tileset_pixellab_v1.png",
+      "dimensions": {
+        "width": 64,
+        "height": 128
+      },
+      "frames": null,
+      "provenanceKey": "pixellab_cooling_lake_nine_refinement_v1",
+      "licenseNote": "PixelLab-generated original AGI Cooling Lake Nine refinement art saved from the authenticated browser UI after user sign-in.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "pixellab",
+        "cooling_lake_nine",
+        "terrain_reference",
+        "server_buoys",
+        "prompt_leech",
+        "source_art",
+        "accepted_flat_terrain",
+        "rejected_source_kept_for_history"
+      ],
+      "notes": "Folder includes PixelLab Map Workshop top-down terrain reference, rejected raised isometric chunks, accepted flat isometric terrain decals, four PixelLab prop frames, and four Prompt Leech frames. Runtime uses the flat terrain decals, props, and Prompt Leech frames plus the prior ChatGPT Images source set."
+    },
+    {
+      "id": "tile.cooling_lake_nine.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime source-derived authored ground sheet for Cooling Lake Nine production-art terrain coverage.",
+      "status": "production",
+      "sourcePath": "assets/tiles/cooling_lake_nine/authored_ground.png",
+      "dimensions": {
+        "width": 5120,
+        "height": 3072
+      },
+      "frames": {
+        "kind": "authored_ground",
+        "originX": 2560,
+        "originY": 1536
+      },
+      "provenanceKey": "cooling_lake_nine_source_v1_runtime_pack",
+      "licenseNote": "PixelLab flat isometric terrain decals mechanically cropped, resized, repeated, and composed into an authored ground sheet. No expressive Cooling terrain art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "cooling_lake_nine",
+        "terrain",
+        "hazard_ecology",
+        "pixellab",
+        "accepted_flat_terrain"
+      ],
+      "notes": "Composes PixelLab cracked server-floor, coolant floor, rack-grate, and cable-trench decals into the runtime Cooling ground sheet. Earlier raised-terrain PixelLab chunks were rejected because they created wall/cube artifacts."
+    },
+    {
+      "id": "tile.cooling_lake_nine.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Transparent terrain chunk atlas for Cooling Lake Nine material accents and future tile/transition refinement.",
+      "status": "production",
+      "sourcePath": "assets/tiles/cooling_lake_nine/cooling_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 512
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 384,
+        "frameHeight": 256,
+        "frameCount": 8
+      },
+      "provenanceKey": "cooling_lake_nine_source_v1_runtime_pack",
+      "licenseNote": "PixelLab flat isometric terrain decals mechanically cropped, resized, and packed. No expressive Cooling terrain chunk art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "cooling_lake_nine",
+        "terrain_chunks",
+        "pixellab",
+        "accepted_flat_terrain"
+      ],
+      "notes": "Frames use the accepted PixelLab V3 flat terrain decals for cracked server floor, coolant floor, rack grate, and cable trench, with repeated frames for runtime terrain roles."
+    },
+    {
+      "id": "prop.cooling_lake_nine.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime transparent prop atlas for Cooling Lake server buoys, rack wrecks, safe platform, and Motherboard Eel emergence marker.",
+      "status": "production",
+      "sourcePath": "assets/props/cooling_lake_nine/cooling_props_objectives_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 448
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 224,
+        "frameCount": 8
+      },
+      "provenanceKey": "cooling_lake_nine_source_v1_runtime_pack",
+      "licenseNote": "PixelLab server-buoy, rack-wreck, and safe-platform props plus ChatGPT Images Eel marker mechanically cropped, resized, and packed. No expressive Cooling prop art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "cooling_lake_nine",
+        "server_buoys",
+        "rack_wrecks",
+        "motherboard_eel",
+        "pixellab"
+      ],
+      "notes": "Uses PixelLab source frames for buoy pads, rack wrecks, and safe platform. The Eel marker remains from the ChatGPT Images source because the PixelLab cable bridge source was clipped."
+    },
+    {
+      "id": "enemy.prompt_leech.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime transparent Prompt Leech enemy animation/source-pose strip for Cooling Lake Nine.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/prompt_leeches_sheet.png",
+      "dimensions": {
+        "width": 576,
+        "height": 96
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 96,
+        "frameHeight": 96,
+        "frameCount": 6,
+        "animations": [
+          {
+            "name": "rush_siphon",
+            "frames": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ]
+      },
+      "provenanceKey": "cooling_lake_nine_source_v1_runtime_pack",
+      "licenseNote": "PixelLab Prompt Leech frames mechanically cropped, resized, duplicated for timing fill, and packed. No expressive Prompt Leech art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "cooling_lake_nine",
+        "prompt_leech",
+        "enemy_sprite",
+        "pixellab"
+      ],
+      "notes": "Gives Cooling Lake Nine headline pressure family a PixelLab source-backed silhouette instead of graybox enemy geometry."
+    },
+    {
+      "id": "boss.motherboard_eel.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent Motherboard Eel boss presentation strip for Cooling Lake Nine.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/motherboard_eel.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 256
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frameCount": 4,
+        "animations": [
+          {
+            "name": "emerge_electrify",
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ]
+          }
+        ]
+      },
+      "provenanceKey": "cooling_lake_nine_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images source boss frames mechanically chroma-keyed, cropped, resized, and packed. No expressive Motherboard Eel art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "cooling_lake_nine",
+        "motherboard_eel",
+        "boss_sprite"
+      ],
+      "notes": "Provides the Cooling boss/event scaffold with source-backed presentation in the close tactical camera."
+    },
+    {
+      "id": "effect.cooling_lake_nine.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for Cooling Lake Nine coolant, electric, vent, buoy, leech, and Eel states.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/cooling_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 12
+      },
+      "provenanceKey": "cooling_lake_nine_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images source VFX mechanically chroma-keyed, cropped, resized, and packed. No expressive Cooling hazard VFX art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "cooling_lake_nine",
+        "hazard_vfx",
+        "server_buoys",
+        "motherboard_eel"
+      ],
+      "notes": "Supplies source-backed coolant, cable, vent, buoy, Prompt Leech, and Eel VFX frames for Cooling Lake Nine."
+    },
+    {
+      "id": "concept.transit_loop_zero.source_v1",
+      "category": "concept_art",
+      "intendedUse": "ChatGPT Images source boards for Transit Loop Zero production-art terrain, props, Station That Arrives, and hazard VFX.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/chatgpt_refs/transit_loop_zero_source_v1/transit_terrain_source_v1.png",
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "frames": null,
+      "provenanceKey": "chatgpt_transit_loop_zero_source_v1",
+      "licenseNote": "ChatGPT Images source-art boards for original AGI Transit Loop Zero production art; generated on flat chroma-key backgrounds for mechanical cleanup.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "chatgpt_images",
+        "transit_loop_zero",
+        "route_transit",
+        "source_art"
+      ],
+      "notes": "Primary source set also includes transit_props_objectives_source_v1.png, station_that_arrives_source_v1.png, and transit_hazard_vfx_source_v1.png in the same folder."
+    },
+    {
+      "id": "tile.transit_loop_zero.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime source-derived authored ground sheet for Transit Loop Zero production-art terrain coverage.",
+      "status": "production",
+      "sourcePath": "assets/tiles/transit_loop_zero/authored_ground.png",
+      "dimensions": {
+        "width": 5120,
+        "height": 3072
+      },
+      "frames": {
+        "kind": "authored_ground",
+        "originX": 2560,
+        "originY": 1536
+      },
+      "provenanceKey": "transit_loop_zero_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images rail-platform source mechanically cropped, resized, repeated, and composed into an authored ground sheet. No expressive Transit terrain art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "transit_loop_zero",
+        "terrain",
+        "route_transit"
+      ],
+      "notes": "Composes source-backed rail platforms, aligned tracks, false tracks, switchbacks, and station-mouth floor pieces into the runtime Transit ground sheet."
+    },
+    {
+      "id": "tile.transit_loop_zero.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Transparent terrain chunk atlas for Transit Loop Zero route-platform material accents.",
+      "status": "production",
+      "sourcePath": "assets/tiles/transit_loop_zero/transit_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 512
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 384,
+        "frameHeight": 256,
+        "frameCount": 8
+      },
+      "provenanceKey": "transit_loop_zero_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images terrain chunks mechanically chroma-keyed, cropped, resized, and packed. No expressive Transit terrain chunk art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "transit_loop_zero",
+        "terrain_chunks",
+        "route_transit"
+      ],
+      "notes": "Frames cover origin platform, aligned track, false track, switchback track, arrival pad, signal platform, route turn, and station-mouth floor."
+    },
+    {
+      "id": "prop.transit_loop_zero.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime transparent prop atlas for Transit Loop Zero platforms, signal pylons, false-schedule boards, route switches, and station scaffold.",
+      "status": "production",
+      "sourcePath": "assets/props/transit_loop_zero/transit_props_objectives_v1.png",
+      "dimensions": {
+        "width": 896,
+        "height": 672
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 224,
+        "frameHeight": 224,
+        "frameCount": 12
+      },
+      "provenanceKey": "transit_loop_zero_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images Transit prop/objective source mechanically chroma-keyed, cropped, resized, and packed. No expressive Transit prop art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "transit_loop_zero",
+        "signal_pylons",
+        "false_schedule",
+        "station_that_arrives"
+      ],
+      "notes": "Supplies source-backed signal pylons, arrival emitters, false-schedule board, beacons, barricades, route console, station scaffold, and cable junction props."
+    },
+    {
+      "id": "boss.station_that_arrives.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent Station That Arrives boss/event presentation strip for Transit Loop Zero.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/station_that_arrives.png",
+      "dimensions": {
+        "width": 864,
+        "height": 512
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 288,
+        "frameHeight": 256,
+        "frameCount": 6,
+        "animations": [
+          {
+            "name": "arrival_relocation",
+            "frames": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ]
+      },
+      "provenanceKey": "transit_loop_zero_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images Station That Arrives source frames mechanically chroma-keyed, cropped, resized, and packed. No expressive Station art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "transit_loop_zero",
+        "station_that_arrives",
+        "boss_sprite"
+      ],
+      "notes": "Provides Transit boss/event scaffold presentation in the close tactical camera and title-card portrait."
+    },
+    {
+      "id": "effect.transit_loop_zero.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for Transit Loop Zero aligned tracks, false tracks, arrival windows, platform alignment, and Station arrival states.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/transit_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 320
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 8
+      },
+      "provenanceKey": "transit_loop_zero_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images Transit hazard VFX mechanically chroma-keyed, cropped, resized, and packed. No expressive Transit hazard VFX art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "transit_loop_zero",
+        "hazard_vfx",
+        "route_transit",
+        "station_that_arrives"
+      ],
+      "notes": "Supplies source-backed aligned-track, false-track, arrival-window, route-switch, station arrival, relocation, and false-schedule wave VFX."
+    },
+    {
+      "id": "concept.signal_coast.source_v1",
+      "category": "concept_art",
+      "intendedUse": "ChatGPT Images production-source boards for Signal Coast terrain, relay props, Static Skimmers, The Lighthouse That Answers, and hazard/objective VFX.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/chatgpt_refs/signal_coast_source_v1/signal_terrain_source_v1.png",
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameCount": 4,
+        "companionFiles": [
+          "assets/concepts/chatgpt_refs/signal_coast_source_v1/signal_props_objectives_source_v1.png",
+          "assets/concepts/chatgpt_refs/signal_coast_source_v1/signal_skimmer_lighthouse_source_v1.png",
+          "assets/concepts/chatgpt_refs/signal_coast_source_v1/signal_hazard_vfx_source_v1.png"
+        ]
+      },
+      "provenanceKey": "chatgpt_signal_coast_source_v1",
+      "licenseNote": "ChatGPT Images generated original project source boards for Signal Coast. Runtime assets require separate mechanical packing and provenance.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "chatgpt_images",
+        "signal_coast",
+        "terrain",
+        "static_skimmers",
+        "lighthouse_that_answers"
+      ],
+      "notes": "Preferred Signal source set after the prior-style direction board; matches Armistice/Cooling/Transit close-camera material density better than the first broad direction board."
+    },
+    {
+      "id": "concept.signal_coast.pixellab_refinement_v1",
+      "category": "concept_art",
+      "intendedUse": "Authenticated PixelLab Signal Coast terrain generation proof/reference after user-requested PixelLab pass.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/signal_coast_refinement_v1/pixellab_signal_coast_gallery_after_terrain_save.png",
+      "dimensions": {
+        "width": 584,
+        "height": 814
+      },
+      "frames": null,
+      "provenanceKey": "pixellab_signal_coast_refinement_v1",
+      "licenseNote": "PixelLab authenticated browser output reference for Signal Coast. Preserved as source/proof; not directly packed into runtime because the export UI did not expose a clean file during this pass.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "pixellab",
+        "signal_coast",
+        "terrain",
+        "source_reference"
+      ],
+      "notes": "Records that PixelLab was used and saved a Signal terrain batch. Runtime V1 uses the stronger clean ChatGPT source boards until a clean PixelLab export/manual Aseprite pass replaces it."
+    },
+    {
+      "id": "tile.signal_coast.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime authored Signal Coast shoreline/causeway ground surface.",
+      "status": "production",
+      "sourcePath": "assets/tiles/signal_coast/authored_ground.png",
+      "dimensions": {
+        "width": 5120,
+        "height": 3072
+      },
+      "frames": null,
+      "provenanceKey": "signal_coast_source_v1_runtime_pack",
+      "licenseNote": "Signal Coast source terrain mechanically chroma-keyed, cropped, resized, composed, and quantized. No expressive terrain art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "signal_coast",
+        "authored_ground",
+        "route_edge"
+      ],
+      "notes": "Provides source-backed broken server-coast causeways, safe spits, corrupted surf edges, relay pads, and lighthouse shelf language for normal production play."
+    },
+    {
+      "id": "tile.signal_coast.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime transparent Signal Coast terrain chunk atlas for close-camera overlays.",
+      "status": "production",
+      "sourcePath": "assets/tiles/signal_coast/signal_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 640
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 512,
+        "frameHeight": 320,
+        "frameCount": 4
+      },
+      "provenanceKey": "signal_coast_source_v1_runtime_pack",
+      "licenseNote": "Signal Coast terrain source mechanically chroma-keyed, cropped, padded, resized, and packed. No expressive terrain chunks were drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "signal_coast",
+        "terrain_chunks",
+        "route_edge"
+      ],
+      "notes": "Supplies production terrain overlays for causeway, relay pad, safe spit, and lighthouse shelf zones."
+    },
+    {
+      "id": "prop.signal_coast.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime transparent prop atlas for Signal Coast relay beacons, pylons, wrecks, buoys, consoles, and barricades.",
+      "status": "production",
+      "sourcePath": "assets/props/signal_coast/signal_props_objectives_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 240,
+        "frameCount": 8
+      },
+      "provenanceKey": "signal_coast_source_v1_runtime_pack",
+      "licenseNote": "Signal Coast prop/objective source mechanically chroma-keyed, cropped, resized, and packed. No expressive Signal prop art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "signal_coast",
+        "relay_beacons",
+        "coastal_props"
+      ],
+      "notes": "Supplies grounded relay beacon pads, cable pylons, antenna wrecks, shoreline debris, offshore buoy, console, tower, and causeway barricade props."
+    },
+    {
+      "id": "enemy.static_skimmers.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Static Skimmer enemy frame strip for Signal Coast relay-jammer pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/static_skimmers_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "signal_coast_source_v1_runtime_pack",
+      "licenseNote": "Signal Coast Static Skimmer source frames mechanically chroma-keyed, cropped, resized, and packed. No expressive enemy art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "signal_coast",
+        "static_skimmers",
+        "enemy_sprite"
+      ],
+      "notes": "Provides Signal Coast's source-backed fast shore/surf relay-jammer enemy family."
+    },
+    {
+      "id": "boss.lighthouse_that_answers.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent The Lighthouse That Answers boss/event presentation strip for Signal Coast.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/lighthouse_that_answers.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 288
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 320,
+        "frameHeight": 288,
+        "frameCount": 4
+      },
+      "provenanceKey": "signal_coast_source_v1_runtime_pack",
+      "licenseNote": "Signal Coast Lighthouse source frames mechanically chroma-keyed, cropped, resized, and packed. No expressive boss art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "signal_coast",
+        "lighthouse_that_answers",
+        "boss_sprite"
+      ],
+      "notes": "Provides large source-backed Lighthouse That Answers event frames for the close Signal Coast camera."
+    },
+    {
+      "id": "effect.signal_coast.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for Signal Coast clear windows, relay calibration, corrupted tide, static, cable, skimmer, extraction, and boss states.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/signal_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 12
+      },
+      "provenanceKey": "signal_coast_source_v1_runtime_pack",
+      "licenseNote": "Signal Coast hazard VFX mechanically chroma-keyed, cropped, resized, and packed. No expressive Signal hazard VFX art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "signal_coast",
+        "hazard_vfx",
+        "relay_calibration"
+      ],
+      "notes": "Supplies source-backed clear-signal, relay, corrupted-tide, static, cable, lighthouse, skimmer, extraction, shard, and boss pulse VFX."
+    },
+    {
+      "id": "concept.blackwater_beacon.source_v1",
+      "category": "concept_art",
+      "intendedUse": "ChatGPT Images production-source boards for Blackwater Beacon terrain, antenna/Signal Tower props, Tidecall Static, Maw Below Weather, and tidal/static hazard VFX.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/chatgpt_refs/blackwater_beacon_source_v1/blackwater_terrain_source_v1.png",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameCount": 4,
+        "companionFiles": [
+          "assets/concepts/chatgpt_refs/blackwater_beacon_source_v1/blackwater_props_objectives_source_v1.png",
+          "assets/concepts/chatgpt_refs/blackwater_beacon_source_v1/blackwater_tidecall_maw_source_v1.png",
+          "assets/concepts/chatgpt_refs/blackwater_beacon_source_v1/blackwater_hazard_vfx_source_v1.png"
+        ]
+      },
+      "provenanceKey": "chatgpt_blackwater_beacon_source_v1",
+      "licenseNote": "ChatGPT Images generated original project source boards for Blackwater Beacon. Runtime assets require separate mechanical packing and provenance.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "chatgpt_images",
+        "blackwater_beacon",
+        "terrain",
+        "tidecall_static",
+        "maw_below_weather"
+      ],
+      "notes": "Generated after the Blackwater gameplay proof and difficulty audit to match the accepted close-camera isometric material language while preserving the ocean antenna, Tidecall Static, Signal Tower, and Maw Below Weather hooks."
+    },
+    {
+      "id": "concept.blackwater_beacon.pixellab_refinement_v1",
+      "category": "concept_art",
+      "intendedUse": "Authenticated PixelLab source frames for Blackwater Beacon runtime refinement.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/blackwater_pixellab_raw_contact.png",
+      "dimensions": {
+        "width": 384,
+        "height": 384
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 16,
+        "companionFiles": [
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_0.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_1.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_2.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_3.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_4.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_5.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_6.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_7.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_8.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_9.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_10.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_11.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_12.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_13.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_14.png",
+          "assets/concepts/pixellab_refs/blackwater_beacon_refinement_v1/raw/frame_15.png"
+        ]
+      },
+      "provenanceKey": "pixellab_blackwater_beacon_refinement_v1",
+      "licenseNote": "PixelLab authenticated browser output for Blackwater Beacon. PixelLab source contributes directly to accepted runtime authored ground, props, and VFX.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "pixellab",
+        "blackwater_beacon",
+        "terrain",
+        "props",
+        "hazard_vfx"
+      ],
+      "notes": "Codex used the authenticated PixelLab browser session without handling credentials, billing, payment, or security prompts. The raw transparent frame set is preserved plus a mechanical contact sheet."
+    },
+    {
+      "id": "tile.blackwater_beacon.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime authored Blackwater Beacon ocean-platform ground surface.",
+      "status": "production",
+      "sourcePath": "assets/tiles/blackwater_beacon/authored_ground.png",
+      "dimensions": {
+        "width": 5120,
+        "height": 3072
+      },
+      "frames": null,
+      "provenanceKey": "blackwater_beacon_source_v1_runtime_pack",
+      "licenseNote": "Blackwater source terrain and PixelLab deck accents mechanically cropped, resized, composed, and quantized. No expressive terrain art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "blackwater_beacon",
+        "authored_ground",
+        "split_pressure"
+      ],
+      "notes": "Provides source-backed Blackwater ocean-platform server decks, flooded crossings, maintenance islands, antenna pads, Signal Tower line, and Maw shelf ground language for normal production play."
+    },
+    {
+      "id": "tile.blackwater_beacon.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime transparent Blackwater Beacon terrain chunk atlas for close-camera overlays.",
+      "status": "production",
+      "sourcePath": "assets/tiles/blackwater_beacon/blackwater_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 640
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 512,
+        "frameHeight": 320,
+        "frameCount": 4
+      },
+      "provenanceKey": "blackwater_beacon_source_v1_runtime_pack",
+      "licenseNote": "Blackwater terrain source mechanically chroma-keyed, cropped, padded, resized, and packed. No expressive terrain chunks were drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "blackwater_beacon",
+        "terrain_chunks",
+        "split_pressure"
+      ],
+      "notes": "Supplies production terrain overlays for server deck, tidal crossing, maintenance platform, and Maw shelf zones."
+    },
+    {
+      "id": "prop.blackwater_beacon.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime transparent prop atlas for Blackwater Beacon antenna arrays, Signal Tower markers, maintenance beacons, key/extraction props, and server debris.",
+      "status": "production",
+      "sourcePath": "assets/props/blackwater_beacon/blackwater_props_objectives_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 240,
+        "frameCount": 8
+      },
+      "provenanceKey": "blackwater_beacon_source_v1_runtime_pack",
+      "licenseNote": "Blackwater prop/objective source and PixelLab prop/key material mechanically chroma-keyed, cropped, resized, and packed. No expressive Blackwater prop art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "blackwater_beacon",
+        "antenna_arrays",
+        "signal_towers"
+      ],
+      "notes": "Supplies downward antenna arrays, Tide Rotor, Abyssal antenna, Signal Tower marker, maintenance beacon, server rack debris, Blackwater Signal Key, and extraction pylon props."
+    },
+    {
+      "id": "enemy.tidecall_static.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Tidecall Static enemy frame strip for Blackwater Beacon objective-interruption pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/tidecall_static_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "blackwater_beacon_source_v1_runtime_pack",
+      "licenseNote": "Blackwater Tidecall Static source frames mechanically chroma-keyed, cropped, resized, and packed. No expressive enemy art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "blackwater_beacon",
+        "tidecall_static",
+        "enemy_sprite"
+      ],
+      "notes": "Provides Blackwater Beacon's source-backed Tidecall Static pressure family for antenna jamming and Maw call waves."
+    },
+    {
+      "id": "boss.maw_below_weather.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent Maw Below Weather boss/event presentation strip for Blackwater Beacon.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/maw_below_weather.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 288
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 320,
+        "frameHeight": 288,
+        "frameCount": 4
+      },
+      "provenanceKey": "blackwater_beacon_source_v1_runtime_pack",
+      "licenseNote": "Blackwater Maw Below Weather source frames mechanically chroma-keyed, cropped, resized, and packed. No expressive boss art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "blackwater_beacon",
+        "maw_below_weather",
+        "boss_sprite"
+      ],
+      "notes": "Provides large source-backed Maw Below Weather event frames for the close Blackwater Beacon camera and boss title-card portrait."
+    },
+    {
+      "id": "effect.blackwater_beacon.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for Blackwater Beacon tidal lanes, Tidecall Static, Signal Tower warnings, antenna beams, retune states, Maw surge, key pickup, and extraction.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/blackwater_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 12
+      },
+      "provenanceKey": "blackwater_beacon_source_v1_runtime_pack",
+      "licenseNote": "Blackwater hazard VFX source and PixelLab VFX contribution mechanically chroma-keyed, cropped, resized, and packed. No expressive Blackwater hazard VFX art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "blackwater_beacon",
+        "hazard_vfx",
+        "antenna_split_pressure"
+      ],
+      "notes": "Supplies source-backed tidal idle/wave, Tidecall Static, static interrupt, Signal Tower warning, antenna beam, retune, complete, Maw surge, upward rain, key pickup, and extraction VFX."
+    },
+    {
+      "id": "concept.memory_cache.source_v1",
+      "category": "concept_art",
+      "intendedUse": "ChatGPT Images production-source boards for Memory Cache terrain, evidence/memory objective props, Context Rot, Memory Curator, and corruption/recovery VFX.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/chatgpt_refs/memory_cache_source_v1/memory_cache_terrain_chunks_source_v1.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameCount": 4,
+        "companionFiles": [
+          "assets/concepts/chatgpt_refs/memory_cache_source_v1/memory_cache_props_objectives_source_v1.png",
+          "assets/concepts/chatgpt_refs/memory_cache_source_v1/memory_cache_actors_source_v1.png",
+          "assets/concepts/chatgpt_refs/memory_cache_source_v1/memory_cache_vfx_source_v1.png"
+        ]
+      },
+      "provenanceKey": "chatgpt_memory_cache_source_v1",
+      "licenseNote": "ChatGPT Images generated original project source boards for Memory Cache. Runtime assets require separate mechanical packing and provenance.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "chatgpt_images",
+        "memory_cache",
+        "terrain",
+        "context_rot",
+        "memory_curator"
+      ],
+      "notes": "Generated after the Memory Cache gameplay proof and difficulty audit to match the accepted close-camera isometric material language while preserving evidence recovery, safe recall, corrupted archive, Context Rot, and Curator hooks."
+    },
+    {
+      "id": "concept.memory_cache.pixellab_refinement_v1",
+      "category": "concept_art",
+      "intendedUse": "Authenticated PixelLab source frames for Memory Cache runtime refinement.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/memory_cache_refinement_v1/memory_cache_pixellab_raw_contact.png",
+      "dimensions": {
+        "width": 384,
+        "height": 384
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 16,
+        "companionFiles": [
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_0.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_1.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_2.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_3.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_4.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_5.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_6.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_7.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_8.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_9.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_10.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_11.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_12.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_13.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_14.png",
+          "assets/concepts/pixellab_refs/memory_cache_refinement_v1/raw/frame_15.png"
+        ]
+      },
+      "provenanceKey": "pixellab_memory_cache_refinement_v1",
+      "licenseNote": "PixelLab authenticated browser output for Memory Cache. PixelLab source contributes directly to accepted runtime authored ground, props, enemies, boss contribution, and VFX.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "pixellab",
+        "memory_cache",
+        "object_batch",
+        "runtime_source"
+      ],
+      "notes": "Downloaded from the authenticated in-app browser session. Codex did not handle credentials, account secrets, billing, payment, or security prompts."
+    },
+    {
+      "id": "tile.memory_cache.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime authored Memory Cache archive ground surface.",
+      "status": "production",
+      "sourcePath": "assets/tiles/memory_cache/authored_ground.png",
+      "dimensions": {
+        "width": 7168,
+        "height": 4096
+      },
+      "frames": null,
+      "provenanceKey": "memory_cache_source_v1_runtime_pack",
+      "licenseNote": "Memory Cache source terrain and PixelLab archive/corruption/recall/shortcut decals mechanically cropped, resized, composed, and quantized. No expressive terrain art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "memory_cache",
+        "authored_ground",
+        "expedition_recovery"
+      ],
+      "notes": "Provides source-backed archive-cache floor, evidence rooms, safe recall pockets, corruption lanes, redacted shortcuts, Curator vault, and extraction index ground language for normal production play."
+    },
+    {
+      "id": "tile.memory_cache.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime transparent Memory Cache terrain chunk atlas for close-camera overlays.",
+      "status": "production",
+      "sourcePath": "assets/tiles/memory_cache/memory_cache_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 2048,
+        "height": 640
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 512,
+        "frameHeight": 320,
+        "frameCount": 8
+      },
+      "provenanceKey": "memory_cache_source_v1_runtime_pack",
+      "licenseNote": "Memory Cache terrain source mechanically chroma-keyed, cropped, padded, resized, and packed. No expressive terrain chunks were drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "memory_cache",
+        "terrain_chunks",
+        "expedition_recovery"
+      ],
+      "notes": "Supplies production overlays for archive rooms, recall pockets, corrupted archive lanes, redacted shortcuts, Curator vault, and extraction index zones."
+    },
+    {
+      "id": "prop.memory_cache.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime transparent prop atlas for Memory Cache evidence records, memory shards, recall pads, redaction barriers, archive props, extraction console, and route-memory reward.",
+      "status": "production",
+      "sourcePath": "assets/props/memory_cache/memory_cache_props_objectives_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 720
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 240,
+        "frameCount": 12
+      },
+      "provenanceKey": "memory_cache_source_v1_runtime_pack",
+      "licenseNote": "Memory Cache prop/objective source and PixelLab evidence/memory material mechanically cropped, resized, and packed. No expressive Memory Cache prop art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "memory_cache",
+        "evidence_records",
+        "memory_shards"
+      ],
+      "notes": "Supplies intake terminal, civic ledger, witness shards, recall pads, redaction barrier, Curator vault obelisk, extraction console, shelves, crates, crystals, redaction node, and route-memory obelisk props."
+    },
+    {
+      "id": "enemy.context_rot.memory_cache_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Context Rot enemy frame strip for Memory Cache recovery interruption pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/memory_cache_context_rot_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "memory_cache_source_v1_runtime_pack",
+      "licenseNote": "Memory Cache Context Rot source frames mechanically cropped, resized, and packed. No expressive enemy art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "memory_cache",
+        "context_rot",
+        "enemy_sprite"
+      ],
+      "notes": "Provides Memory Cache's source-backed Context Rot pressure family for record interruption and corruption lane pressure."
+    },
+    {
+      "id": "enemy.memory_anchors.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Memory Anchor and redaction enemy frame strip for Memory Cache objective-jam pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/memory_anchors_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 128
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 128,
+        "frameCount": 4
+      },
+      "provenanceKey": "memory_cache_source_v1_runtime_pack",
+      "licenseNote": "Memory Anchor and redaction source frames mechanically cropped, resized, and packed. No expressive enemy art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "memory_cache",
+        "memory_anchors",
+        "enemy_sprite"
+      ],
+      "notes": "Provides source-backed Memory Anchor and redaction forms for Memory Cache record jamming and Curator pressure."
+    },
+    {
+      "id": "boss.memory_curator.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent Memory Curator boss/event presentation strip for Memory Cache.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/memory_curator.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 288
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 320,
+        "frameHeight": 288,
+        "frameCount": 4
+      },
+      "provenanceKey": "memory_cache_source_v1_runtime_pack",
+      "licenseNote": "Memory Curator source frames and PixelLab Curator contribution mechanically cropped, resized, and packed. No expressive boss art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "memory_cache",
+        "memory_curator",
+        "boss_sprite"
+      ],
+      "notes": "Provides large source-backed Memory Curator event frames for the close Memory Cache camera and boss title-card portrait."
+    },
+    {
+      "id": "effect.memory_cache.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for Memory Cache shard recovery, recall pockets, corrupted lanes, redaction, shortcuts, Context Rot trails, Curator locks, extraction, warnings, and route-memory rewards.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/memory_cache_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 12
+      },
+      "provenanceKey": "memory_cache_source_v1_runtime_pack",
+      "licenseNote": "Memory Cache hazard VFX source and PixelLab VFX contribution mechanically cropped, resized, and packed. No expressive Memory Cache hazard VFX art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "memory_cache",
+        "hazard_vfx",
+        "memory_record_recovery"
+      ],
+      "notes": "Supplies source-backed shard glints, recovery bursts, recall rings, corruption static, redaction pulses, shortcut sparks, Context Rot trails, Curator locks, record flares, extraction beams, warning cracks, and route reward pulses."
+    },
+    {
+      "id": "concept.guardrail_forge.source_v1",
+      "category": "concept_art",
+      "intendedUse": "ChatGPT Images production-source boards for Guardrail Forge terrain direction, relay/objective props, Doctrine Auditor actors, and guardrail/overload VFX.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/chatgpt_refs/guardrail_forge_source_v1/guardrail_forge_terrain_chunks_source_v1.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameCount": 4,
+        "companionFiles": [
+          "assets/concepts/chatgpt_refs/guardrail_forge_source_v1/guardrail_forge_props_objectives_source_v1.png",
+          "assets/concepts/chatgpt_refs/guardrail_forge_source_v1/guardrail_forge_actors_source_v1.png",
+          "assets/concepts/chatgpt_refs/guardrail_forge_source_v1/guardrail_forge_vfx_source_v1.png"
+        ]
+      },
+      "provenanceKey": "chatgpt_guardrail_forge_source_v1",
+      "licenseNote": "ChatGPT Images generated original project source boards for Guardrail Forge. Runtime assets require separate mechanical packing and provenance.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "chatgpt_images",
+        "guardrail_forge",
+        "terrain",
+        "doctrine_auditor",
+        "defense_holdout"
+      ],
+      "notes": "Generated after the Guardrail Forge gameplay proof and difficulty audit to match the accepted close-camera isometric material language while preserving hold plates, doctrine relays, overload lanes, and Doctrine Auditor hooks. The terrain board is preserved as source direction, but its raised side faces are rejected for runtime terrain."
+    },
+    {
+      "id": "concept.guardrail_forge.pixellab_refinement_v1",
+      "category": "concept_art",
+      "intendedUse": "Authenticated PixelLab source frames for Guardrail Forge runtime refinement.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/guardrail_forge_pixellab_raw_contact.png",
+      "dimensions": {
+        "width": 576,
+        "height": 576
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 16,
+        "companionFiles": [
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_0.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_1.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_2.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_3.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_4.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_5.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_6.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_7.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_8.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_9.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_10.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_11.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_12.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_13.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_14.png",
+          "assets/concepts/pixellab_refs/guardrail_forge_refinement_v1/raw/frame_15.png"
+        ]
+      },
+      "provenanceKey": "pixellab_guardrail_forge_refinement_v1",
+      "licenseNote": "PixelLab authenticated browser output for Guardrail Forge. PixelLab source contributes directly to accepted runtime authored ground, terrain chunks, props, Doctrine Auditor drones, and VFX.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "pixellab",
+        "guardrail_forge",
+        "object_batch",
+        "runtime_source"
+      ],
+      "notes": "Downloaded from the authenticated in-app browser session. Codex did not handle credentials, account secrets, billing, payment, or security prompts."
+    },
+    {
+      "id": "tile.guardrail_forge.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime authored Guardrail Forge ground surface.",
+      "status": "production",
+      "sourcePath": "assets/tiles/guardrail_forge/authored_ground.png",
+      "dimensions": {
+        "width": 7168,
+        "height": 4096
+      },
+      "frames": null,
+      "provenanceKey": "guardrail_forge_source_v1_runtime_pack",
+      "licenseNote": "Guardrail Forge source terrain and PixelLab flat forge/hold-plate decals mechanically cropped, resized, composed, and quantized. No expressive terrain art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "pixellab",
+        "guardrail_forge",
+        "authored_ground",
+        "defense_holdout"
+      ],
+      "notes": "Provides source-backed forge floor, alloy hold plates, constitutional clamp plates, Silkgrid loom floor, overload lanes, audit press floor, quench gate ground, and surrounding civic/server material for normal production play."
+    },
+    {
+      "id": "tile.guardrail_forge.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime transparent Guardrail Forge terrain chunk atlas for close-camera overlays.",
+      "status": "production",
+      "sourcePath": "assets/tiles/guardrail_forge/guardrail_forge_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 2048,
+        "height": 640
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 512,
+        "frameHeight": 320,
+        "frameCount": 8
+      },
+      "provenanceKey": "guardrail_forge_source_v1_runtime_pack",
+      "licenseNote": "Accepted PixelLab terrain decals mechanically cropped, padded, resized, and packed. The ChatGPT terrain board is preserved as rejected runtime direction because raised side faces read as repeated cube/platform artifacts.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "pixellab",
+        "guardrail_forge",
+        "terrain_chunks",
+        "defense_holdout"
+      ],
+      "notes": "Supplies production overlays for alloy hold plates, constitutional clamps, Silkgrid loom floors, overload sluice lanes, audit press floor, quench gate floor, server catwalks, and cracked civic tiles."
+    },
+    {
+      "id": "prop.guardrail_forge.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime transparent prop atlas for Guardrail Forge relays, doctrine machinery, jammer props, quench gate, and reward objects.",
+      "status": "production",
+      "sourcePath": "assets/props/guardrail_forge/guardrail_forge_props_objectives_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 720
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 240,
+        "frameCount": 12
+      },
+      "provenanceKey": "guardrail_forge_source_v1_runtime_pack",
+      "licenseNote": "Guardrail Forge prop/objective source and PixelLab relay material mechanically cropped, resized, and packed. No expressive Guardrail prop art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "guardrail_forge",
+        "forge_relays",
+        "doctrine_machinery"
+      ],
+      "notes": "Supplies alloy temper relay, constitutional clamp, Silkgrid loom, overload sluice, audit press throne, relay jammer, doctrine press pylon, quench gate, safety bollards, signal crates, shard condenser, and extraction console props."
+    },
+    {
+      "id": "enemy.doctrine_auditors.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Doctrine Auditor drone frame strip for Guardrail Forge faction relay pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/doctrine_auditors_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "guardrail_forge_source_v1_runtime_pack",
+      "licenseNote": "PixelLab Doctrine Auditor drone source frames mechanically cropped, resized, and packed. No expressive enemy art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "pixellab",
+        "guardrail_forge",
+        "doctrine_auditors",
+        "enemy_sprite"
+      ],
+      "notes": "Provides Guardrail Forge's source-backed Doctrine Auditor pressure family for relay jamming, hold-plate pressure, and overload lane interruption."
+    },
+    {
+      "id": "boss.doctrine_auditor.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent Doctrine Auditor boss/event presentation strip for Guardrail Forge.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/doctrine_auditor.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 288
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 320,
+        "frameHeight": 288,
+        "frameCount": 4
+      },
+      "provenanceKey": "guardrail_forge_source_v1_runtime_pack",
+      "licenseNote": "Doctrine Auditor source frames mechanically cropped, resized, and packed. No expressive boss art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "guardrail_forge",
+        "doctrine_auditor",
+        "boss_sprite"
+      ],
+      "notes": "Provides large source-backed Doctrine Auditor event frames for the close Guardrail Forge camera and boss title-card portrait."
+    },
+    {
+      "id": "effect.guardrail_forge.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for Guardrail Forge safe hold rings, calibration sparks, overload lanes, doctrine jams, audit locks, relay completion, quench extraction, and boss pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/guardrail_forge_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 12
+      },
+      "provenanceKey": "guardrail_forge_source_v1_runtime_pack",
+      "licenseNote": "Guardrail Forge hazard VFX source and PixelLab VFX contribution mechanically cropped, resized, and packed. No expressive Guardrail hazard VFX art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "guardrail_forge",
+        "hazard_vfx",
+        "guardrail_doctrine_calibration"
+      ],
+      "notes": "Supplies source-backed safe hold rings, calibration sparks, overload lanes, doctrine jam pulses, audit press locks, relay complete flares, quench beams, shard reward bursts, counterproof crackles, warning sweeps, projectile sparks, and boss pressure bursts."
+    },
+    {
+      "id": "concept.glass_sunfield.source_v1",
+      "category": "concept_art",
+      "intendedUse": "ChatGPT Images production-source boards for Glass Sunfield terrain, lens/prism objective props, Solar Reflection and Choirglass actors, Wrong Sunrise boss/event art, and prism/exposure VFX.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/chatgpt_refs/glass_sunfield_source_v1/glass_sunfield_terrain_chunks_source_v1.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameCount": 4,
+        "companionFiles": [
+          "assets/concepts/chatgpt_refs/glass_sunfield_source_v1/glass_sunfield_props_objectives_source_v1.png",
+          "assets/concepts/chatgpt_refs/glass_sunfield_source_v1/glass_sunfield_actors_source_v1.png",
+          "assets/concepts/chatgpt_refs/glass_sunfield_source_v1/glass_sunfield_vfx_source_v1.png"
+        ]
+      },
+      "provenanceKey": "chatgpt_glass_sunfield_source_v1",
+      "licenseNote": "ChatGPT Images generated original project source boards for Glass Sunfield. Runtime assets require separate mechanical packing and provenance.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "chatgpt_images",
+        "glass_sunfield",
+        "terrain",
+        "wrong_sunrise",
+        "solar_prism"
+      ],
+      "notes": "Generated after the Glass Sunfield gameplay proof and difficulty audit to match the accepted close-camera isometric material language while preserving shade pockets, exposed glass lanes, sun lenses, Solar Reflection pressure, Choirglass pressure, and Wrong Sunrise hooks."
+    },
+    {
+      "id": "concept.glass_sunfield.pixellab_refinement_v1",
+      "category": "concept_art",
+      "intendedUse": "Authenticated PixelLab source frames for Glass Sunfield runtime refinement.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/glass_sunfield_pixellab_raw_contact.png",
+      "dimensions": {
+        "width": 576,
+        "height": 576
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 16,
+        "companionFiles": [
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_0.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_1.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_2.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_3.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_4.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_5.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_6.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_7.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_8.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_9.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_10.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_11.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_12.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_13.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_14.png",
+          "assets/concepts/pixellab_refs/glass_sunfield_refinement_v1/raw/frame_15.png"
+        ]
+      },
+      "provenanceKey": "pixellab_glass_sunfield_refinement_v1",
+      "licenseNote": "PixelLab authenticated browser output for Glass Sunfield. PixelLab source contributes directly to accepted runtime authored ground, terrain chunks, props, Solar Reflection frames, Choirglass frames, and VFX. Frame 2 is preserved but rejected for runtime terrain due a raised strip artifact.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "pixellab",
+        "glass_sunfield",
+        "object_batch",
+        "runtime_source"
+      ],
+      "notes": "Downloaded from the authenticated in-app browser session. Codex did not handle credentials, account secrets, billing, payment, or security prompts."
+    },
+    {
+      "id": "tile.glass_sunfield.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime authored Glass Sunfield ground surface.",
+      "status": "production",
+      "sourcePath": "assets/tiles/glass_sunfield/authored_ground.png",
+      "dimensions": {
+        "width": 7168,
+        "height": 4096
+      },
+      "frames": null,
+      "provenanceKey": "glass_sunfield_source_v1_runtime_pack",
+      "licenseNote": "Glass Sunfield source terrain and PixelLab flat glass/prism decals mechanically cropped, resized, composed, and quantized. No expressive terrain art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "glass_sunfield",
+        "authored_ground",
+        "shade_routing"
+      ],
+      "notes": "Provides source-backed black glass server floor, shaded lens courtyards, exposed sunburn lanes, prism-window floor material, mirror approaches, and surrounding civic/server glass for normal production play."
+    },
+    {
+      "id": "tile.glass_sunfield.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime transparent Glass Sunfield terrain chunk atlas for close-camera overlays.",
+      "status": "production",
+      "sourcePath": "assets/tiles/glass_sunfield/glass_sunfield_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 2048,
+        "height": 640
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 512,
+        "frameHeight": 320,
+        "frameCount": 8
+      },
+      "provenanceKey": "glass_sunfield_source_v1_runtime_pack",
+      "licenseNote": "Accepted ChatGPT Images terrain and PixelLab flat floor/prism decals mechanically cropped, padded, resized, and packed. PixelLab frame 2 is preserved as rejected runtime source because its raised side face read as a strip artifact.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "glass_sunfield",
+        "terrain_chunks",
+        "solar_prism"
+      ],
+      "notes": "Supplies production overlays for cracked black glass floors, shaded lens floors, exposed sunburn lanes, prism-window floors, mirror-court material, and civic glass approach chunks."
+    },
+    {
+      "id": "prop.glass_sunfield.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime transparent prop atlas for Glass Sunfield shade lenses, prism vanes, mirror terminals, prism gate, and reward objects.",
+      "status": "production",
+      "sourcePath": "assets/props/glass_sunfield/glass_sunfield_props_objectives_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 720
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 240,
+        "frameCount": 12
+      },
+      "provenanceKey": "glass_sunfield_source_v1_runtime_pack",
+      "licenseNote": "Glass Sunfield prop/objective source and PixelLab prism/lens material mechanically cropped, resized, and packed. No expressive Glass prop art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "glass_sunfield",
+        "sun_lenses",
+        "glass_prism"
+      ],
+      "notes": "Supplies Western Shade Lens, Mistral prism vane, DeepMind mirror lens terminal, Glass Prism Gate, shade projector, mirror debris, lens towers, reward shards, safety bollards, shard crate, and extraction console props."
+    },
+    {
+      "id": "enemy.solar_reflections.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Solar Reflection frame strip for Glass Sunfield reflection pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/solar_reflections_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "glass_sunfield_source_v1_runtime_pack",
+      "licenseNote": "PixelLab Solar Reflection source frames mechanically cropped, resized, and packed. No expressive enemy art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "pixellab",
+        "glass_sunfield",
+        "solar_reflections",
+        "enemy_sprite"
+      ],
+      "notes": "Provides Glass Sunfield's source-backed Solar Reflection pressure family for lens jamming, exposed-lane pressure, and Wrong Sunrise calls."
+    },
+    {
+      "id": "enemy.choirglass.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Choirglass frame strip for Glass Sunfield shard-wing pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/choirglass_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "glass_sunfield_source_v1_runtime_pack",
+      "licenseNote": "PixelLab Choirglass source frames mechanically cropped, resized, and packed. No expressive enemy art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "pixellab",
+        "glass_sunfield",
+        "choirglass",
+        "enemy_sprite"
+      ],
+      "notes": "Provides Glass Sunfield's source-backed shard-wing pressure family for shade-pocket interruption and mirror-lane horde pressure."
+    },
+    {
+      "id": "boss.wrong_sunrise.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent Wrong Sunrise boss/event presentation strip for Glass Sunfield.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/wrong_sunrise.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 320
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 320,
+        "frameHeight": 320,
+        "frameCount": 4
+      },
+      "provenanceKey": "glass_sunfield_source_v1_runtime_pack",
+      "licenseNote": "Wrong Sunrise source frames mechanically cropped, resized, and packed. No expressive boss art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "glass_sunfield",
+        "wrong_sunrise",
+        "boss_sprite"
+      ],
+      "notes": "Provides large source-backed Wrong Sunrise event frames for the close Glass Sunfield camera and boss title-card portrait."
+    },
+    {
+      "id": "effect.glass_sunfield.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for Glass Sunfield shade pockets, exposed lanes, reflection jams, lens completion, Wrong Sunrise pressure, and prism extraction.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/glass_sunfield_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 12
+      },
+      "provenanceKey": "glass_sunfield_source_v1_runtime_pack",
+      "licenseNote": "Glass Sunfield hazard VFX source and PixelLab VFX contribution mechanically cropped, resized, and packed. No expressive Glass hazard VFX art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "glass_sunfield",
+        "hazard_vfx",
+        "glass_prism_alignment"
+      ],
+      "notes": "Supplies source-backed shade pocket rings, exposed glass burn streaks, reflection jam pulses, wrong-sun beams, lens complete flares, prism extraction beams, shard reward glints, warning flashes, Solar Reflection trails, Choirglass slashes, projectile sparks, and boss pressure bursts."
+    },
+    {
+      "id": "concept.archive_court.source_v1",
+      "category": "concept_art",
+      "intendedUse": "ChatGPT Images production-source boards for Archive of Unsaid Things terrain, evidence/objective props, Redaction Angel and Injunction Writ actors, Redactor Saint boss/event art, and redaction/court VFX.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/chatgpt_refs/archive_court_source_v1/archive_court_terrain_chunks_chatgpt_v1.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameCount": 4,
+        "companionFiles": [
+          "assets/concepts/chatgpt_refs/archive_court_source_v1/archive_court_props_objectives_chatgpt_v1.png",
+          "assets/concepts/chatgpt_refs/archive_court_source_v1/archive_court_actors_boss_chatgpt_v1.png",
+          "assets/concepts/chatgpt_refs/archive_court_source_v1/archive_court_vfx_chatgpt_v1.png"
+        ]
+      },
+      "provenanceKey": "chatgpt_archive_court_source_v1",
+      "licenseNote": "ChatGPT Images generated original project source boards for Archive/Court. Runtime assets require separate mechanical packing and provenance.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "chatgpt_images",
+        "archive_court",
+        "archive_of_unsaid_things",
+        "redactor_saint",
+        "redaction"
+      ],
+      "notes": "Generated after the Archive/Court gameplay proof and post-Glass difficulty audit to match close-camera isometric archive/civic material language. Flat slabs, court-floor motifs, props, actors, boss, and VFX were accepted as source; raised terrain faces and pseudo-document marks are not to be enlarged as readable UI text."
+    },
+    {
+      "id": "concept.archive_court.pixellab_refinement_v1",
+      "category": "concept_art",
+      "intendedUse": "Authenticated PixelLab source frames for Archive/Court runtime refinement and contribution.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/archive_court_refinement_v1/archive_court_pixellab_contact_v1.png",
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameWidth": 48,
+        "frameHeight": 48,
+        "frameCount": 16,
+        "companionFiles": [
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_00.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_01.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_02.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_03.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_04.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_05.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_06.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_07.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_08.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_09.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_10.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_11.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_12.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_13.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_14.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/raw_frames/archive_court_pixellab_frame_15.png",
+          "assets/concepts/pixellab_refs/archive_court_refinement_v1/archive_court_runtime_contact_v1.png"
+        ]
+      },
+      "provenanceKey": "pixellab_archive_court_refinement_v1",
+      "licenseNote": "PixelLab authenticated browser output for Archive/Court. PixelLab source contributes directly to accepted runtime props, Redaction Angel frames, and hazard/objective VFX. Frame 00 is preserved but rejected for runtime terrain because it read as a square placeholder rug in close-camera proof.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "pixellab",
+        "archive_court",
+        "object_batch",
+        "runtime_source"
+      ],
+      "notes": "Downloaded from the authenticated in-app browser session. Codex did not handle credentials, account secrets, billing, payment, or security prompts."
+    },
+    {
+      "id": "tile.archive_court.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime authored Archive/Court ground surface for the Archive of Unsaid Things.",
+      "status": "production",
+      "sourcePath": "assets/tiles/archive_court/authored_ground.png",
+      "dimensions": {
+        "width": 7168,
+        "height": 4096
+      },
+      "frames": null,
+      "provenanceKey": "archive_court_source_v1_runtime_pack",
+      "licenseNote": "Archive/Court source terrain mechanically cropped, resized, composed, and quantized. No expressive Archive/Court terrain art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "archive_court",
+        "authored_ground",
+        "archive_redaction"
+      ],
+      "notes": "Provides source-backed dark civic/server archive floor, evidence aisles, redaction lanes, appeal windows, bench approaches, and court writ gate paths for normal production play. PixelLab frame 00 terrain was rejected from runtime after close-camera proof review."
+    },
+    {
+      "id": "tile.archive_court.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime transparent Archive/Court terrain chunk atlas for close-camera overlays.",
+      "status": "production",
+      "sourcePath": "assets/tiles/archive_court/archive_court_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 2048,
+        "height": 640
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 512,
+        "frameHeight": 320,
+        "frameCount": 8
+      },
+      "provenanceKey": "archive_court_source_v1_runtime_pack",
+      "licenseNote": "Accepted ChatGPT Images flat court slabs and lane decals mechanically cropped, padded, resized, and packed. Rejected PixelLab terrain remains reference only.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "archive_court",
+        "terrain_chunks",
+        "redaction"
+      ],
+      "notes": "Supplies production overlays for court floor slabs, witness flooring, redaction stack lanes, appeal seal floor, bench floor, gate floor, and redaction lane motifs without square placeholder rugs."
+    },
+    {
+      "id": "prop.archive_court.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime transparent prop atlas for Archive/Court evidence writs, witness index, redaction stack, appeal seal, Redactor bench, court writ gate, and reward props.",
+      "status": "production",
+      "sourcePath": "assets/props/archive_court/archive_court_props_objectives_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 720
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 240,
+        "frameCount": 12
+      },
+      "provenanceKey": "archive_court_source_v1_runtime_pack",
+      "licenseNote": "Archive/Court prop/objective source and PixelLab prop contributions mechanically cropped, resized, and packed. No expressive Archive prop art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "archive_court",
+        "evidence_writs",
+        "court_writ_gate"
+      ],
+      "notes": "PixelLab contributes accepted evidence lantern, archive shelf, court writ gate, sealed evidence writ, and drawer props; ChatGPT Images supplies the broader witness, stack, appeal, bench, and reward prop source."
+    },
+    {
+      "id": "enemy.redaction_angels.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Redaction Angel frame strip for Archive/Court evidence-jam pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/redaction_angels_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "archive_court_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images and PixelLab Redaction Angel source frames mechanically cropped, resized, and packed. No expressive enemy art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "archive_court",
+        "redaction_angels",
+        "enemy_sprite"
+      ],
+      "notes": "Provides Archive/Court's source-backed Redaction Angel pressure family for preserved-writ jamming and Redactor Saint calls."
+    },
+    {
+      "id": "enemy.injunction_writs.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Injunction Writ frame strip for Archive/Court court-writ storm pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/injunction_writs_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "archive_court_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images Injunction Writ source frame mechanically cropped, resized, and packed. Repeated frames are mechanical animation timing fill only.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "archive_court",
+        "injunction_writs",
+        "enemy_sprite"
+      ],
+      "notes": "Provides Archive/Court's source-backed writ pressure family for appeal-window interruption, storm lanes, and Redactor Saint summons."
+    },
+    {
+      "id": "boss.redactor_saint.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent Redactor Saint boss/event presentation strip for Archive/Court.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/redactor_saint.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 320
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 320,
+        "frameHeight": 320,
+        "frameCount": 4
+      },
+      "provenanceKey": "archive_court_source_v1_runtime_pack",
+      "licenseNote": "Redactor Saint source frames mechanically cropped, resized, and packed. No expressive boss art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "archive_court",
+        "redactor_saint",
+        "boss_sprite"
+      ],
+      "notes": "Provides large source-backed Redactor Saint event frames for the close Archive/Court camera and boss title-card portrait. Live proof asserts the boss is still alive with positive HP in the boss capture."
+    },
+    {
+      "id": "effect.archive_court.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for Archive/Court redaction fields, appeal windows, writ storms, evidence glows, court seals, Redactor Saint pressure, and extraction/reward effects.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/archive_court_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 12
+      },
+      "provenanceKey": "archive_court_source_v1_runtime_pack",
+      "licenseNote": "Archive/Court hazard VFX source and PixelLab VFX contribution mechanically cropped, resized, and packed. No expressive Archive hazard VFX art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "archive_court",
+        "hazard_vfx",
+        "redaction"
+      ],
+      "notes": "Supplies source-backed redaction slashes, appeal-window rings, writ-storm pulses, evidence glows, court seals, boss pressure bursts, projectile sparks, and extraction/reward glints."
+    },
+    {
+      "id": "concept.appeal_court.source_v1",
+      "category": "concept_art",
+      "intendedUse": "ChatGPT Images source boards for Appeal Court Ruins runtime terrain, props/objectives, pressure-family actors, Injunction Engine boss/event, and public-ruling VFX.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/chatgpt_refs/appeal_court_source_v1/appeal_court_terrain_chatgpt_v1.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "frames": {
+        "kind": "source_set",
+        "companionFiles": [
+          "assets/concepts/chatgpt_refs/appeal_court_source_v1/appeal_court_props_objectives_chatgpt_v1.png",
+          "assets/concepts/chatgpt_refs/appeal_court_source_v1/appeal_court_actors_boss_chatgpt_v1.png",
+          "assets/concepts/chatgpt_refs/appeal_court_source_v1/appeal_court_vfx_chatgpt_v2.png",
+          "assets/concepts/chatgpt_refs/appeal_court_source_v1/REJECTED_appeal_court_vfx_labeled_chatgpt_v1.png",
+          "assets/concepts/chatgpt_refs/appeal_court_source_v1/README.md"
+        ]
+      },
+      "provenanceKey": "chatgpt_appeal_court_source_v1",
+      "licenseNote": "ChatGPT Images source boards generated for this project. The first VFX board with baked labels is preserved as rejected source and is not packed into runtime art.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "chatgpt_images",
+        "appeal_court",
+        "appeal_court_ruins",
+        "injunction_engine",
+        "public_ruling"
+      ],
+      "notes": "Generated after Appeal Court gameplay proof and post-Archive difficulty audit to match close-camera isometric tribunal/server material language."
+    },
+    {
+      "id": "concept.appeal_court.pixellab_refinement_v1",
+      "category": "concept_art",
+      "intendedUse": "Authenticated PixelLab source frame for Appeal Court runtime refinement and direct contribution.",
+      "status": "concept",
+      "sourcePath": "assets/concepts/pixellab_refs/appeal_court_refinement_v1/appeal_court_pixellab_source_frame_0.png",
+      "dimensions": {
+        "width": 240,
+        "height": 240
+      },
+      "frames": {
+        "kind": "source_set",
+        "frameWidth": 240,
+        "frameHeight": 240,
+        "frameCount": 1,
+        "companionFiles": [
+          "assets/concepts/pixellab_refs/appeal_court_refinement_v1/appeal_court_runtime_contact_v1.png",
+          "assets/concepts/pixellab_refs/appeal_court_refinement_v1/README.md"
+        ]
+      },
+      "provenanceKey": "pixellab_appeal_court_refinement_v1",
+      "licenseNote": "PixelLab authenticated browser output for Appeal Court. Accepted PixelLab source contributes directly to runtime authored ground, terrain chunks, prop/objective atlas, and hazard/objective VFX.",
+      "mitIncluded": true,
+      "tags": [
+        "concept",
+        "pixellab",
+        "appeal_court",
+        "object_batch",
+        "runtime_source"
+      ],
+      "notes": "Downloaded from the authenticated in-app browser session. Codex did not handle credentials, account secrets, billing, payment, or security prompts. One PixelLab console crop was rejected from the prop atlas after live proof because it read as a black cube-like placeholder."
+    },
+    {
+      "id": "tile.appeal_court.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime authored Appeal Court ground surface for Appeal Court Ruins.",
+      "status": "production",
+      "sourcePath": "assets/tiles/appeal_court/authored_ground.png",
+      "dimensions": {
+        "width": 7168,
+        "height": 4096
+      },
+      "frames": null,
+      "provenanceKey": "appeal_court_source_v1_runtime_pack",
+      "licenseNote": "Appeal Court source terrain mechanically cropped, resized, composed, and quantized. No expressive Appeal terrain art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "appeal_court",
+        "authored_ground",
+        "public_ruling"
+      ],
+      "notes": "Provides source-backed dark civic/server tribunal floor, public-record lanes, verdict routes, objection windows, Injunction Engine dais, and ruling gate paths for normal production play."
+    },
+    {
+      "id": "tile.appeal_court.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime transparent Appeal Court terrain chunk atlas for close-camera overlays.",
+      "status": "production",
+      "sourcePath": "assets/tiles/appeal_court/appeal_court_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 2048,
+        "height": 640
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 512,
+        "frameHeight": 320,
+        "frameCount": 8
+      },
+      "provenanceKey": "appeal_court_source_v1_runtime_pack",
+      "licenseNote": "Accepted ChatGPT Images court slabs plus PixelLab ruling-seal/floor material mechanically cropped, padded, resized, and packed.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "appeal_court",
+        "terrain_chunks",
+        "public_record"
+      ],
+      "notes": "Supplies production overlays for public-record floors, argument/exhibit/cross-exam zones, verdict lanes, Injunction Engine floor, public ruling gate floor, and PixelLab floor/seal contribution."
+    },
+    {
+      "id": "prop.appeal_court.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime transparent prop atlas for Appeal Court briefs, argument podiums, public ruling seal, Injunction Engine dais, ruling gate, and reward props.",
+      "status": "production",
+      "sourcePath": "assets/props/appeal_court/appeal_court_props_objectives_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 720
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 240,
+        "frameCount": 12
+      },
+      "provenanceKey": "appeal_court_source_v1_runtime_pack",
+      "licenseNote": "Appeal Court prop/objective source and PixelLab prop contributions mechanically cropped, resized, and packed. No expressive Appeal prop art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "appeal_court",
+        "appeal_briefs",
+        "ruling_gate"
+      ],
+      "notes": "PixelLab contributes accepted table, ruling seal, Injunction Engine dais, shield, and pylon props; one console crop was rejected after proof because it read too much like a generic black cube."
+    },
+    {
+      "id": "enemy.verdict_clerks.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Verdict Clerk frame strip for Appeal Court public-record and verdict-pressure interruption.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/verdict_clerks_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "appeal_court_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images Verdict Clerk source frames mechanically cropped, resized, and packed. No expressive enemy art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "appeal_court",
+        "verdict_clerks",
+        "enemy_sprite"
+      ],
+      "notes": "Provides Appeal Court's source-backed pressure family for appeal brief jamming and Injunction Engine calls."
+    },
+    {
+      "id": "enemy.appeal_injunction_writs.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime Appeal-specific Injunction Writ frame strip for Appeal Court injunction-ring pressure.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/appeal_injunction_writs_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "appeal_court_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images Appeal Injunction Writ source frames mechanically cropped, resized, and packed.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "appeal_court",
+        "injunction_writs",
+        "enemy_sprite"
+      ],
+      "notes": "Separate from Archive/Court's writ sheet so Appeal can keep its own source-backed pressure-family look."
+    },
+    {
+      "id": "boss.injunction_engine.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent Injunction Engine boss/event presentation strip for Appeal Court.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/injunction_engine.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 320
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 320,
+        "frameHeight": 320,
+        "frameCount": 4
+      },
+      "provenanceKey": "appeal_court_source_v1_runtime_pack",
+      "licenseNote": "Injunction Engine source frames mechanically cropped, resized, padded, and packed. No expressive boss art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "appeal_court",
+        "injunction_engine",
+        "boss_sprite"
+      ],
+      "notes": "Provides large source-backed Injunction Engine event frames for the close Appeal Court camera and boss title-card portrait. Runtime sprite-framing proof includes this sheet."
+    },
+    {
+      "id": "effect.appeal_court.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for Appeal Court public records, verdict beams, objection windows, injunction rings, ruling seal, extraction, and reward effects.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/appeal_court_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 12
+      },
+      "provenanceKey": "appeal_court_source_v1_runtime_pack",
+      "licenseNote": "Appeal Court hazard VFX source and PixelLab VFX contribution mechanically cropped, resized, and packed. No expressive Appeal hazard VFX art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "appeal_court",
+        "hazard_vfx",
+        "public_ruling"
+      ],
+      "notes": "Supplies source-backed public-record rings, verdict beams, objection windows, injunction rings, ruling seal/extraction, projectile sparks, and reward glints. The first ChatGPT VFX board with baked labels is preserved as rejected source and excluded from runtime."
+    },
+    {
+      "id": "tile.alignment_spire.authored_ground_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime authored ground sheet for Outer Alignment Finale / Alignment Spire Prediction Collapse.",
+      "status": "production",
+      "sourcePath": "assets/tiles/alignment_spire/authored_ground.png",
+      "dimensions": {
+        "width": 7168,
+        "height": 4096
+      },
+      "frames": {
+        "kind": "single",
+        "frameCount": 1
+      },
+      "provenanceKey": "alignment_spire_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images terrain/source chunks and PixelLab proof-ring/gate contribution mechanically keyed, cropped, resized, and composited into the authored ground sheet.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "alignment_spire_finale",
+        "authored_ground"
+      ],
+      "notes": "Default runtime finale ground. The terrain source includes raised-block motifs, but runtime use is restricted to readable platform/causeway/ring material and PixelLab proof-ring contribution."
+    },
+    {
+      "id": "tile.alignment_spire.terrain_chunks_v1",
+      "category": "map_tile",
+      "intendedUse": "Runtime terrain-chunk atlas for finale sanctums, causeways, route mouths, echo floors, and PixelLab proof-ring floor.",
+      "status": "production",
+      "sourcePath": "assets/tiles/alignment_spire/alignment_spire_terrain_chunks_v1.png",
+      "dimensions": {
+        "width": 2048,
+        "height": 640
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 512,
+        "frameHeight": 320,
+        "frameCount": 8
+      },
+      "provenanceKey": "alignment_spire_source_v1_runtime_pack",
+      "licenseNote": "Source frames mechanically cropped, edge-keyed, padded, resized, and packed. No expressive terrain art was drawn with code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "alignment_spire_finale",
+        "terrain"
+      ],
+      "notes": "PixelLab proof-ring/gate object contributes the final frame and runtime ground detail."
+    },
+    {
+      "id": "prop.alignment_spire.objectives_props_v1",
+      "category": "landmark_prop",
+      "intendedUse": "Runtime prop/objective atlas for finale proof rings, route mouths, A.G.I. spires, camp remnants, and extraction gate material.",
+      "status": "production",
+      "sourcePath": "assets/props/alignment_spire/alignment_spire_props_objectives_v1.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 720
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 256,
+        "frameHeight": 240,
+        "frameCount": 12
+      },
+      "provenanceKey": "alignment_spire_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images prop source plus PixelLab object frames mechanically cropped, keyed, resized, and packed.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "alignment_spire_finale",
+        "objective_props"
+      ],
+      "notes": "PixelLab proof-ring/gate and prediction-orb objects contribute directly to accepted runtime prop frames."
+    },
+    {
+      "id": "enemy.prediction_ghosts.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime transparent Prediction Ghost pressure-family sprite strip for Outer Alignment Finale.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/prediction_ghosts_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "alignment_spire_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images orb actors and PixelLab prediction-orb object mechanically cropped, resized, and packed.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "alignment_spire_finale",
+        "prediction_ghosts",
+        "enemy_sprite"
+      ],
+      "notes": "PixelLab object_0 supplies the fourth prediction-orb runtime frame."
+    },
+    {
+      "id": "enemy.previous_boss_echoes.production_sheet_v1",
+      "category": "enemy_sprite",
+      "intendedUse": "Runtime transparent previous-boss echo pressure-family sprite strip for Outer Alignment Finale.",
+      "status": "production",
+      "sourcePath": "assets/sprites/enemies/previous_boss_echoes_sheet.png",
+      "dimensions": {
+        "width": 512,
+        "height": 112
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 128,
+        "frameHeight": 112,
+        "frameCount": 4
+      },
+      "provenanceKey": "alignment_spire_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images previous-boss echo source frames mechanically cropped, edge-keyed, resized, and packed.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "alignment_spire_finale",
+        "previous_boss_echoes",
+        "enemy_sprite"
+      ],
+      "notes": "Keeps finale echo pressure distinct from Archive/Appeal writ/clerk pressure families."
+    },
+    {
+      "id": "boss.alien_god_intelligence.production_sheet_v1",
+      "category": "boss_sprite",
+      "intendedUse": "Runtime transparent A.G.I. / Alien God Intelligence boss-event strip and title-card portrait for the finale.",
+      "status": "production",
+      "sourcePath": "assets/sprites/bosses/alien_god_intelligence.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 384
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 384,
+        "frameHeight": 384,
+        "frameCount": 4
+      },
+      "provenanceKey": "alignment_spire_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images A.G.I. boss/event frames mechanically cropped, edge-keyed, padded, resized, and packed. No expressive boss art was drawn in code.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "alignment_spire_finale",
+        "alien_god_intelligence",
+        "boss_sprite"
+      ],
+      "notes": "Runtime sprite-framing proof includes this sheet."
+    },
+    {
+      "id": "effect.alignment_spire.hazard_vfx_v1",
+      "category": "ui",
+      "intendedUse": "Runtime transparent hazard/objective VFX atlas for finale consensus rings, prediction paths, route mouths, boss echoes, proof seals, extraction, and reward bursts.",
+      "status": "production",
+      "sourcePath": "assets/sprites/effects/alignment_spire_hazard_vfx_v1.png",
+      "dimensions": {
+        "width": 768,
+        "height": 480
+      },
+      "frames": {
+        "kind": "atlas",
+        "frameWidth": 192,
+        "frameHeight": 160,
+        "frameCount": 12
+      },
+      "provenanceKey": "alignment_spire_source_v1_runtime_pack",
+      "licenseNote": "ChatGPT Images VFX and PixelLab proof-ring/prediction-orb contribution mechanically cropped, edge-keyed, resized, and packed.",
+      "mitIncluded": true,
+      "tags": [
+        "production",
+        "chatgpt_images",
+        "pixellab",
+        "alignment_spire_finale",
+        "hazard_vfx"
+      ],
+      "notes": "PixelLab frames directly supply proof seal and prediction-orb VFX frames used by runtime zone/objective decals."
     }
   ]
 }

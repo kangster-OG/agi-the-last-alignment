@@ -24,12 +24,21 @@ function enemyStatsForFamily(familyId: string, seconds: number): { hp: number; s
   if (familyId === "benchmark_gremlins") return { hp: 34, speed: 1.85, damage: 8, radius: 0.42, color: palette.plum, value: 2 };
   if (familyId === "context_rot_crabs") return { hp: 27, speed: 1.7, damage: 7, radius: 0.38, color: 0x7a4c5a, value: 1 };
   if (familyId === "prompt_leeches") return { hp: 18, speed: 2.12, damage: 5, radius: 0.31, color: 0x45aaf2, value: 1 };
+  if (familyId === "static_skimmers") return { hp: 24, speed: 2.28, damage: 6, radius: 0.34, color: 0x64e0b4, value: 1 };
+  if (familyId === "tidecall_static") return { hp: 31, speed: 2.06, damage: 7, radius: 0.36, color: 0x64e0b4, value: 1 };
+  if (familyId === "solar_reflections") return { hp: 33, speed: 2.04, damage: 7, radius: 0.36, color: 0xfff4d6, value: 1 };
+  if (familyId === "memory_anchors") return { hp: 39, speed: 1.28, damage: 8, radius: 0.46, color: 0x99f6ff, value: 2 };
+  if (familyId === "doctrine_auditors") return { hp: 43, speed: 1.48, damage: 8, radius: 0.44, color: 0xffd166, value: 2 };
   if (familyId === "jailbreak_wraiths") return { hp: 24, speed: 2.0, damage: 7, radius: 0.33, color: 0xff5d57, value: 1 };
   if (familyId === "overfit_horrors") return { hp: 42, speed: 1.26, damage: 10, radius: 0.48, color: 0xffd166, value: 2 };
   if (familyId === "token_gobblers") return { hp: 26, speed: 1.92, damage: 6, radius: 0.36, color: 0x64e0b4, value: 1 };
   if (familyId === "model_collapse_slimes") return { hp: 38, speed: 1.18, damage: 8, radius: 0.5, color: 0x7b61ff, value: 2 };
   if (familyId === "eval_wraiths") return { hp: 28, speed: 1.74, damage: 7, radius: 0.36, color: 0xfff4d6, value: 1 };
   if (familyId === "redaction_angels") return { hp: 34, speed: 1.72, damage: 8, radius: 0.4, color: 0x111820, value: 2 };
+  if (familyId === "injunction_writs") return { hp: 36, speed: 1.58, damage: 8, radius: 0.42, color: 0xb8f3ff, value: 2 };
+  if (familyId === "verdict_clerks") return { hp: 38, speed: 1.66, damage: 8, radius: 0.41, color: 0xffd166, value: 2 };
+  if (familyId === "prediction_ghosts") return { hp: 42, speed: 2.12, damage: 9, radius: 0.39, color: 0xff5d57, value: 2 };
+  if (familyId === "previous_boss_echoes") return { hp: 56, speed: 1.36, damage: 10, radius: 0.5, color: 0x7b61ff, value: 3 };
   if (familyId === "deepforms") return { hp: 44, speed: 1.34, damage: 9, radius: 0.52, color: 0x2a5c71, value: 2 };
   if (familyId === "choirglass") return { hp: 30, speed: 1.82, damage: 7, radius: 0.37, color: 0xb8f3ff, value: 1 };
   if (familyId === "speculative_executors") return { hp: 30, speed: 1.95, damage: 8, radius: 0.39, color: 0xff8a3d, value: 2 };
@@ -40,6 +49,11 @@ function enemyStatsForFamily(familyId: string, seconds: number): { hp: number; s
 function enemyLabel(familyId: string, sourceRegionId: string): string {
   if (sourceRegionId === "treaty_monument_oath_pages") return "Torn Oath Page";
   if (familyId === "prompt_leeches") return "Prompt Leech";
+  if (familyId === "static_skimmers") return "Static Skimmer";
+  if (familyId === "tidecall_static") return "Tidecall Static";
+  if (familyId === "solar_reflections") return "Solar Reflection";
+  if (familyId === "memory_anchors") return "Memory Anchor";
+  if (familyId === "doctrine_auditors") return "Doctrine Auditor";
   if (familyId === "jailbreak_wraiths") return "Jailbreak Wraith";
   if (familyId === "benchmark_gremlins") return "Benchmark Gremlin";
   if (familyId === "overfit_horrors") return "Overfit Horror";
@@ -48,6 +62,10 @@ function enemyLabel(familyId: string, sourceRegionId: string): string {
   if (familyId === "eval_wraiths") return "Eval Wraith";
   if (familyId === "context_rot_crabs") return "Context Crab";
   if (familyId === "redaction_angels") return "Redaction Angel";
+  if (familyId === "injunction_writs") return "Injunction Writ";
+  if (familyId === "verdict_clerks") return "Verdict Clerk";
+  if (familyId === "prediction_ghosts") return "Prediction Ghost";
+  if (familyId === "previous_boss_echoes") return "Boss Echo";
   if (familyId === "deepforms") return "Deepform";
   if (familyId === "choirglass") return "Choirglass";
   if (familyId === "speculative_executors") return "Speculative Executor";

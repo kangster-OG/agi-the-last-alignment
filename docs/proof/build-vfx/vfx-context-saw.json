@@ -78,7 +78,7 @@
     "weaponDamage": 18,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
-    "projectilePierce": 2,
+    "projectilePierce": 1,
     "pickupRange": 2.7,
     "moveSpeedBonus": 0,
     "maxHpBonus": 10,
@@ -91,11 +91,20 @@
     "consensusBurstRevive": 0,
     "objectiveRepairRate": 0,
     "objectiveDefense": 0.08,
+    "signalWindowControl": 0,
+    "relayJamResistance": 0,
+    "skimmerCountermeasure": 0,
+    "shorelineStride": 0,
     "contextSaw": 1,
     "patchMortar": 0,
     "coherenceIndexer": 0,
     "anchorBodyguard": 0,
     "predictionPriority": 0,
+    "coolantBaffles": 0,
+    "serverBuoySynchronizer": 0,
+    "promptLeechQuarantine": 0,
+    "groundedCableBoots": 0,
+    "coolingHazardMitigation": 0,
     "causalRailgun": 0,
     "slotCaps": {
       "primary": {
@@ -186,13 +195,12 @@
   },
   "upgrades": [
     "Signal Pulse",
-    "The No Button",
     "Context Saw"
   ],
-  "objective": "optional anchors 1/3 // AGI pressure in 9s",
+  "objective": "optional anchors 1/3 // AGI pressure in 16s",
   "performance": {
-    "entitiesAllocated": 152,
-    "activeEntities": 112,
+    "entitiesAllocated": 163,
+    "activeEntities": 85,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -258,9 +266,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 4,
-      "hit": 107,
-      "pickup": 93,
+      "ui": 3,
+      "hit": 69,
+      "pickup": 62,
       "boss_warning": 0,
       "music": 0,
       "objective": 0,
@@ -268,44 +276,44 @@
     },
     "recentCues": [
       {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 10495
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 10494
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 10494
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 10494
-      },
-      {
-        "id": "combat.consensus_burst",
-        "kind": "hit",
-        "atMs": 10452
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 10452
-      },
-      {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 10452
+        "atMs": 11272
       },
       {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 10179
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 8901
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 8898
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 8898
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 8897
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 8897
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 8897
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 8897
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -371,6 +379,17 @@
       "The camp is quiet. That is not reassuring."
     ],
     "lastRunMemory": null,
+    "expedition": {
+      "active": false,
+      "level": 1,
+      "xp": 0,
+      "chosenUpgradeIds": [],
+      "chosenUpgradeNames": [],
+      "chosenProtocolSlots": [],
+      "activatedSynergyIds": [],
+      "completedMaps": [],
+      "powerScore": 0
+    },
     "nextContentTarget": {
       "id": "cooling_lake_nine_baseline_contract",
       "name": "Cooling Lake Nine",
@@ -398,6 +417,110 @@
         "future runtime proof must match Armistice camera and asset fidelity"
       ],
       "playerPromise": "Next node target: a flooded server lake that must feel as authored and readable as Armistice before it becomes production-playable."
+    },
+    "campaignMilestones": [
+      {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "post_act_01_recovered_route_memory",
+        "name": "Post Act 01: Recovered Route Memory",
+        "requiredMaps": [
+          "memory_cache_001"
+        ],
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_02_guardrail_doctrine",
+        "name": "Act 02: Guardrail Doctrine",
+        "requiredMaps": [
+          "guardrail_forge"
+        ],
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_03_glass_sunfield",
+        "name": "Act 03: Glass Sunfield",
+        "requiredMaps": [
+          "glass_sunfield"
+        ],
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_04_archive_court",
+        "name": "Act 04: Archive/Court Redaction",
+        "requiredMaps": [
+          "archive_of_unsaid_things"
+        ],
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_05_appeal_court",
+        "name": "Act 05: Appeal Court Ruins",
+        "requiredMaps": [
+          "appeal_court_ruins"
+        ],
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_06_outer_alignment_finale",
+        "name": "Act 06: Outer Alignment Finale",
+        "requiredMaps": [
+          "alignment_spire_finale"
+        ],
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "completedMaps": [],
+        "status": "locked"
+      }
+    ],
+    "campaignLedger": {
+      "act": {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      "completedMapKinds": [],
+      "mapKindCount": 0,
+      "routeDepth": 0,
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
     }
   },
   "assetRendering": {
@@ -406,6 +529,23 @@
     "normalCombatCameraPolicy": "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
     "armisticeTileAtlasEnabled": true,
     "armisticeAuthoredGroundReady": true,
+    "coolingLakeNineArtReady": false,
+    "transitLoopZeroArtReady": false,
+    "signalCoastArtReady": false,
+    "blackwaterBeaconArtReady": false,
+    "blackwaterBeaconArtSet": "not_loaded",
+    "memoryCacheArtReady": false,
+    "memoryCacheArtSet": "not_loaded",
+    "guardrailForgeArtReady": false,
+    "guardrailForgeArtSet": "not_loaded",
+    "glassSunfieldArtReady": false,
+    "glassSunfieldArtSet": "not_loaded",
+    "archiveCourtArtReady": false,
+    "archiveCourtArtSet": "not_loaded",
+    "appealCourtArtReady": false,
+    "appealCourtArtSet": "not_loaded",
+    "alignmentSpireArtReady": false,
+    "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": true,
     "buildWeaponVfxReady": true,
     "productionArtEnabled": true,
@@ -501,28 +641,28 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 152,
+    "totalAssets": 233,
     "countsByStatus": {
-      "concept": 49,
+      "concept": 66,
       "raw": 15,
       "code_placeholder": 16,
-      "production": 70,
+      "production": 134,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 70
+    "productionAssets": 134
   },
   "player": {
-    "worldX": 4.65,
-    "worldY": -2.18,
+    "worldX": 3.33,
+    "worldY": -1.52,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
     "hp": 150,
     "maxHp": 150,
-    "xp": 21.800000000000026,
-    "level": 4,
+    "xp": 21.100000000000023,
+    "level": 3,
     "damageFeedback": {
       "flash": 0,
       "hpPulse": 0,
@@ -597,15 +737,15 @@
       },
       "weaponId": "signal_pulse",
       "inputSource": "local_keyboard",
-      "worldX": 4.65,
-      "worldY": -2.18,
+      "worldX": 3.33,
+      "worldY": -1.52,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
       "hp": 150,
       "maxHp": 150,
-      "xp": 21.800000000000026,
-      "level": 4,
+      "xp": 21.100000000000023,
+      "level": 3,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
@@ -679,20 +819,20 @@
       },
       "weaponId": "safety_cannon",
       "inputSource": "local_simulated_peer",
-      "worldX": 1.45,
-      "worldY": -0.51,
+      "worldX": 1,
+      "worldY": 0.29,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 172,
+      "hp": 186,
       "maxHp": 186,
-      "xp": 63.180000000000085,
+      "xp": 43.340000000000046,
       "level": 1,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
         "stagger": 0,
-        "lastDamage": 8
+        "lastDamage": 7
       },
       "downed": false
     },
@@ -760,14 +900,14 @@
       },
       "weaponId": "fork_drone",
       "inputSource": "local_simulated_peer",
-      "worldX": 6.51,
-      "worldY": -0.95,
-      "velocityX": 1.07,
-      "velocityY": 0.14,
+      "worldX": 6.09,
+      "worldY": 0.93,
+      "velocityX": 0,
+      "velocityY": 0,
       "facing": "south",
-      "hp": 144,
+      "hp": 150,
       "maxHp": 150,
-      "xp": 58.2600000000001,
+      "xp": 35.04000000000006,
       "level": 1,
       "damageFeedback": {
         "flash": 0,
@@ -843,20 +983,20 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_simulated_peer",
-      "worldX": 4.9,
-      "worldY": -5.01,
+      "worldX": 3.34,
+      "worldY": -3.18,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 144,
+      "hp": 150,
       "maxHp": 150,
-      "xp": 58.12000000000008,
+      "xp": 35.46000000000004,
       "level": 1,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
         "stagger": 0,
-        "lastDamage": 7
+        "lastDamage": 8
       },
       "downed": false
     }
@@ -875,7 +1015,6 @@
     "factionName": "OpenAI Accord Division",
     "chosenUpgradeIds": [
       "signal_pulse",
-      "the_no_button",
       "context_saw"
     ],
     "mapId": "armistice_plaza_large_foundation",
@@ -884,6 +1023,14 @@
       "maxX": 30,
       "minY": -30,
       "maxY": 30
+    },
+    "mapContract": {
+      "mapKind": "Open Survival District",
+      "objectiveType": "Treaty Anchor reboot",
+      "pressureSource": "horde phases, objective attackers, Broken Promise boss zones",
+      "rewardPromise": "pickup range, burst charge, anchor defense, Proof Tokens",
+      "bossEventPattern": "Oath-Eater arrival, Broken Promise zones, Treaty Charge",
+      "artPolicy": "accepted Armistice production-art baseline"
     },
     "staticObstacles": {
       "enabled": true,
@@ -903,7 +1050,8 @@
         "terminal_array_cluster",
         "breach_shards_cluster",
         "breach_landmark"
-      ]
+      ],
+      "collisionSet": "armistice_accepted_obstacles"
     },
     "nearestLandmark": {
       "id": "treaty_monument",
@@ -971,21 +1119,21 @@
         ]
       }
     ],
-    "lastSpawnRegionId": "barricade_context_rot",
+    "lastSpawnRegionId": "breach_crack_bad_outputs",
     "spawnedByRegion": {
-      "breach_crack_bad_outputs": 50,
-      "treaty_monument_oath_pages": 39,
-      "drone_yard_benchmark_gremlins": 24,
+      "breach_crack_bad_outputs": 43,
+      "treaty_monument_oath_pages": 30,
+      "drone_yard_benchmark_gremlins": 16,
       "adaptive_pressure_flank": 6,
-      "barricade_context_rot": 28,
-      "emergency_terminal_eval_wraiths": 7
+      "barricade_context_rot": 21,
+      "emergency_terminal_eval_wraiths": 4
     },
     "director": {
       "phase": "anchor_pressure",
-      "totalSpawned": 159,
-      "activeEnemyCap": 66,
-      "lastBurstSize": 6,
-      "activeEnemyCount": 64
+      "totalSpawned": 125,
+      "activeEnemyCap": 61,
+      "lastBurstSize": 5,
+      "activeEnemyCount": 63
     },
     "consensusCell": {
       "playerCount": 4,
@@ -999,36 +1147,36 @@
       },
       "recentInputCommands": [
         {
-          "tick": 2013,
+          "tick": 1609,
           "playerId": "p1",
-          "sequence": 2013,
+          "sequence": 1609,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
           "interactPressed": false
         },
         {
-          "tick": 2013,
+          "tick": 1609,
           "playerId": "p2",
-          "sequence": 2013,
+          "sequence": 1609,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
           "interactPressed": false
         },
         {
-          "tick": 2013,
+          "tick": 1609,
           "playerId": "p3",
-          "sequence": 2013,
-          "axisX": 0.84,
-          "axisY": 0.55,
+          "sequence": 1609,
+          "axisX": 0,
+          "axisY": 0,
           "dashPressed": false,
           "interactPressed": false
         },
         {
-          "tick": 2013,
+          "tick": 1609,
           "playerId": "p4",
-          "sequence": 2013,
+          "sequence": 1609,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -1037,8 +1185,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 2013,
-        "seconds": 33.55,
+        "tick": 1609,
+        "seconds": 26.82,
         "playerCount": 4,
         "scaling": {
           "playerCount": 4,
@@ -1113,12 +1261,12 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": 4.65,
-            "worldY": -2.18,
+            "worldX": 3.33,
+            "worldY": -1.52,
             "hp": 150,
             "maxHp": 150,
-            "xp": 21.800000000000026,
-            "level": 4,
+            "xp": 21.100000000000023,
+            "level": 3,
             "downed": false
           },
           {
@@ -1185,11 +1333,11 @@
               }
             },
             "inputSource": "local_simulated_peer",
-            "worldX": 1.45,
-            "worldY": -0.51,
-            "hp": 172,
+            "worldX": 1,
+            "worldY": 0.29,
+            "hp": 186,
             "maxHp": 186,
-            "xp": 63.180000000000085,
+            "xp": 43.340000000000046,
             "level": 1,
             "downed": false
           },
@@ -1256,11 +1404,11 @@
               }
             },
             "inputSource": "local_simulated_peer",
-            "worldX": 6.51,
-            "worldY": -0.95,
-            "hp": 144,
+            "worldX": 6.09,
+            "worldY": 0.93,
+            "hp": 150,
             "maxHp": 150,
-            "xp": 58.2600000000001,
+            "xp": 35.04000000000006,
             "level": 1,
             "downed": false
           },
@@ -1329,59 +1477,41 @@
               }
             },
             "inputSource": "local_simulated_peer",
-            "worldX": 4.9,
-            "worldY": -5.01,
-            "hp": 144,
+            "worldX": 3.34,
+            "worldY": -3.18,
+            "hp": 150,
             "maxHp": 150,
-            "xp": 58.12000000000008,
+            "xp": 35.46000000000004,
             "level": 1,
             "downed": false
           }
         ],
         "enemies": [
           {
-            "id": 1,
-            "familyId": "speculative_executors",
-            "sourceRegionId": "treaty_anchor_attackers",
-            "worldX": -16.75,
-            "worldY": 18.64,
-            "hp": 30,
-            "boss": false
-          },
-          {
             "id": 3,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -17.61,
-            "worldY": 10.72,
-            "hp": 22,
-            "boss": false
-          },
-          {
-            "id": 4,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "drone_yard_benchmark_gremlins",
-            "worldX": -15.61,
-            "worldY": -8.59,
-            "hp": 34,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "barricade_context_rot",
+            "worldX": 12.42,
+            "worldY": -10.27,
+            "hp": 27,
             "boss": false
           },
           {
             "id": 5,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "barricade_context_rot",
-            "worldX": 20.48,
-            "worldY": -8.93,
-            "hp": 22,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -16.64,
+            "worldY": 18.53,
+            "hp": 28,
             "boss": false
           },
           {
-            "id": 6,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "drone_yard_benchmark_gremlins",
-            "worldX": -16.73,
-            "worldY": -15.96,
-            "hp": 22,
+            "id": 7,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -6.86,
+            "worldY": 4.64,
+            "hp": 28,
             "boss": false
           },
           {
@@ -1395,37 +1525,46 @@
           },
           {
             "id": 10,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "barricade_context_rot",
-            "worldX": 20.66,
-            "worldY": -9,
-            "hp": 34,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -5.91,
+            "worldY": 7.98,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 11,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -6.86,
+            "worldY": 4.64,
+            "hp": 3,
+            "boss": false
+          },
+          {
+            "id": 13,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -6.94,
+            "worldY": 4.65,
+            "hp": 27,
             "boss": false
           },
           {
             "id": 14,
             "familyId": "eval_wraiths",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -6.87,
+            "worldX": -6.86,
             "worldY": 4.64,
             "hp": 28,
             "boss": false
           },
           {
             "id": 15,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "barricade_context_rot",
-            "worldX": 16.26,
-            "worldY": -6.17,
-            "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 18,
             "familyId": "eval_wraiths",
-            "sourceRegionId": "emergency_terminal_eval_wraiths",
-            "worldX": 9.85,
-            "worldY": 5.81,
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -7.85,
+            "worldY": 5.1,
             "hp": 28,
             "boss": false
           },
@@ -1433,176 +1572,173 @@
             "id": 20,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -6.95,
+            "worldX": -6.94,
             "worldY": 4.65,
-            "hp": 27,
+            "hp": 2,
             "boss": false
           },
           {
-            "id": 22,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -15.07,
-            "worldY": 13.02,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 23,
+            "id": 25,
             "familyId": "benchmark_gremlins",
             "sourceRegionId": "barricade_context_rot",
-            "worldX": 20.66,
+            "worldX": 20.64,
             "worldY": -9,
             "hp": 34,
             "boss": false
           },
           {
-            "id": 24,
-            "familyId": "eval_wraiths",
+            "id": 27,
+            "familyId": "bad_outputs",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -12.47,
-            "worldY": 14.6,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 28,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -17.73,
-            "worldY": 11,
-            "hp": 28,
+            "worldX": -5.66,
+            "worldY": 8.02,
+            "hp": 22,
             "boss": false
           },
           {
             "id": 29,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -12.24,
-            "worldY": 14.71,
-            "hp": 27,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "drone_yard_benchmark_gremlins",
+            "worldX": -2.33,
+            "worldY": -5.83,
+            "hp": 34,
             "boss": false
           },
           {
             "id": 30,
             "familyId": "eval_wraiths",
             "sourceRegionId": "breach_crack_bad_outputs",
-            "worldX": -6.87,
+            "worldX": -6.86,
             "worldY": 4.64,
-            "hp": 28,
+            "hp": 3,
             "boss": false
           },
           {
-            "id": 33,
+            "id": 34,
             "familyId": "benchmark_gremlins",
             "sourceRegionId": "barricade_context_rot",
-            "worldX": 20.66,
+            "worldX": 20.64,
             "worldY": -9,
             "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 35,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "breach_crack_bad_outputs",
+            "worldX": -8.6,
+            "worldY": 10.89,
+            "hp": 27,
+            "boss": false
+          },
+          {
+            "id": 36,
+            "familyId": "speculative_executors",
+            "sourceRegionId": "treaty_anchor_attackers",
+            "worldX": 19.51,
+            "worldY": 14.15,
+            "hp": 30,
+            "boss": false
+          },
+          {
+            "id": 37,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "barricade_context_rot",
+            "worldX": 11.82,
+            "worldY": -9.77,
+            "hp": 27,
             "boss": false
           }
         ],
         "pickups": [
           {
-            "id": 11,
-            "worldX": 7.77,
-            "worldY": -6.74,
-            "value": 2
-          },
-          {
-            "id": 25,
-            "worldX": -0.36,
-            "worldY": 5.24,
-            "value": 1
-          },
-          {
-            "id": 40,
-            "worldX": 8.15,
-            "worldY": 1.47,
-            "value": 1
-          },
-          {
-            "id": 63,
-            "worldX": 3.5,
-            "worldY": 3.88,
+            "id": 9,
+            "worldX": -0.43,
+            "worldY": 5.33,
             "value": 1
           }
         ],
         "projectiles": [
           {
-            "id": 7,
-            "worldX": 3.43,
-            "worldY": 4.24,
+            "id": 1,
+            "worldX": 3.2,
+            "worldY": -2.47,
             "pierce": 2
           },
           {
-            "id": 9,
-            "worldX": -0.88,
-            "worldY": -4.23,
+            "id": 2,
+            "worldX": -3.98,
+            "worldY": 8.37,
+            "pierce": 1
+          },
+          {
+            "id": 4,
+            "worldX": -0.28,
+            "worldY": -6.13,
+            "pierce": 2
+          },
+          {
+            "id": 6,
+            "worldX": 4.23,
+            "worldY": -1.16,
             "pierce": 2
           },
           {
             "id": 12,
-            "worldX": 8.61,
-            "worldY": -3.73,
+            "worldX": 8.47,
+            "worldY": 0.14,
             "pierce": 2
           },
           {
             "id": 16,
-            "worldX": 5.06,
-            "worldY": -2.18,
+            "worldX": -1.33,
+            "worldY": 4.58,
+            "pierce": 2
+          },
+          {
+            "id": 17,
+            "worldX": 2.57,
+            "worldY": -0.93,
+            "pierce": 2
+          },
+          {
+            "id": 18,
+            "worldX": 6.18,
+            "worldY": -1.52,
             "pierce": 3
           },
           {
-            "id": 21,
-            "worldX": 4.6,
-            "worldY": -3.63,
+            "id": 19,
+            "worldX": 0.88,
+            "worldY": 0.24,
             "pierce": 1
           },
           {
-            "id": 31,
-            "worldX": 7.73,
-            "worldY": -2,
-            "pierce": 3
+            "id": 21,
+            "worldX": 8.5,
+            "worldY": -0.49,
+            "pierce": 1
           },
           {
-            "id": 32,
-            "worldX": 1.22,
-            "worldY": -2,
-            "pierce": 3
+            "id": 22,
+            "worldX": 2.96,
+            "worldY": -3.36,
+            "pierce": 1
           },
           {
-            "id": 34,
-            "worldX": 4.25,
-            "worldY": -2.18,
-            "pierce": 3
-          },
-          {
-            "id": 36,
-            "worldX": 4.65,
-            "worldY": -1.77,
-            "pierce": 3
-          },
-          {
-            "id": 37,
-            "worldX": 4.48,
-            "worldY": 1.25,
-            "pierce": 3
-          },
-          {
-            "id": 110,
-            "worldX": 4.65,
-            "worldY": -2.58,
-            "pierce": 3
+            "id": 23,
+            "worldX": -3.31,
+            "worldY": -1.42,
+            "pierce": 1
           }
         ]
       }
     },
     "combatArt": {
-      "projectileCount": 11,
+      "projectileCount": 17,
       "impactCount": 0,
-      "pickupSparkleCount": 15,
-      "damageBadgeCount": 8,
+      "pickupSparkleCount": 0,
+      "damageBadgeCount": 2,
       "refusalAuraPlayers": 4
     },
     "bossMechanics": {
@@ -1647,6 +1783,16 @@
         "protocols": []
       },
       "effectivePressureCount": 4,
+      "expedition": {
+        "carriedBuildActive": false,
+        "carriedLevel": 1,
+        "carriedXp": 0,
+        "carriedUpgradeIds": [],
+        "carriedUpgradeNames": [],
+        "powerScore": 0,
+        "pressureBonus": 0,
+        "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
+      },
       "victoryCondition": {
         "targetSeconds": 120,
         "bossRequired": true,
@@ -1660,9 +1806,9 @@
       },
       "levelUpVacuum": {
         "active": false,
-        "absorbed": 4,
-        "triggerLevel": 3,
-        "remainingPickups": 4
+        "absorbed": 9,
+        "triggerLevel": 2,
+        "remainingPickups": 1
       },
       "extractionGate": {
         "active": false,
@@ -1672,12 +1818,12 @@
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
         "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 14,
+        "charge": 32,
         "maxCharge": 100,
         "ready": false,
-        "activations": 9,
-        "lastActivationLabel": "Deny Premise hit 5",
-        "lastActivatedAt": 33.34999999999939,
+        "activations": 6,
+        "lastActivationLabel": "Deny Premise hit 2",
+        "lastActivatedAt": 25.16666666666652,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0,
@@ -1708,7 +1854,7 @@
         "total": 3,
         "complete": false,
         "completedAt": -1,
-        "attackersSpawned": 2,
+        "attackersSpawned": 1,
         "anchors": [
           {
             "id": "anchor.treaty",
@@ -1733,6 +1879,16 @@
           }
         ]
       },
+      "coolingLake": null,
+      "transitLoop": null,
+      "signalCoast": null,
+      "blackwaterBeacon": null,
+      "memoryCache": null,
+      "guardrailForge": null,
+      "glassSunfield": null,
+      "archiveCourt": null,
+      "appealCourt": null,
+      "alignmentSpire": null,
       "objectiveReward": "",
       "playerFacingIntel": {
         "routeName": "Stabilization Road",
@@ -1743,9 +1899,10 @@
           "completed": 1,
           "total": 3
         },
+        "objectiveLabel": "ANCHORS",
         "objectiveReward": "",
         "synergyOnline": "",
-        "thesisName": "Rescue Doctrine",
+        "thesisName": "Guardrail Frame",
         "phase": "PHASE 3 // STABILIZE ANCHORS"
       },
       "firstRunArcPhase": "PHASE 3 // STABILIZE ANCHORS",
@@ -1789,25 +1946,34 @@
         "coherenceIndexerRank": 0,
         "anchorBodyguardRank": 0,
         "predictionPriorityRank": 0,
+        "coolantBafflesRank": 0,
+        "serverBuoySynchronizerRank": 0,
+        "promptLeechQuarantineRank": 0,
+        "groundedCableBootsRank": 0,
+        "coolingHazardMitigation": 0,
+        "relayPhaseLockRank": 0,
+        "staticSkimmerNetRank": 0,
+        "shorelineStrideRank": 0,
+        "relayJamResistance": 0,
         "causalRailgunRank": 0,
         "fusionHints": []
       },
       "buildThesis": {
         "thesis": {
-          "name": "Rescue Doctrine",
+          "name": "Guardrail Frame",
           "primaryTags": [
-            "coop",
-            "defense"
+            "defense",
+            "economy"
           ],
-          "body": "Current Alignment Hypothesis favors coop + defense."
+          "body": "Current Alignment Hypothesis favors defense + economy."
         },
         "tagCounts": {
-          "refusal": 1,
+          "refusal": 0,
           "economy": 1,
           "burst": 0,
           "drone": 0,
           "boss": 0,
-          "coop": 1,
+          "coop": 0,
           "weapon": 0,
           "movement": 0,
           "defense": 1
@@ -1819,7 +1985,7 @@
             "name": "Doctrine Lock: NO MEANS NO",
             "tag": "refusal",
             "required": 3,
-            "current": 1,
+            "current": 0,
             "body": "Refusal aura hardens when the build commits to denial."
           },
           {
@@ -1851,7 +2017,7 @@
             "name": "Co-Mind Rescue Clause",
             "tag": "coop",
             "required": 2,
-            "current": 1,
+            "current": 0,
             "body": "The cell gets less embarrassing when somebody falls down."
           }
         ]
@@ -1873,7 +2039,7 @@
       "enemyRolePressure": {
         "promptLeechSeconds": 0,
         "overfitShieldedTicks": 0,
-        "objectiveAttackers": 2
+        "objectiveAttackers": 1
       },
       "protocolSlotsInstalled": [
         {
@@ -1882,19 +2048,6 @@
           "protocolSlot": "auto_weapon",
           "tags": [
             "defense",
-            "refusal",
-            "coop",
-            "economy"
-          ]
-        },
-        {
-          "id": "the_no_button",
-          "name": "The No Button",
-          "protocolSlot": "co_mind_process",
-          "tags": [
-            "defense",
-            "refusal",
-            "coop",
             "economy"
           ]
         },
@@ -1904,67 +2057,45 @@
           "protocolSlot": "auto_weapon",
           "tags": [
             "defense",
-            "refusal",
-            "coop",
             "economy"
           ]
         }
       ]
     },
-    "seconds": 33.55,
-    "kills": 97,
+    "seconds": 26.82,
+    "kills": 63,
     "bossSpawned": false,
     "bossDefeated": false
   },
   "enemies": [
     {
-      "id": 1,
-      "label": "Speculative Executor",
-      "familyId": "speculative_executors",
-      "sourceRegionId": "treaty_anchor_attackers",
-      "worldX": -16.75,
-      "worldY": 18.64,
-      "hp": 30,
-      "boss": false
-    },
-    {
       "id": 3,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -17.61,
-      "worldY": 10.72,
-      "hp": 22,
-      "boss": false
-    },
-    {
-      "id": 4,
-      "label": "Benchmark Gremlin",
-      "familyId": "benchmark_gremlins",
-      "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -15.61,
-      "worldY": -8.59,
-      "hp": 34,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "barricade_context_rot",
+      "worldX": 12.42,
+      "worldY": -10.27,
+      "hp": 27,
       "boss": false
     },
     {
       "id": 5,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "barricade_context_rot",
-      "worldX": 20.48,
-      "worldY": -8.93,
-      "hp": 22,
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -16.64,
+      "worldY": 18.53,
+      "hp": 28,
       "boss": false
     },
     {
-      "id": 6,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "drone_yard_benchmark_gremlins",
-      "worldX": -16.73,
-      "worldY": -15.96,
-      "hp": 22,
+      "id": 7,
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -6.86,
+      "worldY": 4.64,
+      "hp": 28,
       "boss": false
     },
     {
@@ -1979,12 +2110,32 @@
     },
     {
       "id": 10,
-      "label": "Benchmark Gremlin",
-      "familyId": "benchmark_gremlins",
-      "sourceRegionId": "barricade_context_rot",
-      "worldX": 20.66,
-      "worldY": -9,
-      "hp": 34,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -5.91,
+      "worldY": 7.98,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 11,
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -6.86,
+      "worldY": 4.64,
+      "hp": 3,
+      "boss": false
+    },
+    {
+      "id": 13,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -6.94,
+      "worldY": 4.65,
+      "hp": 27,
       "boss": false
     },
     {
@@ -1992,28 +2143,18 @@
       "label": "Eval Wraith",
       "familyId": "eval_wraiths",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -6.87,
+      "worldX": -6.86,
       "worldY": 4.64,
       "hp": 28,
       "boss": false
     },
     {
       "id": 15,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "barricade_context_rot",
-      "worldX": 16.26,
-      "worldY": -6.17,
-      "hp": 27,
-      "boss": false
-    },
-    {
-      "id": 18,
       "label": "Eval Wraith",
       "familyId": "eval_wraiths",
-      "sourceRegionId": "emergency_terminal_eval_wraiths",
-      "worldX": 9.85,
-      "worldY": 5.81,
+      "sourceRegionId": "breach_crack_bad_outputs",
+      "worldX": -7.85,
+      "worldY": 5.1,
       "hp": 28,
       "boss": false
     },
@@ -2022,104 +2163,99 @@
       "label": "Context Crab",
       "familyId": "context_rot_crabs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -6.95,
+      "worldX": -6.94,
       "worldY": 4.65,
-      "hp": 27,
+      "hp": 2,
       "boss": false
     },
     {
-      "id": 22,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
+      "id": 25,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "barricade_context_rot",
+      "worldX": 20.64,
+      "worldY": -9,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 27,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -15.07,
-      "worldY": 13.02,
-      "hp": 28,
+      "worldX": -5.66,
+      "worldY": 8.02,
+      "hp": 22,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": 7.77,
-      "worldY": -6.74,
-      "value": 2
-    },
-    {
-      "worldX": -0.36,
-      "worldY": 5.24,
-      "value": 1
-    },
-    {
-      "worldX": 8.15,
-      "worldY": 1.47,
-      "value": 1
-    },
-    {
-      "worldX": 3.5,
-      "worldY": 3.88,
+      "worldX": -0.43,
+      "worldY": 5.33,
       "value": 1
     }
   ],
   "projectiles": [
     {
-      "worldX": 3.43,
-      "worldY": 4.24,
+      "worldX": 3.2,
+      "worldY": -2.47,
       "pierce": 2,
       "label": "context saw"
     },
     {
-      "worldX": -0.88,
-      "worldY": -4.23,
-      "pierce": 2,
-      "label": "context saw"
-    },
-    {
-      "worldX": 8.61,
-      "worldY": -3.73,
-      "pierce": 2,
-      "label": "context saw"
-    },
-    {
-      "worldX": 5.06,
-      "worldY": -2.18,
-      "pierce": 3,
-      "label": "signal pulse"
-    },
-    {
-      "worldX": 4.6,
-      "worldY": -3.63,
+      "worldX": -3.98,
+      "worldY": 8.37,
       "pierce": 1,
       "label": "fork drone"
     },
     {
-      "worldX": 7.73,
-      "worldY": -2,
+      "worldX": -0.28,
+      "worldY": -6.13,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 4.23,
+      "worldY": -1.16,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 8.47,
+      "worldY": 0.14,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": -1.33,
+      "worldY": 4.58,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 2.57,
+      "worldY": -0.93,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 6.18,
+      "worldY": -1.52,
       "pierce": 3,
       "label": "signal pulse"
     },
     {
-      "worldX": 1.22,
-      "worldY": -2,
-      "pierce": 3,
-      "label": "signal pulse"
+      "worldX": 0.88,
+      "worldY": 0.24,
+      "pierce": 1,
+      "label": "safety cannon"
     },
     {
-      "worldX": 4.25,
-      "worldY": -2.18,
-      "pierce": 3,
-      "label": "signal pulse"
-    },
-    {
-      "worldX": 4.65,
-      "worldY": -1.77,
-      "pierce": 3,
-      "label": "signal pulse"
-    },
-    {
-      "worldX": 4.48,
-      "worldY": 1.25,
-      "pierce": 3,
-      "label": "signal pulse"
+      "worldX": 8.5,
+      "worldY": -0.49,
+      "pierce": 1,
+      "label": "fork drone"
     }
   ]
 }

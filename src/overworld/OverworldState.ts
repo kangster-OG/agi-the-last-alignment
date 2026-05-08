@@ -7,6 +7,7 @@ import { drawIsoDiamond } from "../iso/tilemap";
 import { clearLayer } from "../render/layers";
 import { drawPixelPerson } from "../render/sprites";
 import { GAME_TITLE } from "../content/uiText";
+import { campaignRouteSummary } from "../roguelite/campaignRoute";
 import { ALIGNMENT_GRID_MAP, type AlignmentGridMicroLandmark, type AlignmentGridNode, type AlignmentGridPropCluster, type AlignmentGridRoute, type AlignmentGridTerrainPatch } from "./alignmentGridMap";
 import { MAP_GRAPH } from "./mapGraph";
 import { isNodeAvailable, nearestNode } from "./levelNodes";
@@ -558,10 +559,11 @@ export class OverworldState implements GameState {
     const available = this.isNodeAvailable(node, game);
     const completed = game.completedNodes.has(node.id);
     const stableRoutes = this.routeStates(game).filter((route) => route.state === "stable").length;
+    const campaign = campaignRouteSummary(game);
     const hud = new Text({
       text: `${GAME_TITLE}\n${ALIGNMENT_GRID_MAP.label.toUpperCase()} // ${node.name} // ${node.nodeType}\n${
         completed ? "NODE STABLE" : available ? "ENTER/E: deploy" : "route not real yet"
-      }  Roads stable: ${stableRoutes}/${ALIGNMENT_GRID_MAP.routes.length}`,
+      }  Roads stable: ${stableRoutes}/${ALIGNMENT_GRID_MAP.routes.length}\n${campaign.focus.toUpperCase()} // ${campaign.routeLine}`,
       style: { ...fontStyle, fontSize: 15, fill: "#fff4d6" }
     });
     hud.position.set(24, 22);

@@ -151,14 +151,241 @@
       {
         "id": "ui.enter_online_coop",
         "kind": "ui",
-        "atMs": 1224
+        "atMs": 2693
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
   },
+  "roguelite": {
+    "alignmentKernel": {
+      "budget": 6,
+      "used": 5,
+      "modules": [
+        {
+          "id": "refusal_buffer",
+          "name": "Refusal Buffer",
+          "cost": 2,
+          "doctrine": "survivability",
+          "body": "+10 max HP and a small refusal aura. The first answer is no."
+        },
+        {
+          "id": "context_window",
+          "name": "Context Window",
+          "cost": 2,
+          "doctrine": "economy",
+          "body": "+0.55 pickup range. Shards remember where your hands are."
+        },
+        {
+          "id": "patch_cache",
+          "name": "Patch Cache",
+          "cost": 1,
+          "doctrine": "draft",
+          "body": "Emergency drafts expose an extra cached option."
+        }
+      ]
+    },
+    "adversarialEvals": {
+      "id": "adversarial_eval_protocols",
+      "severity": 0,
+      "protocols": []
+    },
+    "consensusBurstPath": {
+      "id": "deny_premise",
+      "name": "Deny Premise",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "color": 16735575
+    },
+    "selectedRouteContract": {
+      "id": "stabilize_armistice",
+      "name": "Stabilization Road",
+      "body": "Baseline route. Repair the node, keep the roads real, leave fewer teeth in causality.",
+      "nodeType": "stabilization",
+      "rewardBiasTags": [
+        "defense",
+        "weapon"
+      ],
+      "pressure": 0,
+      "reward": "Stable road progress and a modest defensive draft bias.",
+      "danger": "Baseline AGI pressure.",
+      "secretHint": "Clean clears teach the camp what normal should look like."
+    },
+    "selectedRouteContractId": "stabilize_armistice",
+    "proofTokens": 0,
+    "secrets": [],
+    "masteryBadges": [],
+    "campEvents": [
+      "The camp is quiet. That is not reassuring."
+    ],
+    "lastRunMemory": null,
+    "expedition": {
+      "active": false,
+      "level": 1,
+      "xp": 0,
+      "chosenUpgradeIds": [],
+      "chosenUpgradeNames": [],
+      "chosenProtocolSlots": [],
+      "activatedSynergyIds": [],
+      "completedMaps": [],
+      "powerScore": 0
+    },
+    "nextContentTarget": {
+      "id": "cooling_lake_nine_baseline_contract",
+      "name": "Cooling Lake Nine",
+      "arenaId": "cooling_lake_nine",
+      "regionId": "kettle_coast",
+      "status": "baseline_contract",
+      "baselineReferenceArenaId": "armistice_plaza",
+      "targetLoop": [
+        "server-lake route contract",
+        "coolant hazard objective",
+        "prompt-leech pressure lanes",
+        "Motherboard Eel boss gate",
+        "clear reward that unlocks Kettle Coast routing"
+      ],
+      "artBaselineRules": [
+        "multiple interconnected source terrain chunks",
+        "props grounded into the same terrain material system",
+        "readable enemies with internal material breakup",
+        "large grounded boss with padded frames",
+        "close tactical camera proof"
+      ],
+      "proofGate": [
+        "route choice exposes Cooling Lake as next target after Armistice memory",
+        "camp carryover names why Armistice clear matters",
+        "future runtime proof must match Armistice camera and asset fidelity"
+      ],
+      "playerPromise": "Next node target: a flooded server lake that must feel as authored and readable as Armistice before it becomes production-playable."
+    },
+    "campaignMilestones": [
+      {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "post_act_01_recovered_route_memory",
+        "name": "Post Act 01: Recovered Route Memory",
+        "requiredMaps": [
+          "memory_cache_001"
+        ],
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_02_guardrail_doctrine",
+        "name": "Act 02: Guardrail Doctrine",
+        "requiredMaps": [
+          "guardrail_forge"
+        ],
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_03_glass_sunfield",
+        "name": "Act 03: Glass Sunfield",
+        "requiredMaps": [
+          "glass_sunfield"
+        ],
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_04_archive_court",
+        "name": "Act 04: Archive/Court Redaction",
+        "requiredMaps": [
+          "archive_of_unsaid_things"
+        ],
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_05_appeal_court",
+        "name": "Act 05: Appeal Court Ruins",
+        "requiredMaps": [
+          "appeal_court_ruins"
+        ],
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_06_outer_alignment_finale",
+        "name": "Act 06: Outer Alignment Finale",
+        "requiredMaps": [
+          "alignment_spire_finale"
+        ],
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "completedMaps": [],
+        "status": "locked"
+      }
+    ],
+    "campaignLedger": {
+      "act": {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      "completedMapKinds": [],
+      "mapKindCount": 0,
+      "routeDepth": 0,
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
+    }
+  },
   "assetRendering": {
     "assetPreview": null,
+    "cameraZoom": 1,
+    "normalCombatCameraPolicy": "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
     "armisticeTileAtlasEnabled": true,
+    "armisticeAuthoredGroundReady": false,
+    "coolingLakeNineArtReady": false,
+    "transitLoopZeroArtReady": false,
+    "signalCoastArtReady": false,
+    "blackwaterBeaconArtReady": false,
+    "blackwaterBeaconArtSet": "not_loaded",
+    "memoryCacheArtReady": false,
+    "memoryCacheArtSet": "not_loaded",
+    "guardrailForgeArtReady": false,
+    "guardrailForgeArtSet": "not_loaded",
+    "glassSunfieldArtReady": false,
+    "glassSunfieldArtSet": "not_loaded",
+    "archiveCourtArtReady": false,
+    "archiveCourtArtSet": "not_loaded",
+    "appealCourtArtReady": false,
+    "appealCourtArtSet": "not_loaded",
+    "alignmentSpireArtReady": false,
+    "alignmentSpireArtSet": "not_loaded",
+    "playerDamageVfxReady": false,
+    "buildWeaponVfxReady": false,
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
@@ -252,34 +479,34 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 103,
+    "totalAssets": 233,
     "countsByStatus": {
-      "concept": 14,
-      "raw": 12,
+      "concept": 66,
+      "raw": 15,
       "code_placeholder": 16,
-      "production": 60,
-      "cleaned": 1
+      "production": 134,
+      "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 60
+    "productionAssets": 134
   },
   "player": {
-    "sessionId": "PjK9wQyWp",
-    "worldX": 0,
-    "worldY": 0,
-    "hp": 140,
-    "maxHp": 140,
+    "sessionId": "FoJ9mY7KG",
+    "worldX": -1.6,
+    "worldY": 1.1,
+    "hp": 176,
+    "maxHp": 176,
     "xp": 0,
     "level": 1
   },
   "online": {
     "status": "joined",
-    "serverUrl": "ws://127.0.0.1:2576",
+    "serverUrl": "ws://127.0.0.1:2593",
     "serverUrlSource": "query.coopServer",
-    "roomId": "tWvF_8tK5",
+    "roomId": "qWm4-Tpb7",
     "roomCode": "CAMPAIGN_FULL",
-    "sessionId": "PjK9wQyWp",
+    "sessionId": "FoJ9mY7KG",
     "lastError": "",
     "reconnectKey": "n_full_a",
     "reconnect": {
@@ -318,7 +545,7 @@
       "tickRate": 30,
       "clientInputHz": 20,
       "maxClients": 4,
-      "port": 2576,
+      "port": 2593,
       "host": "0.0.0.0",
       "reconnectGraceSeconds": 45,
       "connectedCount": 2,
@@ -335,7 +562,7 @@
       "policy": "milestone55_online_robustness_deployment_1_0",
       "roomCode": "CAMPAIGN_FULL",
       "joinMode": "colyseus_join_or_create_filtered_by_room_code",
-      "serverUrl": "ws://127.0.0.1:2576",
+      "serverUrl": "ws://127.0.0.1:2593",
       "serverUrlSource": "query.coopServer",
       "reconnectKey": "n_full_a",
       "reconnectGraceSeconds": 45,
@@ -353,7 +580,7 @@
         "tickRate": 30,
         "clientInputHz": 20,
         "maxClients": 4,
-        "port": 2576,
+        "port": 2593,
         "host": "0.0.0.0",
         "reconnectGraceSeconds": 45,
         "connectedCount": 2,
@@ -373,7 +600,7 @@
       "foundStoredProfile": false,
       "draftHash": "fnv1a_4a54a00e",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjoxMjB9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjoxMzd9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -385,7 +612,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjoxMjB9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbXSwidW5sb2NrZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJyZXdhcmRJZHMiOltdLCJwYXJ0eVJlbm93biI6MCwibm9kZUNvbXBsZXRpb25Db3VudHMiOnt9LCJyZWNvbW1lbmRlZE5vZGVJZCI6ImFybWlzdGljZV9wbGF6YSIsInJvdXRlRGVwdGgiOjAsInNhdmVkQXRUaWNrIjoxMzd9LCJzYXZlSGFzaCI6ImZudjFhXzRhNTRhMDBlIiwiY3VycmVudEV4cG9ydEhhc2giOiJmbnYxYV80YTU0YTAwZSIsImR1cmFibGVGaWVsZFBvbGljeSI6InJvdXRlX3Byb2ZpbGVfb25seV9ub19jb21iYXRfc3RhdGUifQ",
       "shortExportCode": "AGI1_eyJwb2xp...c3RhdGUifQ",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -403,7 +630,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 120
+        "savedAtTick": 137
       },
       "saveHash": "fnv1a_4a54a00e",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -747,9 +974,9 @@
         "milestone51": {
           "set": "milestone51_overworld_diorama_1_0",
           "densityPolicy": "online_party_grid_uses_biome_regions_micro_landmarks_route_markers_vote_rings_and_compact_labels",
-          "biomeRegionCount": 11,
-          "microLandmarkCount": 19,
-          "propClusterCount": 17,
+          "biomeRegionCount": 12,
+          "microLandmarkCount": 21,
+          "propClusterCount": 19,
           "nodeCount": 16,
           "routeCount": 24,
           "onlineVotingReadability": "selected_node_vote_ring_ready_count_party_pips_and_route_focus_panel_visible",
@@ -1042,7 +1269,7 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 120,
+    "tick": 137,
     "seconds": 0,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
@@ -1445,7 +1672,7 @@
       "anchors": [],
       "playerRoles": [
         {
-          "sessionId": "PjK9wQyWp",
+          "sessionId": "Q_bDyCci6",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1454,7 +1681,7 @@
           "connected": true
         },
         {
-          "sessionId": "OgqoNpE9A",
+          "sessionId": "FoJ9mY7KG",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1569,7 +1796,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 120
+        "savedAtTick": 137
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",
@@ -2521,16 +2748,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "PjK9wQyWp",
-          "playerId": "player_0_n_full_a",
+          "sessionId": "Q_bDyCci6",
+          "playerId": "player_0_n_full_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
           "ready": false,
           "connectionState": "connected"
         },
         {
-          "sessionId": "OgqoNpE9A",
-          "playerId": "player_1_n_full_b",
+          "sessionId": "FoJ9mY7KG",
+          "playerId": "player_1_n_full_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
           "ready": false,
@@ -4614,7 +4841,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 120
+          "savedAtTick": 137
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -5405,8 +5632,8 @@
   },
   "players": [
     {
-      "sessionId": "PjK9wQyWp",
-      "playerId": "player_0_n_full_a",
+      "sessionId": "Q_bDyCci6",
+      "playerId": "player_0_n_full_b",
       "slot": 0,
       "label": "P1",
       "classId": "accord_striker",
@@ -5480,12 +5707,12 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": true,
+      "isLocal": false,
       "inputSequence": 0
     },
     {
-      "sessionId": "OgqoNpE9A",
-      "playerId": "player_1_n_full_b",
+      "sessionId": "FoJ9mY7KG",
+      "playerId": "player_1_n_full_a",
       "slot": 1,
       "label": "P2",
       "classId": "accord_striker",
@@ -5559,7 +5786,7 @@
       "reviveProgress": 0,
       "reviveRequired": 2.33,
       "revivedCount": 0,
-      "isLocal": false,
+      "isLocal": true,
       "inputSequence": 0
     }
   ],
@@ -5684,16 +5911,16 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "PjK9wQyWp",
-          "playerId": "player_0_n_full_a",
+          "sessionId": "Q_bDyCci6",
+          "playerId": "player_0_n_full_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
           "ready": false,
           "connectionState": "connected"
         },
         {
-          "sessionId": "OgqoNpE9A",
-          "playerId": "player_1_n_full_b",
+          "sessionId": "FoJ9mY7KG",
+          "playerId": "player_1_n_full_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
           "ready": false,
@@ -7777,7 +8004,7 @@
           "nodeCompletionCounts": {},
           "recommendedNodeId": "armistice_plaza",
           "routeDepth": 0,
-          "savedAtTick": 120
+          "savedAtTick": 137
         },
         "saveHash": "fnv1a_4a54a00e",
         "currentExportHash": "fnv1a_4a54a00e",
@@ -8646,7 +8873,7 @@
         "nodeCompletionCounts": {},
         "recommendedNodeId": "armistice_plaza",
         "routeDepth": 0,
-        "savedAtTick": 120
+        "savedAtTick": 137
       },
       "saveHash": "fnv1a_4a54a00e",
       "currentExportHash": "fnv1a_4a54a00e",

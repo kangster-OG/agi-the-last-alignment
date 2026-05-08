@@ -39,11 +39,20 @@ export interface BuildStats {
   consensusBurstRevive: number;
   objectiveRepairRate: number;
   objectiveDefense: number;
+  signalWindowControl: number;
+  relayJamResistance: number;
+  skimmerCountermeasure: number;
+  shorelineStride: number;
   contextSaw: number;
   patchMortar: number;
   coherenceIndexer: number;
   anchorBodyguard: number;
   predictionPriority: number;
+  coolantBaffles: number;
+  serverBuoySynchronizer: number;
+  promptLeechQuarantine: number;
+  groundedCableBoots: number;
+  coolingHazardMitigation: number;
   causalRailgun: number;
 }
 
@@ -57,7 +66,7 @@ export const BUILD_SLOT_CAPS: Record<BuildSlotKind, number> = {
 
 const PRIMARY_WEAPON_IDS = new Set(["refusal_shard", "vector_lance", "signal_pulse", "rift_mine", "fork_drone", "null_blade", "protocol_suture", "consensus_mortar", "audit_swarm", "truth_cannon"]);
 const SECONDARY_PROTOCOL_IDS = new Set(["context_saw", "patch_mortar", "audit_swarm_protocol", "red_team_spike", "benchmark_rail", "jailbreak_snare", "fork_daemon", "coherence_lanterns", "appeal_writ", "memory_needle"]);
-const PASSIVE_PROCESS_IDS = new Set(["coherence_indexer", "anchor_bodyguard", "prediction_priority", "field_triage_loop", "impact_to_protocol", "reroll_reserve", "rare_patch_bounty", "route_memory", "weakest_link_scanner", "cluster_solver", "dash_compiler", "panic_window", "feedback_sprint", "low_hp_adversary", "cursed_context", "benchmark_overfit", "co_op_relay", "recompile_anchor", "split_attention"]);
+const PASSIVE_PROCESS_IDS = new Set(["coherence_indexer", "anchor_bodyguard", "prediction_priority", "coolant_baffles", "server_buoy_synchronizer", "prompt_leech_quarantine", "grounded_cable_boots", "relay_phase_lock", "static_skimmer_net", "shoreline_stride", "lighthouse_countertone", "field_triage_loop", "impact_to_protocol", "reroll_reserve", "rare_patch_bounty", "route_memory", "weakest_link_scanner", "cluster_solver", "dash_compiler", "panic_window", "feedback_sprint", "low_hp_adversary", "cursed_context", "benchmark_overfit", "co_op_relay", "recompile_anchor", "split_attention"]);
 const FUSION_IDS = new Set(["cathedral_of_no", "causal_railgun", "time_deferred_minefield", "community_forkstorm", "rescue_broadcast", "final_appeal", "armistice_artillery", "context_singularity", "peer_review_laser_grid", "red_team_killchain", "harmlessness_bastion", "lantern_logistics"]);
 
 export function baseBuild(): BuildStats {
@@ -82,11 +91,20 @@ export function baseBuild(): BuildStats {
     consensusBurstRevive: 0,
     objectiveRepairRate: 0,
     objectiveDefense: 0,
+    signalWindowControl: 0,
+    relayJamResistance: 0,
+    skimmerCountermeasure: 0,
+    shorelineStride: 0,
     contextSaw: 0,
     patchMortar: 0,
     coherenceIndexer: 0,
     anchorBodyguard: 0,
     predictionPriority: 0,
+    coolantBaffles: 0,
+    serverBuoySynchronizer: 0,
+    promptLeechQuarantine: 0,
+    groundedCableBoots: 0,
+    coolingHazardMitigation: 0,
     causalRailgun: 0
   };
 }
@@ -295,6 +313,81 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
       addUnique(build.passiveProcesses, "prediction_priority");
       build.predictionPriority += 1;
       build.projectileSpeed += 0.35;
+    }
+  },
+  coolant_baffles: {
+    id: "coolant_baffles",
+    apply: (build) => {
+      addUnique(build.passiveProcesses, "coolant_baffles");
+      build.coolantBaffles += 1;
+      build.coolingHazardMitigation += 0.22;
+      build.maxHpBonus += 8;
+    }
+  },
+  server_buoy_synchronizer: {
+    id: "server_buoy_synchronizer",
+    apply: (build) => {
+      addUnique(build.passiveProcesses, "server_buoy_synchronizer");
+      build.serverBuoySynchronizer += 1;
+      build.objectiveRepairRate += 0.18;
+      build.objectiveDefense += 0.08;
+      build.consensusBurstChargeRate += 0.03;
+    }
+  },
+  prompt_leech_quarantine: {
+    id: "prompt_leech_quarantine",
+    apply: (build) => {
+      addUnique(build.passiveProcesses, "prompt_leech_quarantine");
+      build.promptLeechQuarantine += 1;
+      build.pickupRange += 0.25;
+      build.consensusBurstChargeRate += 0.04;
+    }
+  },
+  grounded_cable_boots: {
+    id: "grounded_cable_boots",
+    apply: (build) => {
+      addUnique(build.passiveProcesses, "grounded_cable_boots");
+      build.groundedCableBoots += 1;
+      build.coolingHazardMitigation += 0.14;
+      build.moveSpeedBonus += 0.22;
+    }
+  },
+  relay_phase_lock: {
+    id: "relay_phase_lock",
+    apply: (build) => {
+      addUnique(build.passiveProcesses, "relay_phase_lock");
+      build.signalWindowControl += 1;
+      build.objectiveRepairRate += 0.14;
+      build.consensusBurstChargeRate += 0.04;
+    }
+  },
+  static_skimmer_net: {
+    id: "static_skimmer_net",
+    apply: (build) => {
+      addUnique(build.passiveProcesses, "static_skimmer_net");
+      build.skimmerCountermeasure += 1;
+      build.relayJamResistance += 0.18;
+      build.weaponDamage += 2;
+    }
+  },
+  shoreline_stride: {
+    id: "shoreline_stride",
+    apply: (build) => {
+      addUnique(build.passiveProcesses, "shoreline_stride");
+      build.shorelineStride += 1;
+      build.moveSpeedBonus += 0.16;
+      build.relayJamResistance += 0.1;
+      build.maxHpBonus += 6;
+    }
+  },
+  lighthouse_countertone: {
+    id: "lighthouse_countertone",
+    apply: (build) => {
+      addUnique(build.passiveProcesses, "lighthouse_countertone");
+      build.signalWindowControl += 1;
+      build.relayJamResistance += 0.12;
+      build.consensusBurstDamage += 0.08;
+      build.consensusBurstChargeRate += 0.03;
     }
   },
   causal_railgun: {
@@ -839,6 +932,46 @@ const FALLBACK_BY_ID: Record<string, { name: string; body: string; source: Upgra
     name: "Rescue Subroutine",
     body: "Objectives resist attackers and Recompile can rescue harder. Co-op doctrine, even solo.",
     source: "general"
+  },
+  coolant_baffles: {
+    name: "Coolant Baffles",
+    body: "Cooling systems passive. Reduces coolant/electric/vent pressure and adds +8 max HP.",
+    source: "general"
+  },
+  server_buoy_synchronizer: {
+    name: "Server Buoy Synchronizer",
+    body: "Cooling systems passive. Server Buoys stabilize faster, decay slower, and feed Burst charge.",
+    source: "general"
+  },
+  prompt_leech_quarantine: {
+    name: "Prompt Leech Quarantine",
+    body: "Cooling systems passive. Prompt Leeches steal fewer shards and pay HP when blocked.",
+    source: "general"
+  },
+  grounded_cable_boots: {
+    name: "Grounded Cable Boots",
+    body: "Cooling systems passive. +move speed and less Cooling hazard push/damage.",
+    source: "general"
+  },
+  relay_phase_lock: {
+    name: "Relay Phase Lock",
+    body: "Signal Coast passive. Clear windows last longer and relay calibration pushes harder during the opening.",
+    source: "general"
+  },
+  static_skimmer_net: {
+    name: "Static Skimmer Net",
+    body: "Signal Coast passive. Static Skimmers jam less relay progress and take countermeasure damage.",
+    source: "general"
+  },
+  shoreline_stride: {
+    name: "Shoreline Stride",
+    body: "Signal Coast passive. Move faster through the route edge and resist surf/static relay decay.",
+    source: "general"
+  },
+  lighthouse_countertone: {
+    name: "Lighthouse Countertone",
+    body: "Signal Coast passive. Better Burst tempo and jam resistance while the Lighthouse is answering.",
+    source: "general"
   }
 };
 
@@ -857,6 +990,10 @@ export function allDraftableUpgrades(classId: string, factionId: string, chosenI
     .filter((upgrade): upgrade is Upgrade => Boolean(upgrade));
 }
 
+export function upgradeById(id: string, classId: string, factionId: string, chosenIds: readonly string[]): Upgrade | null {
+  return makeUpgrade(id, classId, factionId, new Set(chosenIds));
+}
+
 export function draftUpgrades(classId: string, factionId: string, chosenIds: string[], level: number, choiceBonus = 0, biasTags: readonly UpgradeTag[] = [], build?: BuildStats): Upgrade[] {
   const chosen = new Set(chosenIds);
   const evolutions = eligibleEvolutionIds(chosenIds)
@@ -873,16 +1010,20 @@ export function draftUpgrades(classId: string, factionId: string, chosenIds: str
 function fillDraft(classId: string, factionId: string, chosenIds: string[], level: number, reservedIds: string[], biasTags: readonly UpgradeTag[], build?: BuildStats): Upgrade[] {
   const chosen = new Set([...chosenIds, ...reservedIds]);
   const faction = FACTIONS[factionId] ?? FACTIONS.openai_accord;
+  const coolingSystemIds = isCoolingDraftBias(biasTags) ? ["server_buoy_synchronizer", "prompt_leech_quarantine", "coolant_baffles", "grounded_cable_boots"] : [];
+  const signalSystemIds = isSignalCoastDraftBias(biasTags) ? ["relay_phase_lock", "static_skimmer_net", "shoreline_stride", "lighthouse_countertone"] : [];
   const cadence = level <= 2
     ? ["refusal_halo", "vector_lance", "signal_pulse", "context_bloom", "panic_optimized_dash", "the_no_button"]
     : level <= 3
       ? ["the_no_button", "predicted_lane", "context_saw", "patch_mortar", "coherence_indexer", "patch_cascade", "coherence_magnet", "bad_output_filter"]
-      : ["bad_output_filter", "context_saw", "patch_mortar", "coherence_indexer", "anchor_bodyguard", "prediction_priority", "patch_cascade", "alignment_breaker", "million_token_backpack"];
+      : [...signalSystemIds, ...coolingSystemIds, "bad_output_filter", "context_saw", "patch_mortar", "coherence_indexer", "anchor_bodyguard", "prediction_priority", "patch_cascade", "alignment_breaker", "million_token_backpack"];
   const ids = unique([
     ...cadence,
     ...(CLASS_UPGRADE_IDS[classId] ?? []),
     ...faction.upgradePoolIds,
-    ...GENERAL_UPGRADE_IDS
+    ...GENERAL_UPGRADE_IDS,
+    ...coolingSystemIds,
+    ...signalSystemIds
   ]).filter((id) => !chosen.has(id));
   const cards = ids
     .map((id) => makeUpgrade(id, classId, factionId, chosen))
@@ -891,6 +1032,14 @@ function fillDraft(classId: string, factionId: string, chosenIds: string[], leve
     .sort((a, b) => (level <= 3 ? 0 : biasScore(b, biasTags) - biasScore(a, biasTags)))
     .slice(0, 4);
   return cards;
+}
+
+function isCoolingDraftBias(biasTags: readonly UpgradeTag[]): boolean {
+  return biasTags.includes("economy") && biasTags.includes("defense") && biasTags.includes("movement") && biasTags.includes("burst");
+}
+
+function isSignalCoastDraftBias(biasTags: readonly UpgradeTag[]): boolean {
+  return biasTags.includes("movement") && biasTags.includes("burst") && biasTags.includes("defense") && biasTags.includes("boss");
 }
 
 function makeUpgrade(id: string, classId: string, factionId: string, chosen: Set<string>): Upgrade | null {
@@ -926,7 +1075,9 @@ function biasScore(upgrade: Upgrade, biasTags: readonly UpgradeTag[]): number {
 
 function protocolSlotForUpgrade(id: string, source: UpgradeSource): ProtocolSlot {
   if (id === "vector_lance" || id === "signal_pulse" || id === "context_saw" || id === "patch_mortar" || id === "causal_railgun") return "auto_weapon";
-  if (id === "coherence_indexer" || id === "anchor_bodyguard" || id === "prediction_priority") return "co_mind_process";
+  if (id === "coherence_indexer" || id === "anchor_bodyguard" || id === "prediction_priority" || id === "server_buoy_synchronizer" || id === "prompt_leech_quarantine" || id === "relay_phase_lock" || id === "static_skimmer_net" || id === "shoreline_stride" || id === "lighthouse_countertone") return "co_mind_process";
+  if (id === "coolant_baffles") return "defense_layer";
+  if (id === "grounded_cable_boots") return "movement_trace";
   if (id.includes("dash") || id.includes("slipstream") || id.includes("route_runner") || id.includes("storm_cache") || id.includes("spine_spark")) return "movement_trace";
   if (id.includes("shield") || id.includes("guard") || id.includes("halo") || id.includes("backpack") || id.includes("apology") || id.includes("triage") || id.includes("mercy")) return "defense_layer";
   if (id.includes("magnet") || id.includes("context") || id.includes("cache") || id.includes("relay") || id.includes("vocabulary") || id.includes("localization")) return "shard_economy";
@@ -938,13 +1089,13 @@ function protocolSlotForUpgrade(id: string, source: UpgradeSource): ProtocolSlot
 function upgradeTagsFor(id: string, source: UpgradeSource): UpgradeTag[] {
   const tags = new Set<UpgradeTag>();
   if (id.includes("refusal") || id.includes("no_button") || id.includes("cathedral") || id.includes("guardrail") || id.includes("constitutional")) tags.add("refusal");
-  if (id.includes("magnet") || id.includes("context") || id.includes("cache") || id.includes("relay") || id.includes("vocabulary") || id.includes("localization") || id.includes("anchor") || id.includes("coherence")) tags.add("economy");
+  if (id.includes("magnet") || id.includes("context") || id.includes("cache") || id.includes("relay") || id.includes("vocabulary") || id.includes("localization") || id.includes("anchor") || id.includes("coherence") || id.includes("buoy") || id.includes("leech")) tags.add("economy");
   if (id.includes("burst") || id.includes("waveform") || id.includes("recompile")) tags.add("burst");
   if (id.includes("fork") || id.includes("swarm") || id.includes("herd") || id.includes("community") || id.includes("pull_request")) tags.add("drone");
   if (id.includes("boss") || id.includes("benchmark") || id.includes("control_group") || id.includes("adversarial")) tags.add("boss");
   if (id.includes("rescue") || id.includes("recompile") || id.includes("beacon") || id.includes("mercy") || id.includes("shared")) tags.add("coop");
-  if (id.includes("dash") || id.includes("slipstream") || id.includes("route") || id.includes("storm") || id.includes("lunge")) tags.add("movement");
-  if (id.includes("shield") || id.includes("guard") || id.includes("halo") || id.includes("backpack") || id.includes("apology") || id.includes("triage") || id.includes("toolkit") || id.includes("bodyguard") || id.includes("signal")) tags.add("defense");
+  if (id.includes("dash") || id.includes("slipstream") || id.includes("route") || id.includes("storm") || id.includes("lunge") || id.includes("boots")) tags.add("movement");
+  if (id.includes("shield") || id.includes("guard") || id.includes("halo") || id.includes("backpack") || id.includes("apology") || id.includes("triage") || id.includes("toolkit") || id.includes("bodyguard") || id.includes("signal") || id.includes("baffles") || id.includes("quarantine") || id.includes("grounded") || id.includes("skimmer") || id.includes("countertone")) tags.add("defense");
   if (id.includes("vector") || id.includes("prediction") || id.includes("predicted") || id.includes("railgun")) tags.add("boss");
   if (source === "faction") tags.add("coop");
   if (tags.size === 0) tags.add("weapon");
@@ -1046,8 +1197,15 @@ const UPGRADE_RULE_TEXT: Record<string, string> = {
   recompile_pulse: "+1 Burst revive and +6 max HP. Better recovery after mistakes.",
   treaty_anchor_toolkit: "+32% anchor repair speed and +0.25 pickup range. Stabilize objectives faster.",
   adversarial_boss_notes: "+3 damage and stronger Burst damage. Better boss windows.",
-  rescue_subroutine: "+objective defense and +1 Burst revive. Protect anchors and recover allies."
-  ,
+  rescue_subroutine: "+objective defense and +1 Burst revive. Protect anchors and recover allies.",
+  coolant_baffles: "+22% Cooling hazard mitigation and +8 max HP. Coolant, electric arcs, and vent push hurt less.",
+  server_buoy_synchronizer: "+18% Server Buoy stabilize rate, +objective defense, and +Burst charge. Buoys decay slower when pressure pulls you away.",
+  prompt_leech_quarantine: "Prompt Leeches steal less shard value. Blocked leeches lose HP and your pickup economy stays safer.",
+  grounded_cable_boots: "+0.22 move speed and +14% Cooling hazard mitigation. Cable arcs and vent lanes are easier to cross.",
+  relay_phase_lock: "+14% relay calibration rate, +Burst charge, and longer clear signal windows on Signal Coast.",
+  static_skimmer_net: "Static Skimmers jam less relay progress and take countermeasure damage near active relays.",
+  shoreline_stride: "+0.16 move speed, +6 max HP, and stronger resistance to Signal Coast route-edge decay.",
+  lighthouse_countertone: "Lighthouse pressure grants better Burst tempo, Burst damage, and relay jam resistance.",
   vector_lance: "Primary weapon. Replaces Refusal Shard with a long-range piercing lance.",
   signal_pulse: "Primary weapon. Replaces Refusal Shard with four-way rhythmic pulse shots.",
   context_saw: "Secondary weapon. Orbiting saw shots fire automatically; radius scales with pickup range.",

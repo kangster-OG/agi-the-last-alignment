@@ -4,7 +4,9 @@ import type { Game } from "../core/Game";
 import type { GameState } from "../core/StateMachine";
 import { clearAllLayers } from "../render/layers";
 import { SYSTEM_MESSAGES } from "../content/uiText";
-import { NEXT_CONTENT_TARGET } from "../roguelite/nextContentTarget";
+import { nextContentTargetForProgress } from "../roguelite/nextContentTarget";
+import { campaignRouteSummary } from "../roguelite/campaignRoute";
+import { campaignLedgerForProgress } from "../roguelite/campaignMilestones";
 import { drawFieldBackdrop, drawFieldPanel, drawToken, fieldKit, fieldText } from "./fieldKit";
 
 export interface RunSummary {
@@ -16,6 +18,13 @@ export interface RunSummary {
   upgrades: string[];
   upgradeIds?: string[];
   completed: boolean;
+}
+
+function summaryPatchLine(upgrades: string[]): string {
+  if (upgrades.length === 0) return "PATCHES: none";
+  const visible = upgrades.slice(0, 4).join(", ");
+  const extra = upgrades.length > 4 ? `, +${upgrades.length - 4} more` : "";
+  return `PATCHES ${upgrades.length}: ${visible}${extra}`;
 }
 
 export class SummaryState implements GameState {
@@ -73,17 +82,24 @@ export class SummaryState implements GameState {
     game.layers.hud.addChild(title);
 
     const memory = game.lastRunMemory;
+    const expeditionLine = game.expeditionProgress.active
+      ? `\nExpedition LV ${game.expeditionProgress.level} // Patches ${game.expeditionProgress.chosenUpgradeIds.length} // Pressure ${game.expeditionProgress.powerScore}`
+      : "";
     const carryover = memory
-      ? `RUN MEMORY\nRoute ${memory.routeContractId ?? "unknown"} // Anchors ${memory.objectiveCompleted ?? 0}/${memory.objectiveTotal ?? 0} // Thesis ${memory.thesis ?? "uncommitted"}\nProof Tokens +${memory.proofTokensAwarded ?? 0} => ${memory.proofTokensTotal ?? game.proofTokens}\n${memory.newSecrets?.[0] ? `Secret: ${memory.newSecrets[0].name}` : memory.newMastery?.[0] ? `Mastery: ${memory.newMastery[0].name}` : "Camp has new evidence for the next run."}`
+      ? `RUN MEMORY\nRoute ${memory.routeContractId ?? "unknown"} // ${memory.objectiveUnit ?? "Anchors"} ${memory.objectiveCompleted ?? 0}/${memory.objectiveTotal ?? 0} // Thesis ${memory.thesis ?? "uncommitted"}\nProof Tokens +${memory.proofTokensAwarded ?? 0} => ${memory.proofTokensTotal ?? game.proofTokens}${expeditionLine}\n${memory.newSecrets?.[0] ? `Secret: ${memory.newSecrets[0].name}` : memory.newMastery?.[0] ? `Mastery: ${memory.newMastery[0].name}` : "Camp has new evidence for the next run."}`
       : "RUN MEMORY\nNo carryover recorded.";
-    const nextTarget = this.summary.completed && this.summary.nodeId === "armistice_plaza"
-      ? `\n\nNEXT TARGET\n${NEXT_CONTENT_TARGET.name}: ${NEXT_CONTENT_TARGET.playerPromise}`
+    const target = nextContentTargetForProgress(game.completedNodes);
+    const campaign = campaignRouteSummary(game);
+    const ledger = campaignLedgerForProgress(game.completedNodes);
+    const actLine = ledger.act ? `\n${ledger.act.name}: ${ledger.act.status.toUpperCase()} ${ledger.act.completedMaps.length}/${ledger.act.requiredMaps.length}` : "";
+    const nextTarget = this.summary.completed
+      ? `\n\nCAMPAIGN ROUTE\n${campaign.routeLine}${actLine}\nNEXT TARGET\n${target.name}: ${target.playerPromise}`
       : "";
     drawToken(game.layers.hud, game.width / 2 - 282, game.height / 2 - 144, "KO", "red", false);
     drawToken(game.layers.hud, game.width / 2 - 206, game.height / 2 - 144, "LV", "blue", false);
     drawToken(game.layers.hud, game.width / 2 - 130, game.height / 2 - 144, "PT", "amber", this.summary.completed);
     game.layers.hud.addChild(fieldText(
-      `TIME ${Math.floor(this.summary.seconds)}s     KOs ${this.summary.kills}     LV ${this.summary.level}\nPATCHES: ${this.summary.upgrades.join(", ") || "none"}`,
+      `TIME ${Math.floor(this.summary.seconds)}s     KOs ${this.summary.kills}     LV ${this.summary.level}\n${summaryPatchLine(this.summary.upgrades)}`,
       game.width / 2 - 284,
       game.height / 2 - 96,
       { size: 13, fill: fieldKit.text, width: 568, align: "center", lineHeight: 18 }
@@ -97,7 +113,7 @@ export class SummaryState implements GameState {
     game.layers.hud.addChild(fieldText(
       this.summary.completed ? "Enter: Alignment Grid  C: Last Alignment Camp" : "R: retry  Enter: Alignment Grid  C: Camp",
       game.width / 2 - 284,
-      game.height / 2 + 198,
+      game.height - 82,
       { size: 14, fill: "#72eadc", width: 568, align: "center" }
     ));
   }

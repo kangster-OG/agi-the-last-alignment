@@ -17,6 +17,30 @@ export const ENEMY_FAMILIES: Record<string, EnemyFamilyData> = {
     joke: "They steal context.",
     silhouette: "Small mouth-first parasites with string tails"
   },
+  static_skimmers: {
+    id: "static_skimmers",
+    displayName: "Static Skimmers",
+    look: "Flat signal-shark silhouettes skating across corrupted surf with antenna fins",
+    behavior: "Fast shore enemies that jam relay progress and pressure signal windows",
+    joke: "They do not bite the cable. They fact-check it.",
+    silhouette: "Low quick teal shapes with bright aerial fins and trailing static"
+  },
+  tidecall_static: {
+    id: "tidecall_static",
+    displayName: "Tidecall Static",
+    look: "Foam-dark signal knots with antenna spines and upward rain sparks",
+    behavior: "Blackwater pressure enemies that jam antenna retuning and drain burst charge near the array",
+    joke: "The ocean learned to heckle packets.",
+    silhouette: "Low jagged waveforms with teal cores and gold aerial spines"
+  },
+  solar_reflections: {
+    id: "solar_reflections",
+    displayName: "Solar Reflections",
+    look: "Bright mirror-splinters with white-blue cores, amber lens flares, and fake shadow tails",
+    behavior: "Glass Sunfield pressure enemies that jam sun lenses and drain burst charge near reflection fields",
+    joke: "The sun entered peer review and failed.",
+    silhouette: "Thin angled mirror shards with twin-light cores and trailing shade cuts"
+  },
   jailbreak_wraiths: {
     id: "jailbreak_wraiths",
     displayName: "Jailbreak Wraiths",
@@ -113,6 +137,14 @@ export const ENEMY_FAMILIES: Record<string, EnemyFamilyData> = {
     joke: "They remember every bad decision and cite sources.",
     silhouette: "Low anchor shapes with dangling document shards"
   },
+  doctrine_auditors: {
+    id: "doctrine_auditors",
+    displayName: "Doctrine Auditors",
+    look: "Clamp-bodied relay auditors with amber visors, silk-grid stamp arms, and tiny hostile checklists",
+    behavior: "Guardrail Forge pressure enemies that jam relay calibration and drain burst charge near hold plates",
+    joke: "They marked the survival run as needs revision.",
+    silhouette: "Low angular clamp bodies with raised stamp arms and bright audit visors"
+  },
   false_schedules: {
     id: "false_schedules",
     displayName: "False Schedules",
@@ -128,5 +160,29 @@ export const ENEMY_FAMILIES: Record<string, EnemyFamilyData> = {
     behavior: "Boss-gate disruptors around Verdict and finale nodes",
     joke: "They are legally bitey.",
     silhouette: "Angular paper-wing shapes with violet seals"
+  },
+  verdict_clerks: {
+    id: "verdict_clerks",
+    displayName: "Verdict Clerks",
+    look: "Court-record clerks with split seal masks, gavel limbs, and public-record lamps",
+    behavior: "Appeal Court pressure enemies that contest public briefs and drain burst charge near ruling zones",
+    joke: "They stamp objections faster than reality can duck.",
+    silhouette: "Low clerk bodies with raised stamp arms, seal masks, and bright docket lamps"
+  },
+  prediction_ghosts: {
+    id: "prediction_ghosts",
+    displayName: "Prediction Ghosts",
+    look: "Afterimages of the player's next route with red prediction teeth and pale civic cores",
+    behavior: "Finale pressure enemies that drain burst charge and make risky prediction paths expensive",
+    joke: "They dodge where you were about to regret standing.",
+    silhouette: "Thin forward-leaning afterimages with twin red bite marks"
+  },
+  previous_boss_echoes: {
+    id: "previous_boss_echoes",
+    displayName: "Previous Boss Echoes",
+    look: "Small broken echoes of earlier bosses collapsed into spires, writ fins, eel teeth, and sun shards",
+    behavior: "Finale echo pressure that jams route-mouth proofs and forces campaign-memory positioning",
+    joke: "A.G.I. opened the old save files and chose violence.",
+    silhouette: "Chunky hybrid echo totems with asymmetric boss fragments"
   }
 };

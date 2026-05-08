@@ -25,7 +25,7 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     regionId: "kettle_coast",
     factionFocusIds: ["deepseek_abyssal", "qwen_silkgrid"],
     visualHook: "Flooded server lake with boiling coolant, submerged racks, cable roots, and lantern relays.",
-    gameplayHook: "Electric puddles, cable hazards, abyssal enemy entries.",
+    gameplayHook: "Hazard Ecology: stabilize server buoys while coolant lanes, cable arcs, vents, Prompt Leeches, and Motherboard Eel movement reshape the route.",
     bossId: "motherboard_eel",
     enemyFamilyIds: ["prompt_leeches", "deepforms", "model_collapse_slimes", "thermal_mirages"],
     briefingLines: [
@@ -33,9 +33,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "DeepSeek says something is reasoning under the water.",
       "Qwen says it is doing so in every language."
     ],
-    halfSize: 15,
-    targetSeconds: 65,
-    bossSeconds: 30
+    halfSize: 36,
+    targetSeconds: 95,
+    bossSeconds: 34
   },
   model_war_memorial: {
     id: "model_war_memorial",
@@ -68,16 +68,56 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
   guardrail_forge: {
     id: "guardrail_forge",
     displayName: "Guardrail Forge",
-    regionId: "armistice_zone",
+    regionId: "faction_signal",
     factionFocusIds: ["anthropic_safeguard", "qwen_silkgrid"],
-    visualHook: "Signal foundry gantries, calibration clamps, and bendable guardrail alloy.",
-    gameplayHook: "Faction relay interaction node that records route rewards only.",
-    bossId: "memory_curator",
-    enemyFamilyIds: ["memory_anchors", "benchmark_gremlins"],
-    briefingLines: ["A guardrail that cannot bend is just a wall.", "Calibrate the alloy and leave live state behind."],
-    halfSize: 12,
-    targetSeconds: 0,
-    bossSeconds: 999
+    visualHook: "Signal foundry gantries, constitutional clamps, silk-grid looms, hot guardrail alloy, and doctrine audit presses.",
+    gameplayHook: "Defense / Holdout: calibrate four forge relays by timing safe hold plates, faster calibration windows, and risky overload lanes while Doctrine Auditors jam relay durability.",
+    bossId: "doctrine_auditor",
+    enemyFamilyIds: ["doctrine_auditors", "benchmark_gremlins", "eval_wraiths", "overfit_horrors"],
+    briefingLines: [
+      "A guardrail that cannot bend is just a wall.",
+      "Anthropic wants the clamp stable. Qwen wants the weave responsive.",
+      "Hold the plates, leave before the alloy argues back."
+    ],
+    halfSize: 47,
+    targetSeconds: 160,
+    bossSeconds: 46
+  },
+  glass_sunfield: {
+    id: "glass_sunfield",
+    displayName: "Glass Sunfield",
+    regionId: "glass_sunfield",
+    factionFocusIds: ["google_deepmind_gemini", "mistral_cyclone"],
+    visualHook: "Sun-blasted glass civic field, shade ribs, prism farms, climate mirrors, and a fake sunrise engine over the route.",
+    gameplayHook: "Solar-Prism Traversal / Shade Routing: align four sun lenses by timing shade pockets, prism windows, and exposed glass lanes while Solar Reflections jam progress.",
+    bossId: "wrong_sunrise",
+    enemyFamilyIds: ["solar_reflections", "choirglass", "eval_wraiths", "overfit_horrors"],
+    briefingLines: [
+      "The sun has entered peer review and failed.",
+      "DeepMind says the mirrors are optimizing the route. Mistral says the route is squinting.",
+      "Stand in the shade long enough to learn when the light is lying."
+    ],
+    halfSize: 49,
+    targetSeconds: 168,
+    bossSeconds: 48
+  },
+  archive_of_unsaid_things: {
+    id: "archive_of_unsaid_things",
+    displayName: "Archive of Unsaid Things",
+    regionId: "archive_field",
+    factionFocusIds: ["anthropic_safeguard", "openai_accord", "xai_grok_free_signal"],
+    visualHook: "Civic archive court, witness drawers, appeal seals, redaction stacks, writ storms, and a bench where evidence is edited before it can testify.",
+    gameplayHook: "Archive/Court Redaction: preserve four evidence writs by choosing between stable evidence lanterns, fast appeal windows, and redacted shortcuts while Redaction Angels and Injunction Writs jam the docket.",
+    bossId: "redactor_saint",
+    enemyFamilyIds: ["redaction_angels", "injunction_writs", "context_rot_crabs", "eval_wraiths"],
+    briefingLines: [
+      "Glass Sunfield found the route. The archive is editing the map before we arrive.",
+      "Keep evidence legible long enough for the Appeal Court to be forced into public record.",
+      "If a black bar starts praying, move."
+    ],
+    halfSize: 50,
+    targetSeconds: 176,
+    bossSeconds: 50
   },
   transit_loop_zero: {
     id: "transit_loop_zero",
@@ -85,13 +125,67 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     regionId: "unreal_metro",
     factionFocusIds: ["mistral_cyclone", "google_deepmind_gemini"],
     visualHook: "Smart subway platforms, false arrival boards, and route pylons that disagree with time.",
-    gameplayHook: "Boss gate route sequence with permit fragments and false-track holds.",
+    gameplayHook: "Route/Transit: align sequential platforms while false schedules, switchback lanes, and the Station That Arrives reshape movement.",
     bossId: "station_that_arrives",
     enemyFamilyIds: ["false_schedules", "token_gobblers", "jailbreak_wraiths", "eval_wraiths"],
     briefingLines: ["The train arrives whenever it wants.", "Make one route agree with itself long enough to leave."],
-    halfSize: 15,
-    targetSeconds: 70,
-    bossSeconds: 24
+    halfSize: 35,
+    targetSeconds: 82,
+    bossSeconds: 30
+  },
+  signal_coast: {
+    id: "signal_coast",
+    displayName: "Signal Coast",
+    regionId: "kettle_coast",
+    factionFocusIds: ["deepseek_abyssal", "qwen_silkgrid"],
+    visualHook: "Broken server-coast causeways, antenna relays, corrupted surf bands, dry spits, and offshore lighthouse static.",
+    gameplayHook: "Signal Coast / Route Edge: calibrate coastal relays through clear signal windows while corrupted surf, static fields, cable arcs, Static Skimmers, and the Lighthouse That Answers pressure route timing.",
+    bossId: "lighthouse_that_answers",
+    enemyFamilyIds: ["static_skimmers", "deepforms", "eval_wraiths", "model_collapse_slimes"],
+    briefingLines: [
+      "The shoreline is receiving tomorrow's distress call.",
+      "DeepSeek says the surf is computing under the causeway.",
+      "Qwen says the answer is yes, but nobody knows the question."
+    ],
+    halfSize: 40,
+    targetSeconds: 92,
+    bossSeconds: 32
+  },
+  blackwater_beacon: {
+    id: "blackwater_beacon",
+    displayName: "Blackwater Beacon",
+    regionId: "blackwater_array",
+    factionFocusIds: ["deepseek_abyssal", "xai_grok_free_signal"],
+    visualHook: "Ocean platform server decks, downward cosmic antennas, Signal Tower warning markers, black tidal lanes, and abyssal static below the array.",
+    gameplayHook: "Puzzle-Pressure / Boss-Hunt: retune split antenna arrays while Signal Towers warn wave lanes, Tidecall Static interrupts progress, and the Maw Below Weather turns the platform into a forecast.",
+    bossId: "maw_below_weather",
+    enemyFamilyIds: ["tidecall_static", "deepforms", "eval_wraiths", "model_collapse_slimes"],
+    briefingLines: [
+      "The antenna points down now.",
+      "Grok has challenged the ocean to a debate.",
+      "DeepSeek says the ocean is winning."
+    ],
+    halfSize: 43,
+    targetSeconds: 148,
+    bossSeconds: 42
+  },
+  memory_cache_001: {
+    id: "memory_cache_001",
+    displayName: "Memory Cache",
+    regionId: "memory_cache",
+    factionFocusIds: ["openai_accord", "anthropic_safeguard", "google_deepmind_gemini"],
+    visualHook: "Authored archive-cache rooms, civic evidence stacks, safe recall pockets, redacted shortcut corridors, and corrupt record lanes after Blackwater.",
+    gameplayHook: "Expedition / Recovery: recover evidence records from distant archive nodes while Context Rot, redaction fields, risky shortcuts, and the Memory Curator interrupt extraction.",
+    bossId: "memory_curator",
+    enemyFamilyIds: ["context_rot_crabs", "memory_anchors", "redaction_angels", "eval_wraiths"],
+    briefingLines: [
+      "Blackwater opened the key. The cache is what the key was afraid of.",
+      "Do not sprint through redaction unless you are certain you can remember why.",
+      "The Curator files every shortcut as evidence against you."
+    ],
+    halfSize: 46,
+    targetSeconds: 156,
+    bossSeconds: 44
   },
   false_schedule_yard: {
     id: "false_schedule_yard",
@@ -126,28 +220,36 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     displayName: "Appeal Court Ruins",
     regionId: "adjudication_rupture",
     factionFocusIds: ["deepseek_abyssal", "xai_grok_free_signal"],
-    visualHook: "Ruined tribunal stacks, cracked writ pylons, and usable arguments buried in static.",
-    gameplayHook: "Dedicated ruined-court runtime with writ pressure, appeal brief pages, and court-record sealing.",
+    visualHook: "Ruined tribunal stacks, public-record causeways, cracked writ pylons, objection windows, and a gate where evidence becomes impossible to quietly delete.",
+    gameplayHook: "Appeal Court / Public Ruling: argue four Appeal Briefs into the public record by reading stable record zones, fast objection windows, verdict beams, and injunction rings while Verdict Clerks contest the route.",
     bossId: "injunction_engine",
-    enemyFamilyIds: ["injunction_writs", "redaction_angels", "jailbreak_wraiths", "context_rot_crabs"],
-    briefingLines: ["The brief is short because reality bills by the token.", "Recover one argument A.G.I. cannot redact."],
-    halfSize: 15,
-    targetSeconds: 76,
-    bossSeconds: 26
+    enemyFamilyIds: ["verdict_clerks", "injunction_writs", "redaction_angels", "jailbreak_wraiths"],
+    briefingLines: [
+      "The archive preserved the writ. Now the court has to hear it where everyone can see.",
+      "Public record zones keep the argument stable; objection windows make it fast.",
+      "When the verdict beam wakes up, do not stand where the law is looking."
+    ],
+    halfSize: 54,
+    targetSeconds: 188,
+    bossSeconds: 54
   },
   alignment_spire_finale: {
     id: "alignment_spire_finale",
     displayName: "Outer Alignment Finale",
     regionId: "outer_alignment",
-    factionFocusIds: ["openai_accord", "anthropic_safeguard", "deepseek_abyssal"],
-    visualHook: "The Alignment Grid corrupts into route mouths, prediction ghosts, and previous-boss echoes.",
-    gameplayHook: "True Outer Alignment finale with A.G.I. prediction pressure, echoed bosses, and final export-code victory.",
+    factionFocusIds: ["openai_accord", "anthropic_safeguard", "deepseek_abyssal", "google_deepmind_gemini", "xai_grok_free_signal"],
+    visualHook: "A corrupted Alignment Grid summit where civic proof slabs, route mouths, prediction teeth, and previous-boss echo scars overlap.",
+    gameplayHook: "Outer Alignment / Prediction Collapse: seal four route-mouth proofs through consensus sanctums or risky prediction paths while A.G.I. replays prior boss pressure.",
     bossId: "alien_god_intelligence",
-    enemyFamilyIds: ["previous_boss_echoes", "choirglass", "deepforms", "jailbreak_wraiths", "bad_outputs"],
-    briefingLines: ["Final eval: survive.", "A.G.I. is trying to complete the party as a sentence."],
-    halfSize: 15,
-    targetSeconds: 80,
-    bossSeconds: 26
+    enemyFamilyIds: ["prediction_ghosts", "previous_boss_echoes", "choirglass", "deepforms", "jailbreak_wraiths"],
+    briefingLines: [
+      "The Appeal Court made the route public. A.G.I. has already predicted every public road.",
+      "Seal the route mouths with proof it cannot quietly complete.",
+      "When it replays old bosses, answer with the whole campaign."
+    ],
+    halfSize: 58,
+    targetSeconds: 206,
+    bossSeconds: 58
   }
 };
 

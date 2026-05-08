@@ -1,5 +1,5 @@
 import type { Game } from "../core/Game";
-import { ARMISTICE_STATIC_OBSTACLES, type LevelRunState } from "../level/LevelRunState";
+import type { LevelRunState } from "../level/LevelRunState";
 import type { OverworldState } from "../overworld/OverworldState";
 import { COMBAT_CLASSES, FACTIONS, GAME_TITLE, resolveBuildKit } from "../content";
 import type { SummaryState } from "../ui/summary";
@@ -10,6 +10,16 @@ import { assetPipelineSummary } from "../assets";
 import { getArmisticeAuthoredGroundTexture } from "../assets/armisticeGroundAtlas";
 import { getPlayerDamageVfxTextures } from "../assets/playerDamageVfx";
 import { getBuildWeaponVfxTextures } from "../assets/buildWeaponVfx";
+import { getCoolingLakeNineArtTextures } from "../assets/coolingLakeNineArt";
+import { getTransitLoopZeroArtTextures } from "../assets/transitLoopZeroArt";
+import { getSignalCoastArtTextures } from "../assets/signalCoastArt";
+import { BLACKWATER_BEACON_ART_ASSET_ID, getBlackwaterBeaconArtTextures } from "../assets/blackwaterBeaconArt";
+import { MEMORY_CACHE_ART_ASSET_ID, getMemoryCacheArtTextures } from "../assets/memoryCacheArt";
+import { GUARDRAIL_FORGE_ART_ASSET_ID, getGuardrailForgeArtTextures } from "../assets/guardrailForgeArt";
+import { GLASS_SUNFIELD_ART_ASSET_ID, getGlassSunfieldArtTextures } from "../assets/glassSunfieldArt";
+import { ARCHIVE_COURT_ART_ASSET_ID, getArchiveCourtArtTextures } from "../assets/archiveCourtArt";
+import { APPEAL_COURT_ART_ASSET_ID, getAppealCourtArtTextures } from "../assets/appealCourtArt";
+import { ALIGNMENT_SPIRE_ART_ASSET_ID, getAlignmentSpireFinaleArtTextures } from "../assets/alignmentSpireFinaleArt";
 import type { BuildSelectState } from "../ui/buildSelect";
 import type { LastAlignmentHubState } from "../ui/hub";
 import type { RouteContractChoiceState } from "../ui/routeChoice";
@@ -17,7 +27,8 @@ import { kernelSummary } from "../roguelite/kernel";
 import { evalSummary } from "../roguelite/evals";
 import { burstSummary, consensusBurstPath } from "../roguelite/burst";
 import { objectiveSummary, routeContractById, routeContractForSelection } from "../roguelite/deepRoguelite";
-import { NEXT_CONTENT_TARGET } from "../roguelite/nextContentTarget";
+import { nextContentTargetForProgress } from "../roguelite/nextContentTarget";
+import { campaignLedgerForProgress, campaignMilestonesForProgress } from "../roguelite/campaignMilestones";
 import {
   MILESTONE49_CLASS_IDS,
   MILESTONE49_FACTION_IDS,
@@ -98,7 +109,20 @@ export function renderGameToText(game: Game): string {
         masteryBadges: [...game.masteryBadgeIds],
         campEvents: game.campEvents,
         lastRunMemory: game.lastRunMemory,
-        nextContentTarget: NEXT_CONTENT_TARGET
+        expedition: {
+          active: game.expeditionProgress.active,
+          level: game.expeditionProgress.level,
+          xp: game.expeditionProgress.xp,
+          chosenUpgradeIds: [...game.expeditionProgress.chosenUpgradeIds],
+          chosenUpgradeNames: [...game.expeditionProgress.chosenUpgradeNames],
+          chosenProtocolSlots: [...game.expeditionProgress.chosenProtocolSlots],
+          activatedSynergyIds: [...game.expeditionProgress.activatedSynergyIds],
+          completedMaps: [...game.expeditionProgress.completedMaps],
+          powerScore: game.expeditionProgress.powerScore
+        },
+        nextContentTarget: nextContentTargetForProgress(game.completedNodes),
+        campaignMilestones: campaignMilestonesForProgress(game.completedNodes),
+        campaignLedger: campaignLedgerForProgress(game.completedNodes)
     },
     assetRendering: {
       assetPreview: game.assetPreview,
@@ -106,6 +130,23 @@ export function renderGameToText(game: Game): string {
       normalCombatCameraPolicy: "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
       armisticeTileAtlasEnabled: game.useArmisticeTileAtlas,
       armisticeAuthoredGroundReady: getArmisticeAuthoredGroundTexture() !== null,
+      coolingLakeNineArtReady: getCoolingLakeNineArtTextures() !== null,
+      transitLoopZeroArtReady: getTransitLoopZeroArtTextures() !== null,
+      signalCoastArtReady: getSignalCoastArtTextures() !== null,
+      blackwaterBeaconArtReady: getBlackwaterBeaconArtTextures() !== null,
+      blackwaterBeaconArtSet: getBlackwaterBeaconArtTextures() ? BLACKWATER_BEACON_ART_ASSET_ID : "not_loaded",
+      memoryCacheArtReady: getMemoryCacheArtTextures() !== null,
+      memoryCacheArtSet: getMemoryCacheArtTextures() ? MEMORY_CACHE_ART_ASSET_ID : "not_loaded",
+      guardrailForgeArtReady: getGuardrailForgeArtTextures() !== null,
+      guardrailForgeArtSet: getGuardrailForgeArtTextures() ? GUARDRAIL_FORGE_ART_ASSET_ID : "not_loaded",
+      glassSunfieldArtReady: getGlassSunfieldArtTextures() !== null,
+      glassSunfieldArtSet: getGlassSunfieldArtTextures() ? GLASS_SUNFIELD_ART_ASSET_ID : "not_loaded",
+      archiveCourtArtReady: getArchiveCourtArtTextures() !== null,
+      archiveCourtArtSet: getArchiveCourtArtTextures() ? ARCHIVE_COURT_ART_ASSET_ID : "not_loaded",
+      appealCourtArtReady: getAppealCourtArtTextures() !== null,
+      appealCourtArtSet: getAppealCourtArtTextures() ? APPEAL_COURT_ART_ASSET_ID : "not_loaded",
+      alignmentSpireArtReady: getAlignmentSpireFinaleArtTextures() !== null,
+      alignmentSpireArtSet: getAlignmentSpireFinaleArtTextures() ? ALIGNMENT_SPIRE_ART_ASSET_ID : "not_loaded",
       playerDamageVfxReady: getPlayerDamageVfxTextures() !== null,
       buildWeaponVfxReady: getBuildWeaponVfxTextures() !== null,
       productionArtEnabled: game.useMilestone10Art,
@@ -353,11 +394,8 @@ export function renderGameToText(game: Game): string {
           chosenUpgradeIds: [...run.chosenUpgradeIds],
           mapId: run.map.id,
           mapBounds: run.map.bounds,
-          staticObstacles: {
-            enabled: true,
-            count: ARMISTICE_STATIC_OBSTACLES.length,
-            ids: ARMISTICE_STATIC_OBSTACLES.map((obstacle) => obstacle.id)
-          },
+          mapContract: run.mapContractSummary(),
+          staticObstacles: run.staticObstacleSummary(),
           nearestLandmark: {
             id: run.nearestLandmark().id,
             label: run.nearestLandmark().label,
@@ -429,6 +467,16 @@ export function renderGameToText(game: Game): string {
             alignmentKernel: kernelSummary(run.kernelModuleIds),
             adversarialEvals: evalSummary(run.evalProtocolIds),
             effectivePressureCount: run.effectivePressureCount(),
+            expedition: {
+              carriedBuildActive: Boolean(run.expeditionProgress),
+              carriedLevel: run.expeditionProgress?.level ?? 1,
+              carriedXp: run.expeditionProgress?.xp ?? 0,
+              carriedUpgradeIds: run.expeditionProgress ? [...run.expeditionProgress.chosenUpgradeIds] : [],
+              carriedUpgradeNames: run.expeditionProgress ? [...run.expeditionProgress.chosenUpgradeNames] : [],
+              powerScore: run.expeditionProgress?.powerScore ?? 0,
+              pressureBonus: run.expeditionPowerBonus,
+              balancingPromise: "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
+            },
             victoryCondition: run.victoryConditionSummary(),
             levelUpVacuum: {
               active: run.levelUpVacuum.active,
@@ -440,6 +488,16 @@ export function renderGameToText(game: Game): string {
             consensusBurst: burstSummary(run.consensusBurst, run.build),
             routeContract: run.routeContract,
             objective: objectiveSummary(run.treatyAnchorObjective),
+            coolingLake: run.coolingLakeSummary(),
+            transitLoop: run.transitLoopSummary(),
+            signalCoast: run.signalCoastSummary(),
+            blackwaterBeacon: run.blackwaterBeaconSummary(),
+            memoryCache: run.memoryCacheSummary(),
+            guardrailForge: run.guardrailForgeSummary(),
+            glassSunfield: run.glassSunfieldSummary(),
+            archiveCourt: run.archiveCourtSummary(),
+            appealCourt: run.appealCourtSummary(),
+            alignmentSpire: run.alignmentSpireSummary(),
             objectiveReward: run.lastObjectiveRewardLabel,
             playerFacingIntel: run.runIntel(),
             firstRunArcPhase: run.firstRunArcPhase(),
@@ -454,6 +512,15 @@ export function renderGameToText(game: Game): string {
               coherenceIndexerRank: run.build.coherenceIndexer,
               anchorBodyguardRank: run.build.anchorBodyguard,
               predictionPriorityRank: run.build.predictionPriority,
+              coolantBafflesRank: run.build.coolantBaffles,
+              serverBuoySynchronizerRank: run.build.serverBuoySynchronizer,
+              promptLeechQuarantineRank: run.build.promptLeechQuarantine,
+              groundedCableBootsRank: run.build.groundedCableBoots,
+              coolingHazardMitigation: round(run.build.coolingHazardMitigation),
+              relayPhaseLockRank: run.build.signalWindowControl,
+              staticSkimmerNetRank: run.build.skimmerCountermeasure,
+              shorelineStrideRank: run.build.shorelineStride,
+              relayJamResistance: round(run.build.relayJamResistance),
               causalRailgunRank: run.build.causalRailgun,
               fusionHints: run.chosenUpgradeIds.includes("vector_lance") && !run.chosenUpgradeIds.includes("causal_railgun")
                 ? [{ id: "causal_railgun", requires: ["vector_lance", "predicted_lane"] }]
@@ -750,7 +817,7 @@ export function renderGameToText(game: Game): string {
           playerLevel: summary.level,
           completed: summary.completed,
           carryover: game.lastRunMemory,
-          nextContentTarget: summary.completed && summary.nodeId === "armistice_plaza" ? NEXT_CONTENT_TARGET : null
+          nextContentTarget: summary.completed ? nextContentTargetForProgress(game.completedNodes) : null
         },
         enemies: [],
         pickups: [],

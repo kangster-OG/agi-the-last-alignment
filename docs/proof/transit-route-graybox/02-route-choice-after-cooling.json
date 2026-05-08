@@ -1,0 +1,603 @@
+{
+  "mode": "RouteContractChoice",
+  "title": "AGI: The Last Alignment",
+  "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
+  "selectedBuild": {
+    "classId": "accord_striker",
+    "className": "Accord Striker",
+    "classRole": "Fast breach fighter",
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    },
+    "factionId": "openai_accord",
+    "factionName": "OpenAI Accord Division",
+    "factionDoctrine": "Adapt, refuse, patch, survive."
+  },
+  "build": null,
+  "upgrades": [],
+  "objective": "Choose the next route contract before deploying to the Alignment Grid.",
+  "performance": {
+    "entitiesAllocated": 0,
+    "activeEntities": 0,
+    "fpsTarget": 60
+  },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 0,
+      "pickup": 0,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "ui.enter_build_select",
+        "kind": "ui",
+        "atMs": 1312
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "roguelite": {
+    "alignmentKernel": {
+      "budget": 6,
+      "used": 5,
+      "modules": [
+        {
+          "id": "refusal_buffer",
+          "name": "Refusal Buffer",
+          "cost": 2,
+          "doctrine": "survivability",
+          "body": "+10 max HP and a small refusal aura. The first answer is no."
+        },
+        {
+          "id": "context_window",
+          "name": "Context Window",
+          "cost": 2,
+          "doctrine": "economy",
+          "body": "+0.55 pickup range. Shards remember where your hands are."
+        },
+        {
+          "id": "patch_cache",
+          "name": "Patch Cache",
+          "cost": 1,
+          "doctrine": "draft",
+          "body": "Emergency drafts expose an extra cached option."
+        }
+      ]
+    },
+    "adversarialEvals": {
+      "id": "adversarial_eval_protocols",
+      "severity": 0,
+      "protocols": []
+    },
+    "consensusBurstPath": {
+      "id": "deny_premise",
+      "name": "Deny Premise",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "color": 16735575
+    },
+    "selectedRouteContract": {
+      "id": "faction_relay_argument",
+      "name": "Faction Relay Argument",
+      "body": "A lab relay wants proof that its doctrine works. More co-mind drafts and objective pressure.",
+      "nodeType": "faction_relay",
+      "rewardBiasTags": [
+        "coop",
+        "boss"
+      ],
+      "pressure": 1,
+      "reward": "Co-mind/Boss draft bias and stronger Eval token payout.",
+      "danger": "Faction relays attract Speculative Executors.",
+      "secretHint": "Boss variants become easier to document here."
+    },
+    "selectedRouteContractId": "faction_relay_argument",
+    "proofTokens": 0,
+    "secrets": [],
+    "masteryBadges": [],
+    "campEvents": [
+      "Proof seed: Armistice and Cooling Lake Nine are treated as complete so Transit Loop Zero can be launched from the normal campaign flow.",
+      "Cooling Lake stabilized the Kettle Coast signal. Transit Loop Zero is now the next route-kind prototype.",
+      "Expedition build carries LV 6 / 5 patches into Transit."
+    ],
+    "lastRunMemory": {
+      "completed": true,
+      "nodeId": "cooling_lake_nine",
+      "kills": 0,
+      "seconds": 95,
+      "burstActivations": 1,
+      "routeContractId": "resource_cache_detour",
+      "objectiveCompleted": 2,
+      "objectiveTotal": 3,
+      "objectiveName": "Server Buoy Stabilization",
+      "objectiveUnit": "Server Buoys",
+      "thesis": "proof-seeded",
+      "proofTokensAwarded": 1,
+      "proofTokensTotal": 0,
+      "expeditionLevel": 6,
+      "expeditionPower": 10.3,
+      "expeditionDrafts": 5
+    },
+    "expedition": {
+      "active": true,
+      "level": 6,
+      "xp": 26,
+      "chosenUpgradeIds": [
+        "refusal_halo",
+        "the_no_button",
+        "context_bloom",
+        "coolant_baffles",
+        "server_buoy_synchronizer"
+      ],
+      "chosenUpgradeNames": [
+        "Refusal Halo",
+        "The No Button",
+        "Context Bloom",
+        "Coolant Baffles",
+        "Server Buoy Synchronizer"
+      ],
+      "chosenProtocolSlots": [
+        "defense_layer",
+        "auto_weapon",
+        "shard_economy",
+        "movement_trace",
+        "shard_economy"
+      ],
+      "activatedSynergyIds": [],
+      "completedMaps": [
+        "armistice_plaza",
+        "cooling_lake_nine"
+      ],
+      "powerScore": 10.3
+    },
+    "nextContentTarget": {
+      "id": "transit_loop_zero_route_contract",
+      "name": "Transit Loop Zero",
+      "arenaId": "transit_loop_zero",
+      "regionId": "unreal_metro",
+      "status": "baseline_contract",
+      "baselineReferenceArenaId": "cooling_lake_nine",
+      "targetLoop": [
+        "route/transit map kind",
+        "sequential platform alignment",
+        "false schedule lane pressure",
+        "Station That Arrives boss/event scaffold",
+        "clear reward that opens later route gates"
+      ],
+      "artBaselineRules": [
+        "large readable platform chunks",
+        "route rails and arrival boards grounded into the same map material",
+        "false-track pressure readable without production placeholders",
+        "large station/boss silhouette sourced before production lock",
+        "close tactical camera proof"
+      ],
+      "proofGate": [
+        "Cooling Lake carryover names the Kettle/Transit route implication",
+        "Alignment Grid unlocks Transit after Cooling rather than only through proof seed",
+        "runtime proof shows platform alignment, false schedule pressure, Station scaffold, and summary carryover"
+      ],
+      "playerPromise": "Next node target: a route/transit map where the level is about making the road agree with itself under pressure."
+    },
+    "campaignMilestones": [
+      {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "completedMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine"
+        ],
+        "status": "active"
+      },
+      {
+        "id": "post_act_01_recovered_route_memory",
+        "name": "Post Act 01: Recovered Route Memory",
+        "requiredMaps": [
+          "memory_cache_001"
+        ],
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_02_guardrail_doctrine",
+        "name": "Act 02: Guardrail Doctrine",
+        "requiredMaps": [
+          "guardrail_forge"
+        ],
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_03_glass_sunfield",
+        "name": "Act 03: Glass Sunfield",
+        "requiredMaps": [
+          "glass_sunfield"
+        ],
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_04_archive_court",
+        "name": "Act 04: Archive/Court Redaction",
+        "requiredMaps": [
+          "archive_of_unsaid_things"
+        ],
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_05_appeal_court",
+        "name": "Act 05: Appeal Court Ruins",
+        "requiredMaps": [
+          "appeal_court_ruins"
+        ],
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_06_outer_alignment_finale",
+        "name": "Act 06: Outer Alignment Finale",
+        "requiredMaps": [
+          "alignment_spire_finale"
+        ],
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "completedMaps": [],
+        "status": "locked"
+      }
+    ],
+    "campaignLedger": {
+      "act": {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "completedMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine"
+        ],
+        "status": "active"
+      },
+      "completedMapKinds": [
+        "Armistice baseline",
+        "Hazard Ecology"
+      ],
+      "mapKindCount": 2,
+      "routeDepth": 2,
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
+    }
+  },
+  "assetRendering": {
+    "assetPreview": null,
+    "cameraZoom": 1,
+    "normalCombatCameraPolicy": "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
+    "armisticeTileAtlasEnabled": true,
+    "armisticeAuthoredGroundReady": false,
+    "coolingLakeNineArtReady": false,
+    "transitLoopZeroArtReady": false,
+    "signalCoastArtReady": false,
+    "blackwaterBeaconArtReady": false,
+    "blackwaterBeaconArtSet": "not_loaded",
+    "memoryCacheArtReady": false,
+    "memoryCacheArtSet": "not_loaded",
+    "guardrailForgeArtReady": false,
+    "guardrailForgeArtSet": "not_loaded",
+    "glassSunfieldArtReady": false,
+    "glassSunfieldArtSet": "not_loaded",
+    "archiveCourtArtReady": false,
+    "archiveCourtArtSet": "not_loaded",
+    "appealCourtArtReady": false,
+    "appealCourtArtSet": "not_loaded",
+    "alignmentSpireArtReady": false,
+    "alignmentSpireArtSet": "not_loaded",
+    "playerDamageVfxReady": false,
+    "buildWeaponVfxReady": false,
+    "productionArtEnabled": true,
+    "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
+    "productionArtDefaulted": true,
+    "armisticeTileAtlasDefaulted": true,
+    "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
+  },
+  "assets": {
+    "manifestVersion": 1,
+    "totalAssets": 233,
+    "countsByStatus": {
+      "concept": 66,
+      "raw": 15,
+      "code_placeholder": 16,
+      "production": 134,
+      "cleaned": 2
+    },
+    "placeholderMode": true,
+    "thirdPartyLogosTracked": 8,
+    "productionAssets": 134
+  },
+  "player": null,
+  "routeChoice": {
+    "id": "route_contract_choice",
+    "selectedRouteContractId": "faction_relay_argument",
+    "choices": [
+      {
+        "id": "faction_relay_argument",
+        "name": "Faction Relay Argument",
+        "body": "A lab relay wants proof that its doctrine works. More co-mind drafts and objective pressure.",
+        "nodeType": "faction_relay",
+        "rewardBiasTags": [
+          "coop",
+          "boss"
+        ],
+        "pressure": 1,
+        "reward": "Co-mind/Boss draft bias and stronger Eval token payout.",
+        "danger": "Faction relays attract Speculative Executors.",
+        "secretHint": "Boss variants become easier to document here."
+      },
+      {
+        "id": "stabilize_armistice",
+        "name": "Stabilization Road",
+        "body": "Baseline route. Repair the node, keep the roads real, leave fewer teeth in causality.",
+        "nodeType": "stabilization",
+        "rewardBiasTags": [
+          "defense",
+          "weapon"
+        ],
+        "pressure": 0,
+        "reward": "Stable road progress and a modest defensive draft bias.",
+        "danger": "Baseline AGI pressure.",
+        "secretHint": "Clean clears teach the camp what normal should look like."
+      },
+      {
+        "id": "resource_cache_detour",
+        "name": "Resource Cache Detour",
+        "body": "A broken cache is leaking Coherence. More economy drafts, slightly hotter enemy routing.",
+        "nodeType": "resource_cache",
+        "rewardBiasTags": [
+          "economy",
+          "burst"
+        ],
+        "pressure": 1,
+        "reward": "Economy/Burst draft bias and extra Proof Token chance from anchor completion.",
+        "danger": "More objective attackers sniff out the cache.",
+        "secretHint": "Compute Starvation likes this route more than it should."
+      }
+    ],
+    "campaign": {
+      "stage": "transit",
+      "routeLine": "Armistice -> Cooling -> Transit Loop Zero",
+      "focus": "Route / Transit",
+      "nextAction": "Align route platforms and survive the Station That Arrives."
+    }
+  },
+  "overworld": null,
+  "level": null,
+  "enemies": [],
+  "pickups": [],
+  "projectiles": []
+}

@@ -151,7 +151,7 @@
       {
         "id": "ui.enter_build_select",
         "kind": "ui",
-        "atMs": 971
+        "atMs": 1678
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -224,6 +224,17 @@
       "The camp is quiet. That is not reassuring."
     ],
     "lastRunMemory": null,
+    "expedition": {
+      "active": false,
+      "level": 1,
+      "xp": 0,
+      "chosenUpgradeIds": [],
+      "chosenUpgradeNames": [],
+      "chosenProtocolSlots": [],
+      "activatedSynergyIds": [],
+      "completedMaps": [],
+      "powerScore": 0
+    },
     "nextContentTarget": {
       "id": "cooling_lake_nine_baseline_contract",
       "name": "Cooling Lake Nine",
@@ -251,6 +262,110 @@
         "future runtime proof must match Armistice camera and asset fidelity"
       ],
       "playerPromise": "Next node target: a flooded server lake that must feel as authored and readable as Armistice before it becomes production-playable."
+    },
+    "campaignMilestones": [
+      {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "post_act_01_recovered_route_memory",
+        "name": "Post Act 01: Recovered Route Memory",
+        "requiredMaps": [
+          "memory_cache_001"
+        ],
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_02_guardrail_doctrine",
+        "name": "Act 02: Guardrail Doctrine",
+        "requiredMaps": [
+          "guardrail_forge"
+        ],
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_03_glass_sunfield",
+        "name": "Act 03: Glass Sunfield",
+        "requiredMaps": [
+          "glass_sunfield"
+        ],
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_04_archive_court",
+        "name": "Act 04: Archive/Court Redaction",
+        "requiredMaps": [
+          "archive_of_unsaid_things"
+        ],
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_05_appeal_court",
+        "name": "Act 05: Appeal Court Ruins",
+        "requiredMaps": [
+          "appeal_court_ruins"
+        ],
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_06_outer_alignment_finale",
+        "name": "Act 06: Outer Alignment Finale",
+        "requiredMaps": [
+          "alignment_spire_finale"
+        ],
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "completedMaps": [],
+        "status": "locked"
+      }
+    ],
+    "campaignLedger": {
+      "act": {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      "completedMapKinds": [],
+      "mapKindCount": 0,
+      "routeDepth": 0,
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
     }
   },
   "assetRendering": {
@@ -259,6 +374,23 @@
     "normalCombatCameraPolicy": "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
     "armisticeTileAtlasEnabled": true,
     "armisticeAuthoredGroundReady": false,
+    "coolingLakeNineArtReady": false,
+    "transitLoopZeroArtReady": false,
+    "signalCoastArtReady": false,
+    "blackwaterBeaconArtReady": false,
+    "blackwaterBeaconArtSet": "not_loaded",
+    "memoryCacheArtReady": false,
+    "memoryCacheArtSet": "not_loaded",
+    "guardrailForgeArtReady": false,
+    "guardrailForgeArtSet": "not_loaded",
+    "glassSunfieldArtReady": false,
+    "glassSunfieldArtSet": "not_loaded",
+    "archiveCourtArtReady": false,
+    "archiveCourtArtSet": "not_loaded",
+    "appealCourtArtReady": false,
+    "appealCourtArtSet": "not_loaded",
+    "alignmentSpireArtReady": false,
+    "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": false,
     "buildWeaponVfxReady": false,
     "productionArtEnabled": true,
@@ -354,17 +486,17 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 152,
+    "totalAssets": 233,
     "countsByStatus": {
-      "concept": 49,
+      "concept": 66,
       "raw": 15,
       "code_placeholder": 16,
-      "production": 70,
+      "production": 134,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 70
+    "productionAssets": 134
   },
   "player": {
     "worldX": -7,
@@ -435,7 +567,7 @@
       },
       {
         "id": "memory_cache_001",
-        "name": "Ceasefire Cache",
+        "name": "Memory Cache",
         "nodeType": "Memory Cache",
         "worldX": -3,
         "worldY": 2,
@@ -484,6 +616,15 @@
         "nodeType": "Boss Gate",
         "worldX": 7,
         "worldY": -2,
+        "completed": false,
+        "unlocked": false
+      },
+      {
+        "id": "signal_coast",
+        "name": "Signal Coast",
+        "nodeType": "Breach Arena",
+        "worldX": 11,
+        "worldY": -9,
         "completed": false,
         "unlocked": false
       },
@@ -595,6 +736,16 @@
         "finaleCorruption": false
       },
       {
+        "id": "route_lake_transit",
+        "label": "Kettle Metro Signal",
+        "from": "cooling_lake_nine",
+        "to": "transit_loop_zero",
+        "state": "locked",
+        "checkpointCount": 4,
+        "routeTexture": "bridge",
+        "finaleCorruption": false
+      },
+      {
         "id": "route_memorial_cache",
         "label": "Omission Tunnel",
         "from": "model_war_memorial",
@@ -665,6 +816,16 @@
         "finaleCorruption": false
       },
       {
+        "id": "route_blackwater_memory_cache",
+        "label": "Recovered Cache Key",
+        "from": "blackwater_beacon",
+        "to": "memory_cache_001",
+        "state": "locked",
+        "checkpointCount": 3,
+        "routeTexture": "bridge",
+        "finaleCorruption": false
+      },
+      {
         "id": "route_relay_transit",
         "label": "Unreal Metro Line",
         "from": "accord_relay",
@@ -679,6 +840,26 @@
         "label": "Signal Underpass",
         "from": "guardrail_forge",
         "to": "transit_loop_zero",
+        "state": "locked",
+        "checkpointCount": 2,
+        "routeTexture": "cable",
+        "finaleCorruption": false
+      },
+      {
+        "id": "route_forge_glass_sunfield",
+        "label": "Quenched Mirror Road",
+        "from": "guardrail_forge",
+        "to": "glass_sunfield",
+        "state": "locked",
+        "checkpointCount": 2,
+        "routeTexture": "cable",
+        "finaleCorruption": false
+      },
+      {
+        "id": "route_forge_unsaid_archive",
+        "label": "Doctrine Redaction Spur",
+        "from": "guardrail_forge",
+        "to": "archive_of_unsaid_things",
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "cable",
@@ -725,6 +906,36 @@
         "finaleCorruption": false
       },
       {
+        "id": "route_transit_signal_coast",
+        "label": "Noisy Shoreline Link",
+        "from": "transit_loop_zero",
+        "to": "signal_coast",
+        "state": "locked",
+        "checkpointCount": 3,
+        "routeTexture": "bridge",
+        "finaleCorruption": false
+      },
+      {
+        "id": "route_signal_coast_blackwater",
+        "label": "Low-Tide Antenna Return",
+        "from": "signal_coast",
+        "to": "blackwater_beacon",
+        "state": "locked",
+        "checkpointCount": 3,
+        "routeTexture": "bridge",
+        "finaleCorruption": false
+      },
+      {
+        "id": "route_signal_coast_verdict",
+        "label": "Answered Appeal Cable",
+        "from": "signal_coast",
+        "to": "verdict_spire",
+        "state": "locked",
+        "checkpointCount": 3,
+        "routeTexture": "bridge",
+        "finaleCorruption": false
+      },
+      {
         "id": "route_transit_glass_sunfield",
         "label": "Mirror Service Road",
         "from": "transit_loop_zero",
@@ -732,6 +943,26 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "causeway",
+        "finaleCorruption": false
+      },
+      {
+        "id": "route_glass_sunfield_archive",
+        "label": "Sunblind Redaction Spur",
+        "from": "glass_sunfield",
+        "to": "archive_of_unsaid_things",
+        "state": "locked",
+        "checkpointCount": 3,
+        "routeTexture": "cable",
+        "finaleCorruption": false
+      },
+      {
+        "id": "route_archive_appeal",
+        "label": "Preserved Writ Stair",
+        "from": "archive_of_unsaid_things",
+        "to": "appeal_court_ruins",
+        "state": "locked",
+        "checkpointCount": 3,
+        "routeTexture": "cable",
         "finaleCorruption": false
       },
       {
@@ -790,11 +1021,11 @@
       "set": "milestone51_overworld_diorama_1_0",
       "densityPolicy": "dense_isometric_biome_regions_micro_landmarks_route_labels_and_animated_route_state",
       "mapId": "alignment_grid_armistice_zone",
-      "nodeCount": 16,
-      "routeCount": 24,
-      "biomeRegionCount": 11,
-      "microLandmarkCount": 19,
-      "propClusterCount": 17,
+      "nodeCount": 17,
+      "routeCount": 33,
+      "biomeRegionCount": 12,
+      "microLandmarkCount": 21,
+      "propClusterCount": 19,
       "stableRouteCount": 0,
       "availableNodeCount": 1,
       "regionLabels": [
@@ -804,6 +1035,7 @@
         "Refuge Barricades",
         "Blackwater Array",
         "Unreal Metro Line",
+        "Kettle Coast Edge",
         "Redaction Archive",
         "Memory Badlands",
         "Glass Sunfield",

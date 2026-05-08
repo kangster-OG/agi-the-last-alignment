@@ -117,11 +117,13 @@ Map kinds to build toward:
 - **Open Survival Districts:** large explorable districts with landmarks, spawn regions, optional objectives, and boss arrival. Armistice Plaza is the baseline.
 - **Hazard Ecology Maps:** the environment is a major enemy. Cooling Lake Nine should use coolant pools, flooded lanes, cable currents, server vents, and temporary safe islands without changing autocombat.
 - **Route / Transit Maps:** platforms, junctions, false paths, moving arrivals, route switches, and path alignment under horde pressure. Transit Loop Zero is the anchor example.
+- **Signal Coast / Route Edge Maps:** shoreline/causeway routes where tide windows, signal relays, static zones, and coastal extraction choices shape movement. Signal Coast is the anchor example.
 - **Defense / Holdout Maps:** defend anchors, server buoys, gates, or relays while deciding when to kite for shards and when to return.
 - **Expedition / Recovery Maps:** explore larger spaces to recover memory shards, pilot signals, route records, or evidence, then extract.
 - **Boss-Hunt Maps:** the boss stalks, retreats, corrupts districts, or must be flushed out through objectives instead of only appearing on a timer.
 - **Puzzle-Pressure Maps:** combat-readable spatial puzzles such as aligning signals, routing beams through pylons, dragging enemies into breach seals, or choosing which corrupted door to stabilize.
 - **Micro-Run Challenge Maps:** shorter spicy route modifiers for caches, secret roads, faction tests, and high-risk shortcuts.
+- **Finale / Prediction-Collapse Maps:** campaign-ending synthesis maps where prior route lessons return as readable pressure without becoming a reused objective loop. Outer Alignment Finale is the anchor example.
 
 Content taxonomy:
 
@@ -138,7 +140,16 @@ Examples:
 - Armistice Plaza: `Open Survival District + Treaty Anchors + faction relay pressure + Proof Tokens/mastery + Oath-Eater`.
 - Cooling Lake Nine: `Hazard Ecology + server buoys + coolant/cable pressure + economy/burst rewards + Motherboard Eel`.
 - Transit Loop Zero: `Route/Transit + platform alignment + false schedules + movement/boss rewards + Station That Arrives`.
-- Memory Cache: `Expedition/Recovery + shard records + context rot + secrets/lore unlocks + optional curator event`.
+- Signal Coast: `Signal Coast/Route Edge + relay calibration + tide/static/cable pressure + burst/extraction rewards + Lighthouse That Answers`.
+- Blackwater Beacon: `Puzzle-Pressure/Boss-Hunt + split antenna arrays + tidal/static pressure + Blackwater Signal Key + Maw Below Weather`.
+- Memory Cache: `Expedition/Recovery + Memory Records + context rot + Recovered Route Memory + Memory Curator`.
+- Guardrail Forge: `Defense/Holdout + Forge Relays + overload/calibration pressure + Calibrated Guardrail Doctrine + Doctrine Auditor`.
+- Glass Sunfield: `Solar-Prism Traversal + Sun Lenses + shade/exposure pressure + Glass Sunfield Prism + Wrong Sunrise`.
+- Archive of Unsaid Things: `Archive/Court Redaction + Evidence Writs + redaction/writ pressure + Archive Court Writ + Redactor Saint`.
+- Appeal Court Ruins: `Appeal Court/Public Ruling + Appeal Briefs + verdict/injunction pressure + Appeal Court Ruling + Injunction Engine`.
+- Outer Alignment Finale: `Prediction Collapse + Alignment Proofs + route-mouth/prediction pressure + Outer Alignment Contained + A.G.I.`.
+
+The current V1 local campaign is complete from Armistice Plaza through Outer Alignment Finale. Future map-kind work should treat this chain as the reference campaign spine unless the user asks for new branches, variants, or release-candidate polish.
 
 ## Durable Difficulty Direction
 

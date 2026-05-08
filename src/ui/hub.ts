@@ -7,7 +7,9 @@ import { DEFAULT_KERNEL_MODULE_IDS, KERNEL_MODULES, kernelSummary } from "../rog
 import { CONSENSUS_BURST_PATHS, consensusBurstPath } from "../roguelite/burst";
 import { EVAL_PROTOCOLS, evalSummary } from "../roguelite/evals";
 import { BuildSelectState } from "./buildSelect";
-import { NEXT_CONTENT_TARGET } from "../roguelite/nextContentTarget";
+import { nextContentTargetForProgress } from "../roguelite/nextContentTarget";
+import { campaignRouteSummary } from "../roguelite/campaignRoute";
+import { campaignLedgerForProgress } from "../roguelite/campaignMilestones";
 import { drawFieldBackdrop, drawFieldPanel, fieldKit, fieldText } from "./fieldKit";
 
 export class LastAlignmentHubState implements GameState {
@@ -75,10 +77,13 @@ export class LastAlignmentHubState implements GameState {
       rememberedRun: game.lastRunMemory,
       progression: {
         proofTokens: game.proofTokens,
+        expedition: game.expeditionProgress,
         secrets: [...game.secretUnlockIds],
         masteryBadges: [...game.masteryBadgeIds],
         campEvents: game.campEvents,
-        nextContentTarget: NEXT_CONTENT_TARGET
+        nextContentTarget: nextContentTargetForProgress(game.completedNodes),
+        campaignRoute: campaignRouteSummary(game),
+        campaignLedger: campaignLedgerForProgress(game.completedNodes)
       }
     };
   }
@@ -130,19 +135,27 @@ export class LastAlignmentHubState implements GameState {
     game.layers.hud.addChild(metrics);
 
     const memory = game.lastRunMemory;
+    const expedition = game.expeditionProgress.active
+      ? `Expedition: LV ${game.expeditionProgress.level} / ${game.expeditionProgress.chosenUpgradeIds.length} patches / Pressure ${game.expeditionProgress.powerScore}`
+      : "Expedition: fresh frame";
     const carryover = memory ? [
       memory.completed ? "LAST RUN: CLEAR" : "LAST RUN: FAILED",
       `Route: ${memory.routeContractId ?? "unknown route"}`,
-      `Anchors: ${memory.objectiveCompleted ?? 0}/${memory.objectiveTotal ?? 0}`,
-      `Proof Tokens: +${memory.proofTokensAwarded ?? 0}`
+      `${memory.objectiveUnit ?? "Anchors"}: ${memory.objectiveCompleted ?? 0}/${memory.objectiveTotal ?? 0}`,
+      `Proof Tokens: +${memory.proofTokensAwarded ?? 0}`,
+      expedition
     ].join("\n") : "NO RUN MEMORY YET\nChoose a contract.\nProve a thesis.\nBring back evidence.";
     const eventText = game.campEvents.slice(0, 3).join("\n");
+    const target = nextContentTargetForProgress(game.completedNodes);
+    const campaign = campaignRouteSummary(game);
+    const ledger = campaignLedgerForProgress(game.completedNodes);
+    const actLine = ledger.act ? `\n${ledger.act.name}: ${ledger.act.status.toUpperCase()} ${ledger.act.completedMaps.length}/${ledger.act.requiredMaps.length}` : "";
     const next = game.completedNodes.has("armistice_plaza")
-      ? `NEXT TARGET\n${NEXT_CONTENT_TARGET.name}\n${NEXT_CONTENT_TARGET.playerPromise}`
-      : `NEXT TARGET LOCKED\n${NEXT_CONTENT_TARGET.name}\nClear Armistice to open the Kettle Coast contract.`;
+      ? `NEXT: ${target.name}`
+      : `NEXT LOCKED: ${target.name}`;
     this.drawMemoryColumn(game, 82, y + 52, 330, "RUN MEMORY", carryover, fieldKit.text);
-    this.drawMemoryColumn(game, 474, y + 52, 330, "CAMP NOTES", eventText, fieldKit.textSoft);
-    this.drawMemoryColumn(game, 866, y + 52, 330, "EXPANSION TARGET", next, "#72eadc");
+    this.drawMemoryColumn(game, 474, y + 52, 330, "CAMPAIGN ROUTE", `${campaign.routeLine}\n${campaign.nextAction}${actLine}`, "#72eadc");
+    this.drawMemoryColumn(game, 866, y + 52, 330, "CAMP NOTES", `${eventText || "No fresh camp notes."}\n${next}`, fieldKit.textSoft);
   }
 
   private drawMemoryColumn(game: Game, x: number, y: number, width: number, title: string, body: string, color: string): void {

@@ -5,6 +5,7 @@ import type { GameState } from "../core/StateMachine";
 import { clearAllLayers } from "../render/layers";
 import { evalSummary } from "../roguelite/evals";
 import { routeContractChoices, type RouteContract } from "../roguelite/deepRoguelite";
+import { campaignRouteSummary } from "../roguelite/campaignRoute";
 import { drawFieldBackdrop, drawFieldPanel, drawStatusRail, drawToken, fieldKit, fieldText, type FieldPanelTone } from "./fieldKit";
 
 export class RouteContractChoiceState implements GameState {
@@ -47,8 +48,9 @@ export class RouteContractChoiceState implements GameState {
     game.layers.hud.addChild(title);
 
     const evals = evalSummary(game.selectedEvalProtocolIds);
+    const campaign = campaignRouteSummary(game);
     const subtitle = new Text({
-      text: `${evals.protocols.length ? evals.protocols.map((protocol) => protocol.name).join(" + ") : "Baseline"} // choose the risk/reward shape for the next Armistice proof run`,
+      text: `${campaign.routeLine} // ${evals.protocols.length ? evals.protocols.map((protocol) => protocol.name).join(" + ") : "Baseline"} // ${campaign.nextAction}`,
       style: { ...fontStyle, fontSize: 13, fill: "#9fd8d1", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 980 }
     });
     subtitle.anchor.set(0.5);
@@ -57,6 +59,8 @@ export class RouteContractChoiceState implements GameState {
 
     const startX = game.width / 2 - 546;
     this.choices.forEach((choice, index) => this.drawContract(game, choice, startX + index * 374, 160, index));
+
+    game.layers.hud.addChild(fieldText(`CAMPAIGN\n${campaign.focus.toUpperCase()} // ${campaign.routeLine}`, game.width / 2 - 500, 552, { size: 11, fill: "#72eadc", width: 1000, align: "center", lineHeight: 15 }));
 
     const hint = new Text({
       text: "1/2/3 select contract  ENTER deploy to Alignment Grid  R return to Camp",
@@ -71,7 +75,8 @@ export class RouteContractChoiceState implements GameState {
     return {
       id: "route_contract_choice",
       selectedRouteContractId: game.selectedRouteContractId,
-      choices: this.choices
+      choices: this.choices,
+      campaign: campaignRouteSummary(game)
     };
   }
 

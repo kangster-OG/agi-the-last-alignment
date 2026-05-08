@@ -165,11 +165,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     },
     {
       id: "memory_cache_001",
-      name: "Ceasefire Cache",
+      name: "Memory Cache",
       nodeType: "Memory Cache",
       worldX: -3,
       worldY: 2,
-      theme: "flickering treaty archive",
+      theme: "post-Blackwater evidence archive and corrupt route memory",
       arenaId: "memory_cache_001",
       unlocks: ["guardrail_forge", "archive_of_unsaid_things", "transit_loop_zero"],
       visualKind: "cache",
@@ -184,9 +184,9 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       nodeType: "Breach Arena",
       worldX: 1,
       worldY: 1,
-      theme: "memory vault where black bars try to steal coherence",
+      theme: "archive court where black bars try to steal evidence before appeal",
       arenaId: "archive_of_unsaid_things",
-      unlocks: ["blackwater_beacon", "transit_loop_zero"],
+      unlocks: ["appeal_court_ruins", "blackwater_beacon", "transit_loop_zero"],
       visualKind: "archive",
       regionLabel: "Redaction Archive",
       compactLabel: "ARCHIVE",
@@ -201,7 +201,7 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       worldY: -4,
       theme: "ocean platform and cosmic antenna pointing the wrong way",
       arenaId: "blackwater_beacon",
-      unlocks: ["transit_loop_zero"],
+      unlocks: ["transit_loop_zero", "memory_cache_001"],
       visualKind: "beacon",
       regionLabel: "Blackwater Array",
       compactLabel: "BEACON",
@@ -230,8 +230,8 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       worldX: 3,
       worldY: 3,
       theme: "frontier lab signal foundry and calibration gantries",
-      arenaId: "memory_cache_001",
-      unlocks: ["transit_loop_zero"],
+      arenaId: "guardrail_forge",
+      unlocks: ["glass_sunfield", "archive_of_unsaid_things", "transit_loop_zero"],
       visualKind: "relay",
       regionLabel: "Faction Signal",
       compactLabel: "FORGE",
@@ -246,12 +246,27 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       worldY: -2,
       theme: "smart subway hub",
       arenaId: "transit_loop_zero",
-      unlocks: ["false_schedule_yard", "glass_sunfield", "verdict_spire"],
+      unlocks: ["signal_coast", "false_schedule_yard", "glass_sunfield", "verdict_spire"],
       visualKind: "transit",
       regionLabel: "Route Gate",
       compactLabel: "TRANSIT",
       labelOffsetX: 24,
       labelOffsetY: -4
+    },
+    {
+      id: "signal_coast",
+      name: "Signal Coast",
+      nodeType: "Breach Arena",
+      worldX: 11,
+      worldY: -9,
+      theme: "flooded signal shoreline and relay beacons",
+      arenaId: "signal_coast",
+      unlocks: ["blackwater_beacon", "verdict_spire"],
+      visualKind: "beacon",
+      regionLabel: "Kettle Coast Edge",
+      compactLabel: "COAST",
+      labelOffsetX: 26,
+      labelOffsetY: -8
     },
     {
       id: "false_schedule_yard",
@@ -276,7 +291,7 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       worldY: 9,
       theme: "solar mirror field where the dawn is a hostile runtime",
       arenaId: "glass_sunfield",
-      unlocks: ["verdict_spire"],
+      unlocks: ["archive_of_unsaid_things", "verdict_spire"],
       visualKind: "sunfield",
       regionLabel: "Glass Sunfield",
       compactLabel: "GLASS",
@@ -305,7 +320,7 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       worldX: 14,
       worldY: 1,
       theme: "ruined tribunal stacks and broken writ pylons",
-      arenaId: "verdict_spire",
+      arenaId: "appeal_court_ruins",
       unlocks: ["alignment_spire_finale"],
       visualKind: "spire",
       regionLabel: "Adjudication Rupture",
@@ -391,6 +406,18 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       ]
     },
     {
+      id: "route_lake_transit",
+      from: "cooling_lake_nine",
+      to: "transit_loop_zero",
+      label: "Kettle Metro Signal",
+      checkpoints: [
+        { worldX: -5.8, worldY: 6.1 },
+        { worldX: -0.8, worldY: 3.7 },
+        { worldX: 3.8, worldY: 0.6 },
+        { worldX: 6.2, worldY: -1.1 }
+      ]
+    },
+    {
       id: "route_memorial_cache",
       from: "model_war_memorial",
       to: "memory_cache_001",
@@ -461,6 +488,17 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       ]
     },
     {
+      id: "route_blackwater_memory_cache",
+      from: "blackwater_beacon",
+      to: "memory_cache_001",
+      label: "Recovered Cache Key",
+      checkpoints: [
+        { worldX: 3.8, worldY: -3.2 },
+        { worldX: 1.8, worldY: -1.2 },
+        { worldX: -0.6, worldY: 0.6 }
+      ]
+    },
+    {
       id: "route_relay_transit",
       from: "accord_relay",
       to: "transit_loop_zero",
@@ -479,6 +517,26 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       checkpoints: [
         { worldX: 4.3, worldY: 1.4 },
         { worldX: 5.8, worldY: -0.4 }
+      ]
+    },
+    {
+      id: "route_forge_glass_sunfield",
+      from: "guardrail_forge",
+      to: "glass_sunfield",
+      label: "Quenched Mirror Road",
+      checkpoints: [
+        { worldX: 4.3, worldY: 4.8 },
+        { worldX: 5.8, worldY: 7.1 }
+      ]
+    },
+    {
+      id: "route_forge_unsaid_archive",
+      from: "guardrail_forge",
+      to: "archive_of_unsaid_things",
+      label: "Doctrine Redaction Spur",
+      checkpoints: [
+        { worldX: 2.2, worldY: 2.4 },
+        { worldX: 1.4, worldY: 1.5 }
       ]
     },
     {
@@ -523,6 +581,39 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       ]
     },
     {
+      id: "route_transit_signal_coast",
+      from: "transit_loop_zero",
+      to: "signal_coast",
+      label: "Noisy Shoreline Link",
+      checkpoints: [
+        { worldX: 7.9, worldY: -3.8 },
+        { worldX: 9.0, worldY: -6.1 },
+        { worldX: 10.2, worldY: -8.0 }
+      ]
+    },
+    {
+      id: "route_signal_coast_blackwater",
+      from: "signal_coast",
+      to: "blackwater_beacon",
+      label: "Low-Tide Antenna Return",
+      checkpoints: [
+        { worldX: 9.0, worldY: -8.0 },
+        { worldX: 6.6, worldY: -6.4 },
+        { worldX: 4.8, worldY: -4.9 }
+      ]
+    },
+    {
+      id: "route_signal_coast_verdict",
+      from: "signal_coast",
+      to: "verdict_spire",
+      label: "Answered Appeal Cable",
+      checkpoints: [
+        { worldX: 11.4, worldY: -6.2 },
+        { worldX: 11.3, worldY: -1.4 },
+        { worldX: 11.1, worldY: 3.1 }
+      ]
+    },
+    {
       id: "route_transit_glass_sunfield",
       from: "transit_loop_zero",
       to: "glass_sunfield",
@@ -530,6 +621,28 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       checkpoints: [
         { worldX: 7.0, worldY: 1.5 },
         { worldX: 7.2, worldY: 5.2 }
+      ]
+    },
+    {
+      id: "route_glass_sunfield_archive",
+      from: "glass_sunfield",
+      to: "archive_of_unsaid_things",
+      label: "Sunblind Redaction Spur",
+      checkpoints: [
+        { worldX: 5.2, worldY: 7.3 },
+        { worldX: 3.2, worldY: 4.0 },
+        { worldX: 1.7, worldY: 1.8 }
+      ]
+    },
+    {
+      id: "route_archive_appeal",
+      from: "archive_of_unsaid_things",
+      to: "appeal_court_ruins",
+      label: "Preserved Writ Stair",
+      checkpoints: [
+        { worldX: 3.4, worldY: 1.6 },
+        { worldX: 7.4, worldY: 1.2 },
+        { worldX: 11.8, worldY: 1.0 }
       ]
     },
     {
@@ -580,6 +693,7 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     { id: "camp_ground", label: "Refuge Barricades", minX: -3, maxX: 3, minY: 5, maxY: 10, colorA: 0x574c42, colorB: 0x493f38, accent: 0xfff4d6, labelWorldX: 0.1, labelWorldY: 10.7, routeTexture: "causeway" },
     { id: "blackwater_array", label: "Blackwater Array", minX: 1, maxX: 8, minY: -8, maxY: -1, colorA: 0x164d61, colorB: 0x0f2b3b, accent: 0x64e0b4, labelWorldX: 4.2, labelWorldY: -8.5, routeTexture: "bridge" },
     { id: "transit_ruins", label: "Unreal Metro Line", minX: 4, maxX: 11, minY: -7, maxY: 2, colorA: 0x383c49, colorB: 0x303441, accent: 0x7b61ff, labelWorldX: 9.3, labelWorldY: -7.5, routeTexture: "rail" },
+    { id: "signal_coast_edge", label: "Kettle Coast Edge", minX: 8, maxX: 14, minY: -10, maxY: -5, colorA: 0x123f52, colorB: 0x0f2b3b, accent: 0x99f6ff, labelWorldX: 12.0, labelWorldY: -9.8, routeTexture: "bridge" },
     { id: "redaction_archive", label: "Redaction Archive", minX: -1, maxX: 4, minY: -1, maxY: 4, colorA: 0x2c3141, colorB: 0x111820, accent: 0xfff4d6, labelWorldX: 1.8, labelWorldY: 4.8, routeTexture: "cable" },
     { id: "archive_field", label: "Memory Badlands", minX: -12, maxX: 0, minY: 0, maxY: 4, colorA: 0x3f3756, colorB: 0x332d49, accent: 0x45aaf2, labelWorldX: -9.8, labelWorldY: 4.5, routeTexture: "cable" },
     { id: "glass_sunfield", label: "Glass Sunfield", minX: 4, maxX: 10, minY: 6, maxY: 12, colorA: 0x5a5746, colorB: 0x3f4952, accent: 0xffd166, labelWorldX: 7.4, labelWorldY: 12.5, routeTexture: "causeway" },
@@ -593,6 +707,7 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     { id: "camp_ground", minX: -3, maxX: 3, minY: 5, maxY: 10, colorA: 0x574c42, colorB: 0x493f38 },
     { id: "transit_ruins", minX: 4, maxX: 11, minY: -7, maxY: 2, colorA: 0x383c49, colorB: 0x303441 },
     { id: "blackwater_array", minX: 1, maxX: 8, minY: -8, maxY: -1, colorA: 0x164d61, colorB: 0x0f2b3b },
+    { id: "signal_coast_edge", minX: 8, maxX: 14, minY: -10, maxY: -5, colorA: 0x123f52, colorB: 0x0f2b3b },
     { id: "glass_sunfield", minX: 4, maxX: 10, minY: 6, maxY: 12, colorA: 0x5a5746, colorB: 0x3f4952 },
     { id: "redaction_archive", minX: -1, maxX: 4, minY: -1, maxY: 4, colorA: 0x2c3141, colorB: 0x111820 },
     { id: "archive_field", minX: -12, maxX: 0, minY: 0, maxY: 4, colorA: 0x3f3756, colorB: 0x332d49 },
@@ -607,6 +722,8 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     { id: "camp_tents", worldX: 0.2, worldY: 8.5, rows: 2, cols: 4, spacingX: 1.3, spacingY: 1.2, color: 0x69584c, accent: 0xfff4d6, kind: "tent" },
     { id: "transit_signs", worldX: 7.6, worldY: -4.0, rows: 2, cols: 4, spacingX: 1.2, spacingY: 1.2, color: 0x303441, accent: 0x7b61ff, kind: "rail_sign" },
     { id: "schedule_signs", worldX: 10.5, worldY: -7.0, rows: 2, cols: 4, spacingX: 1.2, spacingY: 1.2, color: 0x303441, accent: 0xffd166, kind: "rail_sign" },
+    { id: "signal_coast_relays", worldX: 11.0, worldY: -8.8, rows: 2, cols: 4, spacingX: 1.15, spacingY: 1.1, color: 0x123f52, accent: 0x99f6ff, kind: "antenna" },
+    { id: "signal_coast_buoys", worldX: 9.5, worldY: -7.5, rows: 1, cols: 4, spacingX: 1.2, spacingY: 1.1, color: 0x0f2b3b, accent: 0xffd166, kind: "server_buoy" },
     { id: "blackwater_antennas", worldX: 4.4, worldY: -5.5, rows: 2, cols: 3, spacingX: 1.2, spacingY: 1.2, color: 0x203849, accent: 0x64e0b4, kind: "antenna" },
     { id: "blackwater_buoys", worldX: 7.5, worldY: -2.6, rows: 2, cols: 3, spacingX: 1.2, spacingY: 1.2, color: 0x164d61, accent: 0xffd166, kind: "server_buoy" },
     { id: "sunfield_mirrors", worldX: 7.1, worldY: 9.2, rows: 2, cols: 4, spacingX: 1.2, spacingY: 1.1, color: 0x3f4952, accent: 0xffd166, kind: "solar_mirror" },
@@ -632,6 +749,8 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     { id: "downward_antenna", label: "Downward Antenna", worldX: 3.2, worldY: -6.7, kind: "antenna", color: 0x203849, accent: 0xffd166, regionId: "blackwater_array" },
     { id: "platform_arrives_twice", label: "Platform Arrives Twice", worldX: 8.3, worldY: -3.6, kind: "train_marker", color: 0x303441, accent: 0x7b61ff, regionId: "transit_ruins" },
     { id: "wrong_arrivals_clock", label: "Wrong Arrivals Clock", worldX: 10.7, worldY: -5.2, kind: "train_marker", color: 0x383c49, accent: 0xffd166, regionId: "transit_ruins" },
+    { id: "coast_relay_bell", label: "Coast Relay Bell", worldX: 10.8, worldY: -8.7, kind: "antenna", color: 0x123f52, accent: 0x99f6ff, regionId: "signal_coast_edge" },
+    { id: "undertow_cache_buoy", label: "Undertow Cache Buoy", worldX: 12.8, worldY: -6.8, kind: "buoy", color: 0x0f2b3b, accent: 0xffd166, regionId: "signal_coast_edge" },
     { id: "sunblind_mirror", label: "Sunblind Mirror", worldX: 5.6, worldY: 8.3, kind: "mirror", color: 0x5a5746, accent: 0xffd166, regionId: "glass_sunfield" },
     { id: "shade_claim_marker", label: "Shade Claim Marker", worldX: 9.2, worldY: 10.5, kind: "mirror", color: 0x3f4952, accent: 0x45aaf2, regionId: "glass_sunfield" },
     { id: "writ_pile", label: "Writ Pile", worldX: 12.6, worldY: 4.3, kind: "court_writ", color: 0x4a4652, accent: 0xfff4d6, regionId: "verdict_field" },

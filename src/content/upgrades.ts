@@ -118,6 +118,30 @@ export const UPGRADE_CONTENT: Record<string, UpgradeContentData> = {
     tags: ["targeting", "precision", "boss"],
     description: "Passive process: auto-weapons prefer bosses and elites when they are in range."
   },
+  relay_phase_lock: {
+    id: "relay_phase_lock",
+    displayName: "Relay Phase Lock",
+    tags: ["objective", "signal", "burst"],
+    description: "Signal Coast passive: relay calibration holds phase longer during clear signal windows."
+  },
+  static_skimmer_net: {
+    id: "static_skimmer_net",
+    displayName: "Static Skimmer Net",
+    tags: ["objective", "defense", "signal"],
+    description: "Signal Coast passive: jamming skimmers lose bite and take countermeasure damage near relays."
+  },
+  shoreline_stride: {
+    id: "shoreline_stride",
+    displayName: "Shoreline Stride",
+    tags: ["speed", "defense", "signal"],
+    description: "Signal Coast passive: better movement and resistance while crossing the route edge."
+  },
+  lighthouse_countertone: {
+    id: "lighthouse_countertone",
+    displayName: "Lighthouse Countertone",
+    tags: ["boss", "burst", "signal"],
+    description: "Signal Coast passive: converts Lighthouse interference into Burst tempo and jam resistance."
+  },
   causal_railgun: {
     id: "causal_railgun",
     displayName: "Causal Railgun",

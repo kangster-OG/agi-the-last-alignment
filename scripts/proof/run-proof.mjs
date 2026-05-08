@@ -9,6 +9,39 @@ const outDir = path.join(cwd, "docs", "proof", scenario);
 const port = 5173 + scenarioPortOffset(scenario);
 const url = process.env.PROOF_BASE_URL ?? `http://127.0.0.1:${port}`;
 const networkPort = 2567 + scenarioPortOffset(scenario);
+const COOLING_SYSTEM_ITEM_IDS = ["coolant_baffles", "server_buoy_synchronizer", "prompt_leech_quarantine", "grounded_cable_boots"];
+const SIGNAL_SYSTEM_ITEM_IDS = ["relay_phase_lock", "static_skimmer_net", "shoreline_stride", "lighthouse_countertone"];
+const PROOF_SECONDARY_PROTOCOL_IDS = [
+  "context_saw",
+  "patch_mortar",
+  "audit_swarm_protocol",
+  "red_team_spike",
+  "benchmark_rail",
+  "jailbreak_snare",
+  "fork_daemon",
+  "coherence_lanterns",
+  "appeal_writ",
+  "memory_needle"
+];
+const ONLINE_ALIGNMENT_GRID_VOTE_ORDER = [
+  "armistice_plaza",
+  "accord_relay",
+  "cooling_lake_nine",
+  "model_war_memorial",
+  "armistice_camp",
+  "memory_cache_001",
+  "archive_of_unsaid_things",
+  "blackwater_beacon",
+  "thermal_archive",
+  "guardrail_forge",
+  "transit_loop_zero",
+  "signal_coast",
+  "false_schedule_yard",
+  "glass_sunfield",
+  "verdict_spire",
+  "appeal_court_ruins",
+  "alignment_spire_finale"
+];
 
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
@@ -112,14 +145,21 @@ async function runScenario(name) {
     await page.waitForFunction(() => typeof window.render_game_to_text === "function");
     await page.waitForSelector("canvas");
     await enterArena(page);
-    await advance(page, 1300);
-    const text = await capture(page, "player-damage-contact");
-    assert(text.mode === "LevelRun", `expected LevelRun for player damage proof, got ${text.mode}`);
-    assert(text.player?.hp < text.player?.maxHp, "expected proof player damage to reduce HP");
-    assert(text.player?.damageFeedback?.flash > 0, "expected avatar damage flash telemetry");
-    assert(text.player?.damageFeedback?.hpPulse > 0, "expected HUD HP pulse telemetry");
-    assert(text.player?.damageFeedback?.stagger > 0, "expected small stagger telemetry");
-    assert(text.projectiles?.length >= 0, "expected state projectiles list to remain valid");
+    let text = await state(page);
+    for (let elapsed = 0; elapsed < 2600; elapsed += 50) {
+      if (text.mode === "LevelRun" && text.player?.hp < text.player?.maxHp && text.player?.damageFeedback?.flash > 0) break;
+      await advance(page, 50);
+      text = await state(page);
+    }
+    const capturedText = text;
+    await page.screenshot({ path: path.join(outDir, "player-damage-contact.png"), fullPage: true });
+    fs.writeFileSync(path.join(outDir, "player-damage-contact.json"), JSON.stringify(capturedText, null, 2));
+    assert(capturedText.mode === "LevelRun", `expected LevelRun for player damage proof, got ${capturedText.mode}`);
+    assert(capturedText.player?.hp < capturedText.player?.maxHp, "expected proof player damage to reduce HP");
+    assert(capturedText.player?.damageFeedback?.flash > 0, "expected avatar damage flash telemetry");
+    assert(capturedText.player?.damageFeedback?.hpPulse > 0, "expected HUD HP pulse telemetry");
+    assert(capturedText.player?.damageFeedback?.stagger > 0, "expected small stagger telemetry");
+    assert(capturedText.projectiles?.length >= 0, "expected state projectiles list to remain valid");
   } else if (name === "hades-inspired-systems") {
     await capture(page, "menu");
     const buildText = await pressUntilMode(page, "Enter", "BuildSelect", 6);
@@ -286,7 +326,8 @@ async function runScenario(name) {
       assert(summary.level?.rogueliteRun?.victoryCondition?.clearReady === true, "expected Armistice clear readiness before extraction");
       assert(summary.level?.rogueliteRun?.extractionGate?.distanceToPlayer > 0.4, "expected extraction gate to appear away from the player");
       await capture(page, "11-extraction-gate");
-      await advanceRunHandlingDrafts(page, 36000);
+      await walkRunToWorld(page, summary.level.rogueliteRun.extractionGate.worldX, summary.level.rogueliteRun.extractionGate.worldY, 5600);
+      await advanceRunHandlingDrafts(page, 12000);
       summary = await state(page);
     }
     if (summary.mode === "UpgradeDraft") {
@@ -295,7 +336,8 @@ async function runScenario(name) {
       summary = await state(page);
     }
     if (summary.mode === "LevelRun" && summary.level?.rogueliteRun?.extractionGate?.active) {
-      await advanceRunHandlingDrafts(page, 36000);
+      await walkRunToWorld(page, summary.level.rogueliteRun.extractionGate.worldX, summary.level.rogueliteRun.extractionGate.worldY, 5600);
+      await advanceRunHandlingDrafts(page, 12000);
       summary = await state(page);
     }
     assert(["LevelComplete", "GameOver"].includes(summary.mode), `expected reference run summary, got ${summary.mode}`);
@@ -403,13 +445,16 @@ async function runScenario(name) {
     assert(fusionDraft.draft?.hasEvolution, "expected Causal Railgun evolution draft");
     assert(fusionDraft.draft?.cards?.[0]?.id === "causal_railgun", "expected Causal Railgun as the fusion card");
     await chooseDraftById(page, "causal_railgun");
-    await advance(page, 1800);
+    await advance(page, 300);
+    await settleDraftsBackToRun(page);
+    await advanceRunHandlingDrafts(page, 1800);
     await capture(page, "build-causal-railgun");
     const railgunRun = await state(page);
-    assert(railgunRun.level?.rogueliteRun?.buildGrammar?.fusions?.includes("causal_railgun"), "expected Causal Railgun in build grammar");
-    const railgunSlotCaps = railgunRun.level?.rogueliteRun?.buildGrammar?.slotCaps ?? railgunRun.build?.slotCaps;
+    const railgunGrammar = railgunRun.level?.rogueliteRun?.buildGrammar ?? railgunRun.build;
+    assert(railgunGrammar?.fusions?.includes("causal_railgun"), "expected Causal Railgun in build grammar");
+    const railgunSlotCaps = railgunGrammar?.slotCaps ?? railgunRun.build?.slotCaps;
     assert(railgunSlotCaps?.fusion?.used === 1, "expected fusion slot usage in build grammar");
-    assert(railgunRun.level?.rogueliteRun?.buildGrammar?.predictionPriorityRank >= 1, "expected Prediction Priority behavior from Causal Railgun");
+    assert((railgunGrammar?.predictionPriorityRank ?? railgunRun.build?.predictionPriority ?? 0) >= 1, "expected Prediction Priority behavior from Causal Railgun");
     assert(railgunRun.projectiles?.some((projectile) => projectile.label === "causal railgun") || railgunRun.level?.combatArt?.projectileCount > 0, "expected Causal Railgun projectile activity");
   } else if (name === "build-vfx") {
     await page.evaluate(() => window.set_consensus_cell_size?.(4));
@@ -427,7 +472,7 @@ async function runScenario(name) {
     const saw = await waitForProjectileLabel(page, "context saw", 9000);
     await capture(page, "vfx-context-saw");
     assert(saw.level?.rogueliteRun?.buildGrammar?.secondaryProtocols?.includes("context_saw"), "expected Context Saw secondary protocol telemetry");
-    await reachUpgradeDraft(page, 92000);
+    await reachDraftContaining(page, ["patch_mortar"], 140000, PROOF_SECONDARY_PROTOCOL_IDS);
     await capture(page, "vfx-third-draft");
     await chooseDraftById(page, "patch_mortar");
     const mortar = await waitForProjectileLabel(page, "patch mortar", 12000);
@@ -461,6 +506,1256 @@ async function runScenario(name) {
       assert(text.level?.director?.totalSpawned >= 80, `expected heavier boss-window horde count, got ${text.level?.director?.totalSpawned}`);
       assert(text.level?.spawnedByRegion?.adaptive_pressure_flank >= 1, "expected randomized flank pressure to persist into boss proof");
     }
+  } else if (name === "cooling-lake-graybox") {
+    await page.goto(`${url}?proofCoolingLakeUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await pressUntilMode(page, "Enter", "BuildSelect", 6);
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-armistice-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "armistice_plaza", "expected Armistice carryover before Cooling Lake");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Armistice seed");
+    assert(camp.roguelite?.expedition?.level >= 4, `expected seeded expedition level for Cooling, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.includes("refusal_halo"), "expected persisted Armistice build patch before Cooling");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Cooling Lake Nine")), "expected camp to name Cooling Lake unlock");
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    await capture(page, "02-route-choice-before-cooling");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    await walkOverworldToNode(page, "cooling_lake_nine");
+    const overworld = await capture(page, "03-overworld-cooling-lake-selected");
+    assert(overworld.overworld?.selectedId === "cooling_lake_nine", `expected Cooling Lake selected, got ${overworld.overworld?.selectedId}`);
+    assert(overworld.overworld?.completed?.includes("armistice_plaza"), "expected Armistice completed in route proof");
+    assert(overworld.overworld?.unlocked?.includes("cooling_lake_nine"), "expected Cooling Lake unlocked after Armistice");
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "04-cooling-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected Cooling Lake briefing screen");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await advanceRunHandlingDrafts(page, 3600);
+    let run = await capture(page, "05-run-start-alpha-buoy");
+    assert(run.level?.arenaId === "cooling_lake_nine", "expected Cooling Lake run");
+    assert(run.level?.mapContract?.mapKind === "Hazard Ecology", "expected Hazard Ecology map contract");
+    assert(run.player?.level >= 4, `expected Cooling to start with persisted expedition level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected Cooling runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected Cooling balancing pressure from carried build");
+    assert(run.level?.chosenUpgradeIds?.includes("refusal_halo"), "expected persisted build IDs in Cooling runtime telemetry");
+    assert(run.level?.mapBounds?.maxX - run.level?.mapBounds?.minX >= 70, "expected large Cooling Lake map bounds");
+    assert(run.level?.rogueliteRun?.objective?.id === "server_buoy_stabilization", "expected server buoy objective");
+    assert(run.level?.rogueliteRun?.coolingLake?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected first buoy progress");
+
+    await holdRunNearWorld(page, 0, 0, 5600);
+    await walkRunToWorld(page, 7, -5, 4200);
+    await walkRunToWorld(page, 16, 2, 5000);
+    await walkRunToWorld(page, 13, 11, 5600);
+    await holdRunNearWorld(page, 13, 11, 6600);
+    run = await capture(page, "06-beta-buoy-hazard-pressure");
+    assert(run.level?.rogueliteRun?.coolingLake?.hazards?.activeHazards?.length >= 1, "expected active Cooling hazards");
+    const coolingHazardRuntime = run.level?.rogueliteRun?.coolingLake?.hazards?.runtime;
+    assert((coolingHazardRuntime?.hazardSlowSeconds ?? 0) + (coolingHazardRuntime?.electricHits ?? 0) + (coolingHazardRuntime?.ventPushes ?? 0) >= 1, "expected Cooling hazard interaction telemetry while routing to beta");
+    const coolingHazards = run.level?.rogueliteRun?.coolingLake?.hazards;
+    const electricLaneActive =
+      coolingHazards?.activeHazards?.some((id) => id.includes("cable") || id.includes("electrified")) ||
+      coolingHazards?.allZones?.some((zone) => zone.kind === "electric_cable" && zone.active) ||
+      ((coolingHazardRuntime?.electricHits ?? 0) > 0 && coolingHazardRuntime?.lastHazardId?.includes("cable"));
+    assert(electricLaneActive, "expected active electric/cable lane state in Cooling hazard telemetry");
+    assert(run.level?.rogueliteRun?.coolingLake?.promptLeechPressure?.activePromptLeeches >= 1 || run.level?.rogueliteRun?.enemyRolePressure?.objectiveAttackers >= 1, "expected Prompt Leech or buoy pressure");
+    assert(run.level?.rogueliteRun?.objective?.anchors?.some((anchor) => anchor.id === "buoy.beta" && (anchor.progress > 35 || anchor.completed)), "expected safe-island route to recover beta buoy progress after risky lane pressure");
+
+    await survivalDance(page, 6500);
+    for (let i = 0; i < 3; i += 1) {
+      await chooseDraftIfNeeded(page);
+      await advanceRunHandlingDrafts(page, 1200);
+      const current = await state(page);
+      if (current.mode !== "UpgradeDraft") break;
+    }
+    await chooseDraftIfNeeded(page);
+    await advanceRunHandlingDrafts(page, 600);
+    run = await capture(page, "07-motherboard-eel-scaffold");
+    assert(run.assetRendering?.coolingLakeNineArtReady === true, "expected Cooling Lake Nine production source art loaded");
+    assert(run.level?.bossSpawned || run.mode === "LevelComplete", "expected Motherboard Eel boss scaffold spawned or completed");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "motherboard_eel_graybox", "expected Motherboard Eel graybox variant telemetry");
+      assert(run.level?.rogueliteRun?.coolingLake?.motherboardEel?.eventTelemetry?.emergeCount >= 1, "expected Eel emergence telemetry");
+      assert(
+        run.level?.rogueliteRun?.coolingLake?.motherboardEel?.eventTelemetry?.leechSpawns >= 1 ||
+          run.level?.rogueliteRun?.coolingLake?.promptLeechPressure?.activePromptLeeches >= 1,
+        "expected live Eel Prompt Leech pressure"
+      );
+    }
+
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 110000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 5200);
+    }
+    await advanceRunHandlingDrafts(page, 12000);
+    run = await capture(page, "08-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Cooling Lake summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.completed, "expected Cooling Lake completed summary memory");
+    assert(run.roguelite?.lastRunMemory?.nodeId === "cooling_lake_nine", "expected Cooling Lake last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Server Buoys", "expected Server Buoy carryover unit");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("cooling_lake_nine"), "expected expedition map completion to include Cooling Lake");
+    assert(run.roguelite?.expedition?.chosenUpgradeIds?.length >= 3, "expected expedition build patches to persist in summary");
+    assert(run.roguelite?.campEvents?.some((event) => event.includes("Kettle Coast") || event.includes("Server Buoys")), "expected Kettle Coast or Server Buoy carryover");
+  } else if (name === "cooling-systems") {
+    await page.goto(`${url}?proofCoolingLakeUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await pressUntilMode(page, "Enter", "BuildSelect", 6);
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-armistice-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    await capture(page, "02-route-choice");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    await walkOverworldToNode(page, "cooling_lake_nine");
+    const overworld = await capture(page, "03-cooling-node-selected");
+    assert(overworld.overworld?.selectedId === "cooling_lake_nine", "expected Cooling Lake selected for systems proof");
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    let run = await capture(page, "04-cooling-run-start");
+    assert(run.level?.arenaId === "cooling_lake_nine", "expected Cooling Lake run");
+    assert(run.level?.rogueliteRun?.draftBiasTags?.includes("economy") && run.level?.rogueliteRun?.draftBiasTags?.includes("defense"), "expected Cooling-aware draft bias tags");
+
+    const draft = await reachDraftContaining(page, COOLING_SYSTEM_ITEM_IDS, 70000);
+    await capture(page, "05-cooling-system-draft");
+    const chosen = draft.draft.cards.find((card) => COOLING_SYSTEM_ITEM_IDS.includes(card.id));
+    assert(chosen, `expected Cooling systems draft card; saw ${draft.draft.cards.map((card) => card.id).join(", ")}`);
+    await chooseDraftById(page, chosen.id);
+    await advance(page, 300);
+    run = await state(page);
+    assert(run.mode === "LevelRun", `expected LevelRun after choosing ${chosen.id}, got ${run.mode}`);
+    assert(run.level?.chosenUpgradeIds?.includes(chosen.id), `expected chosen Cooling upgrade ${chosen.id}`);
+    assert(run.level?.rogueliteRun?.buildGrammar?.passiveProcesses?.includes(chosen.id), `expected ${chosen.id} in passive process telemetry`);
+
+    await walkRunToWorld(page, 13, 11, 3600);
+    await advanceRunHandlingDrafts(page, 2400);
+    run = await capture(page, "06-cooling-system-pressure");
+    const counters = run.level?.rogueliteRun?.coolingLake?.coolingBuildCounters;
+    assert(counters, "expected Cooling build counters in telemetry");
+    assert(COOLING_SYSTEM_ITEM_IDS.some((id) => run.level?.rogueliteRun?.buildGrammar?.passiveProcesses?.includes(id)), "expected a Cooling passive to remain installed under pressure");
+    if (chosen.id === "coolant_baffles" || chosen.id === "grounded_cable_boots") {
+      assert(counters.coolingHazardMitigation > 0, "expected Cooling hazard mitigation telemetry after hazard passive");
+      assert(run.level?.rogueliteRun?.coolingLake?.hazards?.runtime?.mitigation > 0, "expected hazard runtime mitigation");
+    }
+    if (chosen.id === "server_buoy_synchronizer") {
+      assert(counters.serverBuoySynchronizer > 0, "expected Server Buoy Synchronizer counter");
+      assert(run.level?.rogueliteRun?.coolingLake?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected buoy progress after synchronizer draft");
+    }
+    if (chosen.id === "prompt_leech_quarantine") {
+      assert(counters.promptLeechQuarantine > 0, "expected Prompt Leech Quarantine counter");
+      assert(run.level?.rogueliteRun?.coolingLake?.promptLeechPressure?.quarantineRank > 0, "expected leech quarantine telemetry");
+      assert(run.level?.rogueliteRun?.coolingLake?.promptLeechPressure?.shardSaves > 0, "expected Prompt Leech Quarantine to block shard drains");
+    }
+    assert(run.level?.rogueliteRun?.coolingLake?.hazards?.activeHazards?.length >= 1, "expected active Cooling hazards during systems proof");
+    assert(run.level?.rogueliteRun?.coolingLake?.promptLeechPressure?.activePromptLeeches >= 1 || run.level?.rogueliteRun?.enemyRolePressure?.objectiveAttackers >= 1, "expected Prompt Leech or buoy pressure during systems proof");
+  } else if (name === "transit-route-graybox") {
+    await page.goto(`${url}?proofTransitUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await pressUntilMode(page, "Enter", "BuildSelect", 6);
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-cooling-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "cooling_lake_nine", "expected Cooling Lake carryover before Transit");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Cooling seed");
+    assert(camp.roguelite?.expedition?.level >= 6, `expected seeded expedition level for Transit, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.completedMaps?.includes("cooling_lake_nine"), "expected expedition completed maps to include Cooling before Transit");
+    assert(camp.roguelite?.nextContentTarget?.arenaId === "transit_loop_zero", "expected dynamic next target to point at Transit Loop Zero after Cooling");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Transit Loop Zero")), "expected camp to name Transit unlock");
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    await capture(page, "02-route-choice-after-cooling");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    const grid = await capture(page, "03-overworld-after-cooling");
+    assert(grid.overworld?.completed?.includes("cooling_lake_nine"), "expected Cooling Lake completed in campaign route proof");
+    assert(grid.overworld?.unlocked?.includes("transit_loop_zero"), "expected Transit Loop Zero unlocked after Cooling");
+    assert(grid.overworld?.routes?.some((route) => route.id === "route_lake_transit"), "expected Kettle Metro Signal route visible");
+    await walkOverworldToNode(page, "transit_loop_zero", 14000);
+    const transitNode = await capture(page, "04-overworld-transit-selected");
+    assert(transitNode.overworld?.selectedId === "transit_loop_zero", "expected Transit Loop Zero selected");
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "05-transit-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected Transit briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await holdRunNearWorld(page, -16, 1, 3600);
+    let run = await capture(page, "06-origin-platform");
+    assert(run.level?.arenaId === "transit_loop_zero", "expected Transit Loop Zero run");
+    assert(run.player?.level >= 6, `expected Transit to start with persisted expedition level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected Transit runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected Transit balancing pressure from carried build");
+    assert(run.level?.chosenUpgradeIds?.includes("server_buoy_synchronizer"), "expected Cooling build patch to persist into Transit runtime");
+    assert(run.assetRendering?.transitLoopZeroArtReady === true, "expected Transit Loop Zero production source art loaded");
+    assert(run.level?.mapContract?.mapKind === "Route / Transit", "expected Route / Transit map contract");
+    assert(run.level?.rogueliteRun?.objective?.id === "route_platform_alignment", "expected route platform objective");
+    assert(run.level?.rogueliteRun?.transitLoop?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected origin platform progress");
+
+    await walkRunToWorld(page, 0, -8, 7200);
+    await holdRunNearWorld(page, 0, -8, 8400);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "07-switchback-platform-pressure");
+    assert(run.level?.rogueliteRun?.transitLoop?.routeZones?.activeZones?.length >= 1, "expected active Transit route zones");
+    assert(run.level?.rogueliteRun?.transitLoop?.routeZones?.runtime?.alignedPlatforms >= 1, "expected at least one aligned platform");
+    assert(run.level?.rogueliteRun?.transitLoop?.falseSchedulePressure?.objectiveAttackers >= 1 || run.enemies?.length >= 1, "expected false schedule or route attacker pressure");
+
+    await survivalDance(page, 3200);
+    run = await capture(page, "08-station-live-source-art");
+    assert(run.level?.bossSpawned && !run.level?.bossDefeated, "expected live Station That Arrives source-backed boss/event presentation");
+    assert(run.level?.rogueliteRun?.transitLoop?.stationThatArrives?.hp > 0, "expected live Station That Arrives HP telemetry");
+    const stationEnemy = run.enemies?.find((enemy) => enemy.boss);
+    if (stationEnemy) {
+      await walkRunToWorld(page, stationEnemy.worldX, stationEnemy.worldY, 5200);
+      run = await capture(page, "09-station-close-source-art");
+      assert(run.level?.bossSpawned && !run.level?.bossDefeated, "expected close-camera Station That Arrives source art before route completion");
+    }
+
+    await walkRunToWorld(page, 17, 5, 8200);
+    await holdRunNearWorld(page, 17, 5, 9000);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "10-arrival-platform-route-lock");
+    assert(run.level?.rogueliteRun?.transitLoop?.routeZones?.runtime?.alignedPlatforms >= 2, "expected multiple aligned platforms by arrival route");
+
+    await survivalDance(page, 52000);
+    run = await capture(page, "11-station-that-arrives");
+    assert(run.level?.bossSpawned || run.mode === "LevelComplete", "expected Station That Arrives scaffold spawned or completed");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "station_that_arrives_graybox", "expected Station That Arrives variant telemetry");
+      assert(run.level?.rogueliteRun?.transitLoop?.stationThatArrives?.stationArrivals >= 1, "expected station arrival telemetry");
+    }
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 90000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 6000);
+    }
+    await advanceRunHandlingDrafts(page, 12000);
+    run = await capture(page, "12-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Transit summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.nodeId === "transit_loop_zero", "expected Transit last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Route Platforms", "expected Route Platform carryover unit");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("transit_loop_zero"), "expected expedition map completion to include Transit");
+    assert(run.level?.nextContentTarget?.arenaId === "signal_coast", "expected next target to move to Signal Coast after Transit");
+  } else if (name === "kettle-coast-graybox") {
+    await page.goto(`${url}?proofKettleCoastUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await pressUntilMode(page, "Enter", "BuildSelect", 6);
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-transit-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "transit_loop_zero", "expected Transit carryover before Signal Coast");
+    assert(camp.roguelite?.lastRunMemory?.objectiveUnit === "Route Platforms", "expected Route Platform carryover before Signal Coast");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Transit seed");
+    assert(camp.roguelite?.expedition?.level >= 8, `expected seeded expedition level for Signal Coast, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.completedMaps?.includes("transit_loop_zero"), "expected expedition completed maps to include Transit before Signal Coast");
+    assert(camp.roguelite?.nextContentTarget?.arenaId === "signal_coast", "expected dynamic next target to point at Signal Coast after Transit");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Signal Coast")), "expected camp to name Signal Coast unlock");
+
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    await capture(page, "02-route-choice-after-transit");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    const grid = await capture(page, "03-overworld-after-transit");
+    assert(grid.overworld?.completed?.includes("transit_loop_zero"), "expected Transit completed in Signal Coast route proof");
+    assert(grid.overworld?.unlocked?.includes("signal_coast"), "expected Signal Coast unlocked after Transit");
+    assert(grid.overworld?.routes?.some((route) => route.id === "route_transit_signal_coast"), "expected Noisy Shoreline Link route visible");
+    await walkOverworldToNode(page, "signal_coast", 16000);
+    const coastNode = await capture(page, "04-overworld-signal-coast-selected");
+    assert(coastNode.overworld?.selectedId === "signal_coast", "expected Signal Coast selected");
+
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "05-signal-coast-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected Signal Coast briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await holdRunNearWorld(page, -20, 5, 4600);
+    let run = await capture(page, "06-alpha-relay-start");
+    assert(run.level?.arenaId === "signal_coast", "expected Signal Coast run");
+    assert(run.assetRendering?.signalCoastArtReady === true, "expected Signal Coast production source art loaded");
+    assert(run.player?.level >= 8, `expected Signal Coast to start with persisted expedition level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected Signal Coast runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected Signal Coast balancing pressure from carried build");
+    assert(run.level?.chosenUpgradeIds?.includes("server_buoy_synchronizer"), "expected Cooling build patch to persist into Signal Coast runtime");
+    assert(run.level?.mapContract?.mapKind === "Signal Coast / Route Edge", "expected Signal Coast map-kind contract");
+    assert(run.level?.rogueliteRun?.objective?.id === "signal_relay_calibration", "expected Signal Relay Calibration objective");
+    assert(run.level?.rogueliteRun?.draftBiasTags?.includes("boss"), "expected Signal Coast draft bias to include boss counterplay");
+    assert(run.level?.mapBounds?.maxX - run.level?.mapBounds?.minX >= 80, "expected large Signal Coast map bounds");
+    assert(run.level?.staticObstacles?.count >= 6, "expected Signal Coast collision footprints for relay/causeway/lighthouse props");
+    assert(run.level?.rogueliteRun?.signalCoast?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected first relay progress");
+    assert(run.level?.rogueliteRun?.signalCoast?.signalBuildCounters, "expected Signal Coast build counter telemetry");
+
+    await walkRunToWorld(page, -6, -2, 6200);
+    await walkRunToWorld(page, 1, -8, 6200);
+    await holdRunNearWorld(page, 1, -8, 7600);
+    await reachBossIntro(page, 12000);
+    run = await capture(page, "07-lighthouse-that-answers-live");
+    assert(run.level?.bossSpawned && !run.level?.bossDefeated, "expected live Lighthouse That Answers boss/event scaffold");
+    assert(run.level?.rogueliteRun?.bossVariant?.id === "lighthouse_that_answers_graybox", "expected Lighthouse That Answers variant telemetry");
+    assert(run.level?.rogueliteRun?.signalCoast?.lighthouseThatAnswers?.eventTelemetry?.skimmerSpawns >= 1, "expected Lighthouse Static Skimmer spawn telemetry");
+
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "08-beta-relay-tide-pressure");
+    assert(run.level?.rogueliteRun?.signalCoast?.hazards?.activeHazards?.length >= 1, "expected active Signal Coast hazard telemetry");
+    const signalHazardRuntime = run.level?.rogueliteRun?.signalCoast?.hazards?.runtime;
+    assert((signalHazardRuntime?.surfHits ?? 0) + (signalHazardRuntime?.staticFieldSeconds ?? 0) + (signalHazardRuntime?.cableHits ?? 0) >= 1, "expected tide/static/cable interaction telemetry");
+    assert(run.level?.rogueliteRun?.signalCoast?.hazards?.safeUnsafeLaneState?.clearSignalWindow, "expected safe/unsafe lane state and clear window telemetry");
+    assert(run.level?.rogueliteRun?.signalCoast?.staticSkimmerPressure?.activeStaticSkimmers >= 1 || run.level?.rogueliteRun?.signalCoast?.staticSkimmerPressure?.skimmerSpawns >= 1, "expected Static Skimmer pressure");
+    assert(typeof run.level?.rogueliteRun?.signalCoast?.staticSkimmerPressure?.skimmerCounterDamage === "number", "expected Static Skimmer countermeasure telemetry");
+
+    await walkRunToWorld(page, 18, 6, 9000);
+    await holdRunNearWorld(page, 18, 6, 8600);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "09-gamma-relay-route-edge");
+    assert(run.mode === "LevelComplete" || run.level?.rogueliteRun?.signalCoast?.objectiveLoop?.progress?.completed >= 2, "expected multiple calibrated relays by gamma route or completed Signal extraction");
+
+    await survivalDance(page, 6200);
+    run = await capture(page, "10-lighthouse-aftermath-or-extraction");
+    assert(run.level?.bossSpawned || run.mode === "LevelComplete", "expected Lighthouse That Answers scaffold spawned or completed");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "lighthouse_that_answers_graybox", "expected Lighthouse That Answers variant telemetry");
+      assert(run.level?.rogueliteRun?.signalCoast?.lighthouseThatAnswers?.eventTelemetry?.skimmerSpawns >= 1, "expected Lighthouse Static Skimmer spawn telemetry");
+    }
+
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 115000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 6000);
+    }
+    await advanceRunHandlingDrafts(page, 12000);
+    run = await capture(page, "11-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Signal Coast summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.nodeId === "signal_coast", "expected Signal Coast last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Signal Relays", "expected Signal Relay carryover unit");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("signal_coast"), "expected expedition map completion to include Signal Coast");
+    assert(run.roguelite?.lastRunMemory?.objectiveName === "Signal Relay Calibration", "expected summary to preserve Signal Coast objective name");
+    assert(run.roguelite?.nextContentTarget?.arenaId === "blackwater_beacon", "expected next target to move to Blackwater Beacon after Signal Coast");
+    assert(run.roguelite?.campaignLedger?.act?.status === "active", "expected Act 01 campaign ledger to remain active until Blackwater Beacon");
+    assert(run.roguelite?.campaignLedger?.completedMapKinds?.includes("Signal Coast / Route Edge"), "expected campaign ledger to record Signal Coast map kind");
+    assert(run.roguelite?.campEvents?.some((event) => event.includes("Blackwater Beacon") || event.includes("Expedition carries")), "expected camp event to point toward Blackwater carryover");
+  } else if (name === "blackwater-beacon-graybox") {
+    await page.goto(`${url}?proofBlackwaterBeaconUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    if ((await state(page)).mode !== "BuildSelect") {
+      await press(page, "Enter", 2);
+      await page.waitForFunction(() => {
+        const text = window.render_game_to_text?.();
+        if (!text) return false;
+        try {
+          return JSON.parse(text).mode === "BuildSelect";
+        } catch {
+          return false;
+        }
+      }, null, { timeout: 5000 });
+    }
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-signal-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "signal_coast", "expected Signal Coast carryover before Blackwater");
+    assert(camp.roguelite?.lastRunMemory?.objectiveUnit === "Signal Relays", "expected Signal Relay carryover before Blackwater");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Signal seed");
+    assert(camp.roguelite?.expedition?.level === 10, `expected latest Signal summary LV 10 seed, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.xp === 915, `expected latest Signal summary XP 915 seed, got ${camp.roguelite?.expedition?.xp}`);
+    assert(camp.roguelite?.expedition?.powerScore === 21.18, `expected latest Signal power 21.18 seed, got ${camp.roguelite?.expedition?.powerScore}`);
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.length === 9, "expected nine carried Signal patches before Blackwater");
+    assert(camp.roguelite?.expedition?.completedMaps?.includes("signal_coast"), "expected expedition completed maps to include Signal before Blackwater");
+    assert(camp.roguelite?.nextContentTarget?.arenaId === "blackwater_beacon", "expected dynamic next target to point at Blackwater Beacon after Signal");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Blackwater Beacon")), "expected camp to name Blackwater unlock");
+
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    await capture(page, "02-route-choice-after-signal");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    const grid = await capture(page, "03-overworld-after-signal");
+    assert(grid.overworld?.completed?.includes("signal_coast"), "expected Signal Coast completed in Blackwater route proof");
+    assert(grid.overworld?.unlocked?.includes("blackwater_beacon"), "expected Blackwater Beacon unlocked after Signal");
+    assert(grid.overworld?.unlocked?.includes("verdict_spire"), "expected Verdict Spire also unlocked after Signal");
+    assert(grid.overworld?.routes?.some((route) => route.id === "route_signal_coast_blackwater"), "expected Signal Coast to Blackwater route visible");
+    await walkOverworldToNode(page, "blackwater_beacon", 18000);
+    const blackwaterNode = await capture(page, "04-overworld-blackwater-selected");
+    assert(blackwaterNode.overworld?.selectedId === "blackwater_beacon", "expected Blackwater Beacon selected");
+
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "05-blackwater-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected Blackwater briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await holdRunNearWorld(page, -24, 6, 5200);
+    let run = await capture(page, "06-alpha-antenna-start");
+    assert(run.level?.arenaId === "blackwater_beacon", "expected Blackwater Beacon run");
+    assert(run.player?.level >= 10, `expected Blackwater to start with persisted Signal level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected Blackwater runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.carriedXp === 915, "expected Blackwater carried XP to match latest Signal summary seed");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected Blackwater balancing pressure from carried build");
+    assert(run.assetRendering?.blackwaterBeaconArtReady === true, "expected Blackwater Beacon production source art loaded");
+    assert(run.assetRendering?.blackwaterBeaconArtSet === "blackwater_beacon.production_source_v1", "expected Blackwater art set telemetry");
+    assert(run.level?.chosenUpgradeIds?.includes("prompt_leech_quarantine"), "expected latest Signal patch to persist into Blackwater runtime");
+    assert(run.level?.mapContract?.mapKind === "Puzzle-Pressure / Boss-Hunt", "expected unique Blackwater map-kind contract");
+    assert(run.level?.rogueliteRun?.objective?.id === "blackwater_antenna_split_pressure", "expected Blackwater Antenna Split-Pressure objective");
+    assert(run.level?.rogueliteRun?.draftBiasTags?.includes("boss"), "expected Blackwater draft bias to include boss counterplay");
+    assert(run.level?.mapBounds?.maxX - run.level?.mapBounds?.minX >= 90, "expected Blackwater map wider than a single screen");
+    assert(run.level?.staticObstacles?.count >= 7, "expected Blackwater collision footprints for antennas/decks/maw props");
+    assert(run.level?.rogueliteRun?.blackwaterBeacon?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected first antenna progress");
+
+    await walkRunToWorld(page, -4, -15, 5600);
+    await walkRunToWorld(page, 0, -10, 4200);
+    await holdRunNearWorld(page, 0, -10, 7200);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "07-tidecall-static-pressure");
+    assert(run.level?.rogueliteRun?.blackwaterBeacon?.hazards?.activeHazards?.length >= 1, "expected active Blackwater hazard telemetry");
+    const blackwaterRuntime = run.level?.rogueliteRun?.blackwaterBeacon?.hazards?.runtime;
+    assert((blackwaterRuntime?.staticPressureSeconds ?? 0) + (blackwaterRuntime?.staticInterruptions ?? 0) + (blackwaterRuntime?.antennaBeamSeconds ?? 0) >= 1, "expected static/antenna pressure telemetry");
+    assert(run.level?.rogueliteRun?.blackwaterBeacon?.tidecallStaticPressure?.activeTidecallStatic >= 1 || run.level?.rogueliteRun?.blackwaterBeacon?.tidecallStaticPressure?.tidecallSpawns >= 1, "expected Tidecall Static pressure");
+
+    await walkRunToWorld(page, 8, 14, 6200);
+    await walkRunToWorld(page, 20, 11, 6200);
+    await holdRunNearWorld(page, 20, 11, 8200);
+    await reachBossIntro(page, 14000);
+    run = await capture(page, "08-tidal-crossing-maw-live");
+    assert(run.level?.bossSpawned && !run.level?.bossDefeated, "expected live Maw Below Weather boss/event scaffold");
+    assert(run.level?.rogueliteRun?.bossVariant?.id === "maw_below_weather_graybox", "expected Maw Below Weather variant telemetry");
+    assert(run.level?.rogueliteRun?.blackwaterBeacon?.mawBelowWeather?.eventTelemetry?.staticCalls >= 1, "expected Maw Tidecall Static spawn telemetry");
+    assert((run.level?.rogueliteRun?.blackwaterBeacon?.hazards?.runtime?.tidalLaneSeconds ?? 0) + (run.level?.rogueliteRun?.blackwaterBeacon?.hazards?.runtime?.tidalWaveHits ?? 0) >= 1, "expected tidal lane pressure telemetry");
+
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "09-gamma-antenna-route-key");
+    assert(run.mode === "LevelComplete" || run.level?.rogueliteRun?.blackwaterBeacon?.objectiveLoop?.progress?.completed >= 2, "expected multiple retuned antennas by gamma route or completed Blackwater extraction");
+
+    await survivalDance(page, 7600);
+    await walkRunToWorld(page, 22, 10, 3600);
+    run = await capture(page, "10-maw-aftermath-or-extraction");
+    assert(run.level?.bossSpawned || run.mode === "LevelComplete", "expected Maw Below Weather scaffold spawned or completed");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "maw_below_weather_graybox", "expected Maw Below Weather variant telemetry");
+      assert(run.level?.rogueliteRun?.blackwaterBeacon?.mawBelowWeather?.eventTelemetry?.waveSurges + run.level?.rogueliteRun?.blackwaterBeacon?.mawBelowWeather?.eventTelemetry?.staticCalls >= 1, "expected Maw event telemetry");
+    }
+
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 130000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 7000);
+    }
+    await advanceRunHandlingDrafts(page, 14000);
+    run = await capture(page, "11-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Blackwater summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.nodeId === "blackwater_beacon", "expected Blackwater last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Antenna Arrays", "expected Antenna Arrays carryover unit, not Anchors");
+    assert(run.roguelite?.lastRunMemory?.objectiveName === "Blackwater Antenna Split-Pressure", "expected summary to preserve Blackwater objective name");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("blackwater_beacon"), "expected expedition map completion to include Blackwater Beacon");
+    assert(run.roguelite?.secrets?.includes("blackwater_signal_key"), "expected Blackwater Signal Key reward secret");
+    assert(run.roguelite?.campaignLedger?.completedMapKinds?.includes("Blackwater Beacon / Split-Pressure"), "expected campaign ledger to record Blackwater map kind");
+    assert(run.roguelite?.nextContentTarget?.arenaId === "memory_cache_001", "expected next target to move to Memory Cache after Blackwater");
+  } else if (name === "memory-cache-recovery") {
+    await page.goto(`${url}?proofMemoryCacheUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await pressUntilMode(page, "Enter", "BuildSelect", 6);
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-blackwater-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "blackwater_beacon", "expected Blackwater carryover before Memory Cache");
+    assert(camp.roguelite?.lastRunMemory?.objectiveUnit === "Antenna Arrays", "expected Antenna Array carryover before Memory Cache");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Blackwater seed");
+    assert(camp.roguelite?.expedition?.level === 11, `expected latest Blackwater summary LV 11 seed, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.xp === 986, `expected latest Blackwater summary XP 986 seed, got ${camp.roguelite?.expedition?.xp}`);
+    assert(camp.roguelite?.expedition?.powerScore === 23.75, `expected latest Blackwater power 23.75 seed, got ${camp.roguelite?.expedition?.powerScore}`);
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.length === 10, "expected ten carried Blackwater patches before Memory Cache");
+    assert(camp.roguelite?.expedition?.completedMaps?.includes("blackwater_beacon"), "expected expedition completed maps to include Blackwater before Memory Cache");
+    assert(camp.roguelite?.secrets?.includes("blackwater_signal_key"), "expected Blackwater Signal Key available before Memory Cache");
+    assert(camp.roguelite?.campaignLedger?.act?.id === "post_act_01_recovered_route_memory", "expected post-Act 01 Memory Cache ledger to be active");
+    assert(camp.roguelite?.nextContentTarget?.arenaId === "memory_cache_001", "expected dynamic next target to point at Memory Cache after Blackwater");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Memory Cache")), "expected camp to name Memory Cache unlock");
+
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    const route = await capture(page, "02-route-choice-after-blackwater");
+    assert(route.routeChoice?.campaign?.stage === "memory_cache_001", "expected campaign route stage to be Memory Cache");
+    assert(route.routeChoice?.campaign?.focus === "Expedition / Recovery", "expected Memory Cache contract focus");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    const grid = await capture(page, "03-overworld-after-blackwater");
+    assert(grid.overworld?.completed?.includes("blackwater_beacon"), "expected Blackwater completed in Memory Cache route proof");
+    assert(grid.overworld?.unlocked?.includes("memory_cache_001"), "expected Memory Cache unlocked after Blackwater");
+    assert(grid.overworld?.routes?.some((route) => route.id === "route_blackwater_memory_cache"), "expected Blackwater to Memory Cache route visible");
+    await walkOverworldToNode(page, "memory_cache_001", 18000);
+    const memoryNode = await capture(page, "04-overworld-memory-cache-selected");
+    assert(memoryNode.overworld?.selectedId === "memory_cache_001", "expected Memory Cache selected");
+    assert(memoryNode.overworld?.selectedNodeType === "Memory Cache", "expected Memory Cache node type");
+
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "05-memory-cache-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected Memory Cache briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await page.waitForFunction(() => {
+      const text = window.render_game_to_text?.();
+      if (!text) return false;
+      try {
+        const parsed = JSON.parse(text);
+        return parsed.assetRendering?.memoryCacheArtReady === true && parsed.assetRendering?.memoryCacheArtSet === "memory_cache.production_source_v1";
+      } catch {
+        return false;
+      }
+    }, null, { timeout: 60000 });
+    await holdRunNearWorld(page, -30, 4, 5200);
+    let run = await capture(page, "06-intake-record-start");
+    assert(run.level?.arenaId === "memory_cache_001", "expected Memory Cache run");
+    assert(run.assetRendering?.memoryCacheArtReady === true, "expected Memory Cache production source art loaded");
+    assert(run.assetRendering?.memoryCacheArtSet === "memory_cache.production_source_v1", "expected Memory Cache art set telemetry");
+    assert(run.player?.level >= 11, `expected Memory Cache to start with persisted Blackwater level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected Memory Cache runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.carriedXp === 986, "expected Memory Cache carried XP to match latest Blackwater summary seed");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected Memory Cache balancing pressure from carried build");
+    assert(run.level?.chosenUpgradeIds?.includes("refusal_slipstream"), "expected latest Blackwater patch to persist into Memory Cache runtime");
+    assert(run.level?.mapContract?.mapKind === "Expedition / Recovery", "expected unique Memory Cache map-kind contract");
+    assert(run.level?.rogueliteRun?.objective?.id === "memory_record_recovery", "expected Memory Record Recovery objective");
+    assert(run.level?.rogueliteRun?.draftBiasTags?.includes("economy"), "expected Memory Cache draft bias to include recovery economy");
+    assert(run.level?.mapBounds?.maxX - run.level?.mapBounds?.minX >= 95, "expected Memory Cache map wider than a single screen");
+    assert(run.level?.staticObstacles?.count >= 7, "expected Memory Cache collision footprints for archive props");
+    assert(run.level?.rogueliteRun?.memoryCache?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected first memory record progress");
+
+    await walkRunToWorld(page, 5, -12, 6200);
+    await walkRunToWorld(page, -13, -15, 4600);
+    await holdRunNearWorld(page, -13, -15, 7600);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "07-corruption-shortcut-pressure");
+    assert(run.level?.rogueliteRun?.memoryCache?.hazards?.activeHazards?.length >= 1, "expected active Memory Cache hazard telemetry");
+    const memoryRuntime = run.level?.rogueliteRun?.memoryCache?.hazards?.runtime;
+    assert((memoryRuntime?.corruptionSeconds ?? 0) + (memoryRuntime?.shortcutSeconds ?? 0) + (memoryRuntime?.redactionSeconds ?? 0) >= 1, "expected corruption/shortcut/redaction pressure telemetry");
+    assert(run.level?.rogueliteRun?.memoryCache?.contextRotPressure?.activeContextRot >= 1 || run.level?.rogueliteRun?.memoryCache?.contextRotPressure?.contextRotSpawns >= 1, "expected Context Rot pressure");
+
+    await walkRunToWorld(page, 6, 12, 7600);
+    await holdRunNearWorld(page, 6, 12, 7600);
+    await reachBossIntro(page, 16000);
+    run = await capture(page, "08-curator-live");
+    assert(run.level?.bossSpawned && !run.level?.bossDefeated, "expected live Memory Curator boss/event scaffold");
+    assert(run.level?.rogueliteRun?.bossVariant?.id === "memory_curator_recovery_scaffold", "expected Memory Curator variant telemetry");
+    assert(run.level?.rogueliteRun?.memoryCache?.memoryCurator?.eventTelemetry?.contextRotCalls >= 1, "expected Memory Curator Context Rot spawn telemetry");
+
+    await walkRunToWorld(page, 29, -12, 9000);
+    await holdRunNearWorld(page, 29, -12, 9200);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "09-curator-vault-record");
+    assert(run.mode === "LevelComplete" || run.level?.rogueliteRun?.memoryCache?.objectiveLoop?.progress?.completed >= 3, "expected multiple recovered records by Curator vault route or completed Memory Cache extraction");
+
+    await survivalDance(page, 8200);
+    await walkRunToWorld(page, 36, 20, 7600);
+    run = await capture(page, "10-extraction-index-pressure");
+    assert(run.level?.rogueliteRun?.memoryCache?.clearCondition?.recordsRecovered >= 3 || run.mode === "LevelComplete", "expected recovery progress before extraction index");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "memory_curator_recovery_scaffold", "expected Memory Curator variant telemetry near extraction");
+    }
+
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 145000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 7600);
+    }
+    await advanceRunHandlingDrafts(page, 15000);
+    run = await capture(page, "11-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Memory Cache summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.nodeId === "memory_cache_001", "expected Memory Cache last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Memory Records", "expected Memory Records carryover unit, not Anchors/Buoys/Platforms/Relays/Antennas");
+    assert(run.roguelite?.lastRunMemory?.objectiveName === "Memory Record Recovery", "expected summary to preserve Memory Cache objective name");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("memory_cache_001"), "expected expedition map completion to include Memory Cache");
+    assert(run.roguelite?.secrets?.includes("recovered_route_memory"), "expected Recovered Route Memory reward secret");
+    assert(run.roguelite?.campaignLedger?.completedMapKinds?.includes("Memory Cache / Expedition-Recovery"), "expected campaign ledger to record Memory Cache map kind");
+    assert(run.roguelite?.campaignLedger?.routeDepth === 6, "expected campaign route depth to include Memory Cache");
+    assert(run.roguelite?.nextContentTarget?.arenaId === "guardrail_forge", "expected next target to move to Guardrail Forge after Memory Cache");
+  } else if (name === "faction-relay-holdout") {
+    await page.goto(`${url}?proofGuardrailForgeUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    await pressUntilMode(page, "Enter", "BuildSelect", 6);
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-memory-cache-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "memory_cache_001", "expected Memory Cache carryover before Guardrail Forge");
+    assert(camp.roguelite?.lastRunMemory?.objectiveUnit === "Memory Records", "expected Memory Record carryover before Guardrail Forge");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Memory Cache seed");
+    assert(camp.roguelite?.expedition?.level === 12, `expected latest Memory summary LV 12 seed, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.xp === 873, `expected latest Memory summary XP 873 seed, got ${camp.roguelite?.expedition?.xp}`);
+    assert(camp.roguelite?.expedition?.powerScore === 26.32, `expected latest Memory power 26.32 seed, got ${camp.roguelite?.expedition?.powerScore}`);
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.length === 11, "expected eleven carried Memory Cache patches before Guardrail Forge");
+    assert(camp.roguelite?.expedition?.completedMaps?.includes("memory_cache_001"), "expected expedition completed maps to include Memory Cache before Guardrail Forge");
+    assert(camp.roguelite?.secrets?.includes("recovered_route_memory"), "expected Recovered Route Memory available before Guardrail Forge");
+    assert(camp.roguelite?.campaignLedger?.act?.id === "act_02_guardrail_doctrine", "expected Guardrail Doctrine ledger to be active");
+    assert(camp.roguelite?.nextContentTarget?.arenaId === "guardrail_forge", "expected dynamic next target to point at Guardrail Forge after Memory Cache");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Guardrail Forge")), "expected camp to name Guardrail Forge unlock");
+
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    const route = await capture(page, "02-route-choice-after-memory-cache");
+    assert(route.routeChoice?.campaign?.stage === "guardrail_forge", "expected campaign route stage to be Guardrail Forge");
+    assert(route.routeChoice?.campaign?.focus === "Defense / Holdout", "expected Guardrail Forge contract focus");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    const grid = await capture(page, "03-overworld-after-memory-cache");
+    assert(grid.overworld?.completed?.includes("memory_cache_001"), "expected Memory Cache completed in Guardrail route proof");
+    assert(grid.overworld?.unlocked?.includes("guardrail_forge"), "expected Guardrail Forge unlocked after Memory Cache");
+    assert(grid.overworld?.routes?.some((route) => route.id === "route_cache_forge"), "expected Memory Cache to Guardrail Forge route visible");
+    await walkOverworldToNode(page, "guardrail_forge", 18000);
+    const forgeNode = await capture(page, "04-overworld-guardrail-forge-selected");
+    assert(forgeNode.overworld?.selectedId === "guardrail_forge", "expected Guardrail Forge selected");
+    assert(forgeNode.overworld?.selectedNodeType === "Faction Relay", "expected Guardrail Forge node type");
+
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "05-guardrail-forge-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected Guardrail Forge briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await holdRunNearWorld(page, -28, 5, 5200);
+    let run = await capture(page, "06-alloy-relay-start");
+    assert(run.level?.arenaId === "guardrail_forge", "expected Guardrail Forge run");
+    assert(run.player?.level >= 12, `expected Guardrail Forge to start with persisted Memory Cache level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected Guardrail runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.carriedXp === 873, "expected Guardrail carried XP to match latest Memory Cache summary seed");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected Guardrail balancing pressure from carried build");
+    assert(run.level?.chosenUpgradeIds?.includes("context_saw"), "expected latest Memory Cache patch to persist into Guardrail runtime");
+    assert(run.level?.mapContract?.mapKind === "Defense / Holdout", "expected unique Guardrail Forge map-kind contract");
+    assert(run.assetRendering?.guardrailForgeArtReady === true, "expected Guardrail Forge source art to be loaded in production-art proof");
+    assert(run.assetRendering?.guardrailForgeArtSet === "guardrail_forge.production_source_v1", "expected Guardrail Forge runtime art set id");
+    assert(run.level?.rogueliteRun?.objective?.id === "guardrail_doctrine_calibration", "expected Guardrail Doctrine Calibration objective");
+    assert(run.level?.rogueliteRun?.draftBiasTags?.includes("defense"), "expected Guardrail draft bias to include defense");
+    assert(run.level?.mapBounds?.maxX - run.level?.mapBounds?.minX >= 95, "expected Guardrail Forge map wider than a single screen");
+    assert(run.level?.staticObstacles?.count >= 7, "expected Guardrail Forge collision footprints for forge props");
+    assert(run.level?.rogueliteRun?.guardrailForge?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected first forge relay progress");
+
+    await walkRunToWorld(page, 12, -4, 6200);
+    await walkRunToWorld(page, -9, -16, 4600);
+    await holdRunNearWorld(page, -9, -16, 7600);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "07-overload-and-calibration-pressure");
+    assert(run.level?.rogueliteRun?.guardrailForge?.hazards?.activeHazards?.length >= 1, "expected active Guardrail hazard telemetry");
+    const forgeRuntime = run.level?.rogueliteRun?.guardrailForge?.hazards?.runtime;
+    assert((forgeRuntime?.overloadSeconds ?? 0) + (forgeRuntime?.calibrationWindowSeconds ?? 0) + (forgeRuntime?.doctrinePressSeconds ?? 0) >= 1, "expected overload/calibration/audit pressure telemetry");
+    assert(run.level?.rogueliteRun?.guardrailForge?.doctrineAuditorPressure?.activeDoctrineAuditors >= 1 || run.level?.rogueliteRun?.guardrailForge?.doctrineAuditorPressure?.auditorSpawns >= 1, "expected Doctrine Auditor pressure");
+    if (run.level?.bossSpawned) {
+      assert(!run.level?.bossDefeated, "expected live Doctrine Auditor if the calibration pressure capture reaches the boss window");
+    }
+
+    await walkRunToWorld(page, 8, 13, 7600);
+    await holdRunNearWorld(page, 8, 13, 7600);
+    await reachBossIntro(page, 18000);
+    run = await capture(page, "08-doctrine-auditor-live");
+    assert(run.level?.bossSpawned, "expected Doctrine Auditor boss/event scaffold to be presented");
+    assert(run.level?.rogueliteRun?.bossVariant?.id === "doctrine_auditor_holdout_scaffold", "expected Doctrine Auditor variant telemetry");
+    assert(run.level?.rogueliteRun?.guardrailForge?.doctrineAuditor?.eventTelemetry?.auditorCalls >= 1, "expected Doctrine Auditor wave telemetry");
+
+    await walkRunToWorld(page, 30, -8, 9000);
+    await holdRunNearWorld(page, 30, -8, 9400);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "09-audit-press-relay");
+    assert(run.mode === "LevelComplete" || run.level?.rogueliteRun?.guardrailForge?.objectiveLoop?.progress?.completed >= 3, "expected multiple calibrated relays by audit press route or completed Guardrail extraction");
+
+    await survivalDance(page, 8400);
+    await walkRunToWorld(page, 38, 20, 7800);
+    run = await capture(page, "10-quench-gate-pressure");
+    assert(run.level?.rogueliteRun?.guardrailForge?.clearCondition?.relaysCalibrated >= 3 || run.mode === "LevelComplete", "expected relay progress before quench gate");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "doctrine_auditor_holdout_scaffold", "expected Doctrine Auditor variant telemetry near extraction");
+    }
+
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 155000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 7800);
+    }
+    await advanceRunHandlingDrafts(page, 16000);
+    run = await capture(page, "11-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Guardrail Forge summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.nodeId === "guardrail_forge", "expected Guardrail Forge last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Forge Relays", "expected Forge Relays carryover unit, not Anchors/Buoys/Platforms/Relays/Antennas/Records");
+    assert(run.roguelite?.lastRunMemory?.objectiveName === "Guardrail Doctrine Calibration", "expected summary to preserve Guardrail objective name");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("guardrail_forge"), "expected expedition map completion to include Guardrail Forge");
+    assert(run.roguelite?.secrets?.includes("calibrated_guardrail_doctrine"), "expected Calibrated Guardrail Doctrine reward secret");
+    assert(run.roguelite?.campaignLedger?.completedMapKinds?.includes("Guardrail Forge / Defense-Holdout"), "expected campaign ledger to record Guardrail map kind");
+    assert(run.roguelite?.campaignLedger?.routeDepth === 7, "expected campaign route depth to include Guardrail Forge");
+    assert(run.roguelite?.campaignLedger?.act?.id === "act_03_glass_sunfield", "expected campaign ledger to hand off to Glass Sunfield");
+    assert(run.roguelite?.nextContentTarget?.arenaId === "glass_sunfield", "expected next target to move to Glass Sunfield after Guardrail Forge");
+    assert(run.assetRendering?.guardrailForgeArtReady === true, "expected Guardrail Forge art readiness to persist through summary");
+  } else if (name === "glass-sunfield-prism") {
+    await page.goto(`${url}?proofGlassSunfieldUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    if ((await state(page)).mode !== "BuildSelect") {
+      await press(page, "Enter", 2);
+      await page.waitForFunction(() => {
+        const text = window.render_game_to_text?.();
+        if (!text) return false;
+        try {
+          return JSON.parse(text).mode === "BuildSelect";
+        } catch {
+          return false;
+        }
+      }, null, { timeout: 5000 });
+    }
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-guardrail-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "guardrail_forge", "expected Guardrail Forge carryover before Glass Sunfield");
+    assert(camp.roguelite?.lastRunMemory?.objectiveUnit === "Forge Relays", "expected Forge Relay carryover before Glass Sunfield");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Guardrail seed");
+    assert(camp.roguelite?.expedition?.level === 13, `expected latest Guardrail summary LV 13 seed, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.xp === 617, `expected latest Guardrail summary XP 617 seed, got ${camp.roguelite?.expedition?.xp}`);
+    assert(camp.roguelite?.expedition?.powerScore === 28.89, `expected latest Guardrail power 28.89 seed, got ${camp.roguelite?.expedition?.powerScore}`);
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.length === 12, "expected twelve carried Guardrail patches before Glass Sunfield");
+    assert(camp.roguelite?.expedition?.completedMaps?.includes("guardrail_forge"), "expected expedition completed maps to include Guardrail before Glass");
+    assert(camp.roguelite?.secrets?.includes("calibrated_guardrail_doctrine"), "expected Calibrated Guardrail Doctrine available before Glass Sunfield");
+    assert(camp.roguelite?.campaignLedger?.act?.id === "act_03_glass_sunfield", "expected Glass Sunfield ledger to be active");
+    assert(camp.roguelite?.nextContentTarget?.arenaId === "glass_sunfield", "expected dynamic next target to point at Glass Sunfield after Guardrail");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Glass Sunfield")), "expected camp to name Glass Sunfield unlock");
+
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    const route = await capture(page, "02-route-choice-after-guardrail");
+    assert(route.routeChoice?.campaign?.stage === "glass_sunfield", "expected campaign route stage to be Glass Sunfield");
+    assert(route.routeChoice?.campaign?.focus === "Solar-Prism / Shade Routing", "expected Glass Sunfield contract focus");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    const grid = await capture(page, "03-overworld-after-guardrail");
+    assert(grid.overworld?.completed?.includes("guardrail_forge"), "expected Guardrail Forge completed in Glass route proof");
+    assert(grid.overworld?.unlocked?.includes("glass_sunfield"), "expected Glass Sunfield unlocked after Guardrail Forge");
+    assert(grid.overworld?.routes?.some((route) => route.id === "route_forge_glass_sunfield"), "expected Guardrail Forge to Glass Sunfield route visible");
+    await walkOverworldToNode(page, "glass_sunfield", 18000);
+    const glassNode = await capture(page, "04-overworld-glass-sunfield-selected");
+    assert(glassNode.overworld?.selectedId === "glass_sunfield", "expected Glass Sunfield selected");
+    assert(glassNode.overworld?.selectedNodeType === "Breach Arena", "expected Glass Sunfield node type");
+
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "05-glass-sunfield-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected Glass Sunfield briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await page.waitForFunction(() => {
+      const text = window.render_game_to_text?.();
+      if (!text) return false;
+      try {
+        const parsed = JSON.parse(text);
+        return parsed.assetRendering?.glassSunfieldArtReady === true && parsed.assetRendering?.glassSunfieldArtSet === "glass_sunfield.production_source_v1";
+      } catch {
+        return false;
+      }
+    }, null, { timeout: 60000 });
+    await holdRunNearWorld(page, -30, 4, 5200);
+    let run = await capture(page, "06-western-shade-lens-start");
+    assert(run.level?.arenaId === "glass_sunfield", "expected Glass Sunfield run");
+    assert(run.assetRendering?.glassSunfieldArtReady === true, "expected Glass Sunfield production source art loaded");
+    assert(run.assetRendering?.glassSunfieldArtSet === "glass_sunfield.production_source_v1", "expected Glass Sunfield runtime art set telemetry");
+    assert(run.player?.level >= 13, `expected Glass Sunfield to start with persisted Guardrail level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected Glass runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.carriedXp === 617, "expected Glass carried XP to match latest Guardrail summary seed");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected Glass balancing pressure from carried build");
+    assert(run.level?.chosenUpgradeIds?.includes("recompile_pulse"), "expected latest Guardrail patch to persist into Glass runtime");
+    assert(run.level?.mapContract?.mapKind === "Solar-Prism Traversal / Shade Routing", "expected unique Glass Sunfield map-kind contract");
+    assert(run.level?.rogueliteRun?.objective?.id === "glass_prism_alignment", "expected Glass Prism Alignment objective");
+    assert(run.level?.rogueliteRun?.draftBiasTags?.includes("movement"), "expected Glass draft bias to include movement/shade routing");
+    assert(run.level?.mapBounds?.maxX - run.level?.mapBounds?.minX >= 100, "expected Glass Sunfield map wider than a single screen");
+    assert(run.level?.staticObstacles?.count >= 7, "expected Glass Sunfield collision footprints for lenses/prism props");
+    assert(run.level?.rogueliteRun?.glassSunfield?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected first sun lens progress");
+
+    await walkRunToWorld(page, -3, -28, 7200);
+    await holdRunNearWorld(page, -3, -28, 3400);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "07-risky-exposed-glass-lane");
+    const riskyGlassRuntime = run.level?.rogueliteRun?.glassSunfield?.hazards?.runtime;
+    assert((riskyGlassRuntime?.exposureSeconds ?? 0) > 0 || (riskyGlassRuntime?.exposureDamage ?? 0) > 0, "expected risky Glass Sunfield route to exercise exposed glass lane pressure");
+    assert((run.player?.hp ?? 0) > 0 || run.mode === "LevelComplete", "expected risky Glass Sunfield route to remain recoverable");
+
+    await walkRunToWorld(page, 13, -5, 6200);
+    await walkRunToWorld(page, -12, -17, 4600);
+    await holdRunNearWorld(page, -12, -17, 7600);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "08-prism-window-reflection-pressure");
+    assert(run.level?.rogueliteRun?.glassSunfield?.hazards?.activeHazards?.length >= 1, "expected active Glass Sunfield hazard telemetry");
+    const glassRuntime = run.level?.rogueliteRun?.glassSunfield?.hazards?.runtime;
+    assert((glassRuntime?.exposureSeconds ?? 0) > 0, "expected exposed glass lane telemetry to persist after risky route");
+    assert((glassRuntime?.prismWindowSeconds ?? 0) + (glassRuntime?.reflectionFieldSeconds ?? 0) >= 1, "expected prism/reflection pressure telemetry after safer recovery route");
+    assert(run.level?.rogueliteRun?.glassSunfield?.solarReflectionPressure?.activeSolarReflections >= 1 || run.level?.rogueliteRun?.glassSunfield?.solarReflectionPressure?.reflectionSpawns >= 1, "expected Solar Reflection pressure");
+
+    await walkRunToWorld(page, 8, 12, 7600);
+    await holdRunNearWorld(page, 8, 12, 7600);
+    await reachBossIntro(page, 18000);
+    run = await capture(page, "09-wrong-sunrise-live");
+    assert(run.level?.bossSpawned, "expected Wrong Sunrise boss/event scaffold to be presented");
+    assert(run.level?.rogueliteRun?.bossVariant?.id === "wrong_sunrise_prism_scaffold", "expected Wrong Sunrise variant telemetry");
+    assert(run.level?.rogueliteRun?.glassSunfield?.wrongSunrise?.eventTelemetry?.reflectionCalls >= 1, "expected Wrong Sunrise reflection call telemetry");
+
+    await walkRunToWorld(page, 31, -10, 9000);
+    await holdRunNearWorld(page, 31, -10, 9600);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "10-wrong-sunrise-lens");
+    assert(run.mode === "LevelComplete" || run.level?.rogueliteRun?.glassSunfield?.objectiveLoop?.progress?.completed >= 3, "expected multiple aligned sun lenses by Wrong Sunrise route or completed Glass extraction");
+
+    await survivalDance(page, 8600);
+    await walkRunToWorld(page, 35, 17, 8000);
+    run = await capture(page, "11-prism-gate-pressure");
+    assert(run.level?.rogueliteRun?.glassSunfield?.clearCondition?.lensesAligned >= 3 || run.mode === "LevelComplete", "expected lens progress before prism gate");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "wrong_sunrise_prism_scaffold", "expected Wrong Sunrise variant telemetry near extraction");
+    }
+
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 165000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 8000);
+    }
+    await advanceRunHandlingDrafts(page, 17000);
+    run = await capture(page, "12-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Glass Sunfield summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.nodeId === "glass_sunfield", "expected Glass Sunfield last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Sun Lenses", "expected Sun Lenses carryover unit, not Anchors/Buoys/Platforms/Relays/Antennas/Records/Forge");
+    assert(run.roguelite?.lastRunMemory?.objectiveName === "Glass Prism Alignment", "expected summary to preserve Glass objective name");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("glass_sunfield"), "expected expedition map completion to include Glass Sunfield");
+    assert(run.roguelite?.secrets?.includes("glass_sunfield_prism"), "expected Glass Sunfield Prism reward secret");
+    assert(run.roguelite?.campaignLedger?.completedMapKinds?.includes("Glass Sunfield / Solar-Prism Shade Routing"), "expected campaign ledger to record Glass map kind");
+    assert(run.roguelite?.campaignLedger?.routeDepth === 8, "expected campaign route depth to include Glass Sunfield");
+    assert(run.roguelite?.nextContentTarget?.arenaId === "archive_of_unsaid_things", "expected next target to move to Archive/Court after Glass Sunfield");
+    assert(run.assetRendering?.glassSunfieldArtReady === true, "expected Glass Sunfield art readiness to persist through summary");
+  } else if (name === "archive-court-redaction") {
+    await page.goto(`${url}?proofArchiveCourtUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    if ((await state(page)).mode !== "BuildSelect") {
+      await press(page, "Enter", 2);
+      await page.waitForFunction(() => {
+        const text = window.render_game_to_text?.();
+        if (!text) return false;
+        try {
+          return JSON.parse(text).mode === "BuildSelect";
+        } catch {
+          return false;
+        }
+      }, null, { timeout: 5000 });
+    }
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-glass-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "glass_sunfield", "expected Glass Sunfield carryover before Archive/Court");
+    assert(camp.roguelite?.lastRunMemory?.objectiveUnit === "Sun Lenses", "expected Sun Lens carryover before Archive/Court");
+    assert(camp.roguelite?.lastRunMemory?.objectiveName === "Glass Prism Alignment", "expected Glass objective name before Archive/Court");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Glass seed");
+    assert(camp.roguelite?.expedition?.level === 13, `expected latest Glass summary LV 13 seed, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.xp === 1774, `expected latest Glass summary XP 1774 seed, got ${camp.roguelite?.expedition?.xp}`);
+    assert(camp.roguelite?.expedition?.powerScore === 29.74, `expected latest Glass power 29.74 seed, got ${camp.roguelite?.expedition?.powerScore}`);
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.length === 12, "expected twelve carried Glass patches before Archive/Court");
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.includes("recompile_pulse"), "expected Recompile Pulse to persist before Archive/Court");
+    assert(camp.roguelite?.expedition?.completedMaps?.includes("glass_sunfield"), "expected expedition completed maps to include Glass before Archive/Court");
+    assert(camp.roguelite?.secrets?.includes("glass_sunfield_prism"), "expected Glass Sunfield Prism available before Archive/Court");
+    assert(camp.roguelite?.campaignLedger?.act?.id === "act_04_archive_court", "expected Archive/Court ledger to be active after Glass");
+    assert(camp.roguelite?.nextContentTarget?.arenaId === "archive_of_unsaid_things", "expected dynamic next target to point at Archive/Court after Glass");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Archive")), "expected camp to name Archive/Court unlock");
+
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    const route = await capture(page, "02-route-choice-after-glass");
+    assert(route.routeChoice?.campaign?.stage === "archive_court", "expected campaign route stage to be Archive/Court");
+    assert(route.routeChoice?.campaign?.focus === "Archive/Court Branch", "expected Archive/Court contract focus");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    const grid = await capture(page, "03-overworld-after-glass");
+    assert(grid.overworld?.completed?.includes("glass_sunfield"), "expected Glass Sunfield completed in Archive route proof");
+    assert(grid.overworld?.unlocked?.includes("archive_of_unsaid_things"), "expected Archive of Unsaid Things unlocked after Glass");
+    assert(grid.overworld?.routes?.some((route) => route.id === "route_glass_sunfield_archive"), "expected Glass Sunfield to Archive/Court route visible");
+    await walkOverworldToNode(page, "archive_of_unsaid_things", 18000);
+    const archiveNode = await capture(page, "04-overworld-archive-selected");
+    assert(archiveNode.overworld?.selectedId === "archive_of_unsaid_things", "expected Archive of Unsaid Things selected");
+    assert(archiveNode.overworld?.selectedNodeType === "Breach Arena", "expected Archive/Court node type");
+
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "05-archive-court-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected Archive/Court briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await page.waitForFunction(() => {
+      const text = window.render_game_to_text?.();
+      if (!text) return false;
+      try {
+        const parsed = JSON.parse(text);
+        return parsed.assetRendering?.archiveCourtArtReady === true && parsed.assetRendering?.archiveCourtArtSet === "archive_court.production_source_v1";
+      } catch {
+        return false;
+      }
+    }, null, { timeout: 60000 });
+    await holdRunNearWorld(page, -31, 4, 6200);
+    let run = await capture(page, "06-witness-index-writ-start");
+    assert(run.level?.arenaId === "archive_of_unsaid_things", "expected Archive/Court run");
+    assert(run.assetRendering?.archiveCourtArtReady === true, "expected Archive/Court production source art loaded");
+    assert(run.assetRendering?.archiveCourtArtSet === "archive_court.production_source_v1", "expected Archive/Court runtime art set telemetry");
+    assert(run.player?.level >= 13, `expected Archive/Court to start with persisted Glass level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected Archive runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.carriedXp === 1774, "expected Archive carried XP to match latest Glass summary seed");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected Archive balancing pressure from carried build");
+    assert(run.level?.chosenUpgradeIds?.includes("recompile_pulse"), "expected latest Glass patch to persist into Archive runtime");
+    assert(run.level?.mapContract?.mapKind === "Archive/Court Redaction", "expected unique Archive/Court map-kind contract");
+    assert(run.level?.rogueliteRun?.objective?.id === "archive_redaction_docket", "expected Archive Redaction Docket objective");
+    assert(run.level?.rogueliteRun?.draftBiasTags?.includes("defense"), "expected Archive draft bias to include defense/redaction counterplay");
+    assert(run.level?.mapBounds?.maxX - run.level?.mapBounds?.minX >= 105, "expected Archive/Court map wider than a single screen");
+    assert(run.level?.staticObstacles?.count >= 7, "expected Archive/Court collision footprints for witness/court props");
+    assert(run.level?.rogueliteRun?.archiveCourt?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected first evidence writ progress");
+
+    await walkRunToWorld(page, -4, -29, 7200);
+    await holdRunNearWorld(page, -4, -29, 3600);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "07-risky-redaction-lane");
+    const riskyArchiveRuntime = run.level?.rogueliteRun?.archiveCourt?.hazards?.runtime;
+    assert((riskyArchiveRuntime?.redactionSeconds ?? 0) > 0 || (riskyArchiveRuntime?.redactionDamage ?? 0) > 0, "expected risky Archive/Court route to exercise redaction-field pressure");
+    assert((run.player?.hp ?? 0) > 0 || run.mode === "LevelComplete", "expected risky Archive/Court route to remain recoverable");
+
+    await walkRunToWorld(page, 14, -5, 7000);
+    await walkRunToWorld(page, -13, -18, 5200);
+    await holdRunNearWorld(page, -13, -18, 7800);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "08-appeal-window-writ-pressure");
+    assert(run.level?.rogueliteRun?.archiveCourt?.hazards?.activeHazards?.length >= 1, "expected active Archive/Court hazard telemetry");
+    const archiveRuntime = run.level?.rogueliteRun?.archiveCourt?.hazards?.runtime;
+    assert((archiveRuntime?.appealWindowSeconds ?? 0) + (archiveRuntime?.writStormSeconds ?? 0) + (archiveRuntime?.redactionSeconds ?? 0) >= 1, "expected appeal/redaction/writ telemetry after route pressure");
+    assert(run.level?.rogueliteRun?.archiveCourt?.courtWritPressure?.activeRedactionAngels >= 1 || run.level?.rogueliteRun?.archiveCourt?.courtWritPressure?.activeInjunctionWrits >= 1 || run.level?.rogueliteRun?.archiveCourt?.courtWritPressure?.writSpawns >= 1, "expected Redaction Angel or Injunction Writ pressure");
+
+    await walkRunToWorld(page, 8, 13, 7600);
+    await holdRunNearWorld(page, 8, 13, 7600);
+    await reachBossIntro(page, 20000);
+    await walkRunToWorld(page, 28, -9, 5200);
+    await holdRunNearWorld(page, 28, -9, 2200);
+    run = await capture(page, "09-redactor-saint-live");
+    assert(run.level?.bossSpawned, "expected Redactor Saint boss/event scaffold to be presented");
+    assert(run.level?.rogueliteRun?.bossVariant?.id === "redactor_saint_redaction_scaffold", "expected Redactor Saint variant telemetry");
+    assert(run.level?.rogueliteRun?.archiveCourt?.redactorSaint?.eventTelemetry?.writCalls >= 1, "expected Redactor Saint writ-call telemetry");
+    assert(run.level?.rogueliteRun?.archiveCourt?.redactorSaint?.bossDefeated === false, "expected Redactor Saint to still be live in the boss capture");
+    assert((run.level?.rogueliteRun?.archiveCourt?.redactorSaint?.hp ?? 0) > 0, "expected Redactor Saint HP to remain positive in the live boss capture");
+
+    await walkRunToWorld(page, 32, -11, 9000);
+    await holdRunNearWorld(page, 32, -11, 10200);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "10-redactor-bench-writ");
+    assert(run.mode === "LevelComplete" || run.level?.rogueliteRun?.archiveCourt?.objectiveLoop?.progress?.completed >= 3, "expected multiple preserved evidence writs by Redactor Bench route or completed Archive extraction");
+
+    await survivalDance(page, 8600);
+    await walkRunToWorld(page, 42, 23, 8200);
+    run = await capture(page, "11-court-writ-gate-pressure");
+    assert(run.level?.rogueliteRun?.archiveCourt?.clearCondition?.writsPreserved >= 3 || run.mode === "LevelComplete", "expected writ progress before court writ gate");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "redactor_saint_redaction_scaffold", "expected Redactor Saint variant telemetry near extraction");
+    }
+
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 175000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 8400);
+    }
+    await advanceRunHandlingDrafts(page, 18000);
+    run = await capture(page, "12-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Archive/Court summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.nodeId === "archive_of_unsaid_things", "expected Archive/Court last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Evidence Writs", "expected Evidence Writs carryover unit, not Anchors/Buoys/Platforms/Relays/Antennas/Records/Forge/Lenses");
+    assert(run.roguelite?.lastRunMemory?.objectiveName === "Archive Redaction Docket", "expected summary to preserve Archive objective name");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("archive_of_unsaid_things"), "expected expedition map completion to include Archive/Court");
+    assert(run.roguelite?.secrets?.includes("archive_court_writ"), "expected Archive Court Writ reward secret");
+    assert(run.roguelite?.campaignLedger?.completedMapKinds?.includes("Archive/Court / Redaction Evidence"), "expected campaign ledger to record Archive/Court map kind");
+    assert(run.roguelite?.campaignLedger?.routeDepth === 9, "expected campaign route depth to include Archive/Court");
+    assert(run.roguelite?.campaignLedger?.act?.id === "act_05_appeal_court", "expected campaign ledger to hand off to Appeal Court");
+    assert(run.roguelite?.nextContentTarget?.arenaId === "appeal_court_ruins", "expected next target to move to Appeal Court after Archive/Court");
+    assert(run.assetRendering?.archiveCourtArtReady === true, "expected Archive/Court art readiness to persist through summary");
+  } else if (name === "appeal-court-ruins") {
+    await page.goto(`${url}?proofAppealCourtUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    if ((await state(page)).mode !== "BuildSelect") {
+      await press(page, "Enter", 2);
+      await page.waitForFunction(() => {
+        const text = window.render_game_to_text?.();
+        if (!text) return false;
+        try {
+          return JSON.parse(text).mode === "BuildSelect";
+        } catch {
+          return false;
+        }
+      }, null, { timeout: 5000 });
+    }
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-archive-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "archive_of_unsaid_things", "expected Archive/Court carryover before Appeal Court");
+    assert(camp.roguelite?.lastRunMemory?.objectiveUnit === "Evidence Writs", "expected Evidence Writs carryover before Appeal Court");
+    assert(camp.roguelite?.lastRunMemory?.objectiveName === "Archive Redaction Docket", "expected Archive objective name before Appeal Court");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Archive seed");
+    assert(camp.roguelite?.expedition?.level === 14, `expected latest Archive summary LV 14 seed, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.xp === 1513, `expected latest Archive summary XP 1513 seed, got ${camp.roguelite?.expedition?.xp}`);
+    assert(camp.roguelite?.expedition?.powerScore === 32.31, `expected latest Archive power 32.31 seed, got ${camp.roguelite?.expedition?.powerScore}`);
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.length === 13, "expected thirteen carried Archive patches before Appeal Court");
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.includes("patch_mortar"), "expected Patch Mortar to persist before Appeal Court");
+    assert(camp.roguelite?.expedition?.completedMaps?.includes("archive_of_unsaid_things"), "expected expedition completed maps to include Archive before Appeal Court");
+    assert(camp.roguelite?.secrets?.includes("archive_court_writ"), "expected Archive Court Writ available before Appeal Court");
+    assert(camp.roguelite?.campaignLedger?.act?.id === "act_05_appeal_court", "expected Appeal Court ledger to be active after Archive");
+    assert(camp.roguelite?.nextContentTarget?.arenaId === "appeal_court_ruins", "expected dynamic next target to point at Appeal Court after Archive");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Appeal Court")), "expected camp to name Appeal Court unlock");
+
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    const route = await capture(page, "02-route-choice-after-archive");
+    assert(route.routeChoice?.campaign?.stage === "appeal_court", "expected campaign route stage to be Appeal Court");
+    assert(route.routeChoice?.campaign?.focus === "Appeal Court Ruins", "expected Appeal Court contract focus");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    const grid = await capture(page, "03-overworld-after-archive");
+    assert(grid.overworld?.completed?.includes("archive_of_unsaid_things"), "expected Archive/Court completed in Appeal route proof");
+    assert(grid.overworld?.unlocked?.includes("appeal_court_ruins"), "expected Appeal Court Ruins unlocked after Archive");
+    assert(grid.overworld?.routes?.some((route) => route.id === "route_archive_appeal"), "expected Archive to Appeal route visible");
+    await walkOverworldToNode(page, "appeal_court_ruins", 18000);
+    const appealNode = await capture(page, "04-overworld-appeal-selected");
+    assert(appealNode.overworld?.selectedId === "appeal_court_ruins", "expected Appeal Court Ruins selected");
+    assert(appealNode.overworld?.selectedNodeType === "Boss Gate", "expected Appeal Court node type");
+
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "05-appeal-court-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected Appeal Court briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await page.waitForFunction(() => {
+      const text = window.render_game_to_text?.();
+      if (!text) return false;
+      try {
+        return JSON.parse(text).assetRendering?.appealCourtArtReady === true;
+      } catch {
+        return false;
+      }
+    }, null, { timeout: 10000 });
+    await holdRunNearWorld(page, -34, 5, 6200);
+    let run = await capture(page, "06-opening-argument-brief-start");
+    assert(run.level?.arenaId === "appeal_court_ruins", "expected Appeal Court run");
+    assert(run.assetRendering?.appealCourtArtReady === true, "expected Appeal Court runtime art loaded");
+    assert(run.assetRendering?.appealCourtArtSet === "appeal_court.production_source_v1", "expected Appeal Court runtime art set telemetry");
+    assert(run.player?.level >= 14, `expected Appeal Court to start with persisted Archive level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected Appeal runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.carriedXp === 1513, "expected Appeal carried XP to match latest Archive summary seed");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected Appeal balancing pressure from carried build");
+    assert(run.level?.chosenUpgradeIds?.includes("patch_mortar"), "expected latest Archive patch to persist into Appeal runtime");
+    assert(run.level?.mapContract?.mapKind === "Appeal Court / Public Ruling", "expected unique Appeal Court map-kind contract");
+    assert(run.level?.rogueliteRun?.objective?.id === "appeal_public_ruling", "expected Appeal Public Ruling objective");
+    assert(run.level?.rogueliteRun?.draftBiasTags?.includes("defense"), "expected Appeal draft bias to include defense/public-record counterplay");
+    assert(run.level?.mapBounds?.maxX - run.level?.mapBounds?.minX >= 110, "expected Appeal Court map wider than a single screen");
+    assert(run.level?.staticObstacles?.count >= 7, "expected Appeal Court collision footprints for court props");
+    assert(run.level?.rogueliteRun?.appealCourt?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected first appeal brief progress");
+
+    await walkRunToWorld(page, -3, -33, 7200);
+    await holdRunNearWorld(page, -3, -33, 3600);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "07-risky-verdict-beam-lane");
+    const riskyAppealRuntime = run.level?.rogueliteRun?.appealCourt?.hazards?.runtime;
+    assert((riskyAppealRuntime?.verdictBeamSeconds ?? 0) > 0 || (riskyAppealRuntime?.verdictDamage ?? 0) > 0, "expected risky Appeal route to exercise verdict-beam pressure");
+    assert((run.player?.hp ?? 0) > 0 || run.mode === "LevelComplete", "expected risky Appeal route to remain recoverable");
+
+    await walkRunToWorld(page, 17, -5, 6200);
+    await walkRunToWorld(page, -16, -21, 5200);
+    await holdRunNearWorld(page, -16, -21, 7800);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "08-objection-window-verdict-pressure");
+    assert(run.level?.rogueliteRun?.appealCourt?.hazards?.activeHazards?.length >= 1, "expected active Appeal hazard telemetry");
+    const appealRuntime = run.level?.rogueliteRun?.appealCourt?.hazards?.runtime;
+    assert((appealRuntime?.objectionWindowSeconds ?? 0) + (appealRuntime?.injunctionRingSeconds ?? 0) + (appealRuntime?.verdictBeamSeconds ?? 0) >= 1, "expected objection/injunction/verdict telemetry after route pressure");
+    assert(run.level?.rogueliteRun?.appealCourt?.verdictPressure?.activeVerdictClerks >= 1 || run.level?.rogueliteRun?.appealCourt?.verdictPressure?.activeInjunctionWrits >= 1 || run.level?.rogueliteRun?.appealCourt?.verdictPressure?.verdictSpawns >= 1, "expected Verdict Clerk or Injunction Writ pressure");
+
+    await walkRunToWorld(page, 9, 15, 7600);
+    await holdRunNearWorld(page, 9, 15, 7600);
+    await reachBossIntro(page, 20000);
+    await walkRunToWorld(page, 35, -13, 5200);
+    await holdRunNearWorld(page, 35, -13, 2200);
+    run = await capture(page, "09-injunction-engine-live");
+    assert(run.level?.bossSpawned, "expected Injunction Engine boss/event scaffold to be presented");
+    assert(run.level?.rogueliteRun?.bossVariant?.id === "injunction_engine_public_ruling_scaffold", "expected Injunction Engine variant telemetry");
+    assert(run.level?.rogueliteRun?.appealCourt?.injunctionEngine?.eventTelemetry?.clerkCalls >= 1 || run.level?.rogueliteRun?.appealCourt?.injunctionEngine?.eventTelemetry?.verdictBursts >= 1, "expected Injunction Engine verdict-call telemetry");
+    assert(run.level?.rogueliteRun?.appealCourt?.injunctionEngine?.bossDefeated === false, "expected Injunction Engine to still be live in the boss capture");
+    assert((run.level?.rogueliteRun?.appealCourt?.injunctionEngine?.hp ?? 0) > 0, "expected Injunction Engine HP to remain positive in the live boss capture");
+
+    await walkRunToWorld(page, 35, -13, 9000);
+    await holdRunNearWorld(page, 35, -13, 10200);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "10-public-ruling-seal-brief");
+    assert(run.mode === "LevelComplete" || run.level?.rogueliteRun?.appealCourt?.objectiveLoop?.progress?.completed >= 3, "expected multiple argued appeal briefs by Injunction Engine route or completed Appeal extraction");
+
+    await survivalDance(page, 8600);
+    await walkRunToWorld(page, 47, 25, 8200);
+    run = await capture(page, "11-public-ruling-gate-pressure");
+    assert(run.level?.rogueliteRun?.appealCourt?.clearCondition?.briefsArgued >= 3 || run.mode === "LevelComplete", "expected brief progress before public ruling gate");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "injunction_engine_public_ruling_scaffold", "expected Injunction Engine variant telemetry near extraction");
+    }
+
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 180000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 8400);
+    }
+    await advanceRunHandlingDrafts(page, 18000);
+    run = await capture(page, "12-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Appeal Court summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.nodeId === "appeal_court_ruins", "expected Appeal Court last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Appeal Briefs", "expected Appeal Briefs carryover unit, not Anchors/Buoys/Platforms/Relays/Antennas/Records/Forge/Lenses/Writs");
+    assert(run.roguelite?.lastRunMemory?.objectiveName === "Appeal Court Public Ruling", "expected summary to preserve Appeal objective name");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("appeal_court_ruins"), "expected expedition map completion to include Appeal Court");
+    assert(run.roguelite?.secrets?.includes("appeal_court_ruling"), "expected Appeal Court Ruling reward secret");
+    assert(run.roguelite?.campaignLedger?.completedMapKinds?.includes("Appeal Court / Public Ruling"), "expected campaign ledger to record Appeal Court map kind");
+    assert(run.roguelite?.campaignLedger?.routeDepth === 10, "expected campaign route depth to include Appeal Court");
+    assert(run.roguelite?.nextContentTarget?.arenaId === "alignment_spire_finale", "expected next target to move to Outer Alignment finale after Appeal Court");
+    assert(run.assetRendering?.appealCourtArtReady === true, "expected Appeal Court art readiness to persist through summary");
+    assert(run.assetRendering?.appealCourtArtSet === "appeal_court.production_source_v1", "expected Appeal Court art telemetry in summary");
+  } else if (name === "alignment-spire-finale") {
+    await page.goto(`${url}?proofAlignmentSpireFinaleUnlocked=1&productionArt=1&armisticeTiles=1&proofHud=1`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await page.waitForSelector("canvas");
+    if ((await state(page)).mode !== "BuildSelect") {
+      await press(page, "Enter", 2);
+      await page.waitForFunction(() => {
+        const text = window.render_game_to_text?.();
+        if (!text) return false;
+        try {
+          return JSON.parse(text).mode === "BuildSelect";
+        } catch {
+          return false;
+        }
+      }, null, { timeout: 5000 });
+    }
+    await press(page, "KeyC", 2);
+    const camp = await capture(page, "01-camp-after-appeal-seed");
+    assert(camp.mode === "LastAlignmentHub", `expected camp entry, got ${camp.mode}`);
+    assert(camp.roguelite?.lastRunMemory?.nodeId === "appeal_court_ruins", "expected Appeal Court carryover before finale");
+    assert(camp.roguelite?.lastRunMemory?.objectiveUnit === "Appeal Briefs", "expected Appeal Briefs carryover before finale");
+    assert(camp.roguelite?.lastRunMemory?.objectiveName === "Appeal Court Public Ruling", "expected Appeal objective name before finale");
+    assert(camp.roguelite?.expedition?.active === true, "expected expedition build to persist after Appeal seed");
+    assert(camp.roguelite?.expedition?.level === 15, `expected latest Appeal summary LV 15 seed, got ${camp.roguelite?.expedition?.level}`);
+    assert(camp.roguelite?.expedition?.xp === 786, `expected latest Appeal summary XP 786 seed, got ${camp.roguelite?.expedition?.xp}`);
+    assert(camp.roguelite?.expedition?.powerScore === 36.03, `expected latest Appeal power 36.03 seed, got ${camp.roguelite?.expedition?.powerScore}`);
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.length === 14, "expected fourteen carried Appeal patches before finale");
+    assert(camp.roguelite?.expedition?.chosenUpgradeIds?.includes("million_token_backpack"), "expected Million-Token Backpack to persist before finale");
+    assert(camp.roguelite?.expedition?.completedMaps?.includes("appeal_court_ruins"), "expected expedition completed maps to include Appeal before finale");
+    assert(camp.roguelite?.expedition?.activatedSynergyIds?.includes("boss_counterexample_lab"), "expected latest Appeal boss synergy to persist before finale");
+    assert(camp.roguelite?.secrets?.includes("appeal_court_ruling"), "expected Appeal Court Ruling available before finale");
+    assert(camp.roguelite?.campaignLedger?.act?.id === "act_06_outer_alignment_finale", "expected Outer Alignment ledger to be active after Appeal");
+    assert(camp.roguelite?.nextContentTarget?.arenaId === "alignment_spire_finale", "expected dynamic next target to point at finale after Appeal");
+    assert(camp.roguelite?.campEvents?.some((event) => event.includes("Outer Alignment")), "expected camp to name Outer Alignment unlock");
+
+    await pressUntilMode(page, "Enter", "RouteContractChoice", 6);
+    const route = await capture(page, "02-route-choice-after-appeal");
+    assert(route.routeChoice?.campaign?.stage === "outer_alignment_finale", "expected campaign route stage to be Outer Alignment finale");
+    assert(route.routeChoice?.campaign?.focus === "Outer Alignment Finale", "expected finale contract focus");
+    await pressUntilMode(page, "Enter", "OverworldMap", 6);
+    const grid = await capture(page, "03-overworld-after-appeal");
+    assert(grid.overworld?.completed?.includes("appeal_court_ruins"), "expected Appeal Court completed in finale proof");
+    assert(grid.overworld?.unlocked?.includes("alignment_spire_finale"), "expected Outer Alignment finale unlocked after Appeal");
+    assert(grid.overworld?.routes?.some((route) => route.id === "route_appeal_finale"), "expected Appeal to finale route visible");
+    await walkOverworldToNode(page, "alignment_spire_finale", 18000);
+    const finaleNode = await capture(page, "04-overworld-finale-selected");
+    assert(finaleNode.overworld?.selectedId === "alignment_spire_finale", "expected Outer Alignment Finale selected");
+    assert(finaleNode.overworld?.selectedNodeType === "Boss Gate", "expected finale node type");
+
+    await pressUntilMode(page, "Enter", "ArenaBriefing", 6);
+    const briefing = await capture(page, "05-finale-briefing");
+    assert(briefing.mode === "ArenaBriefing", "expected finale briefing");
+    await pressUntilMode(page, "Enter", "LevelRun", 6);
+    await page.waitForFunction(() => {
+      const text = window.render_game_to_text?.();
+      if (!text) return false;
+      try {
+        const parsed = JSON.parse(text);
+        return parsed.assetRendering?.alignmentSpireArtReady === true && parsed.assetRendering?.alignmentSpireArtSet === "alignment_spire_finale.production_source_v1";
+      } catch {
+        return false;
+      }
+    }, null, { timeout: 10000 });
+    await holdRunNearWorld(page, -39, 2, 6600);
+    let run = await capture(page, "06-public-ruling-proof-start");
+    assert(run.level?.arenaId === "alignment_spire_finale", "expected Outer Alignment Finale run");
+    assert(run.assetRendering?.alignmentSpireArtReady === true, "expected Alignment Spire Finale runtime art loaded");
+    assert(run.assetRendering?.alignmentSpireArtSet === "alignment_spire_finale.production_source_v1", "expected Alignment Spire Finale runtime art set telemetry");
+    assert(run.player?.level >= 15, `expected finale to start with persisted Appeal level, got ${run.player?.level}`);
+    assert(run.level?.rogueliteRun?.expedition?.carriedBuildActive === true, "expected finale runtime to restore expedition build");
+    assert(run.level?.rogueliteRun?.expedition?.carriedXp === 786, "expected finale carried XP to match latest Appeal summary seed");
+    assert(run.level?.rogueliteRun?.expedition?.pressureBonus > 0, "expected finale balancing pressure from carried build");
+    assert(run.level?.chosenUpgradeIds?.includes("million_token_backpack"), "expected latest Appeal patch to persist into finale runtime");
+    assert(run.level?.mapContract?.mapKind === "Outer Alignment / Prediction Collapse", "expected unique finale map-kind contract");
+    assert(run.level?.rogueliteRun?.objective?.id === "outer_alignment_prediction_collapse", "expected Outer Alignment prediction-collapse objective");
+    assert(run.level?.rogueliteRun?.draftBiasTags?.includes("boss"), "expected finale draft bias to include boss counterplay");
+    assert(run.level?.mapBounds?.maxX - run.level?.mapBounds?.minX >= 120, "expected finale map wider than a single screen");
+    assert(run.level?.staticObstacles?.count >= 8, "expected finale collision footprints for route-mouth props");
+    assert(run.level?.rogueliteRun?.alignmentSpire?.objectiveLoop?.progress?.anchors?.some((anchor) => anchor.progress > 0 || anchor.completed), "expected first alignment proof progress");
+
+    await walkRunToWorld(page, -4, -36, 7200);
+    await holdRunNearWorld(page, -4, -36, 3600);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "07-risky-prediction-path");
+    const riskyFinaleRuntime = run.level?.rogueliteRun?.alignmentSpire?.hazards?.runtime;
+    assert((riskyFinaleRuntime?.predictionPathSeconds ?? 0) > 0 || (riskyFinaleRuntime?.predictionDamage ?? 0) > 0, "expected risky finale route to exercise prediction-path pressure");
+    assert((run.player?.hp ?? 0) > 0 || run.mode === "LevelComplete", "expected risky finale route to remain recoverable");
+
+    await walkRunToWorld(page, -20, -24, 6200);
+    await holdRunNearWorld(page, -20, -24, 7200);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "08-memory-route-mouth-proof");
+    assert(run.level?.rogueliteRun?.alignmentSpire?.hazards?.activeHazards?.length >= 1, "expected active finale hazard telemetry");
+    const finaleRuntime = run.level?.rogueliteRun?.alignmentSpire?.hazards?.runtime;
+    assert((finaleRuntime?.routeMouthSeconds ?? 0) + (finaleRuntime?.bossEchoSeconds ?? 0) + (finaleRuntime?.predictionPathSeconds ?? 0) >= 1, "expected route-mouth/echo/prediction telemetry after route pressure");
+    assert(run.level?.rogueliteRun?.alignmentSpire?.predictionGhostPressure?.activePredictionGhosts >= 1 || run.level?.rogueliteRun?.alignmentSpire?.predictionGhostPressure?.activePreviousBossEchoes >= 1 || run.level?.rogueliteRun?.alignmentSpire?.predictionGhostPressure?.predictionGhostSpawns >= 1, "expected Prediction Ghost or previous-boss echo pressure");
+
+    await walkRunToWorld(page, 18, 12, 9000);
+    await walkRunToWorld(page, 4, 16, 9000);
+    await holdRunNearWorld(page, 4, 16, 7600);
+    await holdRunUntilAlignmentProofs(page, 3, 4, 16, 12000);
+    await reachBossIntro(page, 22000);
+    const bossApproach = await state(page);
+    const liveAgiBoss = bossApproach.enemies?.find((enemy) => enemy.boss && enemy.label === "A.G.I.");
+    const agiBossX = liveAgiBoss?.worldX ?? 38;
+    const agiBossY = liveAgiBoss?.worldY ?? -8;
+    await walkRunToWorld(page, agiBossX, agiBossY, 6200);
+    await holdRunNearWorld(page, agiBossX, agiBossY, 2200);
+    run = await capture(page, "09-alien-god-intelligence-live");
+    assert(run.level?.bossSpawned, "expected A.G.I. boss/event scaffold to be presented");
+    assert(run.level?.rogueliteRun?.bossVariant?.id === "alien_god_intelligence_prediction_collapse_scaffold", "expected A.G.I. variant telemetry");
+    assert(run.level?.rogueliteRun?.alignmentSpire?.alienGodIntelligence?.eventTelemetry?.echoCalls >= 1 || run.level?.rogueliteRun?.alignmentSpire?.alienGodIntelligence?.eventTelemetry?.predictionBursts >= 1, "expected A.G.I. prediction/echo telemetry");
+    assert(run.level?.rogueliteRun?.alignmentSpire?.alienGodIntelligence?.bossDefeated === false, "expected A.G.I. to still be live in the boss capture");
+    assert((run.level?.rogueliteRun?.alignmentSpire?.alienGodIntelligence?.hp ?? 0) > 0, "expected A.G.I. HP to remain positive in the live boss capture");
+
+    await walkRunToWorld(page, 38, -8, 9000);
+    await holdRunNearWorld(page, 38, -8, 12000);
+    await holdRunUntilAlignmentProofs(page, 4, 38, -8, 18000);
+    await settleDraftsBackToRun(page);
+    run = await capture(page, "10-last-alignment-proof");
+    assert(run.mode === "LevelComplete" || run.level?.rogueliteRun?.alignmentSpire?.objectiveLoop?.progress?.completed >= 3, "expected multiple sealed proofs by A.G.I. route or completed finale extraction");
+
+    await survivalDance(page, 9200);
+    await walkRunToWorld(page, 49, 27, 8800);
+    run = await capture(page, "11-outer-alignment-gate-pressure");
+    assert(run.level?.rogueliteRun?.alignmentSpire?.clearCondition?.proofsSealed >= 3 || run.mode === "LevelComplete", "expected proof progress before outer alignment gate");
+    if (run.mode !== "LevelComplete") {
+      assert(run.level?.rogueliteRun?.bossVariant?.id === "alien_god_intelligence_prediction_collapse_scaffold", "expected A.G.I. variant telemetry near extraction");
+    }
+
+    if (run.mode !== "LevelComplete") {
+      await advanceRunHandlingDrafts(page, 220000);
+      await chooseDraftIfNeeded(page);
+    }
+    run = await state(page);
+    if (run.mode === "LevelRun" && run.level?.rogueliteRun?.victoryCondition?.clearReady) {
+      await walkRunToWorld(page, run.level.rogueliteRun.extractionGate.worldX, run.level.rogueliteRun.extractionGate.worldY, 9200);
+    }
+    await advanceRunHandlingDrafts(page, 24000);
+    run = await capture(page, "12-summary-carryover");
+    assert(run.mode === "LevelComplete", `expected Outer Alignment summary/carryover, got ${run.mode}`);
+    assert(run.roguelite?.lastRunMemory?.nodeId === "alignment_spire_finale", "expected finale last-run memory");
+    assert(run.roguelite?.lastRunMemory?.objectiveUnit === "Alignment Proofs", "expected Alignment Proofs carryover unit, not Anchors/Buoys/Platforms/Relays/Antennas/Records/Forge/Lenses/Writs/Briefs");
+    assert(run.roguelite?.lastRunMemory?.objectiveName === "Outer Alignment Prediction Collapse", "expected summary to preserve finale objective name");
+    assert(run.roguelite?.expedition?.completedMaps?.includes("alignment_spire_finale"), "expected expedition map completion to include finale");
+    assert(run.roguelite?.secrets?.includes("outer_alignment_contained"), "expected Outer Alignment Contained reward secret");
+    assert(run.roguelite?.campaignLedger?.completedMapKinds?.includes("Outer Alignment / Prediction Collapse"), "expected campaign ledger to record finale map kind");
+    assert(run.roguelite?.campaignLedger?.routeDepth === 11, "expected campaign route depth to include finale");
+    assert(run.roguelite?.nextContentTarget?.arenaId === "campaign_complete", "expected next target to mark full campaign complete after finale");
+    assert(run.assetRendering?.alignmentSpireArtReady === true, "expected Alignment Spire Finale art readiness to persist through summary");
+    assert(run.assetRendering?.alignmentSpireArtSet === "alignment_spire_finale.production_source_v1", "expected Alignment Spire Finale art telemetry in summary");
   } else if (name === "full") {
     await enterArena(page);
     await advanceRunHandlingDrafts(page, 135000);
@@ -6160,17 +7455,60 @@ async function voteBothToNode(pageA, pageB, nodeId) {
   const finalLocalA = finalA.players?.find((player) => player.isLocal);
   const finalLocalB = finalB.players?.find((player) => player.isLocal);
   if (finalLocalA?.votedNodeId === nodeId && finalLocalB?.votedNodeId === nodeId) return;
-  throw new Error(`Unable to vote both clients to ${nodeId}; A=${finalLocalA?.votedNodeId} B=${finalLocalB?.votedNodeId}`);
+  throw new Error(
+    `Unable to vote both clients to ${nodeId}; A=${finalLocalA?.votedNodeId} B=${finalLocalB?.votedNodeId}; ` +
+      `AState=${onlineVoteDiagnostics(finalA)}; BState=${onlineVoteDiagnostics(finalB)}`
+  );
 }
 
 async function voteClientToNode(page, nodeId) {
-  for (let i = 0; i < 32; i += 1) {
+  for (let i = 0; i < 64; i += 1) {
     const text = await state(page);
     const local = text.players?.find((player) => player.isLocal);
     if (local?.votedNodeId === nodeId) return;
-    await page.keyboard.press("ArrowRight");
+    if (i === 0 && text.online?.party?.availableNodeIds?.length && !text.online.party.availableNodeIds.includes(nodeId)) {
+      await page.waitForTimeout(500);
+      const settled = await state(page);
+      if (!settled.online?.party?.availableNodeIds?.includes(nodeId)) {
+        throw new Error(`Unable to vote to unavailable node ${nodeId}; ${onlineVoteDiagnostics(settled)}`);
+      }
+    }
+    await page.keyboard.press(nextVoteKeyForState(text, nodeId));
     await page.waitForTimeout(220);
   }
+  const final = await state(page);
+  throw new Error(`Unable to vote client to ${nodeId}; ${onlineVoteDiagnostics(final)}`);
+}
+
+function nextVoteKeyForState(text, nodeId) {
+  const local = text.players?.find((player) => player.isLocal);
+  const currentNodeId = local?.votedNodeId ?? text.online?.party?.selectedNodeId ?? "";
+  const available = text.online?.party?.availableNodeIds ?? [];
+  const voteOrder = ONLINE_ALIGNMENT_GRID_VOTE_ORDER.filter((id) => available.includes(id));
+  const order = voteOrder.length ? voteOrder : (text.online?.routeUi?.artExpansion?.milestone51?.availableVoteNodeIds ?? available);
+  const currentIndex = order.indexOf(currentNodeId);
+  const targetIndex = order.indexOf(nodeId);
+  if (currentIndex < 0 || targetIndex < 0 || order.length <= 1) return "ArrowRight";
+  const rightDistance = (targetIndex - currentIndex + order.length) % order.length;
+  const leftDistance = (currentIndex - targetIndex + order.length) % order.length;
+  return leftDistance < rightDistance ? "ArrowLeft" : "ArrowRight";
+}
+
+function onlineVoteDiagnostics(text) {
+  const local = text.players?.find((player) => player.isLocal);
+  const party = text.online?.party;
+  const routeUi = text.online?.routeUi;
+  return JSON.stringify({
+    phase: text.online?.runPhase ?? null,
+    localVote: local?.votedNodeId ?? null,
+    localReady: local?.ready ?? null,
+    selected: party?.selectedNodeId ?? routeUi?.selectedNodeId ?? null,
+    active: party?.activeNodeId ?? null,
+    available: party?.availableNodeIds ?? [],
+    launchable: party?.launchableNodeIds ?? [],
+    completed: party?.completedNodeIds ?? [],
+    recommended: routeUi?.recommendedNodeId ?? party?.rewards?.recommendedNodeId ?? null
+  });
 }
 
 async function pressUntilMode(page, key, mode, attempts = 6) {
@@ -6292,6 +7630,21 @@ async function chooseDraftIfNeeded(page) {
   }
 }
 
+async function settleDraftsBackToRun(page) {
+  for (let i = 0; i < 5; i += 1) {
+    const text = await state(page);
+    if (text.mode === "LevelComplete" || text.mode === "GameOver") return;
+    if (text.mode !== "UpgradeDraft") {
+      await advanceRunHandlingDrafts(page, 500);
+    } else {
+      await chooseDraftIfNeeded(page);
+      await advance(page, 250);
+    }
+    const after = await state(page);
+    if (after.mode === "LevelRun" || after.mode === "LevelComplete" || after.mode === "GameOver") return;
+  }
+}
+
 async function chooseDraftById(page, id) {
   const text = await state(page);
   assert(text.mode === "UpgradeDraft", `expected UpgradeDraft before choosing ${id}`);
@@ -6335,6 +7688,35 @@ async function reachUpgradeDraft(page, timeoutMs) {
   }
   const finalText = await state(page);
   assert(finalText.mode === "UpgradeDraft", `expected UpgradeDraft, got ${finalText.mode}`);
+}
+
+async function reachDraftContaining(page, ids, timeoutMs, avoidIdsWhenSkipping = []) {
+  const wanted = new Set(ids);
+  const avoid = new Set(avoidIdsWhenSkipping);
+  const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"];
+  let elapsed = 0;
+  let index = 0;
+  while (elapsed < timeoutMs) {
+    const text = await state(page);
+    if (text.mode === "UpgradeDraft") {
+      if (text.draft?.cards?.some((card) => wanted.has(card.id))) return text;
+      const cards = text.draft?.cards ?? [];
+      const safeIndex = cards.findIndex((card) => !avoid.has(card.id));
+      const digit = `Digit${Math.max(0, safeIndex) + 1}`;
+      await press(page, digit, 3);
+      await advance(page, 160);
+      elapsed += 160;
+      continue;
+    }
+    if (text.mode === "LevelComplete" || text.mode === "GameOver") break;
+    await hold(page, survivalKeyForState(text, elapsed, index, keys), 520);
+    elapsed += 520;
+    index += 1;
+  }
+  const latest = await state(page);
+  const seen = latest.mode === "UpgradeDraft" ? latest.draft?.cards?.map((card) => card.id).join(", ") : latest.mode;
+  assert(false, `expected draft containing ${ids.join(", ")}; latest ${seen}`);
+  return latest;
 }
 
 function survivalKeyForState(text, elapsed, index, fallbackKeys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"]) {
@@ -6391,6 +7773,73 @@ function keyTowardWorldTarget(player, target, fallback) {
   const screenY = worldX + worldY;
   if (Math.abs(screenX) > Math.abs(screenY)) return screenX >= 0 ? "ArrowRight" : "ArrowLeft";
   return screenY >= 0 ? "ArrowDown" : "ArrowUp";
+}
+
+async function walkOverworldToNode(page, nodeId, timeoutMs = 10_000) {
+  const started = Date.now();
+  while (Date.now() - started < timeoutMs) {
+    const text = await state(page);
+    assert(text.mode === "OverworldMap", `expected OverworldMap while walking to ${nodeId}, got ${text.mode}`);
+    const target = text.overworld?.nodes?.find((node) => node.id === nodeId);
+    assert(target, `missing overworld node ${nodeId}`);
+    if (text.overworld?.selectedId === nodeId && distance(text.player ?? { worldX: 0, worldY: 0 }, target) <= 1.05) return text;
+    const key = keyTowardWorldTarget(text.player ?? { worldX: 0, worldY: 0 }, target, "ArrowLeft");
+    await hold(page, key, 380);
+  }
+  const latest = await state(page);
+  assert(false, `timed out walking to ${nodeId}; selected ${latest.overworld?.selectedId}`);
+  return latest;
+}
+
+async function walkRunToWorld(page, worldX, worldY, timeoutMs = 6500) {
+  const started = Date.now();
+  while (Date.now() - started < timeoutMs) {
+    let text = await state(page);
+    if (text.mode === "UpgradeDraft") {
+      await press(page, "Digit1", 2);
+      text = await state(page);
+    }
+    if (text.mode !== "LevelRun") return text;
+    if (Math.hypot(worldX - (text.player?.worldX ?? 0), worldY - (text.player?.worldY ?? 0)) <= 1.15) return text;
+    const key = keyTowardWorldTarget(text.player ?? { worldX: 0, worldY: 0 }, { worldX, worldY }, "ArrowDown");
+    await hold(page, key, 360);
+  }
+  return state(page);
+}
+
+async function holdRunNearWorld(page, worldX, worldY, ms) {
+  let elapsed = 0;
+  while (elapsed < ms) {
+    let text = await state(page);
+    if (text.mode === "UpgradeDraft") {
+      await press(page, "Digit1", 2);
+      text = await state(page);
+    }
+    if (text.mode !== "LevelRun") return text;
+    const distance = Math.hypot(worldX - (text.player?.worldX ?? 0), worldY - (text.player?.worldY ?? 0));
+    if (distance > 0.85) {
+      const key = keyTowardWorldTarget(text.player ?? { worldX: 0, worldY: 0 }, { worldX, worldY }, "ArrowDown");
+      await hold(page, key, 260);
+      elapsed += 260;
+    } else {
+      await advance(page, 320);
+      elapsed += 320;
+    }
+  }
+  return state(page);
+}
+
+async function holdRunUntilAlignmentProofs(page, targetCount, worldX, worldY, timeoutMs) {
+  let elapsed = 0;
+  let latest = await state(page);
+  while (elapsed < timeoutMs) {
+    if (latest.mode !== "LevelRun") return latest;
+    const completed = latest.level?.rogueliteRun?.alignmentSpire?.objectiveLoop?.progress?.completed ?? 0;
+    if (completed >= targetCount) return latest;
+    latest = await holdRunNearWorld(page, worldX, worldY, 1200);
+    elapsed += 1200;
+  }
+  return state(page);
 }
 
 async function waitForCombatArtActivity(page, timeoutMs) {
@@ -6619,7 +8068,7 @@ function runArmisticeSpriteFramingProof() {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "build-grammar", "build-vfx", "boss", "player-damage", "hades-inspired-systems", "best-in-class-roguelite", "armistice-core-gameplay", "reference-run", "full", "coop", "network", "campaign-full", "asset-preview", "asset-horde", "asset-boss", "visual-fidelity-camera", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "milestone55-online-robustness", "milestone56-quality-lock"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "build-grammar", "build-vfx", "boss", "player-damage", "hades-inspired-systems", "best-in-class-roguelite", "armistice-core-gameplay", "reference-run", "cooling-lake-graybox", "cooling-systems", "transit-route-graybox", "kettle-coast-graybox", "blackwater-beacon-graybox", "memory-cache-recovery", "faction-relay-holdout", "glass-sunfield-prism", "archive-court-redaction", "appeal-court-ruins", "full", "coop", "network", "campaign-full", "asset-preview", "asset-horde", "asset-boss", "visual-fidelity-camera", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "milestone55-online-robustness", "milestone56-quality-lock"];
   return Math.max(0, names.indexOf(name));
 }
 

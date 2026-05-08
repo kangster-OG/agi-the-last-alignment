@@ -13,6 +13,7 @@ export interface RogueliteHudIntel {
   evalName: string;
   evalEffect: string;
   anchors: { completed: number; total: number };
+  objectiveLabel?: string;
   objectiveReward: string;
   synergyOnline: string;
   thesisName: string;
@@ -104,8 +105,9 @@ export function drawHud(
   }
 
   if (rogueliteIntel && !debugHud) {
+    const objectiveLabel = rogueliteIntel.objectiveLabel ?? "ANCHOR";
     const info = new Text({
-      text: `ANCHOR ${rogueliteIntel.anchors.completed}/${rogueliteIntel.anchors.total}     ROUTE ${compactRoute(rogueliteIntel.routeName)}`,
+      text: `${objectiveLabel} ${rogueliteIntel.anchors.completed}/${rogueliteIntel.anchors.total}     ROUTE ${compactRoute(rogueliteIntel.routeName)}`,
       style: { ...fontStyle, fontSize: 9, fill: fieldKit.textSoft, stroke: { color: "#030609", width: 2 } }
     });
     info.position.set(30, 76);
@@ -124,6 +126,7 @@ export function drawHud(
   }
 
   if (rogueliteIntel && debugHud) {
+    const objectiveLabel = rogueliteIntel.objectiveLabel ?? "ANCHORS";
     const panelWidth = 440;
     const x = 16;
     const y = 108;
@@ -133,7 +136,7 @@ export function drawHud(
 
     const compactReward = rogueliteIntel.objectiveReward ? ` + ${rogueliteIntel.objectiveReward}` : "";
     const text = fieldText(
-      `${rogueliteIntel.phase}\nROUTE ${rogueliteIntel.routeName}: ${rogueliteIntel.routeEffect}\nEVAL ${rogueliteIntel.evalName}: ${rogueliteIntel.evalEffect}\nANCHORS ${rogueliteIntel.anchors.completed}/${rogueliteIntel.anchors.total}${compactReward}\nTHESIS ${rogueliteIntel.thesisName}${rogueliteIntel.synergyOnline ? ` // ${rogueliteIntel.synergyOnline}` : ""}`,
+      `${rogueliteIntel.phase}\nROUTE ${rogueliteIntel.routeName}: ${rogueliteIntel.routeEffect}\nEVAL ${rogueliteIntel.evalName}: ${rogueliteIntel.evalEffect}\n${objectiveLabel} ${rogueliteIntel.anchors.completed}/${rogueliteIntel.anchors.total}${compactReward}\nTHESIS ${rogueliteIntel.thesisName}${rogueliteIntel.synergyOnline ? ` // ${rogueliteIntel.synergyOnline}` : ""}`,
       x + 12,
       y + 7,
       { size: 10, width: panelWidth - 24, fill: fieldKit.text, lineHeight: 13 }
@@ -145,6 +148,8 @@ export function drawHud(
 }
 
 function compactObjective(objective: string): string {
+  const buoys = objective.match(/stabilize buoys (\d+)\/(\d+).*eel in (\d+)s/i);
+  if (buoys) return `B ${buoys[1]}/${buoys[2]}  EEL ${buoys[3]}s`;
   const anchors = objective.match(/optional anchors (\d+)\/(\d+).*AGI pressure in (\d+)s/i);
   if (anchors) return `A ${anchors[1]}/${anchors[2]}  AGI ${anchors[3]}s`;
   const agi = objective.match(/AGI pressure in (\d+)s/i);
