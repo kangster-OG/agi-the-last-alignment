@@ -2,7 +2,8 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Room, Server, WebSocketTransport } from "colyseus";
+import { Room, Server } from "@colyseus/core";
+import { WebSocketTransport } from "@colyseus/ws-transport";
 import { ArraySchema, MapSchema, Schema, defineTypes } from "@colyseus/schema";
 import express from "express";
 import {
@@ -35,6 +36,33 @@ const ROLE_PRESSURE_REGROUP_SECONDS = 9.5;
 const ROLE_PRESSURE_RECOMPILE_RADIUS_BONUS = 0.85;
 const ROLE_PRESSURE_RECOMPILE_SPEED_MULTIPLIER = 1.65;
 const DISCONNECTED_SLOT_TTL_SECONDS = 45;
+const ONLINE_ENEMY_PROJECTILE_CAP = 10;
+const ONLINE_ENEMY_TELEGRAPH_CAP = 8;
+const ONLINE_ROLE_PROFILES = {
+  bad_outputs: { roleId: "swarm_fodder", label: "Swarm Fodder" },
+  prompt_leeches: { roleId: "rusher", label: "Rusher" },
+  benchmark_gremlins: { roleId: "support_buffer", label: "Support Buffer" },
+  eval_wraiths: { roleId: "ranged_spitter", label: "Ranged Spitter" },
+  context_rot_crabs: { roleId: "trail_layer", label: "Trail Layer" },
+  memory_anchors: { roleId: "objective_jammer", label: "Objective Jammer" },
+  overfit_horrors: { roleId: "support_buffer", label: "Support Buffer" },
+  token_gobblers: { roleId: "rusher", label: "Rusher" },
+  model_collapse_slimes: { roleId: "volatile_exploder", label: "Volatile Exploder" },
+  static_skimmers: { roleId: "ranged_lead_shooter", label: "Lead Shooter" },
+  tidecall_static: { roleId: "mortar_lobber", label: "Mortar Lobber" },
+  solar_reflections: { roleId: "line_sniper", label: "Line Sniper" },
+  choirglass: { roleId: "ranged_lead_shooter", label: "Lead Shooter" },
+  redaction_angels: { roleId: "trail_layer", label: "Trail Layer" },
+  injunction_writs: { roleId: "line_sniper", label: "Line Sniper" },
+  verdict_clerks: { roleId: "line_sniper", label: "Line Sniper" },
+  doctrine_auditors: { roleId: "objective_jammer", label: "Objective Jammer" },
+  prediction_ghosts: { roleId: "ranged_lead_shooter", label: "Lead Shooter" },
+  previous_boss_echoes: { roleId: "summoner_splitter", label: "Summoner Splitter" },
+  deepforms: { roleId: "ranged_spitter", label: "Ranged Spitter" },
+  jailbreak_wraiths: { roleId: "rusher", label: "Rusher" },
+  false_schedules: { roleId: "line_sniper", label: "Line Sniper" },
+  thermal_mirages: { roleId: "ranged_spitter", label: "Ranged Spitter" }
+};
 const PLAYER_PRESETS = [
   { label: "P1", classId: "accord_striker", factionId: "openai_accord", color: 0x3498db },
   { label: "P2", classId: "bastion_breaker", factionId: "anthropic_safeguard", color: 0xffd166 },
@@ -265,6 +293,9 @@ class ConsensusCellRoom extends Room {
   rolePressureSplitHoldSeconds = 0;
   rolePressureRegroupUntil = 0;
   rolePressureCompletedCount = 0;
+  enemyTelegraphs = [];
+  enemyTrails = [];
+  enemyRoleTelemetry = freshEnemyRoleTelemetry();
   consensusBurstCharge = 0;
   consensusBurstActivations = 0;
   consensusBurstCooldownUntil = 0;
@@ -479,9 +510,13 @@ class ConsensusCellRoom extends Room {
     this.updateBossMechanics(dt);
     this.updateRegionEvents(dt);
     this.updateEnemies(dt);
+    this.updateEnemyRoles(dt);
+    this.updateEnemyTelegraphs(dt);
+    this.updateEnemyTrails(dt);
     this.spawnEnemies(dt);
     this.updateWeapons(dt);
     this.updateProjectiles(dt);
+    this.updateEnemyProjectiles(dt);
     this.updatePickups(dt);
     this.updateConsensusBurst(dt);
     this.resolveEnemyPlayerHits();
@@ -501,6 +536,153 @@ class ConsensusCellRoom extends Room {
       enemy.worldY += movement.y * enemy.speed * dt;
     }
     this.enemies = this.enemies.filter((enemy) => enemy.boss || enemy.life > this.seconds - 42);
+  }
+
+  updateEnemyRoles(dt) {
+    for (const enemy of this.enemies) {
+      if (enemy.hp <= 0 || enemy.boss) continue;
+      const profile = onlineEnemyRoleProfile(enemy.familyId);
+      enemy.roleId = profile.roleId;
+      this.enemyRoleTelemetry.rolesSeen[profile.roleId] = (this.enemyRoleTelemetry.rolesSeen[profile.roleId] ?? 0) + dt;
+      this.enemyRoleTelemetry.familiesSeen[enemy.familyId] = (this.enemyRoleTelemetry.familiesSeen[enemy.familyId] ?? 0) + dt;
+      if (profile.roleId === "support_buffer") this.applyEnemySupportAura(enemy, dt);
+      if (profile.roleId === "trail_layer") this.maybeSpawnEnemyTrail(enemy, profile.roleId);
+      if (profile.roleId === "objective_jammer") this.enemyRoleTelemetry.objectiveJamSeconds += dt;
+      if (!onlineEnemyShooterRole(profile.roleId)) continue;
+      enemy.roleCooldown = Math.max(0, (enemy.roleCooldown ?? onlineInitialRoleCooldown(enemy.familyId, profile.roleId)) - dt);
+      const target = nearestPlayer(enemy.worldX, enemy.worldY, this.players);
+      if (!target || enemy.roleCooldown > 0 || this.enemyTelegraphs.length >= ONLINE_ENEMY_TELEGRAPH_CAP || this.onlineEnemyProjectileCount() >= ONLINE_ENEMY_PROJECTILE_CAP) continue;
+      const dx = target.worldX - enemy.worldX;
+      const dy = target.worldY - enemy.worldY;
+      const distance = Math.hypot(dx, dy);
+      if (distance > onlineEnemyShooterRange(profile.roleId) || distance < 2.2) continue;
+      this.spawnEnemyTelegraph(enemy, target, profile.roleId);
+    }
+  }
+
+  applyEnemySupportAura(source, dt) {
+    let affected = 0;
+    for (const enemy of this.enemies) {
+      if (enemy.id === source.id || enemy.hp <= 0 || enemy.boss) continue;
+      if (Math.hypot(enemy.worldX - source.worldX, enemy.worldY - source.worldY) > 4.1) continue;
+      enemy.hp = Math.min(enemy.maxHp, enemy.hp + dt * (source.familyId === "overfit_horrors" ? 0.9 : 0.55));
+      affected += 1;
+    }
+    if (affected > 0) this.enemyRoleTelemetry.supportAuraSeconds += dt;
+  }
+
+  maybeSpawnEnemyTrail(enemy, roleId) {
+    if ((enemy.nextTrailAt ?? 0) > this.seconds) return;
+    this.enemyTrails.push({
+      id: `${enemy.id}:${Math.floor(this.seconds * 10)}`,
+      familyId: enemy.familyId,
+      roleId,
+      worldX: enemy.worldX,
+      worldY: enemy.worldY,
+      radius: enemy.familyId === "redaction_angels" ? 1.2 : 0.92,
+      damagePerSecond: enemy.familyId === "redaction_angels" ? 1.3 : 0.8,
+      expiresAt: this.seconds + 2.2
+    });
+    enemy.nextTrailAt = this.seconds + 1.05;
+  }
+
+  spawnEnemyTelegraph(enemy, target, roleId) {
+    const lead = roleId === "ranged_lead_shooter" ? 0.46 : roleId === "line_sniper" ? 0.25 : roleId === "mortar_lobber" ? 0.6 : 0.08;
+    const targetX = target.worldX + target.velocityX * lead;
+    const targetY = target.worldY + target.velocityY * lead;
+    const kind = roleId === "line_sniper" ? "line" : roleId === "mortar_lobber" ? "mortar" : "projectile";
+    const windup = kind === "line" ? 0.72 : kind === "mortar" ? 0.92 : roleId === "ranged_lead_shooter" ? 0.52 : 0.62;
+    this.enemyTelegraphs.push({
+      id: this.nextProjectileId++,
+      familyId: enemy.familyId,
+      roleId,
+      kind,
+      fromX: enemy.worldX,
+      fromY: enemy.worldY,
+      targetX,
+      targetY,
+      startedAt: this.seconds,
+      fireAt: this.seconds + windup,
+      expiresAt: this.seconds + windup + 0.35,
+      fired: false
+    });
+    enemy.roleCooldown = onlineEnemyRoleCooldown(enemy.familyId, roleId);
+  }
+
+  updateEnemyTelegraphs() {
+    for (const telegraph of this.enemyTelegraphs) {
+      if (telegraph.fired || this.seconds < telegraph.fireAt) continue;
+      telegraph.fired = true;
+      telegraph.expiresAt = this.seconds + 0.18;
+      const dx = telegraph.targetX - telegraph.fromX;
+      const dy = telegraph.targetY - telegraph.fromY;
+      const len = Math.hypot(dx, dy) || 1;
+      const speed = telegraph.kind === "line" ? 13.8 : telegraph.kind === "mortar" ? 0 : telegraph.roleId === "ranged_lead_shooter" ? 7.2 : 5.0;
+      this.projectiles.push({
+        id: this.nextProjectileId++,
+        ownerSessionId: null,
+        hostile: true,
+        familyId: telegraph.familyId,
+        roleId: telegraph.roleId,
+        kind: telegraph.kind,
+        worldX: telegraph.kind === "mortar" ? telegraph.targetX : telegraph.fromX,
+        worldY: telegraph.kind === "mortar" ? telegraph.targetY : telegraph.fromY,
+        vx: (dx / len) * speed,
+        vy: (dy / len) * speed,
+        radius: telegraph.kind === "line" ? 0.36 : telegraph.kind === "mortar" ? 0.6 : 0.28,
+        damage: telegraph.kind === "line" ? 5 : telegraph.kind === "mortar" ? 5 : telegraph.roleId === "ranged_lead_shooter" ? 2 : 3,
+        pierce: 1,
+        life: telegraph.kind === "line" ? 0.7 : telegraph.kind === "mortar" ? 0.38 : 1.6,
+        label: `enemy:${telegraph.kind}:${telegraph.familyId}`
+      });
+      this.enemyRoleTelemetry.projectilesFired += 1;
+    }
+    this.enemyTelegraphs = this.enemyTelegraphs.filter((telegraph) => telegraph.expiresAt > this.seconds);
+  }
+
+  updateEnemyProjectiles(dt) {
+    for (const projectile of this.projectiles) {
+      if (!projectile.hostile || projectile.life <= 0) continue;
+      projectile.worldX += projectile.vx * dt;
+      projectile.worldY += projectile.vy * dt;
+      projectile.life -= dt;
+      if (projectile.life <= 0) {
+        this.enemyRoleTelemetry.projectileDodges += 1;
+        continue;
+      }
+      for (const player of this.players.values()) {
+        if (player.downed || player.hp <= 0 || player.invuln > 0) continue;
+        if (Math.hypot(projectile.worldX - player.worldX, projectile.worldY - player.worldY) > projectile.radius + 0.34) continue;
+        const kitGuard = player.buildKit?.recompileModifiers?.guardDamageReduction ?? 0;
+        player.hp -= projectile.damage * Math.max(0.82, 1 - kitGuard);
+        projectile.pierce = 0;
+        projectile.life = 0;
+        this.enemyRoleTelemetry.projectileHits += 1;
+        player.invuln = 0.42;
+        if (player.hp <= 0) this.downPlayer(player);
+        break;
+      }
+      if (projectile.life <= 0) continue;
+      projectile.value = 1;
+    }
+    this.enemyRoleTelemetry.projectilesActive = this.onlineEnemyProjectileCount();
+  }
+
+  updateEnemyTrails(dt) {
+    for (const zone of this.enemyTrails) {
+      for (const player of this.players.values()) {
+        if (player.downed || player.hp <= 0) continue;
+        if (Math.hypot(player.worldX - zone.worldX, player.worldY - zone.worldY) > zone.radius) continue;
+        player.hp -= zone.damagePerSecond * dt;
+        this.enemyRoleTelemetry.trailSeconds += dt;
+        if (player.hp <= 0) this.downPlayer(player);
+      }
+    }
+    this.enemyTrails = this.enemyTrails.filter((zone) => zone.expiresAt > this.seconds);
+  }
+
+  onlineEnemyProjectileCount() {
+    return this.projectiles.filter((projectile) => projectile.hostile && projectile.life > 0).length;
   }
 
   enemyMovementVector(enemy, target) {
@@ -540,9 +722,12 @@ class ConsensusCellRoom extends Room {
       const region = chooseSpawnRegion(this.activeArenaConfig().spawnRegions, this.seconds, this.nextEnemyId + i);
       const angle = this.seconds * 1.91 + i * 2.4 + this.nextEnemyId * 0.17;
       const distance = region.radius * (0.35 + ((this.nextEnemyId + i) % 7) / 9);
+      const roleProfile = onlineEnemyRoleProfile(region.familyId);
       this.enemies.push({
         id: this.nextEnemyId,
         familyId: region.familyId,
+        roleId: roleProfile.roleId,
+        roleCooldown: onlineInitialRoleCooldown(region.familyId, roleProfile.roleId),
         sourceRegionId: region.id,
         worldX: clamp(region.worldX + Math.cos(angle) * distance, BOUNDS.minX, BOUNDS.maxX),
         worldY: clamp(region.worldY + Math.sin(angle) * distance, BOUNDS.minY, BOUNDS.maxY),
@@ -682,6 +867,7 @@ class ConsensusCellRoom extends Room {
 
   updateProjectiles(dt) {
     for (const projectile of this.projectiles) {
+      if (projectile.hostile) continue;
       projectile.worldX += projectile.vx * dt;
       projectile.worldY += projectile.vy * dt;
       projectile.life -= dt;
@@ -694,6 +880,7 @@ class ConsensusCellRoom extends Room {
         projectile.pierce -= 1;
         if (enemy.hp <= 0) {
           this.kills += 1;
+          this.resolveEnemyRoleDeath(enemy);
           if (this.objectiveCollectActive()) {
             this.spawnObjectivePickup(enemy.worldX, enemy.worldY);
           } else {
@@ -709,6 +896,23 @@ class ConsensusCellRoom extends Room {
     }
     this.enemies = this.enemies.filter((enemy) => enemy.hp > 0);
     this.projectiles = this.projectiles.filter((projectile) => projectile.life > 0 && projectile.pierce > 0 && insideBounds(projectile.worldX, projectile.worldY, 4));
+  }
+
+  resolveEnemyRoleDeath(enemy) {
+    const roleId = onlineEnemyRoleProfile(enemy.familyId).roleId;
+    if (roleId !== "volatile_exploder" && enemy.familyId !== "model_collapse_slimes") return;
+    this.enemyRoleTelemetry.explosionsTriggered += 1;
+    for (const other of this.enemies) {
+      if (other.id === enemy.id || other.hp <= 0) continue;
+      if (Math.hypot(other.worldX - enemy.worldX, other.worldY - enemy.worldY) > 2.6) continue;
+      other.hp -= other.boss ? 10 : 18;
+    }
+    for (const player of this.players.values()) {
+      if (player.downed || player.hp <= 0) continue;
+      if (Math.hypot(player.worldX - enemy.worldX, player.worldY - enemy.worldY) > 2.2) continue;
+      player.hp -= 4;
+      if (player.hp <= 0) this.downPlayer(player);
+    }
   }
 
   spawnPickup(worldX, worldY, value) {
@@ -1993,6 +2197,7 @@ class ConsensusCellRoom extends Room {
         .map((enemy) => ({
         id: enemy.id,
         familyId: enemy.familyId,
+        roleId: enemy.roleId ?? onlineEnemyRoleProfile(enemy.familyId).roleId,
         sourceRegionId: enemy.sourceRegionId,
         worldX: round(enemy.worldX),
         worldY: round(enemy.worldY),
@@ -2003,12 +2208,37 @@ class ConsensusCellRoom extends Room {
       projectiles: this.projectiles.slice(0, 40).map((projectile) => ({
         id: projectile.id,
         ownerSessionId: projectile.ownerSessionId,
+        hostile: Boolean(projectile.hostile),
+        familyId: projectile.familyId ?? null,
+        roleId: projectile.roleId ?? null,
+        kind: projectile.kind ?? "projectile",
         worldX: round(projectile.worldX),
         worldY: round(projectile.worldY),
         velocityX: round(projectile.vx),
         velocityY: round(projectile.vy),
         life: round(projectile.life),
         label: projectile.label
+      })),
+      enemyTelegraphs: this.enemyTelegraphs.slice(0, 16).map((telegraph) => ({
+        id: telegraph.id,
+        familyId: telegraph.familyId,
+        roleId: telegraph.roleId,
+        kind: telegraph.kind,
+        fromX: round(telegraph.fromX),
+        fromY: round(telegraph.fromY),
+        targetX: round(telegraph.targetX),
+        targetY: round(telegraph.targetY),
+        fireIn: round(Math.max(0, telegraph.fireAt - this.seconds)),
+        fired: telegraph.fired
+      })),
+      enemyTrails: this.enemyTrails.slice(0, 16).map((zone) => ({
+        id: zone.id,
+        familyId: zone.familyId,
+        roleId: zone.roleId,
+        worldX: round(zone.worldX),
+        worldY: round(zone.worldY),
+        radius: zone.radius,
+        expiresIn: round(Math.max(0, zone.expiresAt - this.seconds))
       })),
       pickups: this.pickups.slice(0, 32).map((pickup) => ({
         id: pickup.id,
@@ -2048,9 +2278,11 @@ class ConsensusCellRoom extends Room {
         kills: this.kills,
         collectedPickups: this.collectedPickups,
         authoritativeProjectiles: this.projectiles.length,
+        hostileProjectiles: this.onlineEnemyProjectileCount(),
         authoritativePickups: this.pickups.length,
         bossGateMechanic: this.activeArenaConfig().bossGateMechanic ?? "broken_promise"
       },
+      enemyRoles: this.enemyRoleSnapshot(),
       regionEvent: this.regionEventSnapshot(),
       objectives: this.objectiveSnapshot(),
       recompile: this.recompileSnapshot(),
@@ -2208,6 +2440,29 @@ class ConsensusCellRoom extends Room {
         expiresIn: round(Math.max(0, zone.expiresAt - this.seconds)),
         damagePerSecond: zone.damagePerSecond
       }))
+    };
+  }
+
+  enemyRoleSnapshot() {
+    const activeMix = {};
+    for (const enemy of this.enemies) {
+      if (enemy.hp <= 0 || enemy.boss) continue;
+      const roleId = enemy.roleId ?? onlineEnemyRoleProfile(enemy.familyId).roleId;
+      activeMix[roleId] = (activeMix[roleId] ?? 0) + 1;
+    }
+    return {
+      policy: "online_enemy_roles_v1_server_authoritative",
+      enemyRolesSeen: this.enemyRoleTelemetry.rolesSeen,
+      enemyFamiliesSeen: this.enemyRoleTelemetry.familiesSeen,
+      enemyProjectilesFired: this.enemyRoleTelemetry.projectilesFired,
+      enemyProjectilesActive: this.onlineEnemyProjectileCount(),
+      enemyProjectileHits: this.enemyRoleTelemetry.projectileHits,
+      enemyProjectileDodges: this.enemyRoleTelemetry.projectileDodges,
+      enemyExplosionsTriggered: this.enemyRoleTelemetry.explosionsTriggered,
+      enemyTrailSeconds: round(this.enemyRoleTelemetry.trailSeconds),
+      supportAuraSeconds: round(this.enemyRoleTelemetry.supportAuraSeconds),
+      objectiveJamSeconds: round(this.enemyRoleTelemetry.objectiveJamSeconds),
+      currentPhaseEnemyRoleMix: Object.entries(activeMix).map(([roleId, count]) => ({ roleId, count }))
     };
   }
 
@@ -2896,6 +3151,9 @@ class ConsensusCellRoom extends Room {
     this.rolePressureSplitHoldSeconds = 0;
     this.rolePressureRegroupUntil = 0;
     this.rolePressureCompletedCount = 0;
+    this.enemyTelegraphs = [];
+    this.enemyTrails = [];
+    this.enemyRoleTelemetry = freshEnemyRoleTelemetry();
     this.consensusBurstCharge = 0;
     this.consensusBurstChargeSource = "";
     this.consensusBurstActivations = 0;
@@ -3134,6 +3392,61 @@ function stableHash(text) {
 
 function insideBounds(worldX, worldY, margin) {
   return worldX >= BOUNDS.minX - margin && worldX <= BOUNDS.maxX + margin && worldY >= BOUNDS.minY - margin && worldY <= BOUNDS.maxY + margin;
+}
+
+function onlineEnemyRoleProfile(familyId) {
+  const baseFamilyId = familyId?.endsWith("_echo") ? "previous_boss_echoes" : familyId;
+  return ONLINE_ROLE_PROFILES[baseFamilyId] ?? { roleId: "swarm_fodder", label: "Swarm Fodder" };
+}
+
+function onlineEnemyShooterRole(roleId) {
+  return roleId === "ranged_spitter" || roleId === "ranged_lead_shooter" || roleId === "line_sniper" || roleId === "mortar_lobber";
+}
+
+function onlineEnemyShooterRange(roleId) {
+  if (roleId === "line_sniper") return 24;
+  if (roleId === "mortar_lobber") return 12;
+  if (roleId === "ranged_lead_shooter") return 18;
+  return 22;
+}
+
+function onlineInitialRoleCooldown(familyId, roleId) {
+  if (!onlineEnemyShooterRole(roleId)) return 0;
+  if (familyId === "eval_wraiths") return 0.9;
+  return 2.4 + (stableNumber(familyId) % 17) / 10;
+}
+
+function onlineEnemyRoleCooldown(familyId, roleId) {
+  const base =
+    roleId === "line_sniper" ? 8.4 :
+    roleId === "mortar_lobber" ? 9.2 :
+    roleId === "ranged_lead_shooter" ? 8.2 :
+    familyId === "deepforms" ? 9.4 :
+    8.5;
+  return base + (stableNumber(`${familyId}:${roleId}`) % 9) * 0.13;
+}
+
+function freshEnemyRoleTelemetry() {
+  return {
+    rolesSeen: {},
+    familiesSeen: {},
+    projectilesFired: 0,
+    projectilesActive: 0,
+    projectileHits: 0,
+    projectileDodges: 0,
+    explosionsTriggered: 0,
+    trailSeconds: 0,
+    supportAuraSeconds: 0,
+    objectiveJamSeconds: 0
+  };
+}
+
+function stableNumber(text) {
+  let hash = 0;
+  for (let index = 0; index < String(text).length; index += 1) {
+    hash = (Math.imul(hash, 31) + String(text).charCodeAt(index)) >>> 0;
+  }
+  return hash;
 }
 
 function serveStaticFile(requestUrl, response) {

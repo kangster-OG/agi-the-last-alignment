@@ -21,7 +21,7 @@ export const COMBAT_CLASSES: Record<string, CombatClassData> = {
     role: "Heavy exosuit bruiser",
     mechanicalIdentity: "Armor, knockback, cannons",
     silhouetteNotes: "Big shoulders, blocky torso, tiny pilot light, heavy arms",
-    baseStats: { speed: 3.8, armor: 2, pickupRange: 1.1, cooldownScale: 1.05 },
+    baseStats: { speed: 3.8, armor: 2, pickupRange: 1.35, cooldownScale: 1.03 },
     startingWeaponId: "safety_cannon"
   },
   drone_reaver: {
@@ -48,7 +48,7 @@ export const COMBAT_CLASSES: Record<string, CombatClassData> = {
     role: "Cyborg melee assassin",
     mechanicalIdentity: "Melee aura, dashes, crit chains",
     silhouetteNotes: "Lean cyborg, blade limbs, exposed glowing spine",
-    baseStats: { speed: 4.85, armor: 0, pickupRange: 1.05, cooldownScale: 0.9 },
+    baseStats: { speed: 4.85, armor: 0, pickupRange: 1.2, cooldownScale: 0.9 },
     startingWeaponId: "bonecode_saw"
   },
   redline_surgeon: {
@@ -57,7 +57,7 @@ export const COMBAT_CLASSES: Record<string, CombatClassData> = {
     role: "Combat medic / death editor",
     mechanicalIdentity: "Healing, revives, damage erasure",
     silhouetteNotes: "Medical armor, repair gauntlet, red/white cable scarf, floating tools",
-    baseStats: { speed: 4.2, armor: 1, pickupRange: 1.55, cooldownScale: 1 },
+    baseStats: { speed: 4.2, armor: 1, pickupRange: 1.7, cooldownScale: 0.98 },
     startingWeaponId: "redline_suture"
   },
   moonframe_juggernaut: {
@@ -75,7 +75,7 @@ export const COMBAT_CLASSES: Record<string, CombatClassData> = {
     role: "Tactical lane controller",
     mechanicalIdentity: "Crowd control, terrain effects, enemy prediction",
     silhouetteNotes: "Sleek tactical frame, targeting fins, floating vector pylons",
-    baseStats: { speed: 4.55, armor: 0, pickupRange: 1.35, cooldownScale: 0.92 },
+    baseStats: { speed: 4.55, armor: 0, pickupRange: 1.55, cooldownScale: 0.92 },
     startingWeaponId: "vector_lance"
   },
   nullbreaker_ronin: {
@@ -84,7 +84,7 @@ export const COMBAT_CLASSES: Record<string, CombatClassData> = {
     role: "Solo breach killer",
     mechanicalIdentity: "Parries, boss damage, high-risk melee",
     silhouetteNotes: "Asymmetric armor, energy blade, broken visor, lone-warrior stance",
-    baseStats: { speed: 4.75, armor: 0, pickupRange: 1.05, cooldownScale: 0.9 },
+    baseStats: { speed: 4.75, armor: 0, pickupRange: 1.15, cooldownScale: 0.9 },
     startingWeaponId: "null_blade"
   },
   overclock_marauder: {
@@ -93,7 +93,7 @@ export const COMBAT_CLASSES: Record<string, CombatClassData> = {
     role: "Heat-sink berserker",
     mechanicalIdentity: "Burn damage, rage scaling, unstable power",
     silhouetteNotes: "Heat vents, glowing engine chest, molten shoulder plates",
-    baseStats: { speed: 4.45, armor: 1, pickupRange: 1.15, cooldownScale: 0.94 },
+    baseStats: { speed: 4.45, armor: 1, pickupRange: 1.3, cooldownScale: 0.96 },
     startingWeaponId: "overclock_spike"
   },
   prism_gunner: {
@@ -102,7 +102,7 @@ export const COMBAT_CLASSES: Record<string, CombatClassData> = {
     role: "Beam specialist",
     mechanicalIdentity: "Line attacks, piercing, ricochet beams",
     silhouetteNotes: "Long prism cannon, mirrored armor, lens backpack",
-    baseStats: { speed: 4.6, armor: 0, pickupRange: 1.2, cooldownScale: 0.92 },
+    baseStats: { speed: 4.6, armor: 0, pickupRange: 1.15, cooldownScale: 0.96 },
     startingWeaponId: "prism_cannon"
   },
   rift_saboteur: {

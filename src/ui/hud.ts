@@ -14,9 +14,19 @@ export interface RogueliteHudIntel {
   evalEffect: string;
   anchors: { completed: number; total: number };
   objectiveLabel?: string;
+  objectiveVerb?: string;
+  objectivePlain?: string;
+  objectiveStyle?: string;
+  objectiveMechanic?: string;
+  dangerPlain?: string;
+  bossPressure?: string;
+  rewardPlain?: string;
   objectiveReward: string;
   synergyOnline: string;
   thesisName: string;
+  fusionProgress: string;
+  alignmentCheckLine: string;
+  nextActionLine: string;
   phase: string;
 }
 
@@ -106,8 +116,19 @@ export function drawHud(
 
   if (rogueliteIntel && !debugHud) {
     const objectiveLabel = rogueliteIntel.objectiveLabel ?? "ANCHOR";
+    const stripWidth = 430;
+    const stripX = Math.max(leftWidth + 34, width / 2 - stripWidth / 2);
+    drawFieldPanel(layer, stripX, 16, stripWidth, 70, { tone: "teal", alpha: 0.78 });
+    const objectiveStrip = new Text({
+      text: `${objectiveLabel} ${rogueliteIntel.anchors.completed}/${rogueliteIntel.anchors.total}\n${compactGuidance(rogueliteIntel.nextActionLine)}\nWATCH ${compactThreat(rogueliteIntel.dangerPlain, rogueliteIntel.bossPressure)} // EARN ${compactReward(rogueliteIntel.rewardPlain)}`,
+      style: { ...fontStyle, fontSize: 9, fill: fieldKit.text, stroke: { color: "#030609", width: 3 }, align: "center", wordWrap: true, wordWrapWidth: stripWidth - 24, lineHeight: 12 }
+    });
+    objectiveStrip.anchor.set(0.5, 0);
+    objectiveStrip.position.set(stripX + stripWidth / 2, 25);
+    layer.addChild(objectiveStrip);
+
     const info = new Text({
-      text: `${objectiveLabel} ${rogueliteIntel.anchors.completed}/${rogueliteIntel.anchors.total}     ROUTE ${compactRoute(rogueliteIntel.routeName)}`,
+      text: `ROUTE ${compactRoute(rogueliteIntel.routeName)}${rogueliteIntel.alignmentCheckLine ? `     ${rogueliteIntel.alignmentCheckLine}` : ""}`,
       style: { ...fontStyle, fontSize: 9, fill: fieldKit.textSoft, stroke: { color: "#030609", width: 2 } }
     });
     info.position.set(30, 76);
@@ -136,7 +157,7 @@ export function drawHud(
 
     const compactReward = rogueliteIntel.objectiveReward ? ` + ${rogueliteIntel.objectiveReward}` : "";
     const text = fieldText(
-      `${rogueliteIntel.phase}\nROUTE ${rogueliteIntel.routeName}: ${rogueliteIntel.routeEffect}\nEVAL ${rogueliteIntel.evalName}: ${rogueliteIntel.evalEffect}\n${objectiveLabel} ${rogueliteIntel.anchors.completed}/${rogueliteIntel.anchors.total}${compactReward}\nTHESIS ${rogueliteIntel.thesisName}${rogueliteIntel.synergyOnline ? ` // ${rogueliteIntel.synergyOnline}` : ""}`,
+      `${rogueliteIntel.phase}\nROUTE ${rogueliteIntel.routeName}: ${rogueliteIntel.routeEffect}\nEVAL ${rogueliteIntel.evalName}: ${rogueliteIntel.evalEffect}\n${objectiveLabel} ${rogueliteIntel.anchors.completed}/${rogueliteIntel.anchors.total}${compactReward}\nSTYLE ${rogueliteIntel.objectiveStyle ?? "Objective"}: ${rogueliteIntel.objectiveMechanic ?? rogueliteIntel.objectivePlain ?? "survive, complete, extract"}\nTHESIS ${rogueliteIntel.thesisName}${rogueliteIntel.synergyOnline ? ` // ${rogueliteIntel.synergyOnline}` : ""}\nFUSION ${rogueliteIntel.fusionProgress}${rogueliteIntel.alignmentCheckLine ? `\n${rogueliteIntel.alignmentCheckLine}` : `\nNEXT ${rogueliteIntel.nextActionLine}`}`,
       x + 12,
       y + 7,
       { size: 10, width: panelWidth - 24, fill: fieldKit.text, lineHeight: 13 }
@@ -144,7 +165,7 @@ export function drawHud(
     layer.addChild(text);
   }
 
-  drawCurrentBuildPanel(layer, width, height, build, debugHud);
+  drawCurrentBuildPanel(layer, width, height, build, debugHud, rogueliteIntel?.fusionProgress);
 }
 
 function compactObjective(objective: string): string {
@@ -169,6 +190,52 @@ function compactRoute(routeName: string): string {
   return routeName.toUpperCase().slice(0, 8);
 }
 
+function compactGuidance(line: string): string {
+  if (/extraction/i.test(line)) return "EXTRACT";
+  if (/alignment check/i.test(line)) return "CHECK";
+  if (/break/i.test(line)) return "BOSS";
+  if (/lure|surge/i.test(line)) return "LURE HAZARD";
+  if (/ride|route window/i.test(line)) return "RIDE WINDOW";
+  if (/clear signal|signal window/i.test(line)) return "SIGNAL WINDOW";
+  if (/hunt|tower warning|Maw/i.test(line)) return "BOSS GATE";
+  if (/recover|carry|preserve/i.test(line)) return "CARRY";
+  if (/calibration|overload/i.test(line)) return "HOLD WINDOW";
+  if (/shade|prism|reflection/i.test(line)) return "PRISM";
+  if (/replay|route rule|A\.G\.I/i.test(line)) return "REMIX";
+  const match = line.match(/Move to ([^.]+)/i);
+  if (match) return `GO ${match[1].slice(0, 10).toUpperCase()}`;
+  return line.toUpperCase().slice(0, 14);
+}
+
+function compactThreat(dangerPlain = "", bossPressure = ""): string {
+  const source = `${dangerPlain} ${bossPressure}`.toLowerCase();
+  const tags: string[] = [];
+  if (/horde|attacker/.test(source)) tags.push("HORDE");
+  if (/broken promise|zone/.test(source)) tags.push("ZONES");
+  if (/coolant|cable|vent|electric/.test(source)) tags.push("LANES");
+  if (/false schedule|switchback/.test(source)) tags.push("FALSE ROUTES");
+  if (/tidal|surf|wave|static/.test(source)) tags.push("SIGNAL");
+  if (/context|redaction|curator/.test(source)) tags.push("REDACTION");
+  if (/overload|auditor|guardrail/.test(source)) tags.push("AUDIT");
+  if (/exposure|reflection|choirglass|sunrise/.test(source)) tags.push("LIGHT");
+  if (/writ|docket|saint/.test(source)) tags.push("WRITS");
+  if (/verdict|injunction|clerk/.test(source)) tags.push("VERDICT");
+  if (/prediction|route mouth|echo|a\.g\.i/.test(source)) tags.push("PREDICTION");
+  const unique = [...new Set(tags)];
+  return unique.length ? unique.slice(0, 2).join("+") : "BOSS+MAP";
+}
+
+function compactReward(rewardPlain = ""): string {
+  const source = rewardPlain.toLowerCase();
+  const tags: string[] = [];
+  if (/proof token/.test(source)) tags.push("TOKENS");
+  if (/bastion|drone|vector|rift|signal vanguard|moonframe|prism|redline|bonecode|nullbreaker|overclock/.test(source)) tags.push("FRAME");
+  if (/anthropic|deepmind|mistral|deepseek|qwen|meta|xai/.test(source)) tags.push("CO-MIND");
+  if (/cooling|transit|signal coast|blackwater|memory|guardrail|glass|archive|appeal|finale|completion/.test(source)) tags.push("NEXT");
+  const unique = [...new Set(tags)];
+  return unique.length ? unique.slice(0, 3).join("+") : "NEXT";
+}
+
 function addHudMicroLabel(layer: import("pixi.js").Container, text: string, x: number, y: number, align: "left" | "right"): void {
   const label = new Text({
     text,
@@ -188,7 +255,7 @@ interface BuildHudEntry {
   fallbackTexture?: Texture;
 }
 
-function drawCurrentBuildPanel(layer: import("pixi.js").Container, width: number, height: number, build: BuildStats, debugHud: boolean): void {
+function drawCurrentBuildPanel(layer: import("pixi.js").Container, width: number, height: number, build: BuildStats, debugHud: boolean, fusionProgress = ""): void {
   const panelWidth = debugHud ? 520 : 472;
   const panelHeight = debugHud ? 104 : 88;
   const x = Math.max(16, width / 2 - panelWidth / 2);
@@ -201,17 +268,34 @@ function drawCurrentBuildPanel(layer: import("pixi.js").Container, width: number
   });
   title.position.set(x + 12, y + 8);
   layer.addChild(title);
-
   const primary = currentPrimaryEntry(build);
   drawBuildChip(layer, primary, x + 12, y + 24, 126, "teal", `${BUILD_SLOT_CAPS.primary}/${BUILD_SLOT_CAPS.primary}`);
   drawSlotGroup(layer, "SEC", secondaryEntries(build), BUILD_SLOT_CAPS.secondary, x + 148, y + 24, 128, "blue");
   drawSlotGroup(layer, "PASS", passiveEntries(build), BUILD_SLOT_CAPS.passive, x + 284, y + 24, 118, "violet");
-  drawSlotGroup(layer, "FUSE", fusionEntries(build), BUILD_SLOT_CAPS.fusion, x + 410, y + 24, 50, build.fusions.length > 0 ? "amber" : "neutral");
+  drawSlotGroup(layer, "FUSE", fusionEntries(build), BUILD_SLOT_CAPS.fusion, x + 410, y + 24, 50, build.fusions.length > 0 ? "amber" : "neutral", compactFusionSlotLabel(fusionProgress));
 }
 
-function drawSlotGroup(layer: import("pixi.js").Container, label: string, entries: BuildHudEntry[], cap: number, x: number, y: number, width: number, tone: FieldPanelTone): void {
+function compactFusionSlotLabel(progress: string): string | undefined {
+  if (!progress) return undefined;
+  const upper = progress.toUpperCase();
+  const fraction = upper.match(/\b\d+\/\d+\b/)?.[0] ?? "";
+  if (upper.includes("ONLINE:")) {
+    if (upper.includes("CAUSAL RAILGUN")) return "RAIL ON";
+    if (upper.includes("CATHEDRAL")) return "NO ON";
+    return "FUS ON";
+  }
+  if (upper.includes("AVAILABLE")) {
+    if (upper.includes("CAUSAL RAILGUN")) return "RAIL RDY";
+    if (upper.includes("CATHEDRAL")) return "NO RDY";
+  }
+  if (upper.includes("CAUSAL RAILGUN")) return `RAIL ${fraction || "0/2"}`;
+  if (upper.includes("CATHEDRAL")) return `NO ${fraction || "0/2"}`;
+  return "FUSE";
+}
+
+function drawSlotGroup(layer: import("pixi.js").Container, label: string, entries: BuildHudEntry[], cap: number, x: number, y: number, width: number, tone: FieldPanelTone, headerOverride?: string): void {
   const header = new Text({
-    text: `${label} ${entries.length}/${cap}`,
+    text: headerOverride ?? `${label} ${entries.length}/${cap}`,
     style: { ...fontStyle, fontSize: 8, fill: fieldKit.textSoft, stroke: { color: "#030609", width: 2 } }
   });
   header.position.set(x, y - 16);

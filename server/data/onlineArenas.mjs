@@ -7,7 +7,7 @@ export const SPAWN_REGIONS = [
   { id: "drone_yard_benchmark_gremlins", worldX: -19, worldY: -14, radius: 5, startsAtSeconds: 5, color: 0x7b61ff, familyId: "benchmark_gremlins" },
   { id: "barricade_context_rot", worldX: 20, worldY: -11, radius: 4.8, startsAtSeconds: 10, color: 0x7a4c5a, familyId: "context_rot_crabs" },
   { id: "treaty_monument_oath_pages", worldX: 1, worldY: 3, radius: 4.6, startsAtSeconds: 2, color: 0x1a101f, familyId: "bad_outputs" },
-  { id: "emergency_terminal_eval_wraiths", worldX: 18, worldY: 16, radius: 4.7, startsAtSeconds: 14, color: 0xffd166, familyId: "eval_wraiths" }
+  { id: "emergency_terminal_eval_wraiths", worldX: 18, worldY: 16, radius: 4.7, startsAtSeconds: 6, color: 0xffd166, familyId: "eval_wraiths" }
 ];
 
 export const ROLE_PRESSURE_ANCHORS = {

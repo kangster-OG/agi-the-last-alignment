@@ -184,5 +184,13 @@ export const ENEMY_FAMILIES: Record<string, EnemyFamilyData> = {
     behavior: "Finale echo pressure that jams route-mouth proofs and forces campaign-memory positioning",
     joke: "A.G.I. opened the old save files and chose violence.",
     silhouette: "Chunky hybrid echo totems with asymmetric boss fragments"
+  },
+  speculative_executors: {
+    id: "speculative_executors",
+    displayName: "Speculative Executors",
+    look: "Orange-red execution sparks wrapped around half-built breach bodies",
+    behavior: "Volatile flankers that can be baited into damaging nearby enemies",
+    joke: "They execute the plan before anyone agrees it exists.",
+    silhouette: "Lean hot-core silhouettes with warning fins and unstable limbs"
   }
 };

@@ -1,6 +1,6 @@
 # Fresh Thread Current State
 
-Date: 2026-05-08
+Date: 2026-05-12
 
 Purpose: give a fresh Codex thread the current working truth without forcing it to reconstruct weeks of decisions from chat history or the full `progress.md` chronology.
 
@@ -12,11 +12,16 @@ Before meaningful work, read these in order:
 
 - `AGENTS.md`
 - this file
+- `docs/FRESH_THREAD_NEXT_STEPS.md`
+- `docs/CODEX_CONTINUITY_LEDGER.md`
 - `progress.md` tail
+- `docs/CAMPAIGN_CLARITY_REFACTOR_CHECKLIST.md`
+- `docs/AUTOBATTLE_OBJECTIVE_VARIETY_GOAL.md`
 - `docs/VERTICAL_SLICE_REFERENCE_CONTRACT.md`
 - `docs/ARMISTICE_ACCEPTED_ART_BASELINE.md`
 - `docs/ART_REBUILD_HANDOFF.md`
 - `docs/BUILD_ARCHETYPES_AND_ITEMIZATION.md`
+- `docs/ECO_GUARDIAN_TECH_BROS_MECHANICS_LEARNINGS.md`
 - `docs/DIFFICULTY_AND_MAP_SCALING.md`
 - `docs/MAP_KIND_EXPANSION_CHECKLIST.md`
 - `docs/GAME_DIRECTION.md`
@@ -28,6 +33,8 @@ Before meaningful work, read these in order:
 - `assets/concepts/chatgpt_refs/armistice_source_rebuild_v2/README.md`
 
 Then inspect the actual current game or current proof screenshots. Do not rely on memory from a previous thread.
+
+The continuity ledger is the compact "do not lose this in a fresh context" file. It records the current working law for PixelLab, production art, proof discipline, iCloud workspace workarounds, and the next likely gameplay-feel pass.
 
 ## Current Project Shape
 
@@ -43,6 +50,46 @@ The current design center is:
 - AGI fiction: humans and frontier AI labs form The Last Alignment against A.G.I., the Alien God Intelligence.
 
 Do not redesign away from autocombat unless the user explicitly changes that non-negotiable.
+
+## Campaign Clarity Refactor Direction
+
+As of May 12, 2026, the durable refactor direction is to make the game read as a horde-survival roguelite first, authored campaign adventure second, and AGI lore/system world third. The first implementation pass is in place.
+
+The target player loop is:
+
+`Survive -> build power -> complete one map objective -> beat or escape boss pressure -> extract -> unlock next thing`.
+
+The full work queue and fresh-thread prompt live in `docs/CAMPAIGN_CLARITY_REFACTOR_CHECKLIST.md`. Before changing campaign flow, level briefing copy, in-run objective HUD, summaries, unlocks, Free Alignment, or the Alignment Grid, read that checklist and preserve its hierarchy:
+
+- Campaign Mode keeps durable unlock progression.
+- Free Alignment remains immediate all-frame/all-co-mind selection and does not grant campaign unlocks.
+- Every level should have one plain player-facing verb in briefing, HUD, summary, and telemetry.
+- Summary/reward UI should make mechanical unlocks obvious before lore flavor.
+- The Alignment Grid should remain a dense route-based progression world, not a flat menu.
+
+Current implementation notes:
+
+- `src/content/campaignClarity.ts` is the source of truth for all 11 campaign level numbers, verbs, objective units, plain objective copy, danger copy, boss/event pressure, reward previews, and map-kind labels.
+- `src/content/campaignObjectiveVariety.ts` is the source of truth for the Megabonk / survivor-inspired objective family pass: Armistice teaches baseline anchor capture, then Cooling lures hazards, Transit rides route windows, Signal times clear crossings, Blackwater hunts a boss gate, Memory/Archive carry evidence to extraction, Guardrail uses risk holdout timing, Glass weaponizes the environment, Appeal argues public windows, and the Finale remixes prior rules.
+- Build select labels Campaign as durable unlock progression and Free Alignment as an all-roster sandbox that does not grant campaign rewards.
+- Briefing cards show `Level X/11`, map kind, verb, objective, danger, boss/event, and reward preview before lore.
+- Briefing cards also show the objective style/mechanic line in plain language so a player can tell whether the map is lure, route-window, carry/extract, holdout, environmental weapon, or campaign remix.
+- The normal run HUD now shows the objective, next action, compact danger tags, and compact reward tags in the top-center strip, while `render_game_to_text()` exposes matched campaign objective labels, plain objective copy, objective style/mechanic, boss/event pressure, and level verb telemetry.
+- Boss-warning UI now stages title card and dialogue instead of stacking them together: the title card owns the first warning moment, then the comms dialogue appears above the current-build panel so the two overlays do not collide.
+- Production coherence-shard pickups are intentionally lower visual priority in live combat: smaller, partially transparent, and with reduced shadow weight so late-campaign bosses, route mouths, gates, and objective labels stay readable under carried-build pressure.
+- Objective-window mechanics now have live feel regression coverage, not only copy coverage: Transit route windows and Signal clear windows must produce positive `objectiveVariety.runtime.bonusProgressSeconds` with `ROUTE WINDOW` / `CLEAR SIGNAL` labels in the route graybox proofs.
+- Mid-campaign objective mechanics have the same live feel regression coverage: Blackwater must prove `TOWER WARNING`, Memory must prove `CARRY LANE`, and Guardrail must prove `HOLD WINDOW` in their route proofs. Memory's carry-lane bonus is intentionally a positive reward path, not a weaker alternate route.
+- May 13, 2026 gameplay-feel tuning tightened Memory specifically: baseline proof/screenshot audit across Armistice through Finale found Memory Cache's carry/extract route was the weakest-feeling pre-boss trick. Memory carry-lane engagement now has a wider route skirt, stronger progress/burst payoff, and still pays while the record is contested by Context Rot/redaction pressure. `proof:memory-cache-recovery` now asserts `CARRY LANE`, at least 1s objective-variety bonus telemetry, and at least 0.75s risky-shortcut engagement before Curator pressure.
+- May 13, 2026 late-route feel follow-up compared Archive, Appeal, and Finale. Finale was weakest because A.G.I. arrived almost immediately after the route-mouth proof. Prediction-path play now counts as `REMIX WINDOW`, contested Finale proof pressure gets the remix reward path, and A.G.I. arrival is 66s instead of 58s so the route-mouth/prediction remix reads before boss takeover. `proof:alignment-spire-finale` now asserts the memory-route remix proof is pre-A.G.I. while still showing `REMIX WINDOW` engagement.
+- May 13, 2026 Campaign Duration Rebalance V1 is implemented. `src/content/campaignDurationProfile.ts` is the timing source of truth for the 11-level campaign: 105 minutes of configured combat target, about 115-125 minutes expected full-campaign play with drafts/summaries/overworld. Arena content now reads target/boss seconds from that profile, runtime telemetry exposes target/boss/tail/phase/cache/cycle-depth data through `render_game_to_text()`, mid-run duration caches pay existing burst/objective/reroll rewards, and route proofs are target-aware for the longer clocks.
+- Summary puts mechanical rewards first: level clear, objective progress, objective style, boss defeated, Proof Tokens, newly unlocked frame/co-mind names, next route, then build/flavor.
+- Summary objective rows lead with the plain campaign verb and clear/incomplete state before any progress count, e.g. `Objective: STABILIZE COMPLETE (Treaty Anchors 1/3)`, so optional or partial tracked counts do not make a cleared run look failed.
+- Alignment Grid selected panels and telemetry include level numbers and verb/objective labels while preserving walkable route rails, readable locks, and deploy blocking.
+- Campaign clarity proof artifacts live under `docs/proof/campaign-clarity/`; objective-variety proof artifacts live under `docs/proof/objective-variety/`; campaign-duration proof/audit artifacts live under `docs/proof/campaign-duration/`. Required regression proofs are `npm run proof:campaign-duration`, `npm run proof:objective-variety`, `npm run proof:campaign-clarity`, `npm run proof:overworld`, `npm run proof:solo-campaign-unlocks`, `npm run proof:smoke`, and `npm run proof:reference-run`; recent readability passes inspected `docs/proof/smoke/arena.png`, `docs/proof/reference-run/06-run-start-intel.png`, `docs/proof/boss/boss-intro.png`, `docs/proof/archive-court-redaction/08-appeal-window-writ-pressure.png`, `docs/proof/alignment-spire-finale/09-alien-god-intelligence-live.png`, and `docs/proof/alignment-spire-finale/11-outer-alignment-gate-pressure.png`. When touching objective mechanics, duration, or weapon/effect readability, also rerun and inspect `npm run proof:transit-route-graybox`, `npm run proof:kettle-coast-graybox`, and `npm run proof:build-vfx`.
+- Full-spine local readability proofing on May 12, 2026 covered build select, overworld, briefing, run HUD, boss/objective pressure, extraction/summary, camp-after-run, full solo unlocks, and all local route proofs from Cooling through Finale.
+- May 13, 2026 release-gate repair: `proof:campaign-full` was unblocked by importing Colyseus server pieces directly from `@colyseus/core` and `@colyseus/ws-transport`, and by running proof-spawned coop servers with `MSGPACKR_NATIVE_ACCELERATION_DISABLED=true`. The remaining iCloud-specific dependency/source read slowness can be avoided by using a temp workspace with fresh `/tmp` `node_modules`, copied `src/scripts/server`, linked `assets/public/docs`, and `NODE_OPTIONS=--preserve-symlinks`. From that temp workspace, `proof:campaign-full`, Vite production build, release checklist, and the local packaged launch check all passed.
+- Vite dev-server watch ignores `docs/**` and `tmp/**` because Playwright proofs write screenshots/JSON there; letting those writes hot-reload the app can knock long route proofs back to `MainMenu`.
+- May 14, 2026 playable avatar walk-cycle regeneration is complete. All 12 selectable classes were regenerated through PixelLab Character background jobs using the dedicated `.codex-local/pixellab-automation-profile` profile and then mechanically packed into `assets/sprites/players/class_roster_m49.png` without changing the runtime atlas contract. Source frames, manifest, and contact sheet live under `assets/concepts/pixellab_refs/playable_walk_cycles_v1/`, and visual proof lives at `docs/proof/playable-walk-cycles-v1/playable-walk-cycles-v1-proof.png`. Verification passed: `npm run pixellab:check`, `npm run assets:pixellab-playable-walk-cycles-v1`, `npm run assets:pack-playable-walk-cycles-v1`, `npm run proof:assets`, and `npm run proof:roster-sweep` across all 96 class/co-mind combinations. Normal-workspace `npm run build` still hit the known iCloud `tsc` hang and should be rerun from the temp non-iCloud workspace when production build validation is needed.
 
 ## Armistice Is The Reference Slice
 
@@ -158,22 +205,60 @@ Important bug fixed: draftable primary weapons now persist in runtime. Do not re
 
 Important visual bug fixed: small orange boxes in the playfield were production fallback rectangles from missing/unready projectile art. Production mode must not draw those rectangles again. If a source-backed weapon asset is missing, show the fallback only in explicit debug HUD/proof mode, fail the proof, or document the blocker.
 
+## Free Alignment And Solo Unlocks
+
+As of May 11, 2026, build select has two modes:
+
+- Campaign mode preserves durable unlock progression and only lets the player choose earned frames/co-minds.
+- Free Alignment mode is toggled with `M` and lets the player choose any frame plus any co-mind immediately for testing and player generosity.
+
+Free Alignment is runtime-only; it does not mark locked rewards as earned. Campaign unlocks are now fed by the same browser-local durable reward profile for solo clears and online route rewards: `agi:last_alignment:online_progression:v1`.
+
+The current solo campaign spine unlock plan is:
+
+- Armistice Plaza -> `plaza_stabilized` -> Bastion Breaker, Anthropic.
+- Cooling Lake Nine -> `lake_coolant_rig` -> Drone Reaver, DeepMind.
+- Transit Loop Zero -> `transit_permit_zero`, `transit_loop_online_route` -> Vector Interceptor, Mistral.
+- Signal Coast -> `signal_coast_relay_chart` -> Rift Saboteur.
+- Blackwater Beacon -> `blackwater_signal_key` -> DeepSeek.
+- Memory Cache 001 -> `ceasefire_cache_persistence_seed`, `prototype_persistence_boundary` -> Signal Vanguard, Qwen, Meta.
+- Guardrail Forge -> `guardrail_forge_alloy` -> Moonframe Juggernaut.
+- Glass Sunfield -> `glass_sunfield_prism` -> Prism Gunner.
+- Archive Of Unsaid Things -> `archive_unsaid_index` -> Redline Surgeon.
+- Appeal Court Ruins -> `appeal_court_brief`, `verdict_spire_online_route` -> Bonecode Executioner, Nullbreaker Ronin, xAI.
+- Alignment Spire Finale -> `alignment_spire_route_capstone` -> Overclock Marauder.
+
+Proof command: `npm run proof:solo-campaign-unlocks`. It verifies clean Campaign starter-only state, Free Alignment all-selectable state, and the full solo spine reaching 12/12 frames and 8/8 co-minds. The same proof has passed against the deployed GitHub Pages URL.
+
 Current build VFX source state:
 
-- accepted active source: `assets/concepts/chatgpt_refs/build_weapon_vfx_v2/build_weapon_vfx_source_v2.png`;
-- mechanical keyed intermediate: `assets/concepts/chatgpt_refs/build_weapon_vfx_v2/build_weapon_vfx_source_v2_keyed.png`;
+- accepted active source: `assets/concepts/chatgpt_refs/build_weapon_animation_rebuild_v1/`;
+- ChatGPT Images sources: `build_weapon_animation_primary_fusion_source_v1.png` and `build_weapon_animation_secondary_support_source_v1.png`;
+- PixelLab source: `assets/concepts/pixellab_refs/build_weapon_animation_rebuild_v1/` from dedicated `.codex-local/pixellab-automation-profile`; API ZIP returned 404 for the single-object export shape, so the completed `storage_urls` frames were preserved and normalized directly;
 - runtime atlas path, preserved for compatibility: `assets/sprites/effects/build_weapon_vfx_v1.png`;
-- packer: `scripts/assets/pack-build-weapon-vfx-v1.py`;
-- provenance key: `chatgpt_build_weapon_vfx_v2_source`.
+- active packer: `scripts/assets/pack-build-weapon-animation-rebuild-v1.py`;
+- older v2 packer retained for history: `scripts/assets/pack-build-weapon-vfx-v1.py`;
+- provenance keys: `chatgpt_build_weapon_animation_rebuild_v1_source`, `pixellab_build_weapon_animation_rebuild_v1_source`, and `build_weapon_animation_rebuild_v1_runtime_pack`.
 
-Although the runtime atlas path still says `v1`, the active pack now derives from the v2 source. Do not "clean up" that path name casually unless the import graph, manifest, provenance, proofs, and docs are updated together.
+Although the runtime atlas path still says `v1`, the active pack now derives from Weapon Animation Rebuild V1 source boards. Do not "clean up" that path name casually unless the import graph, manifest, provenance, proofs, and docs are updated together.
 
 Weapon animation expectations now in force:
 
+- Refusal Shard should show charge/launch/travel/echo/impact/residue instead of falling back to the generic projectile atlas.
+- Vector Lance should show charge, segmented beam/travel, trail, impact, and residual lane.
 - Signal Pulse should read as a radial pulse/echo/burst, not a tiny projectile that vanishes instantly.
 - Context Saw should cycle source-backed saw/spin frames with visible orbit/ghosting.
 - Patch Mortar should show launch, arcing travel, descent, shadow, and impact detonation. A static shell sliding through the air is not acceptable.
+- Causal Railgun should show heavy charge, segmented beam/travel, impact, and prediction residue rather than a recolored Vector Lance.
+- Passive/aura/fusion surfaces such as Refusal Halo / Cathedral of No, Coherence Indexer, Anchor Bodyguard, and Prediction Priority should use source-backed icons/residue where exposed in draft/HUD surfaces.
 - Future weapons need the same source-backed motion beats before being called production-ready.
+
+Proof artifacts for this pass:
+
+- source proof: `docs/proof/build-weapon-animation-rebuild-v1/build-weapon-animation-source-contact.png`;
+- PixelLab proof: `assets/concepts/pixellab_refs/build_weapon_animation_rebuild_v1/build_weapon_animation_pixellab_raw_contact.png`;
+- runtime atlas proof: `docs/proof/build-weapon-animation-rebuild-v1/build-weapon-animation-runtime-contact.png`;
+- deterministic motion proof: `docs/proof/build-weapon-animation-rebuild-v1/build-weapon-animation-motion-proof.png`.
 
 Local simulated Consensus Cell peers currently use the accepted Accord Striker art path. Do not bring back simple colored peer bars/boxes as production visuals. Co-op-specific actor art can be added later through the same source-art pipeline.
 
@@ -332,16 +417,24 @@ Act 01 thread lessons that should carry forward:
 - The serial full-level `/goal` workflow is now complete through the finale. Future fresh threads should treat the current chain as a full-campaign V1 lock and focus on regression fixes, final human taste/playtest approval, or release-candidate polish unless the user explicitly asks for new maps.
 - Full-level proof seeds must match the previous level's actual latest summary shape. Do not start a late-campaign level from a plausible hand seed; read the previous proof summary or rerun that proof first and seed from that result.
 - Full-level art completion now means gameplay proof first, then ChatGPT Images/imagegen source boards, then the signed-in automated PixelLab session in the Codex in-app browser for cleanup/refinement/source contribution, then mechanical packing, runtime wiring, visual proof, and provenance. PixelLab source must contribute to accepted runtime art for a new production-art lock unless PixelLab is a documented hard blocker.
+- Alignment Grid rebuild status: the fresh PixelLab export was recovered on 2026-05-11 through the dedicated `.codex-local/pixellab-automation-profile` browser profile, not the user's main Chrome profile. The source lives under `assets/concepts/pixellab_refs/alignment_grid_rebuild_v1/` as a ZIP, 16 normalized raw frames, a contact sheet, and `alignment_grid_pixellab_fresh_raw_atlas.png`; `scripts/assets/pack-alignment-grid-rebuild-v1.py` now prefers that fresh atlas when rebuilding `assets/props/alignment_grid/alignment_grid_backdrop_v1.png`.
+- PixelLab automation process now has a durable handoff in `docs/PIXELLAB_AUTOMATION_WORKFLOW.md`. Future threads should reuse the isolated profile/API ZIP export path before reporting PixelLab export as blocked, and should still stop for user-handled sign-in/security/billing prompts.
+- Playable roster walk-cycle status: the 2026-05-14 PixelLab Character batch regenerated south/east/north/west walking frames for `accord_striker`, `bastion_breaker`, `drone_reaver`, `signal_vanguard`, `bonecode_executioner`, `redline_surgeon`, `moonframe_juggernaut`, `vector_interceptor`, `nullbreaker_ronin`, `overclock_marauder`, `prism_gunner`, and `rift_saboteur`. The accepted runtime atlas is `assets/sprites/players/class_roster_m49.png`; proof/source handoff is `assets/concepts/pixellab_refs/playable_walk_cycles_v1/README.md`. Some classes are still less visually distinct than their names imply, so future art work should refine identity/readability from PixelLab/Aseprite source rather than code-authored edits.
 - Summary/camp/route UI copy must be short enough to fit real proof screenshots. The Blackwater pass required shortening the next-target line and moving summary controls out from the memory text block after screenshot inspection.
 - Late-campaign proof scripts should be robust to powerful carried builds opening drafts faster than older scripts expected. Prefer targeted helpers such as `reachDraftContaining(...)`, settle back to `LevelRun` before run-only telemetry assertions, and inspect captured JSON before changing gameplay balance.
 - Boss tuning for later maps should be audited against both proof time and screenshot readability. Guardrail's Doctrine Auditor proof now shows a readable live boss/event frame before extraction while the level still clears at about 160s / LV13 / power 28.89.
 - Online full-campaign voting must use the Alignment Grid node order, not the server snapshot order, because the browser lobby cycles through `ALIGNMENT_GRID_MAP.nodes`. The proof helper now chooses the shorter direction in that real order and emits detailed route diagnostics if a target is unavailable.
 - `proof:build-vfx` should preserve open secondary protocol slots while waiting for `patch_mortar`; the helper now avoids consuming the remaining secondary slot with filler drafts before the desired VFX card appears.
 - Asset manifest categories must use the validator taxonomy (`map_tile`, `landmark_prop`, `enemy_sprite`, etc.), even when the asset ID prefix is `tile.` or `prop.`.
+- Weapon/effect animation rebuild V1 is now source-backed and has live proof coverage. Refusal Shard, Vector Lance, Signal Pulse, Context Saw, Patch Mortar, Causal Railgun, and aura/passive/fusion support frames were regenerated as ChatGPT Images source boards plus a fresh PixelLab object from the dedicated `.codex-local/pixellab-automation-profile`, then mechanically packed into the 60-frame `assets/sprites/effects/build_weapon_vfx_v1.png` atlas. The atlas is now packed as a 10-column 2560x1152 grid instead of one 15360x192 strip, because live playtest screenshots showed the long-strip texture could render transparent frame backgrounds as opaque black rectangles in run view. Runtime drawing in `src/level/LevelRunState.ts` uses authored charge/launch/travel/echo/arc/impact/residue frames with lifetime-based cycling, and `src/assets/buildWeaponVfx.ts` slices the grid with `FRAMES_PER_ROW = 10`. `npm run proof:build-vfx`, `npm run proof:smoke`, `npm run proof:transit-route-graybox`, and `npm run proof:kettle-coast-graybox` now pass and their screenshots show visible VFX without black blockers.
+- Alignment Grid progression UI now follows the corrected Tech Bros-style 3D walkable overworld structure, not the rejected card-selection menu or the old weird free-walk node layer. The current runtime overworld is a full-screen source-backed isometric progression board using `prop.alignment_grid.backdrop_v2`: the avatar walks node-to-node along authored route rails; arbitrary free-roam movement is disabled; locked landmarks stay visible/readable but cannot deploy; and the selected level card sits in the same physical stone/metal UI grammar with objective, boss, reward, route, and consequence data. The final visual proof pass removed the orange diagonal lock-line artifacts and fixed selected-card text/button overlap. No Tech Bros art/content was copied; the adapted contract is the walkable progression structure reskinned with AGI art/content. Current proof artifacts: `docs/proof/overworld-techbros-full-rebuild/alignment-grid-v2-source-runtime-contact.png`, `docs/proof/overworld/alignment-grid.png`, and `docs/proof/overworld/route-walk-to-locked-gate.png`. `npm run proof:overworld` asserts route walking to a locked gate and locked deploy blocking.
+- The overworld avatar now uses the selected class roster sprite from `game.selectedClassId` through `milestone49NetworkPlayerTextureFor(...)` instead of the old hardcoded Milestone 12 coop slot. Proof telemetry exposes `overworld.avatarClassId` and `overworld.avatarFactionId`; non-default proof is preserved at `docs/proof/overworld-avatar-class/rift-saboteur-overworld-avatar.png` / `.json`.
 
 Final handoff:
 
 - The authored local campaign route is Armistice Plaza -> Cooling Lake Nine -> Transit Loop Zero -> Signal Coast -> Blackwater Beacon -> Memory Cache -> Guardrail Forge -> Glass Sunfield -> Archive of Unsaid Things -> Appeal Court Ruins -> Outer Alignment Finale.
+- Current objective-feel regression coverage now includes live route assertions through the finale. Transit asserts `ROUTE WINDOW`, Signal asserts `CLEAR SIGNAL`, Blackwater asserts `TOWER WARNING`, Memory asserts `CARRY LANE`, Guardrail asserts `HOLD WINDOW`, Glass asserts `PRISM ANGLE`, Archive asserts `EVIDENCE CARRY`, Appeal asserts `PUBLIC WINDOW`, and Finale asserts `REMIX WINDOW`, each with positive objective-variety bonus telemetry. Memory, Archive, and Finale were the weakest measured styles and now use positive progress/burst reward tuning rather than below-baseline alternate lanes.
+- Proof-spawned Vite dev servers set `VITE_PROOF_RUN=1`, which disables HMR during deterministic proof runs. This prevents startup asset/source reloads and proof artifact writes from resetting long route proofs to `MainMenu`; normal local dev HMR remains available outside proof runs.
 - Latest real completion seed: `docs/proof/alignment-spire-finale/12-summary-carryover.json`.
 - Next target in-game: `campaign_complete` / `Full Campaign Complete`.
 - Remaining work should be final human taste/playtest approval, release-candidate polish, and keeping production-art defaults source-backed while placeholder/debug opt-outs remain explicit.
@@ -411,3 +504,14 @@ Vite currently emits a known large chunk warning because of the authored Armisti
 - Do not undo the accepted Armistice baseline while pursuing the next feature. Build forward.
 - Do not copy Hades II, Vampire Survivors, Risk of Rain 2, Dead Cells, Binding of Isaac, Noita, Balatro, Tech Bros, Eco Guardian, or the X/Twitter reference clips. Use them only for structural/fidelity lessons.
 - If a future thread gets confused by older historical notes saying Armistice is not accepted, treat `docs/ARMISTICE_ACCEPTED_ART_BASELINE.md`, `docs/VERTICAL_SLICE_REFERENCE_CONTRACT.md`, and this file as newer guidance.
+
+## Enemy Mob Differentiation V1
+
+- A central enemy role profile source now exists at `src/content/enemyRoleProfiles.ts`, and every current `ENEMY_FAMILIES` entry is mapped to a role, counterplay hint, intro arena, objective/on-hit/on-death effects, elite affix eligibility, and proof counters.
+- V1 runtime support is in `src/level/LevelRunState.ts`: hostile projectiles, windup telegraphs, trails, explosions, support auras, objective jams, elite markers, sparse projectile caps, player collision/damage sources, and public `render_game_to_text()` telemetry.
+- Online co-op now has a matching server-authoritative V1 path in `server/consensusCellServer.mjs`: enemies carry role IDs, hostile telegraphs/projectiles/trails/support/volatile pressure are emitted by the Colyseus room, `OnlineCoopState` renders enemy-role VFX, and `render_game_to_text()` exposes online `enemyRoles`, `enemyTelegraphs`, and hostile projectile metadata.
+- Shooter mobs are now a campaign pillar: `eval_wraiths`, `static_skimmers`, `tidecall_static`, `solar_reflections`, `injunction_writs`, `verdict_clerks`, `prediction_ghosts`, and related families escalate from slow aimed shots to leading, line, mortar/status, and objective pressure.
+- Volatile, trail, support, objective-jammer, splitter/summoner, and elite-affix pressure all have runtime hooks and proof-visible counters.
+- New source-backed enemy-role VFX is preserved under `assets/concepts/chatgpt_refs/enemy_role_vfx_v1/` and `assets/concepts/pixellab_refs/enemy_role_vfx_v1/`, packed into `assets/sprites/effects/enemy_role_vfx_v1.png`, and documented in `docs/ENEMY_MOB_DIFFERENTIATION_PLAN.md`.
+- Verification passed for `npm run proof:enemy-roles`, `npm run proof:objective-variety`, `npm run proof:assets`, `node --check scripts/proof/run-proof.mjs`, `node --check scripts/proof/enemy-role-static.mjs`, `python3 -m py_compile scripts/assets/pack-enemy-role-vfx-v1.py`, and targeted TypeScript transpile checks for touched TS files.
+- Full verification was completed from the hydrated temp checkout `/tmp/agi-enemy-role-proof-clone`: TypeScript, enemy-role static proof, objective/assets/campaign-duration/campaign-clarity/overworld/solo-unlocks/smoke/reference-run, all 11 route proofs, `proof:campaign-full`, and the focused online co-op combat proof passed. The normal iCloud workspace can still hang on Git/Vite/tsc filesystem reads, so use a non-iCloud hydrated checkout for release-gate proof runs.

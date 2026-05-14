@@ -6,6 +6,7 @@ import type { LevelRunState } from "../level/LevelRunState";
 import { draftUpgrades, type Upgrade } from "../gameplay/upgrades";
 import { clearAllLayers } from "../render/layers";
 import { COMBAT_CLASSES, FACTIONS } from "../content";
+import { fusionRecipeLineForCard, protocolCodexForBuild } from "../roguelite/protocolCodex";
 import { getMilestone14ArtTextures, loadMilestone14Art, patchItemIconFrameForUpgrade } from "../assets/milestone14Art";
 import { buildWeaponIconFrameForUpgrade, getBuildWeaponVfxTextures, loadBuildWeaponVfxTextures } from "../assets/buildWeaponVfx";
 import { drawFieldBackdrop, drawFieldPanel, drawStatusRail, fieldKit, fieldText, toneColor, type FieldPanelTone } from "./fieldKit";
@@ -67,6 +68,16 @@ export class UpgradeDraftState implements GameState {
     context.position.set(game.width / 2, 166);
     game.layers.hud.addChild(context);
 
+    const codex = protocolCodexForBuild(this.run.build, this.run.chosenUpgradeIds);
+    const fusionLines = codex.knownFusions.map((recipe) => `${recipe.recipeText} [${recipe.state}]`).join("   ");
+    const codexText = fieldText(
+      `PROTOCOL CODEX // PRIMARY ${this.run.build.weaponId.toUpperCase()} // SECONDARY ${this.run.build.secondaryProtocols.length}/2 // PASSIVE ${this.run.build.passiveProcesses.length}/4 // FUSIONS ${fusionLines}`,
+      game.width / 2 - 490,
+      194,
+      { size: 10, width: 980, fill: fieldKit.textSoft, align: "center", lineHeight: 13 }
+    );
+    game.layers.hud.addChild(codexText);
+
     const cardWidth = 238;
     const cardGap = 22;
     const totalWidth = this.cards.length * cardWidth + Math.max(0, this.cards.length - 1) * cardGap;
@@ -112,6 +123,8 @@ export class UpgradeDraftState implements GameState {
       row.addChild(fieldText(card.name.toUpperCase(), x + 88, 90, { size: 13, width: cardWidth - 108, fill: fieldKit.text, lineHeight: 16 }));
       row.addChild(fieldText(card.tags.map((tag) => tag.toUpperCase()).join(" / "), x + 20, 150, { size: 9, width: cardWidth - 40, fill: tagFill(tone) }));
       row.addChild(fieldText(card.body, x + 20, 176, { size: 12, width: cardWidth - 40, fill: fieldKit.textSoft, lineHeight: 16 }));
+      const recipeLine = fusionRecipeLineForCard(card.id, this.run.build, this.run.chosenUpgradeIds);
+      if (recipeLine) row.addChild(fieldText(recipeLine, x + 20, 235, { size: 9, width: cardWidth - 40, fill: "#ffd37a", lineHeight: 11 }));
       drawStatusRail(row, x + 20, 258, cardWidth - 40, 5, 0.26 + index * 0.18, tone);
     });
 
@@ -137,6 +150,7 @@ export class UpgradeDraftState implements GameState {
     this.run.chosenUpgradeIds.push(card.id);
     this.run.chosenProtocolSlots.push(card.protocolSlot);
     this.run.applyChosenTags(card.tags);
+    this.run.recordRewardEvent("level_up_draft", card.protocolSlot, card.id, card.name);
     game.state.set(this.run);
   }
 }

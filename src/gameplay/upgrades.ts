@@ -167,6 +167,7 @@ export function applyFactionPassive(build: BuildStats, factionId: string): void 
   }
   if (factionId === "meta_llama_open_herd") {
     build.projectilePierce += 1;
+    build.pickupRange += 0.15;
     build.weaponCooldown *= 1.04;
   }
   if (factionId === "qwen_silkgrid") {

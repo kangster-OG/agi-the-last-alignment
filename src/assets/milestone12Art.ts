@@ -5,17 +5,20 @@ import { loadMilestone11Art, type Milestone11ArtTextures } from "./milestone11Ar
 import type { PlayerFacing } from "./milestone10Art";
 
 import accordStrikerCoopVariantsUrl from "../../assets/sprites/players/accord_striker_walk_coop_variants.png";
+import alignmentGridBackdropUrl from "../../assets/props/alignment_grid/alignment_grid_backdrop_v2.png";
 import alignmentGridNodeLandmarksUrl from "../../assets/props/alignment_grid/node_landmarks_v1.png";
 import alignmentGridRouteSigilsUrl from "../../assets/props/alignment_grid/route_sigils_v1.png";
 
 export const MILESTONE12_ASSET_IDS = {
   coopVariants: "player.accord_striker.production_coop_variant_sheet_v1",
+  alignmentGridBackdrop: "prop.alignment_grid.backdrop_v2",
   alignmentGridNodes: "prop.alignment_grid.node_landmarks_v1",
   alignmentGridRoutes: "prop.alignment_grid.route_sigils_v1"
 } as const;
 
 export const MILESTONE12_ASSET_URLS = {
   coopVariants: accordStrikerCoopVariantsUrl,
+  alignmentGridBackdrop: alignmentGridBackdropUrl,
   alignmentGridNodes: alignmentGridNodeLandmarksUrl,
   alignmentGridRoutes: alignmentGridRouteSigilsUrl
 } as const;
@@ -25,6 +28,7 @@ export type RouteSigilState = "stable" | "unstable" | "locked";
 export interface Milestone12ArtTextures {
   base: Milestone11ArtTextures;
   playerVariants: Record<number, Record<PlayerFacing, Texture[]>>;
+  alignmentGridBackdrop: Texture;
   alignmentGridNodes: Record<AlignmentGridNode["visualKind"], Texture>;
   routeSigils: Record<RouteSigilState, Texture>;
 }
@@ -50,12 +54,14 @@ export function loadMilestone12Art(): Promise<Milestone12ArtTextures> {
   milestone12Promise ??= Promise.all([
     loadMilestone11Art(),
     Assets.load<Texture>(MILESTONE12_ASSET_URLS.coopVariants),
+    Assets.load<Texture>(MILESTONE12_ASSET_URLS.alignmentGridBackdrop),
     Assets.load<Texture>(MILESTONE12_ASSET_URLS.alignmentGridNodes),
     Assets.load<Texture>(MILESTONE12_ASSET_URLS.alignmentGridRoutes)
-  ]).then(([base, coopSheet, nodeAtlas, routeAtlas]) => {
+  ]).then(([base, coopSheet, alignmentGridBackdrop, nodeAtlas, routeAtlas]) => {
     milestone12Textures = {
       base,
       playerVariants: slicePlayerVariants(coopSheet),
+      alignmentGridBackdrop,
       alignmentGridNodes: sliceNodeAtlas(nodeAtlas),
       routeSigils: sliceRouteAtlas(routeAtlas)
     };
@@ -97,7 +103,7 @@ function slicePlayerVariants(sheet: Texture): Record<number, Record<PlayerFacing
 
 function sliceNodeAtlas(atlas: Texture): Record<AlignmentGridNode["visualKind"], Texture> {
   const kinds: AlignmentGridNode["visualKind"][] = ["plaza", "relay", "lake", "camp", "cache", "transit"];
-  return Object.fromEntries(
+  const base = Object.fromEntries(
     kinds.map((kind, index) => [
       kind,
       new Texture({
@@ -105,7 +111,13 @@ function sliceNodeAtlas(atlas: Texture): Record<AlignmentGridNode["visualKind"],
         frame: new Rectangle(index * NODE_FRAME_WIDTH, 0, NODE_FRAME_WIDTH, NODE_FRAME_HEIGHT)
       })
     ])
-  ) as Record<AlignmentGridNode["visualKind"], Texture>;
+  ) as Partial<Record<AlignmentGridNode["visualKind"], Texture>>;
+  base.archive = base.cache;
+  base.beacon = base.relay;
+  base.sunfield = base.transit;
+  base.spire = base.relay;
+  base.finale = base.relay;
+  return base as Record<AlignmentGridNode["visualKind"], Texture>;
 }
 
 function sliceRouteAtlas(atlas: Texture): Record<RouteSigilState, Texture> {

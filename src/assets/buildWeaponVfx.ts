@@ -6,26 +6,62 @@ import buildWeaponVfxUrl from "../../assets/sprites/effects/build_weapon_vfx_v1.
 export const BUILD_WEAPON_VFX_ASSET_ID = "effect.build_weapons.production_vfx_v1";
 
 export type BuildWeaponVfxFrame =
+  | "refusalCharge"
+  | "refusalLaunch"
+  | "refusalTravel"
+  | "refusalEcho"
+  | "refusalImpact"
+  | "refusalResidue"
+  | "vectorCharge"
   | "vectorProjectile"
+  | "vectorBeam"
   | "vectorTrail"
   | "vectorChargedTrail"
   | "vectorImpact"
+  | "vectorResidue"
+  | "signalStartup"
   | "signalProjectile"
+  | "signalCross"
   | "signalRing"
   | "signalBurst"
   | "signalImpact"
+  | "signalResidue"
+  | "causalRailgunCharge"
+  | "causalRailgunMuzzle"
+  | "causalRailgunTravel"
   | "contextSaw"
+  | "contextSawStartup"
   | "contextSawSpin"
   | "contextSawLarge"
+  | "contextSawBlur"
+  | "contextSawSweep"
   | "contextSawShardField"
+  | "patchMortarLaunch"
   | "patchMortarShell"
   | "patchMortarTrail"
   | "patchMortarArc"
+  | "patchMortarDescent"
+  | "patchMortarShadow"
   | "patchMortarImpact"
   | "causalRailgunProjectile"
   | "causalRailgunBeam"
   | "causalRailgunChargedBeam"
   | "causalRailgunImpact"
+  | "causalRailgunResidue"
+  | "refusalHaloStartup"
+  | "refusalHaloRing"
+  | "refusalHaloShield"
+  | "refusalHaloFlare"
+  | "riftMineStartup"
+  | "riftMineArmed"
+  | "riftMineRipple"
+  | "riftMineTrigger"
+  | "riftMineBurst"
+  | "riftMineResidue"
+  | "objectiveAnchorSpark"
+  | "objectiveTurretShot"
+  | "objectiveMortarMarker"
+  | "objectiveRepairPulse"
   | "coherenceIndexerIcon"
   | "anchorBodyguardIcon"
   | "predictionPriorityIcon"
@@ -35,33 +71,70 @@ export interface BuildWeaponVfxTextures {
   frames: Record<BuildWeaponVfxFrame, Texture>;
 }
 
-const FRAME_W = 192;
-const FRAME_H = 128;
+const FRAME_W = 256;
+const FRAME_H = 192;
+const FRAMES_PER_ROW = 10;
 const FRAMES: BuildWeaponVfxFrame[] = [
+  "refusalCharge",
+  "refusalLaunch",
+  "refusalTravel",
+  "refusalEcho",
+  "refusalImpact",
+  "refusalResidue",
+  "vectorCharge",
   "vectorProjectile",
+  "vectorBeam",
   "vectorTrail",
-  "vectorChargedTrail",
   "vectorImpact",
-  "signalProjectile",
+  "vectorResidue",
+  "signalStartup",
   "signalRing",
+  "signalCross",
   "signalBurst",
   "signalImpact",
+  "signalResidue",
+  "causalRailgunCharge",
+  "causalRailgunMuzzle",
+  "causalRailgunBeam",
+  "causalRailgunTravel",
+  "causalRailgunImpact",
+  "causalRailgunResidue",
+  "refusalHaloStartup",
+  "refusalHaloRing",
+  "refusalHaloShield",
+  "refusalHaloFlare",
+  "predictionPriorityIcon",
+  "causalRailgunIcon",
+  "contextSawStartup",
   "contextSaw",
   "contextSawSpin",
-  "contextSawLarge",
+  "contextSawBlur",
+  "contextSawSweep",
   "contextSawShardField",
+  "patchMortarLaunch",
   "patchMortarShell",
-  "patchMortarTrail",
   "patchMortarArc",
+  "patchMortarDescent",
+  "patchMortarShadow",
   "patchMortarImpact",
-  "causalRailgunProjectile",
-  "causalRailgunBeam",
-  "causalRailgunChargedBeam",
-  "causalRailgunImpact",
+  "riftMineStartup",
+  "riftMineArmed",
+  "riftMineRipple",
+  "riftMineTrigger",
+  "riftMineBurst",
+  "riftMineResidue",
+  "objectiveAnchorSpark",
+  "objectiveTurretShot",
+  "objectiveMortarMarker",
+  "objectiveRepairPulse",
   "coherenceIndexerIcon",
   "anchorBodyguardIcon",
-  "predictionPriorityIcon",
-  "causalRailgunIcon"
+  "vectorChargedTrail",
+  "signalProjectile",
+  "contextSawLarge",
+  "patchMortarTrail",
+  "causalRailgunProjectile",
+  "causalRailgunChargedBeam",
 ];
 
 let promise: Promise<BuildWeaponVfxTextures> | null = null;
@@ -79,7 +152,7 @@ export function loadBuildWeaponVfxTextures(): Promise<BuildWeaponVfxTextures> {
           name,
           new Texture({
             source: atlas.source,
-            frame: new Rectangle(index * FRAME_W, 0, FRAME_W, FRAME_H)
+            frame: new Rectangle((index % FRAMES_PER_ROW) * FRAME_W, Math.floor(index / FRAMES_PER_ROW) * FRAME_H, FRAME_W, FRAME_H)
           })
         ])
       ) as Record<BuildWeaponVfxFrame, Texture>
@@ -94,9 +167,9 @@ export function buildWeaponIconFrameForUpgrade(upgrade: Upgrade): BuildWeaponVfx
   if (upgrade.id === "anchor_bodyguard") return "anchorBodyguardIcon";
   if (upgrade.id === "prediction_priority") return "predictionPriorityIcon";
   if (upgrade.id === "causal_railgun") return "causalRailgunIcon";
-  if (upgrade.id === "vector_lance") return "vectorProjectile";
-  if (upgrade.id === "signal_pulse") return "signalBurst";
-  if (upgrade.id === "context_saw") return "contextSaw";
+  if (upgrade.id === "vector_lance") return "vectorBeam";
+  if (upgrade.id === "signal_pulse") return "signalCross";
+  if (upgrade.id === "context_saw") return "contextSawSweep";
   if (upgrade.id === "patch_mortar") return "patchMortarImpact";
   return null;
 }

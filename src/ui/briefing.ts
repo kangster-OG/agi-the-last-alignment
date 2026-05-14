@@ -5,6 +5,8 @@ import type { GameState } from "../core/StateMachine";
 import { ARENAS } from "../level/arenas";
 import { BOSSES } from "../content/bosses";
 import { FACTIONS } from "../content/factions";
+import { campaignClarityForArena, campaignLevelLabel } from "../content/campaignClarity";
+import { campaignObjectiveVarietyForArena } from "../content/campaignObjectiveVariety";
 import { clearAllLayers } from "../render/layers";
 import { drawFieldBackdrop, drawFieldPanel, drawToken, fieldKit, fieldText } from "./fieldKit";
 
@@ -33,6 +35,8 @@ export class ArenaBriefingState implements GameState {
     const arena = ARENAS[this.arenaId];
     const boss = arena.bossId ? BOSSES[arena.bossId] : undefined;
     const factions = arena.factionFocusIds.map((id) => FACTIONS[id]?.shortName ?? id).join(" + ");
+    const clarity = campaignClarityForArena(this.arenaId);
+    const variety = campaignObjectiveVarietyForArena(this.arenaId);
 
     drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // DEPLOYMENT TERMINAL");
     drawFieldPanel(game.layers.hud, game.width / 2 - 380, game.height / 2 - 226, 760, 452, {
@@ -55,18 +59,21 @@ export class ArenaBriefingState implements GameState {
     game.layers.hud.addChild(title);
 
     const meta = new Text({
-      text: `ALIGNMENT NODE // ${factions}\nBoss signature: ${boss?.displayName ?? "unknown"}`,
+      text: `${campaignLevelLabel(clarity)} // ${clarity?.mapKind ?? "Alignment Node"} // ${factions}\nBoss/Event: ${boss?.displayName ?? "unknown"}`,
       style: { ...fontStyle, fontSize: 15, align: "center", fill: "#72eadc", stroke: { color: "#030609", width: 3 } }
     });
     meta.anchor.set(0.5);
     meta.position.set(game.width / 2, game.height / 2 - 72);
     game.layers.hud.addChild(meta);
 
+    const briefingText = clarity
+      ? `VERB: ${clarity.verb.toUpperCase()}\nOBJECTIVE: ${clarity.objectivePlain}\nMECHANIC: ${variety?.styleName ?? "Objective"} - ${variety?.mechanicPlain ?? "Complete the map objective under horde pressure."}\nDANGER: ${clarity.dangerPlain}\nBOSS/EVENT: ${clarity.bossPressure}\nREWARD: ${clarity.rewardPlain}`
+      : `${arena.briefingLines.join("\n")}\n\nObjective: survive, build power, finish the map objective, beat or escape boss pressure, then extract.`;
     const body = fieldText(
-      `${arena.briefingLines.join("\n")}\n\nObjective: survive while the local reality patch compiles.\nEnemies drop Coherence Shards. Do not align with the wrong AGI.`,
+      briefingText,
       game.width / 2 - 300,
       game.height / 2 - 12,
-      { size: 17, align: "center", width: 600, fill: fieldKit.textSoft, lineHeight: 24 }
+      { size: 15, align: "center", width: 600, fill: fieldKit.textSoft, lineHeight: 20 }
     );
     game.layers.hud.addChild(body);
 
@@ -75,7 +82,7 @@ export class ArenaBriefingState implements GameState {
       style: { ...fontStyle, fontSize: 16, fill: "#ffd37a", stroke: { color: "#030609", width: 3 } }
     });
     hint.anchor.set(0.5);
-    hint.position.set(game.width / 2, game.height / 2 + 164);
+    hint.position.set(game.width / 2, game.height / 2 + 194);
     game.layers.hud.addChild(hint);
   }
 }
