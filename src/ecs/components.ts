@@ -21,6 +21,12 @@ export interface Entity {
   label: string;
   sourceRegionId: string;
   enemyFamilyId: string;
+  roleCooldown: number;
+  roleWindup: number;
+  roleTargetX: number;
+  roleTargetY: number;
+  roleState: string;
+  eliteAffixId: string;
 }
 
 export interface Player {

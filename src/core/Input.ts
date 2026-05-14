@@ -9,6 +9,7 @@ export type ButtonName =
   | "two"
   | "three"
   | "four"
+  | "mode"
   | "coop"
   | "retry"
   | "escape"
@@ -32,6 +33,7 @@ const KEY_TO_BUTTON: Record<string, ButtonName> = {
   Digit2: "two",
   Digit3: "three",
   Digit4: "four",
+  KeyM: "mode",
   KeyC: "coop",
   KeyR: "retry",
   Escape: "escape",

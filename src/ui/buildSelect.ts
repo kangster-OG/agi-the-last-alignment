@@ -27,9 +27,11 @@ export class BuildSelectState implements GameState {
   private factionIndex = 0;
   private metaprogression: OnlineMetaProgression = readOnlineMetaProgression();
   private requestedMilestone49ArtLoad = false;
+  private freeAlignment = false;
 
   enter(game: Game): void {
     this.metaprogression = readOnlineMetaProgression();
+    this.freeAlignment = game.alignmentSelectionMode === "free";
     this.classIndex = Math.max(0, CLASS_IDS.indexOf(game.selectedClassId));
     this.factionIndex = Math.max(0, FACTION_IDS.indexOf(game.selectedFactionId));
     if (!this.classUnlocked(CLASS_IDS[this.classIndex])) this.classIndex = this.firstUnlockedClassIndex();
@@ -41,6 +43,15 @@ export class BuildSelectState implements GameState {
   exit(): void {}
 
   update(game: Game): void {
+    if (game.input.wasPressed("mode")) {
+      game.alignmentSelectionMode = game.alignmentSelectionMode === "campaign" ? "free" : "campaign";
+      this.freeAlignment = game.alignmentSelectionMode === "free";
+      if (game.alignmentSelectionMode === "campaign") {
+        if (!this.classUnlocked(CLASS_IDS[this.classIndex])) this.classIndex = this.firstUnlockedClassIndex();
+        if (!this.factionUnlocked(FACTION_IDS[this.factionIndex])) this.factionIndex = this.firstUnlockedFactionIndex();
+      }
+      this.render(game);
+    }
     if (game.input.wasPressed("up")) this.classIndex = this.nextUnlockedClassIndex(-1);
     if (game.input.wasPressed("down")) this.classIndex = this.nextUnlockedClassIndex(1);
     if (game.input.wasPressed("left")) this.factionIndex = this.nextUnlockedFactionIndex(-1);
@@ -69,7 +80,7 @@ export class BuildSelectState implements GameState {
     drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // FRAME BAY");
 
     const title = new Text({
-      text: "SELECT YOUR ALIGNMENT FRAME",
+      text: game.alignmentSelectionMode === "free" ? "FREE ALIGNMENT ROSTER" : "CAMPAIGN FRAME SELECT",
       style: { ...fontStyle, fontSize: 30, fill: "#e7f4ef", stroke: { color: "#070b10", width: 5 } }
     });
     title.anchor.set(0.5);
@@ -77,7 +88,9 @@ export class BuildSelectState implements GameState {
     game.layers.hud.addChild(title);
 
     const subtitle = new Text({
-      text: "Combat body on the left. Co-mind doctrine on the right. Enter deploys. C opens the Last Alignment Camp.",
+      text: game.alignmentSelectionMode === "free"
+        ? "Free Alignment: choose any Frame + Co-Mind now for sandbox testing. No campaign unlocks are granted."
+        : "Campaign: clear levels to unlock Frames and Co-Minds. M switches to Free Alignment. Enter opens the Alignment Grid.",
       style: { ...fontStyle, fontSize: 12, fill: "#9fd8d1", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 860 }
     });
     subtitle.anchor.set(0.5);
@@ -118,7 +131,7 @@ export class BuildSelectState implements GameState {
     const x = 42;
     const y = 148;
     const header = new Text({
-      text: "FIGHTER",
+      text: "FRAME",
       style: { ...fontStyle, fontSize: 17, fill: fieldKit.text, stroke: { color: "#030609", width: 3 } }
     });
     header.position.set(x, y - 34);
@@ -160,7 +173,7 @@ export class BuildSelectState implements GameState {
       }
 
       const text = new Text({
-        text: `${combatClass.displayName}${unlocked ? "" : "\nLOCKED"}`,
+        text: `${combatClass.displayName}${unlocked ? game.alignmentSelectionMode === "free" && !isClassUnlocked(id, this.metaprogression) ? "\nFREE" : "" : "\nLOCKED"}`,
         style: { ...fontStyle, fontSize: 8, fill: selected ? fieldKit.text : unlocked ? fieldKit.textSoft : "#7f8998", stroke: { color: "#030609", width: 3 }, align: "center", wordWrap: true, wordWrapWidth: cardWidth - 14 }
       });
       text.anchor.set(0.5, 0);
@@ -246,7 +259,7 @@ export class BuildSelectState implements GameState {
       }
 
       const text = new Text({
-        text: `${faction.shortName}${unlocked ? "" : " LOCKED"}\n${unlocked ? faction.doctrine : entry?.requirementLabel ?? "Route reward required"}`,
+        text: `${faction.shortName}${unlocked ? game.alignmentSelectionMode === "free" && !isFactionUnlocked(id, this.metaprogression) ? " FREE" : "" : " LOCKED"}\n${unlocked ? faction.doctrine : entry?.requirementLabel ?? "Route reward required"}`,
         style: { ...fontStyle, fontSize: 8, fill: selected ? fieldKit.text : unlocked ? fieldKit.textSoft : "#7f8998", stroke: { color: "#030609", width: 3 }, wordWrap: true, wordWrapWidth: 166 }
       });
       text.position.set(left + 78, top + 39);
@@ -258,8 +271,10 @@ export class BuildSelectState implements GameState {
     const combatClass = COMBAT_CLASSES[game.selectedClassId];
     const faction = FACTIONS[game.selectedFactionId];
     const meta = this.metaprogression;
+    const modeLabel = game.alignmentSelectionMode === "free" ? "FREE ALIGNMENT" : "CAMPAIGN";
+    const modeRule = game.alignmentSelectionMode === "free" ? "all roster selectable / no campaign rewards" : "durable unlock progression";
     const text = new Text({
-      text: `${combatClass.displayName} + ${faction.shortName} Co-Mind    CELL ${game.consensusCellSize}/4    ENTER DEPLOY    C CAMP    ARROWS SELECT    SPACE CELL SIZE\nKernel ${game.selectedKernelModuleIds.length} modules    Eval ${game.selectedEvalProtocolIds.length ? game.selectedEvalProtocolIds.join(", ") : "baseline"}    Burst ${game.selectedConsensusBurstPathId}\nRoute ${meta.loaded ? `depth ${meta.routeDepth} / renown ${meta.partyRenown}` : "starter"}    unlocks ${meta.unlockedClassIds.length}/${CLASS_IDS.length} frames ${meta.unlockedFactionIds.length}/${FACTION_IDS.length} co-minds`,
+      text: `${modeLabel}    ${modeRule}    ${combatClass.displayName} + ${faction.shortName} Co-Mind    CELL ${game.consensusCellSize}/4\nENTER DEPLOY    C CAMP    M MODE    ARROWS SELECT    SPACE CELL SIZE\nCampaign unlocks ${meta.unlockedClassIds.length}/${CLASS_IDS.length} Frames ${meta.unlockedFactionIds.length}/${FACTION_IDS.length} Co-Minds    Kernel ${game.selectedKernelModuleIds.length}    Eval ${game.selectedEvalProtocolIds.length ? game.selectedEvalProtocolIds.join(", ") : "baseline"}    Burst ${game.selectedConsensusBurstPathId}`,
       style: { ...fontStyle, fontSize: 10, fill: fieldKit.text, stroke: { color: "#030609", width: 3 }, align: "center", wordWrap: true, wordWrapWidth: 1160 }
     });
     text.anchor.set(0.5);
@@ -288,11 +303,15 @@ export class BuildSelectState implements GameState {
   }
 
   private classUnlocked(id: string | undefined): boolean {
-    return Boolean(id && isClassUnlocked(id, this.metaprogression));
+    return Boolean(id && (this.isFreeAlignmentActive() || isClassUnlocked(id, this.metaprogression)));
   }
 
   private factionUnlocked(id: string | undefined): boolean {
-    return Boolean(id && isFactionUnlocked(id, this.metaprogression));
+    return Boolean(id && (this.isFreeAlignmentActive() || isFactionUnlocked(id, this.metaprogression)));
+  }
+
+  private isFreeAlignmentActive(): boolean {
+    return this.freeAlignment;
   }
 }
 

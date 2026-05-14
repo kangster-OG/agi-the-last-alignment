@@ -15,7 +15,7 @@ import { ArenaBriefingState } from "../ui/briefing";
 import { BuildSelectState } from "../ui/buildSelect";
 import { LastAlignmentHubState } from "../ui/hub";
 import { RouteContractChoiceState } from "../ui/routeChoice";
-import { STARTER_CLASS_ID, STARTER_FACTION_ID } from "../content";
+import { COMBAT_CLASSES, FACTIONS, STARTER_CLASS_ID, STARTER_FACTION_ID } from "../content";
 import { clampConsensusCellSize } from "../sim/consensusCell";
 import { OnlineCoopState } from "../network/OnlineCoopState";
 import { AssetPreviewState, type AssetPreviewKind } from "../ui/assetPreview";
@@ -28,6 +28,7 @@ import { loadMilestone12Art } from "../assets/milestone12Art";
 import { loadMilestone14Art } from "../assets/milestone14Art";
 import { loadMilestone49PlayableArt } from "../assets/milestone49PlayableArt";
 import { loadBuildWeaponVfxTextures } from "../assets/buildWeaponVfx";
+import { loadEnemyRoleVfxTextures } from "../assets/enemyRoleVfx";
 import titleBackdropUrl from "../../assets/ui/armistice_title_backdrop.png";
 import { DEFAULT_KERNEL_MODULE_IDS } from "../roguelite/kernel";
 import { DEFAULT_CONSENSUS_BURST_PATH, type ConsensusBurstPathId } from "../roguelite/burst";
@@ -42,14 +43,21 @@ import {
 } from "../roguelite/deepRoguelite";
 import { createExpeditionProgress, expeditionPowerScore, type ExpeditionProgress } from "../roguelite/expedition";
 import { campaignLedgerForProgress } from "../roguelite/campaignMilestones";
+import { readOnlineMetaProgression, recordSoloCampaignNodeRewards } from "../metaprogression/onlineMetaProgression";
+import { campaignClarityForNode } from "../content/campaignClarity";
+import { campaignObjectiveVarietyForNode } from "../content/campaignObjectiveVariety";
 
 declare global {
   interface Window {
     render_game_to_text?: () => string;
     advanceTime?: (ms: number) => void;
     set_consensus_cell_size?: (size: number) => void;
+    resolve_alignment_check?: (optionIndex: number) => void;
+    record_solo_campaign_clear_for_proof?: (nodeId: string) => string;
   }
 }
+
+export type AlignmentSelectionMode = "campaign" | "free";
 
 class MainMenuState implements GameState {
   readonly mode = "MainMenu" as const;
@@ -171,6 +179,7 @@ export class Game {
   lastNodeId = START_NODE_ID;
   selectedClassId = STARTER_CLASS_ID;
   selectedFactionId = STARTER_FACTION_ID;
+  alignmentSelectionMode: AlignmentSelectionMode = "campaign";
   selectedKernelModuleIds: string[] = [...DEFAULT_KERNEL_MODULE_IDS];
   selectedEvalProtocolIds: string[] = [];
   selectedConsensusBurstPathId: ConsensusBurstPathId = DEFAULT_CONSENSUS_BURST_PATH;
@@ -187,6 +196,8 @@ export class Game {
     objectiveTotal?: number;
     objectiveName?: string;
     objectiveUnit?: string;
+    objectiveStyle?: string;
+    objectiveMechanic?: string;
     thesis?: string;
     proofTokensAwarded?: number;
     proofTokensTotal?: number;
@@ -195,6 +206,15 @@ export class Game {
     expeditionDrafts?: number;
     newSecrets?: SecretUnlock[];
     newMastery?: MasteryBadge[];
+    nodeStabilized?: string;
+    bossDefeated?: boolean;
+    buildHighlights?: string[];
+    routeUnlocks?: string[];
+    stabilizedRouteCount?: number;
+    campaignConsequence?: string;
+    factionCampaignConsequence?: string;
+    finalClearance?: boolean;
+    mechanicalUnlocks?: string[];
   } | null = null;
   proofTokens = 0;
   secretUnlockIds = new Set<string>();
@@ -212,6 +232,11 @@ export class Game {
   private booted = false;
 
   constructor(private readonly root: HTMLElement) {
+    const proofClassId = this.query.get("proofClassId");
+    const proofFactionId = this.query.get("proofFactionId");
+    if (proofClassId && COMBAT_CLASSES[proofClassId]) this.selectedClassId = proofClassId;
+    if (proofFactionId && FACTIONS[proofFactionId]) this.selectedFactionId = proofFactionId;
+    if (isEnabledQueryFlag(this.query, "freeAlignment")) this.alignmentSelectionMode = "free";
     if (isEnabledQueryFlag(this.query, "proofCoolingLakeUnlocked")) {
       this.completedNodes.add("armistice_plaza");
       this.unlockedNodes.add("cooling_lake_nine");
@@ -876,12 +901,25 @@ export class Game {
     window.set_consensus_cell_size = (size: number) => {
       this.consensusCellSize = clampConsensusCellSize(size);
     };
+    window.resolve_alignment_check = (optionIndex: number) => {
+      const current = this.state.current;
+      if (current?.mode === "LevelRun") {
+        (current as LevelRunState).resolveAlignmentCheckForProof(optionIndex);
+      }
+    };
+    window.record_solo_campaign_clear_for_proof = (nodeId: string) => {
+      const meta = recordSoloCampaignNodeRewards(nodeId);
+      return JSON.stringify(meta);
+    };
     window.advanceTime = (ms: number) => {
       this.ticker.advance(ms, (dt) => this.frame(dt));
       this.forceRender();
     };
 
-    if (
+    if (isEnabledQueryFlag(this.query, "proofDirectRun")) {
+      this.preloadRunArt();
+      this.state.set(this.createRun(START_NODE_ID, "armistice_plaza"));
+    } else if (
       this.assetPreview === "armistice_ground_atlas" ||
       this.assetPreview === "accord_striker_raw" ||
       this.assetPreview === "accord_striker_transparent_sheet" ||
@@ -955,6 +993,8 @@ export class Game {
     this.proofTokens += proofTokensAwarded;
     const objectiveCompleted = outcome.objective.anchors.filter((anchor) => anchor.completed).length;
     const objectiveTotal = outcome.objective.anchors.length;
+    const clarity = campaignClarityForNode(outcome.nodeId);
+    const objectiveVariety = campaignObjectiveVarietyForNode(outcome.nodeId);
     const objectiveUnit = outcome.objective.id === "server_buoy_stabilization"
       ? "Server Buoys"
       : outcome.objective.id === "route_platform_alignment"
@@ -975,7 +1015,7 @@ export class Game {
                       ? "Appeal Briefs"
                       : outcome.objective.id === "outer_alignment_prediction_collapse"
                         ? "Alignment Proofs"
-            : "Treaty Anchors";
+            : clarity?.objectiveUnit ?? "Treaty Anchors";
     const routeImplication = outcome.nodeId === "cooling_lake_nine"
       ? "Kettle Coast route signal"
       : outcome.nodeId === "transit_loop_zero"
@@ -996,10 +1036,26 @@ export class Game {
                       ? "Appeal Court Ruling"
                       : outcome.nodeId === "alignment_spire_finale"
                         ? "Outer Alignment Contained"
-            : "stable road progress";
+            : clarity?.rewardPlain ?? "stable road progress";
     const completedForLedger = outcome.completed ? new Set([...this.completedNodes, outcome.nodeId]) : this.completedNodes;
     const campaignLedger = campaignLedgerForProgress(completedForLedger);
+    const routeUnlocks = outcome.completed ? MAP_GRAPH.edges.filter((edge) => edge.from === outcome.nodeId).map((edge) => edge.to) : [];
+    const stabilizedRouteCount = MAP_GRAPH.edges.filter((edge) => completedForLedger.has(edge.from)).length;
+    const buildHighlights = [
+      ...outcome.chosenUpgradeNames.filter((name, index, all) => all.indexOf(name) === index).slice(-4),
+      ...outcome.activatedSynergyIds.map((id) => `Synergy: ${id}`)
+    ].slice(-5);
+    const finalClearance = outcome.completed && outcome.nodeId === "alignment_spire_finale";
+    let mechanicalUnlocks: string[] = [];
     if (outcome.completed) {
+      const metaBefore = readOnlineMetaProgression();
+      const metaAfter = recordSoloCampaignNodeRewards(outcome.nodeId);
+      const newClassIds = metaAfter.unlockedClassIds.filter((id) => !metaBefore.unlockedClassIds.includes(id));
+      const newFactionIds = metaAfter.unlockedFactionIds.filter((id) => !metaBefore.unlockedFactionIds.includes(id));
+      mechanicalUnlocks = [
+        ...newClassIds.map((id) => `Frame: ${COMBAT_CLASSES[id]?.displayName ?? id}`),
+        ...newFactionIds.map((id) => `Co-Mind: ${FACTIONS[id]?.shortName ?? id}`)
+      ];
       const completedMaps = [...new Set([...this.expeditionProgress.completedMaps, outcome.nodeId])];
       this.expeditionProgress = {
         active: true,
@@ -1026,6 +1082,8 @@ export class Game {
       objectiveTotal,
       objectiveName: outcome.objective.name,
       objectiveUnit,
+      objectiveStyle: objectiveVariety?.styleName ?? outcome.objective.styleName,
+      objectiveMechanic: objectiveVariety?.mechanicPlain ?? outcome.objective.mechanicPlain,
       thesis: outcome.chosenTags.length > 0 ? outcome.chosenTags[0] : "uncommitted",
       proofTokensAwarded,
       proofTokensTotal: this.proofTokens,
@@ -1033,7 +1091,22 @@ export class Game {
       expeditionPower: this.expeditionProgress.powerScore,
       expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length,
       newSecrets,
-      newMastery
+      newMastery,
+      nodeStabilized: outcome.completed ? routeImplication : "node unstable",
+      bossDefeated: outcome.bossDefeated,
+      buildHighlights,
+      routeUnlocks,
+      stabilizedRouteCount,
+      mechanicalUnlocks,
+      campaignConsequence: finalClearance
+        ? "Final clearance recorded. Outer Alignment is contained for this campaign proof."
+        : outcome.completed
+          ? campaignLedger.act?.status === "complete"
+            ? `${campaignLedger.act.name}: ${campaignLedger.act.nextImplication}`
+            : `Next route consequence: ${routeImplication}.`
+          : "Run failed before campaign consequence could stabilize.",
+      factionCampaignConsequence: newSecrets[0]?.name ?? newMastery[0]?.name ?? (outcome.completed ? "Faction camp evidence updated." : "Faction camp requests a cleaner proof."),
+      finalClearance
     };
     this.campEvents = [
       outcome.completed ? `Reality accepted ${outcome.nodeId}. Nobody said thank you, but the road stopped screaming.` : `The frame came back bent from ${outcome.nodeId}. The co-mind filed a complaint against physics.`,
@@ -1053,7 +1126,7 @@ export class Game {
       void loadArmisticeAuthoredGround();
     }
     if (this.useMilestone10Art) {
-      void Promise.all([loadMilestone11Art(), loadMilestone12Art(), loadMilestone14Art(), loadMilestone49PlayableArt(), loadArmisticeSourceRebuildV2(), loadBuildWeaponVfxTextures()]);
+      void Promise.all([loadMilestone11Art(), loadMilestone12Art(), loadMilestone14Art(), loadMilestone49PlayableArt(), loadArmisticeSourceRebuildV2(), loadBuildWeaponVfxTextures(), loadEnemyRoleVfxTextures()]);
     }
   }
 

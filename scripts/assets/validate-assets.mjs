@@ -70,6 +70,26 @@ const requiredIds = [
 const errors = [];
 const warnings = [];
 
+const runtimeAssetFolders = [
+  "assets/tiles",
+  "assets/props",
+  "assets/sprites",
+  "assets/ui",
+  "assets/portraits"
+];
+
+for (const folder of runtimeAssetFolders) {
+  const absolute = path.join(cwd, folder);
+  if (!fs.existsSync(absolute)) continue;
+  for (const file of walkFiles(absolute)) {
+    if (path.extname(file).toLowerCase() !== ".png") continue;
+    const stat = fs.statSync(file);
+    if (stat.size === 0) {
+      errors.push(`Runtime PNG is zero bytes and will break production-art loading: ${path.relative(cwd, file)}`);
+    }
+  }
+}
+
 for (const folder of requiredFolders) {
   const absolute = path.join(cwd, folder);
   if (!fs.existsSync(absolute) || !fs.statSync(absolute).isDirectory()) {
@@ -202,6 +222,17 @@ console.log(
 function validateString(value, pathLabel) {
   if (typeof value !== "string" || value.trim().length === 0) {
     errors.push(`${pathLabel} must be a non-empty string.`);
+  }
+}
+
+function* walkFiles(folder) {
+  for (const entry of fs.readdirSync(folder, { withFileTypes: true })) {
+    const absolute = path.join(folder, entry.name);
+    if (entry.isDirectory()) {
+      yield* walkFiles(absolute);
+    } else if (entry.isFile()) {
+      yield absolute;
+    }
   }
 }
 

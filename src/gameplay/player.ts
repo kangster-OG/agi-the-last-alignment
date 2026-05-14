@@ -82,7 +82,7 @@ export function updatePlayerFromCommand(player: Player, command: PlayerInputComm
 }
 
 export function xpNeeded(level: number): number {
-  if (level <= 3) return 9 + level * 4 + Math.max(0, level - 1) * 2;
+  if (level <= 3) return 7 + level * 3 + Math.max(0, level - 1);
   const lateLevel = level - 3;
   return 60 + lateLevel * 20 + lateLevel * lateLevel * 16;
 }

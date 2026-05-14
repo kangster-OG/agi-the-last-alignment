@@ -4,9 +4,7 @@ import type { Game } from "../core/Game";
 import type { GameState } from "../core/StateMachine";
 import { clearAllLayers } from "../render/layers";
 import { SYSTEM_MESSAGES } from "../content/uiText";
-import { nextContentTargetForProgress } from "../roguelite/nextContentTarget";
-import { campaignRouteSummary } from "../roguelite/campaignRoute";
-import { campaignLedgerForProgress } from "../roguelite/campaignMilestones";
+import { campaignClarityForNode } from "../content/campaignClarity";
 import { drawFieldBackdrop, drawFieldPanel, drawToken, fieldKit, fieldText } from "./fieldKit";
 
 export interface RunSummary {
@@ -25,6 +23,15 @@ function summaryPatchLine(upgrades: string[]): string {
   const visible = upgrades.slice(0, 4).join(", ");
   const extra = upgrades.length > 4 ? `, +${upgrades.length - 4} more` : "";
   return `PATCHES ${upgrades.length}: ${visible}${extra}`;
+}
+
+function objectiveOutcomeLine(memory: NonNullable<Game["lastRunMemory"]>, clarity: ReturnType<typeof campaignClarityForNode>): string {
+  const verb = (clarity?.verb ?? "Complete").toUpperCase();
+  const unit = memory.objectiveUnit ?? clarity?.objectiveUnit ?? "Objectives";
+  const completed = memory.objectiveCompleted ?? 0;
+  const total = memory.objectiveTotal ?? 0;
+  const progress = total > 0 ? ` (${unit} ${completed}/${total})` : "";
+  return `Objective: ${verb} ${memory.completed ? "COMPLETE" : "INCOMPLETE"}${progress}`;
 }
 
 export class SummaryState implements GameState {
@@ -82,19 +89,21 @@ export class SummaryState implements GameState {
     game.layers.hud.addChild(title);
 
     const memory = game.lastRunMemory;
+    const clarity = campaignClarityForNode(this.summary.nodeId);
     const expeditionLine = game.expeditionProgress.active
       ? `\nExpedition LV ${game.expeditionProgress.level} // Patches ${game.expeditionProgress.chosenUpgradeIds.length} // Pressure ${game.expeditionProgress.powerScore}`
       : "";
+    const unlockedLine = memory?.mechanicalUnlocks?.length
+      ? memory.mechanicalUnlocks.slice(0, 3).join("  |  ")
+      : memory?.routeUnlocks?.length
+        ? `${memory.routeUnlocks.length} route node(s) opened`
+        : "No new roster unlock this run";
     const carryover = memory
-      ? `RUN MEMORY\nRoute ${memory.routeContractId ?? "unknown"} // ${memory.objectiveUnit ?? "Anchors"} ${memory.objectiveCompleted ?? 0}/${memory.objectiveTotal ?? 0} // Thesis ${memory.thesis ?? "uncommitted"}\nProof Tokens +${memory.proofTokensAwarded ?? 0} => ${memory.proofTokensTotal ?? game.proofTokens}${expeditionLine}\n${memory.newSecrets?.[0] ? `Secret: ${memory.newSecrets[0].name}` : memory.newMastery?.[0] ? `Mastery: ${memory.newMastery[0].name}` : "Camp has new evidence for the next run."}`
+      ? `REWARDS\nLevel Cleared: ${memory.completed ? "YES" : "NO"}\n${objectiveOutcomeLine(memory, clarity)}\nMechanic: ${memory.objectiveStyle ?? "Objective"}\nBoss Defeated: ${memory.bossDefeated ? "YES" : "NO"}\nProof Tokens: +${memory.proofTokensAwarded ?? 0} => ${memory.proofTokensTotal ?? game.proofTokens}\nUnlocked: ${unlockedLine}\nNext: ${memory.nodeStabilized ?? "Next route pending"}${expeditionLine}\n\nBuild: ${memory.buildHighlights?.slice(0, 3).join(", ") || memory.thesis || "uncommitted"}\nFlavor: ${memory.campaignConsequence ?? (memory.newSecrets?.[0] ? `Secret: ${memory.newSecrets[0].name}` : memory.newMastery?.[0] ? `Mastery: ${memory.newMastery[0].name}` : "Camp has new evidence for the next run.")}`
       : "RUN MEMORY\nNo carryover recorded.";
-    const target = nextContentTargetForProgress(game.completedNodes);
-    const campaign = campaignRouteSummary(game);
-    const ledger = campaignLedgerForProgress(game.completedNodes);
-    const actLine = ledger.act ? `\n${ledger.act.name}: ${ledger.act.status.toUpperCase()} ${ledger.act.completedMaps.length}/${ledger.act.requiredMaps.length}` : "";
-    const nextTarget = this.summary.completed
-      ? `\n\nCAMPAIGN ROUTE\n${campaign.routeLine}${actLine}\nNEXT TARGET\n${target.name}: ${target.playerPromise}`
-      : "";
+    const outcomeLine = this.summary.completed
+      ? "Survived. Built power. Extracted with durable rewards."
+      : SYSTEM_MESSAGES.deathBody;
     drawToken(game.layers.hud, game.width / 2 - 282, game.height / 2 - 144, "KO", "red", false);
     drawToken(game.layers.hud, game.width / 2 - 206, game.height / 2 - 144, "LV", "blue", false);
     drawToken(game.layers.hud, game.width / 2 - 130, game.height / 2 - 144, "PT", "amber", this.summary.completed);
@@ -105,10 +114,10 @@ export class SummaryState implements GameState {
       { size: 13, fill: fieldKit.text, width: 568, align: "center", lineHeight: 18 }
     ));
     game.layers.hud.addChild(fieldText(
-      `${this.summary.completed ? SYSTEM_MESSAGES.victoryBody : SYSTEM_MESSAGES.deathBody}\n\n${carryover}${nextTarget}`,
+      `${outcomeLine}\n\n${carryover}`,
       game.width / 2 - 284,
       game.height / 2 - 32,
-      { size: 13, fill: fieldKit.textSoft, width: 568, align: "center", lineHeight: 17 }
+      { size: 12, fill: fieldKit.textSoft, width: 568, align: "center", lineHeight: 15 }
     ));
     game.layers.hud.addChild(fieldText(
       this.summary.completed ? "Enter: Alignment Grid  C: Last Alignment Camp" : "R: retry  Enter: Alignment Grid  C: Camp",

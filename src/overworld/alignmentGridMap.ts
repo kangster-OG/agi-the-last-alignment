@@ -1,4 +1,4 @@
-export type AlignmentNodeType = "Alignment Node" | "Breach Arena" | "Faction Relay" | "Refuge Camp" | "Memory Cache" | "Boss Gate";
+export type AlignmentNodeType = "Alignment Node" | "Breach Arena" | "Faction Relay" | "Memory Cache" | "Boss Gate" | "Shortcut Route" | "Refuge Camp";
 
 export interface AlignmentGridBounds {
   minX: number;
@@ -16,6 +16,11 @@ export interface AlignmentGridNode {
   theme: string;
   arenaId: string;
   unlocks: string[];
+  rewardPromise: string;
+  unlockConsequence: string;
+  stabilizationConsequence: string;
+  nextRouteBehavior: string;
+  proofState: string;
   visualKind: "plaza" | "relay" | "lake" | "camp" | "transit" | "cache" | "spire" | "sunfield" | "archive" | "beacon" | "finale";
   regionLabel: string;
   compactLabel?: string;
@@ -99,6 +104,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "ruined treaty square",
       arenaId: "armistice_plaza",
       unlocks: ["accord_relay", "cooling_lake_nine", "model_war_memorial"],
+      rewardPromise: "Proof Token, Treaty Anchor carryover, and the first stable Kettle Coast route signal.",
+      unlockConsequence: "Accord Relay, Cooling Lake Nine, and Model War Memorial become deployable from the plaza.",
+      stabilizationConsequence: "Refusal Road, Boiled Server Causeway, and Casualty Walk light as stable roads.",
+      nextRouteBehavior: "Recommended route points to Cooling Lake Nine while side branches expose faction and memory options.",
+      proofState: "armistice_clear_unlocks_kettle_coast_and_side_branches",
       visualKind: "plaza",
       regionLabel: "Armistice Zone",
       compactLabel: "PLAZA"
@@ -112,6 +122,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "OpenAI and Anthropic relay tower",
       arenaId: "armistice_plaza",
       unlocks: ["guardrail_forge", "archive_of_unsaid_things", "transit_loop_zero"],
+      rewardPromise: "Faction trust, co-mind draft bias, and a clearer relay route into later doctrine nodes.",
+      unlockConsequence: "Guardrail Forge, Archive of Unsaid Things, and Transit Loop Zero become visible faction routes.",
+      stabilizationConsequence: "Relay cables stop flickering and make the Faction Signal plateau safer to cross.",
+      nextRouteBehavior: "Recommended route branches toward Guardrail Forge if the player wants defense pressure next.",
+      proofState: "accord_relay_clear_unlocks_faction_route_fork",
       visualKind: "relay",
       regionLabel: "Faction Signal",
       compactLabel: "RELAY",
@@ -127,6 +142,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "flooded server lake",
       arenaId: "cooling_lake_nine",
       unlocks: ["armistice_camp", "memory_cache_001", "thermal_archive"],
+      rewardPromise: "Kettle Coast signal, buoy economy help, and carried burst tempo for the next route.",
+      unlockConsequence: "Armistice Camp, Memory Cache, and Thermal Archive open as post-lake choices.",
+      stabilizationConsequence: "Boiled Server Causeway becomes stable and the lake bridge markers turn reliable.",
+      nextRouteBehavior: "Recommended route continues to Transit Loop Zero through the Kettle Metro Signal once the lake is stable.",
+      proofState: "cooling_lake_clear_establishes_kettle_route_signal",
       visualKind: "lake",
       regionLabel: "Kettle Coast Trace",
       compactLabel: "LAKE",
@@ -142,6 +162,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "broken evaluation monument and casualty cache",
       arenaId: "memory_cache_001",
       unlocks: ["memory_cache_001"],
+      rewardPromise: "Route-memory clue, cache draft bias, and evidence context for the next recovery node.",
+      unlockConsequence: "Memory Cache becomes a deployable recovery objective instead of a silhouette.",
+      stabilizationConsequence: "Casualty Walk stabilizes and the omission tunnel starts showing its exits.",
+      nextRouteBehavior: "Recommended route diverts into Memory Cache if the player wants recovery before transit pressure.",
+      proofState: "memorial_clear_unlocks_memory_cache_entry",
       visualKind: "cache",
       regionLabel: "Memory",
       compactLabel: "MEMORIAL",
@@ -157,6 +182,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "refuge barricades and repair tents",
       arenaId: "armistice_plaza",
       unlocks: ["guardrail_forge"],
+      rewardPromise: "Refuge repair context, objective durability, and safer carryover into Guardrail Forge.",
+      unlockConsequence: "Guardrail Forge gains a stable resupply approach from the camp barricades.",
+      stabilizationConsequence: "Relief Barricade becomes stable and camp tent markers brighten.",
+      nextRouteBehavior: "Recommended route points to Guardrail Forge as a defensive branch.",
+      proofState: "refuge_camp_clear_opens_guardrail_resupply_route",
       visualKind: "camp",
       regionLabel: "Refuge",
       compactLabel: "CAMP",
@@ -172,6 +202,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "post-Blackwater evidence archive and corrupt route memory",
       arenaId: "memory_cache_001",
       unlocks: ["guardrail_forge", "archive_of_unsaid_things", "transit_loop_zero"],
+      rewardPromise: "Recovered Route Memory, lore carryover, recovery bias, and route clarity.",
+      unlockConsequence: "Guardrail Forge, Archive of Unsaid Things, and Transit Loop Zero gain recovered-memory route links.",
+      stabilizationConsequence: "Archive Switchback, Guardrail Sluice, and Misremembered Overpass become readable roads.",
+      nextRouteBehavior: "Recommended route points to Guardrail Forge, with Archive and Transit as informed branches.",
+      proofState: "memory_cache_clear_restores_route_memory_fork",
       visualKind: "cache",
       regionLabel: "Memory",
       compactLabel: "CACHE",
@@ -187,6 +222,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "archive court where black bars try to steal evidence before appeal",
       arenaId: "archive_of_unsaid_things",
       unlocks: ["appeal_court_ruins", "blackwater_beacon", "transit_loop_zero"],
+      rewardPromise: "Archive Court Writ, redaction counterplay, and appeal-route clarity.",
+      unlockConsequence: "Appeal Court Ruins becomes public enough to enter; Blackwater and Transit links stay legible.",
+      stabilizationConsequence: "Unsaid Index Road and Preserved Writ Stair stop deleting their own labels.",
+      nextRouteBehavior: "Recommended route points to Appeal Court Ruins once the writ is preserved.",
+      proofState: "archive_clear_opens_appeal_public_writ_route",
       visualKind: "archive",
       regionLabel: "Redaction Archive",
       compactLabel: "ARCHIVE",
@@ -202,6 +242,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "ocean platform and cosmic antenna pointing the wrong way",
       arenaId: "blackwater_beacon",
       unlocks: ["transit_loop_zero", "memory_cache_001"],
+      rewardPromise: "Blackwater Signal Key, antenna clarity, and weather counterplay.",
+      unlockConsequence: "Memory Cache gains a recovered-key approach and Transit Loop Zero regains a signal ferry.",
+      stabilizationConsequence: "Blackwater Causeway and Signal Ferry become stable enough to plan around.",
+      nextRouteBehavior: "Recommended route points to Memory Cache after the signal key is recovered.",
+      proofState: "blackwater_clear_unlocks_signal_key_memory_route",
       visualKind: "beacon",
       regionLabel: "Blackwater Array",
       compactLabel: "BEACON",
@@ -217,6 +262,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "boiling archive stacks under the cooling lake",
       arenaId: "cooling_lake_nine",
       unlocks: ["false_schedule_yard"],
+      rewardPromise: "Risky route memory, bonus cache pressure, and a shortcut into the false schedule branch.",
+      unlockConsequence: "False Schedule Yard becomes reachable through the Steam Rail Bypass.",
+      stabilizationConsequence: "Boilover Spiral gains stable warning markers instead of pure steam noise.",
+      nextRouteBehavior: "Recommended route treats False Schedule Yard as a risky optional shortcut.",
+      proofState: "thermal_archive_clear_unlocks_false_schedule_shortcut",
       visualKind: "lake",
       regionLabel: "Kettle Coast Trace",
       compactLabel: "ARCHIVE",
@@ -232,6 +282,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "frontier lab signal foundry and calibration gantries",
       arenaId: "guardrail_forge",
       unlocks: ["glass_sunfield", "archive_of_unsaid_things", "transit_loop_zero"],
+      rewardPromise: "Calibrated Guardrail Doctrine, defense bias, and faction signal stability.",
+      unlockConsequence: "Glass Sunfield, Archive of Unsaid Things, and Transit Loop Zero gain forge-calibrated routes.",
+      stabilizationConsequence: "Guardrail Sluice, Signal Underpass, and Quenched Mirror Road stabilize.",
+      nextRouteBehavior: "Recommended route points to Glass Sunfield after the doctrine alloy holds.",
+      proofState: "guardrail_forge_clear_opens_glass_sunfield_branch",
       visualKind: "relay",
       regionLabel: "Faction Signal",
       compactLabel: "FORGE",
@@ -247,6 +302,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "smart subway hub",
       arenaId: "transit_loop_zero",
       unlocks: ["signal_coast", "false_schedule_yard", "glass_sunfield", "verdict_spire"],
+      rewardPromise: "Route lock, movement tempo, and clean next-route visibility.",
+      unlockConsequence: "Signal Coast, False Schedule Yard, Glass Sunfield, and Verdict Spire become selectable route choices.",
+      stabilizationConsequence: "Kettle Metro Signal and Appeal Ramp stabilize into authored transit lanes.",
+      nextRouteBehavior: "Recommended route points to Signal Coast; shortcut and boss-gate routes remain visible options.",
+      proofState: "transit_clear_unlocks_signal_coast_and_boss_gate_fork",
       visualKind: "transit",
       regionLabel: "Route Gate",
       compactLabel: "TRANSIT",
@@ -262,6 +322,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "flooded signal shoreline and relay beacons",
       arenaId: "signal_coast",
       unlocks: ["blackwater_beacon", "verdict_spire"],
+      rewardPromise: "Coastal signal lane, burst tempo, and Blackwater route clarity.",
+      unlockConsequence: "Blackwater Beacon becomes the recommended branch while Verdict Spire remains visible.",
+      stabilizationConsequence: "Noisy Shoreline Link and Low-Tide Antenna Return become stable signal roads.",
+      nextRouteBehavior: "Recommended route points to Blackwater Beacon before court escalation.",
+      proofState: "signal_coast_clear_unlocks_blackwater_and_verdict_fork",
       visualKind: "beacon",
       regionLabel: "Kettle Coast Edge",
       compactLabel: "COAST",
@@ -271,12 +336,17 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
     {
       id: "false_schedule_yard",
       name: "False Schedule Yard",
-      nodeType: "Breach Arena",
+      nodeType: "Shortcut Route",
       worldX: 10,
       worldY: -6,
       theme: "yard of impossible arrivals and duplicate route boards",
       arenaId: "transit_loop_zero",
       unlocks: ["appeal_court_ruins"],
+      rewardPromise: "Shortcut route memory, movement bias, and a dangerous appeal bypass.",
+      unlockConsequence: "Appeal Court Ruins can be approached through a risky summons track.",
+      stabilizationConsequence: "Wrong Platform Spur and Summons Track stop swapping their destination labels.",
+      nextRouteBehavior: "Recommended route remains risky; it shortens the court path but raises route pressure.",
+      proofState: "false_schedule_clear_unlocks_risky_appeal_shortcut",
       visualKind: "transit",
       regionLabel: "Unreal Metro Line",
       compactLabel: "YARD",
@@ -292,6 +362,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "solar mirror field where the dawn is a hostile runtime",
       arenaId: "glass_sunfield",
       unlocks: ["archive_of_unsaid_things", "verdict_spire"],
+      rewardPromise: "Glass Sunfield Prism, shade-route timing, and Archive/Court carryover.",
+      unlockConsequence: "Archive of Unsaid Things and Verdict Spire gain prism-backed route clarity.",
+      stabilizationConsequence: "Quenched Mirror Road and Sunblind Appeal gain stable shade markers.",
+      nextRouteBehavior: "Recommended route points to Archive of Unsaid Things after the prism is aligned.",
+      proofState: "glass_sunfield_clear_opens_archive_court_route",
       visualKind: "sunfield",
       regionLabel: "Glass Sunfield",
       compactLabel: "GLASS",
@@ -307,6 +382,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "adjudication rupture and alien court pylons",
       arenaId: "verdict_spire",
       unlocks: ["alignment_spire_finale"],
+      rewardPromise: "Boss-gate writ pressure resolved into a finale ascent route.",
+      unlockConsequence: "Outer Alignment Finale becomes reachable from the first court ascent.",
+      stabilizationConsequence: "Appeal Ramp and First Court Ascent show stable boss-gate markers.",
+      nextRouteBehavior: "Recommended route points to the finale if the player chooses the verdict branch.",
+      proofState: "verdict_spire_clear_opens_first_finale_ascent",
       visualKind: "spire",
       regionLabel: "Adjudication Rupture",
       compactLabel: "VERDICT",
@@ -322,6 +402,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "ruined tribunal stacks and broken writ pylons",
       arenaId: "appeal_court_ruins",
       unlocks: ["alignment_spire_finale"],
+      rewardPromise: "Appeal Court Ruling, public-record proof, and finale route clarity.",
+      unlockConsequence: "Outer Alignment Finale opens through the public Writ Stair.",
+      stabilizationConsequence: "Preserved Writ Stair and Writ Stair become public, stable roads.",
+      nextRouteBehavior: "Recommended route points to Outer Alignment Finale.",
+      proofState: "appeal_court_clear_opens_outer_alignment_finale",
       visualKind: "spire",
       regionLabel: "Adjudication Rupture",
       compactLabel: "APPEAL",
@@ -337,6 +422,11 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
       theme: "corrupted overworld where A.G.I. turns roads into attacks",
       arenaId: "alignment_spire_finale",
       unlocks: [],
+      rewardPromise: "Outer Alignment containment, final campaign proof, and full route stabilization summary.",
+      unlockConsequence: "No later node opens; campaign payoff records the stabilized route count.",
+      stabilizationConsequence: "Finale corruption is contained and the route-mouth teeth stop predicting the exit.",
+      nextRouteBehavior: "Recommended route holds on the completed finale and invites replay/mastery routes.",
+      proofState: "outer_alignment_finale_clear_marks_campaign_complete",
       visualKind: "finale",
       regionLabel: "Outer Alignment",
       compactLabel: "FINALE",
@@ -761,3 +851,42 @@ export const ALIGNMENT_GRID_MAP: AlignmentGridMap = {
 };
 
 export const START_NODE_ID = "armistice_plaza";
+
+export const CAMPAIGN_RECOMMENDED_NODE_ORDER = [
+  "armistice_plaza",
+  "cooling_lake_nine",
+  "transit_loop_zero",
+  "signal_coast",
+  "blackwater_beacon",
+  "memory_cache_001",
+  "guardrail_forge",
+  "glass_sunfield",
+  "archive_of_unsaid_things",
+  "appeal_court_ruins",
+  "alignment_spire_finale"
+] as const;
+
+export function alignmentGridNodeById(id: string | null | undefined): AlignmentGridNode | null {
+  if (!id) return null;
+  return ALIGNMENT_GRID_MAP.nodes.find((node) => node.id === id) ?? null;
+}
+
+export function stabilizedRouteIds(completedNodes: ReadonlySet<string>): string[] {
+  return ALIGNMENT_GRID_MAP.routes.filter((route) => completedNodes.has(route.from)).map((route) => route.id);
+}
+
+export function nextRecommendedAlignmentNode(completedNodes: ReadonlySet<string>, unlockedNodes: ReadonlySet<string>): AlignmentGridNode {
+  const ordered = CAMPAIGN_RECOMMENDED_NODE_ORDER
+    .map((id) => alignmentGridNodeById(id))
+    .filter((node): node is AlignmentGridNode => Boolean(node));
+  return ordered.find((node) => !completedNodes.has(node.id) && unlockedNodes.has(node.id))
+    ?? ALIGNMENT_GRID_MAP.nodes.find((node) => !completedNodes.has(node.id) && unlockedNodes.has(node.id))
+    ?? ordered[ordered.length - 1]
+    ?? ALIGNMENT_GRID_MAP.nodes[0];
+}
+
+export function visibleRouteConsequenceText(node: AlignmentGridNode, completedNodes: ReadonlySet<string>, unlockedNodes: ReadonlySet<string>): string {
+  if (completedNodes.has(node.id)) return node.stabilizationConsequence;
+  if (unlockedNodes.has(node.id)) return node.rewardPromise;
+  return node.unlockConsequence;
+}

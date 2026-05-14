@@ -3,13 +3,14 @@ import type { LevelRunState } from "../level/LevelRunState";
 import type { OverworldState } from "../overworld/OverworldState";
 import { COMBAT_CLASSES, FACTIONS, GAME_TITLE, resolveBuildKit } from "../content";
 import type { SummaryState } from "../ui/summary";
-import { ALIGNMENT_GRID_MAP } from "../overworld/alignmentGridMap";
+import { ALIGNMENT_GRID_MAP, nextRecommendedAlignmentNode, stabilizedRouteIds, visibleRouteConsequenceText } from "../overworld/alignmentGridMap";
 import type { UpgradeDraftState } from "../ui/draft";
 import type { OnlineCoopState } from "../network/OnlineCoopState";
 import { assetPipelineSummary } from "../assets";
 import { getArmisticeAuthoredGroundTexture } from "../assets/armisticeGroundAtlas";
 import { getPlayerDamageVfxTextures } from "../assets/playerDamageVfx";
 import { getBuildWeaponVfxTextures } from "../assets/buildWeaponVfx";
+import { getEnemyRoleVfxTextures, ENEMY_ROLE_VFX_ASSET_ID } from "../assets/enemyRoleVfx";
 import { getCoolingLakeNineArtTextures } from "../assets/coolingLakeNineArt";
 import { getTransitLoopZeroArtTextures } from "../assets/transitLoopZeroArt";
 import { getSignalCoastArtTextures } from "../assets/signalCoastArt";
@@ -26,6 +27,8 @@ import type { RouteContractChoiceState } from "../ui/routeChoice";
 import { kernelSummary } from "../roguelite/kernel";
 import { evalSummary } from "../roguelite/evals";
 import { burstSummary, consensusBurstPath } from "../roguelite/burst";
+import { protocolCodexForBuild } from "../roguelite/protocolCodex";
+import { xpNeeded } from "../gameplay/player";
 import { objectiveSummary, routeContractById, routeContractForSelection } from "../roguelite/deepRoguelite";
 import { nextContentTargetForProgress } from "../roguelite/nextContentTarget";
 import { campaignLedgerForProgress, campaignMilestonesForProgress } from "../roguelite/campaignMilestones";
@@ -38,6 +41,9 @@ import {
 } from "../assets/milestone49PlayableArt";
 import { MILESTONE50_ARENA_IDS, MILESTONE50_BOSS_IDS, MILESTONE50_ENEMY_FAMILY_IDS, MILESTONE50_HAZARD_IDS, MILESTONE50_MAJOR_PROOF_ARENA_IDS } from "../assets/milestone50ArenaBossArt";
 import { buildSlotCapSummary } from "../gameplay/upgrades";
+import { CAMPAIGN_LEVEL_COUNT, campaignClarityForArena, campaignClarityForNode } from "../content/campaignClarity";
+import { campaignObjectiveVarietyForArena, campaignObjectiveVarietyForNode } from "../content/campaignObjectiveVariety";
+import { enemyRoleProfileForFamily } from "../content/enemyRoleProfiles";
 
 export function renderGameToText(game: Game): string {
   const state = game.state.current;
@@ -149,6 +155,8 @@ export function renderGameToText(game: Game): string {
       alignmentSpireArtSet: getAlignmentSpireFinaleArtTextures() ? ALIGNMENT_SPIRE_ART_ASSET_ID : "not_loaded",
       playerDamageVfxReady: getPlayerDamageVfxTextures() !== null,
       buildWeaponVfxReady: getBuildWeaponVfxTextures() !== null,
+      enemyRoleVfxReady: getEnemyRoleVfxTextures() !== null,
+      enemyRoleVfxSet: getEnemyRoleVfxTextures() ? ENEMY_ROLE_VFX_ASSET_ID : "not_loaded",
       productionArtEnabled: game.useMilestone10Art,
       productionArtSet: game.useMilestone10Art ? "milestone14_combat_art_parity" : "placeholder_safe_opt_out",
       playerFrameArtSet: game.useMilestone10Art ? "milestone49_class_roster_and_comind_modules" : "placeholder_safe_opt_out",
@@ -180,6 +188,10 @@ export function renderGameToText(game: Game): string {
         ...base,
         player: null,
         buildSelection: {
+          selectionMode: game.alignmentSelectionMode,
+          selectionModeCopy: game.alignmentSelectionMode === "free"
+            ? "Free Alignment: all Frames and Co-Minds selectable immediately; no campaign unlocks granted."
+            : "Campaign: durable unlock progression; clear levels to unlock Frames and Co-Minds.",
           availableClasses: Object.values(COMBAT_CLASSES).map((combatClass) => ({
             id: combatClass.id,
             name: combatClass.displayName,
@@ -187,6 +199,7 @@ export function renderGameToText(game: Game): string {
             baseStats: combatClass.baseStats,
             buildKit: resolveBuildKit(combatClass.id, selectedFaction.id),
             unlocked: metaprogression.unlockedClassIds.includes(combatClass.id),
+            selectable: game.alignmentSelectionMode === "free" || metaprogression.unlockedClassIds.includes(combatClass.id),
             unlock: metaprogression.classes.find((entry) => entry.id === combatClass.id) ?? null
           })),
           availableFactions: Object.values(FACTIONS).map((faction) => ({
@@ -196,17 +209,28 @@ export function renderGameToText(game: Game): string {
             upgradePoolIds: faction.upgradePoolIds,
             buildKit: resolveBuildKit(selectedClass.id, faction.id),
             unlocked: metaprogression.unlockedFactionIds.includes(faction.id),
+            selectable: game.alignmentSelectionMode === "free" || metaprogression.unlockedFactionIds.includes(faction.id),
             unlock: metaprogression.factions.find((entry) => entry.id === faction.id) ?? null
           })),
           selectedClassId: selectedClass.id,
           selectedFactionId: selectedFaction.id,
           selectedClassUnlocked: metaprogression.unlockedClassIds.includes(selectedClass.id),
           selectedFactionUnlocked: metaprogression.unlockedFactionIds.includes(selectedFaction.id),
+          selectedClassSelectable: game.alignmentSelectionMode === "free" || metaprogression.unlockedClassIds.includes(selectedClass.id),
+          selectedFactionSelectable: game.alignmentSelectionMode === "free" || metaprogression.unlockedFactionIds.includes(selectedFaction.id),
           consensusCellSize: game.consensusCellSize,
           consensusCellHint: "Press Space to cycle local Consensus Cell size before networking.",
           hubHint: "Press C to open the Last Alignment Camp for Kernel, Eval, and Burst setup.",
           confirmHint: "Press Enter to continue to the Alignment Grid.",
           metaprogression,
+          campaignClarityVocabulary: {
+            campaign: "durable unlock progression",
+            freeAlignment: "all-roster sandbox/testing mode",
+            frame: "character",
+            coMind: "AI partner",
+            draft: "in-run upgrade",
+            proofTokens: "durable campaign currency"
+          },
           artCoverage: {
             playerFrameArtSet: game.useMilestone10Art ? "milestone49_class_roster_and_comind_modules" : "placeholder_safe_opt_out",
             classAtlasIds: [...MILESTONE49_CLASS_IDS],
@@ -273,6 +297,8 @@ export function renderGameToText(game: Game): string {
 
   if (state?.mode === "OverworldMap") {
     const overworld = state as OverworldState;
+    const currentNode = overworld.selectedNode;
+    const nextRecommended = nextRecommendedAlignmentNode(game.completedNodes, game.unlockedNodes);
     return JSON.stringify(
       {
         ...base,
@@ -281,12 +307,40 @@ export function renderGameToText(game: Game): string {
           mapId: ALIGNMENT_GRID_MAP.id,
           mapLabel: ALIGNMENT_GRID_MAP.label,
           mapBounds: ALIGNMENT_GRID_MAP.bounds,
+          avatarClassId: game.selectedClassId,
+          avatarFactionId: game.selectedFactionId,
           selectedId: overworld.selectedId,
-          selectedNodeType: overworld.selectedNode?.nodeType,
-          selectedName: overworld.selectedNode?.name,
-          selectedTheme: overworld.selectedNode?.theme,
+          selectedNodeType: currentNode?.nodeType,
+          selectedName: currentNode?.name,
+          selectedTheme: currentNode?.theme,
+          currentNode: currentNode
+            ? {
+                id: currentNode.id,
+                name: currentNode.name,
+                nodeType: currentNode.nodeType,
+                campaignClarity: campaignClarityForNode(currentNode.id),
+                completed: game.completedNodes.has(currentNode.id),
+                unlocked: game.unlockedNodes.has(currentNode.id),
+                rewardPromise: currentNode.rewardPromise,
+                unlockConsequence: currentNode.unlockConsequence,
+                stabilizationConsequence: currentNode.stabilizationConsequence,
+                nextRouteBehavior: currentNode.nextRouteBehavior,
+                proofState: currentNode.proofState
+              }
+            : null,
+          nextRecommendedNode: {
+            id: nextRecommended.id,
+            name: nextRecommended.name,
+            nodeType: nextRecommended.nodeType,
+            routeBehavior: nextRecommended.nextRouteBehavior,
+            proofState: nextRecommended.proofState
+          },
           completed: [...game.completedNodes],
           unlocked: [...game.unlockedNodes],
+          completedNodes: [...game.completedNodes],
+          unlockedNodes: [...game.unlockedNodes],
+          stabilizedRoutes: stabilizedRouteIds(game.completedNodes),
+          visibleRouteConsequenceText: currentNode ? visibleRouteConsequenceText(currentNode, game.completedNodes, game.unlockedNodes) : "",
           nodes: ALIGNMENT_GRID_MAP.nodes.map((node) => ({
             id: node.id,
             name: node.name,
@@ -294,12 +348,19 @@ export function renderGameToText(game: Game): string {
             worldX: node.worldX,
             worldY: node.worldY,
             completed: game.completedNodes.has(node.id),
-            unlocked: game.unlockedNodes.has(node.id)
+            unlocked: game.unlockedNodes.has(node.id),
+            available: game.unlockedNodes.has(node.id) && !game.completedNodes.has(node.id),
+            rewardPromise: node.rewardPromise,
+            unlockConsequence: node.unlockConsequence,
+            stabilizationConsequence: node.stabilizationConsequence,
+            nextRouteBehavior: node.nextRouteBehavior,
+            proofState: node.proofState
           })),
           routes: overworld.routeStates(game),
           nearestRoute: overworld.nearestRoute(game),
           diorama: overworld.dioramaInfo(game),
-          enterHint: "Move near an unlocked node and press E or Enter."
+          routeWalking: overworld.routeWalking,
+          enterHint: "Walk along authored route rails to an unlocked landmark and press E or Enter."
         },
         level: null,
         enemies: [],
@@ -313,6 +374,7 @@ export function renderGameToText(game: Game): string {
 
   if (state?.mode === "LevelRun") {
     const run = state as LevelRunState;
+    const clarity = campaignClarityForArena(run.arena.id);
     const enemies = [...run.world.entities]
       .filter((entity) => entity.active && entity.kind === "enemy")
       .sort((a, b) => Number(b.boss) - Number(a.boss))
@@ -321,6 +383,8 @@ export function renderGameToText(game: Game): string {
         id: entity.id,
         label: entity.label,
         familyId: entity.enemyFamilyId,
+        roleId: entity.enemyFamilyId ? enemyRoleProfileForFamily(entity.enemyFamilyId).roleId : undefined,
+        eliteAffixId: entity.eliteAffixId || undefined,
         sourceRegionId: entity.sourceRegionId,
         worldX: round(entity.worldX),
         worldY: round(entity.worldY),
@@ -334,7 +398,8 @@ export function renderGameToText(game: Game): string {
     const projectiles = run.world.entities
       .filter((entity) => entity.active && entity.kind === "projectile")
       .slice(0, 10)
-      .map((entity) => ({ worldX: round(entity.worldX), worldY: round(entity.worldY), pierce: entity.value, label: entity.label }));
+      .map((entity) => ({ worldX: round(entity.worldX), worldY: round(entity.worldY), pierce: entity.value, label: entity.label, enemyFamilyId: entity.enemyFamilyId || undefined, sourceRoleId: entity.sourceRegionId || undefined }));
+    const enemyRoleTelemetry = run.enemyRoleTelemetry();
     return JSON.stringify(
       {
         ...base,
@@ -442,6 +507,7 @@ export function renderGameToText(game: Game): string {
             refusalAuraPlayers: run.players.filter((runtime) => runtime.build.refusalAura > 0 && !runtime.downed).length
           },
           bossMechanics: {
+            bossContract: run.bossContractSummary(),
             bossIntroSeen: run.bossIntroSeen,
             brokenPromiseZones: run.brokenPromiseZones.map((zone) => ({
               id: zone.id,
@@ -488,6 +554,8 @@ export function renderGameToText(game: Game): string {
             consensusBurst: burstSummary(run.consensusBurst, run.build),
             routeContract: run.routeContract,
             objective: objectiveSummary(run.treatyAnchorObjective),
+            objectiveVariety: run.objectiveVarietySummary(),
+            campaignDuration: run.campaignDurationSummary(),
             coolingLake: run.coolingLakeSummary(),
             transitLoop: run.transitLoopSummary(),
             signalCoast: run.signalCoastSummary(),
@@ -498,7 +566,46 @@ export function renderGameToText(game: Game): string {
             archiveCourt: run.archiveCourtSummary(),
             appealCourt: run.appealCourtSummary(),
             alignmentSpire: run.alignmentSpireSummary(),
+            enemyRoles: enemyRoleTelemetry,
+            enemyRolesSeen: enemyRoleTelemetry.enemyRolesSeen,
+            rangedFamiliesSeen: enemyRoleTelemetry.rangedFamiliesSeen,
+            enemyProjectilesFired: enemyRoleTelemetry.enemyProjectilesFired,
+            enemyProjectilesActive: enemyRoleTelemetry.enemyProjectilesActive,
+            enemyProjectileHits: enemyRoleTelemetry.enemyProjectileHits,
+            enemyProjectileDodges: enemyRoleTelemetry.enemyProjectileDodges,
+            enemyExplosionsTriggered: enemyRoleTelemetry.enemyExplosionsTriggered,
+            enemyTrailSeconds: enemyRoleTelemetry.enemyTrailSeconds,
+            supportAuraSeconds: enemyRoleTelemetry.supportAuraSeconds,
+            objectiveJamSeconds: enemyRoleTelemetry.objectiveJamSeconds,
+            eliteAffixesSeen: enemyRoleTelemetry.eliteAffixesSeen,
+            eliteKills: enemyRoleTelemetry.eliteKills,
+            preBossEnemyRolePressureSeconds: enemyRoleTelemetry.preBossEnemyRolePressureSeconds,
+            currentPhaseEnemyRoleMix: enemyRoleTelemetry.currentPhaseEnemyRoleMix,
             objectiveReward: run.lastObjectiveRewardLabel,
+            rewardEvents: run.rewardEvents,
+            rewardPacing: {
+              phase: run.player.level <= 3 ? "early_build_thesis_fast_drafts" : run.seconds < run.arena.bossSeconds ? "mid_objective_cache_rewards" : "late_boss_route_fusion_rewards",
+              currentXp: run.player.xp,
+              nextDraftXp: xpNeeded(run.player.level),
+              policy: "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+              rewardTypesAllowed: ["primary", "secondary", "passive", "fusion_enabler", "reroll", "route_memory", "faction_trust", "consensus_burst_charge", "objective_durability", "co_op_relay"]
+            },
+            alignmentCheck: run.alignmentCheckSummary(),
+            difficultyDirector: run.difficultyDirectorSummary(),
+            whatNow: run.whatNowSummary(),
+            campaignClarity: clarity
+              ? {
+                  levelNumber: clarity.levelNumber,
+                  levelCount: CAMPAIGN_LEVEL_COUNT,
+                  levelVerb: clarity.verb,
+                  objectiveUnit: clarity.objectiveUnit,
+                  objectivePlain: clarity.objectivePlain,
+                  objectiveVariety: campaignObjectiveVarietyForArena(run.arena.id),
+                  dangerPlain: clarity.dangerPlain,
+                  bossPressure: clarity.bossPressure,
+                  rewardPlain: clarity.rewardPlain
+                }
+              : null,
             playerFacingIntel: run.runIntel(),
             firstRunArcPhase: run.firstRunArcPhase(),
             buildGrammar: {
@@ -522,10 +629,9 @@ export function renderGameToText(game: Game): string {
               shorelineStrideRank: run.build.shorelineStride,
               relayJamResistance: round(run.build.relayJamResistance),
               causalRailgunRank: run.build.causalRailgun,
-              fusionHints: run.chosenUpgradeIds.includes("vector_lance") && !run.chosenUpgradeIds.includes("causal_railgun")
-                ? [{ id: "causal_railgun", requires: ["vector_lance", "predicted_lane"] }]
-                : []
+              fusionHints: protocolCodexForBuild(run.build, run.chosenUpgradeIds).knownFusions
             },
+            protocolCodex: protocolCodexForBuild(run.build, run.chosenUpgradeIds),
             buildThesis: run.synergySummary(),
             synergyOnline: run.lastSynergyOnlineLabel,
             draftBiasTags: run.draftBiasTags(),
@@ -598,8 +704,11 @@ export function renderGameToText(game: Game): string {
 	          combatArt: snapshot?.combatArt ?? null,
 	          campaignContent: snapshot?.campaignContent ?? null,
 	          dialogue: snapshot?.dialogue ?? null,
-	          bossEvent: snapshot?.bossEvent ?? null,
-	          regionEvent: snapshot?.regionEvent ?? null,
+          bossEvent: snapshot?.bossEvent ?? null,
+          regionEvent: snapshot?.regionEvent ?? null,
+          enemyRoles: snapshot?.enemyRoles ?? null,
+          enemyTelegraphs: snapshot?.enemyTelegraphs ?? [],
+          enemyTrails: snapshot?.enemyTrails ?? [],
           objectives: snapshot?.objectives ?? null,
           rolePressure: snapshot?.rolePressure ?? null,
           consensusBurst: snapshot?.consensusBurst ?? null,
@@ -695,6 +804,7 @@ export function renderGameToText(game: Game): string {
           snapshot?.enemies.slice(0, 12).map((enemy) => ({
             id: enemy.id,
             familyId: enemy.familyId,
+            roleId: enemy.roleId,
             sourceRegionId: enemy.sourceRegionId,
             worldX: round(enemy.worldX),
             worldY: round(enemy.worldY),
@@ -712,6 +822,10 @@ export function renderGameToText(game: Game): string {
           snapshot?.projectiles?.slice(0, 12).map((projectile) => ({
             id: projectile.id,
             ownerSessionId: projectile.ownerSessionId,
+            hostile: projectile.hostile,
+            familyId: projectile.familyId,
+            roleId: projectile.roleId,
+            kind: projectile.kind,
             worldX: round(projectile.worldX),
             worldY: round(projectile.worldY),
             velocityX: round(projectile.velocityX),
@@ -719,6 +833,9 @@ export function renderGameToText(game: Game): string {
             life: round(projectile.life),
             label: projectile.label
           })) ?? [],
+        enemyTelegraphs: snapshot?.enemyTelegraphs?.slice(0, 12) ?? [],
+        enemyTrails: snapshot?.enemyTrails?.slice(0, 12) ?? [],
+        enemyRoles: snapshot?.enemyRoles ?? null,
         objective: online.status === "joined" ? "Move independently in the shared Consensus Cell." : "Connect to the Consensus Cell server.",
         performance: {
           entitiesAllocated: (snapshot?.players.length ?? 0) + (snapshot?.enemies.length ?? 0),
@@ -774,6 +891,7 @@ export function renderGameToText(game: Game): string {
           },
           extractionGate: extractionGateSummary(run)
         },
+        rewardEvents: run.rewardEvents,
         draft: {
           cards: draft.cards.map((card) => ({
             id: card.id,
@@ -783,9 +901,13 @@ export function renderGameToText(game: Game): string {
             tags: card.tags,
             factionId: card.factionId,
             classId: card.classId,
-            requires: card.requires ?? []
+            requires: card.requires ?? [],
+            fusionRecipe: protocolCodexForBuild(run.build, run.chosenUpgradeIds).knownFusions.find((recipe) =>
+              recipe.outputId === card.id || recipe.requirements.some((requirement) => requirement.id === card.id)
+            ) ?? null
           })),
-          hasEvolution: draft.cards.some((card) => card.source === "evolution")
+          hasEvolution: draft.cards.some((card) => card.source === "evolution"),
+          protocolCodex: protocolCodexForBuild(run.build, run.chosenUpgradeIds)
         },
         enemies: [],
         pickups: [],
@@ -817,6 +939,34 @@ export function renderGameToText(game: Game): string {
           playerLevel: summary.level,
           completed: summary.completed,
           carryover: game.lastRunMemory,
+          objectiveVariety: game.lastRunMemory ? campaignObjectiveVarietyForNode(game.lastRunMemory.nodeId) : null,
+          completionPayoff: game.lastRunMemory
+            ? {
+                nodeStabilized: game.lastRunMemory.nodeStabilized,
+                objectiveResults: `${game.lastRunMemory.objectiveUnit ?? "Objectives"} ${game.lastRunMemory.objectiveCompleted ?? 0}/${game.lastRunMemory.objectiveTotal ?? 0}`,
+                bossDefeated: game.lastRunMemory.bossDefeated,
+                buildHighlights: game.lastRunMemory.buildHighlights ?? [],
+                proofTokensEarned: game.lastRunMemory.proofTokensAwarded ?? 0,
+                proofTokensTotal: game.lastRunMemory.proofTokensTotal ?? game.proofTokens,
+                mechanicalUnlocks: game.lastRunMemory.mechanicalUnlocks ?? [],
+                routeUnlocks: game.lastRunMemory.routeUnlocks ?? [],
+                factionCampaignConsequence: game.lastRunMemory.factionCampaignConsequence,
+                campaignConsequence: game.lastRunMemory.campaignConsequence,
+                finalClearance: Boolean(game.lastRunMemory.finalClearance),
+                campaignResultSummary: game.lastRunMemory.finalClearance
+                  ? {
+                      finalClearance: "Outer Alignment contained",
+                      stabilizedRouteCount: game.lastRunMemory.stabilizedRouteCount ?? 0,
+                      bestBuildHighlight: game.lastRunMemory.buildHighlights?.[0] ?? "uncommitted",
+                      majorChoices: {
+                        routeContractId: game.lastRunMemory.routeContractId,
+                        thesis: game.lastRunMemory.thesis
+                      },
+                      scoreSubmission: "not submitted; browser-playable proof summary only"
+                    }
+                  : null
+              }
+            : null,
           nextContentTarget: summary.completed ? nextContentTargetForProgress(game.completedNodes) : null
         },
         enemies: [],

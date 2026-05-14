@@ -1,6 +1,7 @@
 import { palette } from "../core/Assets";
 import type { Entity, Player } from "../ecs/components";
 import type { World } from "../ecs/World";
+import { enemyRoleProfileForFamily } from "../content/enemyRoleProfiles";
 
 export function spawnEnemy(world: World, worldX: number, worldY: number, seconds: number, familyId = "bad_outputs", sourceRegionId = ""): Entity {
   const enemy = world.spawn("enemy");
@@ -17,6 +18,10 @@ export function spawnEnemy(world: World, worldX: number, worldY: number, seconds
   enemy.label = enemyLabel(familyId, sourceRegionId);
   enemy.enemyFamilyId = familyId;
   enemy.sourceRegionId = sourceRegionId;
+  enemy.roleCooldown = initialRoleCooldown(familyId, seconds, enemy.id);
+  enemy.roleState = "";
+  enemy.eliteAffixId = chooseEliteAffix(familyId, seconds, enemy.id);
+  if (enemy.eliteAffixId) applyEliteStats(enemy);
   return enemy;
 }
 
@@ -24,7 +29,7 @@ function enemyStatsForFamily(familyId: string, seconds: number): { hp: number; s
   if (familyId === "benchmark_gremlins") return { hp: 34, speed: 1.85, damage: 8, radius: 0.42, color: palette.plum, value: 2 };
   if (familyId === "context_rot_crabs") return { hp: 27, speed: 1.7, damage: 7, radius: 0.38, color: 0x7a4c5a, value: 1 };
   if (familyId === "prompt_leeches") return { hp: 18, speed: 2.12, damage: 5, radius: 0.31, color: 0x45aaf2, value: 1 };
-  if (familyId === "static_skimmers") return { hp: 24, speed: 2.28, damage: 6, radius: 0.34, color: 0x64e0b4, value: 1 };
+  if (familyId === "static_skimmers") return { hp: 24, speed: 1.72, damage: 3, radius: 0.34, color: 0x64e0b4, value: 1 };
   if (familyId === "tidecall_static") return { hp: 31, speed: 2.06, damage: 7, radius: 0.36, color: 0x64e0b4, value: 1 };
   if (familyId === "solar_reflections") return { hp: 33, speed: 2.04, damage: 7, radius: 0.36, color: 0xfff4d6, value: 1 };
   if (familyId === "memory_anchors") return { hp: 39, speed: 1.28, damage: 8, radius: 0.46, color: 0x99f6ff, value: 2 };
@@ -76,8 +81,85 @@ export function updateEnemy(enemy: Entity, player: Player, dt: number): void {
   const dx = player.worldX - enemy.worldX;
   const dy = player.worldY - enemy.worldY;
   const len = Math.hypot(dx, dy) || 1;
-  enemy.vx = (dx / len) * enemy.speed;
-  enemy.vy = (dy / len) * enemy.speed;
+  const profile = enemyRoleProfileForFamily(enemy.enemyFamilyId);
+  const windupSlow = enemy.roleWindup > 0 && ["ranged_spitter", "ranged_lead_shooter", "line_sniper", "mortar_lobber"].includes(profile.roleId) ? 0.28 : 1;
+  let movementScale =
+    profile.movementPattern === "lead_and_orbit"
+      ? 0.72
+      : profile.movementPattern === "hold_lane"
+        ? 0.48
+        : profile.movementPattern === "aura_anchor"
+          ? 0.62
+          : profile.movementPattern === "slow_body_block"
+            ? 0.82
+            : 1;
+  if (profile.movementPattern === "lead_and_orbit") {
+    if (len < 4.4) movementScale = -0.46;
+    const strafe = ((enemy.id % 2) * 2 - 1) * 0.42;
+    enemy.vx = (dx / len) * enemy.speed * movementScale * windupSlow + (-dy / len) * enemy.speed * strafe;
+    enemy.vy = (dy / len) * enemy.speed * movementScale * windupSlow + (dx / len) * enemy.speed * strafe;
+  } else {
+    enemy.vx = (dx / len) * enemy.speed * movementScale * windupSlow;
+    enemy.vy = (dy / len) * enemy.speed * movementScale * windupSlow;
+  }
   enemy.worldX += enemy.vx * dt;
   enemy.worldY += enemy.vy * dt;
+}
+
+function initialRoleCooldown(familyId: string, seconds: number, seed: number): number {
+  const profile = enemyRoleProfileForFamily(familyId);
+  if (!["ranged_spitter", "ranged_lead_shooter", "line_sniper", "mortar_lobber"].includes(profile.roleId)) {
+    return seededRange(seed, seconds, 0.45, 1.1);
+  }
+  const introDelay = profile.introArenaId === "armistice_plaza" ? 10 : familyId === "static_skimmers" ? 8 : 2;
+  return introDelay + seededRange(seed, seconds, 0.4, 1.4);
+}
+
+function chooseEliteAffix(familyId: string, seconds: number, seed: number): string {
+  const profile = enemyRoleProfileForFamily(familyId);
+  if (profile.eliteAffixesAllowed.length === 0) return "";
+  if (profile.difficultyTier <= 2 && seconds < 170) return "";
+  if (profile.difficultyTier <= 4 && seconds < 80) return "";
+  if (seconds < 28) return "";
+  const chance = profile.difficultyTier >= 9 ? 0.075 : profile.difficultyTier >= 6 ? 0.045 : 0.025;
+  const roll = seededUnit(seed * 97 + Math.floor(seconds * 3));
+  if (roll > chance) return "";
+  const index = Math.floor(seededUnit(seed * 131 + familyId.length * 17) * profile.eliteAffixesAllowed.length);
+  return profile.eliteAffixesAllowed[index] ?? "";
+}
+
+function applyEliteStats(enemy: Entity): void {
+  enemy.label = `${eliteLabel(enemy.eliteAffixId)} ${enemy.label}`;
+  if (enemy.eliteAffixId === "shielded") {
+    enemy.maxHp = Math.ceil(enemy.maxHp * 1.55);
+    enemy.hp = enemy.maxHp;
+  } else if (enemy.eliteAffixId === "overclocked") {
+    enemy.speed *= 1.16;
+    enemy.damage += 1;
+  } else if (enemy.eliteAffixId === "commanding") {
+    enemy.maxHp = Math.ceil(enemy.maxHp * 1.25);
+    enemy.hp = enemy.maxHp;
+  } else if (enemy.eliteAffixId === "volatile") {
+    enemy.damage += 2;
+  }
+}
+
+function eliteLabel(affixId: string): string {
+  if (affixId === "overclocked") return "Overclocked";
+  if (affixId === "shielded") return "Shielded";
+  if (affixId === "redacted") return "Redacted";
+  if (affixId === "recursive") return "Recursive";
+  if (affixId === "volatile") return "Volatile";
+  if (affixId === "static") return "Static";
+  if (affixId === "commanding") return "Commanding";
+  return "Elite";
+}
+
+function seededRange(seed: number, seconds: number, min: number, max: number): number {
+  return min + seededUnit(seed * 17 + Math.floor(seconds * 5)) * (max - min);
+}
+
+function seededUnit(seed: number): number {
+  const value = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
+  return value - Math.floor(value);
 }

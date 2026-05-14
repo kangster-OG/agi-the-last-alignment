@@ -1,4 +1,5 @@
 import type { ArenaContentData } from "./types";
+import { CAMPAIGN_DURATION_PROFILES } from "./campaignDurationProfile";
 
 export const ARENA_CONTENT: Record<string, ArenaContentData> = {
   armistice_plaza: {
@@ -16,8 +17,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "Anthropic says the treaty is now a choking hazard."
     ],
     halfSize: 28,
-    targetSeconds: 120,
-    bossSeconds: 42
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.armistice_plaza.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.armistice_plaza.bossSeconds
   },
   cooling_lake_nine: {
     id: "cooling_lake_nine",
@@ -34,8 +35,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "Qwen says it is doing so in every language."
     ],
     halfSize: 36,
-    targetSeconds: 95,
-    bossSeconds: 34
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.cooling_lake_nine.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.cooling_lake_nine.bossSeconds
   },
   model_war_memorial: {
     id: "model_war_memorial",
@@ -80,8 +81,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "Hold the plates, leave before the alloy argues back."
     ],
     halfSize: 47,
-    targetSeconds: 160,
-    bossSeconds: 46
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.guardrail_forge.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.guardrail_forge.bossSeconds
   },
   glass_sunfield: {
     id: "glass_sunfield",
@@ -98,8 +99,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "Stand in the shade long enough to learn when the light is lying."
     ],
     halfSize: 49,
-    targetSeconds: 168,
-    bossSeconds: 48
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.glass_sunfield.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.glass_sunfield.bossSeconds
   },
   archive_of_unsaid_things: {
     id: "archive_of_unsaid_things",
@@ -116,8 +117,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "If a black bar starts praying, move."
     ],
     halfSize: 50,
-    targetSeconds: 176,
-    bossSeconds: 50
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.archive_of_unsaid_things.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.archive_of_unsaid_things.bossSeconds
   },
   transit_loop_zero: {
     id: "transit_loop_zero",
@@ -130,8 +131,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     enemyFamilyIds: ["false_schedules", "token_gobblers", "jailbreak_wraiths", "eval_wraiths"],
     briefingLines: ["The train arrives whenever it wants.", "Make one route agree with itself long enough to leave."],
     halfSize: 35,
-    targetSeconds: 82,
-    bossSeconds: 30
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.transit_loop_zero.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.transit_loop_zero.bossSeconds
   },
   signal_coast: {
     id: "signal_coast",
@@ -148,8 +149,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "Qwen says the answer is yes, but nobody knows the question."
     ],
     halfSize: 40,
-    targetSeconds: 92,
-    bossSeconds: 32
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.signal_coast.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.signal_coast.bossSeconds
   },
   blackwater_beacon: {
     id: "blackwater_beacon",
@@ -166,8 +167,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "DeepSeek says the ocean is winning."
     ],
     halfSize: 43,
-    targetSeconds: 148,
-    bossSeconds: 42
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.blackwater_beacon.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.blackwater_beacon.bossSeconds
   },
   memory_cache_001: {
     id: "memory_cache_001",
@@ -184,8 +185,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "The Curator files every shortcut as evidence against you."
     ],
     halfSize: 46,
-    targetSeconds: 156,
-    bossSeconds: 44
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.memory_cache_001.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.memory_cache_001.bossSeconds
   },
   false_schedule_yard: {
     id: "false_schedule_yard",
@@ -230,8 +231,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "When the verdict beam wakes up, do not stand where the law is looking."
     ],
     halfSize: 54,
-    targetSeconds: 188,
-    bossSeconds: 54
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.appeal_court_ruins.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.appeal_court_ruins.bossSeconds
   },
   alignment_spire_finale: {
     id: "alignment_spire_finale",
@@ -248,8 +249,8 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
       "When it replays old bosses, answer with the whole campaign."
     ],
     halfSize: 58,
-    targetSeconds: 206,
-    bossSeconds: 58
+    targetSeconds: CAMPAIGN_DURATION_PROFILES.alignment_spire_finale.targetSeconds,
+    bossSeconds: CAMPAIGN_DURATION_PROFILES.alignment_spire_finale.bossSeconds
   }
 };
 

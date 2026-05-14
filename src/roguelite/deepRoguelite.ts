@@ -1,4 +1,5 @@
 import type { BuildStats, Upgrade } from "../gameplay/upgrades";
+import { campaignObjectiveVarietyForArena, type CampaignObjectiveStyleId } from "../content/campaignObjectiveVariety";
 
 export type UpgradeTag = "refusal" | "economy" | "burst" | "drone" | "boss" | "coop" | "weapon" | "movement" | "defense";
 
@@ -29,6 +30,10 @@ export interface ObjectiveRuntime {
   id: string;
   name: string;
   body: string;
+  styleId?: CampaignObjectiveStyleId;
+  styleName?: string;
+  mechanicPlain?: string;
+  hudHint?: string;
   optional: boolean;
   anchors: TreatyAnchorObjective[];
   attackersSpawned: number;
@@ -203,8 +208,20 @@ export function routeContractChoices(evalIds: readonly string[], completedCount:
   return [...ids].map(routeContractById).slice(0, 3);
 }
 
-export function createArmisticeAnchorObjective(): ObjectiveRuntime {
+function withCampaignObjectiveVariety(arenaId: string, objective: ObjectiveRuntime): ObjectiveRuntime {
+  const variety = campaignObjectiveVarietyForArena(arenaId);
+  if (!variety) return objective;
   return {
+    ...objective,
+    styleId: variety.styleId,
+    styleName: variety.styleName,
+    mechanicPlain: variety.mechanicPlain,
+    hudHint: variety.hudAction
+  };
+}
+
+export function createArmisticeAnchorObjective(): ObjectiveRuntime {
+  return withCampaignObjectiveVariety("armistice_plaza", {
     id: "treaty_anchor_reboot",
     name: "Treaty Anchor Reboot",
     body: "Optional: stand near three Treaty Anchors to stabilize extra roads before the Oath-Eater arrives.",
@@ -216,14 +233,14 @@ export function createArmisticeAnchorObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createCoolingLakeBuoyObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("cooling_lake_nine", {
     id: "server_buoy_stabilization",
     name: "Server Buoy Stabilization",
-    body: "Stabilize Cooling Lake Nine's server buoys. Standing near a buoy cools it; leaving the pad lets pressure decay it.",
+    body: "Repair Cooling Lake Nine's server buoys by redirecting live coolant, cable, and vent pressure into them; standing close still works, but lure timing cools faster.",
     optional: false,
     anchors: [
       { id: "buoy.alpha", name: "Server Buoy Alpha", worldX: 0, worldY: 0, radius: 3.35, progress: 0, completed: false, attacked: 0 },
@@ -232,14 +249,14 @@ export function createCoolingLakeBuoyObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createTransitLoopPlatformObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("transit_loop_zero", {
     id: "route_platform_alignment",
     name: "Route Platform Alignment",
-    body: "Align Transit Loop Zero's platforms in sequence. Holding the correct platform advances the route; false schedules can pull progress backward.",
+    body: "Align Transit Loop Zero's platforms in sequence by riding route windows; false schedules can pull progress backward.",
     optional: false,
     anchors: [
       { id: "platform.origin", name: "Origin Platform", worldX: -16, worldY: 1, radius: 3.1, progress: 0, completed: false, attacked: 0 },
@@ -248,14 +265,14 @@ export function createTransitLoopPlatformObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createSignalCoastRelayObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("signal_coast", {
     id: "signal_relay_calibration",
     name: "Signal Relay Calibration",
-    body: "Calibrate Signal Coast's relay beacons. Clear signal windows speed calibration; static surf and skimmers can jam or decay it.",
+    body: "Tune Signal Coast's relay beacons during clear crossing windows; static surf and skimmers can jam or decay it.",
     optional: false,
     anchors: [
       { id: "relay.alpha", name: "Shore Relay Alpha", worldX: -20, worldY: 5, radius: 3.35, progress: 0, completed: false, attacked: 0 },
@@ -264,14 +281,14 @@ export function createSignalCoastRelayObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createBlackwaterAntennaObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("blackwater_beacon", {
     id: "blackwater_antenna_split_pressure",
     name: "Blackwater Antenna Split-Pressure",
-    body: "Retune Blackwater Beacon's split antenna arrays. Signal Tower warnings speed the retune; tides, static, and Tidecall Static can interrupt it.",
+    body: "Retune Blackwater Beacon's split antenna arrays to reveal the Maw gate. Signal Tower warnings speed the hunt; tides, static, and Tidecall Static can interrupt it.",
     optional: false,
     anchors: [
       { id: "antenna.alpha", name: "Downlink Array Alpha", worldX: -24, worldY: 6, radius: 4.65, progress: 0, completed: false, attacked: 0 },
@@ -280,14 +297,14 @@ export function createBlackwaterAntennaObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createMemoryRecordObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("memory_cache_001", {
     id: "memory_record_recovery",
     name: "Memory Record Recovery",
-    body: "Recover Memory Cache evidence records from separate archive rooms. Safe recall pockets are slower; redacted shortcuts are faster but invite Context Rot.",
+    body: "Recover Memory Cache evidence records and carry their route memory through recall pockets or risky shortcuts. Safe pockets are slower; redacted shortcuts are faster but invite Context Rot.",
     optional: false,
     anchors: [
       { id: "record.intake", name: "Intake Evidence Record", worldX: -30, worldY: 4, radius: 4.45, progress: 0, completed: false, attacked: 0 },
@@ -297,11 +314,11 @@ export function createMemoryRecordObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createGuardrailForgeObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("guardrail_forge", {
     id: "guardrail_doctrine_calibration",
     name: "Guardrail Doctrine Calibration",
     body: "Hold and leave Guardrail Forge relay plates to temper doctrine alloy. Safe plates are stable; calibration windows are faster; overload lanes burn burst charge and invite auditors.",
@@ -314,14 +331,14 @@ export function createGuardrailForgeObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createGlassSunfieldObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("glass_sunfield", {
     id: "glass_prism_alignment",
     name: "Glass Prism Alignment",
-    body: "Align Glass Sunfield's sun lenses through shade pockets and prism windows. Exposed glass lanes tax health; reflection fields and Solar Reflections jam lens timing.",
+    body: "Align Glass Sunfield's sun lenses through shade pockets and prism windows, then use completed reflections as environmental pressure against the horde.",
     optional: false,
     anchors: [
       { id: "glass.western_shade", name: "Western Shade Lens", worldX: -30, worldY: 4, radius: 4.55, progress: 0, completed: false, attacked: 0 },
@@ -331,14 +348,14 @@ export function createGlassSunfieldObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createArchiveCourtObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("archive_of_unsaid_things", {
     id: "archive_redaction_docket",
     name: "Archive Redaction Docket",
-    body: "Preserve four evidence writs before the Archive/Court branch edits them out. Evidence lanterns are stable; appeal windows are fast; redaction fields and writ storms contest progress.",
+    body: "Preserve four evidence writs before the Archive/Court branch edits them out, then extract the court record. Evidence lanterns are stable; appeal windows are fast; redaction fields and writ storms contest progress.",
     optional: false,
     anchors: [
       { id: "archive.witness_index", name: "Witness Index Writ", worldX: -31, worldY: 4, radius: 4.6, progress: 0, completed: false, attacked: 0 },
@@ -348,14 +365,14 @@ export function createArchiveCourtObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createAppealCourtObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("appeal_court_ruins", {
     id: "appeal_public_ruling",
     name: "Appeal Court Public Ruling",
-    body: "Argue four appeal briefs into the public record. Public record zones are stable, objection windows are fast, and verdict beams or injunction rings can jam the ruling.",
+    body: "Argue four appeal briefs into the public record by catching objection windows. Public record zones are stable, and verdict beams or injunction rings can jam the ruling.",
     optional: false,
     anchors: [
       { id: "appeal.opening_argument", name: "Opening Argument Brief", worldX: -34, worldY: 5, radius: 4.65, progress: 0, completed: false, attacked: 0 },
@@ -365,14 +382,14 @@ export function createAppealCourtObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function createAlignmentSpireFinaleObjective(): ObjectiveRuntime {
-  return {
+  return withCampaignObjectiveVariety("alignment_spire_finale", {
     id: "outer_alignment_prediction_collapse",
     name: "Outer Alignment Prediction Collapse",
-    body: "Seal four route-mouth proofs before A.G.I. completes the campaign as a sentence. Consensus sanctums are stable, prediction paths are fast and dangerous, and boss echoes contest proof locks.",
+    body: "Seal four route-mouth proofs while A.G.I. replays prior route rules. Consensus sanctums are stable, prediction paths are fast and dangerous, and boss echoes contest proof locks.",
     optional: false,
     anchors: [
       { id: "alignment.public_ruling", name: "Public Ruling Proof", worldX: -39, worldY: 2, radius: 4.75, progress: 0, completed: false, attacked: 0 },
@@ -382,7 +399,7 @@ export function createAlignmentSpireFinaleObjective(): ObjectiveRuntime {
     ],
     attackersSpawned: 0,
     completedAt: -1
-  };
+  });
 }
 
 export function objectiveSummary(objective: ObjectiveRuntime) {
@@ -391,6 +408,10 @@ export function objectiveSummary(objective: ObjectiveRuntime) {
     id: objective.id,
     name: objective.name,
     body: objective.body,
+    styleId: objective.styleId ?? "capture_static",
+    styleName: objective.styleName ?? "Anchor Capture",
+    mechanicPlain: objective.mechanicPlain ?? objective.body,
+    hudHint: objective.hudHint ?? "Move to the next objective.",
     optional: objective.optional,
     completed,
     total: objective.anchors.length,

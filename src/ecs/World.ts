@@ -21,7 +21,13 @@ function makeEntity(id: number): Entity {
     boss: false,
     label: "",
     sourceRegionId: "",
-    enemyFamilyId: ""
+    enemyFamilyId: "",
+    roleCooldown: 0,
+    roleWindup: 0,
+    roleTargetX: 0,
+    roleTargetY: 0,
+    roleState: "",
+    eliteAffixId: ""
   };
 }
 
@@ -47,6 +53,12 @@ export class World {
     entity.label = "";
     entity.sourceRegionId = "";
     entity.enemyFamilyId = "";
+    entity.roleCooldown = 0;
+    entity.roleWindup = 0;
+    entity.roleTargetX = 0;
+    entity.roleTargetY = 0;
+    entity.roleState = "";
+    entity.eliteAffixId = "";
     return entity;
   }
 

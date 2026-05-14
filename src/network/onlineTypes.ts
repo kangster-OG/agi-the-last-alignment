@@ -61,6 +61,7 @@ export interface OnlinePlayerSnapshot {
 export interface OnlineEnemySnapshot {
   id: number;
   familyId: string;
+  roleId?: string;
   sourceRegionId: string;
   worldX: number;
   worldY: number;
@@ -178,9 +179,13 @@ export interface OnlineConsensusSnapshot {
     kills: number;
     collectedPickups: number;
     authoritativeProjectiles: number;
+    hostileProjectiles?: number;
     authoritativePickups: number;
     bossGateMechanic?: string;
   };
+  enemyRoles?: OnlineEnemyRoleSnapshot;
+  enemyTelegraphs?: OnlineEnemyTelegraphSnapshot[];
+  enemyTrails?: OnlineEnemyTrailSnapshot[];
   regionEvent?: OnlineRegionEventSnapshot;
   objectives?: OnlineObjectivesSnapshot;
   rolePressure?: OnlineRolePressureSnapshot;
@@ -203,6 +208,44 @@ export interface OnlineConsensusSnapshot {
     pickupCount: number;
     bossEventActive: boolean;
   };
+}
+
+export interface OnlineEnemyRoleSnapshot {
+  policy: "online_enemy_roles_v1_server_authoritative";
+  enemyRolesSeen: Record<string, number>;
+  enemyFamiliesSeen: Record<string, number>;
+  enemyProjectilesFired: number;
+  enemyProjectilesActive: number;
+  enemyProjectileHits: number;
+  enemyProjectileDodges: number;
+  enemyExplosionsTriggered: number;
+  enemyTrailSeconds: number;
+  supportAuraSeconds: number;
+  objectiveJamSeconds: number;
+  currentPhaseEnemyRoleMix: Array<{ roleId: string; count: number }>;
+}
+
+export interface OnlineEnemyTelegraphSnapshot {
+  id: number;
+  familyId: string;
+  roleId: string;
+  kind: "projectile" | "line" | "mortar";
+  fromX: number;
+  fromY: number;
+  targetX: number;
+  targetY: number;
+  fireIn: number;
+  fired: boolean;
+}
+
+export interface OnlineEnemyTrailSnapshot {
+  id: string;
+  familyId: string;
+  roleId: string;
+  worldX: number;
+  worldY: number;
+  radius: number;
+  expiresIn: number;
 }
 
 export interface OnlineLifecycleSnapshot {
@@ -798,7 +841,11 @@ export interface OnlineCampaignContentNodeSnapshot {
 
 export interface OnlineProjectileSnapshot {
   id: number;
-  ownerSessionId: string;
+  ownerSessionId: string | null;
+  hostile?: boolean;
+  familyId?: string | null;
+  roleId?: string | null;
+  kind?: "projectile" | "line" | "mortar";
   worldX: number;
   worldY: number;
   velocityX: number;

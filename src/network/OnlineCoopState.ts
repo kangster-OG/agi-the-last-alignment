@@ -57,6 +57,7 @@ import {
   type RouteStateMarkerFrame,
   type SaveProfileIconFrame
 } from "../assets/milestone34ObjectiveArt";
+import { getEnemyRoleVfxTextures, loadEnemyRoleVfxTextures } from "../assets/enemyRoleVfx";
 
 const ONLINE_PROGRESSION_STORAGE_KEY = "agi:last_alignment:online_progression:v1";
 
@@ -139,6 +140,7 @@ export class OnlineCoopState implements GameState {
   private requestedMilestone34ObjectiveArtLoad = false;
   private requestedMilestone41ArenaIdentityArtLoad = false;
   private requestedMilestone50ArenaBossArtLoad = false;
+  private requestedEnemyRoleVfxLoad = false;
   private readonly proofControlsEnabled = new URLSearchParams(window.location.search).get("proofOnlineFlow") === "1";
   private readonly entityGraphics = new Graphics();
   private readonly productionSpriteLayer = new Container();
@@ -783,6 +785,7 @@ export class OnlineCoopState implements GameState {
     if (!snapshot) return;
     const art = game.useMilestone10Art ? getMilestone12ArtTextures() : null;
     const combatArt = game.useMilestone10Art ? getMilestone14ArtTextures() : null;
+    const enemyRoleVfx = this.enemyRoleVfx(game);
     const routeExpansionArt = this.onlineRouteExpansionArt(game);
     const milestone50Art = this.milestone50ArenaBossArt(game);
     const recompileBySession = new Map((snapshot.recompile?.downedPlayers ?? []).map((entry) => [entry.sessionId, entry]));
@@ -874,9 +877,45 @@ export class OnlineCoopState implements GameState {
     drawables.sort(byIsoDepth);
     for (const drawable of drawables) drawable.draw();
 
+    for (const trail of snapshot.enemyTrails ?? []) {
+      if (enemyRoleVfx) {
+        this.drawProductionEffectSprite(`online-enemy-trail:${trail.id}`, enemyRoleVfx.frames.redactionTrail, trail.worldX, trail.worldY, 0.34 + trail.radius * 0.08, 0.66, trail.worldX + trail.worldY - 0.08, 0.52);
+      } else {
+        const p = worldToIso(trail.worldX, trail.worldY);
+        this.entityGraphics.circle(p.screenX, p.screenY - 8, trail.radius * 12).fill({ color: palette.tomato, alpha: 0.22 });
+      }
+    }
+
+    for (const telegraph of snapshot.enemyTelegraphs ?? []) {
+      const dx = telegraph.targetX - telegraph.fromX;
+      const dy = telegraph.targetY - telegraph.fromY;
+      const rotation = Math.atan2(dy, dx);
+      if (enemyRoleVfx) {
+        if (telegraph.kind === "line") {
+          for (let i = 0; i < 7; i += 1) {
+            const t = i / 6;
+            const x = telegraph.fromX + dx * t;
+            const y = telegraph.fromY + dy * t;
+            this.drawProductionEffectSprite(`online-enemy-line-telegraph:${telegraph.id}:${i}`, enemyRoleVfx.frames.lineTelegraph, x, y, 0.34, 0.58, x + y - 0.08, telegraph.fired ? 0.25 : 0.58, rotation);
+          }
+        } else if (telegraph.kind === "mortar") {
+          this.drawProductionEffectSprite(`online-enemy-mortar-telegraph:${telegraph.id}`, enemyRoleVfx.frames.mortarMarker, telegraph.targetX, telegraph.targetY, 0.52, 0.66, telegraph.targetX + telegraph.targetY - 0.08, 0.66, rotation);
+        } else {
+          this.drawProductionEffectSprite(`online-enemy-aim-telegraph:${telegraph.id}`, telegraph.roleId === "ranged_lead_shooter" ? enemyRoleVfx.frames.leadBolt : enemyRoleVfx.frames.aimedOrb, telegraph.fromX, telegraph.fromY, 0.34, 0.58, telegraph.fromX + telegraph.fromY + 0.08, 0.62, rotation);
+        }
+      } else {
+        const a = worldToIso(telegraph.fromX, telegraph.fromY);
+        const b = worldToIso(telegraph.targetX, telegraph.targetY);
+        this.entityGraphics.moveTo(a.screenX, a.screenY - 18).lineTo(b.screenX, b.screenY - 18).stroke({ color: palette.tomato, width: 3, alpha: 0.55 });
+      }
+    }
+
     for (const projectile of snapshot.projectiles ?? []) {
       const p = worldToIso(projectile.worldX, projectile.worldY);
-      if (combatArt) {
+      if (projectile.hostile && enemyRoleVfx) {
+        const frame = projectile.kind === "line" ? enemyRoleVfx.frames.lineShot : projectile.kind === "mortar" ? enemyRoleVfx.frames.mortarDrop : projectile.roleId === "ranged_lead_shooter" ? enemyRoleVfx.frames.leadBolt : enemyRoleVfx.frames.aimedOrb;
+        this.drawProductionEffectSprite(`online-enemy-projectile:${projectile.id}`, frame, projectile.worldX, projectile.worldY, projectile.kind === "line" ? 0.42 : 0.36, 0.58, projectile.worldX + projectile.worldY + 0.12, 0.98, Math.atan2(projectile.velocityY, projectile.velocityX));
+      } else if (combatArt) {
         this.drawProductionEffectSprite(
           `online-projectile-trail:${projectile.id}`,
           combatArt.combatEffects.projectileTrail,
@@ -888,7 +927,7 @@ export class OnlineCoopState implements GameState {
         );
         this.drawProductionEffectSprite(`online-projectile:${projectile.id}`, combatArt.combatEffects.projectile, projectile.worldX, projectile.worldY, 0.82, 0.72, projectile.worldX + projectile.worldY);
       } else {
-        this.entityGraphics.rect(p.screenX - 5, p.screenY - 22, 10, 8).fill(palette.mint).stroke({ color: palette.ink, width: 2 });
+        this.entityGraphics.rect(p.screenX - 5, p.screenY - 22, 10, 8).fill(projectile.hostile ? palette.tomato : palette.mint).stroke({ color: palette.ink, width: 2 });
       }
     }
 
@@ -1710,6 +1749,19 @@ ${focus.focusDescription}`,
     return textures;
   }
 
+  private enemyRoleVfx(game: Game) {
+    if (!game.useMilestone10Art) return null;
+    const textures = getEnemyRoleVfxTextures();
+    if (!textures && !this.requestedEnemyRoleVfxLoad) {
+      this.requestedEnemyRoleVfxLoad = true;
+      void loadEnemyRoleVfxTextures().then(() => {
+        if (game.state.current !== this) return;
+        this.render(game);
+      });
+    }
+    return textures;
+  }
+
   private routeArt(game: Game) {
     if (!game.useMilestone10Art) return null;
     const textures = getMilestone25RouteArtTextures();
@@ -2259,9 +2311,10 @@ ${focus.focusDescription}`,
     placeWorldSprite(sprite, worldX, worldY, scale, worldX + worldY, anchorY);
   }
 
-  private drawProductionEffectSprite(key: string, texture: Texture, worldX: number, worldY: number, scale: number, anchorY: number, zIndex: number): void {
+  private drawProductionEffectSprite(key: string, texture: Texture, worldX: number, worldY: number, scale: number, anchorY: number, zIndex: number, alpha = 1, rotation = 0): void {
     const sprite = this.spriteForProductionAsset(key, texture);
-    sprite.alpha = 1;
+    sprite.alpha = alpha;
+    sprite.rotation = rotation;
     placeWorldSprite(sprite, worldX, worldY, scale, zIndex, anchorY);
   }
 

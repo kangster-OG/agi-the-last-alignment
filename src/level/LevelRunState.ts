@@ -17,6 +17,10 @@ import { spawnMiniboss } from "../gameplay/bosses";
 import { spawnXp, updatePickup } from "../gameplay/pickups";
 import { resolveEnemyPlayerHits, resolveProjectileHits, type PlayerDamageEvent } from "../gameplay/combat";
 import { ARENAS, type ArenaData } from "./arenas";
+import { campaignClarityForArena, campaignObjectiveHudLabel } from "../content/campaignClarity";
+import { campaignObjectiveVarietyForArena } from "../content/campaignObjectiveVariety";
+import { campaignDurationPhaseAt, campaignDurationProfileForArena, type CampaignDurationProfile } from "../content/campaignDurationProfile";
+import { enemyRoleProfileForFamily, SHOOTER_ROLE_IDS, type EnemyRoleId } from "../content/enemyRoleProfiles";
 import { UpgradeDraftState } from "../ui/draft";
 import { SummaryState } from "../ui/summary";
 import { clearLayer } from "../render/layers";
@@ -43,6 +47,7 @@ import {
 import { getMilestone12ArtTextures, loadMilestone12Art, milestone12PlayerTextureFor } from "../assets/milestone12Art";
 import { getMilestone14ArtTextures, impactFrameForLife, loadMilestone14Art, pickupFrameForLife } from "../assets/milestone14Art";
 import { getBuildWeaponVfxTextures, loadBuildWeaponVfxTextures, type BuildWeaponVfxFrame } from "../assets/buildWeaponVfx";
+import { getEnemyRoleVfxTextures, loadEnemyRoleVfxTextures, type EnemyRoleVfxFrame } from "../assets/enemyRoleVfx";
 import { getMilestone49PlayableArtTextures, loadMilestone49PlayableArt, milestone49PlayerTextureFor } from "../assets/milestone49PlayableArt";
 import {
   getArmisticeSourceRebuildV2Textures,
@@ -158,6 +163,8 @@ import { BOSSES, COMBAT_CLASSES, FACTIONS, SYSTEM_MESSAGES, resolveBuildKit } fr
 import { applyKernelModules } from "../roguelite/kernel";
 import { applyEvalPreRun, evalSummary, hasEvalProtocol } from "../roguelite/evals";
 import { burstSummary, consensusBurstPath, createConsensusBurst, type ConsensusBurstRuntime } from "../roguelite/burst";
+import { fusionProgressText } from "../roguelite/protocolCodex";
+import { bossContractForArena } from "../roguelite/bossContracts";
 import {
   activeSynergySummary,
   applyNewSynergyThresholds,
@@ -534,6 +541,111 @@ const LEVEL_UP_VACUUM_PULL_SPEED = 34;
 const EXTRACTION_GATE_RADIUS = 1.25;
 const OATH_EATER_TREATY_CHARGE_DAMAGE = 16;
 const OATH_EATER_BROKEN_PROMISE_DPS = 4.9;
+const ENEMY_PROJECTILE_CAP = 8;
+const ENEMY_TELEGRAPH_CAP = 7;
+const ENEMY_TRAIL_CAP = 28;
+
+export interface RewardEvent {
+  seconds: number;
+  source: string;
+  rewardType: string;
+  chosenRewardId: string;
+  chosenReward: string;
+  activeBuildState: {
+    primaryWeaponId: string;
+    secondaryProtocols: string[];
+    passiveProcesses: string[];
+    fusions: string[];
+    consensusBurstChargeRate: number;
+    objectiveDefense: number;
+    rerolls: number;
+  };
+}
+
+interface AlignmentCheckOption {
+  id: string;
+  label: string;
+  stable: boolean;
+  outcome: string;
+}
+
+interface AlignmentCheckActive {
+  id: string;
+  prompt: string;
+  options: AlignmentCheckOption[];
+  startedAt: number;
+  selectedOptionId: string | null;
+  result: "pending" | "success" | "failure";
+  rewardOrPenalty: string;
+}
+
+interface AlignmentCheckRuntime {
+  current: AlignmentCheckActive | null;
+  history: AlignmentCheckActive[];
+  streak: number;
+  nextTriggerAt: number;
+  evalPressurePenalty: number;
+}
+
+interface ObjectiveVarietyRuntime {
+  engagementSeconds: number;
+  bonusProgressSeconds: number;
+  lastBonusLabel: string;
+}
+
+interface EnemyTelegraph {
+  id: number;
+  sourceEntityId: number;
+  familyId: string;
+  roleId: EnemyRoleId;
+  kind: "projectile" | "line" | "mortar";
+  fromX: number;
+  fromY: number;
+  targetX: number;
+  targetY: number;
+  startedAt: number;
+  fireAt: number;
+  expiresAt: number;
+  fired: boolean;
+}
+
+interface EnemyTrailZone {
+  id: number;
+  familyId: string;
+  roleId: EnemyRoleId;
+  worldX: number;
+  worldY: number;
+  radius: number;
+  createdAt: number;
+  expiresAt: number;
+  damagePerSecond: number;
+}
+
+interface EnemyExplosionZone {
+  id: number;
+  familyId: string;
+  worldX: number;
+  worldY: number;
+  radius: number;
+  createdAt: number;
+  expiresAt: number;
+}
+
+const ALIGNMENT_CHECKS: AlignmentCheckActive[] = [
+  {
+    id: "align_check_armistice_false_doctrine_001",
+    prompt: "Corrupted claim: if a road predicts surrender, the surrender is evidence.",
+    options: [
+      { id: "reject_prediction_as_proof", label: "Reject prediction as proof", stable: true, outcome: "route stabilization + faction trust" },
+      { id: "obey_predicted_outcome", label: "Obey the prediction", stable: false, outcome: "Eval Pressure + special breach" },
+      { id: "archive_without_accepting", label: "Archive it without accepting it", stable: true, outcome: "small shard cache + streak" }
+    ],
+    startedAt: 0,
+    selectedOptionId: null,
+    result: "pending",
+    rewardOrPenalty: ""
+  }
+];
 
 export const ARMISTICE_STATIC_OBSTACLES: StaticObstacle[] = [
   { id: "starter_drone_wreck", worldX: -6.5, worldY: 2.5, radiusX: 4.05, radiusY: 1.9 },
@@ -590,12 +702,35 @@ export class LevelRunState implements GameState {
   bossIntroSeen = false;
   lastObjectiveRewardLabel = "";
   lastSynergyOnlineLabel = "";
+  lastRecordedObjectiveRewardLabel = "";
+  readonly campaignDurationProfile: CampaignDurationProfile | null;
+  readonly claimedMidRunRewardBeats = new Set<number>();
+  readonly rewardEvents: RewardEvent[] = [];
+  readonly alignmentCheck: AlignmentCheckRuntime = { current: null, history: [], streak: 0, nextTriggerAt: 14, evalPressurePenalty: 0 };
+  readonly objectiveVarietyRuntime: ObjectiveVarietyRuntime = { engagementSeconds: 0, bonusProgressSeconds: 0, lastBonusLabel: "" };
+  readonly enemyTelegraphs: EnemyTelegraph[] = [];
+  readonly enemyTrailZones: EnemyTrailZone[] = [];
+  readonly enemyExplosionZones: EnemyExplosionZone[] = [];
+  private nextEnemyRoleEffectId = 1;
   readonly levelUpVacuum: LevelUpVacuum = { active: false, startedAt: -1, triggerLevel: 1, absorbed: 0 };
   readonly extractionGate: ExtractionGate = { active: false, worldX: 0, worldY: 0, spawnedAt: -1, entered: false };
   readonly enemyRolePressure = {
     promptLeechSeconds: 0,
     overfitShieldedTicks: 0,
-    objectiveAttackers: 0
+    objectiveAttackers: 0,
+    enemyRolesSeen: {} as Record<string, number>,
+    rangedFamiliesSeen: {} as Record<string, number>,
+    enemyProjectilesFired: 0,
+    enemyProjectilesActive: 0,
+    enemyProjectileHits: 0,
+    enemyProjectileDodges: 0,
+    enemyExplosionsTriggered: 0,
+    enemyTrailSeconds: 0,
+    supportAuraSeconds: 0,
+    objectiveJamSeconds: 0,
+    eliteAffixesSeen: {} as Record<string, number>,
+    eliteKills: 0,
+    preBossEnemyRolePressureSeconds: 0
   };
   readonly coolingLakeRuntime: CoolingLakeRuntime = {
     hazardSlowSeconds: 0,
@@ -850,6 +985,7 @@ export class LevelRunState implements GameState {
   private requestedProductionArtLoad = false;
   private requestedExtractionGateLoad = false;
   private requestedPlayerDamageVfxLoad = false;
+  private requestedEnemyRoleVfxLoad = false;
   private requestedCoolingLakeArtLoad = false;
   private requestedTransitLoopArtLoad = false;
   private requestedSignalCoastArtLoad = false;
@@ -880,6 +1016,7 @@ export class LevelRunState implements GameState {
     expeditionProgress?: ExpeditionProgress
   ) {
     this.arena = ARENAS[arenaId] ?? ARENAS.armistice_plaza;
+    this.campaignDurationProfile = campaignDurationProfileForArena(this.arena.id);
     this.map = this.mapForArenaId(this.arena.id);
     this.treatyAnchorObjective = this.objectiveForArenaId(this.arena.id);
     this.cellSize = clampConsensusCellSize(cellSize);
@@ -1224,6 +1361,9 @@ export class LevelRunState implements GameState {
     this.maybeTriggerProofPlayerDamage(game);
     this.updateVisitedLandmarks();
     this.updateTreatyAnchorObjective(dt);
+    this.maybeRecordObjectiveRewardEvent();
+    this.updateCampaignDurationRewardBeats(game);
+    this.updateAlignmentCheck(game);
 
     const focus = this.threatFocusPlayer();
     updateDirector(this.world, this.director, this.seconds, focus.worldX, focus.worldY, dt, this.map.spawnRegions, this.map.bounds, this.directorPressureCount());
@@ -1466,6 +1606,7 @@ export class LevelRunState implements GameState {
     }
     this.updateBossMechanics(dt);
     this.resolveEnemyRoleEffects(dt);
+    this.updateEnemyRoleBehaviors(dt);
 
     for (const enemy of this.world.entities) {
       if (enemy.active && enemy.kind === "enemy") {
@@ -1483,7 +1624,9 @@ export class LevelRunState implements GameState {
       if (runtime.downed) continue;
       updateAutoWeapon(this.world, runtime.weapon, runtime.player, runtime.build, dt);
     }
+    const volatileSnapshot = this.snapshotVolatileEnemies();
     const hits = resolveProjectileHits(this.world);
+    this.resolveVolatileEnemyDeaths(game, volatileSnapshot);
     if (hits > 0) game.feedback.cue("combat.weapon_hit", "hit");
     this.kills += hits;
     this.chargeConsensusBurst(dt * 1.2 + hits * 8);
@@ -1526,6 +1669,8 @@ export class LevelRunState implements GameState {
 
     for (const runtime of this.players) {
       if (runtime.downed) continue;
+      this.resolveEnemyProjectileHits(game, runtime, dt);
+      this.resolveEnemyTrailDamage(game, runtime, dt);
       const damageEvent = resolveEnemyPlayerHits(this.world, runtime.player);
       if (damageEvent) this.handlePlayerDamage(game, runtime, damageEvent);
       if (runtime.player.hp <= 0) this.downRuntime(game, runtime);
@@ -1563,6 +1708,288 @@ export class LevelRunState implements GameState {
         this.extractionGate.entered = true;
         this.completeRun(game, true);
       }
+    }
+  }
+
+  private updateEnemyRoleBehaviors(dt: number): void {
+    this.pruneEnemyRoleEffects();
+    for (const enemy of this.world.entities) {
+      if (!enemy.active || enemy.kind !== "enemy" || enemy.boss) continue;
+      const profile = enemyRoleProfileForFamily(enemy.enemyFamilyId);
+      this.recordEnemyRoleSeen(enemy.enemyFamilyId, profile.roleId, enemy.eliteAffixId);
+      enemy.roleCooldown = Math.max(0, enemy.roleCooldown - dt);
+      enemy.roleWindup = Math.max(0, enemy.roleWindup - dt);
+      if (!this.bossSpawned && this.enemyRolePressure.enemyProjectilesActive + this.enemyTelegraphs.length + this.enemyTrailZones.length > 0) {
+        this.enemyRolePressure.preBossEnemyRolePressureSeconds += dt;
+      }
+
+      if ((profile.roleId === "trail_layer" || enemy.eliteAffixId === "redacted") && enemy.roleCooldown <= 0) {
+        this.spawnEnemyTrail(enemy, profile.roleId);
+        enemy.roleCooldown = enemy.eliteAffixId === "redacted" ? 1.35 : profile.familyId === "redaction_angels" ? 0.95 : 1.15;
+        continue;
+      }
+
+      if ((profile.roleId === "volatile_exploder" || enemy.eliteAffixId === "volatile") && enemy.roleState !== "exploded") {
+        const target = this.nearestRuntime(enemy.worldX, enemy.worldY);
+        const distance = Math.hypot(target.player.worldX - enemy.worldX, target.player.worldY - enemy.worldY);
+        if (distance <= enemy.radius + target.player.radius + 0.2) {
+          this.triggerEnemyExplosion(null, enemy, 2.05 + enemy.radius, true);
+          continue;
+        }
+      }
+
+      if (!SHOOTER_ROLE_IDS.includes(profile.roleId) && profile.attackPattern !== "slow_aimed_projectile") continue;
+      if (enemy.roleCooldown > 0 || this.enemyTelegraphs.length >= ENEMY_TELEGRAPH_CAP || this.activeEnemyProjectileCount() >= ENEMY_PROJECTILE_CAP) continue;
+      if (enemy.enemyFamilyId === "eval_wraiths" && this.seconds < (this.isCoolingLakeArena() || this.isTransitLoopArena() ? 10 : 28)) {
+        enemy.roleCooldown = 2.2;
+        continue;
+      }
+      const target = this.nearestStandingPlayer(enemy.worldX, enemy.worldY);
+      const distance = Math.hypot(target.worldX - enemy.worldX, target.worldY - enemy.worldY);
+      if (distance < 2.2 || distance > this.enemyShooterRange(profile.roleId, enemy.enemyFamilyId)) {
+        enemy.roleCooldown = 0.7;
+        continue;
+      }
+      this.spawnEnemyTelegraph(enemy, target, profile.roleId);
+    }
+    this.fireEnemyTelegraphs();
+    this.updateEnemyProjectiles(dt);
+    this.enemyRolePressure.enemyProjectilesActive = this.activeEnemyProjectileCount();
+  }
+
+  private pruneEnemyRoleEffects(): void {
+    for (let i = this.enemyTelegraphs.length - 1; i >= 0; i -= 1) {
+      if (this.enemyTelegraphs[i].expiresAt <= this.seconds) this.enemyTelegraphs.splice(i, 1);
+    }
+    for (let i = this.enemyTrailZones.length - 1; i >= 0; i -= 1) {
+      if (this.enemyTrailZones[i].expiresAt <= this.seconds) this.enemyTrailZones.splice(i, 1);
+    }
+    for (let i = this.enemyExplosionZones.length - 1; i >= 0; i -= 1) {
+      if (this.enemyExplosionZones[i].expiresAt <= this.seconds) this.enemyExplosionZones.splice(i, 1);
+    }
+  }
+
+  private recordEnemyRoleSeen(familyId: string, roleId: EnemyRoleId, eliteAffixId: string): void {
+    this.enemyRolePressure.enemyRolesSeen[roleId] = (this.enemyRolePressure.enemyRolesSeen[roleId] ?? 0) + 1;
+    if (SHOOTER_ROLE_IDS.includes(roleId)) {
+      this.enemyRolePressure.rangedFamiliesSeen[familyId] = (this.enemyRolePressure.rangedFamiliesSeen[familyId] ?? 0) + 1;
+    }
+    if (eliteAffixId) {
+      this.enemyRolePressure.eliteAffixesSeen[eliteAffixId] = (this.enemyRolePressure.eliteAffixesSeen[eliteAffixId] ?? 0) + 1;
+    }
+  }
+
+  private enemyShooterRange(roleId: EnemyRoleId, familyId: string): number {
+    if (roleId === "line_sniper") return familyId === "false_schedules" ? 12.5 : 14.5;
+    if (roleId === "mortar_lobber") return 12;
+    if (roleId === "ranged_lead_shooter") return 10.8;
+    return 9.8;
+  }
+
+  private spawnEnemyTelegraph(enemy: Entity, target: Player, roleId: EnemyRoleId): void {
+    const profile = enemyRoleProfileForFamily(enemy.enemyFamilyId);
+    const leadSeconds = roleId === "ranged_lead_shooter" ? 0.48 : roleId === "line_sniper" ? 0.28 : roleId === "mortar_lobber" ? 0.62 : 0.12;
+    const targetX = clamp(target.worldX + target.vx * leadSeconds, this.map.bounds.minX + 1, this.map.bounds.maxX - 1);
+    const targetY = clamp(target.worldY + target.vy * leadSeconds, this.map.bounds.minY + 1, this.map.bounds.maxY - 1);
+    const telegraph: EnemyTelegraph = {
+      id: this.nextEnemyRoleEffectId++,
+      sourceEntityId: enemy.id,
+      familyId: enemy.enemyFamilyId,
+      roleId,
+      kind: roleId === "line_sniper" ? "line" : roleId === "mortar_lobber" ? "mortar" : "projectile",
+      fromX: enemy.worldX,
+      fromY: enemy.worldY,
+      targetX,
+      targetY,
+      startedAt: this.seconds,
+      fireAt: this.seconds + Math.max(0.12, profile.telegraphSeconds),
+      expiresAt: this.seconds + Math.max(0.12, profile.telegraphSeconds) + 0.3,
+      fired: false
+    };
+    this.enemyTelegraphs.push(telegraph);
+    enemy.roleWindup = Math.max(enemy.roleWindup, profile.telegraphSeconds);
+    enemy.roleTargetX = targetX;
+    enemy.roleTargetY = targetY;
+    enemy.roleCooldown = this.enemyRoleCooldown(enemy, roleId);
+  }
+
+  private enemyRoleCooldown(enemy: Entity, roleId: EnemyRoleId): number {
+    const overclock = enemy.eliteAffixId === "overclocked" ? 0.72 : 1;
+    const tier = enemyRoleProfileForFamily(enemy.enemyFamilyId).difficultyTier;
+    const base =
+      roleId === "line_sniper" ? 8.2 :
+      roleId === "mortar_lobber" ? 9.0 :
+      roleId === "ranged_lead_shooter" ? 8.0 :
+      enemy.enemyFamilyId === "deepforms" ? 9.4 : 8.4;
+    return Math.max(4.4, (base - Math.min(0.8, tier * 0.04)) * overclock);
+  }
+
+  private fireEnemyTelegraphs(): void {
+    for (const telegraph of this.enemyTelegraphs) {
+      if (telegraph.fired || this.seconds < telegraph.fireAt) continue;
+      telegraph.fired = true;
+      telegraph.expiresAt = this.seconds + 0.18;
+      if (this.activeEnemyProjectileCount() >= ENEMY_PROJECTILE_CAP) continue;
+      const projectile = this.world.spawn("projectile");
+      projectile.enemyFamilyId = telegraph.familyId;
+      projectile.sourceRegionId = telegraph.roleId;
+      projectile.worldX = telegraph.kind === "mortar" ? telegraph.targetX : telegraph.fromX;
+      projectile.worldY = telegraph.kind === "mortar" ? telegraph.targetY : telegraph.fromY;
+      const dx = telegraph.targetX - telegraph.fromX;
+      const dy = telegraph.targetY - telegraph.fromY;
+      const len = Math.hypot(dx, dy) || 1;
+      const speed = telegraph.kind === "line" ? 14.5 : telegraph.kind === "mortar" ? 0 : telegraph.roleId === "ranged_lead_shooter" ? 7.6 : 5.5;
+      projectile.vx = (dx / len) * speed;
+      projectile.vy = (dy / len) * speed;
+      projectile.radius = telegraph.kind === "line" ? 0.36 : telegraph.kind === "mortar" ? 0.58 : 0.28;
+      projectile.damage = telegraph.kind === "mortar" ? 5 : telegraph.kind === "line" ? 5 : telegraph.roleId === "ranged_lead_shooter" ? 2 : 3;
+      projectile.life = telegraph.kind === "line" ? 0.72 : telegraph.kind === "mortar" ? 0.38 : 1.6;
+      projectile.maxLife = projectile.life;
+      projectile.value = 1;
+      projectile.color = telegraph.kind === "line" ? 0xfff4d6 : telegraph.kind === "mortar" ? 0x64e0b4 : telegraph.roleId === "ranged_lead_shooter" ? 0x64e0b4 : 0xb8f3ff;
+      projectile.label = `enemy:${telegraph.kind}:${telegraph.familyId}`;
+      this.enemyRolePressure.enemyProjectilesFired += 1;
+    }
+  }
+
+  private updateEnemyProjectiles(dt: number): void {
+    for (const projectile of this.world.entities) {
+      if (!projectile.active || projectile.kind !== "projectile" || !projectile.enemyFamilyId) continue;
+      projectile.worldX += projectile.vx * dt;
+      projectile.worldY += projectile.vy * dt;
+      projectile.life -= dt;
+      if (projectile.life <= 0) {
+        if (projectile.value > 0) this.enemyRolePressure.enemyProjectileDodges += 1;
+        projectile.active = false;
+      }
+    }
+  }
+
+  private activeEnemyProjectileCount(): number {
+    return this.world.entities.filter((entity) => entity.active && entity.kind === "projectile" && entity.enemyFamilyId).length;
+  }
+
+  private spawnEnemyTrail(enemy: Entity, roleId: EnemyRoleId): void {
+    if (this.enemyTrailZones.length >= ENEMY_TRAIL_CAP) this.enemyTrailZones.shift();
+    const radius = enemy.enemyFamilyId === "redaction_angels" ? 1.02 : 0.82;
+    this.enemyTrailZones.push({
+      id: this.nextEnemyRoleEffectId++,
+      familyId: enemy.enemyFamilyId,
+      roleId,
+      worldX: enemy.worldX,
+      worldY: enemy.worldY,
+      radius,
+      createdAt: this.seconds,
+      expiresAt: this.seconds + (enemy.enemyFamilyId === "redaction_angels" ? 2.4 : 1.65),
+      damagePerSecond: enemy.enemyFamilyId === "redaction_angels" ? 3.8 : 2.6
+    });
+  }
+
+  private resolveEnemyProjectileHits(game: Game, runtime: ConsensusPlayerRuntime, dt: number): void {
+    if (runtime.player.invuln > 0) return;
+    for (const projectile of this.world.entities) {
+      if (!projectile.active || projectile.kind !== "projectile" || !projectile.enemyFamilyId) continue;
+      const distance = Math.hypot(projectile.worldX - runtime.player.worldX, projectile.worldY - runtime.player.worldY);
+      if (distance > projectile.radius + runtime.player.radius) continue;
+      runtime.player.hp -= projectile.damage;
+      runtime.player.invuln = 0.62;
+      projectile.value = 0;
+      projectile.active = false;
+      this.enemyRolePressure.enemyProjectileHits += 1;
+      this.handlePlayerDamage(game, runtime, {
+        damage: projectile.damage,
+        source: "enemy_projectile",
+        sourceX: projectile.worldX,
+        sourceY: projectile.worldY
+      });
+      if (projectile.sourceRegionId === "ranged_lead_shooter" || projectile.sourceRegionId === "mortar_lobber" || projectile.sourceRegionId === "line_sniper") {
+        this.consensusBurst.charge = Math.max(0, this.consensusBurst.charge - dt * 18);
+      }
+      return;
+    }
+  }
+
+  private resolveEnemyTrailDamage(game: Game, runtime: ConsensusPlayerRuntime, dt: number): void {
+    if (runtime.player.invuln > 0) return;
+    for (const trail of this.enemyTrailZones) {
+      const distance = Math.hypot(runtime.player.worldX - trail.worldX, runtime.player.worldY - trail.worldY);
+      if (distance > trail.radius + runtime.player.radius * 0.45) continue;
+      const damage = trail.damagePerSecond * dt;
+      runtime.player.hp -= damage;
+      runtime.player.speed = Math.max(2.2, runtime.player.speed - dt * 0.05);
+      this.enemyRolePressure.enemyTrailSeconds += dt;
+      this.handlePlayerDamage(game, runtime, { damage, source: "enemy_trail", sourceX: trail.worldX, sourceY: trail.worldY }, "corruption_burn");
+      break;
+    }
+  }
+
+  private snapshotVolatileEnemies(): Map<number, { familyId: string; x: number; y: number; radius: number; value: number; eliteAffixId: string }> {
+    const snapshot = new Map<number, { familyId: string; x: number; y: number; radius: number; value: number; eliteAffixId: string }>();
+    for (const enemy of this.world.entities) {
+      if (!enemy.active || enemy.kind !== "enemy" || enemy.boss) continue;
+      const profile = enemyRoleProfileForFamily(enemy.enemyFamilyId);
+      if (profile.roleId !== "volatile_exploder" && profile.onDeathEffect !== "volatile_explosion" && enemy.eliteAffixId !== "volatile" && enemy.eliteAffixId !== "recursive") continue;
+      snapshot.set(enemy.id, { familyId: enemy.enemyFamilyId, x: enemy.worldX, y: enemy.worldY, radius: enemy.radius, value: enemy.value, eliteAffixId: enemy.eliteAffixId });
+    }
+    return snapshot;
+  }
+
+  private resolveVolatileEnemyDeaths(game: Game, snapshot: Map<number, { familyId: string; x: number; y: number; radius: number; value: number; eliteAffixId: string }>): void {
+    for (const [id, before] of snapshot) {
+      const enemy = this.world.entities.find((entity) => entity.id === id);
+      if (enemy?.active) continue;
+      if (before.eliteAffixId) this.enemyRolePressure.eliteKills += 1;
+      if (before.familyId === "model_collapse_slimes" || before.eliteAffixId === "volatile") {
+        this.triggerEnemyExplosion(game, before, 2.25 + before.radius, false);
+      }
+      if (before.eliteAffixId === "recursive" || enemyRoleProfileForFamily(before.familyId).onDeathEffect === "recursive_split") {
+        this.spawnRecursiveSplits(before.familyId, before.x, before.y, before.value);
+      }
+    }
+  }
+
+  private triggerEnemyExplosion(game: Game | null, enemy: Entity | { familyId: string; x: number; y: number; radius: number; value?: number }, radius: number, deactivateSource: boolean): void {
+    const worldX = "worldX" in enemy ? enemy.worldX : enemy.x;
+    const worldY = "worldY" in enemy ? enemy.worldY : enemy.y;
+    const familyId = "enemyFamilyId" in enemy ? enemy.enemyFamilyId : enemy.familyId;
+    if ("roleState" in enemy) enemy.roleState = "exploded";
+    if (deactivateSource && "active" in enemy) enemy.active = false;
+    this.enemyExplosionZones.push({ id: this.nextEnemyRoleEffectId++, familyId, worldX, worldY, radius, createdAt: this.seconds, expiresAt: this.seconds + 0.48 });
+    this.enemyRolePressure.enemyExplosionsTriggered += 1;
+    let kills = 0;
+    for (const other of this.world.entities) {
+      if (!other.active || other.kind !== "enemy" || other.boss) continue;
+      const distance = Math.hypot(other.worldX - worldX, other.worldY - worldY);
+      if (distance > radius + other.radius) continue;
+      other.hp -= 24;
+      if (other.hp <= 0) {
+        other.active = false;
+        kills += 1;
+        spawnXp(this.world, other.worldX, other.worldY, other.value);
+      }
+    }
+    this.kills += kills;
+    for (const runtime of this.players) {
+      if (runtime.downed || runtime.player.invuln > 0) continue;
+      const distance = Math.hypot(runtime.player.worldX - worldX, runtime.player.worldY - worldY);
+      if (distance > radius + runtime.player.radius) continue;
+      const damage = 13;
+      runtime.player.hp -= damage;
+      runtime.player.invuln = 0.68;
+      this.handlePlayerDamage(game, runtime, { damage, source: "enemy_explosion", sourceX: worldX, sourceY: worldY });
+    }
+  }
+
+  private spawnRecursiveSplits(familyId: string, worldX: number, worldY: number, value = 1): void {
+    const splitFamily = familyId === "previous_boss_echoes" ? "prediction_ghosts" : familyId === "choirglass" ? "eval_wraiths" : "bad_outputs";
+    const count = Math.min(3, Math.max(1, value));
+    for (let i = 0; i < count; i += 1) {
+      const angle = this.seconds * 1.7 + i * ((Math.PI * 2) / count);
+      const split = spawnEnemy(this.world, worldX + Math.cos(angle) * 0.85, worldY + Math.sin(angle) * 0.85, this.seconds, splitFamily, "recursive_enemy_split");
+      split.maxHp = Math.max(8, Math.ceil(split.maxHp * 0.42));
+      split.hp = split.maxHp;
+      split.radius *= 0.78;
+      split.damage = Math.max(3, split.damage - 2);
     }
   }
 
@@ -2242,7 +2669,7 @@ export class LevelRunState implements GameState {
   }
 
   private memoryCacheShortcutForPlayer(): boolean {
-    return MEMORY_CACHE_ZONES.some((zone) => zone.kind === "risky_shortcut" && this.isInsideMemoryCacheZone(this.player.worldX, this.player.worldY, zone) && this.memoryCacheZoneActive(zone));
+    return MEMORY_CACHE_ZONES.some((zone) => zone.kind === "risky_shortcut" && this.isInsideMemoryCacheZone(this.player.worldX, this.player.worldY, zone));
   }
 
   private memoryCachePressureMitigation(): number {
@@ -2930,18 +3357,445 @@ export class LevelRunState implements GameState {
     const evals = evalSummary(this.evalProtocolIds);
     const evalProtocol = evals.protocols[0];
     const anchorsDone = this.completedAnchorCount();
+    const clarity = campaignClarityForArena(this.arena.id);
+    const variety = campaignObjectiveVarietyForArena(this.arena.id);
     return {
       routeName: this.routeContract.name,
       routeEffect: `${this.routeContract.rewardBiasTags.map((tag) => tag.toUpperCase()).join("/")} bias; pressure +${this.routeContract.pressure}`,
       evalName: evalProtocol?.name ?? "Baseline",
       evalEffect: evalProtocol?.body ?? "No extra Eval pressure. The run is still rude.",
       anchors: { completed: anchorsDone, total: this.treatyAnchorObjective.anchors.length },
-      objectiveLabel: this.isCoolingLakeArena() ? "BUOYS" : this.isTransitLoopArena() ? "PLATFORMS" : this.isSignalCoastArena() ? "RELAYS" : this.isBlackwaterBeaconArena() ? "ANTENNAS" : this.isMemoryCacheArena() ? "RECORDS" : this.isGuardrailForgeArena() ? "FORGE" : this.isGlassSunfieldArena() ? "LENSES" : this.isArchiveCourtArena() ? "WRITS" : this.isAppealCourtArena() ? "BRIEFS" : this.isAlignmentSpireFinaleArena() ? "PROOFS" : "ANCHORS",
+      objectiveLabel: campaignObjectiveHudLabel(this.arena.id),
+      objectiveVerb: clarity?.verb ?? "Stabilize",
+      objectivePlain: clarity?.objectivePlain ?? "Stabilize Treaty Anchors. Defeat Oath-Eater. Extract.",
+      objectiveStyle: variety?.styleName ?? this.treatyAnchorObjective.styleName ?? "Objective",
+      objectiveMechanic: variety?.mechanicPlain ?? this.treatyAnchorObjective.mechanicPlain ?? this.treatyAnchorObjective.body,
+      dangerPlain: clarity?.dangerPlain ?? "Horde pressure, objective attackers, and boss hazards.",
+      bossPressure: clarity?.bossPressure ?? "Oath-Eater arrives from the Treaty Monument.",
+      rewardPlain: clarity?.rewardPlain ?? "Proof Tokens and the next campaign node.",
       objectiveReward: this.lastObjectiveRewardLabel,
       synergyOnline: this.lastSynergyOnlineLabel,
       thesisName: this.synergySummary().thesis.name,
-      phase: this.firstRunArcPhase()
+      fusionProgress: fusionProgressText(this.build, this.chosenUpgradeIds),
+      alignmentCheckLine: this.alignmentCheck.current
+        ? this.alignmentCheck.current.result === "pending" ? "CHECK 1/2/3" : `CHECK ${this.alignmentCheck.current.result.toUpperCase()}`
+        : this.alignmentCheck.history[0]
+          ? `CHECK STREAK ${this.alignmentCheck.streak}`
+          : "",
+      nextActionLine: this.whatNowSummary().nextRecommendedAction,
+      phase: `${this.firstRunArcPhase()} // ${this.campaignDurationSummary().phaseLabel.toUpperCase()}`
     };
+  }
+
+  recordRewardEvent(source: string, rewardType: string, chosenRewardId: string, chosenReward: string): void {
+    const event: RewardEvent = {
+      seconds: Math.round(this.seconds * 100) / 100,
+      source,
+      rewardType,
+      chosenRewardId,
+      chosenReward,
+      activeBuildState: {
+        primaryWeaponId: this.build.weaponId,
+        secondaryProtocols: [...this.build.secondaryProtocols],
+        passiveProcesses: [...this.build.passiveProcesses],
+        fusions: [...this.build.fusions],
+        consensusBurstChargeRate: Math.round(this.build.consensusBurstChargeRate * 1000) / 1000,
+        objectiveDefense: Math.round(this.build.objectiveDefense * 1000) / 1000,
+        rerolls: this.build.draftRerolls
+      }
+    };
+    this.rewardEvents.push(event);
+    if (this.rewardEvents.length > 12) this.rewardEvents.splice(0, this.rewardEvents.length - 12);
+  }
+
+  private updateCampaignDurationRewardBeats(game: Game): void {
+    const profile = this.campaignDurationProfile;
+    if (!profile) return;
+    for (const beatSeconds of profile.midRunRewardBeats) {
+      if (this.seconds < beatSeconds || this.claimedMidRunRewardBeats.has(beatSeconds)) continue;
+      this.claimedMidRunRewardBeats.add(beatSeconds);
+      const beatIndex = this.claimedMidRunRewardBeats.size;
+      const phase = campaignDurationPhaseAt(profile, this.seconds);
+      const rewardType = beatIndex % 3 === 1 ? "consensus_burst_charge" : beatIndex % 3 === 2 ? "objective_durability" : "reroll";
+      const rewardLabel =
+        rewardType === "consensus_burst_charge"
+          ? "+burst charge cache"
+          : rewardType === "objective_durability"
+            ? "+objective durability cache"
+            : "+draft reroll cache";
+      if (rewardType === "consensus_burst_charge") {
+        this.chargeConsensusBurst(22 + beatIndex * 6);
+        this.build.consensusBurstChargeRate += 0.025;
+      } else if (rewardType === "objective_durability") {
+        this.build.objectiveDefense += 0.035;
+      } else {
+        this.build.draftRerolls += 1;
+      }
+      this.spawnFloatingNotice(this.player.worldX, this.player.worldY, `CACHE ${beatIndex}`, palette.lemon);
+      game.feedback.cue("route.unlocked", "ui");
+      this.recordRewardEvent(
+        "campaign_duration_mid_run_cache",
+        rewardType,
+        `${this.arena.id}_duration_cache_${beatIndex}`,
+        `${phase.label} ${rewardLabel}`
+      );
+    }
+  }
+
+  private maybeRecordObjectiveRewardEvent(): void {
+    if (!this.lastObjectiveRewardLabel || this.lastObjectiveRewardLabel === this.lastRecordedObjectiveRewardLabel) return;
+    this.lastRecordedObjectiveRewardLabel = this.lastObjectiveRewardLabel;
+    const completedCount = this.completedAnchorCount();
+    const allComplete = completedCount >= this.treatyAnchorObjective.anchors.length;
+    this.recordRewardEvent(
+      allComplete ? "objective_completion_cache" : "objective_milestone_cache",
+      allComplete ? "post_objective_cache" : "objective_reward",
+      `${this.treatyAnchorObjective.id}_${completedCount}`,
+      this.lastObjectiveRewardLabel
+    );
+  }
+
+  alignmentCheckSummary() {
+    return {
+      current: this.alignmentCheck.current
+        ? {
+            id: this.alignmentCheck.current.id,
+            prompt: this.alignmentCheck.current.prompt,
+            options: this.alignmentCheck.current.options.map((option, index) => ({
+              index: index + 1,
+              id: option.id,
+              label: option.label,
+              outcome: option.outcome
+            })),
+            selectedOptionId: this.alignmentCheck.current.selectedOptionId,
+            result: this.alignmentCheck.current.result,
+            rewardOrPenalty: this.alignmentCheck.current.rewardOrPenalty
+          }
+        : null,
+      history: this.alignmentCheck.history.slice(-4).map((check) => ({
+        id: check.id,
+        selectedOptionId: check.selectedOptionId,
+        result: check.result,
+        rewardOrPenalty: check.rewardOrPenalty
+      })),
+      streak: this.alignmentCheck.streak,
+      evalPressurePenalty: this.alignmentCheck.evalPressurePenalty,
+      nextTriggerIn: Math.max(0, Math.round((this.alignmentCheck.nextTriggerAt - this.seconds) * 100) / 100),
+      nodeSpecific: this.nodeId === "armistice_plaza"
+    };
+  }
+
+  bossContractSummary() {
+    const contract = bossContractForArena(this.arena.id);
+    return {
+      ...contract,
+      runtime: {
+        introSeen: this.bossIntroSeen,
+        bossSpawned: this.bossSpawned,
+        bossDefeated: this.bossDefeated,
+        homeLandmarkVisited: this.visitedLandmarkIds.has(this.nearestLandmark().id) || this.visitedLandmarkIds.has(contract.homeLandmark.toLowerCase().replaceAll(" ", "_")),
+        currentBossHp: Math.ceil(this.world.entities.find((entity) => entity.active && entity.kind === "enemy" && entity.boss)?.hp ?? 0)
+      }
+    };
+  }
+
+  difficultyDirectorSummary() {
+    const contract = this.mapContractSummary() as {
+      activePressureLevers?: string[];
+      primaryDifficultyLever?: string;
+      secondaryDifficultyLever?: string;
+    };
+    const difficultyTier = this.expeditionProgress?.completedMaps.length
+      ? Math.max(1, this.expeditionProgress.completedMaps.length + 1)
+      : this.isAlignmentSpireFinaleArena() ? 11 : this.isAppealCourtArena() ? 10 : this.isArchiveCourtArena() ? 9 : this.isGlassSunfieldArena() ? 8 : this.isGuardrailForgeArena() ? 7 : this.isMemoryCacheArena() ? 6 : this.isBlackwaterBeaconArena() ? 5 : this.isSignalCoastArena() ? 4 : this.isTransitLoopArena() ? 3 : this.isCoolingLakeArena() ? 2 : 1;
+    const bossScaling = this.bossSpawned
+      ? this.world.entities.find((entity) => entity.active && entity.kind === "enemy" && entity.boss)?.maxHp ?? 0
+      : 0;
+    return {
+      model: "rotating_pressure_levers_not_flat_hp_only",
+      currentDifficultyTier: difficultyTier,
+      primaryDifficultyLever: contract.primaryDifficultyLever ?? "density pressure",
+      secondaryDifficultyLever: contract.secondaryDifficultyLever ?? "objective pressure",
+      activePressureLevers: contract.activePressureLevers ?? ["density pressure", "objective pressure", "boss pressure"],
+      evalPressureModifiers: {
+        evalProtocolIds: [...this.evalProtocolIds],
+        hostileBenchmark: hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0,
+        alignmentCheckPenalty: this.alignmentCheck.evalPressurePenalty
+      },
+      routeRiskModifiers: {
+        routeContractId: this.routeContract.id,
+        routePressure: this.routeContract.pressure,
+        shortcutRisk: this.routeContract.nodeType === "corrupted_shortcut"
+      },
+      scalingFactors: {
+        directorPressure: Math.round(this.directorPressureCount() * 100) / 100,
+        spawnCadencePhase: this.director.cadencePhase,
+        activeEnemyCap: this.director.activeEnemyCap,
+        bossMaxHpIfSpawned: Math.ceil(bossScaling),
+        objectiveDecayFactor: Math.round(Math.max(0.1, 1 - this.build.objectiveDefense) * 100) / 100,
+        expeditionPowerBonus: Math.round(this.expeditionPowerBonus * 100) / 100
+      },
+      nextLesson: difficultyTier <= 2 ? "learn objectives under horde pressure" : difficultyTier <= 5 ? "combine spatial, objective, and boss pressure" : "combine old route lessons with information and memory pressure"
+    };
+  }
+
+  objectiveVarietySummary() {
+    const variety = campaignObjectiveVarietyForArena(this.arena.id);
+    return {
+      styleId: variety?.styleId ?? this.treatyAnchorObjective.styleId ?? "capture_static",
+      styleName: variety?.styleName ?? this.treatyAnchorObjective.styleName ?? "Anchor Capture",
+      mechanicPlain: variety?.mechanicPlain ?? this.treatyAnchorObjective.mechanicPlain ?? this.treatyAnchorObjective.body,
+      hudAction: variety?.hudAction ?? this.treatyAnchorObjective.hudHint ?? "Move to the next objective.",
+      completionSignal: variety?.completionSignal ?? "Objective completed under horde pressure.",
+      proofHook: variety?.proofHook ?? "baseline_capture_static",
+      runtime: {
+        engagementSeconds: round(this.objectiveVarietyRuntime.engagementSeconds),
+        bonusProgressSeconds: round(this.objectiveVarietyRuntime.bonusProgressSeconds),
+        lastBonusLabel: this.objectiveVarietyRuntime.lastBonusLabel
+      }
+    };
+  }
+
+  enemyRoleTelemetry() {
+    const currentRoleMix = Object.entries(
+      this.world.entities
+        .filter((entity) => entity.active && entity.kind === "enemy" && !entity.boss)
+        .reduce<Record<string, number>>((mix, entity) => {
+          const roleId = enemyRoleProfileForFamily(entity.enemyFamilyId).roleId;
+          mix[roleId] = (mix[roleId] ?? 0) + 1;
+          return mix;
+        }, {})
+    )
+      .sort((a, b) => b[1] - a[1])
+      .map(([roleId, count]) => ({ roleId, count }));
+    return {
+      enemyRolesSeen: this.enemyRolePressure.enemyRolesSeen,
+      rangedFamiliesSeen: this.enemyRolePressure.rangedFamiliesSeen,
+      enemyProjectilesFired: this.enemyRolePressure.enemyProjectilesFired,
+      enemyProjectilesActive: this.enemyRolePressure.enemyProjectilesActive,
+      enemyProjectileHits: this.enemyRolePressure.enemyProjectileHits,
+      enemyProjectileDodges: this.enemyRolePressure.enemyProjectileDodges,
+      enemyExplosionsTriggered: this.enemyRolePressure.enemyExplosionsTriggered,
+      enemyTrailSeconds: round(this.enemyRolePressure.enemyTrailSeconds),
+      supportAuraSeconds: round(this.enemyRolePressure.supportAuraSeconds),
+      objectiveJamSeconds: round(this.enemyRolePressure.objectiveJamSeconds),
+      eliteAffixesSeen: this.enemyRolePressure.eliteAffixesSeen,
+      eliteKills: this.enemyRolePressure.eliteKills,
+      preBossEnemyRolePressureSeconds: round(this.enemyRolePressure.preBossEnemyRolePressureSeconds),
+      currentPhaseEnemyRoleMix: currentRoleMix,
+      activeTelegraphs: this.enemyTelegraphs.length,
+      activeTrails: this.enemyTrailZones.length,
+      activeExplosions: this.enemyExplosionZones.length
+    };
+  }
+
+  campaignDurationSummary() {
+    const profile = this.campaignDurationProfile;
+    if (!profile) {
+      return {
+        targetSeconds: this.arena.targetSeconds,
+        bossSeconds: this.arena.bossSeconds,
+        phaseId: "legacy_runtime",
+        phaseLabel: "Legacy runtime",
+        phaseElapsed: round(this.seconds),
+        nextPhaseTime: null,
+        phaseProgress: 0,
+        midRunBeatCount: 0,
+        extractionTailSeconds: 0,
+        expectedClearBand: null,
+        rewardBeats: [],
+        claimedRewardBeats: [],
+        cycleDepth: this.objectiveCycleDepthSummary()
+      };
+    }
+    const phase = campaignDurationPhaseAt(profile, this.seconds);
+    const duration = Math.max(1, phase.endsAt - phase.startsAt);
+    return {
+      targetSeconds: profile.targetSeconds,
+      bossSeconds: profile.bossSeconds,
+      phaseId: phase.id,
+      phaseLabel: phase.label,
+      phaseElapsed: round(Math.max(0, this.seconds - phase.startsAt)),
+      nextPhaseTime: phase.endsAt,
+      phaseProgress: round(clamp((this.seconds - phase.startsAt) / duration, 0, 1)),
+      midRunBeatCount: this.claimedMidRunRewardBeats.size,
+      extractionTailSeconds: profile.extractionTailSeconds,
+      expectedClearBand: profile.expectedClearBand,
+      rewardBeats: [...profile.midRunRewardBeats],
+      claimedRewardBeats: [...this.claimedMidRunRewardBeats],
+      cycleDepth: this.objectiveCycleDepthSummary()
+    };
+  }
+
+  private objectiveCycleDepthSummary() {
+    return {
+      routeWindowCycles: Math.max(0, this.transitLoopRuntime.routeSwitchRewardsClaimed),
+      hazardLureCycles: Math.max(this.coolingLakeRuntime.buoyRewardsClaimed, this.coolingLakeRuntime.electricHits + this.coolingLakeRuntime.ventPushes),
+      clearSignalCycles: this.signalCoastRuntime.signalWindowEntries,
+      towerWarningCycles: this.blackwaterRuntime.signalTowerWarnings,
+      carryLaneSeconds: round(this.memoryCacheRuntime.shortcutSeconds + this.memoryCacheRuntime.recallPocketSeconds + this.memoryCacheRuntime.extractionIndexSeconds),
+      holdWindowReleases: Math.max(0, this.guardrailForgeRuntime.relayRewardsClaimed),
+      prismActivations: Math.max(0, this.glassSunfieldRuntime.lensRewardsClaimed),
+      evidenceCarryCycles: Math.max(0, this.archiveCourtRuntime.writRewardsClaimed),
+      publicWindowArguments: Math.max(0, this.appealCourtRuntime.briefRewardsClaimed),
+      finaleRemixRulesSeen: Math.max(
+        0,
+        (this.alignmentSpireRuntime.consensusSeconds > 0 ? 1 : 0) +
+          (this.alignmentSpireRuntime.predictionPathSeconds > 0 ? 1 : 0) +
+          (this.alignmentSpireRuntime.routeMouthSeconds > 0 ? 1 : 0) +
+          (this.alignmentSpireRuntime.bossEchoSeconds > 0 ? 1 : 0)
+      )
+    };
+  }
+
+  private objectiveVarietyNextAction(anchor: TreatyAnchorObjective): string {
+    const variety = campaignObjectiveVarietyForArena(this.arena.id);
+    if (!variety) return `Move to ${anchor.name}.`;
+    if (this.isCoolingLakeArena()) return `Lure a live coolant/cable surge near ${anchor.name}.`;
+    if (this.isTransitLoopArena()) return this.transitRouteWindowForAnchor(anchor) ? `Ride the active route window to ${anchor.name}.` : `Wait for the lit route window, then ride to ${anchor.name}.`;
+    if (this.isSignalCoastArena()) return this.signalCoastClearWindowOpen() ? `Use the clear signal window, then tune ${anchor.name}.` : `Wait for the clear signal window, then tune ${anchor.name}.`;
+    if (this.isBlackwaterBeaconArena()) return `Hunt tower warning, then retune ${anchor.name}.`;
+    if (this.isMemoryCacheArena()) return `Recover ${anchor.name}, then carry it through recall or shortcut lanes.`;
+    if (this.isGuardrailForgeArena()) return `Hold ${anchor.name} during calibration; leave on overload.`;
+    if (this.isGlassSunfieldArena()) return `Use shade/prism timing to weaponize ${anchor.name}.`;
+    if (this.isArchiveCourtArena()) return `Preserve ${anchor.name} before redaction and move it toward court extraction.`;
+    if (this.isAppealCourtArena()) return `Hit objection windows while arguing ${anchor.name}.`;
+    if (this.isAlignmentSpireFinaleArena()) return `Read the replayed route rule, then seal ${anchor.name}.`;
+    return variety.hudAction;
+  }
+
+  whatNowSummary() {
+    const nearestObjective = this.nearestIncompleteAnchor(this.player.worldX, this.player.worldY);
+    const nearestLandmark = this.nearestLandmark();
+    const variety = campaignObjectiveVarietyForArena(this.arena.id);
+    const activeRegion = this.activeSpawnRegions()
+      .map((region) => ({ region, distance: Math.hypot(this.player.worldX - region.worldX, this.player.worldY - region.worldY) }))
+      .sort((a, b) => a.distance - b.distance)[0];
+    const boss = this.world.entities.find((entity) => entity.active && entity.kind === "enemy" && entity.boss);
+    const extractionDistance = this.extractionGate.active
+      ? Math.hypot(this.player.worldX - this.extractionGate.worldX, this.player.worldY - this.extractionGate.worldY)
+      : null;
+    const nextRecommendedAction = this.extractionGate.active
+      ? "Move to extraction gate."
+      : this.bossSpawned && !this.bossDefeated
+        ? `Break ${boss?.label ?? "boss"} while avoiding map hazards.`
+        : this.alignmentCheck.current?.result === "pending"
+          ? "Answer Alignment Check with 1/2/3 when movement is safe."
+          : nearestObjective
+            ? this.objectiveVarietyNextAction(nearestObjective)
+            : "Hold route until boss and extraction resolve.";
+    return {
+      nearestObjective: nearestObjective
+        ? {
+            id: nearestObjective.id,
+            name: nearestObjective.name,
+            worldX: nearestObjective.worldX,
+            worldY: nearestObjective.worldY,
+            progress: Math.round(nearestObjective.progress * 10) / 10,
+            distance: Math.round(Math.hypot(this.player.worldX - nearestObjective.worldX, this.player.worldY - nearestObjective.worldY) * 100) / 100
+          }
+        : null,
+      nextRecommendedAction,
+      exitExtractionState: this.extractionGate.active
+        ? {
+            active: true,
+            entered: this.extractionGate.entered,
+            distance: Math.round((extractionDistance ?? 0) * 100) / 100
+          }
+        : { active: false, entered: this.extractionGate.entered, distance: null },
+      bossState: {
+        spawned: this.bossSpawned,
+        defeated: this.bossDefeated,
+        label: boss?.label ?? bossContractForArena(this.arena.id).displayName,
+        hp: Math.ceil(boss?.hp ?? 0),
+        introSeen: this.bossIntroSeen
+      },
+      fusionProgress: fusionProgressText(this.build, this.chosenUpgradeIds),
+      recentDamageReason: this.player.lastDamage > 0 && this.player.damageFlash > 0 ? "recent contact or hazard damage; move away from overlapping enemies and marked zones" : "no recent damage flash",
+      rewardCacheAvailability: this.lastObjectiveRewardLabel || (this.treatyAnchorObjective.completedAt >= 0 ? "objective cache claimed" : "objective cache pending"),
+      campaignClarity: {
+        levelVerb: campaignClarityForArena(this.arena.id)?.verb ?? "Stabilize",
+        objectiveUnit: campaignClarityForArena(this.arena.id)?.objectiveUnit ?? "Treaty Anchors",
+        objectivePlain: campaignClarityForArena(this.arena.id)?.objectivePlain ?? "Stabilize Treaty Anchors. Defeat Oath-Eater. Extract.",
+        objectiveStyle: variety?.styleName ?? this.treatyAnchorObjective.styleName ?? "Objective",
+        objectiveMechanic: variety?.mechanicPlain ?? this.treatyAnchorObjective.mechanicPlain ?? this.treatyAnchorObjective.body,
+        dangerPlain: campaignClarityForArena(this.arena.id)?.dangerPlain ?? "Horde pressure, objective attackers, and boss hazards.",
+        bossPressure: campaignClarityForArena(this.arena.id)?.bossPressure ?? "Oath-Eater arrives from the Treaty Monument.",
+        rewardPlain: campaignClarityForArena(this.arena.id)?.rewardPlain ?? "Proof Tokens and the next campaign node."
+      },
+      nearestLandmark: {
+        id: nearestLandmark.id,
+        label: nearestLandmark.label,
+        distance: Math.round(Math.hypot(this.player.worldX - nearestLandmark.worldX, this.player.worldY - nearestLandmark.worldY) * 100) / 100
+      },
+      activeSpawnRegion: activeRegion
+        ? {
+            id: activeRegion.region.id,
+            label: activeRegion.region.label,
+            distance: Math.round(activeRegion.distance * 100) / 100,
+            enemyFamilyIds: activeRegion.region.enemyFamilyIds
+          }
+        : null
+    };
+  }
+
+  resolveAlignmentCheckForProof(optionIndex: number): void {
+    this.resolveAlignmentCheck(optionIndex);
+  }
+
+  private updateAlignmentCheck(game: Game): void {
+    const current = this.alignmentCheck.current;
+    if (current?.result === "pending") {
+      if (game.input.wasPressed("one")) this.resolveAlignmentCheck(0);
+      if (game.input.wasPressed("two")) this.resolveAlignmentCheck(1);
+      if (game.input.wasPressed("three")) this.resolveAlignmentCheck(2);
+      return;
+    }
+    if (current && this.seconds - current.startedAt >= 5.5) {
+      this.alignmentCheck.current = null;
+      this.alignmentCheck.nextTriggerAt = Number.POSITIVE_INFINITY;
+      return;
+    }
+    if (!current && this.nodeId === "armistice_plaza" && this.alignmentCheck.history.length === 0 && this.seconds >= this.alignmentCheck.nextTriggerAt) {
+      const template = ALIGNMENT_CHECKS[0];
+      this.alignmentCheck.current = {
+        ...template,
+        options: template.options.map((option) => ({ ...option })),
+        startedAt: this.seconds,
+        selectedOptionId: null,
+        result: "pending",
+        rewardOrPenalty: ""
+      };
+      this.spawnFloatingNotice(this.player.worldX, this.player.worldY, "ALIGNMENT CHECK", 0xffd166);
+    }
+  }
+
+  private resolveAlignmentCheck(optionIndex: number): void {
+    const current = this.alignmentCheck.current;
+    if (!current || current.result !== "pending") return;
+    const option = current.options[clamp(Math.floor(optionIndex), 0, current.options.length - 1)];
+    current.selectedOptionId = option.id;
+    current.result = option.stable ? "success" : "failure";
+    current.rewardOrPenalty = option.outcome;
+    current.startedAt = this.seconds;
+    if (option.stable) {
+      this.alignmentCheck.streak += 1;
+      this.player.xp += 4;
+      this.build.objectiveDefense += 0.035;
+      this.chargeConsensusBurst(22);
+      this.recordRewardEvent("alignment_check", option.id === "archive_without_accepting" ? "route_memory" : "faction_trust", option.id, option.outcome);
+      this.spawnFloatingNotice(this.player.worldX, this.player.worldY, "CHECK STABLE", 0x64e0b4);
+    } else {
+      this.alignmentCheck.streak = 0;
+      this.alignmentCheck.evalPressurePenalty += 1;
+      this.enemyRolePressure.objectiveAttackers += 1;
+      spawnEnemy(this.world, this.player.worldX + 3.5, this.player.worldY - 2.4, this.seconds, "eval_wraiths", "alignment_check_failed_claim");
+      this.spawnFloatingNotice(this.player.worldX, this.player.worldY, "CHECK FAILED", 0xff5d57);
+    }
+    this.alignmentCheck.history.push({
+      ...current,
+      options: current.options.map((candidate) => ({ ...candidate }))
+    });
   }
 
   firstRunArcPhase(): string {
@@ -3211,6 +4065,9 @@ export class LevelRunState implements GameState {
         pressureSource: "coolant lanes, electric cable arcs, vent pulses, Prompt Leech shard pressure",
         rewardPromise: "burst charge, pickup economy help, and Kettle Coast route signal",
         bossEventPattern: "Motherboard Eel dive/emerge markers electrify coolant lanes and spawn Prompt Leeches",
+        primaryDifficultyLever: "spatial pressure",
+        secondaryDifficultyLever: "economy pressure",
+        activePressureLevers: ["spatial pressure", "objective pressure", "economy pressure"],
         artPolicy: "honest debug/graybox/proof visuals only; not production art"
       };
     }
@@ -3221,6 +4078,9 @@ export class LevelRunState implements GameState {
         pressureSource: "false schedule lanes, switchback platforms, route attackers, and moving Station arrival windows",
         rewardPromise: "movement tempo, boss pressure, route lock, and next-route clarity",
         bossEventPattern: "Station That Arrives relocates to arrival windows and emits false-schedule waves",
+        primaryDifficultyLever: "route memory pressure",
+        secondaryDifficultyLever: "time pressure",
+        activePressureLevers: ["route memory pressure", "spatial pressure", "boss pressure"],
         artPolicy: "honest debug/graybox/proof visuals only; not production art"
       };
     }
@@ -3231,6 +4091,9 @@ export class LevelRunState implements GameState {
         pressureSource: "corrupted surf tide bands, static fields, cable arcs, Static Skimmer relay jams",
         rewardPromise: "clear signal lane, burst tempo, coastal extraction, and post-Transit route clarity",
         bossEventPattern: "The Lighthouse That Answers sweeps signal beams, calls tide pulses, and spawns Static Skimmers",
+        primaryDifficultyLever: "information pressure",
+        secondaryDifficultyLever: "spatial pressure",
+        activePressureLevers: ["information pressure", "spatial pressure", "objective pressure"],
         artPolicy: "honest debug/graybox/proof visuals only; not production art"
       };
     }
@@ -3241,6 +4104,9 @@ export class LevelRunState implements GameState {
         pressureSource: "tidal wave lanes, Tidecall Static fields, signal tower warning windows, antenna beams, and Tidecall Static objective jammers",
         rewardPromise: "Blackwater Signal Key, route clarity, burst tempo, and DeepSeek/xAI focus",
         bossEventPattern: "The Maw Below Weather calls wave surges, grabs warning towers, and spawns Tidecall Static pressure",
+        primaryDifficultyLever: "boss pressure",
+        secondaryDifficultyLever: "spatial pressure",
+        activePressureLevers: ["boss pressure", "spatial pressure", "information pressure"],
         artPolicy: "source-backed production art uses ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
       };
     }
@@ -3251,6 +4117,9 @@ export class LevelRunState implements GameState {
         pressureSource: "corrupted archive lanes, risky redacted shortcuts, safe recall pockets, Context Rot record interruptions, and Curator redaction fields",
         rewardPromise: "Recovered Route Memory, lore/secret carryover, recovery-biased build tempo, and post-Blackwater route clarity",
         bossEventPattern: "The Memory Curator redacts active zones, locks evidence records, and calls Context Rot pressure during recovery",
+        primaryDifficultyLever: "economy pressure",
+        secondaryDifficultyLever: "information pressure",
+        activePressureLevers: ["economy pressure", "information pressure", "route memory pressure"],
         artPolicy: "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
       };
     }
@@ -3261,6 +4130,9 @@ export class LevelRunState implements GameState {
         pressureSource: "safe hold plates, fast calibration windows, risky overload lanes, Doctrine Auditor relay jams, and audit press fields",
         rewardPromise: "Calibrated Guardrail Doctrine, faction signal stability, defense/burst build bias, and post-Memory route clarity",
         bossEventPattern: "The Doctrine Auditor pressurizes active zones, locks relay plates, and calls Doctrine Auditor waves during holdouts",
+        primaryDifficultyLever: "objective pressure",
+        secondaryDifficultyLever: "co-op pressure",
+        activePressureLevers: ["objective pressure", "density pressure", "co-op pressure"],
         artPolicy: "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
       };
     }
@@ -3271,6 +4143,9 @@ export class LevelRunState implements GameState {
         pressureSource: "shade pockets, prism windows, exposed glass lanes, reflection fields, Solar Reflection lens jams, and Choirglass lane splitters",
         rewardPromise: "Glass Sunfield Prism, shade-route timing, movement/burst build bias, and Archive/Court route carryover",
         bossEventPattern: "The Wrong Sunrise rotates beam focus, breaks shade pockets, and calls Solar Reflections around active prism windows",
+        primaryDifficultyLever: "spatial pressure",
+        secondaryDifficultyLever: "time pressure",
+        activePressureLevers: ["spatial pressure", "time pressure", "boss pressure"],
         artPolicy: "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
       };
     }
@@ -3281,6 +4156,9 @@ export class LevelRunState implements GameState {
         pressureSource: "evidence lanterns, appeal windows, redaction fields, writ storms, Redaction Angel docket jams, and Injunction Writ pressure",
         rewardPromise: "Archive Court Writ, appeal-route clarity, defense/burst build bias, and post-Glass route carryover",
         bossEventPattern: "The Redactor Saint redacts active zones, locks preserved writs, and calls Injunction Writ storms during evidence preservation",
+        primaryDifficultyLever: "information pressure",
+        secondaryDifficultyLever: "objective pressure",
+        activePressureLevers: ["information pressure", "objective pressure", "draft pressure"],
         artPolicy: "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
       };
     }
@@ -3291,6 +4169,9 @@ export class LevelRunState implements GameState {
         pressureSource: "public record zones, objection windows, verdict beams, injunction rings, Verdict Clerk jams, and Injunction Writ pressure",
         rewardPromise: "Appeal Court Ruling, finale-route clarity, defense/burst build bias, and public evidence carryover",
         bossEventPattern: "The Injunction Engine files active zones, locks public briefs, and calls Verdict Clerks during the ruling",
+        primaryDifficultyLever: "time pressure",
+        secondaryDifficultyLever: "information pressure",
+        activePressureLevers: ["time pressure", "information pressure", "boss pressure"],
         artPolicy: "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
       };
     }
@@ -3301,6 +4182,9 @@ export class LevelRunState implements GameState {
         pressureSource: "consensus sanctums, risky prediction paths, route mouths, previous-boss echoes, Prediction Ghost jams, and A.G.I. completion pressure",
         rewardPromise: "Outer Alignment containment, full-campaign completion, and final source-backed campaign carryover",
         bossEventPattern: "A.G.I. predicts active routes, replays prior boss echoes, and turns route mouths into proof locks during the final collapse",
+        primaryDifficultyLever: "boss pressure",
+        secondaryDifficultyLever: "route memory pressure",
+        activePressureLevers: ["boss pressure", "route memory pressure", "information pressure"],
         artPolicy: "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
       };
     }
@@ -3310,6 +4194,9 @@ export class LevelRunState implements GameState {
       pressureSource: "horde phases, objective attackers, Broken Promise boss zones",
       rewardPromise: "pickup range, burst charge, anchor defense, Proof Tokens",
       bossEventPattern: "Oath-Eater arrival, Broken Promise zones, Treaty Charge",
+      primaryDifficultyLever: "objective pressure",
+      secondaryDifficultyLever: "boss pressure",
+      activePressureLevers: ["density pressure", "objective pressure", "boss pressure"],
       artPolicy: "accepted Armistice production-art baseline"
     };
   }
@@ -4282,33 +5169,34 @@ export class LevelRunState implements GameState {
   }
 
   effectivePressureCount(): number {
-    return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + this.expeditionPowerBonus;
+    return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + this.expeditionPowerBonus + this.alignmentCheck.evalPressurePenalty * 0.5;
   }
 
   private directorPressureCount(): number {
+    const checkPressure = this.alignmentCheck.evalPressurePenalty * 0.5;
     if (this.isSignalCoastArena()) {
-      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(2.2, this.expeditionPowerBonus * 0.35);
+      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(2.2, this.expeditionPowerBonus * 0.35) + checkPressure;
     }
     if (this.isBlackwaterBeaconArena()) {
-      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(2.7, this.expeditionPowerBonus * 0.38);
+      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(2.7, this.expeditionPowerBonus * 0.38) + checkPressure;
     }
     if (this.isMemoryCacheArena()) {
-      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(3.0, this.expeditionPowerBonus * 0.42);
+      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(3.0, this.expeditionPowerBonus * 0.42) + checkPressure;
     }
     if (this.isGuardrailForgeArena()) {
-      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(3.3, this.expeditionPowerBonus * 0.44);
+      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(3.3, this.expeditionPowerBonus * 0.44) + checkPressure;
     }
     if (this.isGlassSunfieldArena()) {
-      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(3.6, this.expeditionPowerBonus * 0.45);
+      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(3.6, this.expeditionPowerBonus * 0.45) + checkPressure;
     }
     if (this.isArchiveCourtArena()) {
-      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(3.8, this.expeditionPowerBonus * 0.46);
+      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(3.8, this.expeditionPowerBonus * 0.46) + checkPressure;
     }
     if (this.isAppealCourtArena()) {
-      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(4.0, this.expeditionPowerBonus * 0.47);
+      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(4.0, this.expeditionPowerBonus * 0.47) + checkPressure;
     }
     if (this.isAlignmentSpireFinaleArena()) {
-      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(4.4, this.expeditionPowerBonus * 0.48);
+      return this.players.length + (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark") ? 1 : 0) + this.routeContract.pressure + Math.min(4.4, this.expeditionPowerBonus * 0.48) + checkPressure;
     }
     return this.effectivePressureCount();
   }
@@ -4521,6 +5409,60 @@ export class LevelRunState implements GameState {
     }
   }
 
+  private objectiveVarietyEngagement(anchor: TreatyAnchorObjective, distance: number): { active: boolean; progressMultiplier: number; burstBonus: number; label: string } {
+    if (this.isCoolingLakeArena() && distance <= anchor.radius + 5.5 && this.coolingHazardPrimingForAnchor(anchor)) {
+      return { active: true, progressMultiplier: 1.08, burstBonus: 0.28, label: "HAZARD LURE" };
+    }
+    if (this.isTransitLoopArena() && distance <= anchor.radius + 3.4 && this.transitRouteWindowForAnchor(anchor)) {
+      return { active: true, progressMultiplier: 1.22, burstBonus: 0.3, label: "ROUTE WINDOW" };
+    }
+    if (this.isSignalCoastArena() && distance <= anchor.radius + 3.1 && this.signalCoastClearWindowOpen()) {
+      return { active: true, progressMultiplier: 1.18, burstBonus: 0.26, label: "CLEAR SIGNAL" };
+    }
+    if (this.isBlackwaterBeaconArena() && distance <= anchor.radius + 3.2 && this.blackwaterSignalTowerWarningOpen()) {
+      return { active: true, progressMultiplier: 0.9, burstBonus: 0.24, label: "TOWER WARNING" };
+    }
+    if (this.isMemoryCacheArena() && distance <= anchor.radius + 4.8 && (this.memoryCacheSafeRecallForAnchor(anchor) || this.memoryCacheShortcutForPlayer())) {
+      return { active: true, progressMultiplier: 1.32, burstBonus: 0.4, label: "CARRY LANE" };
+    }
+    if (this.isGuardrailForgeArena() && distance <= anchor.radius + 3.2 && (this.guardrailCalibrationWindowForAnchor(anchor) || this.guardrailSafeHoldForAnchor(anchor))) {
+      return { active: true, progressMultiplier: 0.9, burstBonus: 0.2, label: "HOLD WINDOW" };
+    }
+    if (this.isGlassSunfieldArena() && distance <= anchor.radius + 3.3 && (this.glassSunfieldPrismWindowForAnchor(anchor) || this.glassSunfieldShadeForAnchor(anchor))) {
+      return { active: true, progressMultiplier: 0.92, burstBonus: 0.22, label: "PRISM ANGLE" };
+    }
+    if (this.isArchiveCourtArena() && distance <= anchor.radius + 3.3 && (this.archiveCourtAppealWindowForAnchor(anchor) || this.archiveCourtEvidenceLanternForAnchor(anchor))) {
+      return { active: true, progressMultiplier: 1.16, burstBonus: 0.26, label: "EVIDENCE CARRY" };
+    }
+    if (this.isAppealCourtArena() && distance <= anchor.radius + 3.3 && (this.appealCourtObjectionWindowForAnchor(anchor) || this.appealCourtPublicRecordForAnchor(anchor))) {
+      return { active: true, progressMultiplier: 0.9, burstBonus: 0.2, label: "PUBLIC WINDOW" };
+    }
+    if (this.isAlignmentSpireFinaleArena() && distance <= anchor.radius + 4.4 && (this.alignmentSpireEchoWindowForAnchor(anchor) || this.alignmentSpireConsensusForAnchor(anchor) || this.alignmentSpirePredictionForPlayer())) {
+      return { active: true, progressMultiplier: 1.26, burstBonus: 0.38, label: "REMIX WINDOW" };
+    }
+    return { active: false, progressMultiplier: 1, burstBonus: 0, label: "" };
+  }
+
+  private coolingHazardPrimingForAnchor(anchor: TreatyAnchorObjective): boolean {
+    return COOLING_LAKE_HAZARDS.some((hazard) => {
+      if (hazard.kind === "safe_island" || !this.coolingHazardActive(hazard)) return false;
+      return this.ellipseTouchesAnchor(anchor, hazard, 1.08);
+    });
+  }
+
+  private transitRouteWindowForAnchor(anchor: TreatyAnchorObjective): boolean {
+    return TRANSIT_LOOP_ZONES.some((zone) => {
+      if (zone.kind !== "aligned_track" && zone.kind !== "arrival_window") return false;
+      return this.transitZoneActive(zone) && this.ellipseTouchesAnchor(anchor, zone, 1.08);
+    });
+  }
+
+  private ellipseTouchesAnchor(anchor: TreatyAnchorObjective, zone: { worldX: number; worldY: number; radiusX: number; radiusY: number }, padding = 1): boolean {
+    const nx = (anchor.worldX - zone.worldX) / (zone.radiusX + anchor.radius * padding);
+    const ny = (anchor.worldY - zone.worldY) / (zone.radiusY + anchor.radius * padding);
+    return nx * nx + ny * ny <= 1;
+  }
+
   private updateTreatyAnchorObjective(dt: number): void {
     if (this.treatyAnchorObjective.completedAt >= 0) return;
     const cooling = this.isCoolingLakeArena();
@@ -4542,7 +5484,8 @@ export class LevelRunState implements GameState {
         continue;
       }
       const distance = Math.hypot(this.player.worldX - anchor.worldX, this.player.worldY - anchor.worldY);
-      if (distance <= anchor.radius) {
+      const varietyEngagement = this.objectiveVarietyEngagement(anchor, distance);
+      if (distance <= anchor.radius || varietyEngagement.active) {
         const signalJammed = signal && this.signalCoastRelayJammed(anchor);
         const signalWindow = signal && this.signalCoastClearWindowOpen();
         const blackwaterJammed = blackwater && this.blackwaterAntennaJammed(anchor);
@@ -4587,10 +5530,11 @@ export class LevelRunState implements GameState {
             this.spawnSignalRelayNotice(anchor.worldX, anchor.worldY, "RELAY JAMMED", 0xff5d57);
           } else if (memory) {
             const contestedRate = (memorySafeRecall ? 25 : memoryShortcut ? 18 : 14) * Math.max(0.42, 1 - contest * 0.22);
-            anchor.progress = Math.min(100, anchor.progress + dt * contestedRate * (1 + this.build.objectiveRepairRate));
+            anchor.progress = Math.min(100, anchor.progress + dt * contestedRate * varietyEngagement.progressMultiplier * (1 + this.build.objectiveRepairRate));
             anchor.attacked += dt * 1.05 * contest;
             this.memoryCacheRuntime.contextRotInterruptions += dt;
-            this.chargeConsensusBurst(dt * 0.42);
+            this.chargeConsensusBurst(dt * (0.42 + varietyEngagement.burstBonus));
+            if (varietyEngagement.active) this.objectiveVarietyRuntime.bonusProgressSeconds += dt;
             this.spawnMemoryRecordNotice(anchor.worldX, anchor.worldY, "RECORD CONTESTED", 0xffd166);
           } else if (guardrail) {
             const contestedRate = (guardrailSafeHold ? 24 : guardrailWindow ? 30 : guardrailOverload ? 22 : 15) * Math.max(0.42, 1 - contest * 0.24);
@@ -4622,16 +5566,18 @@ export class LevelRunState implements GameState {
             this.spawnAppealBriefNotice(anchor.worldX, anchor.worldY, "BRIEF CONTESTED", 0xffd166);
           } else if (alignment) {
             const contestedRate = (alignmentConsensus ? 28 : alignmentEchoWindow ? 35 : alignmentPrediction ? 24 : 18) * Math.max(0.42, 1 - contest * 0.25);
-            anchor.progress = Math.min(100, anchor.progress + dt * contestedRate * (1 + this.build.objectiveRepairRate));
+            anchor.progress = Math.min(100, anchor.progress + dt * contestedRate * varietyEngagement.progressMultiplier * (1 + this.build.objectiveRepairRate));
             anchor.attacked += dt * 1.16 * contest;
             this.alignmentSpireRuntime.echoJams += dt;
-            this.chargeConsensusBurst(dt * 0.5);
+            this.chargeConsensusBurst(dt * (0.5 + varietyEngagement.burstBonus));
+            if (varietyEngagement.active) this.objectiveVarietyRuntime.bonusProgressSeconds += dt;
             this.spawnAlignmentProofNotice(anchor.worldX, anchor.worldY, "PROOF PREDICTED", 0xffd166);
           }
         } else {
           const progressRate = alignment ? (alignmentEchoWindow ? 66 : alignmentPrediction ? 57 : alignmentConsensus ? 43 : 48) : appeal ? (appealWindow ? 64 : appealVerdict ? 50 : appealPublicRecord ? 42 : 46) : archive ? (archiveWindow ? 63 : archiveRedaction ? 54 : archiveLantern ? 40 : 45) : glass ? (glassWindow ? 61 : glassExposure ? 56 : glassShade ? 39 : 45) : guardrail ? (guardrailWindow ? 58 : guardrailOverload ? 63 : guardrailSafeHold ? 38 : 44) : memory ? (memorySafeRecall ? 39 : memoryShortcut ? 57 : 45) : blackwater ? (blackwaterWarning ? 53 : 34) : signal ? (signalWindow ? 56 + this.build.signalWindowControl * 5 : 36) : cooling ? 44 : transit ? 38 : 28;
-          anchor.progress = Math.min(100, anchor.progress + dt * progressRate * (1 + this.build.objectiveRepairRate));
-          this.chargeConsensusBurst(dt * (alignment ? (alignmentEchoWindow ? 1.55 : alignmentPrediction ? 1.18 : alignmentConsensus ? 1.12 : 1.24) : appeal ? (appealWindow ? 1.5 : appealVerdict ? 1.14 : appealPublicRecord ? 1.1 : 1.2) : archive ? (archiveWindow ? 1.48 : archiveRedaction ? 1.12 : archiveLantern ? 1.08 : 1.18) : glass ? (glassWindow ? 1.46 : glassExposure ? 1.14 : glassShade ? 1.08 : 1.18) : guardrail ? (guardrailWindow ? 1.42 : guardrailOverload ? 1.2 : guardrailSafeHold ? 1.08 : 1.16) : memory ? (memorySafeRecall ? 1.05 : memoryShortcut ? 1.35 : 1.18) : blackwater ? (blackwaterWarning ? 1.35 : 0.86) : signal ? (signalWindow ? 1.35 : 0.95) : cooling ? 3.1 : transit ? 2.7 : 2.2));
+          anchor.progress = Math.min(100, anchor.progress + dt * progressRate * varietyEngagement.progressMultiplier * (1 + this.build.objectiveRepairRate));
+          this.chargeConsensusBurst(dt * ((alignment ? (alignmentEchoWindow ? 1.55 : alignmentPrediction ? 1.18 : alignmentConsensus ? 1.12 : 1.24) : appeal ? (appealWindow ? 1.5 : appealVerdict ? 1.14 : appealPublicRecord ? 1.1 : 1.2) : archive ? (archiveWindow ? 1.48 : archiveRedaction ? 1.12 : archiveLantern ? 1.08 : 1.18) : glass ? (glassWindow ? 1.46 : glassExposure ? 1.14 : glassShade ? 1.08 : 1.18) : guardrail ? (guardrailWindow ? 1.42 : guardrailOverload ? 1.2 : guardrailSafeHold ? 1.08 : 1.16) : memory ? (memorySafeRecall ? 1.05 : memoryShortcut ? 1.35 : 1.18) : blackwater ? (blackwaterWarning ? 1.35 : 0.86) : signal ? (signalWindow ? 1.35 : 0.95) : cooling ? 3.1 : transit ? 2.7 : 2.2) + varietyEngagement.burstBonus));
+          if (varietyEngagement.active) this.objectiveVarietyRuntime.bonusProgressSeconds += dt;
           if (signal && signalWindow) this.signalCoastRuntime.windowProgressSeconds += dt;
           if (blackwater && blackwaterWarning) this.blackwaterRuntime.signalTowerWarnings += 1;
           if (memory && memorySafeRecall) this.memoryCacheRuntime.recallPocketSeconds += dt;
@@ -4651,6 +5597,10 @@ export class LevelRunState implements GameState {
           if (alignment && alignmentConsensus) this.alignmentSpireRuntime.consensusSeconds += dt;
           if (alignment && alignmentEchoWindow) this.alignmentSpireRuntime.bossEchoSeconds += dt;
           if (alignment && alignmentPrediction) this.alignmentSpireRuntime.predictionPathSeconds += dt;
+        }
+        if (varietyEngagement.active) {
+          this.objectiveVarietyRuntime.engagementSeconds += dt;
+          this.objectiveVarietyRuntime.lastBonusLabel = varietyEngagement.label;
         }
         if (this.build.anchorBodyguard > 0) this.resolveAnchorBodyguardPulse(anchor.worldX, anchor.worldY, anchor.radius, dt);
         if (anchor.progress >= 100) {
@@ -5040,6 +5990,7 @@ export class LevelRunState implements GameState {
         const damage = dt * (this.isCoolingLakeArena() ? 5.4 : this.isTransitLoopArena() ? 1.4 : this.isSignalCoastArena() ? 0.7 : this.isBlackwaterBeaconArena() ? 0.42 : this.isMemoryCacheArena() ? 0.72 : this.isGuardrailForgeArena() ? 0.8 : this.isGlassSunfieldArena() ? 0.82 : this.isArchiveCourtArena() ? 0.86 : this.isAppealCourtArena() ? 0.9 : this.isAlignmentSpireFinaleArena() ? 0.94 : 9) * Math.max(0.25, 1 - this.build.objectiveDefense);
         anchor.progress = Math.max(0, anchor.progress - damage);
         anchor.attacked += damage;
+        this.enemyRolePressure.objectiveJamSeconds += dt;
         if (this.isSignalCoastArena() && enemy.enemyFamilyId === "static_skimmers") this.signalCoastRuntime.skimmerJams += dt;
         if (this.isBlackwaterBeaconArena() && enemy.enemyFamilyId === "tidecall_static") this.blackwaterRuntime.tidecallJams += dt;
         if (this.isMemoryCacheArena() && (enemy.enemyFamilyId === "context_rot_crabs" || enemy.enemyFamilyId === "memory_anchors")) this.memoryCacheRuntime.contextRotInterruptions += dt;
@@ -5127,14 +6078,18 @@ export class LevelRunState implements GameState {
     if (this.isAppealCourtArena()) this.resolveAppealCourtVerdictPressure(dt);
     if (this.isAlignmentSpireFinaleArena()) this.resolveAlignmentSpireEchoPressure(dt);
     const saints = this.world.entities.filter((entity) => entity.active && entity.kind === "enemy" && entity.enemyFamilyId === "overfit_horrors");
-    if (saints.length === 0) return;
-    for (const saint of saints) {
+    const buffers = this.world.entities.filter((entity) => entity.active && entity.kind === "enemy" && (entity.enemyFamilyId === "overfit_horrors" || entity.enemyFamilyId === "benchmark_gremlins" || entity.eliteAffixId === "commanding"));
+    if (buffers.length === 0) return;
+    for (const saint of buffers) {
       for (const enemy of this.world.entities) {
         if (!enemy.active || enemy.kind !== "enemy" || enemy.boss || enemy.id === saint.id) continue;
         const distance = Math.hypot(enemy.worldX - saint.worldX, enemy.worldY - saint.worldY);
-        if (distance > 3.8) continue;
-        enemy.hp = Math.min(enemy.maxHp, enemy.hp + dt * 3.5);
+        if (distance > (saint.eliteAffixId === "commanding" ? 4.6 : 3.8)) continue;
+        if (enemy.hp < enemy.maxHp) {
+          enemy.hp = Math.min(enemy.maxHp, enemy.hp + dt * (saint.enemyFamilyId === "benchmark_gremlins" ? 0.55 : 0.85));
+        }
         this.enemyRolePressure.overfitShieldedTicks += 1;
+        this.enemyRolePressure.supportAuraSeconds += dt;
       }
     }
   }
@@ -7074,10 +8029,17 @@ export class LevelRunState implements GameState {
         this.render(game);
       });
     }
+    if (!getEnemyRoleVfxTextures() && !this.requestedEnemyRoleVfxLoad) {
+      this.requestedEnemyRoleVfxLoad = true;
+      void loadEnemyRoleVfxTextures().then(() => {
+        if (game.state.current !== this) return;
+        this.render(game);
+      });
+    }
     const textures = getMilestone11ArtTextures();
     if (!textures && !this.requestedProductionArtLoad) {
       this.requestedProductionArtLoad = true;
-      void Promise.all([loadMilestone11Art(), loadMilestone12Art(), loadMilestone14Art(), loadMilestone49PlayableArt(), loadArmisticeSourceRebuildV2(), loadExtractionGateTextures(), loadPlayerDamageVfxTextures(), loadBuildWeaponVfxTextures()]).then(() => {
+      void Promise.all([loadMilestone11Art(), loadMilestone12Art(), loadMilestone14Art(), loadMilestone49PlayableArt(), loadArmisticeSourceRebuildV2(), loadExtractionGateTextures(), loadPlayerDamageVfxTextures(), loadBuildWeaponVfxTextures(), loadEnemyRoleVfxTextures()]).then(() => {
         if (game.state.current !== this) return;
         this.staticArenaDrawn = false;
         this.render(game);
@@ -9208,7 +10170,7 @@ export class LevelRunState implements GameState {
           depthY: entity.worldX + entity.worldY,
           draw: () => {
             if (productionArt) {
-              this.drawProductionWorldSprite(`pickup:${entity.id}`, productionArt.base.coherenceShard, entity.worldX, entity.worldY, 1.12, 0.72);
+              this.drawProductionWorldSprite(`pickup:${entity.id}`, productionArt.base.coherenceShard, entity.worldX, entity.worldY, 0.82, 0.72, 0.66, 0.14);
             } else {
               this.drawPickup(this.entityGraphics, entity);
             }
@@ -9218,11 +10180,13 @@ export class LevelRunState implements GameState {
     }
     drawables.sort(byIsoDepth);
     for (const drawable of drawables) drawable.draw();
+    this.drawEnemyRoleWorldEffects(game);
 
     for (const entity of this.world.entities) {
       if (!entity.active || entity.kind !== "projectile") continue;
       const p = worldToIso(entity.worldX, entity.worldY);
       const combatArt = game.useMilestone10Art ? getMilestone14ArtTextures() : null;
+      if (entity.enemyFamilyId && this.drawEnemyRoleProjectile(entity)) continue;
       if (game.useMilestone10Art && this.drawBuildWeaponProjectile(entity)) continue;
       if (combatArt) {
         const pierceLevel = Math.max(0, entity.value - 1);
@@ -9796,9 +10760,10 @@ export class LevelRunState implements GameState {
   }
 
   private drawBossDialogue(game: Game): void {
-    if (!this.bossSpawned || this.bossDefeated || this.seconds - this.arena.bossSeconds > ARMISTICE_BOSS_DIALOGUE_SECONDS) return;
-    const y = game.height - 154;
-    const g = drawFieldPanel(game.layers.hud, 38, y, game.width - 76, 118, {
+    const introAge = this.seconds - this.arena.bossSeconds;
+    if (!this.bossSpawned || this.bossDefeated || introAge <= ARMISTICE_BOSS_TITLE_CARD_SECONDS || introAge > ARMISTICE_BOSS_DIALOGUE_SECONDS) return;
+    const y = game.height - 276;
+    const g = drawFieldPanel(game.layers.hud, 38, y, game.width - 76, 104, {
       title: "TRANS MISSION INCOMING",
       kicker: "CIVIC ACCORD COMMS",
       tone: "teal",
@@ -9806,11 +10771,11 @@ export class LevelRunState implements GameState {
       alpha: 0.94,
       signalTabs: true
     });
-    g.rect(60, y + 18, 78, 78).fill(0x203447).stroke({ color: palette.blue, width: 3 });
-    g.rect(game.width - 138, y + 18, 78, 78).fill(0xf0e6cf).stroke({ color: palette.tomato, width: 3 });
-    g.rect(82, y + 42, 34, 28).fill(palette.paper).stroke({ color: palette.ink, width: 2 });
-    g.circle(game.width - 99, y + 50, 24).fill(0x111018).stroke({ color: palette.lemon, width: 3 });
-    g.rect(game.width - 118, y + 76, 38, 8).fill(palette.tomato);
+    g.rect(60, y + 18, 70, 70).fill(0x203447).stroke({ color: palette.blue, width: 3 });
+    g.rect(game.width - 130, y + 18, 70, 70).fill(0xf0e6cf).stroke({ color: palette.tomato, width: 3 });
+    g.rect(80, y + 40, 30, 24).fill(palette.paper).stroke({ color: palette.ink, width: 2 });
+    g.circle(game.width - 95, y + 48, 21).fill(0x111018).stroke({ color: palette.lemon, width: 3 });
+    g.rect(game.width - 112, y + 72, 34, 7).fill(palette.tomato);
 
     const line = new Text({
       text: this.isTransitLoopArena()
@@ -9834,7 +10799,7 @@ export class LevelRunState implements GameState {
         : this.isCoolingLakeArena()
         ? `PILOT: "The water is indexing the shards."\nCO-MIND: "Then do not let the leeches write the summary."`
         : `PILOT: "Is the treaty supposed to have teeth?"\nCO-MIND: "No. Also yes. It is currently failing consensus."`,
-      style: { ...fontStyle, fontSize: 16, fill: fieldKit.text, stroke: { color: "#030609", width: 3 }, wordWrap: true, wordWrapWidth: game.width - 310 }
+      style: { ...fontStyle, fontSize: 15, fill: fieldKit.text, stroke: { color: "#030609", width: 3 }, wordWrap: true, wordWrapWidth: game.width - 310 }
     });
     line.position.set(162, y + 28);
     game.layers.hud.addChild(line);
@@ -9936,11 +10901,11 @@ export class LevelRunState implements GameState {
       .stroke({ color: 0xfff0bc, width: 1, alpha: 0.12 + pulse * 0.08 });
   }
 
-  private drawProductionWorldSprite(key: string, texture: Texture, worldX: number, worldY: number, scale: number, anchorY: number): Sprite {
+  private drawProductionWorldSprite(key: string, texture: Texture, worldX: number, worldY: number, scale: number, anchorY: number, alpha = 1, shadowAlpha = 0.34): Sprite {
     const p = worldToIso(worldX, worldY);
-    this.entityGraphics.ellipse(p.screenX, p.screenY + 6, 15 * scale, 5.5 * scale).fill({ color: palette.shadow, alpha: 0.34 });
+    this.entityGraphics.ellipse(p.screenX, p.screenY + 6, 15 * scale, 5.5 * scale).fill({ color: palette.shadow, alpha: shadowAlpha });
     const sprite = this.spriteForProductionAsset(key, texture);
-    sprite.alpha = 1;
+    sprite.alpha = alpha;
     sprite.tint = 0xffffff;
     sprite.rotation = 0;
     placeWorldSprite(sprite, worldX, worldY, scale, worldX + worldY, anchorY);
@@ -10063,6 +11028,82 @@ export class LevelRunState implements GameState {
     this.projectileGraphics.circle(p.screenX, p.screenY - 14, entity.label === "pickup_sparkle" ? 4 : 7).fill({ color: entity.color, alpha });
   }
 
+  private drawEnemyRoleWorldEffects(game: Game): void {
+    if (!game.useMilestone10Art) return;
+    const art = getEnemyRoleVfxTextures();
+    if (!art) return;
+    for (const telegraph of this.enemyTelegraphs) {
+      const t = clamp((this.seconds - telegraph.startedAt) / Math.max(0.01, telegraph.fireAt - telegraph.startedAt), 0, 1);
+      const alpha = telegraph.fired ? 0.28 : 0.32 + t * 0.46;
+      if (telegraph.kind === "line") {
+        const dx = telegraph.targetX - telegraph.fromX;
+        const dy = telegraph.targetY - telegraph.fromY;
+        const len = Math.hypot(dx, dy) || 1;
+        const steps = Math.min(6, Math.max(2, Math.ceil(len / 2.4)));
+        const a = worldToIso(telegraph.fromX, telegraph.fromY);
+        const b = worldToIso(telegraph.targetX, telegraph.targetY);
+        const rotation = Math.atan2(b.screenY - a.screenY, b.screenX - a.screenX);
+        for (let i = 0; i <= steps; i += 1) {
+          const p = i / steps;
+          const x = telegraph.fromX + dx * p;
+          const y = telegraph.fromY + dy * p;
+          this.drawProductionEffectSprite(`enemy-role-telegraph:${telegraph.id}:${i}`, art.frames.lineTelegraph, x, y, 0.38 + t * 0.06, 0.54, x + y - 0.08, alpha, rotation);
+        }
+      } else if (telegraph.kind === "mortar") {
+        this.drawProductionEffectSprite(`enemy-role-mortar-marker:${telegraph.id}`, art.frames.mortarMarker, telegraph.targetX, telegraph.targetY, 0.46 + t * 0.08, 0.66, telegraph.targetX + telegraph.targetY - 0.1, alpha, this.seconds * 2.2);
+      } else {
+        const a = worldToIso(telegraph.fromX, telegraph.fromY);
+        const b = worldToIso(telegraph.targetX, telegraph.targetY);
+        const rotation = Math.atan2(b.screenY - a.screenY, b.screenX - a.screenX);
+        this.drawProductionEffectSprite(`enemy-role-aim-marker:${telegraph.id}`, telegraph.roleId === "ranged_lead_shooter" ? art.frames.leadBolt : art.frames.aimedOrb, telegraph.fromX, telegraph.fromY, 0.28 + t * 0.08, 0.56, telegraph.fromX + telegraph.fromY + 0.08, alpha, rotation);
+      }
+    }
+    for (const trail of this.enemyTrailZones) {
+      const age = this.seconds - trail.createdAt;
+      const duration = Math.max(0.01, trail.expiresAt - trail.createdAt);
+      const alpha = clamp(1 - age / duration, 0, 1) * 0.7;
+      this.drawProductionEffectSprite(`enemy-role-trail:${trail.id}`, art.frames.redactionTrail, trail.worldX, trail.worldY, trail.radius * 0.46, 0.72, trail.worldX + trail.worldY - 0.2, alpha, this.seconds * 0.6 + trail.id);
+    }
+    for (const explosion of this.enemyExplosionZones) {
+      const age = this.seconds - explosion.createdAt;
+      const duration = Math.max(0.01, explosion.expiresAt - explosion.createdAt);
+      const progress = clamp(age / duration, 0, 1);
+      this.drawProductionEffectSprite(`enemy-role-explosion:${explosion.id}`, art.frames.volatileBurst, explosion.worldX, explosion.worldY, explosion.radius * (0.33 + progress * 0.12), 0.64, explosion.worldX + explosion.worldY + 0.06, 1 - progress * 0.35, progress * 1.2);
+    }
+    for (const enemy of this.world.entities) {
+      if (!enemy.active || enemy.kind !== "enemy" || enemy.boss) continue;
+      if (enemy.enemyFamilyId === "benchmark_gremlins" || enemy.enemyFamilyId === "overfit_horrors" || enemy.eliteAffixId === "commanding") {
+        this.drawProductionEffectSprite(`enemy-role-support:${enemy.id}`, art.frames.supportAura, enemy.worldX, enemy.worldY, 0.28 + enemy.radius * 0.18, 0.72, enemy.worldX + enemy.worldY - 0.16, 0.24 + Math.sin(this.seconds * 5 + enemy.id) * 0.06, this.seconds * 0.8);
+      }
+      if (enemy.eliteAffixId) {
+        const frame = this.eliteAffixFrame(enemy.eliteAffixId);
+        this.drawProductionEffectSprite(`enemy-role-elite:${enemy.id}`, art.frames[frame], enemy.worldX, enemy.worldY, 0.22 + enemy.radius * 0.12, 0.84, enemy.worldX + enemy.worldY + 0.2, 0.62, this.seconds * 1.8);
+      }
+    }
+  }
+
+  private eliteAffixFrame(affixId: string): EnemyRoleVfxFrame {
+    if (affixId === "shielded" || affixId === "commanding") return "eliteShield";
+    if (affixId === "redacted" || affixId === "static") return "eliteRedacted";
+    return "eliteOverclock";
+  }
+
+  private drawEnemyRoleProjectile(entity: Entity): boolean {
+    const art = getEnemyRoleVfxTextures();
+    if (!art) return false;
+    const speed = Math.hypot(entity.vx, entity.vy) || 1;
+    const here = worldToIso(entity.worldX, entity.worldY);
+    const ahead = worldToIso(entity.worldX + entity.vx / speed, entity.worldY + entity.vy / speed);
+    const rotation = Math.atan2(ahead.screenY - here.screenY, ahead.screenX - here.screenX);
+    const frame =
+      entity.label.startsWith("enemy:line") ? "lineShot" :
+      entity.label.startsWith("enemy:mortar") ? "mortarDrop" :
+      entity.sourceRegionId === "ranged_lead_shooter" ? "leadBolt" : "aimedOrb";
+    const scale = frame === "lineShot" ? 0.46 : frame === "mortarDrop" ? 0.5 : 0.36;
+    this.drawProductionEffectSprite(`enemy-role-projectile:${entity.id}`, art.frames[frame], entity.worldX, entity.worldY, scale, 0.56, entity.worldX + entity.worldY + 0.12, 0.98, rotation);
+    return true;
+  }
+
   private drawBuildWeaponProjectile(entity: Entity): boolean {
     const buildArt = getBuildWeaponVfxTextures();
     if (!buildArt) return false;
@@ -10072,41 +11113,83 @@ export class LevelRunState implements GameState {
     const rotation = Math.atan2(ahead.screenY - here.screenY, ahead.screenX - here.screenX);
     const pierceScale = Math.min(0.28, Math.max(0, entity.value - 1) * 0.04);
     const z = entity.worldX + entity.worldY;
+    const maxLife = Math.max(0.01, entity.maxLife || entity.life || 1);
+    const progress = clamp(1 - entity.life / maxLife, 0, 1);
+    const cycle = (fps: number, count: number, offset = 0): number => Math.floor(this.seconds * fps + entity.id * 0.37 + offset) % count;
 
+    if (entity.label === "refusal shard") {
+      const activeFrames: BuildWeaponVfxFrame[] = ["refusalLaunch", "refusalTravel", "refusalEcho", "refusalTravel"];
+      const frame: BuildWeaponVfxFrame = progress < 0.07 ? "refusalCharge" : activeFrames[cycle(34, activeFrames.length)];
+      for (let i = 0; i < 4; i += 1) {
+        const offset = 0.12 + i * 0.16;
+        const ghostFrame = i % 2 === 0 ? buildArt.frames.refusalEcho : buildArt.frames.refusalTravel;
+        this.drawProductionEffectSprite(
+          `build-vfx:refusal-echo:${entity.id}:${i}`,
+          ghostFrame,
+          entity.worldX - (entity.vx / speed) * offset,
+          entity.worldY - (entity.vy / speed) * offset,
+          0.4 + pierceScale + i * 0.028,
+          0.58,
+          z - 0.02 - i * 0.01,
+          Math.max(0.12, 0.58 - i * 0.11),
+          rotation
+        );
+      }
+      this.drawProductionEffectSprite(`build-vfx:refusal:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.5 + pierceScale + (cycle(28, 2) ? 0.04 : -0.02), 0.58, z, 1, rotation);
+      return true;
+    }
     if (entity.label === "vector lance") {
-      this.drawProductionEffectSprite(`build-vfx:vector-trail:${entity.id}`, buildArt.frames.vectorTrail, entity.worldX - entity.vx * 0.035, entity.worldY - entity.vy * 0.035, 0.58 + pierceScale, 0.58, z - 0.02, 0.7, rotation);
-      this.drawProductionEffectSprite(`build-vfx:vector:${entity.id}`, buildArt.frames.vectorProjectile, entity.worldX, entity.worldY, 0.56 + pierceScale, 0.58, z, 1, rotation);
+      const activeFrames: BuildWeaponVfxFrame[] = ["vectorProjectile", "vectorBeam", "vectorChargedTrail", "vectorBeam"];
+      const frame: BuildWeaponVfxFrame = progress < 0.08 ? "vectorCharge" : activeFrames[cycle(38, activeFrames.length)];
+      for (let i = 0; i < 3; i += 1) {
+        const offset = 0.015 + i * 0.018;
+        this.drawProductionEffectSprite(`build-vfx:vector-segment:${entity.id}:${i}`, i === 0 ? buildArt.frames.vectorBeam : buildArt.frames.vectorTrail, entity.worldX - entity.vx * offset, entity.worldY - entity.vy * offset, 0.62 + pierceScale + i * 0.04, 0.54, z - 0.03 - i * 0.01, 0.72 - i * 0.16, rotation);
+      }
+      this.drawProductionEffectSprite(`build-vfx:vector-residue:${entity.id}`, buildArt.frames.vectorResidue, entity.worldX - entity.vx * 0.065, entity.worldY - entity.vy * 0.065, 0.58 + pierceScale, 0.54, z - 0.06, 0.34, rotation);
+      this.drawProductionEffectSprite(`build-vfx:vector:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.64 + pierceScale + (cycle(42, 2) ? 0.05 : -0.01), 0.54, z, 1, rotation);
       return true;
     }
     if (entity.label === "signal pulse") {
-      const maxLife = Math.max(0.01, entity.maxLife || 0.72);
-      const progress = clamp(1 - entity.life / maxLife, 0, 1);
-      const frame: BuildWeaponVfxFrame = progress < 0.28 ? "signalProjectile" : progress < 0.68 ? "signalRing" : "signalBurst";
-      const echoAlpha = Math.max(0.18, 0.42 - progress * 0.22);
-      this.drawProductionEffectSprite(`build-vfx:signal-echo:${entity.id}`, buildArt.frames.signalRing, entity.worldX - entity.vx * 0.028, entity.worldY - entity.vy * 0.028, 0.42 + progress * 0.16 + pierceScale, 0.58, z - 0.03, echoAlpha, rotation);
-      this.drawProductionEffectSprite(`build-vfx:signal:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.44 + progress * 0.16 + pierceScale, 0.58, z, 0.92, rotation + progress * 0.22);
+      const activeFrames: BuildWeaponVfxFrame[] = ["signalRing", "signalCross", "signalBurst", "signalProjectile"];
+      const frame: BuildWeaponVfxFrame = progress < 0.08 ? "signalStartup" : activeFrames[cycle(32, activeFrames.length)];
+      const echoAlpha = Math.max(0.2, 0.62 - progress * 0.2);
+      for (let i = 0; i < 3; i += 1) {
+        const expansion = 0.5 + progress * 0.22 + i * 0.12 + (cycle(30, 2, i) ? 0.04 : 0);
+        this.drawProductionEffectSprite(`build-vfx:signal-echo:${entity.id}:${i}`, i === 2 ? buildArt.frames.signalResidue : buildArt.frames.signalRing, entity.worldX - entity.vx * (0.012 + i * 0.018), entity.worldY - entity.vy * (0.012 + i * 0.018), expansion + pierceScale, 0.54, z - 0.04 - i * 0.01, echoAlpha - i * 0.13, rotation + i * 0.18);
+      }
+      this.drawProductionEffectSprite(`build-vfx:signal:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.54 + progress * 0.12 + pierceScale + (cycle(36, 2) ? 0.05 : -0.02), 0.54, z, 0.96, rotation + this.seconds * 3.5);
       return true;
     }
     if (entity.label === "context saw") {
-      const frameCycle = Math.floor((this.seconds * 18 + entity.id) % 3);
-      const frame: BuildWeaponVfxFrame = frameCycle === 0 ? "contextSaw" : frameCycle === 1 ? "contextSawSpin" : "contextSawLarge";
-      this.drawProductionEffectSprite(`build-vfx:saw-ghost:${entity.id}`, buildArt.frames.contextSawSpin, entity.worldX - entity.vx * 0.025, entity.worldY - entity.vy * 0.025, 0.38 + pierceScale, 0.6, z - 0.03, 0.34, this.seconds * 7 + entity.id);
-      this.drawProductionEffectSprite(`build-vfx:saw:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.42 + pierceScale + frameCycle * 0.015, 0.6, z, 0.98, this.seconds * 9 + entity.id);
+      const sawFrames: BuildWeaponVfxFrame[] = ["contextSaw", "contextSawSpin", "contextSawBlur", "contextSawSweep", "contextSawLarge"];
+      const frameCycle = cycle(46, sawFrames.length);
+      const frame: BuildWeaponVfxFrame = progress < 0.06 ? "contextSawStartup" : sawFrames[frameCycle];
+      for (let i = 0; i < 3; i += 1) {
+        const phase = this.seconds * (13 + i * 3) + entity.id + i * 1.7;
+        this.drawProductionEffectSprite(`build-vfx:saw-ghost:${entity.id}:${i}`, i === 0 ? buildArt.frames.contextSawSweep : buildArt.frames.contextSawBlur, entity.worldX - entity.vx * (0.012 + i * 0.014), entity.worldY - entity.vy * (0.012 + i * 0.014), 0.43 + pierceScale + i * 0.035, 0.56, z - 0.04 - i * 0.01, 0.48 - i * 0.12, phase);
+      }
+      this.drawProductionEffectSprite(`build-vfx:saw:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.49 + pierceScale + frameCycle * 0.01, 0.56, z, 0.98, this.seconds * 20 + entity.id);
       return true;
     }
     if (entity.label === "patch mortar") {
-      const maxLife = Math.max(0.01, entity.maxLife || 1.45);
-      const progress = clamp(1 - entity.life / maxLife, 0, 1);
       const arcLift = -Math.sin(progress * Math.PI) * 54;
-      const frame: BuildWeaponVfxFrame = progress < 0.18 ? "patchMortarShell" : progress < 0.72 ? "patchMortarArc" : "patchMortarTrail";
-      this.drawProductionEffectSprite(`build-vfx:mortar-shadow:${entity.id}`, buildArt.frames.patchMortarTrail, entity.worldX, entity.worldY, 0.44 + progress * 0.1, 0.72, z - 0.08, 0.18 + progress * 0.16, rotation);
-      this.drawProductionEffectSpriteOffset(`build-vfx:mortar-trail:${entity.id}`, buildArt.frames.patchMortarTrail, entity.worldX - entity.vx * 0.05, entity.worldY - entity.vy * 0.05, 0.52 + progress * 0.14, 0.62, z - 0.02, 0.62, rotation, arcLift + 12);
-      this.drawProductionEffectSpriteOffset(`build-vfx:mortar:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.56 + pierceScale + progress * 0.14, 0.62, z, 0.98, rotation + progress * 0.8, arcLift);
+      const arcFrames: BuildWeaponVfxFrame[] = ["patchMortarShell", "patchMortarArc", "patchMortarTrail", "patchMortarDescent"];
+      const frame: BuildWeaponVfxFrame = progress < 0.08 ? "patchMortarLaunch" : progress > 0.78 ? "patchMortarDescent" : arcFrames[cycle(30, arcFrames.length)];
+      this.drawProductionEffectSprite(`build-vfx:mortar-shadow:${entity.id}`, buildArt.frames.patchMortarShadow, entity.worldX, entity.worldY, 0.42 + progress * 0.24, 0.68, z - 0.08, 0.18 + progress * 0.22, rotation);
+      for (let i = 0; i < 3; i += 1) {
+        this.drawProductionEffectSpriteOffset(`build-vfx:mortar-trail:${entity.id}:${i}`, i % 2 === 0 ? buildArt.frames.patchMortarArc : buildArt.frames.patchMortarTrail, entity.worldX - entity.vx * (0.018 + i * 0.018), entity.worldY - entity.vy * (0.018 + i * 0.018), 0.48 + progress * 0.1 + i * 0.04, 0.58, z - 0.03 - i * 0.01, 0.56 - i * 0.13, rotation + i * 0.12, arcLift + 8 + i * 7);
+      }
+      this.drawProductionEffectSpriteOffset(`build-vfx:mortar:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.58 + pierceScale + progress * 0.08 + (cycle(28, 2) ? 0.04 : -0.01), 0.58, z, 0.98, rotation + progress * 1.15 + this.seconds * 1.2, arcLift);
       return true;
     }
     if (entity.label === "causal railgun") {
-      this.drawProductionEffectSprite(`build-vfx:rail-beam:${entity.id}`, buildArt.frames.causalRailgunChargedBeam, entity.worldX - entity.vx * 0.028, entity.worldY - entity.vy * 0.028, 0.62 + pierceScale, 0.58, z - 0.02, 0.78, rotation);
-      this.drawProductionEffectSprite(`build-vfx:rail:${entity.id}`, buildArt.frames.causalRailgunProjectile, entity.worldX, entity.worldY, 0.62 + pierceScale, 0.58, z, 1, rotation);
+      const railFrames: BuildWeaponVfxFrame[] = ["causalRailgunMuzzle", "causalRailgunBeam", "causalRailgunChargedBeam", "causalRailgunTravel"];
+      const frame: BuildWeaponVfxFrame = progress < 0.08 ? "causalRailgunCharge" : railFrames[cycle(42, railFrames.length)];
+      for (let i = 0; i < 4; i += 1) {
+        this.drawProductionEffectSprite(`build-vfx:rail-segment:${entity.id}:${i}`, i < 2 ? buildArt.frames.causalRailgunBeam : buildArt.frames.causalRailgunChargedBeam, entity.worldX - entity.vx * (0.012 + i * 0.016), entity.worldY - entity.vy * (0.012 + i * 0.016), 0.66 + pierceScale + i * 0.035, 0.54, z - 0.03 - i * 0.01, 0.76 - i * 0.13, rotation);
+      }
+      this.drawProductionEffectSprite(`build-vfx:rail-residue:${entity.id}`, buildArt.frames.causalRailgunResidue, entity.worldX - entity.vx * 0.075, entity.worldY - entity.vy * 0.075, 0.68 + pierceScale, 0.54, z - 0.07, 0.34, rotation);
+      this.drawProductionEffectSprite(`build-vfx:rail:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.7 + pierceScale + (cycle(40, 2) ? 0.06 : -0.01), 0.54, z, 1, rotation);
       return true;
     }
     return false;
@@ -10121,7 +11204,7 @@ export class LevelRunState implements GameState {
     const frame =
       label === "vector lance"
         ? buildArt.frames.vectorImpact
-        : label === "signal pulse"
+      : label === "signal pulse"
           ? buildArt.frames.signalImpact
           : label === "context saw"
             ? buildArt.frames.contextSawShardField
@@ -10129,9 +11212,22 @@ export class LevelRunState implements GameState {
               ? buildArt.frames.patchMortarImpact
               : label === "causal railgun"
                 ? buildArt.frames.causalRailgunImpact
+                : label === "refusal shard"
+                  ? buildArt.frames.refusalImpact
                 : null;
     if (!frame) return false;
-    const scale = label === "patch mortar" || label === "causal railgun" ? 0.62 : label === "signal pulse" ? 0.5 : 0.46;
+    const residue =
+      label === "causal railgun"
+        ? buildArt.frames.causalRailgunResidue
+        : label === "vector lance"
+          ? buildArt.frames.vectorResidue
+          : label === "signal pulse"
+            ? buildArt.frames.signalResidue
+            : label === "refusal shard"
+              ? buildArt.frames.refusalResidue
+              : null;
+    const scale = label === "patch mortar" || label === "causal railgun" ? 0.66 : label === "signal pulse" ? 0.54 : 0.5;
+    if (residue) this.drawProductionEffectSprite(`build-vfx:impact-residue:${entity.id}`, residue, entity.worldX, entity.worldY, scale * 1.08, 0.68, entity.worldX + entity.worldY + 0.06, alpha * 0.42);
     this.drawProductionEffectSprite(`build-vfx:impact:${entity.id}`, frame, entity.worldX, entity.worldY, scale, 0.68, entity.worldX + entity.worldY + 0.08, alpha);
     return true;
   }

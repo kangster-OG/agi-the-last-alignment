@@ -5,7 +5,7 @@ import { spawnXp } from "./pickups";
 
 export interface PlayerDamageEvent {
   damage: number;
-  source: "contact";
+  source: "contact" | "enemy_projectile" | "enemy_explosion" | "enemy_trail";
   sourceX: number;
   sourceY: number;
 }
@@ -14,6 +14,7 @@ export function resolveProjectileHits(world: World): number {
   let kills = 0;
   for (const projectile of world.entities) {
     if (!projectile.active || projectile.kind !== "projectile") continue;
+    if (projectile.enemyFamilyId) continue;
     projectile.worldX += projectile.vx * (1 / 60);
     projectile.worldY += projectile.vy * (1 / 60);
     projectile.life -= 1 / 60;
