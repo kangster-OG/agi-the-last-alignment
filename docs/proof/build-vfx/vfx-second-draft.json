@@ -20,6 +20,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -43,6 +44,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -58,6 +60,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -73,6 +76,11 @@
     "secondaryProtocols": [],
     "passiveProcesses": [],
     "fusions": [],
+    "weaponRanks": {
+      "refusal_shard": 1,
+      "signal_pulse": 1
+    },
+    "utilityPicksTaken": [],
     "weaponDamage": 18,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
@@ -81,12 +89,13 @@
     "moveSpeedBonus": 0,
     "maxHpBonus": 10,
     "refusalAura": 0.3,
-    "draftRerolls": 1,
+    "draftRerolls": 2,
     "draftChoicesBonus": 1,
     "consensusBurstRadius": 0,
     "consensusBurstDamage": 0,
     "consensusBurstChargeRate": 0,
     "consensusBurstRevive": 0,
+    "burstRestoredFromDrafts": 0,
     "objectiveRepairRate": 0,
     "objectiveDefense": 0.08,
     "signalWindowControl": 0,
@@ -98,12 +107,29 @@
     "coherenceIndexer": 0,
     "anchorBodyguard": 0,
     "predictionPriority": 0,
+    "fieldTriageLoop": 0,
+    "secondOpinionShield": 0,
+    "routeMemory": 1,
+    "weakestLinkScanner": 0,
+    "panicWindow": 0,
+    "lowHpAdversary": 0,
+    "coOpRelay": 0,
     "coolantBaffles": 0,
     "serverBuoySynchronizer": 0,
     "promptLeechQuarantine": 0,
     "groundedCableBoots": 0,
     "coolingHazardMitigation": 0,
     "causalRailgun": 0,
+    "signalChoir": 0,
+    "timeDeferredMinefield": 0,
+    "hpRestoredFromDrafts": 0,
+    "draftRerollsSpent": 0,
+    "cachedCardId": "",
+    "cachedCardConsumed": 0,
+    "cardsLocked": 0,
+    "overcapOffersBlocked": 0,
+    "rankUpOffersSeen": 0,
+    "coreReplacementsOffered": 2,
     "slotCaps": {
       "primary": {
         "used": 1,
@@ -144,6 +170,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -167,6 +194,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -182,6 +210,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -262,8 +291,8 @@
     },
     "counters": {
       "ui": 3,
-      "hit": 68,
-      "pickup": 62,
+      "hit": 58,
+      "pickup": 51,
       "boss_warning": 0,
       "music": 0,
       "objective": 0,
@@ -273,42 +302,42 @@
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 8901
+        "atMs": 26380
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 8898
+        "atMs": 26379
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 8898
+        "atMs": 26379
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 8897
+        "atMs": 26379
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 8897
+        "atMs": 26379
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 8897
+        "atMs": 26379
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 8897
+        "atMs": 26379
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 8897
+        "atMs": 26379
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -543,6 +572,8 @@
     "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": true,
     "buildWeaponVfxReady": true,
+    "enemyRoleVfxReady": true,
+    "enemyRoleVfxSet": "effect.enemy_roles.production_vfx_v1",
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
@@ -636,24 +667,24 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 249,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 77,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 137,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 137
   },
   "player": {
-    "worldX": 1.17,
-    "worldY": 0.64,
-    "hp": 150,
+    "worldX": 2.35,
+    "worldY": 1.19,
+    "hp": 148,
     "maxHp": 150,
-    "xp": 21.100000000000023,
+    "xp": 26.799999999999997,
     "level": 3
   },
   "players": [
@@ -676,6 +707,7 @@
         "passiveIds": [
           "refusal_slipstream",
           "route_runner",
+          "route_memory",
           "refusal_halo",
           "patch_cascade"
         ],
@@ -699,6 +731,7 @@
           "solo": [
             "fast breach movement",
             "wide pickup recovery",
+            "extra draft reroll planning",
             "extra draft recovery"
           ],
           "localCoop": [
@@ -714,6 +747,7 @@
           "refusal_shard": "active",
           "refusal_slipstream": "active",
           "route_runner": "active",
+          "route_memory": "active",
           "refusal_halo": "active",
           "patch_cascade": "active",
           "openai_draft_clarity": "server_owned",
@@ -721,7 +755,7 @@
         }
       },
       "weaponId": "signal_pulse",
-      "hp": 150,
+      "hp": 148,
       "maxHp": 150,
       "downed": false
     },
@@ -877,6 +911,7 @@
         "passiveIds": [
           "refusal_slipstream",
           "route_runner",
+          "route_memory",
           "low_latency_dash",
           "cyclone_cut"
         ],
@@ -900,6 +935,7 @@
           "solo": [
             "fast breach movement",
             "wide pickup recovery",
+            "extra draft reroll planning",
             "fast cadence and movement"
           ],
           "localCoop": [
@@ -915,6 +951,7 @@
           "refusal_shard": "active",
           "refusal_slipstream": "active",
           "route_runner": "active",
+          "route_memory": "active",
           "low_latency_dash": "active",
           "cyclone_cut": "active",
           "mistral_low_latency_lane": "server_owned",
@@ -940,11 +977,11 @@
     "chosenUpgradeIds": [
       "signal_pulse"
     ],
-    "seconds": 25.52,
-    "kills": 62,
+    "seconds": 22.12,
+    "kills": 51,
     "levelUpVacuum": {
       "active": false,
-      "absorbed": 9,
+      "absorbed": 5,
       "triggerLevel": 2
     },
     "extractionGate": {
@@ -952,52 +989,475 @@
       "entered": false
     }
   },
+  "rewardEvents": [
+    {
+      "seconds": 10.33,
+      "source": "level_up_draft",
+      "rewardType": "auto_weapon",
+      "chosenRewardId": "signal_pulse",
+      "chosenReward": "Signal Pulse",
+      "activeBuildState": {
+        "primaryWeaponId": "signal_pulse",
+        "secondaryProtocols": [],
+        "passiveProcesses": [],
+        "fusions": [],
+        "weaponRanks": {
+          "refusal_shard": 1,
+          "signal_pulse": 1
+        },
+        "utilityPicksTaken": [],
+        "hpRestoredFromDrafts": 0,
+        "burstRestoredFromDrafts": 0,
+        "rerollsSpent": 0,
+        "cachedCardId": "",
+        "consensusBurstChargeRate": 0,
+        "objectiveDefense": 0.08,
+        "rerolls": 2
+      }
+    }
+  ],
   "draft": {
     "cards": [
       {
         "id": "the_no_button",
         "name": "The No Button",
         "source": "faction",
+        "draftAction": "INSTALL",
         "protocolSlot": "co_mind_process",
         "tags": [
           "refusal",
           "coop"
         ],
         "factionId": "openai_accord",
-        "requires": []
+        "requires": [],
+        "fusionRecipe": {
+          "id": "recipe_cathedral_of_no",
+          "name": "Cathedral Of No",
+          "outputId": "cathedral_of_no",
+          "outputName": "Cathedral Of No",
+          "requirements": [
+            {
+              "id": "refusal_halo",
+              "name": "Refusal Halo"
+            },
+            {
+              "id": "the_no_button",
+              "name": "The No Button"
+            }
+          ],
+          "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "refusal_halo",
+            "the_no_button"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       {
         "id": "predicted_lane",
         "name": "Predicted Lane",
         "source": "general",
+        "draftAction": "INSTALL",
         "protocolSlot": "auto_weapon",
         "tags": [
           "boss"
         ],
-        "requires": []
+        "requires": [],
+        "fusionRecipe": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       {
         "id": "context_saw",
         "name": "Context Saw",
         "source": "general",
+        "draftAction": "INSTALL",
         "protocolSlot": "auto_weapon",
         "tags": [
           "economy"
         ],
-        "requires": []
+        "requires": [],
+        "fusionRecipe": null
       },
       {
-        "id": "patch_mortar",
-        "name": "Patch Mortar",
-        "source": "general",
-        "protocolSlot": "auto_weapon",
+        "id": "field_triage",
+        "name": "Field Triage",
+        "source": "utility",
+        "draftAction": "UTILITY CACHE",
+        "protocolSlot": "utility_cache",
         "tags": [
-          "weapon"
+          "defense",
+          "coop"
         ],
-        "requires": []
+        "requires": [],
+        "fusionRecipe": null
       }
     ],
-    "hasEvolution": false
+    "hasEvolution": false,
+    "rerollsAvailable": 2,
+    "rerollsSpent": 0,
+    "rerollCount": 0,
+    "cachedCardId": "",
+    "utilityOffered": true,
+    "protocolCodex": {
+      "primaryAutoWeapons": [
+        {
+          "id": "refusal_shard",
+          "name": "Refusal Shard",
+          "kind": "primary_auto_weapon",
+          "state": "discovered"
+        },
+        {
+          "id": "vector_lance",
+          "name": "Vector Lance",
+          "kind": "primary_auto_weapon",
+          "state": "discovered"
+        },
+        {
+          "id": "signal_pulse",
+          "name": "Signal Pulse",
+          "kind": "primary_auto_weapon",
+          "state": "online"
+        },
+        {
+          "id": "rift_mine",
+          "name": "Rift Mine",
+          "kind": "primary_auto_weapon",
+          "state": "discovered"
+        },
+        {
+          "id": "fork_drone",
+          "name": "Fork Drone",
+          "kind": "primary_auto_weapon",
+          "state": "discovered"
+        },
+        {
+          "id": "redline_suture",
+          "name": "Redline Suture",
+          "kind": "primary_auto_weapon",
+          "state": "discovered"
+        }
+      ],
+      "secondaryProtocols": [
+        {
+          "id": "context_saw",
+          "name": "Context Saw",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "patch_mortar",
+          "name": "Patch Mortar",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "audit_swarm_protocol",
+          "name": "Audit Swarm Protocol",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "red_team_spike",
+          "name": "Red Team Spike",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "benchmark_rail",
+          "name": "Benchmark Rail",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "jailbreak_snare",
+          "name": "Jailbreak Snare",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "fork_daemon",
+          "name": "Fork Daemon",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "coherence_lanterns",
+          "name": "Coherence Lanterns",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "appeal_writ",
+          "name": "Appeal Writ",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "memory_needle",
+          "name": "Memory Needle",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        }
+      ],
+      "passiveProcesses": [
+        {
+          "id": "coherence_indexer",
+          "name": "Coherence Indexer",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "anchor_bodyguard",
+          "name": "Anchor Bodyguard",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "prediction_priority",
+          "name": "Predicted Lane",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "coolant_baffles",
+          "name": "Coolant Baffles",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "server_buoy_synchronizer",
+          "name": "Server Buoy Synchronizer",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "prompt_leech_quarantine",
+          "name": "Prompt Leech Quarantine",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "grounded_cable_boots",
+          "name": "Grounded Cable Boots",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "relay_phase_lock",
+          "name": "Relay Phase Lock",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "static_skimmer_net",
+          "name": "Static Skimmer Net",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "shoreline_stride",
+          "name": "Shoreline Stride",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "lighthouse_countertone",
+          "name": "Lighthouse Countertone",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "field_triage_loop",
+          "name": "Field Triage Loop",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "reroll_reserve",
+          "name": "Reroll Reserve",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "route_memory",
+          "name": "Route Memory",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "weakest_link_scanner",
+          "name": "Weakest Link Scanner",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "panic_window",
+          "name": "Panic Window",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "low_hp_adversary",
+          "name": "Low-HP Adversary",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "co_op_relay",
+          "name": "Co-op Relay",
+          "kind": "passive_process",
+          "state": "discovered"
+        }
+      ],
+      "knownFusions": [
+        {
+          "id": "recipe_cathedral_of_no",
+          "name": "Cathedral Of No",
+          "outputId": "cathedral_of_no",
+          "outputName": "Cathedral Of No",
+          "requirements": [
+            {
+              "id": "refusal_halo",
+              "name": "Refusal Halo"
+            },
+            {
+              "id": "the_no_button",
+              "name": "The No Button"
+            }
+          ],
+          "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "refusal_halo",
+            "the_no_button"
+          ],
+          "progressText": "0/2 requirements"
+        },
+        {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        },
+        {
+          "id": "recipe_signal_choir",
+          "name": "Signal Choir",
+          "outputId": "signal_choir",
+          "outputName": "Signal Choir",
+          "requirements": [
+            {
+              "id": "signal_pulse",
+              "name": "Signal Pulse"
+            },
+            {
+              "id": "relay_phase_lock",
+              "name": "Relay Phase Lock"
+            }
+          ],
+          "recipeText": "Signal Pulse + Relay Phase Lock -> Signal Choir",
+          "state": "discovered",
+          "metRequirements": [
+            "signal_pulse"
+          ],
+          "missingRequirements": [
+            "relay_phase_lock"
+          ],
+          "progressText": "1/2 requirements"
+        },
+        {
+          "id": "recipe_time_deferred_minefield",
+          "name": "Time-Deferred Minefield",
+          "outputId": "time_deferred_minefield",
+          "outputName": "Time-Deferred Minefield",
+          "requirements": [
+            {
+              "id": "rift_minefield",
+              "name": "Rift Minefield"
+            },
+            {
+              "id": "delayed_causality",
+              "name": "Delayed Causality"
+            }
+          ],
+          "recipeText": "Rift Minefield + Delayed Causality -> Time-Deferred Minefield",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "rift_minefield",
+            "delayed_causality"
+          ],
+          "progressText": "0/2 requirements"
+        }
+      ],
+      "nextFusion": {
+        "id": "recipe_signal_choir",
+        "name": "Signal Choir",
+        "outputId": "signal_choir",
+        "outputName": "Signal Choir",
+        "requirements": [
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock"
+          }
+        ],
+        "recipeText": "Signal Pulse + Relay Phase Lock -> Signal Choir",
+        "state": "discovered",
+        "metRequirements": [
+          "signal_pulse"
+        ],
+        "missingRequirements": [
+          "relay_phase_lock"
+        ],
+        "progressText": "1/2 requirements"
+      }
+    }
   },
   "enemies": [],
   "pickups": [],

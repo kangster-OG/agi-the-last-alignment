@@ -30,6 +30,7 @@ export class BuildSelectState implements GameState {
   private freeAlignment = false;
 
   enter(game: Game): void {
+    game.audio.setMusicState("briefing");
     this.metaprogression = readOnlineMetaProgression();
     this.freeAlignment = game.alignmentSelectionMode === "free";
     this.classIndex = Math.max(0, CLASS_IDS.indexOf(game.selectedClassId));
@@ -43,6 +44,8 @@ export class BuildSelectState implements GameState {
   exit(): void {}
 
   update(game: Game): void {
+    const previousClassIndex = this.classIndex;
+    const previousFactionIndex = this.factionIndex;
     if (game.input.wasPressed("mode")) {
       game.alignmentSelectionMode = game.alignmentSelectionMode === "campaign" ? "free" : "campaign";
       this.freeAlignment = game.alignmentSelectionMode === "free";
@@ -64,6 +67,9 @@ export class BuildSelectState implements GameState {
       game.consensusCellSize = clampConsensusCellSize((game.consensusCellSize % CONSENSUS_CELL_MAX_PLAYERS) + 1);
     }
     this.applySelection(game);
+    if (this.classIndex !== previousClassIndex || this.factionIndex !== previousFactionIndex) {
+      game.feedback.cue("ui.build_select_changed", "ui", { priority: 2 });
+    }
     if (game.input.wasPressed("interact")) {
       game.state.set(game.createOverworld());
     }
@@ -89,8 +95,8 @@ export class BuildSelectState implements GameState {
 
     const subtitle = new Text({
       text: game.alignmentSelectionMode === "free"
-        ? "Free Alignment: choose any Frame + Co-Mind now for sandbox testing. No campaign unlocks are granted."
-        : "Campaign: clear levels to unlock Frames and Co-Minds. M switches to Free Alignment. Enter opens the Alignment Grid.",
+        ? "Free Alignment: choose any Frame + Co-Mind now. No campaign unlocks, no moral victory, excellent chaos."
+        : "Campaign: clear levels to unlock Frames and Co-Minds. M opens the irresponsible sandbox. Enter opens the Alignment Grid.",
       style: { ...fontStyle, fontSize: 12, fill: "#9fd8d1", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 860 }
     });
     subtitle.anchor.set(0.5);
@@ -272,9 +278,9 @@ export class BuildSelectState implements GameState {
     const faction = FACTIONS[game.selectedFactionId];
     const meta = this.metaprogression;
     const modeLabel = game.alignmentSelectionMode === "free" ? "FREE ALIGNMENT" : "CAMPAIGN";
-    const modeRule = game.alignmentSelectionMode === "free" ? "all roster selectable / no campaign rewards" : "durable unlock progression";
+    const modeRule = game.alignmentSelectionMode === "free" ? "all roster selectable / no campaign rewards / consequences on mute" : "durable unlock progression / consequences on record";
     const text = new Text({
-      text: `${modeLabel}    ${modeRule}    ${combatClass.displayName} + ${faction.shortName} Co-Mind    CELL ${game.consensusCellSize}/4\nENTER DEPLOY    C CAMP    M MODE    ARROWS SELECT    SPACE CELL SIZE\nCampaign unlocks ${meta.unlockedClassIds.length}/${CLASS_IDS.length} Frames ${meta.unlockedFactionIds.length}/${FACTION_IDS.length} Co-Minds    Kernel ${game.selectedKernelModuleIds.length}    Eval ${game.selectedEvalProtocolIds.length ? game.selectedEvalProtocolIds.join(", ") : "baseline"}    Burst ${game.selectedConsensusBurstPathId}`,
+      text: `${modeLabel}    ${modeRule}    ${combatClass.displayName} + ${faction.shortName} Co-Mind    CELL ${game.consensusCellSize}/4\nENTER DEPLOY    C CAMP    M MODE    ARROWS SELECT    SPACE CELL SIZE\nCampaign unlocks ${meta.unlockedClassIds.length}/${CLASS_IDS.length} Frames ${meta.unlockedFactionIds.length}/${FACTION_IDS.length} Co-Minds    Kernel ${game.selectedKernelModuleIds.length}    Eval ${game.selectedEvalProtocolIds.length ? game.selectedEvalProtocolIds.join(", ") : "baseline, the coward's buffet"}    Burst ${game.selectedConsensusBurstPathId}`,
       style: { ...fontStyle, fontSize: 10, fill: fieldKit.text, stroke: { color: "#030609", width: 3 }, align: "center", wordWrap: true, wordWrapWidth: 1160 }
     });
     text.anchor.set(0.5);

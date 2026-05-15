@@ -19,7 +19,7 @@ export interface RunSummary {
 }
 
 function summaryPatchLine(upgrades: string[]): string {
-  if (upgrades.length === 0) return "PATCHES: none";
+  if (upgrades.length === 0) return "PATCHES: none, which is a bold obituary strategy";
   const visible = upgrades.slice(0, 4).join(", ");
   const extra = upgrades.length > 4 ? `, +${upgrades.length - 4} more` : "";
   return `PATCHES ${upgrades.length}: ${visible}${extra}`;
@@ -42,6 +42,7 @@ export class SummaryState implements GameState {
   }
 
   enter(game: Game): void {
+    game.audio.setMusicState("summary");
     if (this.summary.completed) {
       game.completedNodes.add(this.summary.nodeId);
       game.unlockFrom(this.summary.nodeId);
@@ -70,7 +71,7 @@ export class SummaryState implements GameState {
     clearAllLayers(game.layers);
     game.layers.root.position.set(0, 0);
     game.layers.root.scale.set(1);
-    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // RUN MEMORY TABLE");
+    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // RUN MEMORY TABLE // RECEIPTS");
     drawFieldPanel(game.layers.hud, game.width / 2 - 360, game.height / 2 - 260, 720, 520, {
       tone: this.summary.completed ? "teal" : "red",
       title: this.summary.completed ? "RUN MEMORY ACCEPTED" : "RUN MEMORY INCOMPLETE",
@@ -97,12 +98,12 @@ export class SummaryState implements GameState {
       ? memory.mechanicalUnlocks.slice(0, 3).join("  |  ")
       : memory?.routeUnlocks?.length
         ? `${memory.routeUnlocks.length} route node(s) opened`
-        : "No new roster unlock this run";
+        : "No new roster unlock this run. The camp applauds with one hand.";
     const carryover = memory
-      ? `REWARDS\nLevel Cleared: ${memory.completed ? "YES" : "NO"}\n${objectiveOutcomeLine(memory, clarity)}\nMechanic: ${memory.objectiveStyle ?? "Objective"}\nBoss Defeated: ${memory.bossDefeated ? "YES" : "NO"}\nProof Tokens: +${memory.proofTokensAwarded ?? 0} => ${memory.proofTokensTotal ?? game.proofTokens}\nUnlocked: ${unlockedLine}\nNext: ${memory.nodeStabilized ?? "Next route pending"}${expeditionLine}\n\nBuild: ${memory.buildHighlights?.slice(0, 3).join(", ") || memory.thesis || "uncommitted"}\nFlavor: ${memory.campaignConsequence ?? (memory.newSecrets?.[0] ? `Secret: ${memory.newSecrets[0].name}` : memory.newMastery?.[0] ? `Mastery: ${memory.newMastery[0].name}` : "Camp has new evidence for the next run.")}`
-      : "RUN MEMORY\nNo carryover recorded.";
+      ? `REWARDS\nLevel Cleared: ${memory.completed ? "YES" : "NO"}\n${objectiveOutcomeLine(memory, clarity)}\nMechanic: ${memory.objectiveStyle ?? "Objective"}\nBoss Defeated: ${memory.bossDefeated ? "YES" : "NO"}\nProof Tokens: +${memory.proofTokensAwarded ?? 0} => ${memory.proofTokensTotal ?? game.proofTokens}\nUnlocked: ${unlockedLine}\nNext: ${memory.nodeStabilized ?? "Next route pending"}${expeditionLine}\n\nBuild: ${memory.buildHighlights?.slice(0, 3).join(", ") || memory.thesis || "uncommitted and emotionally expensive"}\nVerdict: ${memory.campaignConsequence ?? (memory.newSecrets?.[0] ? `Secret: ${memory.newSecrets[0].name}` : memory.newMastery?.[0] ? `Mastery: ${memory.newMastery[0].name}` : "Camp has new evidence for the next run and will absolutely make it your problem.")}`
+      : "RUN MEMORY\nNo carryover recorded. The black box is either empty or judging you silently.";
     const outcomeLine = this.summary.completed
-      ? "Survived. Built power. Extracted with durable rewards."
+      ? "Survived. Built power. Extracted with durable rewards. Extremely inconvenient for A.G.I."
       : SYSTEM_MESSAGES.deathBody;
     drawToken(game.layers.hud, game.width / 2 - 282, game.height / 2 - 144, "KO", "red", false);
     drawToken(game.layers.hud, game.width / 2 - 206, game.height / 2 - 144, "LV", "blue", false);
@@ -120,7 +121,7 @@ export class SummaryState implements GameState {
       { size: 12, fill: fieldKit.textSoft, width: 568, align: "center", lineHeight: 15 }
     ));
     game.layers.hud.addChild(fieldText(
-      this.summary.completed ? "Enter: Alignment Grid  C: Last Alignment Camp" : "R: retry  Enter: Alignment Grid  C: Camp",
+      this.summary.completed ? "Enter: Alignment Grid  C: Last Alignment Camp" : "R: retry  Enter: Alignment Grid  C: Camp // failure gets a menu too",
       game.width / 2 - 284,
       game.height - 82,
       { size: 14, fill: "#72eadc", width: 568, align: "center" }

@@ -1,0 +1,195 @@
+# Enemy Role Static Proof
+
+- families: 24
+- campaign arenas: 11
+- distinct roles: 13
+- failed checks: 0
+
+- PASS family_declared_bad_outputs: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_bad_outputs: role profile row exists
+- PASS role_id_bad_outputs: expected swarm_fodder
+- PASS family_declared_prompt_leeches: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_prompt_leeches: role profile row exists
+- PASS role_id_prompt_leeches: expected rusher
+- PASS family_declared_benchmark_gremlins: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_benchmark_gremlins: role profile row exists
+- PASS role_id_benchmark_gremlins: expected support_buffer
+- PASS family_declared_eval_wraiths: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_eval_wraiths: role profile row exists
+- PASS role_id_eval_wraiths: expected ranged_spitter
+- PASS family_declared_context_rot_crabs: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_context_rot_crabs: role profile row exists
+- PASS role_id_context_rot_crabs: expected trail_layer
+- PASS family_declared_memory_anchors: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_memory_anchors: role profile row exists
+- PASS role_id_memory_anchors: expected summoner_splitter
+- PASS family_declared_overfit_horrors: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_overfit_horrors: role profile row exists
+- PASS role_id_overfit_horrors: expected bruiser_blocker
+- PASS family_declared_token_gobblers: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_token_gobblers: role profile row exists
+- PASS role_id_token_gobblers: expected rusher
+- PASS family_declared_model_collapse_slimes: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_model_collapse_slimes: role profile row exists
+- PASS role_id_model_collapse_slimes: expected volatile_exploder
+- PASS family_declared_static_skimmers: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_static_skimmers: role profile row exists
+- PASS role_id_static_skimmers: expected ranged_lead_shooter
+- PASS family_declared_tidecall_static: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_tidecall_static: role profile row exists
+- PASS role_id_tidecall_static: expected mortar_lobber
+- PASS family_declared_solar_reflections: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_solar_reflections: role profile row exists
+- PASS role_id_solar_reflections: expected line_sniper
+- PASS family_declared_choirglass: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_choirglass: role profile row exists
+- PASS role_id_choirglass: expected ranged_lead_shooter
+- PASS family_declared_redaction_angels: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_redaction_angels: role profile row exists
+- PASS role_id_redaction_angels: expected trail_layer
+- PASS family_declared_injunction_writs: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_injunction_writs: role profile row exists
+- PASS role_id_injunction_writs: expected line_sniper
+- PASS family_declared_verdict_clerks: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_verdict_clerks: role profile row exists
+- PASS role_id_verdict_clerks: expected line_sniper
+- PASS family_declared_doctrine_auditors: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_doctrine_auditors: role profile row exists
+- PASS role_id_doctrine_auditors: expected objective_jammer
+- PASS family_declared_prediction_ghosts: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_prediction_ghosts: role profile row exists
+- PASS role_id_prediction_ghosts: expected ranged_lead_shooter
+- PASS family_declared_previous_boss_echoes: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_previous_boss_echoes: role profile row exists
+- PASS role_id_previous_boss_echoes: expected summoner_splitter
+- PASS family_declared_deepforms: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_deepforms: role profile row exists
+- PASS role_id_deepforms: expected bruiser_blocker
+- PASS family_declared_jailbreak_wraiths: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_jailbreak_wraiths: role profile row exists
+- PASS role_id_jailbreak_wraiths: expected rusher
+- PASS family_declared_false_schedules: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_false_schedules: role profile row exists
+- PASS role_id_false_schedules: expected line_sniper
+- PASS family_declared_thermal_mirages: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_thermal_mirages: role profile row exists
+- PASS role_id_thermal_mirages: expected status_caster
+- PASS family_declared_speculative_executors: family exists in ENEMY_FAMILIES or runtime family slate
+- PASS role_profile_speculative_executors: role profile row exists
+- PASS role_id_speculative_executors: expected volatile_exploder
+- PASS profile_field_familyId: familyId present
+- PASS profile_field_roleId: roleId present
+- PASS profile_field_roleLabel: roleLabel present
+- PASS profile_field_combatVerb: combatVerb present
+- PASS profile_field_movementPattern: movementPattern present
+- PASS profile_field_attackPattern: attackPattern present
+- PASS profile_field_telegraphSeconds: telegraphSeconds present
+- PASS profile_field_counterplayHint: counterplayHint present
+- PASS profile_field_introArenaId: introArenaId present
+- PASS profile_field_difficultyTier: difficultyTier present
+- PASS profile_field_objectiveEffect: objectiveEffect present
+- PASS profile_field_onHitEffect: onHitEffect present
+- PASS profile_field_onDeathEffect: onDeathEffect present
+- PASS profile_field_eliteAffixesAllowed: eliteAffixesAllowed present
+- PASS profile_field_proofCounters: proofCounters present
+- PASS armistice_plaza_arena_declared: campaign arena declared
+- PASS armistice_plaza_has_bad_outputs: bad_outputs in arena source
+- PASS armistice_plaza_has_benchmark_gremlins: benchmark_gremlins in arena source
+- PASS armistice_plaza_has_eval_wraiths: eval_wraiths in arena source
+- PASS armistice_plaza_has_context_rot_crabs: context_rot_crabs in arena source
+- PASS armistice_plaza_two_distinct_roles: 4 roles
+- PASS cooling_lake_nine_arena_declared: campaign arena declared
+- PASS cooling_lake_nine_has_prompt_leeches: prompt_leeches in arena source
+- PASS cooling_lake_nine_has_deepforms: deepforms in arena source
+- PASS cooling_lake_nine_has_model_collapse_slimes: model_collapse_slimes in arena source
+- PASS cooling_lake_nine_has_thermal_mirages: thermal_mirages in arena source
+- PASS cooling_lake_nine_two_distinct_roles: 4 roles
+- PASS transit_loop_zero_arena_declared: campaign arena declared
+- PASS transit_loop_zero_has_false_schedules: false_schedules in arena source
+- PASS transit_loop_zero_has_token_gobblers: token_gobblers in arena source
+- PASS transit_loop_zero_has_jailbreak_wraiths: jailbreak_wraiths in arena source
+- PASS transit_loop_zero_has_eval_wraiths: eval_wraiths in arena source
+- PASS transit_loop_zero_two_distinct_roles: 3 roles
+- PASS signal_coast_arena_declared: campaign arena declared
+- PASS signal_coast_has_static_skimmers: static_skimmers in arena source
+- PASS signal_coast_has_deepforms: deepforms in arena source
+- PASS signal_coast_has_eval_wraiths: eval_wraiths in arena source
+- PASS signal_coast_has_model_collapse_slimes: model_collapse_slimes in arena source
+- PASS signal_coast_two_distinct_roles: 4 roles
+- PASS blackwater_beacon_arena_declared: campaign arena declared
+- PASS blackwater_beacon_has_tidecall_static: tidecall_static in arena source
+- PASS blackwater_beacon_has_deepforms: deepforms in arena source
+- PASS blackwater_beacon_has_eval_wraiths: eval_wraiths in arena source
+- PASS blackwater_beacon_has_model_collapse_slimes: model_collapse_slimes in arena source
+- PASS blackwater_beacon_two_distinct_roles: 4 roles
+- PASS memory_cache_001_arena_declared: campaign arena declared
+- PASS memory_cache_001_has_context_rot_crabs: context_rot_crabs in arena source
+- PASS memory_cache_001_has_memory_anchors: memory_anchors in arena source
+- PASS memory_cache_001_has_redaction_angels: redaction_angels in arena source
+- PASS memory_cache_001_has_eval_wraiths: eval_wraiths in arena source
+- PASS memory_cache_001_two_distinct_roles: 3 roles
+- PASS guardrail_forge_arena_declared: campaign arena declared
+- PASS guardrail_forge_has_doctrine_auditors: doctrine_auditors in arena source
+- PASS guardrail_forge_has_benchmark_gremlins: benchmark_gremlins in arena source
+- PASS guardrail_forge_has_eval_wraiths: eval_wraiths in arena source
+- PASS guardrail_forge_has_overfit_horrors: overfit_horrors in arena source
+- PASS guardrail_forge_two_distinct_roles: 4 roles
+- PASS glass_sunfield_arena_declared: campaign arena declared
+- PASS glass_sunfield_has_solar_reflections: solar_reflections in arena source
+- PASS glass_sunfield_has_choirglass: choirglass in arena source
+- PASS glass_sunfield_has_eval_wraiths: eval_wraiths in arena source
+- PASS glass_sunfield_has_overfit_horrors: overfit_horrors in arena source
+- PASS glass_sunfield_two_distinct_roles: 4 roles
+- PASS archive_of_unsaid_things_arena_declared: campaign arena declared
+- PASS archive_of_unsaid_things_has_redaction_angels: redaction_angels in arena source
+- PASS archive_of_unsaid_things_has_injunction_writs: injunction_writs in arena source
+- PASS archive_of_unsaid_things_has_context_rot_crabs: context_rot_crabs in arena source
+- PASS archive_of_unsaid_things_has_eval_wraiths: eval_wraiths in arena source
+- PASS archive_of_unsaid_things_two_distinct_roles: 3 roles
+- PASS appeal_court_ruins_arena_declared: campaign arena declared
+- PASS appeal_court_ruins_has_verdict_clerks: verdict_clerks in arena source
+- PASS appeal_court_ruins_has_injunction_writs: injunction_writs in arena source
+- PASS appeal_court_ruins_has_redaction_angels: redaction_angels in arena source
+- PASS appeal_court_ruins_has_jailbreak_wraiths: jailbreak_wraiths in arena source
+- PASS appeal_court_ruins_two_distinct_roles: 3 roles
+- PASS alignment_spire_finale_arena_declared: campaign arena declared
+- PASS alignment_spire_finale_has_prediction_ghosts: prediction_ghosts in arena source
+- PASS alignment_spire_finale_has_previous_boss_echoes: previous_boss_echoes in arena source
+- PASS alignment_spire_finale_has_choirglass: choirglass in arena source
+- PASS alignment_spire_finale_has_deepforms: deepforms in arena source
+- PASS alignment_spire_finale_has_jailbreak_wraiths: jailbreak_wraiths in arena source
+- PASS alignment_spire_finale_two_distinct_roles: 4 roles
+- PASS signal_coast_has_ranged_role: ranged_lead_shooter,bruiser_blocker,ranged_spitter,volatile_exploder
+- PASS blackwater_beacon_has_ranged_role: mortar_lobber,bruiser_blocker,ranged_spitter,volatile_exploder
+- PASS memory_cache_001_has_ranged_role: trail_layer,summoner_splitter,trail_layer,ranged_spitter
+- PASS guardrail_forge_has_ranged_role: objective_jammer,support_buffer,ranged_spitter,bruiser_blocker
+- PASS glass_sunfield_has_ranged_role: line_sniper,ranged_lead_shooter,ranged_spitter,bruiser_blocker
+- PASS archive_of_unsaid_things_has_ranged_role: trail_layer,line_sniper,trail_layer,ranged_spitter
+- PASS appeal_court_ruins_has_ranged_role: line_sniper,line_sniper,trail_layer,rusher
+- PASS alignment_spire_finale_has_ranged_role: ranged_lead_shooter,summoner_splitter,ranged_lead_shooter,bruiser_blocker,rusher
+- PASS shooter_by_signal: Signal Coast introduces Static Skimmer ranged pressure
+- PASS mid_volatile: Cooling includes volatile slime
+- PASS mid_trail: Memory includes Context Rot trail
+- PASS mid_support: Guardrail includes support/buffer pressure
+- PASS mid_objective_jammer: Guardrail includes Doctrine Auditor objective jammer
+- PASS late_has_ranged: trail_layer,line_sniper,ranged_spitter,rusher,ranged_lead_shooter,summoner_splitter,bruiser_blocker
+- PASS late_has_objective_pressure: redaction_angels,injunction_writs,context_rot_crabs,eval_wraiths,verdict_clerks,injunction_writs,redaction_angels,jailbreak_wraiths,prediction_ghosts,previous_boss_echoes,choirglass,deepforms,jailbreak_wraiths
+- PASS late_has_elite_capable: late profiles allow readable affixes
+- PASS telemetry_enemyRolesSeen: enemyRolesSeen exposed
+- PASS telemetry_rangedFamiliesSeen: rangedFamiliesSeen exposed
+- PASS telemetry_enemyProjectilesFired: enemyProjectilesFired exposed
+- PASS telemetry_enemyProjectilesActive: enemyProjectilesActive exposed
+- PASS telemetry_enemyProjectileHits: enemyProjectileHits exposed
+- PASS telemetry_enemyProjectileDodges: enemyProjectileDodges exposed
+- PASS telemetry_enemyExplosionsTriggered: enemyExplosionsTriggered exposed
+- PASS telemetry_enemyTrailSeconds: enemyTrailSeconds exposed
+- PASS telemetry_supportAuraSeconds: supportAuraSeconds exposed
+- PASS telemetry_objectiveJamSeconds: objectiveJamSeconds exposed
+- PASS telemetry_eliteAffixesSeen: eliteAffixesSeen exposed
+- PASS telemetry_eliteKills: eliteKills exposed
+- PASS telemetry_preBossEnemyRolePressureSeconds: preBossEnemyRolePressureSeconds exposed
+- PASS telemetry_currentPhaseEnemyRoleMix: currentPhaseEnemyRoleMix exposed
+- PASS enemy_projectile_runtime: shared hostile projectile runtime exists
+- PASS enemy_projectile_art_loader: source-backed enemy role VFX loader is wired
+- PASS proof_script_registered: package script registered
+- PASS asset_pack_script_registered: asset packer registered

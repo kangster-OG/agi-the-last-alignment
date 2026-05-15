@@ -19,7 +19,7 @@ export function resolveProjectileHits(world: World): number {
     projectile.worldY += projectile.vy * (1 / 60);
     projectile.life -= 1 / 60;
     if (projectile.life <= 0) {
-      if (projectile.label === "patch mortar") {
+      if (projectile.label === "patch mortar" || projectile.label === "time deferred minefield") {
         kills += detonatePatchMortar(world, projectile);
       }
       projectile.active = false;

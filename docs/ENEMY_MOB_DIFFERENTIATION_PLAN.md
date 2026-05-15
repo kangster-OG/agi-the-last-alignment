@@ -45,8 +45,6 @@ The runtime now has shared hostile projectile and telegraph support in `src/leve
 - Trails, explosions, support auras, and elite markers are tracked as role effects.
 - Player damage sources distinguish `enemy_projectile`, `enemy_explosion`, and `enemy_trail`.
 
-Online co-op has a matching V1 layer in `server/consensusCellServer.mjs` so the feature is visible when playing with friends. The Colyseus room tags enemies with role IDs, emits hostile telegraphs/projectiles/trails/support/volatile pressure, exposes role telemetry in snapshots, and `OnlineCoopState` renders the source-backed enemy-role VFX for hostile pressure.
-
 Implemented V1 behaviors:
 
 - `eval_wraiths`: slow aimed shooter.

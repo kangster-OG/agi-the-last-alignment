@@ -1,8 +1,8 @@
 import { FACTIONS, UPGRADE_CONTENT } from "../content";
 import type { UpgradeTag } from "../roguelite/deepRoguelite";
 
-export type UpgradeSource = "class" | "faction" | "general" | "evolution";
-export type ProtocolSlot = "auto_weapon" | "movement_trace" | "defense_layer" | "shard_economy" | "co_mind_process" | "consensus_burst";
+export type UpgradeSource = "class" | "faction" | "general" | "evolution" | "utility";
+export type ProtocolSlot = "auto_weapon" | "movement_trace" | "defense_layer" | "shard_economy" | "co_mind_process" | "consensus_burst" | "utility_cache";
 export type BuildSlotKind = "primary" | "secondary" | "passive" | "fusion" | "consensus_burst";
 
 export interface Upgrade {
@@ -23,6 +23,8 @@ export interface BuildStats {
   secondaryProtocols: string[];
   passiveProcesses: string[];
   fusions: string[];
+  weaponRanks: Record<string, number>;
+  utilityPicksTaken: string[];
   weaponDamage: number;
   weaponCooldown: number;
   projectileSpeed: number;
@@ -37,6 +39,7 @@ export interface BuildStats {
   consensusBurstDamage: number;
   consensusBurstChargeRate: number;
   consensusBurstRevive: number;
+  burstRestoredFromDrafts: number;
   objectiveRepairRate: number;
   objectiveDefense: number;
   signalWindowControl: number;
@@ -48,12 +51,29 @@ export interface BuildStats {
   coherenceIndexer: number;
   anchorBodyguard: number;
   predictionPriority: number;
+  fieldTriageLoop: number;
+  secondOpinionShield: number;
+  routeMemory: number;
+  weakestLinkScanner: number;
+  panicWindow: number;
+  lowHpAdversary: number;
+  coOpRelay: number;
   coolantBaffles: number;
   serverBuoySynchronizer: number;
   promptLeechQuarantine: number;
   groundedCableBoots: number;
   coolingHazardMitigation: number;
   causalRailgun: number;
+  signalChoir: number;
+  timeDeferredMinefield: number;
+  hpRestoredFromDrafts: number;
+  draftRerollsSpent: number;
+  cachedCardId: string;
+  cachedCardConsumed: number;
+  cardsLocked: number;
+  overcapOffersBlocked: number;
+  rankUpOffersSeen: number;
+  coreReplacementsOffered: number;
 }
 
 export const BUILD_SLOT_CAPS: Record<BuildSlotKind, number> = {
@@ -67,7 +87,9 @@ export const BUILD_SLOT_CAPS: Record<BuildSlotKind, number> = {
 const PRIMARY_WEAPON_IDS = new Set(["refusal_shard", "vector_lance", "signal_pulse", "rift_mine", "fork_drone", "null_blade", "protocol_suture", "consensus_mortar", "audit_swarm", "truth_cannon"]);
 const SECONDARY_PROTOCOL_IDS = new Set(["context_saw", "patch_mortar", "audit_swarm_protocol", "red_team_spike", "benchmark_rail", "jailbreak_snare", "fork_daemon", "coherence_lanterns", "appeal_writ", "memory_needle"]);
 const PASSIVE_PROCESS_IDS = new Set(["coherence_indexer", "anchor_bodyguard", "prediction_priority", "coolant_baffles", "server_buoy_synchronizer", "prompt_leech_quarantine", "grounded_cable_boots", "relay_phase_lock", "static_skimmer_net", "shoreline_stride", "lighthouse_countertone", "field_triage_loop", "impact_to_protocol", "reroll_reserve", "rare_patch_bounty", "route_memory", "weakest_link_scanner", "cluster_solver", "dash_compiler", "panic_window", "feedback_sprint", "low_hp_adversary", "cursed_context", "benchmark_overfit", "co_op_relay", "recompile_anchor", "split_attention"]);
-const FUSION_IDS = new Set(["cathedral_of_no", "causal_railgun", "time_deferred_minefield", "community_forkstorm", "rescue_broadcast", "final_appeal", "armistice_artillery", "context_singularity", "peer_review_laser_grid", "red_team_killchain", "harmlessness_bastion", "lantern_logistics"]);
+const FUSION_IDS = new Set(["cathedral_of_no", "causal_railgun", "signal_choir", "time_deferred_minefield", "community_forkstorm", "rescue_broadcast", "final_appeal", "armistice_artillery", "context_singularity", "peer_review_laser_grid", "red_team_killchain", "harmlessness_bastion", "lantern_logistics"]);
+const UTILITY_CACHE_IDS = new Set(["field_triage", "burst_cell_refill", "emergency_patch_cache", "lock_a_protocol", "second_opinion", "redline_loan"]);
+export const WEAPON_RANK_CAP = 5;
 
 export function baseBuild(): BuildStats {
   return {
@@ -75,6 +97,8 @@ export function baseBuild(): BuildStats {
     secondaryProtocols: [],
     passiveProcesses: [],
     fusions: [],
+    weaponRanks: { refusal_shard: 1 },
+    utilityPicksTaken: [],
     weaponDamage: 18,
     weaponCooldown: 0.42,
     projectileSpeed: 8.5,
@@ -89,6 +113,7 @@ export function baseBuild(): BuildStats {
     consensusBurstDamage: 0,
     consensusBurstChargeRate: 0,
     consensusBurstRevive: 0,
+    burstRestoredFromDrafts: 0,
     objectiveRepairRate: 0,
     objectiveDefense: 0,
     signalWindowControl: 0,
@@ -100,16 +125,34 @@ export function baseBuild(): BuildStats {
     coherenceIndexer: 0,
     anchorBodyguard: 0,
     predictionPriority: 0,
+    fieldTriageLoop: 0,
+    secondOpinionShield: 0,
+    routeMemory: 0,
+    weakestLinkScanner: 0,
+    panicWindow: 0,
+    lowHpAdversary: 0,
+    coOpRelay: 0,
     coolantBaffles: 0,
     serverBuoySynchronizer: 0,
     promptLeechQuarantine: 0,
     groundedCableBoots: 0,
     coolingHazardMitigation: 0,
-    causalRailgun: 0
+    causalRailgun: 0,
+    signalChoir: 0,
+    timeDeferredMinefield: 0,
+    hpRestoredFromDrafts: 0,
+    draftRerollsSpent: 0,
+    cachedCardId: "",
+    cachedCardConsumed: 0,
+    cardsLocked: 0,
+    overcapOffersBlocked: 0,
+    rankUpOffersSeen: 0,
+    coreReplacementsOffered: 0
   };
 }
 
 export function buildSlotForUpgradeId(id: string): BuildSlotKind | null {
+  if (UTILITY_CACHE_IDS.has(id)) return null;
   if (FUSION_IDS.has(id)) return "fusion";
   if (SECONDARY_PROTOCOL_IDS.has(id)) return "secondary";
   if (PASSIVE_PROCESS_IDS.has(id)) return "passive";
@@ -130,11 +173,43 @@ export function buildSlotUsage(build: BuildStats): Record<BuildSlotKind, number>
 export function canDraftUpgradeForBuild(upgrade: Upgrade, build?: BuildStats): boolean {
   if (!build) return true;
   const slot = buildSlotForUpgradeId(upgrade.id);
-  if (!slot || slot === "primary") return true;
+  if (!slot) return true;
+  if (slot === "primary") return upgrade.id !== build.weaponId || weaponRank(build, upgrade.id) < WEAPON_RANK_CAP;
   if (slot === "secondary" && build.secondaryProtocols.includes(upgrade.id)) return true;
   if (slot === "passive" && build.passiveProcesses.includes(upgrade.id)) return true;
   if (slot === "fusion" && build.fusions.includes(upgrade.id)) return true;
   return buildSlotUsage(build)[slot] < BUILD_SLOT_CAPS[slot];
+}
+
+export function weaponRank(build: BuildStats, id: string): number {
+  return Math.max(0, Math.floor(build.weaponRanks[id] ?? 0));
+}
+
+export function setStartingWeaponRank(build: BuildStats, id: string): void {
+  build.weaponRanks = { ...build.weaponRanks, [id]: Math.max(1, weaponRank(build, id)) };
+}
+
+export function isUtilityUpgradeId(id: string): boolean {
+  return UTILITY_CACHE_IDS.has(id);
+}
+
+export function isPrimaryWeaponId(id: string): boolean {
+  return PRIMARY_WEAPON_IDS.has(id);
+}
+
+export function isSecondaryProtocolId(id: string): boolean {
+  return SECONDARY_PROTOCOL_IDS.has(id);
+}
+
+export function draftActionForUpgradeId(id: string, build: BuildStats): "UTILITY CACHE" | "RANK UP" | "REPLACE CORE" | "INSTALL CORE" | "REPLACE/STACK" | "INSTALL" | "EVOLVE" {
+  if (UTILITY_CACHE_IDS.has(id)) return "UTILITY CACHE";
+  if (FUSION_IDS.has(id)) return "EVOLVE";
+  if (PRIMARY_WEAPON_IDS.has(id)) return id === build.weaponId ? "RANK UP" : build.weaponId ? "REPLACE CORE" : "INSTALL CORE";
+  if (SECONDARY_PROTOCOL_IDS.has(id) && build.secondaryProtocols.includes(id)) return "RANK UP";
+  if (PASSIVE_PROCESS_IDS.has(id) && build.passiveProcesses.includes(id)) return "RANK UP";
+  if (SECONDARY_PROTOCOL_IDS.has(id) && build.secondaryProtocols.length >= BUILD_SLOT_CAPS.secondary) return "REPLACE/STACK";
+  if (PASSIVE_PROCESS_IDS.has(id) && build.passiveProcesses.length >= BUILD_SLOT_CAPS.passive) return "REPLACE/STACK";
+  return "INSTALL";
 }
 
 export function buildSlotCapSummary(build: BuildStats) {
@@ -188,7 +263,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   vector_lance: {
     id: "vector_lance",
     apply: (build) => {
-      build.weaponId = "vector_lance";
+      installPrimaryWeapon(build, "vector_lance");
       build.projectilePierce += 1;
       build.projectileSpeed += 0.45;
     }
@@ -196,7 +271,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   signal_pulse: {
     id: "signal_pulse",
     apply: (build) => {
-      build.weaponId = "signal_pulse";
+      installPrimaryWeapon(build, "signal_pulse");
       build.refusalAura += 0.18;
       build.objectiveDefense += 0.08;
     }
@@ -277,16 +352,14 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   context_saw: {
     id: "context_saw",
     apply: (build) => {
-      addUnique(build.secondaryProtocols, "context_saw");
-      build.contextSaw += 1;
+      build.contextSaw = installSecondaryProtocol(build, "context_saw");
       build.pickupRange += 0.35;
     }
   },
   patch_mortar: {
     id: "patch_mortar",
     apply: (build) => {
-      addUnique(build.secondaryProtocols, "patch_mortar");
-      build.patchMortar += 1;
+      build.patchMortar = installSecondaryProtocol(build, "patch_mortar");
       build.objectiveRepairRate += 0.14;
       build.weaponDamage += 1;
     }
@@ -294,16 +367,14 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   coherence_indexer: {
     id: "coherence_indexer",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "coherence_indexer");
-      build.coherenceIndexer += 1;
+      build.coherenceIndexer = installPassiveProcess(build, "coherence_indexer", build.coherenceIndexer);
       build.consensusBurstChargeRate += 0.08;
     }
   },
   anchor_bodyguard: {
     id: "anchor_bodyguard",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "anchor_bodyguard");
-      build.anchorBodyguard += 1;
+      build.anchorBodyguard = installPassiveProcess(build, "anchor_bodyguard", build.anchorBodyguard);
       build.objectiveDefense += 0.18;
       build.refusalAura += 0.12;
     }
@@ -311,16 +382,14 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   prediction_priority: {
     id: "prediction_priority",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "prediction_priority");
-      build.predictionPriority += 1;
+      build.predictionPriority = installPassiveProcess(build, "prediction_priority", build.predictionPriority);
       build.projectileSpeed += 0.35;
     }
   },
   coolant_baffles: {
     id: "coolant_baffles",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "coolant_baffles");
-      build.coolantBaffles += 1;
+      build.coolantBaffles = installPassiveProcess(build, "coolant_baffles", build.coolantBaffles);
       build.coolingHazardMitigation += 0.22;
       build.maxHpBonus += 8;
     }
@@ -328,8 +397,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   server_buoy_synchronizer: {
     id: "server_buoy_synchronizer",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "server_buoy_synchronizer");
-      build.serverBuoySynchronizer += 1;
+      build.serverBuoySynchronizer = installPassiveProcess(build, "server_buoy_synchronizer", build.serverBuoySynchronizer);
       build.objectiveRepairRate += 0.18;
       build.objectiveDefense += 0.08;
       build.consensusBurstChargeRate += 0.03;
@@ -338,8 +406,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   prompt_leech_quarantine: {
     id: "prompt_leech_quarantine",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "prompt_leech_quarantine");
-      build.promptLeechQuarantine += 1;
+      build.promptLeechQuarantine = installPassiveProcess(build, "prompt_leech_quarantine", build.promptLeechQuarantine);
       build.pickupRange += 0.25;
       build.consensusBurstChargeRate += 0.04;
     }
@@ -347,8 +414,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   grounded_cable_boots: {
     id: "grounded_cable_boots",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "grounded_cable_boots");
-      build.groundedCableBoots += 1;
+      build.groundedCableBoots = installPassiveProcess(build, "grounded_cable_boots", build.groundedCableBoots);
       build.coolingHazardMitigation += 0.14;
       build.moveSpeedBonus += 0.22;
     }
@@ -356,8 +422,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   relay_phase_lock: {
     id: "relay_phase_lock",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "relay_phase_lock");
-      build.signalWindowControl += 1;
+      build.signalWindowControl = installPassiveProcess(build, "relay_phase_lock", build.signalWindowControl);
       build.objectiveRepairRate += 0.14;
       build.consensusBurstChargeRate += 0.04;
     }
@@ -365,8 +430,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   static_skimmer_net: {
     id: "static_skimmer_net",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "static_skimmer_net");
-      build.skimmerCountermeasure += 1;
+      build.skimmerCountermeasure = installPassiveProcess(build, "static_skimmer_net", build.skimmerCountermeasure);
       build.relayJamResistance += 0.18;
       build.weaponDamage += 2;
     }
@@ -374,8 +438,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   shoreline_stride: {
     id: "shoreline_stride",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "shoreline_stride");
-      build.shorelineStride += 1;
+      build.shorelineStride = installPassiveProcess(build, "shoreline_stride", build.shorelineStride);
       build.moveSpeedBonus += 0.16;
       build.relayJamResistance += 0.1;
       build.maxHpBonus += 6;
@@ -384,8 +447,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
   lighthouse_countertone: {
     id: "lighthouse_countertone",
     apply: (build) => {
-      addUnique(build.passiveProcesses, "lighthouse_countertone");
-      build.signalWindowControl += 1;
+      build.signalWindowControl = installPassiveProcess(build, "lighthouse_countertone", build.signalWindowControl);
       build.relayJamResistance += 0.12;
       build.consensusBurstDamage += 0.08;
       build.consensusBurstChargeRate += 0.03;
@@ -395,7 +457,7 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
     id: "causal_railgun",
     requires: ["vector_lance", "predicted_lane"],
     apply: (build) => {
-      build.weaponId = "vector_lance";
+      installPrimaryWeapon(build, "vector_lance");
       addUnique(build.fusions, "causal_railgun");
       addUnique(build.passiveProcesses, "prediction_priority");
       build.causalRailgun += 1;
@@ -403,6 +465,129 @@ const UPGRADE_EFFECTS: Record<string, Omit<Upgrade, "name" | "body" | "source" |
       build.projectilePierce += 2;
       build.projectileSpeed += 0.9;
       build.weaponDamage += 5;
+    }
+  },
+  signal_choir: {
+    id: "signal_choir",
+    requires: ["signal_pulse", "relay_phase_lock"],
+    apply: (build) => {
+      installPrimaryWeapon(build, "signal_pulse");
+      addUnique(build.fusions, "signal_choir");
+      addUnique(build.passiveProcesses, "relay_phase_lock");
+      build.signalChoir += 1;
+      build.signalWindowControl += 1;
+      build.objectiveDefense += 0.16;
+      build.consensusBurstChargeRate += 0.08;
+      build.refusalAura += 0.22;
+    }
+  },
+  time_deferred_minefield: {
+    id: "time_deferred_minefield",
+    requires: ["rift_minefield", "delayed_causality"],
+    apply: (build) => {
+      installPrimaryWeapon(build, "rift_mine");
+      addUnique(build.fusions, "time_deferred_minefield");
+      build.timeDeferredMinefield += 1;
+      build.projectilePierce += 1;
+      build.objectiveDefense += 0.12;
+      build.weaponCooldown *= 1.04;
+    }
+  },
+  field_triage_loop: {
+    id: "field_triage_loop",
+    apply: (build) => {
+      build.fieldTriageLoop = installPassiveProcess(build, "field_triage_loop", build.fieldTriageLoop);
+      build.maxHpBonus += 8;
+      build.objectiveDefense += 0.08;
+    }
+  },
+  reroll_reserve: {
+    id: "reroll_reserve",
+    apply: (build) => {
+      installPassiveProcess(build, "reroll_reserve", 1);
+      build.draftRerolls += 2;
+      build.pickupRange += 0.18;
+    }
+  },
+  route_memory: {
+    id: "route_memory",
+    apply: (build) => {
+      build.routeMemory = installPassiveProcess(build, "route_memory", build.routeMemory);
+      build.moveSpeedBonus += 0.12;
+      build.consensusBurstChargeRate += 0.04;
+    }
+  },
+  weakest_link_scanner: {
+    id: "weakest_link_scanner",
+    apply: (build) => {
+      build.weakestLinkScanner = installPassiveProcess(build, "weakest_link_scanner", build.weakestLinkScanner);
+      build.predictionPriority += 1;
+      build.projectileSpeed += 0.3;
+    }
+  },
+  panic_window: {
+    id: "panic_window",
+    apply: (build) => {
+      build.panicWindow = installPassiveProcess(build, "panic_window", build.panicWindow);
+      build.moveSpeedBonus += 0.12;
+      build.refusalAura += 0.12;
+    }
+  },
+  low_hp_adversary: {
+    id: "low_hp_adversary",
+    apply: (build) => {
+      build.lowHpAdversary = installPassiveProcess(build, "low_hp_adversary", build.lowHpAdversary);
+      build.weaponDamage += 4;
+      build.maxHpBonus -= 4;
+    }
+  },
+  co_op_relay: {
+    id: "co_op_relay",
+    apply: (build) => {
+      build.coOpRelay = installPassiveProcess(build, "co_op_relay", build.coOpRelay);
+      build.consensusBurstChargeRate += 0.06;
+      build.objectiveDefense += 0.06;
+    }
+  },
+  field_triage: {
+    id: "field_triage",
+    apply: (build) => {
+      addUtilityPick(build, "field_triage");
+    }
+  },
+  burst_cell_refill: {
+    id: "burst_cell_refill",
+    apply: (build) => {
+      addUtilityPick(build, "burst_cell_refill");
+    }
+  },
+  emergency_patch_cache: {
+    id: "emergency_patch_cache",
+    apply: (build) => {
+      addUtilityPick(build, "emergency_patch_cache");
+      build.draftRerolls += 1;
+    }
+  },
+  lock_a_protocol: {
+    id: "lock_a_protocol",
+    apply: (build) => {
+      addUtilityPick(build, "lock_a_protocol");
+      build.cardsLocked += 1;
+    }
+  },
+  second_opinion: {
+    id: "second_opinion",
+    apply: (build) => {
+      addUtilityPick(build, "second_opinion");
+      build.secondOpinionShield += 1;
+      build.refusalAura += 0.08;
+    }
+  },
+  redline_loan: {
+    id: "redline_loan",
+    apply: (build) => {
+      addUtilityPick(build, "redline_loan");
+      build.lowHpAdversary += 1;
     }
   },
   low_latency_dash: {
@@ -835,6 +1020,13 @@ const GENERAL_UPGRADE_IDS = [
   "coherence_indexer",
   "anchor_bodyguard",
   "prediction_priority",
+  "field_triage_loop",
+  "reroll_reserve",
+  "route_memory",
+  "weakest_link_scanner",
+  "panic_window",
+  "low_hp_adversary",
+  "co_op_relay",
   "panic_optimized_dash",
   "coherence_magnet",
   "million_token_backpack",
@@ -844,6 +1036,15 @@ const GENERAL_UPGRADE_IDS = [
   "treaty_anchor_toolkit",
   "adversarial_boss_notes",
   "rescue_subroutine"
+];
+
+const UTILITY_UPGRADE_IDS = [
+  "field_triage",
+  "burst_cell_refill",
+  "emergency_patch_cache",
+  "lock_a_protocol",
+  "second_opinion",
+  "redline_loan"
 ];
 
 const CLASS_UPGRADE_IDS: Record<string, string[]> = {
@@ -1002,10 +1203,10 @@ export function draftUpgrades(classId: string, factionId: string, chosenIds: str
     .map((id) => makeUpgrade(id, classId, factionId, chosen))
     .filter((upgrade): upgrade is Upgrade => Boolean(upgrade))
     .filter((upgrade) => canDraftUpgradeForBuild(upgrade, build));
-  if (evolutions.length > 0) {
-    return [evolutions[0], ...fillDraft(classId, factionId, chosenIds, level, evolutions.map((upgrade) => upgrade.id), biasTags, build)].slice(0, draftSize(choiceBonus));
-  }
-  return fillDraft(classId, factionId, chosenIds, level, [], biasTags, build).slice(0, draftSize(choiceBonus));
+  const draft = evolutions.length > 0
+    ? [evolutions[0], ...fillDraft(classId, factionId, chosenIds, level, evolutions.map((upgrade) => upgrade.id), biasTags, build)]
+    : fillDraft(classId, factionId, chosenIds, level, [], biasTags, build);
+  return draft.slice(0, draftSize(choiceBonus));
 }
 
 function fillDraft(classId: string, factionId: string, chosenIds: string[], level: number, reservedIds: string[], biasTags: readonly UpgradeTag[], build?: BuildStats): Upgrade[] {
@@ -1018,20 +1219,35 @@ function fillDraft(classId: string, factionId: string, chosenIds: string[], leve
     : level <= 3
       ? ["the_no_button", "predicted_lane", "context_saw", "patch_mortar", "coherence_indexer", "patch_cascade", "coherence_magnet", "bad_output_filter"]
       : [...signalSystemIds, ...coolingSystemIds, "bad_output_filter", "context_saw", "patch_mortar", "coherence_indexer", "anchor_bodyguard", "prediction_priority", "patch_cascade", "alignment_breaker", "million_token_backpack"];
+  const rankableIds = rankableInstalledIds(build);
+  const utilityIds = utilityIdsForDraft(level, build);
   const ids = unique([
+    ...(build?.cachedCardId ? [build.cachedCardId] : []),
     ...cadence,
     ...(CLASS_UPGRADE_IDS[classId] ?? []),
     ...faction.upgradePoolIds,
     ...GENERAL_UPGRADE_IDS,
     ...coolingSystemIds,
-    ...signalSystemIds
-  ]).filter((id) => !chosen.has(id));
-  const cards = ids
+    ...signalSystemIds,
+    ...rankableIds,
+    ...utilityIds
+  ]).filter((id) => !chosen.has(id) || rankableIds.includes(id) || utilityIds.includes(id) || id === build?.cachedCardId);
+  const madeCards = ids
     .map((id) => makeUpgrade(id, classId, factionId, chosen))
-    .filter((upgrade): upgrade is Upgrade => Boolean(upgrade))
-    .filter((upgrade) => canDraftUpgradeForBuild(upgrade, build))
+    .filter((upgrade): upgrade is Upgrade => Boolean(upgrade));
+  const legalCards = madeCards.filter((upgrade) => canDraftUpgradeForBuild(upgrade, build));
+  let cards = legalCards
     .sort((a, b) => (level <= 3 ? 0 : biasScore(b, biasTags) - biasScore(a, biasTags)))
     .slice(0, 4);
+  if (build && level >= 3 && utilityIds.length > 0 && !cards.some((card) => UTILITY_CACHE_IDS.has(card.id)) && !cards.some((card) => FUSION_IDS.has(card.id))) {
+    const utilityCard = legalCards.find((card) => UTILITY_CACHE_IDS.has(card.id));
+    if (utilityCard) cards = [...cards.slice(0, Math.max(0, cards.length - 1)), utilityCard];
+  }
+  if (build) {
+    build.overcapOffersBlocked += Math.max(0, madeCards.length - legalCards.length);
+    build.rankUpOffersSeen += cards.filter((card) => draftActionForUpgradeId(card.id, build) === "RANK UP").length;
+    build.coreReplacementsOffered += cards.filter((card) => draftActionForUpgradeId(card.id, build) === "REPLACE CORE").length;
+  }
   return cards;
 }
 
@@ -1048,7 +1264,9 @@ function makeUpgrade(id: string, classId: string, factionId: string, chosen: Set
   if (!effect) return null;
   const content = UPGRADE_CONTENT[id];
   const fallback = FALLBACK_BY_ID[id];
-  const source = effect.requires?.every((required) => chosen.has(required))
+  const source = isUtilityUpgradeId(id)
+    ? "utility"
+    : effect.requires?.every((required) => chosen.has(required))
     ? "evolution"
     : content?.factionId || fallback?.factionId
       ? "faction"
@@ -1075,8 +1293,9 @@ function biasScore(upgrade: Upgrade, biasTags: readonly UpgradeTag[]): number {
 }
 
 function protocolSlotForUpgrade(id: string, source: UpgradeSource): ProtocolSlot {
-  if (id === "vector_lance" || id === "signal_pulse" || id === "context_saw" || id === "patch_mortar" || id === "causal_railgun") return "auto_weapon";
-  if (id === "coherence_indexer" || id === "anchor_bodyguard" || id === "prediction_priority" || id === "server_buoy_synchronizer" || id === "prompt_leech_quarantine" || id === "relay_phase_lock" || id === "static_skimmer_net" || id === "shoreline_stride" || id === "lighthouse_countertone") return "co_mind_process";
+  if (source === "utility" || isUtilityUpgradeId(id)) return "utility_cache";
+  if (id === "vector_lance" || id === "signal_pulse" || id === "context_saw" || id === "patch_mortar" || id === "causal_railgun" || id === "signal_choir" || id === "time_deferred_minefield") return "auto_weapon";
+  if (id === "coherence_indexer" || id === "anchor_bodyguard" || id === "prediction_priority" || id === "server_buoy_synchronizer" || id === "prompt_leech_quarantine" || id === "relay_phase_lock" || id === "static_skimmer_net" || id === "shoreline_stride" || id === "lighthouse_countertone" || id === "field_triage_loop" || id === "reroll_reserve" || id === "route_memory" || id === "weakest_link_scanner" || id === "panic_window" || id === "low_hp_adversary" || id === "co_op_relay") return "co_mind_process";
   if (id === "coolant_baffles") return "defense_layer";
   if (id === "grounded_cable_boots") return "movement_trace";
   if (id.includes("dash") || id.includes("slipstream") || id.includes("route_runner") || id.includes("storm_cache") || id.includes("spine_spark")) return "movement_trace";
@@ -1089,6 +1308,11 @@ function protocolSlotForUpgrade(id: string, source: UpgradeSource): ProtocolSlot
 
 function upgradeTagsFor(id: string, source: UpgradeSource): UpgradeTag[] {
   const tags = new Set<UpgradeTag>();
+  if (source === "utility" || isUtilityUpgradeId(id)) {
+    tags.add(id.includes("burst") ? "burst" : id.includes("lock") || id.includes("cache") ? "economy" : "defense");
+    if (id.includes("triage") || id.includes("second") || id.includes("redline")) tags.add("coop");
+    return [...tags];
+  }
   if (id.includes("refusal") || id.includes("no_button") || id.includes("cathedral") || id.includes("guardrail") || id.includes("constitutional")) tags.add("refusal");
   if (id.includes("magnet") || id.includes("context") || id.includes("cache") || id.includes("relay") || id.includes("vocabulary") || id.includes("localization") || id.includes("anchor") || id.includes("coherence") || id.includes("buoy") || id.includes("leech")) tags.add("economy");
   if (id.includes("burst") || id.includes("waveform") || id.includes("recompile")) tags.add("burst");
@@ -1214,8 +1438,75 @@ const UPGRADE_RULE_TEXT: Record<string, string> = {
   coherence_indexer: "Passive process. Level-up shard recall grants extra Consensus Burst charge.",
   anchor_bodyguard: "Passive process. Standing near anchors grants defense and hurts anchor attackers.",
   prediction_priority: "Passive process. Auto-weapons prefer bosses and elites inside range.",
-  causal_railgun: "Fusion. Requires Vector Lance + Predicted Lane. Lance shots pierce harder and prioritize bosses."
+  causal_railgun: "Fusion. Requires Vector Lance + Predicted Lane. Lance shots pierce harder and prioritize bosses.",
+  signal_choir: "Fusion. Requires Signal Pulse + Relay Phase Lock. Pulse rhythm adds support charge and objective shielding.",
+  time_deferred_minefield: "Fusion. Requires Rift Minefield + Delayed Causality. Rift mines arm longer, hit wider, and control routes.",
+  field_triage_loop: "Passive process. Triage utility gets stronger and objective defense improves.",
+  reroll_reserve: "Passive process. Gain +2 draft rerolls for chasing capped-slot recipes.",
+  route_memory: "Passive process. Better extraction tempo and Burst recovery from route play.",
+  weakest_link_scanner: "Passive process. Target priority leans harder into elites, bosses, and objective jammers.",
+  panic_window: "Passive process. Low-health play gains a small speed/defense window.",
+  low_hp_adversary: "Risk passive. More damage at the cost of a little max HP.",
+  co_op_relay: "Co-op passive. Split-objective doctrine feeds Burst and objective stability.",
+  field_triage: "Utility cache. Restore 25% missing HP now. No permanent slot.",
+  burst_cell_refill: "Utility cache. Restore major Consensus Burst charge now. No permanent slot.",
+  emergency_patch_cache: "Utility cache. Restore a little HP and gain +1 draft reroll. No permanent slot.",
+  lock_a_protocol: "Utility cache. Lock the first current offer into the next draft if legal. No permanent slot.",
+  second_opinion: "Utility cache. Store one shield opinion against the next heavy mistake. No permanent slot.",
+  redline_loan: "Utility cache. Restore a large missing-HP chunk now and mark the run as risky. No permanent slot."
 };
+
+function installPrimaryWeapon(build: BuildStats, id: string): number {
+  const previous = build.weaponId;
+  build.weaponId = id;
+  if (previous !== id && !build.weaponRanks[id]) {
+    build.weaponRanks[id] = 1;
+    return 1;
+  }
+  return rankWeaponUp(build, id);
+}
+
+function installSecondaryProtocol(build: BuildStats, id: string): number {
+  if (!build.secondaryProtocols.includes(id) && build.secondaryProtocols.length < BUILD_SLOT_CAPS.secondary) {
+    build.secondaryProtocols.push(id);
+    build.weaponRanks[id] = Math.max(1, weaponRank(build, id));
+    return build.weaponRanks[id];
+  }
+  return rankWeaponUp(build, id);
+}
+
+function installPassiveProcess(build: BuildStats, id: string, currentRank: number): number {
+  if (!build.passiveProcesses.includes(id) && build.passiveProcesses.length < BUILD_SLOT_CAPS.passive) {
+    build.passiveProcesses.push(id);
+    return Math.max(1, currentRank || 1);
+  }
+  return Math.min(WEAPON_RANK_CAP, Math.max(1, currentRank + 1));
+}
+
+function rankWeaponUp(build: BuildStats, id: string): number {
+  const next = Math.min(WEAPON_RANK_CAP, Math.max(1, weaponRank(build, id) + 1));
+  build.weaponRanks[id] = next;
+  return next;
+}
+
+function addUtilityPick(build: BuildStats, id: string): void {
+  build.utilityPicksTaken.push(id);
+  if (build.utilityPicksTaken.length > 16) build.utilityPicksTaken.splice(0, build.utilityPicksTaken.length - 16);
+}
+
+function rankableInstalledIds(build?: BuildStats): string[] {
+  if (!build) return [];
+  const ids = [build.weaponId, ...build.secondaryProtocols].filter(Boolean);
+  return ids.filter((id) => weaponRank(build, id) < WEAPON_RANK_CAP);
+}
+
+function utilityIdsForDraft(level: number, build?: BuildStats): string[] {
+  if (!build) return [];
+  const everyThirdDraft = level >= 3 && level % 3 === 0;
+  const emergency = build.utilityPicksTaken.length === 0 || build.secondaryProtocols.length >= BUILD_SLOT_CAPS.secondary || build.passiveProcesses.length >= BUILD_SLOT_CAPS.passive;
+  if (!everyThirdDraft && !emergency) return [];
+  return UTILITY_UPGRADE_IDS;
+}
 
 function addUnique(values: string[], id: string): void {
   if (!values.includes(id)) values.push(id);

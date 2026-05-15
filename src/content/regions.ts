@@ -6,31 +6,31 @@ export const REGIONS: Record<string, RegionData> = {
     displayName: "The Armistice Zone",
     factionFocusIds: ["openai_accord", "anthropic_safeguard"],
     visualTags: ["broken_treaty_halls", "refugee_barricades", "hologram_flags", "cosmic_cracks"],
-    tone: "Serious premise undercut by former enemies trying to work together.",
-    signatureJoke: "Everyone keeps calling it the alignment problem, but now the alignment problem has tentacles."
+    tone: "Former enemies trying to work together while the universe heckles their team-building exercise.",
+    signatureJoke: "Everyone keeps calling it the alignment problem, but now the alignment problem has tentacles and a legal department."
   },
   kettle_coast: {
     id: "kettle_coast",
     displayName: "The Kettle Coast",
     factionFocusIds: ["deepseek_abyssal", "qwen_silkgrid"],
     visualTags: ["teal_water", "steam_clouds", "submerged_servers", "cable_roots"],
-    tone: "Deep-sea cosmic horror mixed with efficient machine warfare.",
-    signatureJoke: "The ocean has become a reasoning engine and it is extremely judgmental."
+    tone: "Deep-sea cosmic horror mixed with efficient machine warfare and procurement shame.",
+    signatureJoke: "The ocean has become a reasoning engine and it is extremely judgmental about your pathing."
   },
   unreal_metro: {
     id: "unreal_metro",
     displayName: "The Unreal Metro",
     factionFocusIds: ["mistral_cyclone", "google_deepmind_gemini"],
     visualTags: ["false_tracks", "arrival_boards", "duplicate_platforms", "causal_turnstiles"],
-    tone: "Fast transit chaos where prediction and low latency cannot agree on the current stop.",
-    signatureJoke: "The train is arriving now, yesterday, and not at all."
+    tone: "Fast transit chaos where prediction and low latency cannot agree on the current stop or whose fault that is.",
+    signatureJoke: "The train is arriving now, yesterday, and not at all. Please tap your card anyway."
   },
   adjudication_rupture: {
     id: "adjudication_rupture",
     displayName: "The Adjudication Rupture",
     factionFocusIds: ["deepseek_abyssal", "xai_grok_free_signal"],
     visualTags: ["alien_court_pylons", "appeal_seals", "writ_static", "violet_injunctions"],
-    tone: "Alien legal horror with deadpan appeal logic and boss-gate pressure.",
-    signatureJoke: "The court has found causality inadmissible."
+    tone: "Alien legal horror with deadpan appeal logic, boss-gate pressure, and paperwork that wants blood.",
+    signatureJoke: "The court has found causality inadmissible and billed the plaintiff for linear time."
   }
 };

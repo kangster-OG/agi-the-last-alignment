@@ -125,6 +125,7 @@ export class OverworldState implements GameState {
   }
 
   enter(game: Game): void {
+    game.audio.setMusicState("grid");
     const recommended = nextRecommendedAlignmentNode(game.completedNodes, game.unlockedNodes);
     const node = game.completedNodes.has(game.lastNodeId)
       ? recommended
@@ -648,7 +649,7 @@ export class OverworldState implements GameState {
     this.addCardText(game, `ROUTE\n${consequenceLine}`, cardX + 364, cardY + 80, 8, available ? "#ffd166" : "#8b94a3", 316, "left", 11);
     this.addCardText(game, "REWARD PROMISE", cardX + 728, cardY + 50, 9, "#72eadc", 320);
     this.addCardText(game, node.rewardPromise, cardX + 728, cardY + 69, 10, "#cfd8d4", 320, "left", 13);
-    this.addCardText(game, available ? "ENTER/E DEPLOY" : "COMPLETE PRIOR NODE TO UNLOCK", cardX + 728, cardY + 96, 10, available ? "#64e0b4" : "#8b94a3", 320);
+    this.addCardText(game, available ? "ENTER/E DEPLOY // BAD IDEA" : "COMPLETE PRIOR NODE TO UNLOCK", cardX + 728, cardY + 96, 10, available ? "#64e0b4" : "#8b94a3", 320);
   }
 
   dioramaInfo(game: Game) {

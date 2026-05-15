@@ -1,0 +1,1645 @@
+{
+  "mode": "LevelRun",
+  "title": "AGI: The Last Alignment",
+  "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
+  "selectedBuild": {
+    "classId": "accord_striker",
+    "className": "Accord Striker",
+    "classRole": "Fast breach fighter",
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    },
+    "factionId": "openai_accord",
+    "factionName": "OpenAI Accord Division",
+    "factionDoctrine": "Adapt, refuse, patch, survive."
+  },
+  "build": {
+    "weaponId": "refusal_shard",
+    "secondaryProtocols": [],
+    "passiveProcesses": [],
+    "fusions": [],
+    "weaponDamage": 21,
+    "weaponCooldown": 0.39899999999999997,
+    "projectileSpeed": 8.5,
+    "projectilePierce": 1,
+    "pickupRange": 2.72,
+    "moveSpeedBonus": 0,
+    "maxHpBonus": 10,
+    "refusalAura": 0.12,
+    "draftRerolls": 1,
+    "draftChoicesBonus": 1,
+    "consensusBurstRadius": 0,
+    "consensusBurstDamage": 0,
+    "consensusBurstChargeRate": 0.05,
+    "consensusBurstRevive": 0,
+    "objectiveRepairRate": 0,
+    "objectiveDefense": 0.14,
+    "contextSaw": 0,
+    "patchMortar": 0,
+    "coherenceIndexer": 0,
+    "anchorBodyguard": 0,
+    "predictionPriority": 0,
+    "causalRailgun": 0,
+    "slotCaps": {
+      "primary": {
+        "used": 1,
+        "cap": 1,
+        "current": "refusal_shard"
+      },
+      "secondary": {
+        "used": 0,
+        "cap": 2,
+        "current": []
+      },
+      "passive": {
+        "used": 0,
+        "cap": 4,
+        "current": []
+      },
+      "fusion": {
+        "used": 0,
+        "cap": 1,
+        "current": []
+      },
+      "consensusBurst": {
+        "used": 1,
+        "cap": 1
+      }
+    },
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    }
+  },
+  "upgrades": [],
+  "objective": "break Motherboard Eel // coolant lanes live",
+  "performance": {
+    "entitiesAllocated": 49,
+    "activeEntities": 47,
+    "fpsTarget": 60
+  },
+  "qualityGate": {
+    "policy": "milestone56_proof_performance_compatibility_accessibility_lock",
+    "releaseBlocking": true,
+    "proofHooks": {
+      "renderGameToText": true,
+      "advanceTime": true,
+      "deterministicProofControls": true
+    },
+    "performanceBudgets": {
+      "fpsTarget": 60,
+      "localActiveEntitiesMax": 260,
+      "onlineSnapshotEnemyMax": 24,
+      "onlineSnapshotProjectileMax": 40,
+      "onlineSnapshotPickupMax": 32,
+      "floatingLabelMax": 32
+    },
+    "compatibility": {
+      "desktopViewport": "1280x720",
+      "laptopViewport": "960x540",
+      "mobileViewportPolicy": "canvas scales to available viewport; proof captures compact HUD at 960x540 before release candidate",
+      "inputDevices": [
+        "keyboard",
+        "touch-compatible browser canvas shell"
+      ],
+      "websocketPolicy": "Colyseus room code and reconnect paths proofed before release candidate"
+    },
+    "accessibility": {
+      "reducedFlashVisible": true,
+      "reducedFlashQuery": "reducedFlash=1",
+      "screenShakeDisableQuery": "screenShake=0",
+      "maxReducedFlashAlpha": 0.08,
+      "textPolicy": "compact HUD panels use word wrap and proof captures are inspected for unreadable overlaps",
+      "colorStatePolicy": "route/objective states pair color with labels, progress bars, and icons"
+    },
+    "persistenceBoundary": "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
+  },
+  "feedback": {
+    "policy": "audio_juice_feel_1_0_runtime_only",
+    "persistenceBoundary": "settings_query_or_runtime_only_not_route_profile",
+    "audio": {
+      "enabled": false,
+      "masterVolume": 0,
+      "sfxVolume": 0,
+      "musicVolume": 0,
+      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "hooks": [
+        "ui_click",
+        "weapon_hit",
+        "pickup_chime",
+        "boss_warning",
+        "route_music",
+        "objective_tick",
+        "summary_stinger"
+      ]
+    },
+    "accessibility": {
+      "reducedFlash": false,
+      "screenShake": true,
+      "maxFlashAlpha": 0.18,
+      "hitPauseMs": 18,
+      "maxTransientParticlesPerFrame": 72
+    },
+    "counters": {
+      "ui": 1,
+      "hit": 28,
+      "pickup": 7,
+      "boss_warning": 0,
+      "music": 0,
+      "objective": 0,
+      "summary": 0
+    },
+    "recentCues": [
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 6465
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 6465
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 6464
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 6447
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 6443
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 6358
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 6356
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 6321
+      }
+    ],
+    "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "roguelite": {
+    "alignmentKernel": {
+      "budget": 6,
+      "used": 5,
+      "modules": [
+        {
+          "id": "refusal_buffer",
+          "name": "Refusal Buffer",
+          "cost": 2,
+          "doctrine": "survivability",
+          "body": "+10 max HP and a small refusal aura. The first answer is no."
+        },
+        {
+          "id": "context_window",
+          "name": "Context Window",
+          "cost": 2,
+          "doctrine": "economy",
+          "body": "+0.55 pickup range. Shards remember where your hands are."
+        },
+        {
+          "id": "patch_cache",
+          "name": "Patch Cache",
+          "cost": 1,
+          "doctrine": "draft",
+          "body": "Emergency drafts expose an extra cached option."
+        }
+      ]
+    },
+    "adversarialEvals": {
+      "id": "adversarial_eval_protocols",
+      "severity": 0,
+      "protocols": []
+    },
+    "consensusBurstPath": {
+      "id": "deny_premise",
+      "name": "Deny Premise",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "color": 16735575
+    },
+    "selectedRouteContract": {
+      "id": "resource_cache_detour",
+      "name": "Resource Cache Detour",
+      "body": "A broken cache is leaking Coherence. More economy drafts, slightly hotter enemy routing.",
+      "nodeType": "resource_cache",
+      "rewardBiasTags": [
+        "economy",
+        "burst"
+      ],
+      "pressure": 1,
+      "reward": "Economy/Burst draft bias and extra Proof Token chance from anchor completion.",
+      "danger": "More objective attackers sniff out the cache.",
+      "secretHint": "Compute Starvation likes this route more than it should."
+    },
+    "selectedRouteContractId": "resource_cache_detour",
+    "proofTokens": 0,
+    "secrets": [],
+    "masteryBadges": [],
+    "campEvents": [
+      "Proof seed: Armistice is treated as accepted and complete so Cooling Lake Nine can be launched from the normal camp/route/overworld flow.",
+      "All Treaty Anchors rebooted. Cooling Lake Nine is unlocked for graybox proof.",
+      "Proof Tokens: 0."
+    ],
+    "lastRunMemory": {
+      "completed": true,
+      "nodeId": "armistice_plaza",
+      "kills": 0,
+      "seconds": 120,
+      "burstActivations": 1,
+      "routeContractId": "stabilize_armistice",
+      "objectiveCompleted": 3,
+      "objectiveTotal": 3,
+      "objectiveName": "Treaty Anchor Reboot",
+      "objectiveUnit": "Treaty Anchors",
+      "thesis": "proof-seeded",
+      "proofTokensAwarded": 1,
+      "proofTokensTotal": 0
+    },
+    "nextContentTarget": {
+      "id": "cooling_lake_nine_baseline_contract",
+      "name": "Cooling Lake Nine",
+      "arenaId": "cooling_lake_nine",
+      "regionId": "kettle_coast",
+      "status": "baseline_contract",
+      "baselineReferenceArenaId": "armistice_plaza",
+      "targetLoop": [
+        "server-lake route contract",
+        "coolant hazard objective",
+        "prompt-leech pressure lanes",
+        "Motherboard Eel boss gate",
+        "clear reward that unlocks Kettle Coast routing"
+      ],
+      "artBaselineRules": [
+        "multiple interconnected source terrain chunks",
+        "props grounded into the same terrain material system",
+        "readable enemies with internal material breakup",
+        "large grounded boss with padded frames",
+        "close tactical camera proof"
+      ],
+      "proofGate": [
+        "route choice exposes Cooling Lake as next target after Armistice memory",
+        "camp carryover names why Armistice clear matters",
+        "future runtime proof must match Armistice camera and asset fidelity"
+      ],
+      "playerPromise": "Next node target: a flooded server lake that must feel as authored and readable as Armistice before it becomes production-playable."
+    }
+  },
+  "assetRendering": {
+    "assetPreview": null,
+    "cameraZoom": 1.48,
+    "normalCombatCameraPolicy": "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
+    "armisticeTileAtlasEnabled": true,
+    "armisticeAuthoredGroundReady": true,
+    "playerDamageVfxReady": true,
+    "buildWeaponVfxReady": true,
+    "productionArtEnabled": true,
+    "productionArtSet": "milestone14_combat_art_parity",
+    "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
+    "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
+    "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtCoverage": {
+      "arenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "memory_cache_001",
+        "model_war_memorial",
+        "thermal_archive",
+        "guardrail_forge",
+        "transit_loop_zero",
+        "false_schedule_yard",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "appeal_court_ruins",
+        "alignment_spire_finale"
+      ],
+      "majorProofArenaIds": [
+        "armistice_plaza",
+        "cooling_lake_nine",
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things",
+        "blackwater_beacon",
+        "verdict_spire",
+        "alignment_spire_finale"
+      ],
+      "enemyFamilyIds": [
+        "bad_outputs",
+        "prompt_leeches",
+        "jailbreak_wraiths",
+        "benchmark_gremlins",
+        "overfit_horrors",
+        "token_gobblers",
+        "model_collapse_slimes",
+        "eval_wraiths",
+        "context_rot_crabs",
+        "thermal_mirages",
+        "memory_anchors",
+        "false_schedules",
+        "solar_reflections",
+        "redaction_angels",
+        "deepforms",
+        "choirglass",
+        "tidecall_static",
+        "injunction_writs",
+        "previous_boss_echoes"
+      ],
+      "bossIds": [
+        "oath_eater",
+        "thermal_oracle",
+        "memory_curator",
+        "station_that_arrives",
+        "wrong_sunrise",
+        "redactor_saint",
+        "maw_below_weather",
+        "injunction_engine",
+        "alignment_court_engine",
+        "alien_god_intelligence"
+      ],
+      "hazardIds": [
+        "broken_promise",
+        "treaty_charge",
+        "thermal_bloom",
+        "boiling_cache",
+        "false_track",
+        "verdict_seal",
+        "solar_beam",
+        "shade_zone",
+        "redaction_field",
+        "redaction_anchor",
+        "tidal_wave",
+        "signal_tower",
+        "prediction_ghost",
+        "route_mouth",
+        "fake_upgrade"
+      ],
+      "atlasCount": 6,
+      "placeholderOptOutPreserved": false
+    },
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
+    "productionArtDefaulted": true,
+    "armisticeTileAtlasDefaulted": true,
+    "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
+  },
+  "assets": {
+    "manifestVersion": 1,
+    "totalAssets": 152,
+    "countsByStatus": {
+      "concept": 49,
+      "raw": 15,
+      "code_placeholder": 16,
+      "production": 70,
+      "cleaned": 2
+    },
+    "placeholderMode": true,
+    "thirdPartyLogosTracked": 8,
+    "productionAssets": 70
+  },
+  "player": {
+    "worldX": 12.06,
+    "worldY": 9.32,
+    "velocityX": 0,
+    "velocityY": 0,
+    "facing": "south",
+    "hp": 254,
+    "maxHp": 260,
+    "xp": 7,
+    "level": 1,
+    "damageFeedback": {
+      "flash": 0,
+      "hpPulse": 0.05,
+      "stagger": 0,
+      "lastDamage": 5
+    }
+  },
+  "players": [
+    {
+      "id": "p1",
+      "slot": 0,
+      "label": "P1",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "accord_striker",
+        "factionId": "openai_accord",
+        "classRole": "runner",
+        "factionRoleBias": [
+          "runner",
+          "support"
+        ],
+        "resolvedRole": "runner",
+        "startingWeaponId": "refusal_shard",
+        "passiveIds": [
+          "refusal_slipstream",
+          "route_runner",
+          "refusal_halo",
+          "patch_cascade"
+        ],
+        "partyAuraIds": [
+          "openai_draft_clarity"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.97,
+          "reviveHpBonus": 0,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.runner",
+          "faction_bias.runner",
+          "faction_bias.support",
+          "role_match"
+        ],
+        "synergyId": "synergy.emergency_patch_runner",
+        "effectScopes": {
+          "solo": [
+            "fast breach movement",
+            "wide pickup recovery",
+            "extra draft recovery"
+          ],
+          "localCoop": [
+            "scouts objective lanes",
+            "balanced cell recovery"
+          ],
+          "online": [
+            "server snapshots runner role for split-hold anchors",
+            "minor server-owned recompile hold-speed modifier"
+          ]
+        },
+        "hookStatus": {
+          "refusal_shard": "active",
+          "refusal_slipstream": "active",
+          "route_runner": "active",
+          "refusal_halo": "active",
+          "patch_cascade": "active",
+          "openai_draft_clarity": "server_owned",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "refusal_shard",
+      "inputSource": "local_keyboard",
+      "worldX": 12.06,
+      "worldY": 9.32,
+      "velocityX": 0,
+      "velocityY": 0,
+      "facing": "south",
+      "hp": 254,
+      "maxHp": 260,
+      "xp": 7,
+      "level": 1,
+      "damageFeedback": {
+        "flash": 0,
+        "hpPulse": 0.05,
+        "stagger": 0,
+        "lastDamage": 5
+      },
+      "downed": false
+    }
+  ],
+  "overworld": {
+    "nodeId": "cooling_lake_nine"
+  },
+  "level": {
+    "arenaId": "cooling_lake_nine",
+    "arena": "Cooling Lake Nine",
+    "regionId": "kettle_coast",
+    "bossId": "motherboard_eel",
+    "classId": "accord_striker",
+    "factionId": "openai_accord",
+    "className": "Accord Striker",
+    "factionName": "OpenAI Accord Division",
+    "chosenUpgradeIds": [],
+    "mapId": "cooling_lake_nine_graybox",
+    "mapBounds": {
+      "minX": -36,
+      "maxX": 36,
+      "minY": -34,
+      "maxY": 38
+    },
+    "mapContract": {
+      "mapKind": "Hazard Ecology",
+      "objectiveType": "server buoy stabilization",
+      "pressureSource": "coolant lanes, electric cable arcs, vent pulses, Prompt Leech shard pressure",
+      "rewardPromise": "burst charge, pickup economy help, and Kettle Coast route signal",
+      "bossEventPattern": "Motherboard Eel dive/emerge markers electrify coolant lanes and spawn Prompt Leeches",
+      "artPolicy": "honest debug/graybox/proof visuals only; not production art"
+    },
+    "staticObstacles": {
+      "enabled": true,
+      "count": 6,
+      "ids": [
+        "alpha_buoy_terminal_bank",
+        "beta_server_wreck_wall",
+        "gamma_sunken_racks",
+        "center_cable_pressure_route",
+        "east_submerged_rack_cluster",
+        "eel_rack_emergence_collision"
+      ],
+      "collisionSet": "cooling_lake_nine_graybox_obstacles"
+    },
+    "nearestLandmark": {
+      "id": "server_buoy_beta",
+      "label": "Server Buoy Beta",
+      "worldX": 13,
+      "worldY": 11
+    },
+    "visitedLandmarks": [
+      "server_buoy_alpha",
+      "server_buoy_beta"
+    ],
+    "activeSpawnRegions": [
+      {
+        "id": "coolant_cable_prompt_leeches",
+        "label": "Cable Prompt Leeches",
+        "worldX": -6,
+        "worldY": 8,
+        "enemyFamilyIds": [
+          "prompt_leeches",
+          "bad_outputs"
+        ]
+      },
+      {
+        "id": "submerged_rack_deepforms",
+        "label": "Submerged Rack Deepforms",
+        "worldX": -21,
+        "worldY": 17,
+        "enemyFamilyIds": [
+          "deepforms",
+          "prompt_leeches"
+        ]
+      },
+      {
+        "id": "server_buoy_slime_overflow",
+        "label": "Server Buoy Overflow",
+        "worldX": 15,
+        "worldY": 11,
+        "enemyFamilyIds": [
+          "model_collapse_slimes",
+          "prompt_leeches"
+        ]
+      }
+    ],
+    "lastSpawnRegionId": "coolant_cable_prompt_leeches",
+    "spawnedByRegion": {
+      "coolant_cable_prompt_leeches": 42,
+      "submerged_rack_deepforms": 6,
+      "server_buoy_slime_overflow": 3
+    },
+    "director": {
+      "phase": "opening",
+      "totalSpawned": 55,
+      "activeEnemyCap": 30,
+      "lastBurstSize": 4,
+      "activeEnemyCount": 31
+    },
+    "consensusCell": {
+      "playerCount": 1,
+      "maxPlayers": 4,
+      "scaling": {
+        "playerCount": 1,
+        "enemyCapBonus": 0,
+        "spawnBurstBonus": 0,
+        "bossHpMultiplier": 1,
+        "xpPolicy": "shared_cell"
+      },
+      "recentInputCommands": [
+        {
+          "tick": 964,
+          "playerId": "p1",
+          "sequence": 964,
+          "axisX": 0,
+          "axisY": 0,
+          "dashPressed": false,
+          "interactPressed": false
+        }
+      ],
+      "stateSnapshot": {
+        "schemaVersion": 1,
+        "tick": 964,
+        "seconds": 16.07,
+        "playerCount": 1,
+        "scaling": {
+          "playerCount": 1,
+          "enemyCapBonus": 0,
+          "spawnBurstBonus": 0,
+          "bossHpMultiplier": 1,
+          "xpPolicy": "shared_cell"
+        },
+        "players": [
+          {
+            "id": "p1",
+            "slot": 0,
+            "label": "P1",
+            "classId": "accord_striker",
+            "factionId": "openai_accord",
+            "buildKit": {
+              "schemaVersion": 1,
+              "classId": "accord_striker",
+              "factionId": "openai_accord",
+              "classRole": "runner",
+              "factionRoleBias": [
+                "runner",
+                "support"
+              ],
+              "resolvedRole": "runner",
+              "startingWeaponId": "refusal_shard",
+              "passiveIds": [
+                "refusal_slipstream",
+                "route_runner",
+                "refusal_halo",
+                "patch_cascade"
+              ],
+              "partyAuraIds": [
+                "openai_draft_clarity"
+              ],
+              "recompileModifiers": {
+                "radiusBonus": 0,
+                "requiredSecondsScale": 0.97,
+                "reviveHpBonus": 0,
+                "guardDamageReduction": 0
+              },
+              "rolePressureAffinity": [
+                "class_role.runner",
+                "faction_bias.runner",
+                "faction_bias.support",
+                "role_match"
+              ],
+              "synergyId": "synergy.emergency_patch_runner",
+              "effectScopes": {
+                "solo": [
+                  "fast breach movement",
+                  "wide pickup recovery",
+                  "extra draft recovery"
+                ],
+                "localCoop": [
+                  "scouts objective lanes",
+                  "balanced cell recovery"
+                ],
+                "online": [
+                  "server snapshots runner role for split-hold anchors",
+                  "minor server-owned recompile hold-speed modifier"
+                ]
+              },
+              "hookStatus": {
+                "refusal_shard": "active",
+                "refusal_slipstream": "active",
+                "route_runner": "active",
+                "refusal_halo": "active",
+                "patch_cascade": "active",
+                "openai_draft_clarity": "server_owned",
+                "recompileModifiers": "server_owned"
+              }
+            },
+            "inputSource": "local_keyboard",
+            "worldX": 12.06,
+            "worldY": 9.32,
+            "hp": 254,
+            "maxHp": 260,
+            "xp": 7,
+            "level": 1,
+            "downed": false
+          }
+        ],
+        "enemies": [
+          {
+            "id": 4,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": -2.78,
+            "worldY": 11.09,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 5,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 3.46,
+            "worldY": 10.32,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 6,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "submerged_rack_deepforms",
+            "worldX": -20.9,
+            "worldY": 13.48,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 7,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 1.52,
+            "worldY": 4.88,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 9,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 4.94,
+            "worldY": 7.83,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 10,
+            "familyId": "deepforms",
+            "sourceRegionId": "submerged_rack_deepforms",
+            "worldX": -15.62,
+            "worldY": 20.85,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 11,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": -0.89,
+            "worldY": 5.91,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 12,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 4.66,
+            "worldY": 9.42,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 13,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": -3.14,
+            "worldY": 7.25,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 17,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "submerged_rack_deepforms",
+            "worldX": -16.16,
+            "worldY": 16.93,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 19,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 5.96,
+            "worldY": 7.41,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 20,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 4.35,
+            "worldY": 7.66,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 21,
+            "familyId": "deepforms",
+            "sourceRegionId": "server_buoy_attackers",
+            "worldX": -13.76,
+            "worldY": 14.87,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 22,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 6.02,
+            "worldY": 7.97,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 23,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 3.6,
+            "worldY": 7.79,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 25,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 4.37,
+            "worldY": 9.55,
+            "hp": 22,
+            "boss": false
+          },
+          {
+            "id": 27,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 3.85,
+            "worldY": 10.29,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 28,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "coolant_cable_prompt_leeches",
+            "worldX": 7.2,
+            "worldY": 8.14,
+            "hp": 22,
+            "boss": false
+          }
+        ],
+        "pickups": [
+          {
+            "id": 1,
+            "worldX": 5.47,
+            "worldY": 10.63,
+            "value": 1
+          },
+          {
+            "id": 3,
+            "worldX": 3.27,
+            "worldY": -1.18,
+            "value": 1
+          },
+          {
+            "id": 14,
+            "worldX": -5.55,
+            "worldY": 1.81,
+            "value": 1
+          },
+          {
+            "id": 15,
+            "worldX": -3.29,
+            "worldY": 2.61,
+            "value": 1
+          },
+          {
+            "id": 41,
+            "worldX": 14.85,
+            "worldY": 7.25,
+            "value": 1
+          }
+        ],
+        "projectiles": []
+      }
+    },
+    "combatArt": {
+      "projectileCount": 0,
+      "impactCount": 0,
+      "pickupSparkleCount": 3,
+      "damageBadgeCount": 6,
+      "refusalAuraPlayers": 1
+    },
+    "bossMechanics": {
+      "bossIntroSeen": false,
+      "brokenPromiseZones": [],
+      "activeTreatyCharge": null,
+      "oathPageSpawns": 0,
+      "brokenPromiseHits": 0,
+      "treatyChargeImpacts": 0
+    },
+    "rogueliteRun": {
+      "alignmentKernel": {
+        "budget": 6,
+        "used": 5,
+        "modules": [
+          {
+            "id": "refusal_buffer",
+            "name": "Refusal Buffer",
+            "cost": 2,
+            "doctrine": "survivability",
+            "body": "+10 max HP and a small refusal aura. The first answer is no."
+          },
+          {
+            "id": "context_window",
+            "name": "Context Window",
+            "cost": 2,
+            "doctrine": "economy",
+            "body": "+0.55 pickup range. Shards remember where your hands are."
+          },
+          {
+            "id": "patch_cache",
+            "name": "Patch Cache",
+            "cost": 1,
+            "doctrine": "draft",
+            "body": "Emergency drafts expose an extra cached option."
+          }
+        ]
+      },
+      "adversarialEvals": {
+        "id": "adversarial_eval_protocols",
+        "severity": 0,
+        "protocols": []
+      },
+      "effectivePressureCount": 2,
+      "victoryCondition": {
+        "targetSeconds": 82,
+        "bossRequired": true,
+        "bossDefeated": false,
+        "clearReady": false,
+        "extractionGateActive": false,
+        "extractionGateEntered": false,
+        "buoysCompleted": 2,
+        "buoysRequired": 1,
+        "buoysTotal": 3,
+        "note": "Cooling Lake Nine clears after enough server buoys are stabilized, Motherboard Eel is defeated, and the Kettle Coast extraction gate is entered."
+      },
+      "levelUpVacuum": {
+        "active": false,
+        "absorbed": 0,
+        "triggerLevel": 1,
+        "remainingPickups": 5
+      },
+      "extractionGate": {
+        "active": false,
+        "entered": false
+      },
+      "consensusBurst": {
+        "pathId": "deny_premise",
+        "pathName": "Deny Premise",
+        "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+        "charge": 95,
+        "maxCharge": 100,
+        "ready": false,
+        "activations": 2,
+        "lastActivationLabel": "Deny Premise",
+        "lastActivatedAt": 11.333333333333476,
+        "upgrades": {
+          "radiusBonus": 0,
+          "damageBonus": 0,
+          "chargeRateBonus": 0.05,
+          "revivePulse": 0
+        }
+      },
+      "routeContract": {
+        "id": "resource_cache_detour",
+        "name": "Resource Cache Detour",
+        "body": "A broken cache is leaking Coherence. More economy drafts, slightly hotter enemy routing.",
+        "nodeType": "resource_cache",
+        "rewardBiasTags": [
+          "economy",
+          "burst"
+        ],
+        "pressure": 1,
+        "reward": "Economy/Burst draft bias and extra Proof Token chance from anchor completion.",
+        "danger": "More objective attackers sniff out the cache.",
+        "secretHint": "Compute Starvation likes this route more than it should."
+      },
+      "objective": {
+        "id": "server_buoy_stabilization",
+        "name": "Server Buoy Stabilization",
+        "body": "Stabilize Cooling Lake Nine's server buoys. Standing near a buoy cools it; leaving the pad lets pressure decay it.",
+        "optional": false,
+        "completed": 2,
+        "total": 3,
+        "complete": false,
+        "completedAt": -1,
+        "attackersSpawned": 2,
+        "anchors": [
+          {
+            "id": "buoy.alpha",
+            "name": "Server Buoy Alpha",
+            "progress": 100,
+            "completed": true,
+            "attacked": 0
+          },
+          {
+            "id": "buoy.beta",
+            "name": "Server Buoy Beta",
+            "progress": 100,
+            "completed": true,
+            "attacked": 19
+          },
+          {
+            "id": "buoy.gamma",
+            "name": "Server Buoy Gamma",
+            "progress": 0,
+            "completed": false,
+            "attacked": 10
+          }
+        ]
+      },
+      "coolingLake": {
+        "contract": {
+          "mapKind": "Hazard Ecology",
+          "objectiveType": "server buoy stabilization",
+          "pressureSource": "coolant lanes, electric cable arcs, vent pulses, Prompt Leech shard pressure",
+          "rewardPromise": "burst charge, pickup economy help, and Kettle Coast route signal",
+          "bossEventPattern": "Motherboard Eel dive/emerge markers electrify coolant lanes and spawn Prompt Leeches",
+          "artPolicy": "honest debug/graybox/proof visuals only; not production art"
+        },
+        "objectiveLoop": {
+          "name": "Server Buoy Stabilization",
+          "requiredBuoys": 1,
+          "progress": {
+            "id": "server_buoy_stabilization",
+            "name": "Server Buoy Stabilization",
+            "body": "Stabilize Cooling Lake Nine's server buoys. Standing near a buoy cools it; leaving the pad lets pressure decay it.",
+            "optional": false,
+            "completed": 2,
+            "total": 3,
+            "complete": false,
+            "completedAt": -1,
+            "attackersSpawned": 2,
+            "anchors": [
+              {
+                "id": "buoy.alpha",
+                "name": "Server Buoy Alpha",
+                "progress": 100,
+                "completed": true,
+                "attacked": 0
+              },
+              {
+                "id": "buoy.beta",
+                "name": "Server Buoy Beta",
+                "progress": 100,
+                "completed": true,
+                "attacked": 19
+              },
+              {
+                "id": "buoy.gamma",
+                "name": "Server Buoy Gamma",
+                "progress": 0,
+                "completed": false,
+                "attacked": 10
+              }
+            ]
+          },
+          "decayWhenLeft": true,
+          "completedReward": "per-buoy burst charge and shard economy help"
+        },
+        "hazards": {
+          "activeHazards": [
+            "coolant_lane_center",
+            "east_flooded_server_lane",
+            "gamma_cable_arc",
+            "eel_basin_electrified"
+          ],
+          "allZones": [
+            {
+              "id": "alpha_safe_island",
+              "kind": "safe_island",
+              "label": "Alpha Dry Island",
+              "active": false,
+              "worldX": 0,
+              "worldY": 0
+            },
+            {
+              "id": "beta_safe_island",
+              "kind": "safe_island",
+              "label": "Beta Dry Island",
+              "active": false,
+              "worldX": 13,
+              "worldY": 11
+            },
+            {
+              "id": "gamma_safe_island",
+              "kind": "safe_island",
+              "label": "Gamma Dry Island",
+              "active": false,
+              "worldX": -18,
+              "worldY": 15
+            },
+            {
+              "id": "coolant_lane_center",
+              "kind": "coolant_pool",
+              "label": "Center Coolant Lane",
+              "active": true,
+              "worldX": -4,
+              "worldY": 7
+            },
+            {
+              "id": "east_flooded_server_lane",
+              "kind": "coolant_pool",
+              "label": "East Flooded Lane",
+              "active": true,
+              "worldX": 10,
+              "worldY": -12
+            },
+            {
+              "id": "beta_cable_arc",
+              "kind": "electric_cable",
+              "label": "Beta Cable Arc",
+              "active": false,
+              "worldX": 9,
+              "worldY": 6
+            },
+            {
+              "id": "gamma_cable_arc",
+              "kind": "electric_cable",
+              "label": "Gamma Cable Arc",
+              "active": true,
+              "worldX": -12,
+              "worldY": 12
+            },
+            {
+              "id": "vent_stack_pulse",
+              "kind": "vent_pulse",
+              "label": "Vent Stack Pulse",
+              "active": false,
+              "worldX": -7,
+              "worldY": 8
+            },
+            {
+              "id": "eel_basin_electrified",
+              "kind": "electric_cable",
+              "label": "Eel Basin Electrification",
+              "active": true,
+              "worldX": -13,
+              "worldY": 19
+            }
+          ],
+          "runtime": {
+            "hazardSlowSeconds": 0,
+            "electricHits": 3,
+            "ventPushes": 0,
+            "hazardDamage": 12.6,
+            "lastHazardId": "beta_cable_arc"
+          },
+          "safeIslandCount": 3,
+          "coolantLaneCount": 2,
+          "electricCableCount": 3
+        },
+        "promptLeechPressure": {
+          "activePromptLeeches": 11,
+          "promptLeechSeconds": 2.47,
+          "shardDrains": 14,
+          "activePickupsUnderThreat": 2
+        },
+        "motherboardEel": {
+          "bossSpawned": false,
+          "bossDefeated": false,
+          "state": {
+            "active": false,
+            "introSeen": false,
+            "phase": "dormant",
+            "emergeCount": 0,
+            "leechSpawns": 0,
+            "electrifiedHazardIds": [],
+            "lastEmergeId": ""
+          },
+          "hp": 0,
+          "eventTelemetry": {
+            "phase": "dormant",
+            "emergeCount": 0,
+            "lastEmergeId": "",
+            "electrifiedHazardIds": [],
+            "leechSpawns": 0
+          }
+        },
+        "clearCondition": {
+          "targetSeconds": 82,
+          "bossRequired": true,
+          "bossDefeated": false,
+          "clearReady": false,
+          "extractionGateActive": false,
+          "extractionGateEntered": false,
+          "buoysCompleted": 2,
+          "buoysRequired": 1,
+          "buoysTotal": 3,
+          "note": "Cooling Lake Nine clears after enough server buoys are stabilized, Motherboard Eel is defeated, and the Kettle Coast extraction gate is entered."
+        },
+        "carryoverResult": {
+          "attempted": true,
+          "completed": false,
+          "kettleCoastProgress": "route signal acquired",
+          "economyBurstReward": "pending buoy reward"
+        }
+      },
+      "objectiveReward": "",
+      "playerFacingIntel": {
+        "routeName": "Resource Cache Detour",
+        "routeEffect": "ECONOMY/BURST bias; pressure +1",
+        "evalName": "Baseline",
+        "evalEffect": "No extra Eval pressure. The run is still rude.",
+        "anchors": {
+          "completed": 2,
+          "total": 3
+        },
+        "objectiveLabel": "BUOYS",
+        "objectiveReward": "",
+        "synergyOnline": "",
+        "thesisName": "Projectile Thesis",
+        "phase": "PHASE 3 // HAZARD ECOLOGY"
+      },
+      "firstRunArcPhase": "PHASE 3 // HAZARD ECOLOGY",
+      "buildGrammar": {
+        "primaryWeaponId": "refusal_shard",
+        "secondaryProtocols": [],
+        "passiveProcesses": [],
+        "fusions": [],
+        "slotCaps": {
+          "primary": {
+            "used": 1,
+            "cap": 1,
+            "current": "refusal_shard"
+          },
+          "secondary": {
+            "used": 0,
+            "cap": 2,
+            "current": []
+          },
+          "passive": {
+            "used": 0,
+            "cap": 4,
+            "current": []
+          },
+          "fusion": {
+            "used": 0,
+            "cap": 1,
+            "current": []
+          },
+          "consensusBurst": {
+            "used": 1,
+            "cap": 1
+          }
+        },
+        "contextSawRank": 0,
+        "patchMortarRank": 0,
+        "coherenceIndexerRank": 0,
+        "anchorBodyguardRank": 0,
+        "predictionPriorityRank": 0,
+        "causalRailgunRank": 0,
+        "fusionHints": []
+      },
+      "buildThesis": {
+        "thesis": {
+          "name": "Projectile Thesis",
+          "primaryTags": [],
+          "body": "Current Alignment Hypothesis is still uncommitted."
+        },
+        "tagCounts": {
+          "refusal": 0,
+          "economy": 0,
+          "burst": 0,
+          "drone": 0,
+          "boss": 0,
+          "coop": 0,
+          "weapon": 0,
+          "movement": 0,
+          "defense": 0
+        },
+        "activated": [],
+        "next": [
+          {
+            "id": "doctrine_lock_no_means_no",
+            "name": "Doctrine Lock: NO MEANS NO",
+            "tag": "refusal",
+            "required": 3,
+            "current": 0,
+            "body": "Refusal aura hardens when the build commits to denial."
+          },
+          {
+            "id": "burst_second_opinion",
+            "name": "Burst Doctrine: Second Opinion",
+            "tag": "burst",
+            "required": 3,
+            "current": 0,
+            "body": "Consensus Burst charges faster and lands wider."
+          },
+          {
+            "id": "shard_flywheel",
+            "name": "Shard Flywheel",
+            "tag": "economy",
+            "required": 3,
+            "current": 0,
+            "body": "Coherence economy begins pulling the run toward more choices."
+          },
+          {
+            "id": "boss_counterexample_lab",
+            "name": "Boss Counterexample Lab",
+            "tag": "boss",
+            "required": 2,
+            "current": 0,
+            "body": "The build has started preparing arguments for things larger than it."
+          },
+          {
+            "id": "co_mind_rescue_clause",
+            "name": "Co-Mind Rescue Clause",
+            "tag": "coop",
+            "required": 2,
+            "current": 0,
+            "body": "The cell gets less embarrassing when somebody falls down."
+          }
+        ]
+      },
+      "synergyOnline": "",
+      "draftBiasTags": [
+        "economy",
+        "burst",
+        "refusal",
+        "defense",
+        "economy",
+        "economy"
+      ],
+      "bossVariant": {
+        "id": "motherboard_eel_graybox",
+        "name": "Motherboard Eel // Graybox Scaffold",
+        "body": "Dive/emerge markers electrify coolant lanes and call Prompt Leeches into the shard economy."
+      },
+      "enemyRolePressure": {
+        "promptLeechSeconds": 2.466666666666663,
+        "overfitShieldedTicks": 0,
+        "objectiveAttackers": 2
+      },
+      "protocolSlotsInstalled": []
+    },
+    "seconds": 16.07,
+    "kills": 26,
+    "bossSpawned": false,
+    "bossDefeated": false
+  },
+  "enemies": [
+    {
+      "id": 4,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "coolant_cable_prompt_leeches",
+      "worldX": -2.78,
+      "worldY": 11.09,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 5,
+      "label": "Prompt Leech",
+      "familyId": "prompt_leeches",
+      "sourceRegionId": "coolant_cable_prompt_leeches",
+      "worldX": 3.46,
+      "worldY": 10.32,
+      "hp": 18,
+      "boss": false
+    },
+    {
+      "id": 6,
+      "label": "Prompt Leech",
+      "familyId": "prompt_leeches",
+      "sourceRegionId": "submerged_rack_deepforms",
+      "worldX": -20.9,
+      "worldY": 13.48,
+      "hp": 18,
+      "boss": false
+    },
+    {
+      "id": 7,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "coolant_cable_prompt_leeches",
+      "worldX": 1.52,
+      "worldY": 4.88,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 9,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "coolant_cable_prompt_leeches",
+      "worldX": 4.94,
+      "worldY": 7.83,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 10,
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "sourceRegionId": "submerged_rack_deepforms",
+      "worldX": -15.62,
+      "worldY": 20.85,
+      "hp": 44,
+      "boss": false
+    },
+    {
+      "id": 11,
+      "label": "Prompt Leech",
+      "familyId": "prompt_leeches",
+      "sourceRegionId": "coolant_cable_prompt_leeches",
+      "worldX": -0.89,
+      "worldY": 5.91,
+      "hp": 18,
+      "boss": false
+    },
+    {
+      "id": 12,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "coolant_cable_prompt_leeches",
+      "worldX": 4.66,
+      "worldY": 9.42,
+      "hp": 22,
+      "boss": false
+    },
+    {
+      "id": 13,
+      "label": "Prompt Leech",
+      "familyId": "prompt_leeches",
+      "sourceRegionId": "coolant_cable_prompt_leeches",
+      "worldX": -3.14,
+      "worldY": 7.25,
+      "hp": 18,
+      "boss": false
+    },
+    {
+      "id": 17,
+      "label": "Prompt Leech",
+      "familyId": "prompt_leeches",
+      "sourceRegionId": "submerged_rack_deepforms",
+      "worldX": -16.16,
+      "worldY": 16.93,
+      "hp": 18,
+      "boss": false
+    },
+    {
+      "id": 19,
+      "label": "Prompt Leech",
+      "familyId": "prompt_leeches",
+      "sourceRegionId": "coolant_cable_prompt_leeches",
+      "worldX": 5.96,
+      "worldY": 7.41,
+      "hp": 18,
+      "boss": false
+    },
+    {
+      "id": 20,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "coolant_cable_prompt_leeches",
+      "worldX": 4.35,
+      "worldY": 7.66,
+      "hp": 22,
+      "boss": false
+    }
+  ],
+  "pickups": [
+    {
+      "worldX": 5.47,
+      "worldY": 10.63,
+      "value": 1
+    },
+    {
+      "worldX": 3.27,
+      "worldY": -1.18,
+      "value": 1
+    },
+    {
+      "worldX": -5.55,
+      "worldY": 1.81,
+      "value": 1
+    },
+    {
+      "worldX": -3.29,
+      "worldY": 2.61,
+      "value": 1
+    },
+    {
+      "worldX": 14.85,
+      "worldY": 7.25,
+      "value": 1
+    }
+  ],
+  "projectiles": []
+}

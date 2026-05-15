@@ -8,9 +8,13 @@ This file does not replace `docs/FRESH_THREAD_CURRENT_STATE.md`, `docs/CAMPAIGN_
 
 For the compact durable operating rules from the latest long thread, also read `docs/CODEX_CONTINUITY_LEDGER.md`.
 
+For any player-facing copy, also read `docs/COPY_VOICE_DIRECTION.md`. The new copy target is not earnest AGI lore. It is original sardonic AGI dungeon-crawl parody: clear objective language first, then jokes, institutional mockery, hostile reward framing, and constant contempt for A.G.I., frontier labs, safety theater, bosses, and the player's terrible little job.
+
 ## Current Truth
 
 `AGI: The Last Alignment` should read first as a 2D isometric pixel-art horde-survival roguelite, second as an authored campaign adventure, and third as AGI lore/systems flavor.
+
+The copy should no longer read like solemn lore or neutral systems documentation. It should read like the apocalypse has a sarcastic announcer with a grudge and a very good grasp of tutorial UX.
 
 Do not redesign away from:
 
@@ -114,7 +118,7 @@ The next phase should continue gameplay feel tuning, not another clarity refacto
 
 Goal: make each campaign level feel different moment-to-moment in the player's hands, now that the objective verbs, UI, duration profile, and Enemy Mob Differentiation V1 systems are in place.
 
-First follow-up: rerun the route proofs from a fully responsive non-iCloud checkout and inspect screenshots for the new enemy-role pressure. During the V1 implementation, static/asset checks passed, but normal-workspace browser proofs were blocked by dependency/source reads (`picomatch`, `rollup`, `@playwright/test`, `vite.config.ts`, and source transform stalls). Do not claim final play-feel acceptance for enemy roles until fresh route screenshots prove readability in live close-camera combat.
+Enemy-role V1 verification is complete from a hydrated `/tmp/agi-enemy-role-proof-clone` checkout. The blocker was stale `.playwright-mcp` git-add jobs plus iCloud/File Provider dataless placeholders, not a gameplay compile failure. Final checks passed: full `tsc --noEmit`, enemy-role/objective/duration/clarity/assets proofs, overworld, solo unlocks, smoke, reference-run, every route proof from Cooling through Finale, and `proof:campaign-full`. Future enemy/spawn tuning should still use the temp-checkout pattern if the normal workspace starts blocking on dependency/source reads again.
 
 Work in this order:
 

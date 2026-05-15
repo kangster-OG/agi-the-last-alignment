@@ -10,6 +10,30 @@ Arcade shape: the player walks across a dense Super Mario-style overworld dioram
 
 The game is intended to support both solo play and co-op. Target co-op size is 1-4 players.
 
+## Design Hierarchy
+
+The current durable direction is to make the game read in this order:
+
+1. Horde-survival roguelite.
+2. Authored campaign adventure.
+3. AGI lore, parody faction flavor, and strange systems language.
+
+That means the core loop should be obvious before the fiction gets dense:
+
+`Survive -> build power -> complete one map objective -> beat or escape boss pressure -> extract -> unlock next thing`.
+
+Campaign structure, overworld presentation, briefing copy, in-run HUD guidance, summary rewards, and unlock UI should all reinforce that loop. Free Alignment should feel generous as an immediate roster sandbox, while Campaign Mode should preserve durable unlock progression.
+
+The detailed implementation checklist lives in `docs/CAMPAIGN_CLARITY_REFACTOR_CHECKLIST.md`. The objective-variety goal lives in `docs/AUTOBATTLE_OBJECTIVE_VARIETY_GOAL.md`: after Armistice teaches baseline anchor capture, campaign levels should rotate through hazard lure, route/timing windows, boss-gate hunt, carry/extract, risk holdout, environmental weapon, and finale remix patterns so the game feels closer to modern horde-survival/autobattle pacing.
+
+## Copy Voice
+
+The durable copy direction lives in `docs/COPY_VOICE_DIRECTION.md`.
+
+Player-facing text should now read like original sardonic AGI dungeon-crawl parody: mechanically clear, sarcastic, funny, hostile to institutional nonsense, and constantly making fun of A.G.I., frontier labs, safety theater, objectives, bosses, rewards, and the player's miserable but apparently necessary job.
+
+The campaign clarity hierarchy still wins: tell the player what to do first, then make the joke. The game should never become solemn lore sludge, but it also should not bury objectives under comedy.
+
 ## Current Prototype
 
 The current prototype is a successful Milestone 1 scaffold:
@@ -150,6 +174,18 @@ Examples:
 - Outer Alignment Finale: `Prediction Collapse + Alignment Proofs + route-mouth/prediction pressure + Outer Alignment Contained + A.G.I.`.
 
 The current V1 local campaign is complete from Armistice Plaza through Outer Alignment Finale. Future map-kind work should treat this chain as the reference campaign spine unless the user asks for new branches, variants, or release-candidate polish.
+
+## Eco Guardian / Tech Bros Mechanics Study
+
+The user asked Codex to play and analyze Eco Guardian (`https://eco-guardian-delta.vercel.app/`) and Tech Bros (`https://techbrosgame.app/`) and translate their strongest structural lessons into AGI without copying their names, art, characters, jokes, UI, maps, or expressive content.
+
+The durable study and implementation record lives in `docs/ECO_GUARDIAN_TECH_BROS_MECHANICS_LEARNINGS.md`. Read it before extending campaign progression, Protocol Codex/fusions, reward pacing, Alignment Checks, boss contracts, difficulty rotation, "what now?" guidance, or completion payoff.
+
+Short version:
+
+- Eco Guardian mainly informed stage-clear payoff, readable build evolution, reward/cache cadence, rising stage clarity, lightweight choice events, and mission-complete stats.
+- Tech Bros mainly informed authored campaign route clarity, named location/room purpose, round/room pacing, boss encounter framing, and ending-screen closure.
+- AGI translates those lessons into Alignment Grid progression metadata, map-kind contracts, Protocol Codex fusion visibility, reward-event telemetry, Alignment Checks, boss-map contracts, rotating pressure levers, compact guidance, and richer node/campaign payoff.
 
 ## Durable Difficulty Direction
 

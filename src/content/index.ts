@@ -8,3 +8,5 @@ export * from "./regions";
 export * from "./types";
 export * from "./uiText";
 export * from "./upgrades";
+export * from "./campaignClarity";
+export * from "./campaignObjectiveVariety";

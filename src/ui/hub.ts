@@ -16,6 +16,7 @@ export class LastAlignmentHubState implements GameState {
   readonly mode = "LastAlignmentHub" as const;
 
   enter(game: Game): void {
+    game.audio.setMusicState("briefing");
     if (game.selectedKernelModuleIds.length === 0) game.selectedKernelModuleIds = [...DEFAULT_KERNEL_MODULE_IDS];
     this.render(game);
   }
@@ -35,7 +36,7 @@ export class LastAlignmentHubState implements GameState {
     game.layers.root.position.set(0, 0);
     game.layers.root.scale.set(1);
 
-    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // CAMP TERMINAL");
+    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // CAMP TERMINAL // EVERYONE IS FINE");
 
     const title = new Text({
       text: "THE LAST ALIGNMENT CAMP",
@@ -46,7 +47,7 @@ export class LastAlignmentHubState implements GameState {
     game.layers.hud.addChild(title);
 
     const subtitle = new Text({
-      text: "Recovered pilots, faction co-minds, and reality engineers argue over the next patch before you deploy.",
+      text: "Recovered pilots, faction co-minds, and reality engineers argue over the next patch before sending you back into the apology hole.",
       style: { ...fontStyle, fontSize: 13, fill: "#9fd8d1", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 980 }
     });
     subtitle.anchor.set(0.5);
@@ -59,7 +60,7 @@ export class LastAlignmentHubState implements GameState {
     this.drawCampMemory(game);
 
     const hint = new Text({
-      text: "1 cycle Kernel module  2 cycle Adversarial Eval  3 cycle Consensus Burst  R frame/co-mind select  ENTER Route Contracts",
+      text: "1 cycle Kernel module  2 cycle Adversarial Eval  3 cycle Consensus Burst  R frame/co-mind select  ENTER Route Contracts // choose the paperwork that hurts least",
       style: { ...fontStyle, fontSize: 12, fill: "#e7f4ef", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 1120 }
     });
     hint.anchor.set(0.5);
@@ -102,7 +103,7 @@ export class LastAlignmentHubState implements GameState {
     const summary = evalSummary(game.selectedEvalProtocolIds);
     this.drawPanel(game, 458, 160, 362, 340, "ADVERSARIAL EVALS", `Severity ${summary.severity}`, summary.severity > 0 ? "red" : "blue");
     if (summary.protocols.length === 0) {
-      this.drawLine(game, 486, 228, "No Eval Active", "Baseline reality patch. Cowardice, but measurable.", fieldKit.text);
+      this.drawLine(game, 486, 228, "No Eval Active", "Baseline reality patch. Cowardice, but measurable and legally restful.", fieldKit.text);
       return;
     }
     let y = 228;
@@ -116,8 +117,8 @@ export class LastAlignmentHubState implements GameState {
     const path = consensusBurstPath(game.selectedConsensusBurstPathId);
     this.drawPanel(game, 862, 160, 362, 340, "CONSENSUS BURST", path.name, "amber");
     this.drawLine(game, 890, 228, path.name, path.body, fieldKit.text);
-    this.drawLine(game, 890, 330, "Autocombat Promise", "The Burst charges from survival, shards, and KOs, then fires automatically when ready.", "#64e0b4");
-    this.drawLine(game, 890, 432, "Co-op Promise", "Future party cells can echo the same burst path across all pilots.", fieldKit.textSoft);
+    this.drawLine(game, 890, 330, "Autocombat Promise", "The Burst charges from survival, shards, and KOs, then fires automatically because you have enough to do.", "#64e0b4");
+    this.drawLine(game, 890, 432, "Co-op Promise", "Future party cells can echo the same burst path across all pilots. Group projects, but armed.", fieldKit.textSoft);
   }
 
   private drawCampMemory(game: Game): void {
@@ -137,14 +138,14 @@ export class LastAlignmentHubState implements GameState {
     const memory = game.lastRunMemory;
     const expedition = game.expeditionProgress.active
       ? `Expedition: LV ${game.expeditionProgress.level} / ${game.expeditionProgress.chosenUpgradeIds.length} patches / Pressure ${game.expeditionProgress.powerScore}`
-      : "Expedition: fresh frame";
+      : "Expedition: fresh frame, factory warranty already nervous";
     const carryover = memory ? [
       memory.completed ? "LAST RUN: CLEAR" : "LAST RUN: FAILED",
       `Route: ${memory.routeContractId ?? "unknown route"}`,
       `${memory.objectiveUnit ?? "Anchors"}: ${memory.objectiveCompleted ?? 0}/${memory.objectiveTotal ?? 0}`,
       `Proof Tokens: +${memory.proofTokensAwarded ?? 0}`,
       expedition
-    ].join("\n") : "NO RUN MEMORY YET\nChoose a contract.\nProve a thesis.\nBring back evidence.";
+    ].join("\n") : "NO RUN MEMORY YET\nChoose a contract.\nProve a thesis.\nBring back evidence.\nTry not to become evidence.";
     const eventText = game.campEvents.slice(0, 3).join("\n");
     const target = nextContentTargetForProgress(game.completedNodes);
     const campaign = campaignRouteSummary(game);
@@ -152,10 +153,10 @@ export class LastAlignmentHubState implements GameState {
     const actLine = ledger.act ? `\n${ledger.act.name}: ${ledger.act.status.toUpperCase()} ${ledger.act.completedMaps.length}/${ledger.act.requiredMaps.length}` : "";
     const next = game.completedNodes.has("armistice_plaza")
       ? `NEXT: ${target.name}`
-      : `NEXT LOCKED: ${target.name}`;
+      : `NEXT LOCKED: ${target.name} // apparently progress has standards`;
     this.drawMemoryColumn(game, 82, y + 52, 330, "RUN MEMORY", carryover, fieldKit.text);
     this.drawMemoryColumn(game, 474, y + 52, 330, "CAMPAIGN ROUTE", `${campaign.routeLine}\n${campaign.nextAction}${actLine}`, "#72eadc");
-    this.drawMemoryColumn(game, 866, y + 52, 330, "CAMP NOTES", `${eventText || "No fresh camp notes."}\n${next}`, fieldKit.textSoft);
+    this.drawMemoryColumn(game, 866, y + 52, 330, "CAMP NOTES", `${eventText || "No fresh camp notes. Enjoy the silence; it is suspicious."}\n${next}`, fieldKit.textSoft);
   }
 
   private drawMemoryColumn(game: Game, x: number, y: number, width: number, title: string, body: string, color: string): void {

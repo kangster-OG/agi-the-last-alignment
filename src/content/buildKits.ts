@@ -60,8 +60,8 @@ const ZERO_RECOMPILE: RecompileModifiers = {
 export const CLASS_KIT_DEFINITIONS: Record<string, ClassKitDefinition> = {
   accord_striker: {
     role: "runner",
-    passiveIds: ["refusal_slipstream", "route_runner"],
-    solo: ["fast breach movement", "wide pickup recovery"],
+    passiveIds: ["refusal_slipstream", "route_runner", "route_memory"],
+    solo: ["fast breach movement", "wide pickup recovery", "extra draft reroll planning"],
     localCoop: ["scouts objective lanes"],
     online: ["server snapshots runner role for split-hold anchors"]
   },
@@ -81,9 +81,9 @@ export const CLASS_KIT_DEFINITIONS: Record<string, ClassKitDefinition> = {
   },
   signal_vanguard: {
     role: "support",
-    passiveIds: ["beacon_discipline", "silkgrid_relay"],
-    solo: ["short pulse control"],
-    localCoop: ["support identity visible in four-player cell"],
+    passiveIds: ["beacon_discipline", "silkgrid_relay", "co_op_relay"],
+    solo: ["short pulse control", "Signal Choir recipe bias"],
+    localCoop: ["support identity visible in four-player cell", "relay-shield build grammar"],
     online: ["server-owned support kit modifiers can help Recompile Ally"]
   },
   bonecode_executioner: {
@@ -95,8 +95,8 @@ export const CLASS_KIT_DEFINITIONS: Record<string, ClassKitDefinition> = {
   },
   redline_surgeon: {
     role: "support",
-    passiveIds: ["redline_triage", "death_edit"],
-    solo: ["recovery-biased damage erasure"],
+    passiveIds: ["redline_triage", "death_edit", "field_triage_loop"],
+    solo: ["recovery-biased damage erasure", "stronger utility-cache sustain"],
     localCoop: ["revive and sustain identity"],
     online: ["support kit exposes server-owned Recompile Ally intent without durable state"]
   },
@@ -109,8 +109,8 @@ export const CLASS_KIT_DEFINITIONS: Record<string, ClassKitDefinition> = {
   },
   vector_interceptor: {
     role: "control",
-    passiveIds: ["predicted_lane", "peer_reviewed_laser"],
-    solo: ["long lane-piercing shots"],
+    passiveIds: ["predicted_lane", "peer_reviewed_laser", "weakest_link_scanner"],
+    solo: ["long lane-piercing shots", "Causal Railgun recipe bias"],
     localCoop: ["controls objective lanes"],
     online: ["control role remains authoritative telemetry only"]
   },
@@ -137,8 +137,8 @@ export const CLASS_KIT_DEFINITIONS: Record<string, ClassKitDefinition> = {
   },
   rift_saboteur: {
     role: "control",
-    passiveIds: ["rift_minefield", "delayed_causality"],
-    solo: ["trap and delayed burst identity"],
+    passiveIds: ["rift_minefield", "delayed_causality", "panic_window"],
+    solo: ["trap and delayed burst identity", "Time-Deferred Minefield recipe bias"],
     localCoop: ["objective choke-point denial"],
     online: ["server snapshots saboteur role for lane pressure"]
   }

@@ -13,6 +13,7 @@ Before doing meaningful art, visual, gameplay, packaging, or deployment work, re
 - `progress.md` tail
 - `docs/AGI_VISUAL_ART_BIBLE.md`
 - `docs/ASSET_PIPELINE.md`
+- `docs/PIXELLAB_AUTOMATION_WORKFLOW.md`
 - `docs/GAME_DIRECTION.md`
 - `docs/VISUAL_FIDELITY_VERTICAL_SLICE.md`
 - `docs/ARMISTICE_ACCEPTED_ART_BASELINE.md`
@@ -87,7 +88,9 @@ Fresh-thread habit: before and periodically during implementation, run `git stat
 
 Use PixelLab in an automated browser session by itself in the background. Do not touch the user's main browser tabs.
 
-Try the existing authenticated PixelLab browser/profile first. If that cannot be accessed, open a separate automated browser session and try PixelLab there. If PixelLab asks for sign-in, fresh 2FA, CAPTCHA, password re-entry, billing, payment, add-on purchase, or account-security prompts, stop and document the blocker so the user can sign in. Do not store credentials. Do not commit browser profiles, tokens, downloads with secrets, or local session data.
+Try the existing authenticated PixelLab browser/profile first. The current recovered workflow uses `.codex-local/pixellab-automation-profile` on DevTools port `9337` and is documented in `docs/PIXELLAB_AUTOMATION_WORKFLOW.md`. If that cannot be accessed, open a separate automated browser session and try PixelLab there. If PixelLab asks for sign-in, fresh 2FA, CAPTCHA, password re-entry, billing, payment, add-on purchase, or account-security prompts, stop and document the blocker so the user can sign in. Do not store credentials. Do not commit browser profiles, tokens, downloads with secrets, or local session data.
+
+When normal PixelLab download/export is unreliable, use the proven in-page API export pattern before declaring a hard blocker: read the PixelLab Supabase auth token from the page cookie inside the dedicated profile, query `GET https://api.pixellab.ai/objects?limit=100&offset=0`, select generated objects by prompt prefix, and export them with `POST https://api.pixellab.ai/objects/zip`. Save only the ZIP/source assets, then normalize and prove them mechanically.
 
 ## Historical Rebuild Plan
 

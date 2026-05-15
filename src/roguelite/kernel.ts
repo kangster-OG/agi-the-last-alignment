@@ -17,7 +17,7 @@ export const KERNEL_MODULES: KernelModule[] = [
     name: "Refusal Buffer",
     cost: 2,
     doctrine: "survivability",
-    body: "+10 max HP and a small refusal aura. The first answer is no.",
+    body: "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius.",
     apply: (build) => {
       build.maxHpBonus += 10;
       build.refusalAura += 0.12;
@@ -28,7 +28,7 @@ export const KERNEL_MODULES: KernelModule[] = [
     name: "Context Window",
     cost: 2,
     doctrine: "economy",
-    body: "+0.55 pickup range. Shards remember where your hands are.",
+    body: "+0.55 pickup range. Shards remember where your hands are, which is more than command can say.",
     apply: (build) => {
       build.pickupRange += 0.55;
     }
@@ -38,7 +38,7 @@ export const KERNEL_MODULES: KernelModule[] = [
     name: "Patch Cache",
     cost: 1,
     doctrine: "draft",
-    body: "Emergency drafts expose an extra cached option.",
+    body: "Emergency drafts expose an extra cached option. A tiny buffet in a burning building.",
     apply: (build) => {
       build.draftChoicesBonus += 1;
     }
@@ -48,7 +48,7 @@ export const KERNEL_MODULES: KernelModule[] = [
     name: "Recompile Insurance",
     cost: 2,
     doctrine: "co-op safety",
-    body: "+14 max HP and faster Consensus Burst charge after damage.",
+    body: "+14 max HP and faster Consensus Burst charge after damage. Getting hit now counts as research.",
     apply: (build) => {
       build.maxHpBonus += 14;
       build.consensusBurstChargeRate += 0.12;
@@ -59,7 +59,7 @@ export const KERNEL_MODULES: KernelModule[] = [
     name: "Eval Harness",
     cost: 1,
     doctrine: "boss pressure",
-    body: "+8% Consensus Burst damage. Bosses hate controlled studies.",
+    body: "+8% Consensus Burst damage. Bosses hate controlled studies because the control group explodes.",
     apply: (build) => {
       build.consensusBurstDamage += 0.08;
     }

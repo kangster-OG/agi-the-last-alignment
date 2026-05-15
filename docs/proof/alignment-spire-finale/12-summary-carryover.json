@@ -83,7 +83,10 @@
     "Context Saw",
     "Recompile Pulse",
     "Patch Mortar",
-    "Million-Token Backpack"
+    "Million-Token Backpack",
+    "Bad Output Filter",
+    "Patch Cascade",
+    "Alignment Breaker"
   ],
   "objective": "Reality now accepts this road.",
   "performance": {
@@ -154,9 +157,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 2,
-      "hit": 827,
-      "pickup": 763,
+      "ui": 9,
+      "hit": 5011,
+      "pickup": 5889,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
@@ -166,42 +169,42 @@
       {
         "id": "summary.completed",
         "kind": "summary",
-        "atMs": 133830
+        "atMs": 200584
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 200576
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 200405
       },
       {
         "id": "combat.consensus_burst",
         "kind": "hit",
-        "atMs": 133659
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 133659
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 133646
+        "atMs": 200388
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 133603
+        "atMs": 200388
       },
       {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 133466
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 200385
       },
       {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 133435
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 200384
       },
       {
-        "id": "route.unlocked",
-        "kind": "ui",
-        "atMs": 133418
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 200383
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -303,20 +306,22 @@
     "lastRunMemory": {
       "completed": true,
       "nodeId": "alignment_spire_finale",
-      "kills": 1026,
-      "seconds": 208,
-      "burstActivations": 123,
+      "kills": 6082,
+      "seconds": 901,
+      "burstActivations": 803,
       "routeContractId": "faction_relay_argument",
       "objectiveCompleted": 4,
       "objectiveTotal": 4,
       "objectiveName": "Outer Alignment Prediction Collapse",
       "objectiveUnit": "Alignment Proofs",
+      "objectiveStyle": "Campaign Remix",
+      "objectiveMechanic": "Seal proofs while A.G.I. replays prior route rules as prediction paths and boss echoes.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 14,
-      "expeditionLevel": 15,
-      "expeditionPower": 36.88,
-      "expeditionDrafts": 14,
+      "expeditionLevel": 18,
+      "expeditionPower": 43.19,
+      "expeditionDrafts": 17,
       "newSecrets": [
         {
           "id": "outer_alignment_contained",
@@ -345,12 +350,29 @@
           "name": "Alignment Proof Clear",
           "body": "Sealed every Outer Alignment route-mouth proof before the finale extraction."
         }
-      ]
+      ],
+      "nodeStabilized": "Outer Alignment Contained",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Alignment Breaker",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel",
+        "Synergy: boss_counterexample_lab",
+        "Synergy: co_mind_rescue_clause"
+      ],
+      "routeUnlocks": [],
+      "stabilizedRouteCount": 27,
+      "mechanicalUnlocks": [
+        "Frame: Overclock Marauder"
+      ],
+      "campaignConsequence": "Final clearance recorded. Outer Alignment is contained for this campaign proof.",
+      "factionCampaignConsequence": "Outer Alignment Contained",
+      "finalClearance": true
     },
     "expedition": {
       "active": true,
-      "level": 15,
-      "xp": 2176,
+      "level": 18,
+      "xp": 2343,
       "chosenUpgradeIds": [
         "refusal_halo",
         "the_no_button",
@@ -365,7 +387,10 @@
         "context_saw",
         "recompile_pulse",
         "patch_mortar",
-        "million_token_backpack"
+        "million_token_backpack",
+        "bad_output_filter",
+        "patch_cascade",
+        "alignment_breaker"
       ],
       "chosenUpgradeNames": [
         "Refusal Halo",
@@ -381,7 +406,10 @@
         "Context Saw",
         "Recompile Pulse",
         "Patch Mortar",
-        "Million-Token Backpack"
+        "Million-Token Backpack",
+        "Bad Output Filter",
+        "Patch Cascade",
+        "Alignment Breaker"
       ],
       "chosenProtocolSlots": [
         "defense_layer",
@@ -397,12 +425,16 @@
         "auto_weapon",
         "consensus_burst",
         "auto_weapon",
-        "defense_layer"
+        "defense_layer",
+        "co_mind_process",
+        "co_mind_process",
+        "co_mind_process"
       ],
       "activatedSynergyIds": [
         "doctrine_lock_no_means_no",
         "shard_flywheel",
-        "boss_counterexample_lab"
+        "boss_counterexample_lab",
+        "co_mind_rescue_clause"
       ],
       "completedMaps": [
         "armistice_plaza",
@@ -417,7 +449,7 @@
         "appeal_court_ruins",
         "alignment_spire_finale"
       ],
-      "powerScore": 36.88
+      "powerScore": 43.19
     },
     "nextContentTarget": {
       "id": "full_campaign_complete_contract",
@@ -696,17 +728,17 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": null,
   "overworld": {
@@ -741,27 +773,29 @@
   "level": {
     "nodeId": "alignment_spire_finale",
     "arena": "Outer Alignment Finale",
-    "seconds": 208.32,
-    "kills": 1026,
-    "playerLevel": 15,
+    "seconds": 901.05,
+    "kills": 6082,
+    "playerLevel": 18,
     "completed": true,
     "carryover": {
       "completed": true,
       "nodeId": "alignment_spire_finale",
-      "kills": 1026,
-      "seconds": 208,
-      "burstActivations": 123,
+      "kills": 6082,
+      "seconds": 901,
+      "burstActivations": 803,
       "routeContractId": "faction_relay_argument",
       "objectiveCompleted": 4,
       "objectiveTotal": 4,
       "objectiveName": "Outer Alignment Prediction Collapse",
       "objectiveUnit": "Alignment Proofs",
+      "objectiveStyle": "Campaign Remix",
+      "objectiveMechanic": "Seal proofs while A.G.I. replays prior route rules as prediction paths and boss echoes.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 14,
-      "expeditionLevel": 15,
-      "expeditionPower": 36.88,
-      "expeditionDrafts": 14,
+      "expeditionLevel": 18,
+      "expeditionPower": 43.19,
+      "expeditionDrafts": 17,
       "newSecrets": [
         {
           "id": "outer_alignment_contained",
@@ -790,7 +824,65 @@
           "name": "Alignment Proof Clear",
           "body": "Sealed every Outer Alignment route-mouth proof before the finale extraction."
         }
-      ]
+      ],
+      "nodeStabilized": "Outer Alignment Contained",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Alignment Breaker",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel",
+        "Synergy: boss_counterexample_lab",
+        "Synergy: co_mind_rescue_clause"
+      ],
+      "routeUnlocks": [],
+      "stabilizedRouteCount": 27,
+      "mechanicalUnlocks": [
+        "Frame: Overclock Marauder"
+      ],
+      "campaignConsequence": "Final clearance recorded. Outer Alignment is contained for this campaign proof.",
+      "factionCampaignConsequence": "Outer Alignment Contained",
+      "finalClearance": true
+    },
+    "objectiveVariety": {
+      "nodeId": "alignment_spire_finale",
+      "arenaId": "alignment_spire_finale",
+      "styleId": "campaign_remix",
+      "styleName": "Campaign Remix",
+      "mechanicPlain": "Seal proofs while A.G.I. replays prior route rules as prediction paths and boss echoes.",
+      "hudAction": "Read the replayed route rule, seal the proof, then contain A.G.I.",
+      "completionSignal": "Outer Alignment Contained marks the campaign complete.",
+      "proofHook": "finale_campaign_remix"
+    },
+    "completionPayoff": {
+      "nodeStabilized": "Outer Alignment Contained",
+      "objectiveResults": "Alignment Proofs 4/4",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Alignment Breaker",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel",
+        "Synergy: boss_counterexample_lab",
+        "Synergy: co_mind_rescue_clause"
+      ],
+      "proofTokensEarned": 2,
+      "proofTokensTotal": 14,
+      "mechanicalUnlocks": [
+        "Frame: Overclock Marauder"
+      ],
+      "routeUnlocks": [],
+      "factionCampaignConsequence": "Outer Alignment Contained",
+      "campaignConsequence": "Final clearance recorded. Outer Alignment is contained for this campaign proof.",
+      "finalClearance": true,
+      "campaignResultSummary": {
+        "finalClearance": "Outer Alignment contained",
+        "stabilizedRouteCount": 27,
+        "bestBuildHighlight": "Alignment Breaker",
+        "majorChoices": {
+          "routeContractId": "faction_relay_argument",
+          "thesis": "refusal"
+        },
+        "scoreSubmission": "not submitted; browser-playable proof summary only"
+      }
     },
     "nextContentTarget": {
       "id": "full_campaign_complete_contract",
@@ -836,6 +928,9 @@
     "context_saw",
     "recompile_pulse",
     "patch_mortar",
-    "million_token_backpack"
+    "million_token_backpack",
+    "bad_output_filter",
+    "patch_cascade",
+    "alignment_breaker"
   ]
 }

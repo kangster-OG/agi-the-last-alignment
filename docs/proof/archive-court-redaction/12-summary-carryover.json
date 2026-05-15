@@ -82,7 +82,9 @@
     "Refusal Slipstream",
     "Context Saw",
     "Recompile Pulse",
-    "Patch Mortar"
+    "Patch Mortar",
+    "Million-Token Backpack",
+    "Route Runner"
   ],
   "objective": "Reality now accepts this road.",
   "performance": {
@@ -153,9 +155,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 3,
-      "hit": 736,
-      "pickup": 790,
+      "ui": 8,
+      "hit": 3154,
+      "pickup": 3708,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
@@ -165,42 +167,42 @@
       {
         "id": "summary.completed",
         "kind": "summary",
-        "atMs": 108047
+        "atMs": 162965
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 108038
+        "atMs": 162961
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 108029
+        "atMs": 162956
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 108027
+        "atMs": 162691
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 108027
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 108026
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 108025
+        "atMs": 162687
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 108024
+        "atMs": 162682
+      },
+      {
+        "id": "route.unlocked",
+        "kind": "ui",
+        "atMs": 162674
+      },
+      {
+        "id": "combat.consensus_burst",
+        "kind": "hit",
+        "atMs": 162633
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -289,25 +291,27 @@
     "campEvents": [
       "Reality accepted archive_of_unsaid_things. Nobody said thank you, but the road stopped screaming.",
       "All Evidence Writs completed. The camp tags this as Archive Court Writ.",
-      "Expedition carries LV 14 / 13 patches forward. Pressure budget 32.31."
+      "Expedition carries LV 16 / 15 patches forward. Pressure budget 35.75."
     ],
     "lastRunMemory": {
       "completed": true,
       "nodeId": "archive_of_unsaid_things",
-      "kills": 881,
-      "seconds": 178,
-      "burstActivations": 103,
+      "kills": 3826,
+      "seconds": 661,
+      "burstActivations": 471,
       "routeContractId": "stabilize_armistice",
       "objectiveCompleted": 4,
       "objectiveTotal": 4,
       "objectiveName": "Archive Redaction Docket",
       "objectiveUnit": "Evidence Writs",
+      "objectiveStyle": "Evidence Carry",
+      "objectiveMechanic": "Preserve writs before redaction, use appeal windows for speed, then extract the court record.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 9,
-      "expeditionLevel": 14,
-      "expeditionPower": 32.31,
-      "expeditionDrafts": 13,
+      "expeditionLevel": 16,
+      "expeditionPower": 35.75,
+      "expeditionDrafts": 15,
       "newSecrets": [
         {
           "id": "archive_court_writ",
@@ -336,12 +340,33 @@
           "name": "Archive Writ Clear",
           "body": "Preserved every Archive/Court evidence writ before extraction."
         }
-      ]
+      ],
+      "nodeStabilized": "Archive Court Writ",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Patch Mortar",
+        "Million-Token Backpack",
+        "Route Runner",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "routeUnlocks": [
+        "transit_loop_zero",
+        "blackwater_beacon",
+        "appeal_court_ruins"
+      ],
+      "stabilizedRouteCount": 26,
+      "mechanicalUnlocks": [
+        "Frame: Redline Surgeon"
+      ],
+      "campaignConsequence": "Next route consequence: Archive Court Writ.",
+      "factionCampaignConsequence": "Archive Court Writ",
+      "finalClearance": false
     },
     "expedition": {
       "active": true,
-      "level": 14,
-      "xp": 1303,
+      "level": 16,
+      "xp": 1440,
       "chosenUpgradeIds": [
         "refusal_halo",
         "the_no_button",
@@ -355,7 +380,9 @@
         "refusal_slipstream",
         "context_saw",
         "recompile_pulse",
-        "patch_mortar"
+        "patch_mortar",
+        "million_token_backpack",
+        "route_runner"
       ],
       "chosenUpgradeNames": [
         "Refusal Halo",
@@ -370,7 +397,9 @@
         "Refusal Slipstream",
         "Context Saw",
         "Recompile Pulse",
-        "Patch Mortar"
+        "Patch Mortar",
+        "Million-Token Backpack",
+        "Route Runner"
       ],
       "chosenProtocolSlots": [
         "defense_layer",
@@ -385,7 +414,9 @@
         "movement_trace",
         "auto_weapon",
         "consensus_burst",
-        "auto_weapon"
+        "auto_weapon",
+        "defense_layer",
+        "movement_trace"
       ],
       "activatedSynergyIds": [
         "doctrine_lock_no_means_no",
@@ -402,7 +433,7 @@
         "glass_sunfield",
         "archive_of_unsaid_things"
       ],
-      "powerScore": 32.31
+      "powerScore": 35.75
     },
     "nextContentTarget": {
       "id": "appeal_court_ruins_contract",
@@ -675,17 +706,17 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": null,
   "overworld": {
@@ -717,27 +748,29 @@
   "level": {
     "nodeId": "archive_of_unsaid_things",
     "arena": "Archive of Unsaid Things",
-    "seconds": 178.72,
-    "kills": 881,
-    "playerLevel": 14,
+    "seconds": 661.05,
+    "kills": 3826,
+    "playerLevel": 16,
     "completed": true,
     "carryover": {
       "completed": true,
       "nodeId": "archive_of_unsaid_things",
-      "kills": 881,
-      "seconds": 178,
-      "burstActivations": 103,
+      "kills": 3826,
+      "seconds": 661,
+      "burstActivations": 471,
       "routeContractId": "stabilize_armistice",
       "objectiveCompleted": 4,
       "objectiveTotal": 4,
       "objectiveName": "Archive Redaction Docket",
       "objectiveUnit": "Evidence Writs",
+      "objectiveStyle": "Evidence Carry",
+      "objectiveMechanic": "Preserve writs before redaction, use appeal windows for speed, then extract the court record.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 9,
-      "expeditionLevel": 14,
-      "expeditionPower": 32.31,
-      "expeditionDrafts": 13,
+      "expeditionLevel": 16,
+      "expeditionPower": 35.75,
+      "expeditionDrafts": 15,
       "newSecrets": [
         {
           "id": "archive_court_writ",
@@ -766,7 +799,64 @@
           "name": "Archive Writ Clear",
           "body": "Preserved every Archive/Court evidence writ before extraction."
         }
-      ]
+      ],
+      "nodeStabilized": "Archive Court Writ",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Patch Mortar",
+        "Million-Token Backpack",
+        "Route Runner",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "routeUnlocks": [
+        "transit_loop_zero",
+        "blackwater_beacon",
+        "appeal_court_ruins"
+      ],
+      "stabilizedRouteCount": 26,
+      "mechanicalUnlocks": [
+        "Frame: Redline Surgeon"
+      ],
+      "campaignConsequence": "Next route consequence: Archive Court Writ.",
+      "factionCampaignConsequence": "Archive Court Writ",
+      "finalClearance": false
+    },
+    "objectiveVariety": {
+      "nodeId": "archive_of_unsaid_things",
+      "arenaId": "archive_of_unsaid_things",
+      "styleId": "carry_extract",
+      "styleName": "Evidence Carry",
+      "mechanicPlain": "Preserve writs before redaction, use appeal windows for speed, then extract the court record.",
+      "hudAction": "Preserve a writ before redaction and move it toward court extraction.",
+      "completionSignal": "Archive Court Writ becomes a route-opening mechanical reward.",
+      "proofHook": "archive_evidence_carry"
+    },
+    "completionPayoff": {
+      "nodeStabilized": "Archive Court Writ",
+      "objectiveResults": "Evidence Writs 4/4",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Patch Mortar",
+        "Million-Token Backpack",
+        "Route Runner",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "proofTokensEarned": 2,
+      "proofTokensTotal": 9,
+      "mechanicalUnlocks": [
+        "Frame: Redline Surgeon"
+      ],
+      "routeUnlocks": [
+        "transit_loop_zero",
+        "blackwater_beacon",
+        "appeal_court_ruins"
+      ],
+      "factionCampaignConsequence": "Archive Court Writ",
+      "campaignConsequence": "Next route consequence: Archive Court Writ.",
+      "finalClearance": false,
+      "campaignResultSummary": null
     },
     "nextContentTarget": {
       "id": "appeal_court_ruins_contract",
@@ -813,6 +903,8 @@
     "refusal_slipstream",
     "context_saw",
     "recompile_pulse",
-    "patch_mortar"
+    "patch_mortar",
+    "million_token_backpack",
+    "route_runner"
   ]
 }

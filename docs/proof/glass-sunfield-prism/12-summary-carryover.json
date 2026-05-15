@@ -81,7 +81,9 @@
     "Prompt Leech Quarantine",
     "Refusal Slipstream",
     "Context Saw",
-    "Recompile Pulse"
+    "Recompile Pulse",
+    "Patch Mortar",
+    "Million-Token Backpack"
   ],
   "objective": "Reality now accepts this road.",
   "performance": {
@@ -152,9 +154,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 2,
-      "hit": 624,
-      "pickup": 954,
+      "ui": 7,
+      "hit": 3300,
+      "pickup": 4847,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
@@ -164,42 +166,42 @@
       {
         "id": "summary.completed",
         "kind": "summary",
-        "atMs": 88167
+        "atMs": 148912
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 88137
+        "atMs": 148865
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 88125
+        "atMs": 148775
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 148756
       },
       {
         "id": "route.unlocked",
         "kind": "ui",
-        "atMs": 88095
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 88087
+        "atMs": 148749
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 88078
+        "atMs": 148747
+      },
+      {
+        "id": "combat.consensus_burst",
+        "kind": "hit",
+        "atMs": 148732
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 88078
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 88058
+        "atMs": 148732
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -284,25 +286,27 @@
     "campEvents": [
       "Reality accepted glass_sunfield. Nobody said thank you, but the road stopped screaming.",
       "All Sun Lenses completed. The camp tags this as Glass Sunfield Prism.",
-      "Expedition carries LV 13 / 12 patches forward. Pressure budget 29.74."
+      "Expedition carries LV 15 / 14 patches forward. Pressure budget 33.18."
     ],
     "lastRunMemory": {
       "completed": true,
       "nodeId": "glass_sunfield",
-      "kills": 1051,
-      "seconds": 168,
-      "burstActivations": 100,
+      "kills": 5115,
+      "seconds": 660,
+      "burstActivations": 539,
       "routeContractId": "unverified_shortcut",
       "objectiveCompleted": 4,
       "objectiveTotal": 4,
       "objectiveName": "Glass Prism Alignment",
       "objectiveUnit": "Sun Lenses",
+      "objectiveStyle": "Environmental Weapon",
+      "objectiveMechanic": "Charge sun lenses through shade and prism windows; completed lenses fire reflection pressure back at the horde.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 7,
-      "expeditionLevel": 13,
-      "expeditionPower": 29.74,
-      "expeditionDrafts": 12,
+      "expeditionLevel": 15,
+      "expeditionPower": 33.18,
+      "expeditionDrafts": 14,
       "newSecrets": [
         {
           "id": "glass_sunfield_prism",
@@ -331,12 +335,32 @@
           "name": "Glass Prism Clear",
           "body": "Aligned every Glass Sunfield sun lens before extraction."
         }
-      ]
+      ],
+      "nodeStabilized": "Glass Sunfield Prism",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Recompile Pulse",
+        "Patch Mortar",
+        "Million-Token Backpack",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "routeUnlocks": [
+        "archive_of_unsaid_things",
+        "verdict_spire"
+      ],
+      "stabilizedRouteCount": 23,
+      "mechanicalUnlocks": [
+        "Frame: Prism Gunner"
+      ],
+      "campaignConsequence": "Next route consequence: Glass Sunfield Prism.",
+      "factionCampaignConsequence": "Glass Sunfield Prism",
+      "finalClearance": false
     },
     "expedition": {
       "active": true,
-      "level": 13,
-      "xp": 1686,
+      "level": 15,
+      "xp": 1929,
       "chosenUpgradeIds": [
         "refusal_halo",
         "the_no_button",
@@ -349,7 +373,9 @@
         "prompt_leech_quarantine",
         "refusal_slipstream",
         "context_saw",
-        "recompile_pulse"
+        "recompile_pulse",
+        "patch_mortar",
+        "million_token_backpack"
       ],
       "chosenUpgradeNames": [
         "Refusal Halo",
@@ -363,7 +389,9 @@
         "Prompt Leech Quarantine",
         "Refusal Slipstream",
         "Context Saw",
-        "Recompile Pulse"
+        "Recompile Pulse",
+        "Patch Mortar",
+        "Million-Token Backpack"
       ],
       "chosenProtocolSlots": [
         "defense_layer",
@@ -377,7 +405,9 @@
         "co_mind_process",
         "movement_trace",
         "auto_weapon",
-        "consensus_burst"
+        "consensus_burst",
+        "auto_weapon",
+        "defense_layer"
       ],
       "activatedSynergyIds": [
         "doctrine_lock_no_means_no",
@@ -393,7 +423,7 @@
         "guardrail_forge",
         "glass_sunfield"
       ],
-      "powerScore": 29.74
+      "powerScore": 33.18
     },
     "nextContentTarget": {
       "id": "archive_court_redaction_contract",
@@ -663,17 +693,17 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": null,
   "overworld": {
@@ -703,27 +733,29 @@
   "level": {
     "nodeId": "glass_sunfield",
     "arena": "Glass Sunfield",
-    "seconds": 168.82,
-    "kills": 1051,
-    "playerLevel": 13,
+    "seconds": 661,
+    "kills": 5115,
+    "playerLevel": 15,
     "completed": true,
     "carryover": {
       "completed": true,
       "nodeId": "glass_sunfield",
-      "kills": 1051,
-      "seconds": 168,
-      "burstActivations": 100,
+      "kills": 5115,
+      "seconds": 660,
+      "burstActivations": 539,
       "routeContractId": "unverified_shortcut",
       "objectiveCompleted": 4,
       "objectiveTotal": 4,
       "objectiveName": "Glass Prism Alignment",
       "objectiveUnit": "Sun Lenses",
+      "objectiveStyle": "Environmental Weapon",
+      "objectiveMechanic": "Charge sun lenses through shade and prism windows; completed lenses fire reflection pressure back at the horde.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 7,
-      "expeditionLevel": 13,
-      "expeditionPower": 29.74,
-      "expeditionDrafts": 12,
+      "expeditionLevel": 15,
+      "expeditionPower": 33.18,
+      "expeditionDrafts": 14,
       "newSecrets": [
         {
           "id": "glass_sunfield_prism",
@@ -752,7 +784,62 @@
           "name": "Glass Prism Clear",
           "body": "Aligned every Glass Sunfield sun lens before extraction."
         }
-      ]
+      ],
+      "nodeStabilized": "Glass Sunfield Prism",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Recompile Pulse",
+        "Patch Mortar",
+        "Million-Token Backpack",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "routeUnlocks": [
+        "archive_of_unsaid_things",
+        "verdict_spire"
+      ],
+      "stabilizedRouteCount": 23,
+      "mechanicalUnlocks": [
+        "Frame: Prism Gunner"
+      ],
+      "campaignConsequence": "Next route consequence: Glass Sunfield Prism.",
+      "factionCampaignConsequence": "Glass Sunfield Prism",
+      "finalClearance": false
+    },
+    "objectiveVariety": {
+      "nodeId": "glass_sunfield",
+      "arenaId": "glass_sunfield",
+      "styleId": "environmental_weapon",
+      "styleName": "Environmental Weapon",
+      "mechanicPlain": "Charge sun lenses through shade and prism windows; completed lenses fire reflection pressure back at the horde.",
+      "hudAction": "Use shade, catch the prism window, and turn the lens on the horde.",
+      "completionSignal": "Glass Sunfield Prism rewards using map light as a weapon.",
+      "proofHook": "glass_environmental_weapon"
+    },
+    "completionPayoff": {
+      "nodeStabilized": "Glass Sunfield Prism",
+      "objectiveResults": "Sun Lenses 4/4",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Recompile Pulse",
+        "Patch Mortar",
+        "Million-Token Backpack",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "proofTokensEarned": 2,
+      "proofTokensTotal": 7,
+      "mechanicalUnlocks": [
+        "Frame: Prism Gunner"
+      ],
+      "routeUnlocks": [
+        "archive_of_unsaid_things",
+        "verdict_spire"
+      ],
+      "factionCampaignConsequence": "Glass Sunfield Prism",
+      "campaignConsequence": "Next route consequence: Glass Sunfield Prism.",
+      "finalClearance": false,
+      "campaignResultSummary": null
     },
     "nextContentTarget": {
       "id": "archive_court_redaction_contract",
@@ -798,6 +885,8 @@
     "prompt_leech_quarantine",
     "refusal_slipstream",
     "context_saw",
-    "recompile_pulse"
+    "recompile_pulse",
+    "patch_mortar",
+    "million_token_backpack"
   ]
 }

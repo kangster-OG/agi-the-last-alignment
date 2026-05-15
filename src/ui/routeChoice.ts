@@ -13,6 +13,7 @@ export class RouteContractChoiceState implements GameState {
   private choices: RouteContract[] = [];
 
   enter(game: Game): void {
+    game.audio.setMusicState("briefing");
     this.choices = routeContractChoices(game.selectedEvalProtocolIds, game.completedNodes.size);
     if (this.choices[0]) game.selectedRouteContractId = this.choices[0].id;
     this.render(game);
@@ -37,7 +38,7 @@ export class RouteContractChoiceState implements GameState {
     game.layers.root.position.set(0, 0);
     game.layers.root.scale.set(1);
 
-    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // ROUTE TERMINAL");
+    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // ROUTE TERMINAL // BAD ROADS MENU");
 
     const title = new Text({
       text: "SELECT ROUTE CONTRACT",
@@ -50,7 +51,7 @@ export class RouteContractChoiceState implements GameState {
     const evals = evalSummary(game.selectedEvalProtocolIds);
     const campaign = campaignRouteSummary(game);
     const subtitle = new Text({
-      text: `${campaign.routeLine} // ${evals.protocols.length ? evals.protocols.map((protocol) => protocol.name).join(" + ") : "Baseline"} // ${campaign.nextAction}`,
+      text: `${campaign.routeLine} // ${evals.protocols.length ? evals.protocols.map((protocol) => protocol.name).join(" + ") : "Baseline, coward edition"} // ${campaign.nextAction}`,
       style: { ...fontStyle, fontSize: 13, fill: "#9fd8d1", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 980 }
     });
     subtitle.anchor.set(0.5);
@@ -63,7 +64,7 @@ export class RouteContractChoiceState implements GameState {
     game.layers.hud.addChild(fieldText(`CAMPAIGN\n${campaign.focus.toUpperCase()} // ${campaign.routeLine}`, game.width / 2 - 500, 552, { size: 11, fill: "#72eadc", width: 1000, align: "center", lineHeight: 15 }));
 
     const hint = new Text({
-      text: "1/2/3 select contract  ENTER deploy to Alignment Grid  R return to Camp",
+      text: "1/2/3 select contract  ENTER deploy to Alignment Grid  R return to Camp // cowardice remains available",
       style: { ...fontStyle, fontSize: 14, fill: "#e7f4ef", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 1000 }
     });
     hint.anchor.set(0.5);
@@ -84,6 +85,7 @@ export class RouteContractChoiceState implements GameState {
     const choice = this.choices[index];
     if (!choice) return;
     game.selectedRouteContractId = choice.id;
+    game.feedback.cue("ui.route_contract_selected", "ui", { priority: 3 });
     this.render(game);
   }
 

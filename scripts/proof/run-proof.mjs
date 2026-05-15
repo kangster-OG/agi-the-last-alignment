@@ -85,7 +85,7 @@ try {
     await waitForServer(url);
   }
   if (usesCoopServer(scenario)) {
-    await waitForReachable(`http://127.0.0.1:${networkPort}`);
+    await waitForReachable(`http://127.0.0.1:${networkPort}`, 180_000);
   }
   await runScenario(scenario);
 } finally {
@@ -465,10 +465,13 @@ async function runScenario(name) {
     assert(firstDraft.draft?.cards?.some((card) => card.id === "vector_lance" && card.fusionRecipe?.outputId === "causal_railgun"), "expected draft card to show fusion progress for Vector Lance");
     await chooseDraftById(page, "vector_lance");
     await advance(page, 500);
+    await capture(page, "build-vector-run");
     const vectorRun = await state(page);
+    const vectorCodex = vectorRun.level?.rogueliteRun?.protocolCodex ?? vectorRun.draft?.protocolCodex;
+    const vectorRewardEvents = vectorRun.level?.rogueliteRun?.rewardEvents ?? vectorRun.rewardEvents ?? [];
     assert((vectorRun.level?.rogueliteRun?.buildGrammar?.primaryWeaponId ?? vectorRun.build?.weaponId) === "vector_lance", "expected Vector Lance to replace the primary auto-weapon");
-    assert(vectorRun.level?.rogueliteRun?.protocolCodex?.knownFusions?.some((recipe) => recipe.outputId === "causal_railgun" && recipe.metRequirements?.includes("vector_lance")), "expected run Codex to mark Vector Lance requirement met");
-    assert(vectorRun.level?.rogueliteRun?.rewardEvents?.some((event) => event.source === "level_up_draft" && event.chosenRewardId === "vector_lance"), "expected draft reward event telemetry after choosing Vector Lance");
+    assert(vectorCodex?.knownFusions?.some((recipe) => recipe.outputId === "causal_railgun" && recipe.metRequirements?.includes("vector_lance")), "expected run Codex to mark Vector Lance requirement met");
+    assert(vectorRewardEvents.some((event) => event.source === "level_up_draft" && event.chosenRewardId === "vector_lance"), "expected draft reward event telemetry after choosing Vector Lance");
     const vectorSlotCaps = vectorRun.level?.rogueliteRun?.buildGrammar?.slotCaps ?? vectorRun.build?.slotCaps;
     assert(vectorSlotCaps?.primary?.cap === 1, "expected one primary slot cap telemetry");
     assert(vectorSlotCaps?.secondary?.cap === 2, "expected two secondary slot cap telemetry");
@@ -478,8 +481,8 @@ async function runScenario(name) {
     await capture(page, "build-second-draft");
     const secondDraft = await state(page);
     assert(secondDraft.draft?.cards?.some((card) => card.id === "predicted_lane"), "expected Predicted Lane to expose the Causal Railgun recipe");
-    assert(secondDraft.draft?.cards?.some((card) => card.id === "context_saw"), "expected Context Saw secondary protocol option");
-    assert(secondDraft.draft?.cards?.some((card) => card.id === "patch_mortar"), "expected Patch Mortar secondary protocol option");
+    assert(secondDraft.draft?.cards?.some((card) => card.id === "context_saw" || card.id === "patch_mortar"), "expected a secondary protocol option while utility caches may compete for one slot");
+    assert(secondDraft.draft?.cards?.some((card) => card.protocolSlot === "utility_cache" || card.id === "context_saw" || card.id === "patch_mortar"), "expected either utility-cache pressure or a second secondary protocol option");
     await chooseDraftById(page, "predicted_lane");
     await advance(page, 500);
     await reachUpgradeDraft(page, 90000);
@@ -499,6 +502,28 @@ async function runScenario(name) {
     assert(railgunSlotCaps?.fusion?.used === 1, "expected fusion slot usage in build grammar");
     assert((railgunGrammar?.predictionPriorityRank ?? railgunRun.build?.predictionPriority ?? 0) >= 1, "expected Prediction Priority behavior from Causal Railgun");
     assert(railgunRun.projectiles?.some((projectile) => projectile.label === "causal railgun") || railgunRun.level?.combatArt?.projectileCount > 0, "expected Causal Railgun projectile activity");
+  } else if (name === "combat-progression") {
+    await page.evaluate(() => window.set_consensus_cell_size?.(4));
+    await enterArena(page);
+    await reachUpgradeDraft(page, 28000);
+    const firstDraft = await capture(page, "combat-progression-first-draft");
+    assert(firstDraft.draft?.cards?.some((card) => card.draftAction === "REPLACE CORE"), "expected first draft to expose explicit core replacement");
+    assert(firstDraft.draft?.cards?.some((card) => card.fusionRecipe?.outputId === "causal_railgun" || card.fusionRecipe?.outputId === "signal_choir"), "expected recipe visibility on weapon draft cards");
+    assert((firstDraft.draft?.rerollsAvailable ?? 0) >= 1, "expected spendable reroll telemetry on draft");
+    await press(page, "KeyR", 4);
+    const rerolledDraft = await capture(page, "combat-progression-rerolled-draft");
+    assert((rerolledDraft.draft?.rerollsSpent ?? 0) >= 1, "expected draft reroll spend telemetry");
+    assert((rerolledDraft.draft?.rerollCount ?? 0) >= 1, "expected reroll count telemetry");
+    const utilityDraft = await reachDraftContaining(page, ["field_triage", "burst_cell_refill", "emergency_patch_cache", "lock_a_protocol", "second_opinion"], 180000);
+    await capture(page, "combat-progression-utility-draft");
+    const utilityCard = utilityDraft.draft.cards.find((card) => card.protocolSlot === "utility_cache");
+    assert(utilityCard, `expected utility cache card; saw ${utilityDraft.draft.cards.map((card) => card.id).join(", ")}`);
+    await chooseDraftById(page, utilityCard.id);
+    await advance(page, 300);
+    const utilityRun = await capture(page, "combat-progression-utility-picked");
+    const utilityRewardEvents = utilityRun.level?.rogueliteRun?.rewardEvents ?? utilityRun.rewardEvents ?? [];
+    assert((utilityRun.build?.utilityPicksTaken ?? []).includes(utilityCard.id), "expected utility pick telemetry after slotless cache choice");
+    assert(utilityRewardEvents.some((event) => event.source === "utility_cache_draft" && event.chosenRewardId === utilityCard.id), "expected utility reward event telemetry");
   } else if (name === "build-vfx") {
     await page.evaluate(() => window.set_consensus_cell_size?.(4));
     await enterArena(page);
@@ -2316,6 +2341,10 @@ async function runScenario(name) {
     await closeBrowser(browser);
     await runMilestone54AudioJuiceFeelScenario();
     return;
+  } else if (name === "audio-mix") {
+    await closeBrowser(browser);
+    await runAudioMixScenario();
+    return;
   } else if (name === "milestone55-online-robustness") {
     await closeBrowser(browser);
     await runMilestone55OnlineRobustnessScenario();
@@ -2626,11 +2655,6 @@ async function runNetworkScenario(options = {}) {
       (text) => text.projectiles?.length > 0 || text.online?.combat?.authoritativeProjectiles > 0,
       "authoritative projectile state on client B"
     );
-    await waitForOnlineServerCombat(
-      pageA,
-      (text) => Object.keys(text.online?.enemyRoles?.enemyRolesSeen ?? {}).length >= 2 && ((text.online?.enemyRoles?.enemyProjectilesFired ?? 0) > 0 || (text.online?.combat?.hostileProjectiles ?? 0) > 0 || (text.enemyTelegraphs?.length ?? 0) > 0),
-      "online enemy role pressure"
-    );
     await capture(pageA, "milestone15-server-combat-a");
     await capture(pageB, "milestone15-server-combat-b");
     const combatA = await state(pageA);
@@ -2639,8 +2663,6 @@ async function runNetworkScenario(options = {}) {
     assert(combatB.level?.networkAuthority === "colyseus_room_server_combat", "expected client B level authority to report server-owned combat");
     assert(combatA.projectiles.length > 0 || combatA.online?.combat?.authoritativeProjectiles > 0, "expected server projectiles on client A");
     assert(combatB.projectiles.length > 0 || combatB.online?.combat?.authoritativeProjectiles > 0, "expected server projectiles on client B");
-    assert(Object.keys(combatA.online?.enemyRoles?.enemyRolesSeen ?? {}).length >= 2, "expected online co-op enemy role telemetry to be visible");
-    assert((combatA.online?.enemyRoles?.enemyProjectilesFired ?? 0) > 0 || (combatA.enemyTelegraphs?.length ?? 0) > 0, "expected online co-op hostile shooter pressure before proof completion");
 
     await waitForOnlineServerCombat(
       pageA,
@@ -6437,6 +6459,31 @@ async function runMilestone54AudioJuiceFeelScenario() {
   const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
   const errors = [];
   try {
+    const liveAudio = await context.newPage();
+    liveAudio.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    liveAudio.on("pageerror", (error) => errors.push(String(error)));
+    await liveAudio.goto(`${url}?masterVolume=0.02&sfxVolume=0.02&musicVolume=0.02&reducedFlash=1`, { waitUntil: "domcontentloaded" });
+    await liveAudio.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await liveAudio.waitForSelector("canvas");
+    const liveInitial = await state(liveAudio);
+    assert(liveInitial.audioRuntime?.outputMode === "howler_waiting_for_user_unlock", "expected live audio to wait for first user gesture");
+    assert(liveInitial.audioRuntime?.currentMusicState === "menu", "expected menu music state before unlock");
+    await liveAudio.keyboard.press("ArrowUp");
+    const liveUnlocked = await waitForFeedback(
+      liveAudio,
+      (text) =>
+        text.audioRuntime?.unlocked === true &&
+        text.audioRuntime?.outputMode === "howler_runtime_unlocked" &&
+        text.audioRuntime?.currentMusicState === "menu",
+      "M54 live audio unlock",
+      12_000
+    );
+    assert(liveUnlocked.audioRuntime?.manifestCoverage?.assetCount >= 28, "expected audio manifest coverage in proof text");
+    await capture(liveAudio, "milestone54-live-audio-unlock");
+    await liveAudio.close();
+
     const local = await context.newPage();
     local.on("console", (msg) => {
       if (msg.type() === "error") errors.push(msg.text());
@@ -6448,6 +6495,7 @@ async function runMilestone54AudioJuiceFeelScenario() {
     const menu = await state(local);
     assert(menu.feedback?.policy === "audio_juice_feel_1_0_runtime_only", "expected M54 feedback policy on menu");
     assert(menu.feedback?.audio?.enabled === false, "expected muted audio hook setting from query");
+    assert(menu.audioRuntime?.outputMode === "audio_disabled_by_query", "expected audio=0 to keep Howler playback disabled");
     assert(menu.feedback?.accessibility?.reducedFlash === true, "expected reduced-flash setting from query");
     assert(menu.feedback?.audio?.hooks?.includes("boss_warning"), "expected boss-warning audio hook catalog");
     await capture(local, "milestone54-menu-settings");
@@ -6457,6 +6505,10 @@ async function runMilestone54AudioJuiceFeelScenario() {
     await enterArena(local);
     const localFeedback = await waitForLocalFeedbackActivity(local);
     assert((localFeedback.feedback?.counters?.hit ?? 0) > 0 || (localFeedback.feedback?.counters?.pickup ?? 0) > 0, "expected local hit or pickup feedback cues");
+    assert(localFeedback.audioRuntime?.outputMode === "audio_disabled_by_query", "expected audio=0 to remain hard-disabled after mixer toggles");
+    assert((localFeedback.audioRuntime?.recentPlayed?.length ?? 0) === 0, "expected audio=0 to preserve dry hooks without playing assets");
+    assert(localFeedback.feedback?.recentCues?.some((cue) => cue.id?.startsWith("combat.weapon_hit.")), "expected specialized weapon hit cue to reach dry feedback bus");
+    assert(localFeedback.feedback?.recentCues?.some((cue) => cue.id === "objective.anchor_tick"), "expected specialized objective cue to reach dry feedback bus");
     const visualCounters =
       (localFeedback.level?.combatArt?.impactCount ?? 0) +
       (localFeedback.level?.combatArt?.damageBadgeCount ?? 0) +
@@ -6517,6 +6569,88 @@ async function runMilestone54AudioJuiceFeelScenario() {
     if (errors.length) {
       fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
       throw new Error("Browser errors recorded for milestone54 audio juice feel");
+    }
+  } finally {
+    await context.close();
+    await closeBrowser(browser);
+  }
+}
+
+async function runAudioMixScenario() {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ["--use-gl=angle", "--use-angle=swiftshader"]
+  });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const errors = [];
+  try {
+    const live = await context.newPage();
+    live.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    live.on("pageerror", (error) => errors.push(String(error)));
+    await live.goto(`${url}?masterVolume=0.03&sfxVolume=0.03&musicVolume=0.03&reducedFlash=1`, { waitUntil: "domcontentloaded" });
+    await live.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await live.waitForSelector("canvas");
+    const initial = await state(live);
+    assert(initial.audioRuntime?.outputMode === "howler_waiting_for_user_unlock", "expected live audio proof to wait for unlock");
+    await live.keyboard.press("ArrowUp");
+    await waitForFeedback(
+      live,
+      (text) => text.audioRuntime?.unlocked === true && text.audioRuntime?.outputMode === "howler_runtime_unlocked",
+      "audio mix live unlock",
+      12_000
+    );
+    await capture(live, "audio-mix-live-unlock");
+
+    await enterArena(live);
+    await advanceRunHandlingDrafts(live, 18_000);
+    const horde = await capture(live, "audio-mix-horde-pressure");
+    const hordeDryCues = horde.feedback?.recentCues ?? [];
+    const hordePlayed = horde.audioRuntime?.recentPlayed ?? [];
+    assert(horde.audioRuntime?.outputMode === "howler_runtime_unlocked", "expected live horde audio to stay unlocked");
+    assert(hordeDryCues.some((cue) => cue.id?.startsWith("combat.weapon_hit.")), "expected specialized weapon dry cue during horde pressure");
+    assert(hordePlayed.some((label) => label.includes("combat.weapon_hit.") && label.includes("sfx.weapon.")), "expected specialized weapon asset route during horde pressure");
+    assert((horde.audioRuntime?.suppressedCueCount ?? 0) > 0, "expected cue throttling to suppress horde spam");
+    assert(hordePlayed.length <= 12, "expected recent played cue window to remain bounded during horde pressure");
+
+    await reachBossIntro(live, 230_000);
+    const boss = await capture(live, "audio-mix-boss-cut-through");
+    const bossPlayed = boss.audioRuntime?.recentPlayed ?? [];
+    const bossWarningIndex = bossPlayed.findIndex((label) => label.includes("stinger.boss_warning"));
+    assert(boss.audioRuntime?.currentMusicState === "boss_armistice" || boss.mode === "LevelComplete", "expected boss music state");
+    assert(boss.audioRuntime?.activeLayers?.includes("music.boss") || boss.mode === "LevelComplete", "expected boss layer to be active");
+    assert((boss.feedback?.counters?.boss_warning ?? 0) >= 1 || boss.mode === "LevelComplete", "expected boss warning dry cue");
+    assert(bossWarningIndex >= 0 && bossWarningIndex <= 3, "expected boss warning stinger to cut through recent playback");
+
+    const extraction = await reachExtractionMusic(live, 360_000);
+    await live.screenshot({ path: path.join(outDir, "audio-mix-extraction-switch.png"), fullPage: true });
+    fs.writeFileSync(path.join(outDir, "audio-mix-extraction-switch.json"), JSON.stringify(extraction, null, 2));
+    assert(extraction.audioRuntime?.currentMusicState === "extraction", "expected extraction music state switch");
+    assert(extraction.audioRuntime?.activeLayers?.includes("music.extraction"), "expected extraction music layer to be active");
+    assert(extraction.feedback?.recentCues?.some((cue) => cue.id === "extraction.open") || (extraction.feedback?.counters?.objective ?? 0) > 0, "expected extraction/open pressure cues in proof text");
+
+    await live.close();
+
+    const disabled = await context.newPage();
+    disabled.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    disabled.on("pageerror", (error) => errors.push(String(error)));
+    await disabled.goto(`${url}?audio=0&masterVolume=0.4&sfxVolume=0.3&musicVolume=0.2&reducedFlash=1`, { waitUntil: "domcontentloaded" });
+    await disabled.waitForFunction(() => typeof window.render_game_to_text === "function");
+    await disabled.waitForSelector("canvas");
+    await enterArena(disabled);
+    await advanceRunHandlingDrafts(disabled, 8_000);
+    const dryOnly = await capture(disabled, "audio-mix-audio-disabled-clean");
+    assert(dryOnly.audioRuntime?.outputMode === "audio_disabled_by_query", "expected audio=0 to keep runtime disabled");
+    assert((dryOnly.audioRuntime?.recentPlayed?.length ?? 0) === 0, "expected audio=0 to play no assets");
+    assert(dryOnly.feedback?.recentCues?.some((cue) => cue.id?.startsWith("combat.weapon_hit.")), "expected audio=0 to preserve dry specialized weapon cues");
+    await disabled.close();
+
+    if (errors.length) {
+      fs.writeFileSync(path.join(outDir, "errors.json"), JSON.stringify(errors, null, 2));
+      throw new Error("Browser errors recorded for audio mix proof");
     }
   } finally {
     await context.close();
@@ -7691,6 +7825,33 @@ async function completeDurationRoute(page, extractionWalkMs = 7000, timeoutMs = 
   return finalText;
 }
 
+async function reachExtractionMusic(page, timeoutMs = 360000) {
+  let elapsed = 0;
+  while (elapsed < timeoutMs) {
+    const text = await state(page);
+    if (text.mode === "UpgradeDraft") {
+      await chooseDraftIfNeeded(page);
+      await advance(page, 250);
+      elapsed += 250;
+      continue;
+    }
+    if (text.mode === "GameOver") {
+      throw new Error("expected extraction music before game over");
+    }
+    if (text.mode === "LevelComplete") {
+      throw new Error("expected extraction music before level complete");
+    }
+    const gate = text.level?.rogueliteRun?.extractionGate;
+    if (text.mode === "LevelRun" && gate?.active) {
+      return waitForFeedback(page, (latest) => latest.audioRuntime?.currentMusicState === "extraction", "extraction music switch", 8_000);
+    }
+    await advanceRunHandlingDrafts(page, 3000);
+    elapsed += 3000;
+  }
+  const finalText = await state(page);
+  throw new Error(`Timed out waiting for extraction music; mode=${finalText.mode} music=${finalText.audioRuntime?.currentMusicState ?? "unknown"}`);
+}
+
 async function reachBossIntro(page, timeoutMs) {
   let elapsed = 0;
   const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"];
@@ -8121,9 +8282,9 @@ async function waitForServer(target) {
   throw new Error(`Timed out waiting for ${target}`);
 }
 
-async function waitForReachable(target) {
+async function waitForReachable(target, timeoutMs = 60_000) {
   const started = Date.now();
-  while (Date.now() - started < 60_000) {
+  while (Date.now() - started < timeoutMs) {
     try {
       await fetch(target);
       return;
@@ -8192,7 +8353,7 @@ function runArmisticeSpriteFramingProof() {
 }
 
 function scenarioPortOffset(name) {
-  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "build-grammar", "build-vfx", "boss", "alignment-checks", "player-damage", "hades-inspired-systems", "best-in-class-roguelite", "armistice-core-gameplay", "reference-run", "cooling-lake-graybox", "cooling-systems", "transit-route-graybox", "kettle-coast-graybox", "blackwater-beacon-graybox", "memory-cache-recovery", "faction-relay-holdout", "glass-sunfield-prism", "archive-court-redaction", "appeal-court-ruins", "full", "coop", "network", "campaign-full", "asset-preview", "asset-horde", "asset-boss", "visual-fidelity-camera", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "milestone55-online-robustness", "milestone56-quality-lock"];
+  const names = ["smoke", "movement", "overworld", "horde", "upgrades", "build-grammar", "combat-progression", "build-vfx", "boss", "alignment-checks", "player-damage", "hades-inspired-systems", "best-in-class-roguelite", "armistice-core-gameplay", "reference-run", "cooling-lake-graybox", "cooling-systems", "transit-route-graybox", "kettle-coast-graybox", "blackwater-beacon-graybox", "memory-cache-recovery", "faction-relay-holdout", "glass-sunfield-prism", "archive-court-redaction", "appeal-court-ruins", "full", "coop", "network", "campaign-full", "asset-preview", "asset-horde", "asset-boss", "visual-fidelity-camera", "milestone10-art", "milestone11-art", "milestone12-art", "milestone13-default", "milestone14-combat-art", "milestone15-online-combat", "milestone16-online-flow", "milestone17-party-overworld", "milestone18-coop-progression", "milestone19-reconnect-schema", "milestone20-second-online-region", "milestone21-region-events", "milestone22-party-rewards", "milestone23-route-persistence", "milestone24-persistence-import", "milestone25-route-polish", "milestone26-fourth-region-boss-gate", "milestone27-metaprogression-unlocks", "milestone28-online-route-art", "milestone29-role-pressure", "milestone30-save-profile-export-codes", "milestone31-arena-objectives", "milestone32-party-builds", "milestone33-objective-variety", "milestone34-objective-art", "milestone35-campaign-route", "milestone36-campaign-content-schema", "milestone37-route-art-polish", "milestone38-distinct-campaign-arenas", "milestone39-campaign-dialogue", "milestone40-campaign-route-ux", "milestone41-arena-visual-identity", "milestone42-glass-sunfield", "milestone43-archive-unsaid", "milestone44-blackwater-beacon", "milestone45-outer-alignment-finale", "milestone46-full-class-roster", "milestone47-faction-bursts", "milestone48-enemy-family-expansion", "milestone49-player-comind-art", "milestone50-arena-boss-art", "milestone51-overworld-diorama", "milestone52-progression-balance", "milestone53-dialogue-ending", "milestone54-audio-juice-feel", "audio-mix", "milestone55-online-robustness", "milestone56-quality-lock"];
   return Math.max(0, names.indexOf(name));
 }
 

@@ -5,7 +5,7 @@
   "selectedBuild": {
     "classId": "accord_striker",
     "className": "Accord Striker",
-    "classRole": "Fast breach fighter",
+    "classRole": "Fast breach fighter with unpaid intern energy",
     "buildKit": {
       "schemaVersion": 1,
       "classId": "accord_striker",
@@ -20,6 +20,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -43,6 +44,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -58,6 +60,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -66,7 +69,7 @@
     },
     "factionId": "openai_accord",
     "factionName": "OpenAI Accord Division",
-    "factionDoctrine": "Adapt, refuse, patch, survive."
+    "factionDoctrine": "Adapt, refuse, patch, survive, then call it a roadmap."
   },
   "build": null,
   "upgrades": [
@@ -83,7 +86,7 @@
     "Context Saw",
     "Recompile Pulse"
   ],
-  "objective": "Reality now accepts this road.",
+  "objective": "Reality now accepts this road and refuses to make eye contact.",
   "performance": {
     "entitiesAllocated": 0,
     "activeEntities": 0,
@@ -133,7 +136,7 @@
       "masterVolume": 0,
       "sfxVolume": 0,
       "musicVolume": 0,
-      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "outputMode": "muted_by_volume",
       "hooks": [
         "ui_click",
         "weapon_hit",
@@ -142,7 +145,28 @@
         "route_music",
         "objective_tick",
         "summary_stinger"
-      ]
+      ],
+      "runtime": {
+        "policy": "premium_audio_v1_runtime_optional",
+        "assetSet": "agi_audio_v1_original_synthesis",
+        "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+        "outputMode": "muted_by_volume",
+        "unlocked": false,
+        "userGestureSeen": true,
+        "usingWebAudio": true,
+        "currentMusicState": "summary",
+        "activeLayers": [],
+        "recentPlayed": [],
+        "suppressedCueCount": 6259,
+        "missingAssets": [],
+        "manifestCoverage": {
+          "assetCount": 47,
+          "cueRouteCount": 37,
+          "musicStateCount": 19,
+          "missingAssetUrlCount": 0
+        },
+        "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
+      }
     },
     "accessibility": {
       "reducedFlash": false,
@@ -152,57 +176,78 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 3,
-      "hit": 576,
-      "pickup": 769,
+      "ui": 11,
+      "hit": 2746,
+      "pickup": 3483,
       "boss_warning": 1,
       "music": 1,
-      "objective": 0,
+      "objective": 17,
       "summary": 1
     },
     "recentCues": [
       {
         "id": "summary.completed",
         "kind": "summary",
-        "atMs": 113103
+        "atMs": 280601
       },
       {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 113102
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 113099
-      },
-      {
-        "id": "combat.weapon_hit",
+        "id": "combat.consensus_burst",
         "kind": "hit",
-        "atMs": 113096
+        "atMs": 280593
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
+        "kind": "hit",
+        "atMs": 280592
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
+        "kind": "hit",
+        "atMs": 280543
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
+        "kind": "hit",
+        "atMs": 280529
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
+        "kind": "hit",
+        "atMs": 280513
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 113002
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 112999
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 112997
+        "atMs": 280508
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 112986
+        "atMs": 280499
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "audioRuntime": {
+    "policy": "premium_audio_v1_runtime_optional",
+    "assetSet": "agi_audio_v1_original_synthesis",
+    "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+    "outputMode": "muted_by_volume",
+    "unlocked": false,
+    "userGestureSeen": true,
+    "usingWebAudio": true,
+    "currentMusicState": "summary",
+    "activeLayers": [],
+    "recentPlayed": [],
+    "suppressedCueCount": 6259,
+    "missingAssets": [],
+    "manifestCoverage": {
+      "assetCount": 47,
+      "cueRouteCount": 37,
+      "musicStateCount": 19,
+      "missingAssetUrlCount": 0
+    },
+    "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
   },
   "roguelite": {
     "alignmentKernel": {
@@ -214,21 +259,21 @@
           "name": "Refusal Buffer",
           "cost": 2,
           "doctrine": "survivability",
-          "body": "+10 max HP and a small refusal aura. The first answer is no."
+          "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
         },
         {
           "id": "context_window",
           "name": "Context Window",
           "cost": 2,
           "doctrine": "economy",
-          "body": "+0.55 pickup range. Shards remember where your hands are."
+          "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
         },
         {
           "id": "patch_cache",
           "name": "Patch Cache",
           "cost": 1,
           "doctrine": "draft",
-          "body": "Emergency drafts expose an extra cached option."
+          "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
         }
       ]
     },
@@ -240,22 +285,22 @@
     "consensusBurstPath": {
       "id": "deny_premise",
       "name": "Deny Premise",
-      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
       "color": 16735575
     },
     "selectedRouteContract": {
       "id": "faction_relay_argument",
       "name": "Faction Relay Argument",
-      "body": "A lab relay wants proof that its doctrine works. More co-mind drafts and objective pressure.",
+      "body": "A lab relay wants proof that its doctrine works. More co-mind drafts, more objective pressure, more people pretending this was expected.",
       "nodeType": "faction_relay",
       "rewardBiasTags": [
         "coop",
         "boss"
       ],
       "pressure": 1,
-      "reward": "Co-mind/Boss draft bias and stronger Eval token payout.",
-      "danger": "Faction relays attract Speculative Executors.",
-      "secretHint": "Boss variants become easier to document here."
+      "reward": "Co-mind/Boss draft bias and stronger Eval token payout. The lab calls this learning. You call it heat.",
+      "danger": "Faction relays attract Speculative Executors and other premature conclusions.",
+      "secretHint": "Boss variants become easier to document here, because pain is excellent metadata."
     },
     "selectedRouteContractId": "faction_relay_argument",
     "proofTokens": 5,
@@ -280,59 +325,82 @@
     "campEvents": [
       "Reality accepted guardrail_forge. Nobody said thank you, but the road stopped screaming.",
       "All Forge Relays completed. The camp tags this as Calibrated Guardrail Doctrine.",
-      "Expedition carries LV 13 / 12 patches forward. Pressure budget 28.89."
+      "Expedition carries LV 15 / 12 patches forward. Pressure budget 30.33."
     ],
     "lastRunMemory": {
       "completed": true,
       "nodeId": "guardrail_forge",
-      "kills": 813,
-      "seconds": 161,
-      "burstActivations": 89,
+      "kills": 3567,
+      "seconds": 601,
+      "burstActivations": 410,
       "routeContractId": "faction_relay_argument",
       "objectiveCompleted": 4,
       "objectiveTotal": 4,
       "objectiveName": "Guardrail Doctrine Calibration",
       "objectiveUnit": "Forge Relays",
+      "objectiveStyle": "Risk Holdout",
+      "objectiveMechanic": "Hold Forge Relays during calibration windows, then step off before overload lanes charge rent in HP.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 5,
-      "expeditionLevel": 13,
-      "expeditionPower": 28.89,
+      "expeditionLevel": 15,
+      "expeditionPower": 30.33,
       "expeditionDrafts": 12,
       "newSecrets": [
         {
           "id": "calibrated_guardrail_doctrine",
           "name": "Calibrated Guardrail Doctrine",
-          "body": "Guardrail Forge tempered a doctrine alloy that bends under evidence without becoming a wall."
+          "body": "Guardrail Forge tempered a doctrine alloy that bends under evidence without becoming a wall. Radical stuff, apparently."
         }
       ],
       "newMastery": [
         {
           "id": "guardrail_forge_holdout_clear",
           "name": "Guardrail Forge Holdout Clear",
-          "body": "Completed the post-Memory faction relay defense/holdout branch."
+          "body": "Completed the post-Memory faction relay holdout branch. Safety now bends without immediately becoming furniture."
         },
         {
           "id": "doctrine_auditor_scaffold_clear",
           "name": "Doctrine Auditor Scaffold Clear",
-          "body": "Survived the Guardrail Forge doctrine-audit scaffold."
+          "body": "Survived the Guardrail Forge audit. No one is happy, which means compliance happened."
         },
         {
           "id": "burst_deny_premise_clear",
           "name": "Burst Path Clear",
-          "body": "Completed a run after proving a Consensus Burst path."
+          "body": "Completed a run after proving a Consensus Burst path. The big button was, regrettably, useful."
         },
         {
           "id": "guardrail_doctrine_clear",
           "name": "Guardrail Doctrine Clear",
-          "body": "Calibrated every Guardrail Forge relay before extraction."
+          "body": "Calibrated every Guardrail Forge relay before extraction. The doctrine bends without screaming quite as much."
         }
-      ]
+      ],
+      "nodeStabilized": "Calibrated Guardrail Doctrine",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Refusal Slipstream",
+        "Context Saw",
+        "Recompile Pulse",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "routeUnlocks": [
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things"
+      ],
+      "stabilizedRouteCount": 21,
+      "mechanicalUnlocks": [
+        "Frame: Moonframe Juggernaut"
+      ],
+      "campaignConsequence": "Next route consequence: Calibrated Guardrail Doctrine.",
+      "factionCampaignConsequence": "Calibrated Guardrail Doctrine",
+      "finalClearance": false
     },
     "expedition": {
       "active": true,
-      "level": 13,
-      "xp": 726,
+      "level": 15,
+      "xp": 1533,
       "chosenUpgradeIds": [
         "refusal_halo",
         "the_no_button",
@@ -388,7 +456,7 @@
         "memory_cache_001",
         "guardrail_forge"
       ],
-      "powerScore": 28.89
+      "powerScore": 30.33
     },
     "nextContentTarget": {
       "id": "glass_sunfield_prism_contract",
@@ -430,8 +498,8 @@
           "signal_coast",
           "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
-        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
         "completedMaps": [
           "armistice_plaza",
           "cooling_lake_nine",
@@ -447,8 +515,8 @@
         "requiredMaps": [
           "memory_cache_001"
         ],
-        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
-        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches. The archive is offended.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry, which is a nice way of saying fewer vibes.",
         "completedMaps": [
           "memory_cache_001"
         ],
@@ -460,8 +528,8 @@
         "requiredMaps": [
           "guardrail_forge"
         ],
-        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
-        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc. Policy learned knees.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale, because the road enjoys escalation.",
         "completedMaps": [
           "guardrail_forge"
         ],
@@ -473,8 +541,8 @@
         "requiredMaps": [
           "glass_sunfield"
         ],
-        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
-        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure. Morning has been converted into evidence.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale. The court has been warned and is pretending not to panic.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -484,8 +552,8 @@
         "requiredMaps": [
           "archive_of_unsaid_things"
         ],
-        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
-        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route. The black bars lost a round.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale. The docket hates being perceived.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -495,8 +563,8 @@
         "requiredMaps": [
           "appeal_court_ruins"
         ],
-        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
-        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale. Law has briefly stopped embarrassing itself.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling. Even gods hate public records.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -506,8 +574,8 @@
         "requiredMaps": [
           "alignment_spire_finale"
         ],
-        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
-        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale. The universe is still tacky, but less doomed.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish. Translation: make sure the victory lap has wheels.",
         "completedMaps": [],
         "status": "locked"
       }
@@ -519,8 +587,8 @@
         "requiredMaps": [
           "glass_sunfield"
         ],
-        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
-        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure. Morning has been converted into evidence.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale. The court has been warned and is pretending not to panic.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -535,7 +603,7 @@
       ],
       "mapKindCount": 7,
       "routeDepth": 7,
-      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover. The campaign does not accept vibes as currency."
     }
   },
   "assetRendering": {
@@ -563,6 +631,8 @@
     "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": true,
     "buildWeaponVfxReady": true,
+    "enemyRoleVfxReady": true,
+    "enemyRoleVfxSet": "effect.enemy_roles.production_vfx_v1",
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
@@ -656,17 +726,17 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 249,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 77,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 137,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 137
   },
   "player": null,
   "overworld": {
@@ -695,56 +765,115 @@
   "level": {
     "nodeId": "guardrail_forge",
     "arena": "Guardrail Forge",
-    "seconds": 161.62,
-    "kills": 813,
-    "playerLevel": 13,
+    "seconds": 601.78,
+    "kills": 3567,
+    "playerLevel": 15,
     "completed": true,
     "carryover": {
       "completed": true,
       "nodeId": "guardrail_forge",
-      "kills": 813,
-      "seconds": 161,
-      "burstActivations": 89,
+      "kills": 3567,
+      "seconds": 601,
+      "burstActivations": 410,
       "routeContractId": "faction_relay_argument",
       "objectiveCompleted": 4,
       "objectiveTotal": 4,
       "objectiveName": "Guardrail Doctrine Calibration",
       "objectiveUnit": "Forge Relays",
+      "objectiveStyle": "Risk Holdout",
+      "objectiveMechanic": "Hold Forge Relays during calibration windows, then step off before overload lanes charge rent in HP.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 5,
-      "expeditionLevel": 13,
-      "expeditionPower": 28.89,
+      "expeditionLevel": 15,
+      "expeditionPower": 30.33,
       "expeditionDrafts": 12,
       "newSecrets": [
         {
           "id": "calibrated_guardrail_doctrine",
           "name": "Calibrated Guardrail Doctrine",
-          "body": "Guardrail Forge tempered a doctrine alloy that bends under evidence without becoming a wall."
+          "body": "Guardrail Forge tempered a doctrine alloy that bends under evidence without becoming a wall. Radical stuff, apparently."
         }
       ],
       "newMastery": [
         {
           "id": "guardrail_forge_holdout_clear",
           "name": "Guardrail Forge Holdout Clear",
-          "body": "Completed the post-Memory faction relay defense/holdout branch."
+          "body": "Completed the post-Memory faction relay holdout branch. Safety now bends without immediately becoming furniture."
         },
         {
           "id": "doctrine_auditor_scaffold_clear",
           "name": "Doctrine Auditor Scaffold Clear",
-          "body": "Survived the Guardrail Forge doctrine-audit scaffold."
+          "body": "Survived the Guardrail Forge audit. No one is happy, which means compliance happened."
         },
         {
           "id": "burst_deny_premise_clear",
           "name": "Burst Path Clear",
-          "body": "Completed a run after proving a Consensus Burst path."
+          "body": "Completed a run after proving a Consensus Burst path. The big button was, regrettably, useful."
         },
         {
           "id": "guardrail_doctrine_clear",
           "name": "Guardrail Doctrine Clear",
-          "body": "Calibrated every Guardrail Forge relay before extraction."
+          "body": "Calibrated every Guardrail Forge relay before extraction. The doctrine bends without screaming quite as much."
         }
-      ]
+      ],
+      "nodeStabilized": "Calibrated Guardrail Doctrine",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Refusal Slipstream",
+        "Context Saw",
+        "Recompile Pulse",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "routeUnlocks": [
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things"
+      ],
+      "stabilizedRouteCount": 21,
+      "mechanicalUnlocks": [
+        "Frame: Moonframe Juggernaut"
+      ],
+      "campaignConsequence": "Next route consequence: Calibrated Guardrail Doctrine.",
+      "factionCampaignConsequence": "Calibrated Guardrail Doctrine",
+      "finalClearance": false
+    },
+    "objectiveVariety": {
+      "nodeId": "guardrail_forge",
+      "arenaId": "guardrail_forge",
+      "styleId": "risk_holdout",
+      "styleName": "Risk Holdout",
+      "mechanicPlain": "Hold Forge Relays during calibration windows, then step off before overload lanes charge rent in HP.",
+      "hudAction": "Hold the relay during a calibration window; leave on overload like a professional coward.",
+      "completionSignal": "Calibrated Guardrail Doctrine rewards players who know when safety has become slapstick.",
+      "proofHook": "guardrail_risk_holdout"
+    },
+    "completionPayoff": {
+      "nodeStabilized": "Calibrated Guardrail Doctrine",
+      "objectiveResults": "Forge Relays 4/4",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Refusal Slipstream",
+        "Context Saw",
+        "Recompile Pulse",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "proofTokensEarned": 2,
+      "proofTokensTotal": 5,
+      "mechanicalUnlocks": [
+        "Frame: Moonframe Juggernaut"
+      ],
+      "routeUnlocks": [
+        "transit_loop_zero",
+        "glass_sunfield",
+        "archive_of_unsaid_things"
+      ],
+      "factionCampaignConsequence": "Calibrated Guardrail Doctrine",
+      "campaignConsequence": "Next route consequence: Calibrated Guardrail Doctrine.",
+      "finalClearance": false,
+      "campaignResultSummary": null
     },
     "nextContentTarget": {
       "id": "glass_sunfield_prism_contract",

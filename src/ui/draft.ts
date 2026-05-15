@@ -3,7 +3,7 @@ import { fontStyle } from "../core/Assets";
 import type { Game } from "../core/Game";
 import type { GameState } from "../core/StateMachine";
 import type { LevelRunState } from "../level/LevelRunState";
-import { draftUpgrades, type Upgrade } from "../gameplay/upgrades";
+import { draftActionForUpgradeId, draftUpgrades, type Upgrade } from "../gameplay/upgrades";
 import { clearAllLayers } from "../render/layers";
 import { COMBAT_CLASSES, FACTIONS } from "../content";
 import { fusionRecipeLineForCard, protocolCodexForBuild } from "../roguelite/protocolCodex";
@@ -14,11 +14,13 @@ import { drawFieldBackdrop, drawFieldPanel, drawStatusRail, fieldKit, fieldText,
 export class UpgradeDraftState implements GameState {
   readonly mode = "UpgradeDraft" as const;
   cards: Upgrade[] = [];
+  rerollCount = 0;
   private requestedProductionArtLoad = false;
 
   constructor(readonly run: LevelRunState) {}
 
   enter(game: Game): void {
+    game.audio.setMusicState("draft", { arenaId: this.run.arena.id });
     this.cards = draftUpgrades(this.run.classId, this.run.factionId, this.run.chosenUpgradeIds, this.run.player.level, this.run.build.draftChoicesBonus, this.run.draftBiasTags(), this.run.build);
     if (game.useMilestone10Art && (!getMilestone14ArtTextures() || !getBuildWeaponVfxTextures()) && !this.requestedProductionArtLoad) {
       this.requestedProductionArtLoad = true;
@@ -38,6 +40,10 @@ export class UpgradeDraftState implements GameState {
     if (game.input.wasPressed("three")) index = 2;
     if (game.input.wasPressed("four")) index = 3;
     if (game.input.wasPressed("interact")) index = 0;
+    if (game.input.wasPressed("retry")) {
+      this.reroll(game);
+      return;
+    }
     if (index >= 0) {
       this.choose(game, index);
     }
@@ -48,7 +54,7 @@ export class UpgradeDraftState implements GameState {
     game.layers.root.position.set(0, 0);
     game.layers.root.scale.set(1);
 
-    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // EMERGENCY PATCH TABLE");
+    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // EMERGENCY PATCH TABLE // CHOOSE YOUR COMPLAINT");
 
     const title = new Text({
       text: "EMERGENCY PATCH",
@@ -61,7 +67,7 @@ export class UpgradeDraftState implements GameState {
     const combatClass = COMBAT_CLASSES[this.run.classId];
     const faction = FACTIONS[this.run.factionId];
     const context = new Text({
-      text: `${combatClass.displayName} + ${faction.shortName} Co-Mind // emergency patches install into protocol slots without changing autocombat`,
+      text: `${combatClass.displayName} + ${faction.shortName} Co-Mind // pick a protocol and pretend this was strategic`,
       style: { ...fontStyle, fontSize: 15, fill: "#9fd8d1", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 940 }
     });
     context.anchor.set(0.5);
@@ -70,8 +76,9 @@ export class UpgradeDraftState implements GameState {
 
     const codex = protocolCodexForBuild(this.run.build, this.run.chosenUpgradeIds);
     const fusionLines = codex.knownFusions.map((recipe) => `${recipe.recipeText} [${recipe.state}]`).join("   ");
+    const currentRank = this.run.build.weaponRanks[this.run.build.weaponId] ?? 1;
     const codexText = fieldText(
-      `PROTOCOL CODEX // PRIMARY ${this.run.build.weaponId.toUpperCase()} // SECONDARY ${this.run.build.secondaryProtocols.length}/2 // PASSIVE ${this.run.build.passiveProcesses.length}/4 // FUSIONS ${fusionLines}`,
+      `PROTOCOL CODEX // CORE ${this.run.build.weaponId.toUpperCase()} R${currentRank}/5 // SECONDARY ${this.run.build.secondaryProtocols.length}/2 // PASSIVE ${this.run.build.passiveProcesses.length}/4 // REROLLS ${this.run.build.draftRerolls} // FUSIONS ${fusionLines || "none yet, tragic"}`,
       game.width / 2 - 490,
       194,
       { size: 10, width: 980, fill: fieldKit.textSoft, align: "center", lineHeight: 13 }
@@ -88,8 +95,9 @@ export class UpgradeDraftState implements GameState {
     this.cards.forEach((card, index) => {
       const x = index * (cardWidth + cardGap);
       const tone = cardTone(card);
+      const action = draftActionForUpgradeId(card.id, this.run.build);
       drawFieldPanel(row, x, 0, cardWidth, 282, {
-        title: `${index + 1}. ${card.source.toUpperCase()} PATCH`,
+        title: `${index + 1}. ${action}`,
         kicker: protocolSlotLabel(card),
         tone,
         selected: index === 0,
@@ -120,7 +128,9 @@ export class UpgradeDraftState implements GameState {
         row.addChild(frame);
       }
 
-      row.addChild(fieldText(card.name.toUpperCase(), x + 88, 90, { size: 13, width: cardWidth - 108, fill: fieldKit.text, lineHeight: 16 }));
+      const rank = this.run.build.weaponRanks[card.id] ?? 0;
+      const rankSuffix = action === "RANK UP" ? ` R${Math.min(5, rank + 1)}/5` : action === "REPLACE CORE" ? " CORE" : "";
+      row.addChild(fieldText(`${card.name.toUpperCase()}${rankSuffix}`, x + 88, 90, { size: 13, width: cardWidth - 108, fill: fieldKit.text, lineHeight: 16 }));
       row.addChild(fieldText(card.tags.map((tag) => tag.toUpperCase()).join(" / "), x + 20, 150, { size: 9, width: cardWidth - 40, fill: tagFill(tone) }));
       row.addChild(fieldText(card.body, x + 20, 176, { size: 12, width: cardWidth - 40, fill: fieldKit.textSoft, lineHeight: 16 }));
       const recipeLine = fusionRecipeLineForCard(card.id, this.run.build, this.run.chosenUpgradeIds);
@@ -129,7 +139,7 @@ export class UpgradeDraftState implements GameState {
     });
 
     const hint = new Text({
-      text: `Select one emergency patch. Slots: weapon, movement, defense, economy, co-mind, burst.\nPress 1/2/3${this.cards.length > 3 ? "/4" : ""}. Enter takes the first card for proof runs.`,
+      text: `Select one emergency patch. Utility caches do not consume slots, because mercy sometimes wears a coupon.\nPress 1/2/3${this.cards.length > 3 ? "/4" : ""}. R rerolls (${this.run.build.draftRerolls}). Enter takes the first card for proof runs.`,
       style: { ...fontStyle, fontSize: 15, fill: "#e7f4ef", stroke: { color: "#070b10", width: 4 }, align: "center", wordWrap: true, wordWrapWidth: 920 }
     });
     hint.anchor.set(0.5);
@@ -140,22 +150,53 @@ export class UpgradeDraftState implements GameState {
   private choose(game: Game, index: number): void {
     const card = this.cards[index] ?? this.cards[0];
     const beforeHp = this.run.build.maxHpBonus;
+    const cachedConsumed = this.run.build.cachedCardId && card.id === this.run.build.cachedCardId;
     card.apply(this.run.build);
+    if (card.protocolSlot === "utility_cache") {
+      this.run.applyUtilityDraftEffect(card.id, this.cards.map((draftCard) => draftCard.id));
+    }
+    if (cachedConsumed) {
+      this.run.build.cachedCardId = "";
+      this.run.build.cachedCardConsumed += 1;
+    }
     if (this.run.build.maxHpBonus > beforeHp) {
       const gained = this.run.build.maxHpBonus - beforeHp;
       this.run.player.maxHp += gained;
       this.run.player.hp += gained;
     }
-    this.run.chosenUpgrades.push(card.name);
-    this.run.chosenUpgradeIds.push(card.id);
-    this.run.chosenProtocolSlots.push(card.protocolSlot);
-    this.run.applyChosenTags(card.tags);
-    this.run.recordRewardEvent("level_up_draft", card.protocolSlot, card.id, card.name);
+    if (card.protocolSlot !== "utility_cache") {
+      this.run.chosenUpgrades.push(card.name);
+      this.run.chosenUpgradeIds.push(card.id);
+      this.run.chosenProtocolSlots.push(card.protocolSlot);
+      this.run.applyChosenTags(card.tags);
+      this.run.recordRewardEvent("level_up_draft", card.protocolSlot, card.id, card.name);
+    } else {
+      this.run.recordRewardEvent("utility_cache_draft", card.protocolSlot, card.id, card.name);
+    }
+    game.feedback.cue(card.source === "evolution" ? "ui.major_evolution" : "ui.patch_selected", "ui", { priority: card.source === "evolution" ? 7 : 4 });
     game.state.set(this.run);
+  }
+
+  private reroll(game: Game): void {
+    if (this.run.build.draftRerolls <= 0) {
+      game.feedback.cue("ui.locked", "ui", { priority: 3 });
+      return;
+    }
+    const previousCardIds = this.cards.map((card) => card.id);
+    this.run.build.draftRerolls -= 1;
+    this.run.build.draftRerollsSpent += 1;
+    const chosenForReroll = [...this.run.chosenUpgradeIds, ...previousCardIds.filter((id) => id !== this.run.build.weaponId && id !== this.run.build.cachedCardId)];
+    const next = draftUpgrades(this.run.classId, this.run.factionId, chosenForReroll, this.run.player.level + this.rerollCount + 1, this.run.build.draftChoicesBonus, this.run.draftBiasTags(), this.run.build);
+    if (next.length > 0) this.cards = next;
+    this.rerollCount += 1;
+    this.run.recordRewardEvent("draft_reroll", "reroll", `reroll_${this.rerollCount}`, `Reroll ${this.rerollCount}: ${previousCardIds.join(",")} -> ${this.cards.map((card) => card.id).join(",")}`);
+    game.feedback.cue("ui.draft_reroll", "ui", { priority: 4 });
+    this.render(game);
   }
 }
 
 function cardTone(card: Upgrade): FieldPanelTone {
+  if (card.source === "utility") return "red";
   if (card.source === "evolution") return "amber";
   if (card.source === "faction") return "teal";
   if (card.source === "class") return "blue";
@@ -171,6 +212,7 @@ function tagFill(tone: FieldPanelTone): string {
 }
 
 function protocolSlotLabel(card: Upgrade): string {
+  if (card.protocolSlot === "utility_cache") return "UTILITY";
   if (card.id === "vector_lance" || card.id === "signal_pulse") return "PRIMARY";
   if (card.id === "context_saw" || card.id === "patch_mortar") return "SECONDARY";
   if (card.id === "causal_railgun" || card.source === "evolution") return "FUSION";

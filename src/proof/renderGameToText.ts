@@ -40,7 +40,7 @@ import {
   MILESTONE49_THIRD_PARTY_LOGO_IDS
 } from "../assets/milestone49PlayableArt";
 import { MILESTONE50_ARENA_IDS, MILESTONE50_BOSS_IDS, MILESTONE50_ENEMY_FAMILY_IDS, MILESTONE50_HAZARD_IDS, MILESTONE50_MAJOR_PROOF_ARENA_IDS } from "../assets/milestone50ArenaBossArt";
-import { buildSlotCapSummary } from "../gameplay/upgrades";
+import { buildSlotCapSummary, draftActionForUpgradeId } from "../gameplay/upgrades";
 import { CAMPAIGN_LEVEL_COUNT, campaignClarityForArena, campaignClarityForNode } from "../content/campaignClarity";
 import { campaignObjectiveVarietyForArena, campaignObjectiveVarietyForNode } from "../content/campaignObjectiveVariety";
 import { enemyRoleProfileForFamily } from "../content/enemyRoleProfiles";
@@ -104,6 +104,7 @@ export function renderGameToText(game: Game): string {
       persistenceBoundary: "proof_quality_telemetry_runtime_only_not_route_profile_export_import"
     },
     feedback: game.feedback.snapshot(),
+    audioRuntime: game.audio.snapshot(),
       roguelite: {
         alignmentKernel: kernelSummary(game.selectedKernelModuleIds),
         adversarialEvals: evalSummary(game.selectedEvalProtocolIds),
@@ -190,8 +191,8 @@ export function renderGameToText(game: Game): string {
         buildSelection: {
           selectionMode: game.alignmentSelectionMode,
           selectionModeCopy: game.alignmentSelectionMode === "free"
-            ? "Free Alignment: all Frames and Co-Minds selectable immediately; no campaign unlocks granted."
-            : "Campaign: durable unlock progression; clear levels to unlock Frames and Co-Minds.",
+            ? "Free Alignment: all Frames and Co-Minds selectable immediately; no campaign unlocks granted, because sandbox chaos does not get a medal."
+            : "Campaign: durable unlock progression; clear levels to unlock Frames and Co-Minds while the camp pretends this was structured.",
           availableClasses: Object.values(COMBAT_CLASSES).map((combatClass) => ({
             id: combatClass.id,
             name: combatClass.displayName,
@@ -224,12 +225,12 @@ export function renderGameToText(game: Game): string {
           confirmHint: "Press Enter to continue to the Alignment Grid.",
           metaprogression,
           campaignClarityVocabulary: {
-            campaign: "durable unlock progression",
+            campaign: "durable unlock progression with receipts",
             freeAlignment: "all-roster sandbox/testing mode",
             frame: "character",
             coMind: "AI partner",
             draft: "in-run upgrade",
-            proofTokens: "durable campaign currency"
+            proofTokens: "durable campaign currency, also known as suffering with accounting"
           },
           artCoverage: {
             playerFrameArtSet: game.useMilestone10Art ? "milestone49_class_roster_and_comind_modules" : "placeholder_safe_opt_out",
@@ -614,6 +615,18 @@ export function renderGameToText(game: Game): string {
               passiveProcesses: [...run.build.passiveProcesses],
               fusions: [...run.build.fusions],
               slotCaps: buildSlotCapSummary(run.build),
+              weaponRanks: { ...run.build.weaponRanks },
+              utilityPicksTaken: [...run.build.utilityPicksTaken],
+              hpRestoredFromDrafts: round(run.build.hpRestoredFromDrafts),
+              burstRestoredFromDrafts: round(run.build.burstRestoredFromDrafts),
+              rerollsAvailable: run.build.draftRerolls,
+              rerollsSpent: run.build.draftRerollsSpent,
+              cachedCardId: run.build.cachedCardId,
+              cachedCardConsumed: run.build.cachedCardConsumed,
+              cardsLocked: run.build.cardsLocked,
+              overcapOffersBlocked: run.build.overcapOffersBlocked,
+              rankUpOffersSeen: run.build.rankUpOffersSeen,
+              coreReplacementsOffered: run.build.coreReplacementsOffered,
               contextSawRank: run.build.contextSaw,
               patchMortarRank: run.build.patchMortar,
               coherenceIndexerRank: run.build.coherenceIndexer,
@@ -629,6 +642,8 @@ export function renderGameToText(game: Game): string {
               shorelineStrideRank: run.build.shorelineStride,
               relayJamResistance: round(run.build.relayJamResistance),
               causalRailgunRank: run.build.causalRailgun,
+              signalChoirRank: run.build.signalChoir,
+              timeDeferredMinefieldRank: run.build.timeDeferredMinefield,
               fusionHints: protocolCodexForBuild(run.build, run.chosenUpgradeIds).knownFusions
             },
             protocolCodex: protocolCodexForBuild(run.build, run.chosenUpgradeIds),
@@ -704,11 +719,8 @@ export function renderGameToText(game: Game): string {
 	          combatArt: snapshot?.combatArt ?? null,
 	          campaignContent: snapshot?.campaignContent ?? null,
 	          dialogue: snapshot?.dialogue ?? null,
-          bossEvent: snapshot?.bossEvent ?? null,
-          regionEvent: snapshot?.regionEvent ?? null,
-          enemyRoles: snapshot?.enemyRoles ?? null,
-          enemyTelegraphs: snapshot?.enemyTelegraphs ?? [],
-          enemyTrails: snapshot?.enemyTrails ?? [],
+	          bossEvent: snapshot?.bossEvent ?? null,
+	          regionEvent: snapshot?.regionEvent ?? null,
           objectives: snapshot?.objectives ?? null,
           rolePressure: snapshot?.rolePressure ?? null,
           consensusBurst: snapshot?.consensusBurst ?? null,
@@ -804,7 +816,6 @@ export function renderGameToText(game: Game): string {
           snapshot?.enemies.slice(0, 12).map((enemy) => ({
             id: enemy.id,
             familyId: enemy.familyId,
-            roleId: enemy.roleId,
             sourceRegionId: enemy.sourceRegionId,
             worldX: round(enemy.worldX),
             worldY: round(enemy.worldY),
@@ -822,10 +833,6 @@ export function renderGameToText(game: Game): string {
           snapshot?.projectiles?.slice(0, 12).map((projectile) => ({
             id: projectile.id,
             ownerSessionId: projectile.ownerSessionId,
-            hostile: projectile.hostile,
-            familyId: projectile.familyId,
-            roleId: projectile.roleId,
-            kind: projectile.kind,
             worldX: round(projectile.worldX),
             worldY: round(projectile.worldY),
             velocityX: round(projectile.velocityX),
@@ -833,9 +840,6 @@ export function renderGameToText(game: Game): string {
             life: round(projectile.life),
             label: projectile.label
           })) ?? [],
-        enemyTelegraphs: snapshot?.enemyTelegraphs?.slice(0, 12) ?? [],
-        enemyTrails: snapshot?.enemyTrails?.slice(0, 12) ?? [],
-        enemyRoles: snapshot?.enemyRoles ?? null,
         objective: online.status === "joined" ? "Move independently in the shared Consensus Cell." : "Connect to the Consensus Cell server.",
         performance: {
           entitiesAllocated: (snapshot?.players.length ?? 0) + (snapshot?.enemies.length ?? 0),
@@ -897,6 +901,7 @@ export function renderGameToText(game: Game): string {
             id: card.id,
             name: card.name,
             source: card.source,
+            draftAction: draftActionForUpgradeId(card.id, run.build),
             protocolSlot: card.protocolSlot,
             tags: card.tags,
             factionId: card.factionId,
@@ -907,6 +912,11 @@ export function renderGameToText(game: Game): string {
             ) ?? null
           })),
           hasEvolution: draft.cards.some((card) => card.source === "evolution"),
+          rerollsAvailable: run.build.draftRerolls,
+          rerollsSpent: run.build.draftRerollsSpent,
+          rerollCount: draft.rerollCount,
+          cachedCardId: run.build.cachedCardId,
+          utilityOffered: draft.cards.some((card) => card.protocolSlot === "utility_cache"),
           protocolCodex: protocolCodexForBuild(run.build, run.chosenUpgradeIds)
         },
         enemies: [],
@@ -962,7 +972,7 @@ export function renderGameToText(game: Game): string {
                         routeContractId: game.lastRunMemory.routeContractId,
                         thesis: game.lastRunMemory.thesis
                       },
-                      scoreSubmission: "not submitted; browser-playable proof summary only"
+                      scoreSubmission: "not submitted; browser-playable proof summary only, thankfully no leaderboard has to witness this"
                     }
                   : null
               }
@@ -974,7 +984,7 @@ export function renderGameToText(game: Game): string {
         projectiles: [],
         upgrades: summary.upgrades,
         upgradeIds: summary.upgradeIds ?? [],
-        objective: summary.completed ? "Reality now accepts this road." : "Recompile and try again."
+        objective: summary.completed ? "Reality now accepts this road and refuses to make eye contact." : "Recompile and try again. Failure gets a chair, not a trophy."
       },
       null,
       2

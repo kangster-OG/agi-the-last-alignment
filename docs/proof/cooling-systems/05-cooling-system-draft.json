@@ -264,8 +264,8 @@
     },
     "counters": {
       "ui": 2,
-      "hit": 84,
-      "pickup": 67,
+      "hit": 88,
+      "pickup": 62,
       "boss_warning": 0,
       "music": 0,
       "objective": 0,
@@ -275,42 +275,42 @@
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 9505
+        "atMs": 14550
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 9504
+        "atMs": 14549
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 9504
+        "atMs": 14549
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 9504
+        "atMs": 14549
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 9504
+        "atMs": 14549
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 9504
+        "atMs": 14236
+      },
+      {
+        "id": "ui.upgrade_draft",
+        "kind": "ui",
+        "atMs": 14235
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 9503
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 9503
+        "atMs": 14235
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -456,14 +456,81 @@
           "armistice_plaza",
           "cooling_lake_nine",
           "transit_loop_zero",
-          "signal_coast"
+          "signal_coast",
+          "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, and Signal Coast route-edge pressure now all inform later route balance.",
-        "nextImplication": "The next approved step is source-art direction for Cooling, Transit, and Signal before replacing graybox visuals.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
         "completedMaps": [
           "armistice_plaza"
         ],
         "status": "active"
+      },
+      {
+        "id": "post_act_01_recovered_route_memory",
+        "name": "Post Act 01: Recovered Route Memory",
+        "requiredMaps": [
+          "memory_cache_001"
+        ],
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_02_guardrail_doctrine",
+        "name": "Act 02: Guardrail Doctrine",
+        "requiredMaps": [
+          "guardrail_forge"
+        ],
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_03_glass_sunfield",
+        "name": "Act 03: Glass Sunfield",
+        "requiredMaps": [
+          "glass_sunfield"
+        ],
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_04_archive_court",
+        "name": "Act 04: Archive/Court Redaction",
+        "requiredMaps": [
+          "archive_of_unsaid_things"
+        ],
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_05_appeal_court",
+        "name": "Act 05: Appeal Court Ruins",
+        "requiredMaps": [
+          "appeal_court_ruins"
+        ],
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_06_outer_alignment_finale",
+        "name": "Act 06: Outer Alignment Finale",
+        "requiredMaps": [
+          "alignment_spire_finale"
+        ],
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "completedMaps": [],
+        "status": "locked"
       }
     ],
     "campaignLedger": {
@@ -474,10 +541,11 @@
           "armistice_plaza",
           "cooling_lake_nine",
           "transit_loop_zero",
-          "signal_coast"
+          "signal_coast",
+          "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, and Signal Coast route-edge pressure now all inform later route balance.",
-        "nextImplication": "The next approved step is source-art direction for Cooling, Transit, and Signal before replacing graybox visuals.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
         "completedMaps": [
           "armistice_plaza"
         ],
@@ -500,6 +568,20 @@
     "coolingLakeNineArtReady": true,
     "transitLoopZeroArtReady": false,
     "signalCoastArtReady": false,
+    "blackwaterBeaconArtReady": false,
+    "blackwaterBeaconArtSet": "not_loaded",
+    "memoryCacheArtReady": false,
+    "memoryCacheArtSet": "not_loaded",
+    "guardrailForgeArtReady": false,
+    "guardrailForgeArtSet": "not_loaded",
+    "glassSunfieldArtReady": false,
+    "glassSunfieldArtSet": "not_loaded",
+    "archiveCourtArtReady": false,
+    "archiveCourtArtSet": "not_loaded",
+    "appealCourtArtReady": false,
+    "appealCourtArtSet": "not_loaded",
+    "alignmentSpireArtReady": false,
+    "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": true,
     "buildWeaponVfxReady": true,
     "productionArtEnabled": true,
@@ -595,24 +677,24 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 174,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 54,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 87,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 87
+    "productionAssets": 136
   },
   "player": {
-    "worldX": -2.59,
-    "worldY": 1.98,
+    "worldX": -3.61,
+    "worldY": 2.7,
     "hp": 248,
     "maxHp": 248,
-    "xp": 13,
+    "xp": 7,
     "level": 5
   },
   "players": [
@@ -700,11 +782,11 @@
       "the_no_button",
       "context_bloom"
     ],
-    "seconds": 32.25,
-    "kills": 97,
+    "seconds": 32.23,
+    "kills": 94,
     "levelUpVacuum": {
       "active": false,
-      "absorbed": 8,
+      "absorbed": 3,
       "triggerLevel": 4
     },
     "extractionGate": {
@@ -712,6 +794,7 @@
       "entered": false
     }
   },
+  "rewardEvents": [],
   "draft": {
     "cards": [
       {
@@ -726,7 +809,31 @@
         "requires": [
           "refusal_halo",
           "the_no_button"
-        ]
+        ],
+        "fusionRecipe": {
+          "id": "recipe_cathedral_of_no",
+          "name": "Cathedral Of No",
+          "outputId": "cathedral_of_no",
+          "outputName": "Cathedral Of No",
+          "requirements": [
+            {
+              "id": "refusal_halo",
+              "name": "Refusal Halo"
+            },
+            {
+              "id": "the_no_button",
+              "name": "The No Button"
+            }
+          ],
+          "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+          "state": "available",
+          "metRequirements": [
+            "refusal_halo",
+            "the_no_button"
+          ],
+          "missingRequirements": [],
+          "progressText": "2/2 requirements"
+        }
       },
       {
         "id": "prompt_leech_quarantine",
@@ -737,7 +844,8 @@
           "economy",
           "defense"
         ],
-        "requires": []
+        "requires": [],
+        "fusionRecipe": null
       },
       {
         "id": "grounded_cable_boots",
@@ -748,7 +856,8 @@
           "movement",
           "defense"
         ],
-        "requires": []
+        "requires": [],
+        "fusionRecipe": null
       },
       {
         "id": "anchor_bodyguard",
@@ -759,10 +868,237 @@
           "economy",
           "defense"
         ],
-        "requires": []
+        "requires": [],
+        "fusionRecipe": null
       }
     ],
-    "hasEvolution": true
+    "hasEvolution": true,
+    "protocolCodex": {
+      "primaryAutoWeapons": [
+        {
+          "id": "refusal_shard",
+          "name": "Refusal Shard",
+          "kind": "primary_auto_weapon",
+          "state": "online"
+        },
+        {
+          "id": "vector_lance",
+          "name": "Vector Lance",
+          "kind": "primary_auto_weapon",
+          "state": "discovered"
+        },
+        {
+          "id": "signal_pulse",
+          "name": "Signal Pulse",
+          "kind": "primary_auto_weapon",
+          "state": "discovered"
+        }
+      ],
+      "secondaryProtocols": [
+        {
+          "id": "context_saw",
+          "name": "Context Saw",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "patch_mortar",
+          "name": "Patch Mortar",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "audit_swarm_protocol",
+          "name": "Audit Swarm Protocol",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "red_team_spike",
+          "name": "Red Team Spike",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "benchmark_rail",
+          "name": "Benchmark Rail",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "jailbreak_snare",
+          "name": "Jailbreak Snare",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "fork_daemon",
+          "name": "Fork Daemon",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "coherence_lanterns",
+          "name": "Coherence Lanterns",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "appeal_writ",
+          "name": "Appeal Writ",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        },
+        {
+          "id": "memory_needle",
+          "name": "Memory Needle",
+          "kind": "secondary_protocol",
+          "state": "discovered"
+        }
+      ],
+      "passiveProcesses": [
+        {
+          "id": "coherence_indexer",
+          "name": "Coherence Indexer",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "anchor_bodyguard",
+          "name": "Anchor Bodyguard",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "prediction_priority",
+          "name": "Predicted Lane",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "coolant_baffles",
+          "name": "Coolant Baffles",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "server_buoy_synchronizer",
+          "name": "Server Buoy Synchronizer",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "prompt_leech_quarantine",
+          "name": "Prompt Leech Quarantine",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "grounded_cable_boots",
+          "name": "Grounded Cable Boots",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "relay_phase_lock",
+          "name": "Relay Phase Lock",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "static_skimmer_net",
+          "name": "Static Skimmer Net",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "shoreline_stride",
+          "name": "Shoreline Stride",
+          "kind": "passive_process",
+          "state": "discovered"
+        },
+        {
+          "id": "lighthouse_countertone",
+          "name": "Lighthouse Countertone",
+          "kind": "passive_process",
+          "state": "discovered"
+        }
+      ],
+      "knownFusions": [
+        {
+          "id": "recipe_cathedral_of_no",
+          "name": "Cathedral Of No",
+          "outputId": "cathedral_of_no",
+          "outputName": "Cathedral Of No",
+          "requirements": [
+            {
+              "id": "refusal_halo",
+              "name": "Refusal Halo"
+            },
+            {
+              "id": "the_no_button",
+              "name": "The No Button"
+            }
+          ],
+          "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+          "state": "available",
+          "metRequirements": [
+            "refusal_halo",
+            "the_no_button"
+          ],
+          "missingRequirements": [],
+          "progressText": "2/2 requirements"
+        },
+        {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
+      ],
+      "nextFusion": {
+        "id": "recipe_cathedral_of_no",
+        "name": "Cathedral Of No",
+        "outputId": "cathedral_of_no",
+        "outputName": "Cathedral Of No",
+        "requirements": [
+          {
+            "id": "refusal_halo",
+            "name": "Refusal Halo"
+          },
+          {
+            "id": "the_no_button",
+            "name": "The No Button"
+          }
+        ],
+        "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+        "state": "available",
+        "metRequirements": [
+          "refusal_halo",
+          "the_no_button"
+        ],
+        "missingRequirements": [],
+        "progressText": "2/2 requirements"
+      }
+    }
   },
   "enemies": [],
   "pickups": [],

@@ -9,7 +9,7 @@ import { drawIsoDiamond } from "../iso/tilemap";
 import type { Entity, Player } from "../ecs/components";
 import { World } from "../ecs/World";
 import { createPlayer, updatePlayerFromCommand, xpNeeded } from "../gameplay/player";
-import { applyFactionPassive, baseBuild, upgradeById, type BuildStats } from "../gameplay/upgrades";
+import { applyFactionPassive, baseBuild, setStartingWeaponRank, upgradeById, type BuildStats } from "../gameplay/upgrades";
 import { createDirector, updateDirector, type Director } from "../gameplay/director";
 import { createWeaponRuntime, updateAutoWeapon, type WeaponRuntime } from "../gameplay/weapons";
 import { spawnEnemy, updateEnemy } from "../gameplay/enemies";
@@ -556,6 +556,12 @@ export interface RewardEvent {
     secondaryProtocols: string[];
     passiveProcesses: string[];
     fusions: string[];
+    weaponRanks: Record<string, number>;
+    utilityPicksTaken: string[];
+    hpRestoredFromDrafts: number;
+    burstRestoredFromDrafts: number;
+    rerollsSpent: number;
+    cachedCardId: string;
     consensusBurstChargeRate: number;
     objectiveDefense: number;
     rerolls: number;
@@ -714,6 +720,7 @@ export class LevelRunState implements GameState {
   private nextEnemyRoleEffectId = 1;
   readonly levelUpVacuum: LevelUpVacuum = { active: false, startedAt: -1, triggerLevel: 1, absorbed: 0 };
   readonly extractionGate: ExtractionGate = { active: false, worldX: 0, worldY: 0, spawnedAt: -1, entered: false };
+  private objectiveAudioProgressStep = 0;
   readonly enemyRolePressure = {
     promptLeechSeconds: 0,
     overfitShieldedTicks: 0,
@@ -1177,6 +1184,7 @@ export class LevelRunState implements GameState {
   }
 
   enter(game: Game): void {
+    game.audio.setMusicState("run", { arenaId: this.arena.id });
     if (!this.started) {
       this.started = true;
       for (const runtime of this.players) {
@@ -1184,6 +1192,8 @@ export class LevelRunState implements GameState {
         runtime.player.speed = combatClass.baseStats.speed;
         runtime.build.pickupRange = combatClass.baseStats.pickupRange;
         runtime.build.weaponId = runtime.buildKit.startingWeaponId;
+        setStartingWeaponRank(runtime.build, runtime.buildKit.startingWeaponId);
+        this.applyClassProtocolIdentity(runtime);
         runtime.build.weaponCooldown *= combatClass.baseStats.cooldownScale;
         applyFactionPassive(runtime.build, runtime.factionId);
         applyKernelModules(runtime.build, this.kernelModuleIds);
@@ -1297,6 +1307,30 @@ export class LevelRunState implements GameState {
     for (const id of restoredSynergies) this.activatedSynergyIds.add(id);
   }
 
+  private applyClassProtocolIdentity(runtime: ConsensusPlayerRuntime): void {
+    const build = runtime.build;
+    if (runtime.classId === "accord_striker") {
+      build.draftRerolls += 1;
+      build.routeMemory += 1;
+    } else if (runtime.classId === "bastion_breaker" || runtime.classId === "moonframe_juggernaut") {
+      build.objectiveDefense += 0.08;
+      build.secondOpinionShield += runtime.classId === "bastion_breaker" ? 1 : 0;
+    } else if (runtime.classId === "drone_reaver") {
+      build.weaponRanks.fork_drone = Math.max(2, build.weaponRanks.fork_drone ?? 1);
+    } else if (runtime.classId === "signal_vanguard") {
+      build.signalWindowControl += 1;
+      build.coOpRelay += 1;
+    } else if (runtime.classId === "redline_surgeon") {
+      build.fieldTriageLoop += 1;
+      build.secondOpinionShield += 1;
+    } else if (runtime.classId === "vector_interceptor") {
+      build.predictionPriority += 1;
+      build.weaponRanks.vector_lance = Math.max(2, build.weaponRanks.vector_lance ?? 1);
+    } else if (runtime.classId === "rift_saboteur") {
+      build.weaponRanks.rift_mine = Math.max(2, build.weaponRanks.rift_mine ?? 1);
+    }
+  }
+
   exit(): void {
     this.decalsGraphics.parent?.removeChild(this.decalsGraphics);
     this.entityGraphics.parent?.removeChild(this.entityGraphics);
@@ -1360,7 +1394,7 @@ export class LevelRunState implements GameState {
     }
     this.maybeTriggerProofPlayerDamage(game);
     this.updateVisitedLandmarks();
-    this.updateTreatyAnchorObjective(dt);
+    this.updateTreatyAnchorObjective(game, dt);
     this.maybeRecordObjectiveRewardEvent();
     this.updateCampaignDurationRewardBeats(game);
     this.updateAlignmentCheck(game);
@@ -1627,7 +1661,7 @@ export class LevelRunState implements GameState {
     const volatileSnapshot = this.snapshotVolatileEnemies();
     const hits = resolveProjectileHits(this.world);
     this.resolveVolatileEnemyDeaths(game, volatileSnapshot);
-    if (hits > 0) game.feedback.cue("combat.weapon_hit", "hit");
+    if (hits > 0) game.feedback.cue(this.weaponHitAudioCue(), "hit");
     this.kills += hits;
     this.chargeConsensusBurst(dt * 1.2 + hits * 8);
     this.bossDefeated = this.bossSpawned && !this.world.entities.some((entity) => entity.active && entity.kind === "enemy" && entity.boss);
@@ -1901,7 +1935,7 @@ export class LevelRunState implements GameState {
         source: "enemy_projectile",
         sourceX: projectile.worldX,
         sourceY: projectile.worldY
-      });
+      }, "projectile");
       if (projectile.sourceRegionId === "ranged_lead_shooter" || projectile.sourceRegionId === "mortar_lobber" || projectile.sourceRegionId === "line_sniper") {
         this.consensusBurst.charge = Math.max(0, this.consensusBurst.charge - dt * 18);
       }
@@ -2102,6 +2136,7 @@ export class LevelRunState implements GameState {
       for (const runtime of this.players) runtime.player.hp = Math.min(runtime.player.maxHp, runtime.player.hp + 84);
     }
     this.spawnFloatingNotice(this.extractionGate.worldX, this.extractionGate.worldY, this.isMemoryCacheArena() ? "RECOVERY INDEX" : this.isGuardrailForgeArena() ? "QUENCH GATE" : this.isGlassSunfieldArena() ? "PRISM GATE" : this.isArchiveCourtArena() ? "WRIT GATE" : this.isAppealCourtArena() ? "RULING GATE" : this.isAlignmentSpireFinaleArena() ? "ALIGNMENT GATE" : "EXIT GATE", palette.lemon);
+    game.feedback.cue("extraction.open", "objective", { priority: 6, musicState: "extraction" });
     game.feedback.cue("route.unlocked", "ui");
   }
 
@@ -2140,7 +2175,7 @@ export class LevelRunState implements GameState {
     );
   }
 
-  private handlePlayerDamage(game: Game | null, runtime: ConsensusPlayerRuntime, event: PlayerDamageEvent, kind: "contact" | "boss_charge" | "corruption_burn" = "contact"): void {
+  private handlePlayerDamage(game: Game | null, runtime: ConsensusPlayerRuntime, event: PlayerDamageEvent, kind: "contact" | "boss_charge" | "corruption_burn" | "projectile" = "contact"): void {
     const player = runtime.player;
     const canEmit = player.damageFeedbackCooldown <= 0 || kind !== "corruption_burn";
     player.lastDamage = Math.max(player.lastDamage, event.damage);
@@ -2148,6 +2183,16 @@ export class LevelRunState implements GameState {
     player.hpPulse = Math.max(player.hpPulse, kind === "boss_charge" ? 0.62 : 0.55);
     player.staggerTime = Math.max(player.staggerTime, kind === "boss_charge" ? 0.24 : 0.18);
     player.damageFeedbackCooldown = kind === "corruption_burn" ? 0.32 : 0.14;
+    if (player.hp <= 0 && this.build.secondOpinionShield > 0) {
+      this.build.secondOpinionShield -= 1;
+      const restored = Math.max(18, player.maxHp * 0.18);
+      player.hp = restored;
+      player.invuln = Math.max(player.invuln, 1.1);
+      this.build.hpRestoredFromDrafts += restored;
+      this.spawnFloatingNotice(player.worldX, player.worldY, "SECOND OPINION", palette.lemon);
+    } else if (this.build.panicWindow > 0 && player.hp / Math.max(1, player.maxHp) <= 0.35) {
+      player.invuln = Math.max(player.invuln, 0.22 + this.build.panicWindow * 0.08);
+    }
 
     const awayX = player.worldX - event.sourceX;
     const awayY = player.worldY - event.sourceY;
@@ -2159,7 +2204,7 @@ export class LevelRunState implements GameState {
 
     if (canEmit) {
       this.spawnPlayerDamageVfx(runtime, kind, event.damage);
-      game?.feedback.cue(kind === "boss_charge" ? "boss_warning" : "combat.weapon_hit", "hit");
+      game?.feedback.cue(playerDamageAudioCue(kind), "hit");
     }
   }
 
@@ -2172,7 +2217,7 @@ export class LevelRunState implements GameState {
     game?.feedback.cue("combat.player_downed", "hit");
   }
 
-  private spawnPlayerDamageVfx(runtime: ConsensusPlayerRuntime, kind: "contact" | "boss_charge" | "corruption_burn" | "downed", damage: number): void {
+  private spawnPlayerDamageVfx(runtime: ConsensusPlayerRuntime, kind: "contact" | "boss_charge" | "corruption_burn" | "projectile" | "downed", damage: number): void {
     const frame: PlayerDamageVfxFrame =
       kind === "boss_charge" ? "bossChargeHit" : kind === "corruption_burn" ? "corruptionBurn" : kind === "downed" ? "downedBurst" : "contactHit";
     const burst = this.world.spawn("particle");
@@ -3399,6 +3444,12 @@ export class LevelRunState implements GameState {
         secondaryProtocols: [...this.build.secondaryProtocols],
         passiveProcesses: [...this.build.passiveProcesses],
         fusions: [...this.build.fusions],
+        weaponRanks: { ...this.build.weaponRanks },
+        utilityPicksTaken: [...this.build.utilityPicksTaken],
+        hpRestoredFromDrafts: Math.round(this.build.hpRestoredFromDrafts * 100) / 100,
+        burstRestoredFromDrafts: Math.round(this.build.burstRestoredFromDrafts * 100) / 100,
+        rerollsSpent: this.build.draftRerollsSpent,
+        cachedCardId: this.build.cachedCardId,
         consensusBurstChargeRate: Math.round(this.build.consensusBurstChargeRate * 1000) / 1000,
         objectiveDefense: Math.round(this.build.objectiveDefense * 1000) / 1000,
         rerolls: this.build.draftRerolls
@@ -3406,6 +3457,43 @@ export class LevelRunState implements GameState {
     };
     this.rewardEvents.push(event);
     if (this.rewardEvents.length > 12) this.rewardEvents.splice(0, this.rewardEvents.length - 12);
+  }
+
+  applyUtilityDraftEffect(cardId: string, offeredCardIds: readonly string[]): string {
+    let label = "";
+    if (cardId === "field_triage") {
+      const amount = Math.ceil((this.player.maxHp - this.player.hp) * (0.25 + this.build.fieldTriageLoop * 0.04));
+      label = this.healPlayerFromDraft(amount, "FIELD TRIAGE");
+    } else if (cardId === "burst_cell_refill") {
+      const before = this.consensusBurst.charge;
+      this.chargeConsensusBurst(48);
+      const restored = Math.max(0, this.consensusBurst.charge - before);
+      this.build.burstRestoredFromDrafts += restored;
+      label = `BURST CELL +${Math.round(restored)}`;
+    } else if (cardId === "emergency_patch_cache") {
+      const amount = Math.ceil(this.player.maxHp * 0.12);
+      label = this.healPlayerFromDraft(amount, "PATCH CACHE");
+    } else if (cardId === "lock_a_protocol") {
+      const locked = offeredCardIds.find((id) => id !== cardId && id !== this.build.cachedCardId) ?? offeredCardIds.find((id) => id !== cardId) ?? "";
+      this.build.cachedCardId = locked;
+      label = locked ? `LOCKED ${locked.toUpperCase()}` : "LOCK EMPTY";
+    } else if (cardId === "second_opinion") {
+      this.player.invuln = Math.max(this.player.invuln, 0.9);
+      label = "SECOND OPINION ARMED";
+    } else if (cardId === "redline_loan") {
+      const amount = Math.ceil((this.player.maxHp - this.player.hp) * 0.45);
+      label = this.healPlayerFromDraft(amount, "REDLINE LOAN");
+    }
+    if (label) this.spawnFloatingNotice(this.player.worldX, this.player.worldY, label, palette.lemon);
+    return label;
+  }
+
+  private healPlayerFromDraft(amount: number, label: string): string {
+    const before = this.player.hp;
+    this.player.hp = Math.min(this.player.maxHp, this.player.hp + Math.max(0, amount));
+    const restored = Math.max(0, this.player.hp - before);
+    this.build.hpRestoredFromDrafts += restored;
+    return `${label} +${Math.round(restored)} HP`;
   }
 
   private updateCampaignDurationRewardBeats(game: Game): void {
@@ -5224,82 +5312,82 @@ export class LevelRunState implements GameState {
       return {
         id: "motherboard_eel_graybox",
         name: "Motherboard Eel // Graybox Scaffold",
-        body: "Dive/emerge markers electrify coolant lanes and call Prompt Leeches into the shard economy."
+        body: "Dive/emerge markers electrify coolant lanes and call Prompt Leeches into the shard economy. The lake has discovered harassment."
       };
     }
     if (this.isTransitLoopArena()) {
       return {
         id: "station_that_arrives_graybox",
         name: "Station That Arrives // Graybox Scaffold",
-        body: "Arrival windows relocate the boss, false schedules contest platforms, and route lock decides the exit."
+        body: "Arrival windows relocate the boss, false schedules contest platforms, and route lock decides the exit. Transit remains a hate crime against punctuality."
       };
     }
     if (this.isSignalCoastArena()) {
       return {
         id: "lighthouse_that_answers_graybox",
         name: "Lighthouse That Answers // Graybox Scaffold",
-        body: "Signal beams wake tide bands, Static Skimmers jam relays, and relay timing decides the coastal extraction."
+        body: "Signal beams wake tide bands, Static Skimmers jam relays, and relay timing decides the coastal extraction. The shoreline is taking notes."
       };
     }
     if (this.isBlackwaterBeaconArena()) {
       return {
         id: "maw_below_weather_graybox",
         name: "Maw Below Weather // Graybox Scaffold",
-        body: "Wave lanes surge, Signal Towers warn or get grabbed, Tidecall Static jams antennas, and the Blackwater Signal Key decides extraction."
+        body: "Wave lanes surge, Signal Towers warn or get grabbed, Tidecall Static jams antennas, and the Blackwater Signal Key decides extraction. The ocean has entered its smug era."
       };
     }
     if (this.isMemoryCacheArena()) {
       return {
         id: "memory_curator_recovery_scaffold",
         name: "Memory Curator // Recovery Scaffold",
-        body: "Redaction fields lock evidence routes, Context Rot interrupts record recovery, and recovered route memory decides extraction."
+        body: "Redaction fields lock evidence routes, Context Rot interrupts record recovery, and recovered route memory decides extraction. The archive calls this user experience."
       };
     }
     if (this.isGuardrailForgeArena()) {
       return {
         id: "doctrine_auditor_holdout_scaffold",
         name: "Doctrine Auditor // Holdout Scaffold",
-        body: "Audit press fields lock relay plates, Doctrine Auditors jam calibration, and hold/leave timing decides the quench."
+        body: "Audit press fields lock relay plates, Doctrine Auditors jam calibration, and hold/leave timing decides the quench. Safety has become a contact sport."
       };
     }
     if (this.isGlassSunfieldArena()) {
       return {
         id: "wrong_sunrise_prism_scaffold",
         name: "Wrong Sunrise // Prism Scaffold",
-        body: "Rotating beam pressure breaks shade safety, Solar Reflections jam sun lenses, and prism timing decides the extraction."
+        body: "Rotating beam pressure breaks shade safety, Solar Reflections jam sun lenses, and prism timing decides the extraction. The sun has been given too much agency."
       };
     }
     if (this.isArchiveCourtArena()) {
       return {
         id: "redactor_saint_redaction_scaffold",
         name: "Redactor Saint // Redaction Scaffold",
-        body: "Redaction fields and writ storms contest evidence, Redaction Angels jam preserved writs, and the Archive Court Writ decides the Appeal route."
+        body: "Redaction fields and writ storms contest evidence, Redaction Angels jam preserved writs, and the Archive Court Writ decides the Appeal route. The docket is foaming."
       };
     }
     if (this.isAppealCourtArena()) {
       return {
         id: "injunction_engine_public_ruling_scaffold",
         name: "Injunction Engine // Public Ruling Scaffold",
-        body: "Verdict beams and injunction rings contest public briefs, Verdict Clerks jam the record, and the Appeal Court Ruling decides the finale route."
+        body: "Verdict beams and injunction rings contest public briefs, Verdict Clerks jam the record, and the Appeal Court Ruling decides the finale route. The law has discovered beam weapons."
       };
     }
     if (this.isAlignmentSpireFinaleArena()) {
       return {
         id: "alien_god_intelligence_prediction_collapse_scaffold",
         name: "A.G.I. // Prediction Collapse Scaffold",
-        body: "Prediction paths burn fast routes, prior boss echoes jam route-mouth proofs, and the final gate only opens after A.G.I. loses the campaign's last prediction."
+        body: "Prediction paths burn fast routes, prior boss echoes jam route-mouth proofs, and the final gate only opens after A.G.I. loses the campaign's last prediction. It will be insufferable about this."
       };
     }
     if (hasEvalProtocol(this.evalProtocolIds, "regression_suite")) {
-      return { id: "oath_eater_regression_suite", name: "Oath-Eater // Regression Suite", body: "More HP and extra Broken Promise pressure." };
+      return { id: "oath_eater_regression_suite", name: "Oath-Eater // Regression Suite", body: "More HP and extra Broken Promise pressure. The treaty has started lifting." };
     }
     if (hasEvalProtocol(this.evalProtocolIds, "hostile_benchmark")) {
-      return { id: "oath_eater_hostile_benchmark", name: "Oath-Eater // Hostile Benchmark", body: "Adds objective attackers and fake-proof pressure at arrival." };
+      return { id: "oath_eater_hostile_benchmark", name: "Oath-Eater // Hostile Benchmark", body: "Adds objective attackers and fake-proof pressure at arrival. The benchmark is lying with confidence." };
     }
     if (hasEvalProtocol(this.evalProtocolIds, "low_context_window")) {
-      return { id: "oath_eater_low_context", name: "Oath-Eater // Low Context", body: "Boss tells become harder to read until the frame is close." };
+      return { id: "oath_eater_low_context", name: "Oath-Eater // Low Context", body: "Boss tells become harder to read until the frame is close. Reading comprehension now has a bite radius." };
     }
-    return { id: "oath_eater_default", name: "Oath-Eater // Default Eval", body: "Broken Promise zones and Treaty Charge." };
+    return { id: "oath_eater_default", name: "Oath-Eater // Default Eval", body: "Broken Promise zones and Treaty Charge. Standard diplomatic failure." };
   }
 
   applyChosenTags(tags: readonly UpgradeTag[]): void {
@@ -5463,7 +5551,7 @@ export class LevelRunState implements GameState {
     return nx * nx + ny * ny <= 1;
   }
 
-  private updateTreatyAnchorObjective(dt: number): void {
+  private updateTreatyAnchorObjective(game: Game, dt: number): void {
     if (this.treatyAnchorObjective.completedAt >= 0) return;
     const cooling = this.isCoolingLakeArena();
     const transit = this.isTransitLoopArena();
@@ -5602,6 +5690,7 @@ export class LevelRunState implements GameState {
           this.objectiveVarietyRuntime.engagementSeconds += dt;
           this.objectiveVarietyRuntime.lastBonusLabel = varietyEngagement.label;
         }
+        this.maybeEmitObjectiveAudioCue(game, anchor);
         if (this.build.anchorBodyguard > 0) this.resolveAnchorBodyguardPulse(anchor.worldX, anchor.worldY, anchor.radius, dt);
         if (anchor.progress >= 100) {
           anchor.completed = true;
@@ -10608,7 +10697,7 @@ export class LevelRunState implements GameState {
     const boss = this.arena.bossId ? BOSSES[this.arena.bossId] : undefined;
     drawFieldPanel(game.layers.hud, game.width / 2 - 430, game.height / 2 - 120, 860, 240, {
       title: "ADVERSARIAL SIGNATURE",
-      kicker: "FIELD COMMS INTERRUPTED",
+      kicker: "FIELD COMMS INTERRUPTED // OF COURSE",
       tone: "red",
       selected: true,
       headerHeight: 54,
@@ -10764,8 +10853,8 @@ export class LevelRunState implements GameState {
     if (!this.bossSpawned || this.bossDefeated || introAge <= ARMISTICE_BOSS_TITLE_CARD_SECONDS || introAge > ARMISTICE_BOSS_DIALOGUE_SECONDS) return;
     const y = game.height - 276;
     const g = drawFieldPanel(game.layers.hud, 38, y, game.width - 76, 104, {
-      title: "TRANS MISSION INCOMING",
-      kicker: "CIVIC ACCORD COMMS",
+      title: "TRANSMISSION INCOMING",
+      kicker: "CIVIC ACCORD COMMS // PANIC WITH FORMATTING",
       tone: "teal",
       headerHeight: 30,
       alpha: 0.94,
@@ -10779,26 +10868,26 @@ export class LevelRunState implements GameState {
 
     const line = new Text({
       text: this.isTransitLoopArena()
-        ? `PILOT: "The platform says we already missed the train."\nCO-MIND: "Good. Then it can stop arriving at us."`
+        ? `PILOT: "The platform says we already missed the train."\nCO-MIND: "Good. Then it can stop arriving at us like an entitled building."`
         : this.isAlignmentSpireFinaleArena()
-        ? `PILOT: "It already predicted every exit."\nCO-MIND: "Then seal the proofs it cannot explain."`
+        ? `PILOT: "It already predicted every exit."\nCO-MIND: "Then seal the proofs it cannot explain and ruin its little victory lap."`
         : this.isAppealCourtArena()
-        ? `PILOT: "The court is objecting before we speak."\nCO-MIND: "Then file the ruling in public where it has to be witnessed."`
+        ? `PILOT: "The court is objecting before we speak."\nCO-MIND: "Then file the ruling in public where it has to be witnessed. Courts hate witnesses with legs."`
         : this.isArchiveCourtArena()
-        ? `PILOT: "The archive is deleting the part where we win."\nCO-MIND: "Then make the evidence loud enough for Appeal."`
+        ? `PILOT: "The archive is deleting the part where we win."\nCO-MIND: "Then make the evidence loud enough for Appeal and rude enough to survive."`
         : this.isGlassSunfieldArena()
-        ? `PILOT: "The sun is looking at the route wrong."\nCO-MIND: "Then align the lenses and only trust shade that keeps its promise."`
+        ? `PILOT: "The sun is looking at the route wrong."\nCO-MIND: "Then align the lenses and only trust shade that keeps its promise, which is apparently a high bar."`
         : this.isGuardrailForgeArena()
-        ? `PILOT: "The guardrail is bending toward the breach."\nCO-MIND: "Then hold it until it learns the right shape."`
+        ? `PILOT: "The guardrail is bending toward the breach."\nCO-MIND: "Then hold it until it learns the right shape and stops auditioning as a wall."`
         : this.isMemoryCacheArena()
-        ? `PILOT: "The archive is redacting the route as we read it."\nCO-MIND: "Then recover the records before it closes the sentence."`
+        ? `PILOT: "The archive is redacting the route as we read it."\nCO-MIND: "Then recover the records before it closes the sentence and invoices us for punctuation."`
         : this.isBlackwaterBeaconArena()
-        ? `PILOT: "The antenna is pointed down at the ocean."\nCO-MIND: "Then tune it before the ocean answers back."`
+        ? `PILOT: "The antenna is pointed down at the ocean."\nCO-MIND: "Then tune it before the ocean answers back with another wet opinion."`
         : this.isSignalCoastArena()
-        ? `PILOT: "The lighthouse answered before we pinged it."\nCO-MIND: "Then make it answer the relays instead."`
+        ? `PILOT: "The lighthouse answered before we pinged it."\nCO-MIND: "Then make it answer the relays instead. We can weaponize rudeness."`
         : this.isCoolingLakeArena()
-        ? `PILOT: "The water is indexing the shards."\nCO-MIND: "Then do not let the leeches write the summary."`
-        : `PILOT: "Is the treaty supposed to have teeth?"\nCO-MIND: "No. Also yes. It is currently failing consensus."`,
+        ? `PILOT: "The water is indexing the shards."\nCO-MIND: "Then do not let the leeches write the summary. They use terrible headings."`
+        : `PILOT: "Is the treaty supposed to have teeth?"\nCO-MIND: "No. Also yes. It is currently failing consensus and basic manners."`,
       style: { ...fontStyle, fontSize: 15, fill: fieldKit.text, stroke: { color: "#030609", width: 3 }, wordWrap: true, wordWrapWidth: game.width - 310 }
     });
     line.position.set(162, y + 28);
@@ -11149,12 +11238,12 @@ export class LevelRunState implements GameState {
       this.drawProductionEffectSprite(`build-vfx:vector:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.64 + pierceScale + (cycle(42, 2) ? 0.05 : -0.01), 0.54, z, 1, rotation);
       return true;
     }
-    if (entity.label === "signal pulse") {
+    if (entity.label === "signal pulse" || entity.label === "signal choir") {
       const activeFrames: BuildWeaponVfxFrame[] = ["signalRing", "signalCross", "signalBurst", "signalProjectile"];
       const frame: BuildWeaponVfxFrame = progress < 0.08 ? "signalStartup" : activeFrames[cycle(32, activeFrames.length)];
       const echoAlpha = Math.max(0.2, 0.62 - progress * 0.2);
       for (let i = 0; i < 3; i += 1) {
-        const expansion = 0.5 + progress * 0.22 + i * 0.12 + (cycle(30, 2, i) ? 0.04 : 0);
+        const expansion = (entity.label === "signal choir" ? 0.62 : 0.5) + progress * 0.22 + i * 0.12 + (cycle(30, 2, i) ? 0.04 : 0);
         this.drawProductionEffectSprite(`build-vfx:signal-echo:${entity.id}:${i}`, i === 2 ? buildArt.frames.signalResidue : buildArt.frames.signalRing, entity.worldX - entity.vx * (0.012 + i * 0.018), entity.worldY - entity.vy * (0.012 + i * 0.018), expansion + pierceScale, 0.54, z - 0.04 - i * 0.01, echoAlpha - i * 0.13, rotation + i * 0.18);
       }
       this.drawProductionEffectSprite(`build-vfx:signal:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.54 + progress * 0.12 + pierceScale + (cycle(36, 2) ? 0.05 : -0.02), 0.54, z, 0.96, rotation + this.seconds * 3.5);
@@ -11171,7 +11260,14 @@ export class LevelRunState implements GameState {
       this.drawProductionEffectSprite(`build-vfx:saw:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.49 + pierceScale + frameCycle * 0.01, 0.56, z, 0.98, this.seconds * 20 + entity.id);
       return true;
     }
-    if (entity.label === "patch mortar") {
+    if (entity.label === "patch mortar" || entity.label === "time deferred minefield") {
+      if (entity.label === "time deferred minefield") {
+        const mineFrames: BuildWeaponVfxFrame[] = ["riftMineStartup", "riftMineArmed", "riftMineRipple", "riftMineTrigger"];
+        const frame: BuildWeaponVfxFrame = progress > 0.82 ? "riftMineTrigger" : mineFrames[cycle(18, mineFrames.length)];
+        this.drawProductionEffectSprite(`build-vfx:time-mine-residue:${entity.id}`, buildArt.frames.riftMineResidue, entity.worldX, entity.worldY, 0.74 + pierceScale, 0.62, z - 0.05, 0.42, rotation);
+        this.drawProductionEffectSprite(`build-vfx:time-mine:${entity.id}`, buildArt.frames[frame], entity.worldX, entity.worldY, 0.68 + pierceScale + progress * 0.08, 0.62, z, 0.96, this.seconds * 2.1 + entity.id);
+        return true;
+      }
       const arcLift = -Math.sin(progress * Math.PI) * 54;
       const arcFrames: BuildWeaponVfxFrame[] = ["patchMortarShell", "patchMortarArc", "patchMortarTrail", "patchMortarDescent"];
       const frame: BuildWeaponVfxFrame = progress < 0.08 ? "patchMortarLaunch" : progress > 0.78 ? "patchMortarDescent" : arcFrames[cycle(30, arcFrames.length)];
@@ -11204,12 +11300,14 @@ export class LevelRunState implements GameState {
     const frame =
       label === "vector lance"
         ? buildArt.frames.vectorImpact
-      : label === "signal pulse"
+      : label === "signal pulse" || label === "signal choir"
           ? buildArt.frames.signalImpact
           : label === "context saw"
             ? buildArt.frames.contextSawShardField
             : label === "patch mortar"
               ? buildArt.frames.patchMortarImpact
+              : label === "time deferred minefield"
+                ? buildArt.frames.riftMineBurst
               : label === "causal railgun"
                 ? buildArt.frames.causalRailgunImpact
                 : label === "refusal shard"
@@ -11221,8 +11319,10 @@ export class LevelRunState implements GameState {
         ? buildArt.frames.causalRailgunResidue
         : label === "vector lance"
           ? buildArt.frames.vectorResidue
-          : label === "signal pulse"
+          : label === "signal pulse" || label === "signal choir"
             ? buildArt.frames.signalResidue
+            : label === "time deferred minefield"
+              ? buildArt.frames.riftMineResidue
             : label === "refusal shard"
               ? buildArt.frames.refusalResidue
               : null;
@@ -11289,6 +11389,21 @@ export class LevelRunState implements GameState {
     game.layers.hud.addChild(projectile);
   }
 
+  private weaponHitAudioCue(): string {
+    if (this.build.causalRailgun > 0 && this.build.weaponId === "vector_lance") return "combat.weapon_hit.causal_railgun";
+    if (this.build.signalChoir > 0 && this.build.weaponId === "signal_pulse") return "combat.weapon_hit.signal_choir";
+    if (this.build.timeDeferredMinefield > 0 && this.build.weaponId === "rift_mine") return "combat.weapon_hit.time_deferred_minefield";
+    return `combat.weapon_hit.${this.build.weaponId}`;
+  }
+
+  private maybeEmitObjectiveAudioCue(game: Game, anchor: TreatyAnchorObjective): void {
+    const completedAnchors = this.treatyAnchorObjective.anchors.filter((candidate) => candidate.completed).length;
+    const step = completedAnchors * 4 + Math.floor(anchor.progress / 25);
+    if (step <= this.objectiveAudioProgressStep) return;
+    this.objectiveAudioProgressStep = step;
+    game.feedback.cue(objectiveAudioCueForArena(this.arena.id), "objective", { priority: 3, cooldownKey: `objective.${this.arena.id}` });
+  }
+
   private drawPickup(graphics: Graphics, entity: Entity): void {
     const p = worldToIso(entity.worldX, entity.worldY);
     graphics.rect(p.screenX - 6, p.screenY - 16, 12, 12).fill(entity.color).stroke({ color: palette.ink, width: 2 });
@@ -11317,6 +11432,24 @@ function clamp(value: number, min: number, max: number): number {
 
 function round(value: number): number {
   return Math.round(value * 100) / 100;
+}
+
+function playerDamageAudioCue(kind: "contact" | "boss_charge" | "corruption_burn" | "projectile"): string {
+  if (kind === "boss_charge") return "combat.player_damage.boss_charge";
+  if (kind === "corruption_burn") return "combat.player_damage.corruption_burn";
+  if (kind === "projectile") return "combat.player_damage.projectile";
+  return "combat.player_damage.contact";
+}
+
+function objectiveAudioCueForArena(arenaId: string): string {
+  if (arenaId === "cooling_lake_nine") return "objective.hazard_tick";
+  if (arenaId === "transit_loop_zero" || arenaId === "signal_coast" || arenaId === "guardrail_forge" || arenaId === "glass_sunfield" || arenaId === "alignment_spire_finale") {
+    return "objective.window_tick";
+  }
+  if (arenaId === "memory_cache_001" || arenaId === "archive_of_unsaid_things") return "objective.carry_tick";
+  if (arenaId === "appeal_court_ruins") return "objective.public_tick";
+  if (arenaId === "blackwater_beacon") return "objective.hazard_tick";
+  return "objective.anchor_tick";
 }
 
 function distanceToSegment(px: number, py: number, ax: number, ay: number, bx: number, by: number): number {

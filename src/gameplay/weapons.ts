@@ -1,7 +1,7 @@
 import { palette } from "../core/Assets";
 import type { Entity, Player } from "../ecs/components";
 import type { World } from "../ecs/World";
-import type { BuildStats } from "./upgrades";
+import { weaponRank, type BuildStats } from "./upgrades";
 
 export interface WeaponRuntime {
   cooldown: number;
@@ -28,7 +28,8 @@ export function updateAutoWeapon(
 
   const profile = weaponProfile(weaponId);
   if (weaponId === "signal_pulse") {
-    runtime.cooldown = build.weaponCooldown * profile.cooldownScale;
+    const rank = weaponRank(build, weaponId);
+    runtime.cooldown = build.weaponCooldown * profile.cooldownScale * Math.max(0.82, 1 - rank * 0.025);
     runtime.shotIndex += 1;
     spawnSignalPulse(world, player, build, profile);
     return;
@@ -36,7 +37,9 @@ export function updateAutoWeapon(
   const target = nearestEnemy(world, player.worldX, player.worldY, profile.range, build);
   if (!target) return;
 
-  runtime.cooldown = build.weaponCooldown * profile.cooldownScale * (build.causalRailgun > 0 && weaponId === "vector_lance" ? 1.08 : 1);
+  const rank = weaponRank(build, weaponId);
+  const rankCooldownScale = Math.max(0.78, 1 - Math.max(0, rank - 1) * 0.035);
+  runtime.cooldown = build.weaponCooldown * profile.cooldownScale * rankCooldownScale * (build.causalRailgun > 0 && weaponId === "vector_lance" ? 1.08 : 1);
   runtime.shotIndex += 1;
   const dx = target.worldX - player.worldX;
   const dy = target.worldY - player.worldY;
@@ -46,29 +49,33 @@ export function updateAutoWeapon(
   const projectile = world.spawn("projectile");
   projectile.worldX = player.worldX + (-dy / len) * originOffset;
   projectile.worldY = player.worldY + (dx / len) * originOffset;
-  projectile.vx = (dx / len) * (build.projectileSpeed + profile.speedBonus);
-  projectile.vy = (dy / len) * (build.projectileSpeed + profile.speedBonus);
-  projectile.radius = profile.radius;
-  projectile.damage = Math.max(1, build.weaponDamage * profile.damageScale + profile.damageBonus + (build.causalRailgun > 0 && weaponId === "vector_lance" ? 6 : 0));
-  projectile.life = profile.life;
-  projectile.maxLife = profile.life;
-  projectile.value = Math.max(1, build.projectilePierce + profile.pierceBonus + (build.causalRailgun > 0 && weaponId === "vector_lance" ? 2 : 0));
+  const speed = build.projectileSpeed + profile.speedBonus + rank * 0.08;
+  const timeMine = build.timeDeferredMinefield > 0 && weaponId === "rift_mine";
+  projectile.vx = (dx / len) * (timeMine ? Math.max(1.4, speed * 0.34) : speed);
+  projectile.vy = (dy / len) * (timeMine ? Math.max(1.4, speed * 0.34) : speed);
+  projectile.radius = profile.radius + Math.min(0.16, rank * 0.025) + (timeMine ? 0.24 : 0);
+  projectile.damage = Math.max(1, build.weaponDamage * profile.damageScale + profile.damageBonus + rank * 1.4 + (build.causalRailgun > 0 && weaponId === "vector_lance" ? 6 : 0) + (timeMine ? 8 : 0));
+  projectile.life = profile.life + (timeMine ? 0.95 : 0);
+  projectile.maxLife = projectile.life;
+  projectile.value = Math.max(1, build.projectilePierce + profile.pierceBonus + Math.floor(rank / 2) + (build.causalRailgun > 0 && weaponId === "vector_lance" ? 2 : 0) + (timeMine ? 2 : 0));
   projectile.color = profile.color;
-  projectile.label = build.causalRailgun > 0 && weaponId === "vector_lance" ? "causal railgun" : profile.label;
+  projectile.label = build.causalRailgun > 0 && weaponId === "vector_lance" ? "causal railgun" : timeMine ? "time deferred minefield" : profile.label;
 }
 
 function updateSecondaryProtocols(world: World, runtime: WeaponRuntime, player: Player, build: BuildStats, dt: number): void {
   if (build.contextSaw > 0) {
     runtime.contextSawCooldown -= dt;
     if (runtime.contextSawCooldown <= 0) {
-      runtime.contextSawCooldown = Math.max(0.34, 0.82 - build.contextSaw * 0.07);
+      const rank = weaponRank(build, "context_saw");
+      runtime.contextSawCooldown = Math.max(0.32, 0.82 - build.contextSaw * 0.07 - rank * 0.025);
       spawnContextSaws(world, runtime, player, build);
     }
   }
   if (build.patchMortar > 0) {
     runtime.patchMortarCooldown -= dt;
     if (runtime.patchMortarCooldown <= 0) {
-      runtime.patchMortarCooldown = Math.max(1.25, 2.35 - build.patchMortar * 0.16);
+      const rank = weaponRank(build, "patch_mortar");
+      runtime.patchMortarCooldown = Math.max(1.16, 2.35 - build.patchMortar * 0.16 - rank * 0.035);
       spawnPatchMortar(world, player, build);
     }
   }
@@ -115,25 +122,31 @@ function spawnPatchMortar(world: World, player: Player, build: BuildStats): void
 }
 
 function spawnSignalPulse(world: World, player: Player, build: BuildStats, profile: WeaponProfile): void {
+  const rank = weaponRank(build, "signal_pulse");
+  const choirBeat = build.signalChoir > 0 && rank >= 2;
   const directions = [
     { x: 1, y: 0 },
     { x: -1, y: 0 },
     { x: 0, y: 1 },
     { x: 0, y: -1 }
   ];
+  if (choirBeat) {
+    directions.push({ x: 0.72, y: 0.72 }, { x: -0.72, y: 0.72 }, { x: 0.72, y: -0.72 }, { x: -0.72, y: -0.72 });
+  }
   for (const direction of directions) {
+    const len = Math.hypot(direction.x, direction.y) || 1;
     const projectile = world.spawn("projectile");
     projectile.worldX = player.worldX;
     projectile.worldY = player.worldY;
-    projectile.vx = direction.x * (build.projectileSpeed + profile.speedBonus);
-    projectile.vy = direction.y * (build.projectileSpeed + profile.speedBonus);
-    projectile.radius = profile.radius;
-    projectile.damage = Math.max(1, build.weaponDamage * profile.damageScale + profile.damageBonus);
-    projectile.life = profile.life;
+    projectile.vx = (direction.x / len) * (build.projectileSpeed + profile.speedBonus + rank * 0.1);
+    projectile.vy = (direction.y / len) * (build.projectileSpeed + profile.speedBonus + rank * 0.1);
+    projectile.radius = profile.radius + (choirBeat ? 0.04 : 0);
+    projectile.damage = Math.max(1, build.weaponDamage * profile.damageScale + profile.damageBonus + rank);
+    projectile.life = profile.life + (choirBeat ? 0.12 : 0);
     projectile.maxLife = profile.life;
-    projectile.value = Math.max(3, build.projectilePierce + profile.pierceBonus + 1);
+    projectile.value = Math.max(3, build.projectilePierce + profile.pierceBonus + 1 + Math.floor(rank / 2));
     projectile.color = profile.color;
-    projectile.label = profile.label;
+    projectile.label = choirBeat ? "signal choir" : profile.label;
   }
 }
 

@@ -167,6 +167,10 @@ export function buildWeaponIconFrameForUpgrade(upgrade: Upgrade): BuildWeaponVfx
   if (upgrade.id === "anchor_bodyguard") return "anchorBodyguardIcon";
   if (upgrade.id === "prediction_priority") return "predictionPriorityIcon";
   if (upgrade.id === "causal_railgun") return "causalRailgunIcon";
+  if (upgrade.id === "signal_choir") return "signalBurst";
+  if (upgrade.id === "time_deferred_minefield") return "riftMineArmed";
+  if (upgrade.id === "field_triage" || upgrade.id === "emergency_patch_cache" || upgrade.id === "second_opinion" || upgrade.id === "redline_loan") return "objectiveRepairPulse";
+  if (upgrade.id === "burst_cell_refill" || upgrade.id === "lock_a_protocol") return "coherenceIndexerIcon";
   if (upgrade.id === "vector_lance") return "vectorBeam";
   if (upgrade.id === "signal_pulse") return "signalCross";
   if (upgrade.id === "context_saw") return "contextSawSweep";

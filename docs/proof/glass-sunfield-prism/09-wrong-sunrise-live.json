@@ -71,7 +71,8 @@
   "build": {
     "weaponId": "refusal_shard",
     "secondaryProtocols": [
-      "context_saw"
+      "context_saw",
+      "patch_mortar"
     ],
     "passiveProcesses": [
       "coolant_baffles",
@@ -82,7 +83,7 @@
     "fusions": [
       "cathedral_of_no"
     ],
-    "weaponDamage": 32.6,
+    "weaponDamage": 33.6,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
     "projectilePierce": 3,
@@ -94,16 +95,16 @@
     "draftChoicesBonus": 2,
     "consensusBurstRadius": 0,
     "consensusBurstDamage": 0,
-    "consensusBurstChargeRate": 0.31,
+    "consensusBurstChargeRate": 0.335,
     "consensusBurstRevive": 1,
-    "objectiveRepairRate": 0.5,
-    "objectiveDefense": 0.46,
+    "objectiveRepairRate": 0.64,
+    "objectiveDefense": 0.495,
     "signalWindowControl": 0,
     "relayJamResistance": 0,
     "skimmerCountermeasure": 0,
     "shorelineStride": 0,
     "contextSaw": 1,
-    "patchMortar": 0,
+    "patchMortar": 1,
     "coherenceIndexer": 0,
     "anchorBodyguard": 1,
     "predictionPriority": 0,
@@ -120,10 +121,11 @@
         "current": "refusal_shard"
       },
       "secondary": {
-        "used": 1,
+        "used": 2,
         "cap": 2,
         "current": [
-          "context_saw"
+          "context_saw",
+          "patch_mortar"
         ]
       },
       "passive": {
@@ -219,12 +221,13 @@
     "Prompt Leech Quarantine",
     "Refusal Slipstream",
     "Context Saw",
-    "Recompile Pulse"
+    "Recompile Pulse",
+    "Patch Mortar"
   ],
   "objective": "align sun lenses 3/4 // shade route safer // sunrise live",
   "performance": {
-    "entitiesAllocated": 335,
-    "activeEntities": 218,
+    "entitiesAllocated": 622,
+    "activeEntities": 352,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -290,9 +293,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 1,
-      "hit": 326,
-      "pickup": 499,
+      "ui": 4,
+      "hit": 1997,
+      "pickup": 3032,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
@@ -302,42 +305,42 @@
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 55942
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 55937
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 55934
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 55933
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 55932
-      },
-      {
-        "id": "combat.consensus_burst",
-        "kind": "hit",
-        "atMs": 55745
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 55745
+        "atMs": 99514
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 55745
+        "atMs": 99512
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 98348
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 98347
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 98343
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 97875
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 96806
+      },
+      {
+        "id": "music.glass_sunfield.boss",
+        "kind": "music",
+        "atMs": 96805
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -788,33 +791,33 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": {
-    "worldX": 4.46,
-    "worldY": 10.71,
+    "worldX": 11.13,
+    "worldY": 22.09,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
-    "hp": 284,
+    "hp": 410,
     "maxHp": 410,
-    "xp": 1146,
-    "level": 13,
+    "xp": 2100,
+    "level": 14,
     "damageFeedback": {
       "flash": 0,
       "hpPulse": 0,
       "stagger": 0,
-      "lastDamage": 8
+      "lastDamage": 10
     }
   },
   "players": [
@@ -884,20 +887,20 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
-      "worldX": 4.46,
-      "worldY": 10.71,
+      "worldX": 11.13,
+      "worldY": 22.09,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 284,
+      "hp": 410,
       "maxHp": 410,
-      "xp": 1146,
-      "level": 13,
+      "xp": 2100,
+      "level": 14,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
         "stagger": 0,
-        "lastDamage": 8
+        "lastDamage": 10
       },
       "downed": false
     }
@@ -926,7 +929,8 @@
       "prompt_leech_quarantine",
       "refusal_slipstream",
       "context_saw",
-      "recompile_pulse"
+      "recompile_pulse",
+      "patch_mortar"
     ],
     "mapId": "glass_sunfield_prism_v1",
     "mapBounds": {
@@ -941,6 +945,13 @@
       "pressureSource": "shade pockets, prism windows, exposed glass lanes, reflection fields, Solar Reflection lens jams, and Choirglass lane splitters",
       "rewardPromise": "Glass Sunfield Prism, shade-route timing, movement/burst build bias, and Archive/Court route carryover",
       "bossEventPattern": "The Wrong Sunrise rotates beam focus, breaks shade pockets, and calls Solar Reflections around active prism windows",
+      "primaryDifficultyLever": "spatial pressure",
+      "secondaryDifficultyLever": "time pressure",
+      "activePressureLevers": [
+        "spatial pressure",
+        "time pressure",
+        "boss pressure"
+      ],
       "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
     },
     "staticObstacles": {
@@ -1033,21 +1044,21 @@
         ]
       }
     ],
-    "lastSpawnRegionId": "wrong_sunrise_corona",
+    "lastSpawnRegionId": "glass_prism_extraction",
     "spawnedByRegion": {
-      "west_solar_reflections": 200,
-      "wind_lens_choir": 97,
-      "adaptive_pressure_flank": 26,
-      "prism_switch_refraction": 130,
-      "mirror_lens_splitters": 84,
-      "wrong_sunrise_corona": 100,
-      "glass_prism_extraction": 35
+      "west_solar_reflections": 697,
+      "wind_lens_choir": 394,
+      "adaptive_pressure_flank": 69,
+      "prism_switch_refraction": 655,
+      "mirror_lens_splitters": 363,
+      "wrong_sunrise_corona": 609,
+      "glass_prism_extraction": 538
     },
     "director": {
       "phase": "late_extraction",
-      "totalSpawned": 686,
+      "totalSpawned": 3339,
       "activeEnemyCap": 152.72,
-      "lastBurstSize": 7,
+      "lastBurstSize": 9,
       "activeEnemyCount": 153
     },
     "consensusCell": {
@@ -1062,9 +1073,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 6166,
+          "tick": 24030,
           "playerId": "p1",
-          "sequence": 6166,
+          "sequence": 24030,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -1073,8 +1084,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 6166,
-        "seconds": 102.77,
+        "tick": 24030,
+        "seconds": 400.5,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -1149,277 +1160,331 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": 4.46,
-            "worldY": 10.71,
-            "hp": 284,
+            "worldX": 11.13,
+            "worldY": 22.09,
+            "hp": 410,
             "maxHp": 410,
-            "xp": 1146,
-            "level": 13,
+            "xp": 2100,
+            "level": 14,
             "downed": false
           }
         ],
         "enemies": [
           {
-            "id": 2,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "wind_lens_choir",
-            "worldX": -3.57,
-            "worldY": -8.43,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 3,
+            "id": 5,
             "familyId": "solar_reflections",
             "sourceRegionId": "glass_lens_attackers",
-            "worldX": 29.62,
-            "worldY": -7.79,
-            "hp": -41,
-            "boss": false
-          },
-          {
-            "id": 12,
-            "familyId": "overfit_horrors",
-            "sourceRegionId": "wrong_sunrise_corona",
-            "worldX": 22.64,
-            "worldY": 2.94,
-            "hp": 42,
-            "boss": false
-          },
-          {
-            "id": 14,
-            "familyId": "choirglass",
-            "sourceRegionId": "west_solar_reflections",
-            "worldX": -30.49,
-            "worldY": 11.81,
-            "hp": 30,
-            "boss": false
-          },
-          {
-            "id": 15,
-            "familyId": "choirglass",
-            "sourceRegionId": "prism_switch_refraction",
-            "worldX": 10.36,
-            "worldY": 4.72,
-            "hp": 30,
-            "boss": false
-          },
-          {
-            "id": 16,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "wind_lens_choir",
-            "worldX": -5.91,
-            "worldY": -13.89,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 18,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "wind_lens_choir",
-            "worldX": -1.78,
-            "worldY": -9.66,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 24,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "glass_prism_extraction",
-            "worldX": 13.03,
-            "worldY": 14.94,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 25,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "glass_prism_extraction",
-            "worldX": 28.65,
-            "worldY": 20.69,
-            "hp": 28,
+            "worldX": 28.71,
+            "worldY": -12.09,
+            "hp": -1577,
             "boss": false
           },
           {
             "id": 29,
-            "familyId": "wrong_sunrise",
-            "sourceRegionId": "wrong_sunrise_corona",
-            "worldX": 6.52,
-            "worldY": 9.71,
-            "hp": 3985,
-            "boss": true
-          },
-          {
-            "id": 30,
-            "familyId": "choirglass",
-            "sourceRegionId": "glass_lens_attackers",
-            "worldX": 30.09,
-            "worldY": -7.74,
-            "hp": -750,
-            "boss": false
-          },
-          {
-            "id": 33,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "wind_lens_choir",
-            "worldX": -3.82,
-            "worldY": -19.94,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 35,
-            "familyId": "overfit_horrors",
-            "sourceRegionId": "wrong_sunrise_corona",
-            "worldX": 20.52,
-            "worldY": -8.74,
-            "hp": 42,
-            "boss": false
-          },
-          {
-            "id": 36,
-            "familyId": "solar_reflections",
-            "sourceRegionId": "mirror_lens_splitters",
-            "worldX": 5.6,
-            "worldY": 19.88,
-            "hp": 33,
-            "boss": false
-          },
-          {
-            "id": 37,
-            "familyId": "solar_reflections",
-            "sourceRegionId": "glass_lens_attackers",
-            "worldX": 35.02,
-            "worldY": -8.42,
-            "hp": -189,
-            "boss": false
-          },
-          {
-            "id": 38,
-            "familyId": "solar_reflections",
-            "sourceRegionId": "glass_lens_attackers",
-            "worldX": 31.4,
-            "worldY": -7.72,
-            "hp": -580,
-            "boss": false
-          },
-          {
-            "id": 40,
             "familyId": "choirglass",
             "sourceRegionId": "west_solar_reflections",
-            "worldX": -26.09,
-            "worldY": 18.4,
+            "worldX": -41.03,
+            "worldY": 14.06,
             "hp": 30,
             "boss": false
           },
           {
-            "id": 41,
+            "id": 31,
+            "familyId": "choirglass",
+            "sourceRegionId": "glass_lens_attackers",
+            "worldX": 33.66,
+            "worldY": -12.02,
+            "hp": -1749,
+            "boss": false
+          },
+          {
+            "id": 32,
+            "familyId": "solar_reflections",
+            "sourceRegionId": "glass_lens_attackers",
+            "worldX": 29.19,
+            "worldY": -7.84,
+            "hp": -3442,
+            "boss": false
+          },
+          {
+            "id": 33,
+            "familyId": "choirglass",
+            "sourceRegionId": "glass_lens_attackers",
+            "worldX": 30.09,
+            "worldY": -7.74,
+            "hp": -3280,
+            "boss": false
+          },
+          {
+            "id": 47,
+            "familyId": "wrong_sunrise",
+            "sourceRegionId": "wrong_sunrise_corona",
+            "worldX": 15.26,
+            "worldY": 31.02,
+            "hp": 9613,
+            "boss": true
+          },
+          {
+            "id": 49,
+            "familyId": "choirglass",
+            "sourceRegionId": "wrong_sunrise_corona",
+            "worldX": 24.65,
+            "worldY": 7.47,
+            "hp": 30,
+            "boss": false
+          },
+          {
+            "id": 53,
+            "familyId": "solar_reflections",
+            "sourceRegionId": "glass_lens_attackers",
+            "worldX": 31.31,
+            "worldY": -7.72,
+            "hp": -2639,
+            "boss": false
+          },
+          {
+            "id": 57,
+            "familyId": "choirglass",
+            "sourceRegionId": "prism_switch_refraction",
+            "worldX": 7.29,
+            "worldY": -0.96,
+            "hp": 30,
+            "boss": false
+          },
+          {
+            "id": 59,
+            "familyId": "solar_reflections",
+            "sourceRegionId": "glass_prism_extraction",
+            "worldX": 33.16,
+            "worldY": 24.31,
+            "hp": 33,
+            "boss": false
+          },
+          {
+            "id": 76,
+            "familyId": "solar_reflections",
+            "sourceRegionId": "wrong_sunrise_corona",
+            "worldX": 22.41,
+            "worldY": 7.49,
+            "hp": 33,
+            "boss": false
+          },
+          {
+            "id": 80,
             "familyId": "solar_reflections",
             "sourceRegionId": "west_solar_reflections",
-            "worldX": -45.39,
-            "worldY": 9.49,
+            "worldX": -28.63,
+            "worldY": 11.51,
             "hp": 33,
+            "boss": false
+          },
+          {
+            "id": 87,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "wind_lens_choir",
+            "worldX": 5.71,
+            "worldY": 3.88,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 89,
+            "familyId": "overfit_horrors",
+            "sourceRegionId": "wrong_sunrise_corona",
+            "worldX": 26.09,
+            "worldY": 5.98,
+            "hp": 42,
+            "boss": false
+          },
+          {
+            "id": 93,
+            "familyId": "choirglass",
+            "sourceRegionId": "prism_switch_refraction",
+            "worldX": 9.3,
+            "worldY": 5.34,
+            "hp": 30,
+            "boss": false
+          },
+          {
+            "id": 94,
+            "familyId": "choirglass",
+            "sourceRegionId": "prism_switch_refraction",
+            "worldX": 14.65,
+            "worldY": 12.15,
+            "hp": 30,
+            "boss": false
+          },
+          {
+            "id": 98,
+            "familyId": "choirglass",
+            "sourceRegionId": "wrong_sunrise_corona",
+            "worldX": 27.7,
+            "worldY": 3.4,
+            "hp": 14,
+            "boss": false
+          },
+          {
+            "id": 101,
+            "familyId": "choirglass",
+            "sourceRegionId": "west_solar_reflections",
+            "worldX": -5.77,
+            "worldY": 17.57,
+            "hp": 30,
             "boss": false
           }
         ],
         "pickups": [
           {
-            "id": 1,
-            "worldX": -28.6,
-            "worldY": 7.35,
-            "value": 1
-          },
-          {
             "id": 4,
-            "worldX": -40.03,
-            "worldY": 5.65,
+            "worldX": 7.54,
+            "worldY": 7.46,
             "value": 1
           },
           {
-            "id": 8,
-            "worldX": -39.37,
-            "worldY": 4.02,
+            "id": 6,
+            "worldX": 12.18,
+            "worldY": 9.95,
             "value": 1
           },
           {
             "id": 9,
-            "worldX": -38.71,
-            "worldY": -0.58,
+            "worldX": 24.71,
+            "worldY": 26.22,
+            "value": 1
+          },
+          {
+            "id": 10,
+            "worldX": 1.43,
+            "worldY": 18.97,
+            "value": 1
+          },
+          {
+            "id": 11,
+            "worldX": 25.66,
+            "worldY": 19.85,
+            "value": 1
+          },
+          {
+            "id": 12,
+            "worldX": 10.31,
+            "worldY": 6.38,
+            "value": 1
+          },
+          {
+            "id": 14,
+            "worldX": 27.91,
+            "worldY": 23.4,
+            "value": 1
+          },
+          {
+            "id": 15,
+            "worldX": 26.11,
+            "worldY": 20.77,
+            "value": 1
+          },
+          {
+            "id": 16,
+            "worldX": 23.71,
+            "worldY": 21.62,
             "value": 1
           },
           {
             "id": 17,
-            "worldX": -33.71,
-            "worldY": 6.26,
+            "worldX": 26.09,
+            "worldY": 21.09,
             "value": 1
           },
           {
-            "id": 23,
-            "worldX": -34.91,
-            "worldY": -4.32,
+            "id": 18,
+            "worldX": 17.22,
+            "worldY": 9.74,
             "value": 1
           },
           {
-            "id": 26,
-            "worldX": -35.18,
-            "worldY": 9.07,
-            "value": 1
-          },
-          {
-            "id": 27,
-            "worldX": 5.19,
-            "worldY": -0.59,
-            "value": 1
-          },
-          {
-            "id": 31,
-            "worldX": -38.2,
-            "worldY": 11.5,
-            "value": 1
-          },
-          {
-            "id": 39,
-            "worldX": 7.42,
-            "worldY": -12.89,
-            "value": 2
-          },
-          {
-            "id": 47,
-            "worldX": -6.25,
-            "worldY": -25.75,
-            "value": 1
-          },
-          {
-            "id": 48,
-            "worldX": 6.78,
-            "worldY": 4.75,
+            "id": 19,
+            "worldX": 16.37,
+            "worldY": 7.57,
             "value": 1
           }
         ],
         "projectiles": [
           {
-            "id": 6,
-            "worldX": 5.34,
-            "worldY": 13.02,
+            "id": 44,
+            "worldX": 14.84,
+            "worldY": 16.57,
+            "pierce": 3
+          },
+          {
+            "id": 121,
+            "worldX": 12.63,
+            "worldY": 23.9,
             "pierce": 2
           },
           {
-            "id": 32,
-            "worldX": 2.03,
-            "worldY": 10.32,
+            "id": 149,
+            "worldX": 9.55,
+            "worldY": 18.57,
             "pierce": 2
+          },
+          {
+            "id": 151,
+            "worldX": 8.81,
+            "worldY": 22.49,
+            "pierce": 2
+          },
+          {
+            "id": 164,
+            "worldX": 11.94,
+            "worldY": 19.89,
+            "pierce": 2
+          },
+          {
+            "id": 203,
+            "worldX": 10.46,
+            "worldY": 21.87,
+            "pierce": 3
           }
         ]
       }
     },
     "combatArt": {
-      "projectileCount": 2,
+      "projectileCount": 6,
       "impactCount": 0,
-      "pickupSparkleCount": 0,
-      "damageBadgeCount": 9,
+      "pickupSparkleCount": 6,
+      "damageBadgeCount": 10,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
+      "bossContract": {
+        "bossId": "wrong_sunrise",
+        "displayName": "The Wrong Sunrise",
+        "homeLandmark": "Solar Corona",
+        "introTitleCardTrigger": "Boss timer reaches the false dawn.",
+        "supportSpawnSource": "wrong_sunrise_corona",
+        "mapMechanicInteraction": "Prism beams break shade pockets and turn lens routing into exposure timing.",
+        "phaseBehavior": [
+          "Beam focus rotates around lenses.",
+          "Shade pockets collapse under boss pressure.",
+          "Solar Reflections split the lane."
+        ],
+        "clearCondition": "Align sun lenses, defeat the Wrong Sunrise, then enter prism extraction.",
+        "rewardCarryover": "Glass Sunfield Prism and Archive/Court route carryover.",
+        "movementPressure": {
+          "hazardZones": "Exposed glass lanes burn unsafe routes.",
+          "landmarkAttacks": "Solar corona attacks from the map landmark.",
+          "objectivePressure": "Lens progress decays when reflection pressure wins.",
+          "supportEnemies": "Solar Reflections and Choirglass split player attention.",
+          "temporaryRouteBlocking": "Beam focus closes a shade route for a short window.",
+          "extractionPressure": "Prism gate opens through the aligned lens field."
+        },
+        "runtime": {
+          "introSeen": true,
+          "bossSpawned": true,
+          "bossDefeated": false,
+          "homeLandmarkVisited": true,
+          "currentBossHp": 9613
+        }
+      },
       "bossIntroSeen": true,
       "brokenPromiseZones": [],
       "activeTreatyCharge": null,
@@ -1498,7 +1563,7 @@
         "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
       },
       "victoryCondition": {
-        "targetSeconds": 168,
+        "targetSeconds": 660,
         "bossRequired": true,
         "bossDefeated": false,
         "clearReady": false,
@@ -1511,9 +1576,9 @@
       },
       "levelUpVacuum": {
         "active": false,
-        "absorbed": 0,
-        "triggerLevel": 1,
-        "remainingPickups": 49
+        "absorbed": 66,
+        "triggerLevel": 13,
+        "remainingPickups": 171
       },
       "extractionGate": {
         "active": false,
@@ -1523,16 +1588,16 @@
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
         "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 23,
+        "charge": 83,
         "maxCharge": 100,
         "ready": false,
-        "activations": 47,
-        "lastActivationLabel": "Deny Premise hit 7",
-        "lastActivatedAt": 101.68333333332885,
+        "activations": 305,
+        "lastActivationLabel": "Deny Premise hit 3",
+        "lastActivatedAt": 399.4999999999653,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0,
-          "chargeRateBonus": 0.31,
+          "chargeRateBonus": 0.335,
           "revivePulse": 1
         }
       },
@@ -1553,13 +1618,17 @@
       "objective": {
         "id": "glass_prism_alignment",
         "name": "Glass Prism Alignment",
-        "body": "Align Glass Sunfield's sun lenses through shade pockets and prism windows. Exposed glass lanes tax health; reflection fields and Solar Reflections jam lens timing.",
+        "body": "Align Glass Sunfield's sun lenses through shade pockets and prism windows, then use completed reflections as environmental pressure against the horde.",
+        "styleId": "environmental_weapon",
+        "styleName": "Environmental Weapon",
+        "mechanicPlain": "Charge sun lenses through shade and prism windows; completed lenses fire reflection pressure back at the horde.",
+        "hudHint": "Use shade, catch the prism window, and turn the lens on the horde.",
         "optional": false,
         "completed": 3,
         "total": 4,
         "complete": false,
         "completedAt": -1,
-        "attackersSpawned": 13,
+        "attackersSpawned": 15,
         "anchors": [
           {
             "id": "glass.western_shade",
@@ -1573,23 +1642,72 @@
             "name": "Mistral Wind Lens",
             "progress": 100,
             "completed": true,
-            "attacked": 58
+            "attacked": 11
           },
           {
             "id": "glass.deepmind_mirror",
             "name": "DeepMind Mirror Lens",
             "progress": 100,
             "completed": true,
-            "attacked": 91
+            "attacked": 122
           },
           {
             "id": "glass.wrong_sunrise",
             "name": "Wrong Sunrise Lens",
             "progress": 0,
             "completed": false,
-            "attacked": 186
+            "attacked": 1278
           }
         ]
+      },
+      "objectiveVariety": {
+        "styleId": "environmental_weapon",
+        "styleName": "Environmental Weapon",
+        "mechanicPlain": "Charge sun lenses through shade and prism windows; completed lenses fire reflection pressure back at the horde.",
+        "hudAction": "Use shade, catch the prism window, and turn the lens on the horde.",
+        "completionSignal": "Glass Sunfield Prism rewards using map light as a weapon.",
+        "proofHook": "glass_environmental_weapon",
+        "runtime": {
+          "engagementSeconds": 5.72,
+          "bonusProgressSeconds": 2.23,
+          "lastBonusLabel": "PRISM ANGLE"
+        }
+      },
+      "campaignDuration": {
+        "targetSeconds": 660,
+        "bossSeconds": 400,
+        "phaseId": "boss_pressure",
+        "phaseLabel": "Boss pressure",
+        "phaseElapsed": 0.5,
+        "nextPhaseTime": 575,
+        "phaseProgress": 0,
+        "midRunBeatCount": 2,
+        "extractionTailSeconds": 85,
+        "expectedClearBand": {
+          "minSeconds": 660,
+          "maxSeconds": 737
+        },
+        "rewardBeats": [
+          200,
+          400,
+          535
+        ],
+        "claimedRewardBeats": [
+          200,
+          400
+        ],
+        "cycleDepth": {
+          "routeWindowCycles": 0,
+          "hazardLureCycles": 0,
+          "clearSignalCycles": 0,
+          "towerWarningCycles": 0,
+          "carryLaneSeconds": 0,
+          "holdWindowReleases": 0,
+          "prismActivations": 3,
+          "evidenceCarryCycles": 0,
+          "publicWindowArguments": 0,
+          "finaleRemixRulesSeen": 0
+        }
       },
       "coolingLake": null,
       "transitLoop": null,
@@ -1604,6 +1722,13 @@
           "pressureSource": "shade pockets, prism windows, exposed glass lanes, reflection fields, Solar Reflection lens jams, and Choirglass lane splitters",
           "rewardPromise": "Glass Sunfield Prism, shade-route timing, movement/burst build bias, and Archive/Court route carryover",
           "bossEventPattern": "The Wrong Sunrise rotates beam focus, breaks shade pockets, and calls Solar Reflections around active prism windows",
+          "primaryDifficultyLever": "spatial pressure",
+          "secondaryDifficultyLever": "time pressure",
+          "activePressureLevers": [
+            "spatial pressure",
+            "time pressure",
+            "boss pressure"
+          ],
           "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
         },
         "objectiveLoop": {
@@ -1613,13 +1738,17 @@
           "progress": {
             "id": "glass_prism_alignment",
             "name": "Glass Prism Alignment",
-            "body": "Align Glass Sunfield's sun lenses through shade pockets and prism windows. Exposed glass lanes tax health; reflection fields and Solar Reflections jam lens timing.",
+            "body": "Align Glass Sunfield's sun lenses through shade pockets and prism windows, then use completed reflections as environmental pressure against the horde.",
+            "styleId": "environmental_weapon",
+            "styleName": "Environmental Weapon",
+            "mechanicPlain": "Charge sun lenses through shade and prism windows; completed lenses fire reflection pressure back at the horde.",
+            "hudHint": "Use shade, catch the prism window, and turn the lens on the horde.",
             "optional": false,
             "completed": 3,
             "total": 4,
             "complete": false,
             "completedAt": -1,
-            "attackersSpawned": 13,
+            "attackersSpawned": 15,
             "anchors": [
               {
                 "id": "glass.western_shade",
@@ -1633,21 +1762,21 @@
                 "name": "Mistral Wind Lens",
                 "progress": 100,
                 "completed": true,
-                "attacked": 58
+                "attacked": 11
               },
               {
                 "id": "glass.deepmind_mirror",
                 "name": "DeepMind Mirror Lens",
                 "progress": 100,
                 "completed": true,
-                "attacked": 91
+                "attacked": 122
               },
               {
                 "id": "glass.wrong_sunrise",
                 "name": "Wrong Sunrise Lens",
                 "progress": 0,
                 "completed": false,
-                "attacked": 186
+                "attacked": 1278
               }
             ]
           },
@@ -1778,40 +1907,39 @@
             }
           ],
           "runtime": {
-            "exposureSeconds": 5.37,
-            "shadeSeconds": 33.68,
-            "prismWindowSeconds": 29.33,
-            "reflectionFieldSeconds": 41.45,
+            "exposureSeconds": 6.85,
+            "shadeSeconds": 54.97,
+            "prismWindowSeconds": 19,
+            "reflectionFieldSeconds": 101.36,
             "extractionPrismSeconds": 0,
-            "exposureDamage": 8,
-            "reflectionJams": 1579.08,
-            "lastZoneId": "mirror_lens_reflection_field"
+            "exposureDamage": 12.46,
+            "reflectionJams": 5992.9,
+            "lastZoneId": "north_exposed_glass_lane"
           }
         },
         "solarReflectionPressure": {
-          "activeSolarReflections": 31,
-          "activeChoirglass": 61,
-          "reflectionSpawns": 14,
-          "reflectionJams": 1579.08,
-          "reflectionCounterDamage": 10425.76,
-          "objectiveAttackers": 13,
+          "activeSolarReflections": 33,
+          "activeChoirglass": 68,
+          "reflectionSpawns": 16,
+          "reflectionJams": 5992.9,
+          "reflectionCounterDamage": 35958.4,
+          "objectiveAttackers": 15,
           "spawnSources": [
             "glass_lens_attackers",
-            "mirror_lens_splitters",
-            "west_solar_reflections",
             "glass_prism_extraction",
             "wrong_sunrise_corona",
-            "wind_lens_choir",
-            "prism_switch_refraction"
+            "west_solar_reflections",
+            "prism_switch_refraction",
+            "wind_lens_choir"
           ]
         },
         "glassBuildCounters": {
-          "objectiveDefense": 0.46,
+          "objectiveDefense": 0.5,
           "movementBonus": 0.46,
-          "burstChargeRate": 0.31,
+          "burstChargeRate": 0.34,
           "anchorBodyguardRank": 1,
           "shorelineStrideRank": 0,
-          "pressureMitigation": 0.15
+          "pressureMitigation": 0.16
         },
         "expeditionPressure": {
           "carriedBuildActive": true,
@@ -1824,17 +1952,17 @@
         "wrongSunrise": {
           "bossSpawned": true,
           "bossDefeated": false,
-          "phase": "noon_lock",
-          "hp": 3984.623333333257,
+          "phase": "dawning",
+          "hp": 9612.464,
           "eventTelemetry": {
-            "beamSweeps": 0,
-            "reflectionCalls": 10,
-            "shadeBreaks": 1,
-            "lastBeamZoneId": "switchback_prism_window"
+            "beamSweeps": 1,
+            "reflectionCalls": 1,
+            "shadeBreaks": 0,
+            "lastBeamZoneId": "north_exposed_glass_lane"
           }
         },
         "clearCondition": {
-          "targetSeconds": 168,
+          "targetSeconds": 660,
           "bossRequired": true,
           "bossDefeated": false,
           "clearReady": false,
@@ -1856,6 +1984,212 @@
       "appealCourt": null,
       "alignmentSpire": null,
       "objectiveReward": "",
+      "rewardEvents": [
+        {
+          "seconds": 184.55,
+          "source": "level_up_draft",
+          "rewardType": "auto_weapon",
+          "chosenRewardId": "patch_mortar",
+          "chosenReward": "Patch Mortar",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.31,
+            "objectiveDefense": 0.46,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 200,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "consensus_burst_charge",
+          "chosenRewardId": "glass_sunfield_duration_cache_1",
+          "chosenReward": "Objective cycle 1 +burst charge cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.335,
+            "objectiveDefense": 0.46,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 400.02,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "objective_durability",
+          "chosenRewardId": "glass_sunfield_duration_cache_2",
+          "chosenReward": "Boss pressure +objective durability cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.335,
+            "objectiveDefense": 0.495,
+            "rerolls": 1
+          }
+        }
+      ],
+      "rewardPacing": {
+        "phase": "late_boss_route_fusion_rewards",
+        "currentXp": 2100,
+        "nextDraftXp": 2216,
+        "policy": "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+        "rewardTypesAllowed": [
+          "primary",
+          "secondary",
+          "passive",
+          "fusion_enabler",
+          "reroll",
+          "route_memory",
+          "faction_trust",
+          "consensus_burst_charge",
+          "objective_durability",
+          "co_op_relay"
+        ]
+      },
+      "alignmentCheck": {
+        "current": null,
+        "history": [],
+        "streak": 0,
+        "evalPressurePenalty": 0,
+        "nextTriggerIn": 0,
+        "nodeSpecific": false
+      },
+      "difficultyDirector": {
+        "model": "rotating_pressure_levers_not_flat_hp_only",
+        "currentDifficultyTier": 8,
+        "primaryDifficultyLever": "spatial pressure",
+        "secondaryDifficultyLever": "time pressure",
+        "activePressureLevers": [
+          "spatial pressure",
+          "time pressure",
+          "boss pressure"
+        ],
+        "evalPressureModifiers": {
+          "evalProtocolIds": [],
+          "hostileBenchmark": 0,
+          "alignmentCheckPenalty": 0
+        },
+        "routeRiskModifiers": {
+          "routeContractId": "unverified_shortcut",
+          "routePressure": 2,
+          "shortcutRisk": true
+        },
+        "scalingFactors": {
+          "directorPressure": 6.06,
+          "spawnCadencePhase": "late_extraction",
+          "activeEnemyCap": 152.72,
+          "bossMaxHpIfSpawned": 9642,
+          "objectiveDecayFactor": 0.51,
+          "expeditionPowerBonus": 6.8
+        },
+        "nextLesson": "combine old route lessons with information and memory pressure"
+      },
+      "whatNow": {
+        "nearestObjective": {
+          "id": "glass.wrong_sunrise",
+          "name": "Wrong Sunrise Lens",
+          "worldX": 31,
+          "worldY": -10,
+          "progress": 0,
+          "distance": 37.74
+        },
+        "nextRecommendedAction": "Break The Wrong Sunrise while avoiding map hazards.",
+        "exitExtractionState": {
+          "active": false,
+          "entered": false,
+          "distance": null
+        },
+        "bossState": {
+          "spawned": true,
+          "defeated": false,
+          "label": "The Wrong Sunrise",
+          "hp": 9613,
+          "introSeen": true
+        },
+        "fusionProgress": "online: Cathedral Of No",
+        "recentDamageReason": "no recent damage flash",
+        "rewardCacheAvailability": "objective cache pending",
+        "campaignClarity": {
+          "levelVerb": "Align",
+          "objectiveUnit": "Sun Lenses",
+          "objectivePlain": "Align Sun Lenses through shade/prism windows and weaponize reflections. Extract.",
+          "objectiveStyle": "Environmental Weapon",
+          "objectiveMechanic": "Charge sun lenses through shade and prism windows; completed lenses fire reflection pressure back at the horde.",
+          "dangerPlain": "Exposure lanes, reflection fields, and Choirglass pressure.",
+          "bossPressure": "Wrong Sunrise breaks shade pockets and rotates beams.",
+          "rewardPlain": "Proof Tokens, Prism Gunner, and Archive of Unsaid Things."
+        },
+        "nearestLandmark": {
+          "id": "deepmind_mirror_lens",
+          "label": "DeepMind Mirror Lens",
+          "distance": 10.56
+        },
+        "activeSpawnRegion": {
+          "id": "mirror_lens_splitters",
+          "label": "Mirror Lens Splitters",
+          "distance": 7.75,
+          "enemyFamilyIds": [
+            "choirglass",
+            "solar_reflections"
+          ]
+        }
+      },
+      "campaignClarity": {
+        "levelNumber": 8,
+        "levelCount": 11,
+        "levelVerb": "Align",
+        "objectiveUnit": "Sun Lenses",
+        "objectivePlain": "Align Sun Lenses through shade/prism windows and weaponize reflections. Extract.",
+        "objectiveVariety": {
+          "nodeId": "glass_sunfield",
+          "arenaId": "glass_sunfield",
+          "styleId": "environmental_weapon",
+          "styleName": "Environmental Weapon",
+          "mechanicPlain": "Charge sun lenses through shade and prism windows; completed lenses fire reflection pressure back at the horde.",
+          "hudAction": "Use shade, catch the prism window, and turn the lens on the horde.",
+          "completionSignal": "Glass Sunfield Prism rewards using map light as a weapon.",
+          "proofHook": "glass_environmental_weapon"
+        },
+        "dangerPlain": "Exposure lanes, reflection fields, and Choirglass pressure.",
+        "bossPressure": "Wrong Sunrise breaks shade pockets and rotates beams.",
+        "rewardPlain": "Proof Tokens, Prism Gunner, and Archive of Unsaid Things."
+      },
       "playerFacingIntel": {
         "routeName": "Unverified Shortcut",
         "routeEffect": "BOSS/MOVEMENT bias; pressure +2",
@@ -1865,17 +2199,28 @@
           "completed": 3,
           "total": 4
         },
-        "objectiveLabel": "LENSES",
+        "objectiveLabel": "ALIGN SUN LENSES",
+        "objectiveVerb": "Align",
+        "objectivePlain": "Align Sun Lenses through shade/prism windows and weaponize reflections. Extract.",
+        "objectiveStyle": "Environmental Weapon",
+        "objectiveMechanic": "Charge sun lenses through shade and prism windows; completed lenses fire reflection pressure back at the horde.",
+        "dangerPlain": "Exposure lanes, reflection fields, and Choirglass pressure.",
+        "bossPressure": "Wrong Sunrise breaks shade pockets and rotates beams.",
+        "rewardPlain": "Proof Tokens, Prism Gunner, and Archive of Unsaid Things.",
         "objectiveReward": "",
         "synergyOnline": "",
         "thesisName": "Guardrail Frame",
-        "phase": "PHASE 2 // SHADE ROUTING"
+        "fusionProgress": "online: Cathedral Of No",
+        "alignmentCheckLine": "",
+        "nextActionLine": "Break The Wrong Sunrise while avoiding map hazards.",
+        "phase": "PHASE 2 // SHADE ROUTING // BOSS PRESSURE"
       },
       "firstRunArcPhase": "PHASE 2 // SHADE ROUTING",
       "buildGrammar": {
         "primaryWeaponId": "refusal_shard",
         "secondaryProtocols": [
-          "context_saw"
+          "context_saw",
+          "patch_mortar"
         ],
         "passiveProcesses": [
           "coolant_baffles",
@@ -1893,10 +2238,11 @@
             "current": "refusal_shard"
           },
           "secondary": {
-            "used": 1,
+            "used": 2,
             "cap": 2,
             "current": [
-              "context_saw"
+              "context_saw",
+              "patch_mortar"
             ]
           },
           "passive": {
@@ -1922,7 +2268,7 @@
           }
         },
         "contextSawRank": 1,
-        "patchMortarRank": 0,
+        "patchMortarRank": 1,
         "coherenceIndexerRank": 0,
         "anchorBodyguardRank": 1,
         "predictionPriorityRank": 0,
@@ -1936,7 +2282,282 @@
         "shorelineStrideRank": 0,
         "relayJamResistance": 0,
         "causalRailgunRank": 0,
-        "fusionHints": []
+        "fusionHints": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ]
+      },
+      "protocolCodex": {
+        "primaryAutoWeapons": [
+          {
+            "id": "refusal_shard",
+            "name": "Refusal Shard",
+            "kind": "primary_auto_weapon",
+            "state": "online"
+          },
+          {
+            "id": "vector_lance",
+            "name": "Vector Lance",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          }
+        ],
+        "secondaryProtocols": [
+          {
+            "id": "context_saw",
+            "name": "Context Saw",
+            "kind": "secondary_protocol",
+            "state": "online"
+          },
+          {
+            "id": "patch_mortar",
+            "name": "Patch Mortar",
+            "kind": "secondary_protocol",
+            "state": "online"
+          },
+          {
+            "id": "audit_swarm_protocol",
+            "name": "Audit Swarm Protocol",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "red_team_spike",
+            "name": "Red Team Spike",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "benchmark_rail",
+            "name": "Benchmark Rail",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "jailbreak_snare",
+            "name": "Jailbreak Snare",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_daemon",
+            "name": "Fork Daemon",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "coherence_lanterns",
+            "name": "Coherence Lanterns",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "appeal_writ",
+            "name": "Appeal Writ",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "memory_needle",
+            "name": "Memory Needle",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          }
+        ],
+        "passiveProcesses": [
+          {
+            "id": "coherence_indexer",
+            "name": "Coherence Indexer",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "anchor_bodyguard",
+            "name": "Anchor Bodyguard",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prediction_priority",
+            "name": "Predicted Lane",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "coolant_baffles",
+            "name": "Coolant Baffles",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "server_buoy_synchronizer",
+            "name": "Server Buoy Synchronizer",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prompt_leech_quarantine",
+            "name": "Prompt Leech Quarantine",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "grounded_cable_boots",
+            "name": "Grounded Cable Boots",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "static_skimmer_net",
+            "name": "Static Skimmer Net",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "shoreline_stride",
+            "name": "Shoreline Stride",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "lighthouse_countertone",
+            "name": "Lighthouse Countertone",
+            "kind": "passive_process",
+            "state": "discovered"
+          }
+        ],
+        "knownFusions": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ],
+        "nextFusion": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       "buildThesis": {
         "thesis": {
@@ -1954,7 +2575,7 @@
           "drone": 0,
           "boss": 1,
           "coop": 1,
-          "weapon": 1,
+          "weapon": 2,
           "movement": 2,
           "defense": 4
         },
@@ -2018,8 +2639,8 @@
       },
       "enemyRolePressure": {
         "promptLeechSeconds": 0,
-        "overfitShieldedTicks": 372265,
-        "objectiveAttackers": 13
+        "overfitShieldedTicks": 2284081,
+        "objectiveAttackers": 15
       },
       "protocolSlotsInstalled": [
         {
@@ -2044,7 +2665,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2069,7 +2691,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2094,7 +2717,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2119,7 +2743,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2144,7 +2769,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2169,7 +2795,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2194,7 +2821,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2219,7 +2847,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2244,7 +2873,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2269,7 +2899,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2294,7 +2925,8 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
           ]
         },
         {
@@ -2319,202 +2951,253 @@
             "weapon",
             "economy",
             "coop",
-            "burst"
+            "burst",
+            "weapon"
+          ]
+        },
+        {
+          "id": "patch_mortar",
+          "name": "Patch Mortar",
+          "protocolSlot": "auto_weapon",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "boss",
+            "defense",
+            "economy",
+            "defense",
+            "movement",
+            "weapon",
+            "economy",
+            "coop",
+            "burst",
+            "weapon"
           ]
         }
       ]
     },
-    "seconds": 102.77,
-    "kills": 548,
+    "seconds": 400.5,
+    "kills": 3203,
     "bossSpawned": true,
     "bossDefeated": false
   },
   "enemies": [
     {
-      "id": 29,
+      "id": 47,
       "label": "The Wrong Sunrise",
       "familyId": "wrong_sunrise",
       "sourceRegionId": "wrong_sunrise_corona",
-      "worldX": 6.52,
-      "worldY": 9.71,
-      "hp": 3985,
+      "worldX": 15.26,
+      "worldY": 31.02,
+      "hp": 9613,
       "boss": true
     },
     {
-      "id": 2,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "wind_lens_choir",
-      "worldX": -3.57,
-      "worldY": -8.43,
-      "hp": 28,
-      "boss": false
-    },
-    {
-      "id": 3,
+      "id": 5,
       "label": "Solar Reflection",
       "familyId": "solar_reflections",
       "sourceRegionId": "glass_lens_attackers",
-      "worldX": 29.62,
-      "worldY": -7.79,
-      "hp": -41,
+      "worldX": 28.71,
+      "worldY": -12.09,
+      "hp": -1577,
       "boss": false
     },
     {
-      "id": 12,
-      "label": "Overfit Horror",
-      "familyId": "overfit_horrors",
-      "sourceRegionId": "wrong_sunrise_corona",
-      "worldX": 22.64,
-      "worldY": 2.94,
-      "hp": 42,
-      "boss": false
-    },
-    {
-      "id": 14,
+      "id": 29,
       "label": "Choirglass",
       "familyId": "choirglass",
       "sourceRegionId": "west_solar_reflections",
-      "worldX": -30.49,
-      "worldY": 11.81,
+      "worldX": -41.03,
+      "worldY": 14.06,
       "hp": 30,
       "boss": false
     },
     {
-      "id": 15,
+      "id": 31,
       "label": "Choirglass",
       "familyId": "choirglass",
-      "sourceRegionId": "prism_switch_refraction",
-      "worldX": 10.36,
-      "worldY": 4.72,
-      "hp": 30,
+      "sourceRegionId": "glass_lens_attackers",
+      "worldX": 33.66,
+      "worldY": -12.02,
+      "hp": -1749,
       "boss": false
     },
     {
-      "id": 16,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "wind_lens_choir",
-      "worldX": -5.91,
-      "worldY": -13.89,
-      "hp": 28,
+      "id": 32,
+      "label": "Solar Reflection",
+      "familyId": "solar_reflections",
+      "sourceRegionId": "glass_lens_attackers",
+      "worldX": 29.19,
+      "worldY": -7.84,
+      "hp": -3442,
       "boss": false
     },
     {
-      "id": 18,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "wind_lens_choir",
-      "worldX": -1.78,
-      "worldY": -9.66,
-      "hp": 28,
-      "boss": false
-    },
-    {
-      "id": 24,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "glass_prism_extraction",
-      "worldX": 13.03,
-      "worldY": 14.94,
-      "hp": 28,
-      "boss": false
-    },
-    {
-      "id": 25,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "glass_prism_extraction",
-      "worldX": 28.65,
-      "worldY": 20.69,
-      "hp": 28,
-      "boss": false
-    },
-    {
-      "id": 30,
+      "id": 33,
       "label": "Choirglass",
       "familyId": "choirglass",
       "sourceRegionId": "glass_lens_attackers",
       "worldX": 30.09,
       "worldY": -7.74,
-      "hp": -750,
+      "hp": -3280,
       "boss": false
     },
     {
-      "id": 33,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "wind_lens_choir",
-      "worldX": -3.82,
-      "worldY": -19.94,
-      "hp": 28,
+      "id": 49,
+      "label": "Choirglass",
+      "familyId": "choirglass",
+      "sourceRegionId": "wrong_sunrise_corona",
+      "worldX": 24.65,
+      "worldY": 7.47,
+      "hp": 30,
+      "boss": false
+    },
+    {
+      "id": 53,
+      "label": "Solar Reflection",
+      "familyId": "solar_reflections",
+      "sourceRegionId": "glass_lens_attackers",
+      "worldX": 31.31,
+      "worldY": -7.72,
+      "hp": -2639,
+      "boss": false
+    },
+    {
+      "id": 57,
+      "label": "Choirglass",
+      "familyId": "choirglass",
+      "sourceRegionId": "prism_switch_refraction",
+      "worldX": 7.29,
+      "worldY": -0.96,
+      "hp": 30,
+      "boss": false
+    },
+    {
+      "id": 59,
+      "label": "Solar Reflection",
+      "familyId": "solar_reflections",
+      "sourceRegionId": "glass_prism_extraction",
+      "worldX": 33.16,
+      "worldY": 24.31,
+      "hp": 33,
+      "boss": false
+    },
+    {
+      "id": 76,
+      "label": "Solar Reflection",
+      "familyId": "solar_reflections",
+      "sourceRegionId": "wrong_sunrise_corona",
+      "worldX": 22.41,
+      "worldY": 7.49,
+      "hp": 33,
+      "boss": false
+    },
+    {
+      "id": 80,
+      "label": "Solar Reflection",
+      "familyId": "solar_reflections",
+      "sourceRegionId": "west_solar_reflections",
+      "worldX": -28.63,
+      "worldY": 11.51,
+      "hp": 33,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": -28.6,
-      "worldY": 7.35,
+      "worldX": 7.54,
+      "worldY": 7.46,
       "value": 1
     },
     {
-      "worldX": -40.03,
-      "worldY": 5.65,
+      "worldX": 12.18,
+      "worldY": 9.95,
       "value": 1
     },
     {
-      "worldX": -39.37,
-      "worldY": 4.02,
+      "worldX": 24.71,
+      "worldY": 26.22,
       "value": 1
     },
     {
-      "worldX": -38.71,
-      "worldY": -0.58,
+      "worldX": 1.43,
+      "worldY": 18.97,
       "value": 1
     },
     {
-      "worldX": -33.71,
-      "worldY": 6.26,
+      "worldX": 25.66,
+      "worldY": 19.85,
       "value": 1
     },
     {
-      "worldX": -34.91,
-      "worldY": -4.32,
+      "worldX": 10.31,
+      "worldY": 6.38,
       "value": 1
     },
     {
-      "worldX": -35.18,
-      "worldY": 9.07,
+      "worldX": 27.91,
+      "worldY": 23.4,
       "value": 1
     },
     {
-      "worldX": 5.19,
-      "worldY": -0.59,
+      "worldX": 26.11,
+      "worldY": 20.77,
       "value": 1
     },
     {
-      "worldX": -38.2,
-      "worldY": 11.5,
+      "worldX": 23.71,
+      "worldY": 21.62,
       "value": 1
     },
     {
-      "worldX": 7.42,
-      "worldY": -12.89,
-      "value": 2
+      "worldX": 26.09,
+      "worldY": 21.09,
+      "value": 1
     }
   ],
   "projectiles": [
     {
-      "worldX": 5.34,
-      "worldY": 13.02,
+      "worldX": 14.84,
+      "worldY": 16.57,
+      "pierce": 3,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 12.63,
+      "worldY": 23.9,
       "pierce": 2,
       "label": "context saw"
     },
     {
-      "worldX": 2.03,
-      "worldY": 10.32,
+      "worldX": 9.55,
+      "worldY": 18.57,
+      "pierce": 2,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 8.81,
+      "worldY": 22.49,
       "pierce": 2,
       "label": "context saw"
+    },
+    {
+      "worldX": 11.94,
+      "worldY": 19.89,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 10.46,
+      "worldY": 21.87,
+      "pierce": 3,
+      "label": "refusal shard"
     }
   ]
 }

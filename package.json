@@ -45,6 +45,10 @@
     "proof:campaign-duration-audit": "node scripts/proof/campaign-duration-audit.mjs",
     "proof:enemy-roles": "node scripts/proof/enemy-role-static.mjs",
     "proof:objective-variety": "node scripts/proof/objective-variety-static.mjs",
+    "proof:combat-progression": "node scripts/proof/combat-progression-static.mjs",
+    "proof:combat-progression-browser": "node scripts/proof/run-proof.mjs combat-progression",
+    "proof:audio-runtime": "node scripts/proof/audio-runtime-static.mjs",
+    "proof:audio-mix": "node scripts/proof/run-proof.mjs audio-mix",
     "proof:roster-sweep": "node scripts/proof/roster-sweep.mjs",
     "proof:assets": "node scripts/assets/validate-assets.mjs && python3 scripts/proof/validate-runtime-sprite-framing.py",
     "proof:release-checklist": "node scripts/proof/release-checklist.mjs",
@@ -122,11 +126,13 @@
     "@colyseus/sdk": "^0.17.42",
     "colyseus": "^0.17.10",
     "express": "^5.2.1",
+    "howler": "^2.2.4",
     "pixi.js": "^8.9.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.3"
+    "@types/node": "22.15.3",
+    "typescript": "5.8.3",
+    "vite": "6.3.3"
   }
 }

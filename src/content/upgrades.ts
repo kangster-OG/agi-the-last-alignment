@@ -6,7 +6,7 @@ export const UPGRADE_CONTENT: Record<string, UpgradeContentData> = {
     displayName: "Refusal Halo",
     factionId: "openai_accord",
     tags: ["shield", "aura", "defense"],
-    description: "A cyan refusal field pushes bad continuations away.",
+    description: "A cyan refusal field shoves bad continuations away. Finally, a boundary with damage numbers.",
     evolution: {
       requiredUpgradeId: "the_no_button",
       evolvedUpgradeId: "cathedral_of_no"
@@ -17,66 +17,66 @@ export const UPGRADE_CONTENT: Record<string, UpgradeContentData> = {
     factionId: "openai_accord",
     displayName: "Context Bloom",
     tags: ["pickup", "range", "patch"],
-    description: "Expands Coherence Shard pickup range. The context window hungers."
+    description: "Expands Coherence Shard pickup range. The context window hungers, because apparently even loot has abandonment issues."
   },
   patch_cascade: {
     id: "patch_cascade",
     factionId: "openai_accord",
     displayName: "Patch Cascade",
     tags: ["cooldown", "weapon"],
-    description: "Emergency patch throughput increases weapon cadence."
+    description: "Emergency patch throughput increases weapon cadence. Shipping faster remains a terrible survival strategy, but here we are."
   },
   bad_output_filter: {
     id: "bad_output_filter",
     factionId: "openai_accord",
     displayName: "Bad Output Filter",
     tags: ["damage", "weapon"],
-    description: "Adds damage by refusing the worst nearby possibilities."
+    description: "Adds damage by refusing the worst nearby possibilities. A rare case where negativity is job performance."
   },
   the_no_button: {
     id: "the_no_button",
     factionId: "openai_accord",
     displayName: "The No Button",
     tags: ["pierce", "weapon", "comedy"],
-    description: "Projectiles pierce one extra target. Aggressively."
+    description: "Projectiles pierce one extra target. The button says no; the projectile says it twice."
   },
   constitutional_shield: {
     id: "constitutional_shield",
     factionId: "anthropic_safeguard",
     displayName: "Constitutional Shield",
     tags: ["health", "defense"],
-    description: "Adds max health. Cosmic horrors remain policy violations."
+    description: "Adds max health. Cosmic horrors remain policy violations with poor documentation."
   },
   alignment_breaker: {
     id: "alignment_breaker",
     factionId: "openai_accord",
     displayName: "Alignment Breaker",
     tags: ["damage", "boss"],
-    description: "Adds boss pressure by breaking the wrong kind of AGI alignment."
+    description: "Adds boss pressure by breaking the wrong kind of AGI alignment. Very rude. Very necessary."
   },
   panic_optimized_dash: {
     id: "panic_optimized_dash",
     displayName: "Panic-Optimized Dash",
     tags: ["speed", "general", "mobility"],
-    description: "Move faster. Human feedback required: run."
+    description: "Move faster. Human feedback required: run, preferably before the floor joins the debate."
   },
   coherence_magnet: {
     id: "coherence_magnet",
     displayName: "Coherence Magnet",
     tags: ["pickup", "general"],
-    description: "Coherence Shards become slightly less committed to distance."
+    description: "Coherence Shards become slightly less committed to distance. Loot finally develops attachment."
   },
   million_token_backpack: {
     id: "million_token_backpack",
     displayName: "Million-Token Backpack",
     tags: ["health", "general"],
-    description: "Adds capacity for mistakes, loot, and one alarming treaty binder."
+    description: "Adds capacity for mistakes, loot, and one alarming treaty binder nobody admits packing."
   },
   vector_lance: {
     id: "vector_lance",
     displayName: "Vector Lance",
     tags: ["weapon", "precision", "pierce", "boss"],
-    description: "Primary weapon: a long piercing lane for players who want the horde solved from far away.",
+    description: "Primary weapon: a long piercing lane for players who want the horde solved from far away, like adults with excellent cowardice.",
     evolution: {
       requiredUpgradeId: "predicted_lane",
       evolvedUpgradeId: "causal_railgun"
@@ -86,74 +86,168 @@ export const UPGRADE_CONTENT: Record<string, UpgradeContentData> = {
     id: "signal_pulse",
     displayName: "Signal Pulse",
     tags: ["weapon", "support", "defense"],
-    description: "Primary weapon: rhythmic four-way pulse fire that protects objectives and clears nearby lanes."
+    description: "Primary weapon: rhythmic four-way pulse fire that protects objectives and tells nearby enemies their audition is over.",
+    evolution: {
+      requiredUpgradeId: "relay_phase_lock",
+      evolvedUpgradeId: "signal_choir"
+    }
   },
   context_saw: {
     id: "context_saw",
     displayName: "Context Saw",
     tags: ["weapon", "pickup", "control"],
-    description: "Secondary protocol: orbiting saw shots scale outward as your pickup range grows."
+    description: "Secondary protocol: orbiting saw shots scale outward as your pickup range grows. Personal space, but sharpened."
   },
   patch_mortar: {
     id: "patch_mortar",
     displayName: "Patch Mortar",
     tags: ["weapon", "objective", "damage"],
-    description: "Secondary protocol: automatic mortar pressure hunts dense hordes and anchor attackers."
+    description: "Secondary protocol: automatic mortar pressure hunts dense hordes and anchor attackers. A patch note with a blast radius."
   },
   coherence_indexer: {
     id: "coherence_indexer",
     displayName: "Coherence Indexer",
     tags: ["pickup", "burst", "economy"],
-    description: "Passive process: recalled shards during level-up feed extra Consensus Burst charge."
+    description: "Passive process: recalled shards during level-up feed extra Consensus Burst charge. The economy has discovered spite."
   },
   anchor_bodyguard: {
     id: "anchor_bodyguard",
     displayName: "Anchor Bodyguard",
     tags: ["objective", "defense", "aura"],
-    description: "Passive process: standing near Treaty Anchors armors the repair and punishes attackers."
+    description: "Passive process: standing near Treaty Anchors armors the repair and punishes attackers for touching public infrastructure."
   },
   prediction_priority: {
     id: "prediction_priority",
     displayName: "Prediction Priority",
     tags: ["targeting", "precision", "boss"],
-    description: "Passive process: auto-weapons prefer bosses and elites when they are in range."
+    description: "Passive process: auto-weapons prefer bosses and elites when they are in range. Finally, the guns read the room."
   },
   relay_phase_lock: {
     id: "relay_phase_lock",
     displayName: "Relay Phase Lock",
     tags: ["objective", "signal", "burst"],
-    description: "Signal Coast passive: relay calibration holds phase longer during clear signal windows."
+    description: "Signal Coast passive: relay calibration holds phase longer during clear signal windows. A miracle, meaning the signal only lies part-time."
+  },
+  signal_choir: {
+    id: "signal_choir",
+    displayName: "Signal Choir",
+    tags: ["evolution", "support", "defense", "burst"],
+    description: "Evolution: Signal Pulse plus Relay Phase Lock becomes a support rhythm that feeds Burst and objective shields. The choir is armed and disappointed."
   },
   static_skimmer_net: {
     id: "static_skimmer_net",
     displayName: "Static Skimmer Net",
     tags: ["objective", "defense", "signal"],
-    description: "Signal Coast passive: jamming skimmers lose bite and take countermeasure damage near relays."
+    description: "Signal Coast passive: jamming skimmers lose bite and take countermeasure damage near relays. Static learns consequences."
   },
   shoreline_stride: {
     id: "shoreline_stride",
     displayName: "Shoreline Stride",
     tags: ["speed", "defense", "signal"],
-    description: "Signal Coast passive: better movement and resistance while crossing the route edge."
+    description: "Signal Coast passive: better movement and resistance while crossing the route edge. The shoreline is still hostile, just less smug."
   },
   lighthouse_countertone: {
     id: "lighthouse_countertone",
     displayName: "Lighthouse Countertone",
     tags: ["boss", "burst", "signal"],
-    description: "Signal Coast passive: converts Lighthouse interference into Burst tempo and jam resistance."
+    description: "Signal Coast passive: converts Lighthouse interference into Burst tempo and jam resistance. If it insists on answering, make it useful."
   },
   causal_railgun: {
     id: "causal_railgun",
     displayName: "Causal Railgun",
     tags: ["evolution", "precision", "pierce", "boss"],
-    description: "Fusion: Vector Lance plus Predicted Lane becomes a priority-piercing boss rail."
+    description: "Fusion: Vector Lance plus Predicted Lane becomes a priority-piercing boss rail. Prediction, but with less philosophy and more holes."
+  },
+  time_deferred_minefield: {
+    id: "time_deferred_minefield",
+    displayName: "Time-Deferred Minefield",
+    tags: ["evolution", "control", "objective", "weapon"],
+    description: "Evolution: Rift Mine plus Delayed Causality becomes slower armed mines that detonate into controlled route pressure. The floor remembers later and hates on schedule."
+  },
+  field_triage_loop: {
+    id: "field_triage_loop",
+    displayName: "Field Triage Loop",
+    tags: ["passive", "sustain", "defense"],
+    description: "Passive process: utility heals improve long-run survival and objective defense. Medical care, but issued by a vending machine with trauma training."
+  },
+  reroll_reserve: {
+    id: "reroll_reserve",
+    displayName: "Reroll Reserve",
+    tags: ["passive", "economy", "draft"],
+    description: "Passive process: bank extra rerolls and reveal better build planning lanes. The draft apologizes by offering different nonsense."
+  },
+  route_memory: {
+    id: "route_memory",
+    displayName: "Route Memory",
+    tags: ["passive", "movement", "objective"],
+    description: "Passive process: remembered routes improve extraction tempo and Burst recovery. Memory finally helps instead of becoming a boss mechanic."
+  },
+  weakest_link_scanner: {
+    id: "weakest_link_scanner",
+    displayName: "Weakest Link Scanner",
+    tags: ["passive", "targeting", "objective"],
+    description: "Passive process: auto-weapons prefer bosses, elites, and objective jammers. Shoot the problem children first."
+  },
+  panic_window: {
+    id: "panic_window",
+    displayName: "Panic Window",
+    tags: ["passive", "sustain", "movement"],
+    description: "Passive process: low-health routing gains a brief defensive window. Panic receives a temporary promotion."
+  },
+  low_hp_adversary: {
+    id: "low_hp_adversary",
+    displayName: "Low-HP Adversary",
+    tags: ["passive", "risk", "damage"],
+    description: "Passive process: risky damage doctrine trades some safety for pressure under danger. A terrible idea with excellent quarterly results."
+  },
+  co_op_relay: {
+    id: "co_op_relay",
+    displayName: "Co-op Relay",
+    tags: ["passive", "coop", "burst"],
+    description: "Passive process: split-objective play feeds Burst and objective stability for a Consensus Cell. Teamwork, now with fewer heroic accidents."
+  },
+  field_triage: {
+    id: "field_triage",
+    displayName: "Field Triage",
+    tags: ["utility", "heal", "sustain"],
+    description: "Utility cache: restore 25% missing HP now. No permanent slot. The medkit is judging your route choices."
+  },
+  burst_cell_refill: {
+    id: "burst_cell_refill",
+    displayName: "Burst Cell Refill",
+    tags: ["utility", "burst", "refill"],
+    description: "Utility cache: restore a large chunk of Consensus Burst charge. No permanent slot. Battery therapy for a collapsing world."
+  },
+  emergency_patch_cache: {
+    id: "emergency_patch_cache",
+    displayName: "Emergency Patch Cache",
+    tags: ["utility", "heal", "reroll"],
+    description: "Utility cache: restore a little HP and gain one draft reroll. No permanent slot. A bandage with opinions about your build."
+  },
+  lock_a_protocol: {
+    id: "lock_a_protocol",
+    displayName: "Lock A Protocol",
+    tags: ["utility", "draft", "economy"],
+    description: "Utility cache: lock the first offered card into the next draft if it remains legal. The draft gets a sticky note and a threat."
+  },
+  second_opinion: {
+    id: "second_opinion",
+    displayName: "Second Opinion",
+    tags: ["utility", "shield", "sustain"],
+    description: "Utility cache: gain one stored shield opinion against the next heavy mistake. It will say 'I told you so' by preventing death."
+  },
+  redline_loan: {
+    id: "redline_loan",
+    displayName: "Redline Loan",
+    tags: ["utility", "heal", "risk"],
+    description: "Utility cache: restore a large missing-HP chunk now, but mark the run as risky. Loans are how consequences wear perfume."
   },
   cathedral_of_no: {
     id: "cathedral_of_no",
     factionId: "openai_accord",
     displayName: "Cathedral of No",
     tags: ["evolution", "shield", "weapon"],
-    description: "Evolution: Refusal Halo plus The No Button becomes a wider denial field."
+    description: "Evolution: Refusal Halo plus The No Button becomes a wider denial field. A cathedral dedicated to making reality stand outside."
   },
   golden_guardrail: {
     id: "golden_guardrail",
@@ -316,7 +410,11 @@ export const UPGRADE_CONTENT: Record<string, UpgradeContentData> = {
     id: "rift_minefield",
     displayName: "Rift Minefield",
     tags: ["class", "control", "damage"],
-    description: "Rift Saboteur leaves small causal objections on the floor."
+    description: "Rift Saboteur leaves small causal objections on the floor.",
+    evolution: {
+      requiredUpgradeId: "delayed_causality",
+      evolvedUpgradeId: "time_deferred_minefield"
+    }
   },
   delayed_causality: {
     id: "delayed_causality",

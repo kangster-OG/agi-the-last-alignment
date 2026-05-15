@@ -4,6 +4,7 @@ Before making meaningful gameplay, visual, worldbuilding, or architecture change
 
 - `docs/AGI_The_Last_Alignment_Creative_Bible.md`
 - `docs/GAME_DIRECTION.md`
+- `docs/COPY_VOICE_DIRECTION.md`
 - `docs/AUTOBATTLE_OBJECTIVE_VARIETY_GOAL.md`
 - `docs/AGI_IMPLEMENTATION_PLAN.md`
 - `docs/FRESH_THREAD_CURRENT_STATE.md`
@@ -35,6 +36,7 @@ This project is `AGI: The Last Alignment`, a free browser-playable 2D isometric 
 
 - The primary reference format is the pair of X/Twitter gameplay clips from TheJohnnyStaley that the user provided on April 30, 2026. Use them as inspiration for camera language, overworld structure, UI density, chunky isometric pixel-art presentation, and horde-survival pacing.
 - The Creative Bible is now the source of truth for the game identity: humans and frontier AI labs form The Last Alignment to fight A.G.I., the Alien God Intelligence.
+- `docs/COPY_VOICE_DIRECTION.md` is now the source of truth for player-facing copy voice. Future game copy should be original sardonic AGI dungeon-crawl parody: mechanically clear first, funny/sarcastic second, and constantly roasting A.G.I., frontier labs, corporate safety theater, bosses, objectives, rewards, and the player's terrible little job.
 - Do not copy protected names, characters, portraits, brands, UI art, maps, jokes, or expressive content from those clips or any existing game. We are making our own lore, characters, factions, art assets, setting, and mechanics.
 - Real frontier lab names are used as broad fictional/parody factions per the Creative Bible. The user wants official logos used for parody/faction presentation. Treat logos as third-party/parody brand assets with provenance and disclaimers, not as original MIT-created artwork.
 - The current snack/coupon/receipt theme is placeholder only. Replace it with AGI content.

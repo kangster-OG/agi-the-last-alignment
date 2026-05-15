@@ -78,7 +78,10 @@
     "Cathedral of No",
     "Anchor Bodyguard",
     "Treaty Anchor Toolkit",
-    "Prompt Leech Quarantine"
+    "Prompt Leech Quarantine",
+    "Refusal Slipstream",
+    "Context Saw",
+    "Million-Token Backpack"
   ],
   "objective": "Reality now accepts this road.",
   "performance": {
@@ -149,9 +152,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 3,
-      "hit": 621,
-      "pickup": 896,
+      "ui": 9,
+      "hit": 1890,
+      "pickup": 3767,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
@@ -161,42 +164,42 @@
       {
         "id": "summary.completed",
         "kind": "summary",
-        "atMs": 87598
+        "atMs": 125340
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 87524
+        "atMs": 125338
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 87521
+        "atMs": 125066
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 125061
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 87520
+        "atMs": 125057
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 87494
+        "atMs": 125052
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 87494
+        "atMs": 125050
       },
       {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 87493
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 87493
+        "id": "combat.consensus_burst",
+        "kind": "hit",
+        "atMs": 125046
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -269,25 +272,27 @@
     "campEvents": [
       "Reality accepted signal_coast. Nobody said thank you, but the road stopped screaming.",
       "All Signal Relays completed. The camp tags this as Blackwater Beacon route fork.",
-      "Expedition carries LV 10 / 9 patches forward. Pressure budget 21.18."
+      "Expedition carries LV 13 / 12 patches forward. Pressure budget 26.34."
     ],
     "lastRunMemory": {
       "completed": true,
       "nodeId": "signal_coast",
-      "kills": 1020,
-      "seconds": 184,
-      "burstActivations": 89,
+      "kills": 3796,
+      "seconds": 480,
+      "burstActivations": 306,
       "routeContractId": "unverified_shortcut",
       "objectiveCompleted": 3,
       "objectiveTotal": 3,
       "objectiveName": "Signal Relay Calibration",
       "objectiveUnit": "Signal Relays",
+      "objectiveStyle": "Timed Crossing",
+      "objectiveMechanic": "Cross during clear signal windows to tune relays before static fields jam the shoreline.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 2,
-      "expeditionLevel": 10,
-      "expeditionPower": 21.18,
-      "expeditionDrafts": 9,
+      "expeditionLevel": 13,
+      "expeditionPower": 26.34,
+      "expeditionDrafts": 12,
       "newSecrets": [
         {
           "id": "signal_coast_relay_chain",
@@ -321,12 +326,32 @@
           "name": "Signal Relay Clear",
           "body": "Completed every Signal Coast relay before extraction."
         }
-      ]
+      ],
+      "nodeStabilized": "Blackwater Beacon route fork",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Refusal Slipstream",
+        "Context Saw",
+        "Million-Token Backpack",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "routeUnlocks": [
+        "blackwater_beacon",
+        "verdict_spire"
+      ],
+      "stabilizedRouteCount": 13,
+      "mechanicalUnlocks": [
+        "Frame: Rift Saboteur"
+      ],
+      "campaignConsequence": "Next route consequence: Blackwater Beacon route fork.",
+      "factionCampaignConsequence": "Signal Coast Relay Chain",
+      "finalClearance": false
     },
     "expedition": {
       "active": true,
-      "level": 10,
-      "xp": 747,
+      "level": 13,
+      "xp": 1044,
       "chosenUpgradeIds": [
         "refusal_halo",
         "the_no_button",
@@ -336,7 +361,10 @@
         "cathedral_of_no",
         "anchor_bodyguard",
         "treaty_anchor_toolkit",
-        "prompt_leech_quarantine"
+        "prompt_leech_quarantine",
+        "refusal_slipstream",
+        "context_saw",
+        "million_token_backpack"
       ],
       "chosenUpgradeNames": [
         "Refusal Halo",
@@ -347,7 +375,10 @@
         "Cathedral of No",
         "Anchor Bodyguard",
         "Treaty Anchor Toolkit",
-        "Prompt Leech Quarantine"
+        "Prompt Leech Quarantine",
+        "Refusal Slipstream",
+        "Context Saw",
+        "Million-Token Backpack"
       ],
       "chosenProtocolSlots": [
         "defense_layer",
@@ -358,7 +389,10 @@
         "auto_weapon",
         "co_mind_process",
         "auto_weapon",
-        "co_mind_process"
+        "co_mind_process",
+        "movement_trace",
+        "auto_weapon",
+        "defense_layer"
       ],
       "activatedSynergyIds": [
         "doctrine_lock_no_means_no",
@@ -370,7 +404,7 @@
         "transit_loop_zero",
         "signal_coast"
       ],
-      "powerScore": 21.18
+      "powerScore": 26.34
     },
     "nextContentTarget": {
       "id": "blackwater_beacon_split_pressure_contract",
@@ -639,17 +673,17 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": null,
   "overworld": {
@@ -671,27 +705,29 @@
   "level": {
     "nodeId": "signal_coast",
     "arena": "Signal Coast",
-    "seconds": 184.08,
-    "kills": 1020,
-    "playerLevel": 10,
+    "seconds": 480.83,
+    "kills": 3796,
+    "playerLevel": 13,
     "completed": true,
     "carryover": {
       "completed": true,
       "nodeId": "signal_coast",
-      "kills": 1020,
-      "seconds": 184,
-      "burstActivations": 89,
+      "kills": 3796,
+      "seconds": 480,
+      "burstActivations": 306,
       "routeContractId": "unverified_shortcut",
       "objectiveCompleted": 3,
       "objectiveTotal": 3,
       "objectiveName": "Signal Relay Calibration",
       "objectiveUnit": "Signal Relays",
+      "objectiveStyle": "Timed Crossing",
+      "objectiveMechanic": "Cross during clear signal windows to tune relays before static fields jam the shoreline.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 2,
-      "expeditionLevel": 10,
-      "expeditionPower": 21.18,
-      "expeditionDrafts": 9,
+      "expeditionLevel": 13,
+      "expeditionPower": 26.34,
+      "expeditionDrafts": 12,
       "newSecrets": [
         {
           "id": "signal_coast_relay_chain",
@@ -725,7 +761,62 @@
           "name": "Signal Relay Clear",
           "body": "Completed every Signal Coast relay before extraction."
         }
-      ]
+      ],
+      "nodeStabilized": "Blackwater Beacon route fork",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Refusal Slipstream",
+        "Context Saw",
+        "Million-Token Backpack",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "routeUnlocks": [
+        "blackwater_beacon",
+        "verdict_spire"
+      ],
+      "stabilizedRouteCount": 13,
+      "mechanicalUnlocks": [
+        "Frame: Rift Saboteur"
+      ],
+      "campaignConsequence": "Next route consequence: Blackwater Beacon route fork.",
+      "factionCampaignConsequence": "Signal Coast Relay Chain",
+      "finalClearance": false
+    },
+    "objectiveVariety": {
+      "nodeId": "signal_coast",
+      "arenaId": "signal_coast",
+      "styleId": "signal_window",
+      "styleName": "Timed Crossing",
+      "mechanicPlain": "Cross during clear signal windows to tune relays before static fields jam the shoreline.",
+      "hudAction": "Use the clear signal window, then tune the relay.",
+      "completionSignal": "Relays tune fastest when the player times crossings with clean signal.",
+      "proofHook": "signal_window_timing"
+    },
+    "completionPayoff": {
+      "nodeStabilized": "Blackwater Beacon route fork",
+      "objectiveResults": "Signal Relays 3/3",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Refusal Slipstream",
+        "Context Saw",
+        "Million-Token Backpack",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
+      ],
+      "proofTokensEarned": 2,
+      "proofTokensTotal": 2,
+      "mechanicalUnlocks": [
+        "Frame: Rift Saboteur"
+      ],
+      "routeUnlocks": [
+        "blackwater_beacon",
+        "verdict_spire"
+      ],
+      "factionCampaignConsequence": "Signal Coast Relay Chain",
+      "campaignConsequence": "Next route consequence: Blackwater Beacon route fork.",
+      "finalClearance": false,
+      "campaignResultSummary": null
     },
     "nextContentTarget": {
       "id": "blackwater_beacon_split_pressure_contract",
@@ -769,6 +860,9 @@
     "cathedral_of_no",
     "anchor_bodyguard",
     "treaty_anchor_toolkit",
-    "prompt_leech_quarantine"
+    "prompt_leech_quarantine",
+    "refusal_slipstream",
+    "context_saw",
+    "million_token_backpack"
   ]
 }

@@ -10,6 +10,8 @@ This file is not a changelog. `progress.md` has the blow-by-blow record. This le
 
 `AGI: The Last Alignment` should feel first like a 2D isometric pixel-art horde-survival roguelite, second like an authored campaign adventure, and third like AGI lore/systems flavor.
 
+Player-facing copy now has its own source of truth: `docs/COPY_VOICE_DIRECTION.md`. The desired voice is original sardonic AGI dungeon-crawl parody: clear verbs first, then sarcasm, institutional mockery, hostile reward language, and jokes at the expense of A.G.I., frontier labs, safety theater, bosses, objectives, and the player's unfortunate job description. Do not imitate or copy protected prose, jokes, names, or distinctive phrasing from existing books/games; translate the broad traits into AGI's own voice.
+
 Preserve:
 
 - close tactical isometric camera in large authored maps;
@@ -169,6 +171,8 @@ The current UI is functional and readable, not a final premium art lock. Preserv
 - selected Alignment Grid panel with level/verb/objective/reward/consequence;
 - source-backed item/build icons.
 
+Future UI/copy rewrites should make these surfaces much funnier and more sarcastic without losing scan speed. If a joke makes the objective harder to understand, cut or move the joke.
+
 Rejected directions include pale pasted-on panels, tiny terminal copy, noisy source-backed chrome that hurts readability, card-grid overworlds, and anything that treats the Alignment Grid as a menu instead of a walkable route world.
 
 ## Fresh-Thread Startup Checklist
@@ -190,6 +194,5 @@ When a new Codex thread starts meaningful work:
 - `src/content/enemyRoleProfiles.ts` is the central taxonomy. Do not add an enemy family without a role profile, counterplay hint, intro arena, difficulty tier, objective/on-hit/on-death effects, allowed elite affixes, and proof counters.
 - Shooter enemies are now a real pillar, introduced gradually. Preserve sparse readable windups and close-camera projectile readability; do not convert the horde loop into bullet hell.
 - Runtime hostile projectiles/trails/explosions/support auras/objective jams/elites are intentionally telemetry-backed through `render_game_to_text()`. Preserve `enemyRolesSeen`, `rangedFamiliesSeen`, projectile counters, trail/support/jam seconds, elite counters, pre-boss role pressure seconds, and phase role mix.
-- Online co-op is included in the V1 contract. Preserve the server-authoritative role layer in `server/consensusCellServer.mjs`, the online snapshot fields (`enemyRoles`, `enemyTelegraphs`, `enemyTrails`, hostile projectile metadata), and the `OnlineCoopState` enemy-role VFX rendering so the feature appears for players with friends as well as solo.
 - Enemy-role VFX must stay source-backed. The V1 source chain is `assets/concepts/chatgpt_refs/enemy_role_vfx_v1/`, `assets/concepts/pixellab_refs/enemy_role_vfx_v1/`, `scripts/assets/pack-enemy-role-vfx-v1.py`, and `assets/sprites/effects/enemy_role_vfx_v1.png`. Do not patch expressive enemy/projectile/trail/explosion art with code-authored drawing or recolors.
-- `npm run proof:enemy-roles` is now a required static gate after enemy/spawn/route changes. For multiplayer-affecting changes, also run `npm run proof:milestone15-online-combat`; it now asserts online enemy-role pressure and hostile shooter telemetry.
+- `npm run proof:enemy-roles` is now a required static gate after enemy/spawn/route changes. Route proofs have additional role-pressure assertions, and the V1 pass has been verified from a hydrated `/tmp/agi-enemy-role-proof-clone` checkout with full `tsc`, static proofs, all route proofs, and `proof:campaign-full`. If the normal workspace blocks again, look first for stale `.playwright-mcp` git-add jobs and iCloud/File Provider `compressed,dataless` files, then use the temp-checkout pattern.

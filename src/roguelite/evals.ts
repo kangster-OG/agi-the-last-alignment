@@ -13,7 +13,7 @@ export const EVAL_PROTOCOLS: EvalProtocol[] = [
     id: "low_context_window",
     name: "Low Context Window",
     severity: 1,
-    body: "-0.3 pickup range. The patch has to survive with less memory.",
+    body: "-0.3 pickup range. The patch has to survive with less memory, also known as leadership.",
     applyPreRun: (build) => {
       build.pickupRange = Math.max(0.7, build.pickupRange - 0.3);
     }
@@ -22,19 +22,19 @@ export const EVAL_PROTOCOLS: EvalProtocol[] = [
     id: "hostile_benchmark",
     name: "Hostile Benchmark",
     severity: 2,
-    body: "Enemy pressure ramps as if one extra pilot joined the run."
+    body: "Enemy pressure ramps as if one extra pilot joined the run and immediately made enemies."
   },
   {
     id: "regression_suite",
     name: "Regression Suite",
     severity: 2,
-    body: "Oath-Eater arrives with more HP and extra Broken Promise pressure."
+    body: "Oath-Eater arrives with more HP and extra Broken Promise pressure. The treaty has become a gym.",
   },
   {
     id: "compute_starvation",
     name: "Compute Starvation",
     severity: 1,
-    body: "Draft choices lose one slot unless Kernel modules restore it.",
+    body: "Draft choices lose one slot unless Kernel modules restore it. Scarcity builds character, allegedly.",
     applyPreRun: (build) => {
       build.draftChoicesBonus -= 1;
     }

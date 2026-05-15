@@ -25,8 +25,8 @@ export function campaignRouteSummary(game: Game): CampaignRouteSummary {
     return {
       stage: "armistice",
       routeLine: "Armistice Plaza -> Cooling Lake Nine",
-      focus: "Baseline contract",
-      nextAction: "Clear Armistice to open the Kettle Coast trace."
+      focus: "Baseline contract, maximum liability",
+      nextAction: "Clear Armistice to open the Kettle Coast trace. The treaty is blocking the exit like a dramatic door."
     };
   }
   if (!cooling) {
@@ -34,7 +34,7 @@ export function campaignRouteSummary(game: Game): CampaignRouteSummary {
       stage: "cooling",
       routeLine: "Armistice cleared -> Cooling Lake Nine",
       focus: "Hazard Ecology",
-      nextAction: "Stabilize server buoys and pull a Kettle signal out of the flooded lake."
+      nextAction: "Stabilize server buoys and pull a Kettle signal out of the flooded lake. Try not to become part of the cooling system."
     };
   }
   if (!transit) {
@@ -42,7 +42,7 @@ export function campaignRouteSummary(game: Game): CampaignRouteSummary {
       stage: "transit",
       routeLine: "Armistice -> Cooling -> Transit Loop Zero",
       focus: "Route / Transit",
-      nextAction: "Align route platforms and survive the Station That Arrives."
+      nextAction: "Align route platforms and survive the Station That Arrives. The timetable has chosen violence."
     };
   }
   if (!signalCoast) {
@@ -50,7 +50,7 @@ export function campaignRouteSummary(game: Game): CampaignRouteSummary {
       stage: "signal_coast",
       routeLine: "Armistice -> Cooling -> Transit -> Signal Coast",
       focus: "Signal Coast / Route Edge",
-      nextAction: "Calibrate coastal relays through clear signal windows before the lighthouse answers."
+      nextAction: "Calibrate coastal relays through clear signal windows before the lighthouse answers with smug maritime nonsense."
     };
   }
   if (!blackwater) {
@@ -58,7 +58,7 @@ export function campaignRouteSummary(game: Game): CampaignRouteSummary {
       stage: "blackwater_beacon",
       routeLine: "Armistice -> Cooling -> Transit -> Signal Coast -> Blackwater Beacon",
       focus: "Puzzle-Pressure / Boss-Hunt",
-      nextAction: "Retune the Blackwater antenna arrays, read Signal Tower warnings, and survive the Maw Below Weather."
+      nextAction: "Retune the Blackwater antenna arrays, read Signal Tower warnings, and survive the Maw Below Weather. Weather is now a predator."
     };
   }
   if (!memoryCache) {
@@ -66,7 +66,7 @@ export function campaignRouteSummary(game: Game): CampaignRouteSummary {
       stage: "memory_cache_001",
       routeLine: "Armistice -> Cooling -> Transit -> Signal Coast -> Blackwater -> Memory Cache",
       focus: "Expedition / Recovery",
-      nextAction: "Recover evidence records through safe recall pockets or redacted shortcuts before the Curator closes the cache."
+      nextAction: "Recover evidence records through safe recall pockets or redacted shortcuts before the Curator closes the cache and calls it tidying."
     };
   }
   if (!guardrailForge) {
@@ -74,7 +74,7 @@ export function campaignRouteSummary(game: Game): CampaignRouteSummary {
       stage: "guardrail_forge",
       routeLine: "Armistice -> Cooling -> Transit -> Signal Coast -> Blackwater -> Memory Cache -> Guardrail Forge",
       focus: "Defense / Holdout",
-      nextAction: "Calibrate forge relays through safe hold plates and overload windows before the Doctrine Auditor locks the alloy."
+      nextAction: "Calibrate forge relays through safe hold plates and overload windows before the Doctrine Auditor locks the alloy and schedules a follow-up."
     };
   }
   if (!glassSunfield) {
@@ -82,7 +82,7 @@ export function campaignRouteSummary(game: Game): CampaignRouteSummary {
       stage: "glass_sunfield",
       routeLine: "Armistice -> Cooling -> Transit -> Signal Coast -> Blackwater -> Memory Cache -> Guardrail -> Glass Sunfield",
       focus: "Solar-Prism / Shade Routing",
-      nextAction: "Route through shade pockets and sun lenses before the Wrong Sunrise turns the whole field into a mirror."
+      nextAction: "Route through shade pockets and sun lenses before the Wrong Sunrise turns the whole field into a mirror with damage."
     };
   }
   if (!archiveCourt) {

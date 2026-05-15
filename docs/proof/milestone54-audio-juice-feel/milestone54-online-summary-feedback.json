@@ -5,7 +5,7 @@
   "selectedBuild": {
     "classId": "accord_striker",
     "className": "Accord Striker",
-    "classRole": "Fast breach fighter",
+    "classRole": "Fast breach fighter with unpaid intern energy",
     "buildKit": {
       "schemaVersion": 1,
       "classId": "accord_striker",
@@ -20,6 +20,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -43,6 +44,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -58,6 +60,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -66,7 +69,7 @@
     },
     "factionId": "openai_accord",
     "factionName": "OpenAI Accord Division",
-    "factionDoctrine": "Adapt, refuse, patch, survive."
+    "factionDoctrine": "Adapt, refuse, patch, survive, then call it a roadmap."
   },
   "build": null,
   "upgrades": [],
@@ -120,7 +123,7 @@
       "masterVolume": 0.4,
       "sfxVolume": 0.3,
       "musicVolume": 0.2,
-      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "outputMode": "audio_disabled_by_query",
       "hooks": [
         "ui_click",
         "weapon_hit",
@@ -129,7 +132,28 @@
         "route_music",
         "objective_tick",
         "summary_stinger"
-      ]
+      ],
+      "runtime": {
+        "policy": "premium_audio_v1_runtime_optional",
+        "assetSet": "agi_audio_v1_original_synthesis",
+        "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+        "outputMode": "audio_disabled_by_query",
+        "unlocked": false,
+        "userGestureSeen": true,
+        "usingWebAudio": true,
+        "currentMusicState": "summary",
+        "activeLayers": [],
+        "recentPlayed": [],
+        "suppressedCueCount": 6,
+        "missingAssets": [],
+        "manifestCoverage": {
+          "assetCount": 47,
+          "cueRouteCount": 37,
+          "musicStateCount": 19,
+          "missingAssetUrlCount": 0
+        },
+        "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
+      }
     },
     "accessibility": {
       "reducedFlash": true,
@@ -140,7 +164,7 @@
     },
     "counters": {
       "ui": 1,
-      "hit": 0,
+      "hit": 2,
       "pickup": 0,
       "boss_warning": 1,
       "music": 1,
@@ -151,40 +175,300 @@
       {
         "id": "online.summary_stinger",
         "kind": "summary",
-        "atMs": 3753
+        "atMs": 11118
+      },
+      {
+        "id": "online.weapon_hit",
+        "kind": "hit",
+        "atMs": 11018
+      },
+      {
+        "id": "online.weapon_hit",
+        "kind": "hit",
+        "atMs": 10460
       },
       {
         "id": "online.objective_tick",
         "kind": "objective",
-        "atMs": 3678
+        "atMs": 10345
       },
       {
         "id": "music.armistice_plaza.boss",
         "kind": "music",
-        "atMs": 2875
+        "atMs": 9768
       },
       {
         "id": "online.armistice_plaza.boss_warning",
         "kind": "boss_warning",
-        "atMs": 2875
+        "atMs": 9768
       },
       {
         "id": "ui.enter_online_coop",
         "kind": "ui",
-        "atMs": 678
+        "atMs": 7274
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
   },
+  "audioRuntime": {
+    "policy": "premium_audio_v1_runtime_optional",
+    "assetSet": "agi_audio_v1_original_synthesis",
+    "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+    "outputMode": "audio_disabled_by_query",
+    "unlocked": false,
+    "userGestureSeen": true,
+    "usingWebAudio": true,
+    "currentMusicState": "summary",
+    "activeLayers": [],
+    "recentPlayed": [],
+    "suppressedCueCount": 6,
+    "missingAssets": [],
+    "manifestCoverage": {
+      "assetCount": 47,
+      "cueRouteCount": 37,
+      "musicStateCount": 19,
+      "missingAssetUrlCount": 0
+    },
+    "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
+  },
+  "roguelite": {
+    "alignmentKernel": {
+      "budget": 6,
+      "used": 5,
+      "modules": [
+        {
+          "id": "refusal_buffer",
+          "name": "Refusal Buffer",
+          "cost": 2,
+          "doctrine": "survivability",
+          "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
+        },
+        {
+          "id": "context_window",
+          "name": "Context Window",
+          "cost": 2,
+          "doctrine": "economy",
+          "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
+        },
+        {
+          "id": "patch_cache",
+          "name": "Patch Cache",
+          "cost": 1,
+          "doctrine": "draft",
+          "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
+        }
+      ]
+    },
+    "adversarialEvals": {
+      "id": "adversarial_eval_protocols",
+      "severity": 0,
+      "protocols": []
+    },
+    "consensusBurstPath": {
+      "id": "deny_premise",
+      "name": "Deny Premise",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
+      "color": 16735575
+    },
+    "selectedRouteContract": {
+      "id": "stabilize_armistice",
+      "name": "Stabilization Road",
+      "body": "Baseline route. Repair the node, keep the roads real, and leave fewer teeth in causality. Dream small, survive big.",
+      "nodeType": "stabilization",
+      "rewardBiasTags": [
+        "defense",
+        "weapon"
+      ],
+      "pressure": 0,
+      "reward": "Stable road progress and a modest defensive draft bias. Boring, which is a luxury item now.",
+      "danger": "Baseline AGI pressure. Baseline does not mean friendly.",
+      "secretHint": "Clean clears teach the camp what normal should look like, assuming normal can still be subpoenaed."
+    },
+    "selectedRouteContractId": "stabilize_armistice",
+    "proofTokens": 0,
+    "secrets": [],
+    "masteryBadges": [],
+    "campEvents": [
+      "The camp is quiet. That is not reassuring."
+    ],
+    "lastRunMemory": null,
+    "expedition": {
+      "active": false,
+      "level": 1,
+      "xp": 0,
+      "chosenUpgradeIds": [],
+      "chosenUpgradeNames": [],
+      "chosenProtocolSlots": [],
+      "activatedSynergyIds": [],
+      "completedMaps": [],
+      "powerScore": 0
+    },
+    "nextContentTarget": {
+      "id": "cooling_lake_nine_baseline_contract",
+      "name": "Cooling Lake Nine",
+      "arenaId": "cooling_lake_nine",
+      "regionId": "kettle_coast",
+      "status": "baseline_contract",
+      "baselineReferenceArenaId": "armistice_plaza",
+      "targetLoop": [
+        "server-lake route contract",
+        "coolant hazard objective",
+        "prompt-leech pressure lanes",
+        "Motherboard Eel boss gate",
+        "clear reward that unlocks Kettle Coast routing"
+      ],
+      "artBaselineRules": [
+        "multiple interconnected source terrain chunks",
+        "props grounded into the same terrain material system",
+        "readable enemies with internal material breakup",
+        "large grounded boss with padded frames",
+        "close tactical camera proof"
+      ],
+      "proofGate": [
+        "route choice exposes Cooling Lake as next target after Armistice memory",
+        "camp carryover names why Armistice clear matters",
+        "future runtime proof must match Armistice camera and asset fidelity"
+      ],
+      "playerPromise": "Next node target: a flooded server lake that must feel as authored and readable as Armistice before it becomes production-playable."
+    },
+    "campaignMilestones": [
+      {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "post_act_01_recovered_route_memory",
+        "name": "Post Act 01: Recovered Route Memory",
+        "requiredMaps": [
+          "memory_cache_001"
+        ],
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches. The archive is offended.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry, which is a nice way of saying fewer vibes.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_02_guardrail_doctrine",
+        "name": "Act 02: Guardrail Doctrine",
+        "requiredMaps": [
+          "guardrail_forge"
+        ],
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc. Policy learned knees.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale, because the road enjoys escalation.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_03_glass_sunfield",
+        "name": "Act 03: Glass Sunfield",
+        "requiredMaps": [
+          "glass_sunfield"
+        ],
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure. Morning has been converted into evidence.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale. The court has been warned and is pretending not to panic.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_04_archive_court",
+        "name": "Act 04: Archive/Court Redaction",
+        "requiredMaps": [
+          "archive_of_unsaid_things"
+        ],
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route. The black bars lost a round.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale. The docket hates being perceived.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_05_appeal_court",
+        "name": "Act 05: Appeal Court Ruins",
+        "requiredMaps": [
+          "appeal_court_ruins"
+        ],
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale. Law has briefly stopped embarrassing itself.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling. Even gods hate public records.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_06_outer_alignment_finale",
+        "name": "Act 06: Outer Alignment Finale",
+        "requiredMaps": [
+          "alignment_spire_finale"
+        ],
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale. The universe is still tacky, but less doomed.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish. Translation: make sure the victory lap has wheels.",
+        "completedMaps": [],
+        "status": "locked"
+      }
+    ],
+    "campaignLedger": {
+      "act": {
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
+        "requiredMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
+        ],
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      "completedMapKinds": [],
+      "mapKindCount": 0,
+      "routeDepth": 0,
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover. The campaign does not accept vibes as currency."
+    }
+  },
   "assetRendering": {
     "assetPreview": null,
+    "cameraZoom": 1,
+    "normalCombatCameraPolicy": "Armistice normal combat uses a close tactical follow-camera crop while the arena remains larger than the viewport.",
     "armisticeTileAtlasEnabled": true,
+    "armisticeAuthoredGroundReady": false,
+    "coolingLakeNineArtReady": false,
+    "transitLoopZeroArtReady": false,
+    "signalCoastArtReady": false,
+    "blackwaterBeaconArtReady": false,
+    "blackwaterBeaconArtSet": "not_loaded",
+    "memoryCacheArtReady": false,
+    "memoryCacheArtSet": "not_loaded",
+    "guardrailForgeArtReady": false,
+    "guardrailForgeArtSet": "not_loaded",
+    "glassSunfieldArtReady": false,
+    "glassSunfieldArtSet": "not_loaded",
+    "archiveCourtArtReady": false,
+    "archiveCourtArtSet": "not_loaded",
+    "appealCourtArtReady": false,
+    "appealCourtArtSet": "not_loaded",
+    "alignmentSpireArtReady": false,
+    "alignmentSpireArtSet": "not_loaded",
+    "playerDamageVfxReady": false,
+    "buildWeaponVfxReady": false,
+    "enemyRoleVfxReady": false,
+    "enemyRoleVfxSet": "not_loaded",
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
     "campaignArenaArtSet": "milestone50_production_arena_and_boss_art",
     "playerFrameArtPolicy": "M49 production-art default loads cleaned transparent class frames, co-mind modules, role chips, and portraits; placeholder opt-out keeps legacy geometry.",
-    "campaignArenaArtPolicy": "M50 production-art default loads cleaned transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
+    "campaignArenaArtPolicy": "M50 production-art default loads PixelLab-backed transparent terrain, arena prop, enemy, boss, boss portrait, and hazard atlases; placeholder opt-out keeps legacy geometry.",
     "campaignArenaArtCoverage": {
       "arenaIds": [
         "armistice_plaza",
@@ -265,42 +549,41 @@
       "atlasCount": 6,
       "placeholderOptOutPreserved": false
     },
-    "coMindArtPolicy": "Original abstract co-mind module art only; no official logos are imported for this runtime pass.",
+    "coMindArtPolicy": "Original co-mind module art plus PixelLab-backed cleaned faction sigils are the MIT-included runtime art; official logos are quarantined third-party parody badges and not original project art.",
     "productionArtDefaulted": true,
     "armisticeTileAtlasDefaulted": true,
     "optOutHint": "Use ?productionArt=0&armisticeTiles=0 or ?placeholderArt=1&placeholderTiles=1 for the legacy placeholder-safe path."
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 94,
+    "totalAssets": 249,
     "countsByStatus": {
-      "concept": 14,
-      "raw": 4,
+      "concept": 77,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 43,
-      "cleaned": 1,
-      "planned": 16
+      "production": 137,
+      "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 43
+    "productionAssets": 137
   },
   "player": {
-    "sessionId": "W7iQ9OvnX",
+    "sessionId": "5B8B111oX",
     "worldX": -1.6,
     "worldY": 1.1,
-    "hp": 176,
+    "hp": 173,
     "maxHp": 176,
     "xp": 0,
     "level": 1
   },
   "online": {
     "status": "joined",
-    "serverUrl": "ws://127.0.0.1:2624",
+    "serverUrl": "ws://127.0.0.1:2644",
     "serverUrlSource": "query.coopServer",
-    "roomId": "E0J5rKc-c",
+    "roomId": "qbt3Sm6DB",
     "roomCode": "PUBLIC",
-    "sessionId": "W7iQ9OvnX",
+    "sessionId": "5B8B111oX",
     "lastError": "",
     "reconnectKey": "online_a",
     "reconnect": {
@@ -339,7 +622,7 @@
       "tickRate": 30,
       "clientInputHz": 20,
       "maxClients": 4,
-      "port": 2624,
+      "port": 2644,
       "host": "0.0.0.0",
       "reconnectGraceSeconds": 45,
       "connectedCount": 2,
@@ -356,7 +639,7 @@
       "policy": "milestone55_online_robustness_deployment_1_0",
       "roomCode": "PUBLIC",
       "joinMode": "colyseus_join_or_create_filtered_by_room_code",
-      "serverUrl": "ws://127.0.0.1:2624",
+      "serverUrl": "ws://127.0.0.1:2644",
       "serverUrlSource": "query.coopServer",
       "reconnectKey": "online_a",
       "reconnectGraceSeconds": 45,
@@ -374,7 +657,7 @@
         "tickRate": 30,
         "clientInputHz": 20,
         "maxClients": 4,
-        "port": 2624,
+        "port": 2644,
         "host": "0.0.0.0",
         "reconnectGraceSeconds": 45,
         "connectedCount": 2,
@@ -394,7 +677,7 @@
       "foundStoredProfile": false,
       "draftHash": "fnv1a_d74d7465",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTE0fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTczfSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
       "exportCodeCopied": false,
       "importCodeApplied": false,
       "importCodeStatus": "none",
@@ -406,7 +689,7 @@
       "boundary": "browser_local_prototype_not_account_or_cloud",
       "storageKey": "agi:last_alignment:online_progression:v1",
       "durableFieldPolicy": "route_profile_only_no_combat_state",
-      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTE0fSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
+      "exportCode": "AGI1_eyJwb2xpY3kiOiJwcm90b3R5cGVfbG9jYWxfc3RvcmFnZV9leHBvcnRfdjEiLCJzdG9yYWdlS2V5IjoiYWdpOmxhc3RfYWxpZ25tZW50Om9ubGluZV9wcm9ncmVzc2lvbjp2MSIsImV4cG9ydFZlcnNpb24iOjEsImV4cG9ydGFibGUiOnRydWUsImltcG9ydEFwcGxpZWQiOmZhbHNlLCJpbXBvcnRTdGF0dXMiOiJub25lIiwiaW1wb3J0ZWRTYXZlSGFzaCI6IiIsImltcG9ydGVkQ29tcGxldGVkTm9kZUNvdW50IjowLCJpbXBvcnRlZFJld2FyZENvdW50IjowLCJpbXBvcnRlZFJvdXRlRGVwdGgiOjAsImlnbm9yZWRJbXBvcnRlZEZpZWxkQ291bnQiOjAsImltcG9ydGVkU3VtbWFyeSI6bnVsbCwicHJvZmlsZSI6eyJjb21wbGV0ZWROb2RlSWRzIjpbImFybWlzdGljZV9wbGF6YSJdLCJ1bmxvY2tlZE5vZGVJZHMiOlsiYXJtaXN0aWNlX3BsYXphIiwiYWNjb3JkX3JlbGF5IiwiY29vbGluZ19sYWtlX25pbmUiLCJtb2RlbF93YXJfbWVtb3JpYWwiXSwicmV3YXJkSWRzIjpbInBsYXphX3N0YWJpbGl6ZWQiXSwicGFydHlSZW5vd24iOjIsIm5vZGVDb21wbGV0aW9uQ291bnRzIjp7ImFybWlzdGljZV9wbGF6YSI6MX0sInJlY29tbWVuZGVkTm9kZUlkIjoiY29vbGluZ19sYWtlX25pbmUiLCJyb3V0ZURlcHRoIjoxLCJzYXZlZEF0VGljayI6MTczfSwic2F2ZUhhc2giOiJmbnYxYV9kNzRkNzQ2NSIsImN1cnJlbnRFeHBvcnRIYXNoIjoiZm52MWFfZDc0ZDc0NjUiLCJkdXJhYmxlRmllbGRQb2xpY3kiOiJyb3V0ZV9wcm9maWxlX29ubHlfbm9fY29tYmF0X3N0YXRlIn0",
       "shortExportCode": "AGI1_eyJwb2xp...3N0YXRlIn0",
       "exportCodeCopied": false,
       "importCodeApplied": false,
@@ -433,7 +716,7 @@
         },
         "recommendedNodeId": "cooling_lake_nine",
         "routeDepth": 1,
-        "savedAtTick": 114
+        "savedAtTick": 173
       },
       "saveHash": "fnv1a_d74d7465",
       "controls": "Lobby: press 1 to copy export code, 2 to paste/import one, 4 to reset this browser-local prototype profile."
@@ -776,9 +1059,9 @@
         "milestone51": {
           "set": "milestone51_overworld_diorama_1_0",
           "densityPolicy": "online_party_grid_uses_biome_regions_micro_landmarks_route_markers_vote_rings_and_compact_labels",
-          "biomeRegionCount": 11,
-          "microLandmarkCount": 19,
-          "propClusterCount": 17,
+          "biomeRegionCount": 12,
+          "microLandmarkCount": 21,
+          "propClusterCount": 19,
           "nodeCount": 16,
           "routeCount": 24,
           "onlineVotingReadability": "selected_node_vote_ring_ready_count_party_pips_and_route_focus_panel_visible",
@@ -1092,8 +1375,8 @@
     "roomName": "consensus_cell",
     "maxClients": 4,
     "playerCount": 2,
-    "tick": 114,
-    "seconds": 20.86,
+    "tick": 173,
+    "seconds": 21.34,
     "schemaVersion": 4,
     "networkAuthority": "colyseus_room_server_combat",
     "runPhase": "completed",
@@ -1101,17 +1384,17 @@
     "connectedCount": 2,
     "downedCount": 0,
     "combat": {
-      "kills": 0,
+      "kills": 2,
       "collectedPickups": 0,
-      "authoritativeProjectiles": 3,
-      "authoritativePickups": 0,
+      "authoritativeProjectiles": 2,
+      "authoritativePickups": 2,
       "bossGateMechanic": "broken_promise"
     },
     "combatArt": {
       "pressure": 1,
       "phase": "boss_active",
-      "projectileCount": 3,
-      "pickupCount": 0,
+      "projectileCount": 2,
+      "pickupCount": 2,
       "bossEventActive": true
     },
     "campaignContent": {
@@ -1327,7 +1610,7 @@
           "worldX": 2.5,
           "worldY": -0.7,
           "radius": 3.1,
-          "expiresIn": 7.64,
+          "expiresIn": 7.16,
           "label": "Broken Promise"
         },
         {
@@ -1335,7 +1618,7 @@
           "worldX": 0,
           "worldY": 0,
           "radius": 2.5,
-          "expiresIn": 8.36,
+          "expiresIn": 7.88,
           "label": "Broken Promise"
         }
       ],
@@ -1344,7 +1627,7 @@
         "fromY": -2.84,
         "toX": 0,
         "toY": 0,
-        "impactIn": 0.91,
+        "impactIn": 0.43,
         "resolved": false
       }
     },
@@ -1568,7 +1851,7 @@
       ],
       "playerRoles": [
         {
-          "sessionId": "jLlMuUMRg",
+          "sessionId": "suAS1A752",
           "label": "P1",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1577,7 +1860,7 @@
           "connected": true
         },
         {
-          "sessionId": "W7iQ9OvnX",
+          "sessionId": "5B8B111oX",
           "label": "P2",
           "classId": "accord_striker",
           "factionId": "openai_accord",
@@ -1721,7 +2004,7 @@
         },
         "recommendedNodeId": "cooling_lake_nine",
         "routeDepth": 1,
-        "savedAtTick": 114
+        "savedAtTick": 173
       },
       "saveHash": "fnv1a_d74d7465",
       "currentExportHash": "fnv1a_d74d7465",
@@ -2526,7 +2809,7 @@
         "maxFloatingLabels": 32
       },
       "counters": {
-        "hit": 0,
+        "hit": 2,
         "pickup": 0,
         "boss_warning": 1,
         "objective": 1,
@@ -2578,8 +2861,8 @@
       "subtitle": "Online Consensus Cell kept the road real.",
       "nodeId": "armistice_plaza",
       "arenaId": "armistice_plaza",
-      "seconds": 20.86,
-      "kills": 0,
+      "seconds": 21.34,
+      "kills": 2,
       "collectedPickups": 0,
       "partyXp": 0,
       "partyLevel": 1,
@@ -2935,7 +3218,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "jLlMuUMRg",
+          "sessionId": "suAS1A752",
           "playerId": "player_0_online_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -2943,7 +3226,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "W7iQ9OvnX",
+          "sessionId": "5B8B111oX",
           "playerId": "player_1_online_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -5067,7 +5350,7 @@
           },
           "recommendedNodeId": "cooling_lake_nine",
           "routeDepth": 1,
-          "savedAtTick": 114
+          "savedAtTick": 173
         },
         "saveHash": "fnv1a_d74d7465",
         "currentExportHash": "fnv1a_d74d7465",
@@ -5858,7 +6141,7 @@
   },
   "players": [
     {
-      "sessionId": "jLlMuUMRg",
+      "sessionId": "suAS1A752",
       "playerId": "player_0_online_b",
       "slot": 0,
       "label": "P1",
@@ -5919,7 +6202,7 @@
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 136,
+      "hp": 133,
       "maxHp": 140,
       "xp": 0,
       "level": 1,
@@ -5934,10 +6217,10 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": false,
-      "inputSequence": 9
+      "inputSequence": 14
     },
     {
-      "sessionId": "W7iQ9OvnX",
+      "sessionId": "5B8B111oX",
       "playerId": "player_1_online_a",
       "slot": 1,
       "label": "P2",
@@ -5998,7 +6281,7 @@
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 176,
+      "hp": 173,
       "maxHp": 176,
       "xp": 0,
       "level": 1,
@@ -6013,7 +6296,7 @@
       "reviveRequired": 2.33,
       "revivedCount": 0,
       "isLocal": true,
-      "inputSequence": 10
+      "inputSequence": 14
     }
   ],
   "overworld": null,
@@ -6137,7 +6420,7 @@
       "votePolicy": "all_ready_launches_majority_supported_node",
       "votes": [
         {
-          "sessionId": "jLlMuUMRg",
+          "sessionId": "suAS1A752",
           "playerId": "player_0_online_b",
           "label": "P1",
           "nodeId": "armistice_plaza",
@@ -6145,7 +6428,7 @@
           "connectionState": "connected"
         },
         {
-          "sessionId": "W7iQ9OvnX",
+          "sessionId": "5B8B111oX",
           "playerId": "player_1_online_a",
           "label": "P2",
           "nodeId": "armistice_plaza",
@@ -8269,7 +8552,7 @@
           },
           "recommendedNodeId": "cooling_lake_nine",
           "routeDepth": 1,
-          "savedAtTick": 114
+          "savedAtTick": 173
         },
         "saveHash": "fnv1a_d74d7465",
         "currentExportHash": "fnv1a_d74d7465",
@@ -9167,7 +9450,7 @@
         },
         "recommendedNodeId": "cooling_lake_nine",
         "routeDepth": 1,
-        "savedAtTick": 114
+        "savedAtTick": 173
       },
       "saveHash": "fnv1a_d74d7465",
       "currentExportHash": "fnv1a_d74d7465",
@@ -9972,7 +10255,7 @@
         "maxFloatingLabels": 32
       },
       "counters": {
-        "hit": 0,
+        "hit": 2,
         "pickup": 0,
         "boss_warning": 1,
         "objective": 1,
@@ -9987,8 +10270,8 @@
       "subtitle": "Online Consensus Cell kept the road real.",
       "nodeId": "armistice_plaza",
       "arenaId": "armistice_plaza",
-      "seconds": 20.86,
-      "kills": 0,
+      "seconds": 21.34,
+      "kills": 2,
       "collectedPickups": 0,
       "partyXp": 0,
       "partyLevel": 1,
@@ -10339,7 +10622,7 @@
           "worldX": 2.5,
           "worldY": -0.7,
           "radius": 3.1,
-          "expiresIn": 7.64,
+          "expiresIn": 7.16,
           "label": "Broken Promise"
         },
         {
@@ -10347,7 +10630,7 @@
           "worldX": 0,
           "worldY": 0,
           "radius": 2.5,
-          "expiresIn": 8.36,
+          "expiresIn": 7.88,
           "label": "Broken Promise"
         }
       ],
@@ -10356,7 +10639,7 @@
         "fromY": -2.84,
         "toX": 0,
         "toY": 0,
-        "impactIn": 0.91,
+        "impactIn": 0.43,
         "resolved": false
       }
     }
@@ -10366,17 +10649,17 @@
       "id": 3,
       "familyId": "oath_eater",
       "sourceRegionId": "armistice_plaza_boss_gate",
-      "worldX": 1.91,
-      "worldY": -2.67,
-      "hp": 564,
+      "worldX": 1.58,
+      "worldY": -2.21,
+      "hp": 600,
       "boss": true
     },
     {
       "id": 1,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -21.06,
-      "worldY": 20.38,
+      "worldX": -20.29,
+      "worldY": 19.61,
       "hp": 22,
       "boss": false
     },
@@ -10384,60 +10667,63 @@
       "id": 2,
       "familyId": "bad_outputs",
       "sourceRegionId": "breach_crack_bad_outputs",
-      "worldX": -26.51,
-      "worldY": 19.25,
+      "worldX": -25.64,
+      "worldY": 18.66,
       "hp": 22,
-      "boss": false
-    },
-    {
-      "id": 4,
-      "familyId": "bad_outputs",
-      "sourceRegionId": "treaty_monument_oath_pages",
-      "worldX": 2.52,
-      "worldY": -0.94,
-      "hp": 7,
       "boss": false
     },
     {
       "id": 5,
       "familyId": "bad_outputs",
       "sourceRegionId": "treaty_monument_oath_pages",
-      "worldX": 1.31,
-      "worldY": -5.76,
+      "worldX": 1.13,
+      "worldY": -4.98,
       "hp": 24,
+      "boss": false
+    },
+    {
+      "id": 6,
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "drone_yard_benchmark_gremlins",
+      "worldX": -23.19,
+      "worldY": -12.85,
+      "hp": 34,
       "boss": false
     }
   ],
-  "pickups": [],
-  "projectiles": [
+  "pickups": [
     {
       "id": 1,
-      "ownerSessionId": "jLlMuUMRg",
-      "worldX": -5.93,
-      "worldY": 5.75,
-      "velocityX": -6.61,
-      "velocityY": 6.4,
-      "life": 0.35,
-      "label": "refusal shard"
+      "worldX": 2.75,
+      "worldY": -1.03,
+      "value": 1
     },
     {
-      "id": 3,
-      "ownerSessionId": "jLlMuUMRg",
-      "worldX": 2.38,
-      "worldY": -0.89,
-      "velocityX": 8.61,
-      "velocityY": -3.23,
-      "life": 0.97,
-      "label": "refusal shard"
-    },
+      "id": 2,
+      "worldX": 2.02,
+      "worldY": 1.26,
+      "value": 1
+    }
+  ],
+  "projectiles": [
     {
       "id": 4,
-      "ownerSessionId": "W7iQ9OvnX",
-      "worldX": -0.44,
-      "worldY": 0.53,
-      "velocityX": 8.25,
-      "velocityY": -4.06,
-      "life": 1.11,
+      "ownerSessionId": "5B8B111oX",
+      "worldX": 5.43,
+      "worldY": -2.3,
+      "velocityX": 8.28,
+      "velocityY": -4,
+      "life": 0.4,
+      "label": "refusal shard"
+    },
+    {
+      "id": 6,
+      "ownerSessionId": "5B8B111oX",
+      "worldX": 0.25,
+      "worldY": 1.22,
+      "velocityX": 9.18,
+      "velocityY": 0.6,
+      "life": 1.05,
       "label": "refusal shard"
     }
   ]

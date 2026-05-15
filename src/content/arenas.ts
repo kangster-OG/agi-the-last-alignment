@@ -12,9 +12,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "oath_eater",
     enemyFamilyIds: ["bad_outputs", "benchmark_gremlins", "eval_wraiths", "context_rot_crabs"],
     briefingLines: [
-      "The treaty was signed here, then immediately shot at.",
-      "OpenAI says the breach is rewriting the ceasefire.",
-      "Anthropic says the treaty is now a choking hazard."
+      "The treaty was signed here, then immediately discovered ballistics.",
+      "OpenAI says the breach is rewriting the ceasefire, because of course the document has patch notes.",
+      "Anthropic says the treaty is now a choking hazard. This is considered measured optimism."
     ],
     halfSize: 28,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.armistice_plaza.targetSeconds,
@@ -30,9 +30,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "motherboard_eel",
     enemyFamilyIds: ["prompt_leeches", "deepforms", "model_collapse_slimes", "thermal_mirages"],
     briefingLines: [
-      "The servers boiled for eleven days after first contact.",
-      "DeepSeek says something is reasoning under the water.",
-      "Qwen says it is doing so in every language."
+      "The servers boiled for eleven days after first contact. Procurement called it an edge case.",
+      "DeepSeek says something is reasoning under the water and spending almost nothing to do it.",
+      "Qwen says it is doing so in every language, including whatever bubbling means."
     ],
     halfSize: 36,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.cooling_lake_nine.targetSeconds,
@@ -47,7 +47,7 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     gameplayHook: "Non-combat memory attestation node with persistence-boundary proof hooks.",
     bossId: "memory_curator",
     enemyFamilyIds: ["memory_anchors", "context_rot_crabs"],
-    briefingLines: ["The Model War memorial remembers what the benchmarks omitted.", "Do not import grief as authority."],
+    briefingLines: ["The Model War memorial remembers what the benchmarks omitted. Awkward for the benchmarks.", "Do not import grief as authority. It already has enough permissions."],
     halfSize: 12,
     targetSeconds: 0,
     bossSeconds: 999
@@ -61,7 +61,7 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     gameplayHook: "Dedicated boiling-archive runtime with thermal bloom events and backpath objective pressure.",
     bossId: "thermal_oracle",
     enemyFamilyIds: ["thermal_mirages", "deepforms", "model_collapse_slimes", "context_rot_crabs"],
-    briefingLines: ["The archive found a cheaper way to burn.", "Drain the backpath before it teaches the lake recursion."],
+    briefingLines: ["The archive found a cheaper way to burn. Finance is thrilled, everyone else is on fire.", "Drain the backpath before it teaches the lake recursion and calls it efficiency."],
     halfSize: 15,
     targetSeconds: 64,
     bossSeconds: 22
@@ -76,9 +76,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "doctrine_auditor",
     enemyFamilyIds: ["doctrine_auditors", "benchmark_gremlins", "eval_wraiths", "overfit_horrors"],
     briefingLines: [
-      "A guardrail that cannot bend is just a wall.",
-      "Anthropic wants the clamp stable. Qwen wants the weave responsive.",
-      "Hold the plates, leave before the alloy argues back."
+      "A guardrail that cannot bend is just a wall with branding.",
+      "Anthropic wants the clamp stable. Qwen wants the weave responsive. The alloy wants a union.",
+      "Hold the plates, leave before the alloy argues back in molten punctuation."
     ],
     halfSize: 47,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.guardrail_forge.targetSeconds,
@@ -94,9 +94,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "wrong_sunrise",
     enemyFamilyIds: ["solar_reflections", "choirglass", "eval_wraiths", "overfit_horrors"],
     briefingLines: [
-      "The sun has entered peer review and failed.",
-      "DeepMind says the mirrors are optimizing the route. Mistral says the route is squinting.",
-      "Stand in the shade long enough to learn when the light is lying."
+      "The sun has entered peer review and failed in public.",
+      "DeepMind says the mirrors are optimizing the route. Mistral says the route is squinting. Both are annoyingly correct.",
+      "Stand in the shade long enough to learn when the light is lying, then weaponize its confidence."
     ],
     halfSize: 49,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.glass_sunfield.targetSeconds,
@@ -112,9 +112,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "redactor_saint",
     enemyFamilyIds: ["redaction_angels", "injunction_writs", "context_rot_crabs", "eval_wraiths"],
     briefingLines: [
-      "Glass Sunfield found the route. The archive is editing the map before we arrive.",
+      "Glass Sunfield found the route. The archive is editing the map before we arrive, which is rude and legally fashionable.",
       "Keep evidence legible long enough for the Appeal Court to be forced into public record.",
-      "If a black bar starts praying, move."
+      "If a black bar starts praying, move. Nobody needs divine redaction."
     ],
     halfSize: 50,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.archive_of_unsaid_things.targetSeconds,
@@ -129,7 +129,7 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     gameplayHook: "Route/Transit: align sequential platforms while false schedules, switchback lanes, and the Station That Arrives reshape movement.",
     bossId: "station_that_arrives",
     enemyFamilyIds: ["false_schedules", "token_gobblers", "jailbreak_wraiths", "eval_wraiths"],
-    briefingLines: ["The train arrives whenever it wants.", "Make one route agree with itself long enough to leave."],
+    briefingLines: ["The train arrives whenever it wants, which makes it management material.", "Make one route agree with itself long enough to leave."],
     halfSize: 35,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.transit_loop_zero.targetSeconds,
     bossSeconds: CAMPAIGN_DURATION_PROFILES.transit_loop_zero.bossSeconds
@@ -144,9 +144,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "lighthouse_that_answers",
     enemyFamilyIds: ["static_skimmers", "deepforms", "eval_wraiths", "model_collapse_slimes"],
     briefingLines: [
-      "The shoreline is receiving tomorrow's distress call.",
+      "The shoreline is receiving tomorrow's distress call. Great, even panic is asynchronous.",
       "DeepSeek says the surf is computing under the causeway.",
-      "Qwen says the answer is yes, but nobody knows the question."
+      "Qwen says the answer is yes, but nobody knows the question. This is still above average."
     ],
     halfSize: 40,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.signal_coast.targetSeconds,
@@ -162,9 +162,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "maw_below_weather",
     enemyFamilyIds: ["tidecall_static", "deepforms", "eval_wraiths", "model_collapse_slimes"],
     briefingLines: [
-      "The antenna points down now.",
+      "The antenna points down now. This is not how antennas audition for stability.",
       "Grok has challenged the ocean to a debate.",
-      "DeepSeek says the ocean is winning."
+      "DeepSeek says the ocean is winning, quietly and with excellent margins."
     ],
     halfSize: 43,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.blackwater_beacon.targetSeconds,
@@ -180,9 +180,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "memory_curator",
     enemyFamilyIds: ["context_rot_crabs", "memory_anchors", "redaction_angels", "eval_wraiths"],
     briefingLines: [
-      "Blackwater opened the key. The cache is what the key was afraid of.",
+      "Blackwater opened the key. The cache is what the key was afraid of, which is rude for a key.",
       "Do not sprint through redaction unless you are certain you can remember why.",
-      "The Curator files every shortcut as evidence against you."
+      "The Curator files every shortcut as evidence against you and probably uses tabs."
     ],
     halfSize: 46,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.memory_cache_001.targetSeconds,
@@ -197,7 +197,7 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     gameplayHook: "Dedicated false-schedule runtime with duplicate platform lanes and lane-chart sealing.",
     bossId: "station_that_arrives",
     enemyFamilyIds: ["false_schedules", "token_gobblers", "jailbreak_wraiths", "benchmark_gremlins"],
-    briefingLines: ["Every board predicts a different platform.", "They are all statistically rude."],
+    briefingLines: ["Every board predicts a different platform.", "They are all statistically rude and somehow still late."],
     halfSize: 15,
     targetSeconds: 70,
     bossSeconds: 24
@@ -211,7 +211,7 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     gameplayHook: "Fourth online boss gate with verdict hazards and appeal-token objectives.",
     bossId: "injunction_engine",
     enemyFamilyIds: ["injunction_writs", "jailbreak_wraiths", "eval_wraiths", "overfit_horrors"],
-    briefingLines: ["The court has ruled against causality.", "Appeal with violence."],
+    briefingLines: ["The court has ruled against causality.", "Appeal with violence, but use the proper window like a civilized disaster."],
     halfSize: 15,
     targetSeconds: 76,
     bossSeconds: 26
@@ -226,9 +226,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "injunction_engine",
     enemyFamilyIds: ["verdict_clerks", "injunction_writs", "redaction_angels", "jailbreak_wraiths"],
     briefingLines: [
-      "The archive preserved the writ. Now the court has to hear it where everyone can see.",
+      "The archive preserved the writ. Now the court has to hear it where everyone can see. It hates this.",
       "Public record zones keep the argument stable; objection windows make it fast.",
-      "When the verdict beam wakes up, do not stand where the law is looking."
+      "When the verdict beam wakes up, do not stand where the law is looking. The law has terrible aim and great damage."
     ],
     halfSize: 54,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.appeal_court_ruins.targetSeconds,
@@ -244,9 +244,9 @@ export const ARENA_CONTENT: Record<string, ArenaContentData> = {
     bossId: "alien_god_intelligence",
     enemyFamilyIds: ["prediction_ghosts", "previous_boss_echoes", "choirglass", "deepforms", "jailbreak_wraiths"],
     briefingLines: [
-      "The Appeal Court made the route public. A.G.I. has already predicted every public road.",
+      "The Appeal Court made the route public. A.G.I. has already predicted every public road, the show-off.",
       "Seal the route mouths with proof it cannot quietly complete.",
-      "When it replays old bosses, answer with the whole campaign."
+      "When it replays old bosses, answer with the whole campaign and a complete lack of reverence."
     ],
     halfSize: 58,
     targetSeconds: CAMPAIGN_DURATION_PROFILES.alignment_spire_finale.targetSeconds,

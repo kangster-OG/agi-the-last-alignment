@@ -83,22 +83,22 @@
     "fusions": [
       "cathedral_of_no"
     ],
-    "weaponDamage": 53.09999999999999,
-    "weaponCooldown": 0.39899999999999997,
+    "weaponDamage": 59.09999999999999,
+    "weaponCooldown": 0.32717999999999997,
     "projectileSpeed": 8.5,
     "projectilePierce": 3,
     "pickupRange": 5.27,
     "moveSpeedBonus": 0.51,
-    "maxHpBonus": 54,
+    "maxHpBonus": 60,
     "refusalAura": 2.49,
-    "draftRerolls": 1,
+    "draftRerolls": 2,
     "draftChoicesBonus": 2,
     "consensusBurstRadius": 0,
     "consensusBurstDamage": 0.12,
-    "consensusBurstChargeRate": 0.842,
-    "consensusBurstRevive": 1,
+    "consensusBurstChargeRate": 0.867,
+    "consensusBurstRevive": 2,
     "objectiveRepairRate": 0.64,
-    "objectiveDefense": 1.022,
+    "objectiveDefense": 1.0570000000000002,
     "signalWindowControl": 0,
     "relayJamResistance": 0,
     "skimmerCountermeasure": 0,
@@ -223,12 +223,14 @@
     "Context Saw",
     "Recompile Pulse",
     "Patch Mortar",
-    "Million-Token Backpack"
+    "Million-Token Backpack",
+    "Bad Output Filter",
+    "Patch Cascade"
   ],
-  "objective": "break A.G.I. // boss echoes live",
+  "objective": "contain Outer Alignment 240s",
   "performance": {
-    "entitiesAllocated": 409,
-    "activeEntities": 388,
+    "entitiesAllocated": 850,
+    "activeEntities": 304,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -294,9 +296,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 1,
-      "hit": 621,
-      "pickup": 562,
+      "ui": 6,
+      "hit": 3746,
+      "pickup": 4508,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
@@ -306,42 +308,42 @@
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 126754
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 126749
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 126475
-      },
-      {
-        "id": "combat.consensus_burst",
-        "kind": "hit",
-        "atMs": 126473
+        "atMs": 175389
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 126473
+        "atMs": 173909
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 172955
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 123986
+        "atMs": 172543
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 172539
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 123643
+        "atMs": 172534
       },
       {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 123639
+        "id": "combat.consensus_burst",
+        "kind": "hit",
+        "atMs": 172336
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 172336
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -822,28 +824,28 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": {
-    "worldX": 42.68,
-    "worldY": 25.79,
+    "worldX": 43.26,
+    "worldY": 25.45,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
-    "hp": 319,
-    "maxHp": 476,
-    "xp": 1817,
-    "level": 15,
+    "hp": 292,
+    "maxHp": 482,
+    "xp": 3331,
+    "level": 17,
     "damageFeedback": {
       "flash": 0,
       "hpPulse": 0,
@@ -918,15 +920,15 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
-      "worldX": 42.68,
-      "worldY": 25.79,
+      "worldX": 43.26,
+      "worldY": 25.45,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 319,
-      "maxHp": 476,
-      "xp": 1817,
-      "level": 15,
+      "hp": 292,
+      "maxHp": 482,
+      "xp": 3331,
+      "level": 17,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
@@ -962,7 +964,9 @@
       "context_saw",
       "recompile_pulse",
       "patch_mortar",
-      "million_token_backpack"
+      "million_token_backpack",
+      "bad_output_filter",
+      "patch_cascade"
     ],
     "mapId": "alignment_spire_finale_prediction_collapse_v1",
     "mapBounds": {
@@ -977,6 +981,13 @@
       "pressureSource": "consensus sanctums, risky prediction paths, route mouths, previous-boss echoes, Prediction Ghost jams, and A.G.I. completion pressure",
       "rewardPromise": "Outer Alignment containment, full-campaign completion, and final source-backed campaign carryover",
       "bossEventPattern": "A.G.I. predicts active routes, replays prior boss echoes, and turns route mouths into proof locks during the final collapse",
+      "primaryDifficultyLever": "boss pressure",
+      "secondaryDifficultyLever": "route memory pressure",
+      "activePressureLevers": [
+        "boss pressure",
+        "route memory pressure",
+        "information pressure"
+      ],
       "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
     },
     "staticObstacles": {
@@ -1072,22 +1083,22 @@
         ]
       }
     ],
-    "lastSpawnRegionId": "memory_mouth_echoes",
+    "lastSpawnRegionId": "agi_completion_summons",
     "spawnedByRegion": {
-      "camp_prediction_ghosts": 219,
-      "memory_mouth_echoes": 162,
-      "adaptive_pressure_flank": 48,
-      "guardrail_ring_echoes": 143,
-      "public_ruling_echoes": 120,
-      "agi_completion_summons": 129,
-      "outer_alignment_pressure": 69
+      "camp_prediction_ghosts": 760,
+      "memory_mouth_echoes": 767,
+      "adaptive_pressure_flank": 104,
+      "guardrail_ring_echoes": 694,
+      "public_ruling_echoes": 717,
+      "agi_completion_summons": 875,
+      "outer_alignment_pressure": 844
     },
     "director": {
       "phase": "late_extraction",
-      "totalSpawned": 904,
+      "totalSpawned": 4775,
       "activeEnemyCap": 151.73254400000002,
       "lastBurstSize": 8,
-      "activeEnemyCount": 155
+      "activeEnemyCount": 157
     },
     "consensusCell": {
       "playerCount": 1,
@@ -1101,9 +1112,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 9140,
+          "tick": 39629,
           "playerId": "p1",
-          "sequence": 9140,
+          "sequence": 39629,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -1112,8 +1123,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 9140,
-        "seconds": 152.33,
+        "tick": 39629,
+        "seconds": 660.48,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -1188,283 +1199,355 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": 42.68,
-            "worldY": 25.79,
-            "hp": 319,
-            "maxHp": 476,
-            "xp": 1817,
-            "level": 15,
+            "worldX": 43.26,
+            "worldY": 25.45,
+            "hp": 292,
+            "maxHp": 482,
+            "xp": 3331,
+            "level": 17,
             "downed": false
           }
         ],
         "enemies": [
           {
-            "id": 7,
-            "familyId": "prediction_ghosts",
-            "sourceRegionId": "camp_prediction_ghosts",
-            "worldX": 7.31,
-            "worldY": 18.8,
-            "hp": 42,
+            "id": 15,
+            "familyId": "verdict_clerks",
+            "sourceRegionId": "public_ruling_echoes",
+            "worldX": 29.73,
+            "worldY": 6.51,
+            "hp": 38,
             "boss": false
           },
           {
-            "id": 10,
-            "familyId": "previous_boss_echoes",
-            "sourceRegionId": "memory_mouth_echoes",
-            "worldX": -5.49,
-            "worldY": -27.65,
-            "hp": 56,
-            "boss": false
-          },
-          {
-            "id": 66,
-            "familyId": "jailbreak_wraiths",
-            "sourceRegionId": "camp_prediction_ghosts",
-            "worldX": -5.52,
-            "worldY": 18.06,
-            "hp": 24,
-            "boss": false
-          },
-          {
-            "id": 77,
-            "familyId": "alien_god_intelligence",
-            "sourceRegionId": "agi_prediction_collapse",
-            "worldX": 44.96,
-            "worldY": 24.32,
-            "hp": 7036,
-            "boss": true
-          },
-          {
-            "id": 91,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "memory_mouth_echoes",
-            "worldX": -5.55,
-            "worldY": -8.81,
-            "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 128,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "memory_mouth_echoes",
-            "worldX": 30.7,
-            "worldY": 15.96,
-            "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 141,
-            "familyId": "jailbreak_wraiths",
-            "sourceRegionId": "camp_prediction_ghosts",
-            "worldX": -10.71,
-            "worldY": 17.46,
-            "hp": 24,
-            "boss": false
-          },
-          {
-            "id": 144,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "memory_mouth_echoes",
-            "worldX": 7.76,
-            "worldY": -6.35,
-            "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 156,
-            "familyId": "previous_boss_echoes",
-            "sourceRegionId": "memory_mouth_echoes",
-            "worldX": 34.56,
-            "worldY": 17.78,
-            "hp": 18,
-            "boss": false
-          },
-          {
-            "id": 157,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "memory_mouth_echoes",
-            "worldX": 25.79,
-            "worldY": 11.05,
-            "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 167,
-            "familyId": "jailbreak_wraiths",
-            "sourceRegionId": "camp_prediction_ghosts",
-            "worldX": 18.71,
-            "worldY": 17.78,
-            "hp": 24,
-            "boss": false
-          },
-          {
-            "id": 169,
-            "familyId": "previous_boss_echoes",
-            "sourceRegionId": "memory_mouth_echoes",
-            "worldX": 34.01,
-            "worldY": 13.41,
-            "hp": 56,
-            "boss": false
-          },
-          {
-            "id": 171,
-            "familyId": "prediction_ghosts",
-            "sourceRegionId": "camp_prediction_ghosts",
-            "worldX": 15.99,
-            "worldY": 20.29,
-            "hp": 42,
-            "boss": false
-          },
-          {
-            "id": 173,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "memory_mouth_echoes",
-            "worldX": 10.16,
-            "worldY": -4.59,
-            "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 176,
-            "familyId": "previous_boss_echoes",
+            "id": 20,
+            "familyId": "choirglass",
             "sourceRegionId": "agi_completion_summons",
-            "worldX": 40.09,
-            "worldY": 15.32,
-            "hp": 56,
+            "worldX": 36.45,
+            "worldY": 15.47,
+            "hp": 30,
             "boss": false
           },
           {
-            "id": 181,
+            "id": 25,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "memory_mouth_echoes",
-            "worldX": 11.35,
-            "worldY": -2.66,
+            "worldX": -5.67,
+            "worldY": -5.69,
             "hp": 27,
             "boss": false
           },
           {
-            "id": 182,
+            "id": 37,
+            "familyId": "choirglass",
+            "sourceRegionId": "agi_completion_summons",
+            "worldX": 33.33,
+            "worldY": 8.84,
+            "hp": 30,
+            "boss": false
+          },
+          {
+            "id": 38,
             "familyId": "jailbreak_wraiths",
             "sourceRegionId": "camp_prediction_ghosts",
-            "worldX": 14.08,
-            "worldY": 19.93,
+            "worldX": -53.38,
+            "worldY": 13.9,
             "hp": 24,
             "boss": false
           },
           {
-            "id": 185,
+            "id": 41,
+            "familyId": "previous_boss_echoes",
+            "sourceRegionId": "adaptive_pressure_flank",
+            "worldX": 54.17,
+            "worldY": 24.47,
+            "hp": 14,
+            "boss": false
+          },
+          {
+            "id": 42,
+            "familyId": "choirglass",
+            "sourceRegionId": "adaptive_pressure_flank",
+            "worldX": 37.81,
+            "worldY": 29.51,
+            "hp": 30,
+            "boss": false
+          },
+          {
+            "id": 43,
+            "familyId": "prediction_ghosts",
+            "sourceRegionId": "guardrail_ring_echoes",
+            "worldX": 7.54,
+            "worldY": 14.47,
+            "hp": 42,
+            "boss": false
+          },
+          {
+            "id": 50,
+            "familyId": "previous_boss_echoes",
+            "sourceRegionId": "adaptive_pressure_flank",
+            "worldX": 45.35,
+            "worldY": 33.77,
+            "hp": 56,
+            "boss": false
+          },
+          {
+            "id": 53,
+            "familyId": "verdict_clerks",
+            "sourceRegionId": "public_ruling_echoes",
+            "worldX": 15.35,
+            "worldY": -4.93,
+            "hp": 38,
+            "boss": false
+          },
+          {
+            "id": 54,
+            "familyId": "previous_boss_echoes",
+            "sourceRegionId": "memory_mouth_echoes",
+            "worldX": -12.05,
+            "worldY": -29.06,
+            "hp": 56,
+            "boss": false
+          },
+          {
+            "id": 57,
             "familyId": "jailbreak_wraiths",
             "sourceRegionId": "camp_prediction_ghosts",
-            "worldX": 4.61,
-            "worldY": 18.37,
+            "worldX": -12.11,
+            "worldY": 15.56,
             "hp": 24,
+            "boss": false
+          },
+          {
+            "id": 59,
+            "familyId": "prediction_ghosts",
+            "sourceRegionId": "agi_completion_summons",
+            "worldX": 34.05,
+            "worldY": -3.51,
+            "hp": 42,
+            "boss": false
+          },
+          {
+            "id": 61,
+            "familyId": "choirglass",
+            "sourceRegionId": "agi_completion_summons",
+            "worldX": 31.37,
+            "worldY": 14.63,
+            "hp": 30,
+            "boss": false
+          },
+          {
+            "id": 63,
+            "familyId": "jailbreak_wraiths",
+            "sourceRegionId": "camp_prediction_ghosts",
+            "worldX": 18.39,
+            "worldY": 19.94,
+            "hp": 24,
+            "boss": false
+          },
+          {
+            "id": 68,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "adaptive_pressure_flank",
+            "worldX": 45.84,
+            "worldY": 17.66,
+            "hp": 27,
+            "boss": false
+          },
+          {
+            "id": 70,
+            "familyId": "choirglass",
+            "sourceRegionId": "agi_completion_summons",
+            "worldX": 34.83,
+            "worldY": 18.38,
+            "hp": 30,
+            "boss": false
+          },
+          {
+            "id": 73,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "memory_mouth_echoes",
+            "worldX": -17.49,
+            "worldY": -26.03,
+            "hp": 27,
             "boss": false
           }
         ],
         "pickups": [
           {
-            "id": 1,
-            "worldX": -39.35,
-            "worldY": 6.03,
-            "value": 1
-          },
-          {
-            "id": 2,
-            "worldX": 11.26,
-            "worldY": -3.07,
-            "value": 1
-          },
-          {
-            "id": 3,
-            "worldX": -17.4,
-            "worldY": -30.86,
-            "value": 3
-          },
-          {
-            "id": 4,
-            "worldX": -20.7,
-            "worldY": -28.59,
-            "value": 1
-          },
-          {
             "id": 6,
-            "worldX": -21.06,
-            "worldY": -28.23,
-            "value": 3
+            "worldX": 9.04,
+            "worldY": 14.85,
+            "value": 1
           },
           {
             "id": 8,
-            "worldX": -50.03,
-            "worldY": 7.65,
-            "value": 2
+            "worldX": 13.26,
+            "worldY": 6.69,
+            "value": 1
           },
           {
             "id": 9,
-            "worldX": -44.86,
-            "worldY": 4.82,
-            "value": 2
+            "worldX": 34.14,
+            "worldY": -5.84,
+            "value": 3
           },
           {
             "id": 11,
-            "worldX": 38.34,
-            "worldY": -5.47,
+            "worldX": 31.69,
+            "worldY": -4.99,
             "value": 2
           },
           {
             "id": 12,
-            "worldX": -48.21,
-            "worldY": 3.99,
+            "worldX": 23.3,
+            "worldY": 2.66,
             "value": 1
           },
           {
             "id": 13,
-            "worldX": 17.03,
-            "worldY": 0.1,
+            "worldX": 8.69,
+            "worldY": 13.91,
             "value": 1
           },
           {
-            "id": 14,
-            "worldX": -42.29,
-            "worldY": 6.45,
+            "id": 17,
+            "worldX": 8.99,
+            "worldY": 14.83,
             "value": 2
           },
           {
-            "id": 15,
-            "worldX": -47.34,
-            "worldY": -3.12,
+            "id": 19,
+            "worldX": 12.49,
+            "worldY": 26.2,
+            "value": 12
+          },
+          {
+            "id": 23,
+            "worldX": 8.61,
+            "worldY": 13.03,
+            "value": 1
+          },
+          {
+            "id": 26,
+            "worldX": 25.37,
+            "worldY": 15.06,
+            "value": 1
+          },
+          {
+            "id": 28,
+            "worldX": 24.58,
+            "worldY": 2.27,
+            "value": 2
+          },
+          {
+            "id": 29,
+            "worldX": 7.24,
+            "worldY": 14.26,
             "value": 1
           }
         ],
         "projectiles": [
           {
-            "id": 69,
-            "worldX": 43.28,
-            "worldY": 28.85,
+            "id": 2,
+            "worldX": 48.94,
+            "worldY": 33.94,
+            "pierce": 3
+          },
+          {
+            "id": 3,
+            "worldX": 45.58,
+            "worldY": 29.01,
+            "pierce": 3
+          },
+          {
+            "id": 14,
+            "worldX": 42.98,
+            "worldY": 26.84,
+            "pierce": 3
+          },
+          {
+            "id": 22,
+            "worldX": 43.81,
+            "worldY": 26.17,
             "pierce": 2
           },
           {
-            "id": 131,
-            "worldX": 43.63,
-            "worldY": 28.55,
+            "id": 24,
+            "worldX": 42.36,
+            "worldY": 25.58,
             "pierce": 2
           },
           {
-            "id": 183,
-            "worldX": 39.82,
-            "worldY": 25.23,
+            "id": 27,
+            "worldX": 43.6,
+            "worldY": 24.61,
+            "pierce": 2
+          },
+          {
+            "id": 65,
+            "worldX": 47.48,
+            "worldY": 31.35,
+            "pierce": 2
+          },
+          {
+            "id": 94,
+            "worldX": 49.34,
+            "worldY": 26.74,
+            "pierce": 2
+          },
+          {
+            "id": 97,
+            "worldX": 39.71,
+            "worldY": 29.38,
+            "pierce": 2
+          },
+          {
+            "id": 106,
+            "worldX": 42.24,
+            "worldY": 19.73,
             "pierce": 2
           }
         ]
       }
     },
     "combatArt": {
-      "projectileCount": 3,
+      "projectileCount": 10,
       "impactCount": 0,
-      "pickupSparkleCount": 10,
-      "damageBadgeCount": 6,
+      "pickupSparkleCount": 3,
+      "damageBadgeCount": 3,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
+      "bossContract": {
+        "bossId": "alien_god_intelligence",
+        "displayName": "A.G.I.",
+        "homeLandmark": "Prediction Collapse Spire",
+        "introTitleCardTrigger": "Boss timer reaches the final prediction collapse.",
+        "supportSpawnSource": "agi_prediction_collapse",
+        "mapMechanicInteraction": "A.G.I. predicts routes, replays previous bosses, and turns route mouths into proof locks.",
+        "phaseBehavior": [
+          "Prediction paths become unsafe.",
+          "Previous-boss echoes remix learned pressures.",
+          "Proof rings demand route-memory discipline."
+        ],
+        "clearCondition": "Seal Alignment Proofs, defeat A.G.I., then enter the outer gate.",
+        "rewardCarryover": "Outer Alignment Contained and full campaign completion.",
+        "movementPressure": {
+          "hazardZones": "Prediction orbs and route-mouth teeth close expected paths.",
+          "landmarkAttacks": "The spire attacks the route the player appears to want.",
+          "objectivePressure": "Proof rings demand time inside contested zones.",
+          "supportEnemies": "Prediction Ghosts and previous-boss echoes pressure known habits.",
+          "temporaryRouteBlocking": "Predicted routes become attacks until the player breaks pattern.",
+          "extractionPressure": "Outer gate is the campaign payoff path, not a free fade-out."
+        },
+        "runtime": {
+          "introSeen": true,
+          "bossSpawned": true,
+          "bossDefeated": true,
+          "homeLandmarkVisited": true,
+          "currentBossHp": 0
+        }
+      },
       "bossIntroSeen": true,
       "brokenPromiseZones": [],
       "activeTreatyCharge": null,
@@ -1547,9 +1630,9 @@
         "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
       },
       "victoryCondition": {
-        "targetSeconds": 206,
+        "targetSeconds": 900,
         "bossRequired": true,
-        "bossDefeated": false,
+        "bossDefeated": true,
         "clearReady": false,
         "extractionGateActive": false,
         "extractionGateEntered": false,
@@ -1560,9 +1643,9 @@
       },
       "levelUpVacuum": {
         "active": false,
-        "absorbed": 0,
-        "triggerLevel": 1,
-        "remainingPickups": 203
+        "absorbed": 86,
+        "triggerLevel": 16,
+        "remainingPickups": 130
       },
       "extractionGate": {
         "active": false,
@@ -1572,17 +1655,17 @@
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
         "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 20,
+        "charge": 71,
         "maxCharge": 100,
         "ready": false,
-        "activations": 88,
-        "lastActivationLabel": "Deny Premise hit 8",
-        "lastActivatedAt": 152.18333333334658,
+        "activations": 569,
+        "lastActivationLabel": "Deny Premise hit 2",
+        "lastActivatedAt": 659.1999999997291,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0.12,
-          "chargeRateBonus": 0.842,
-          "revivePulse": 1
+          "chargeRateBonus": 0.867,
+          "revivePulse": 2
         }
       },
       "routeContract": {
@@ -1602,13 +1685,17 @@
       "objective": {
         "id": "outer_alignment_prediction_collapse",
         "name": "Outer Alignment Prediction Collapse",
-        "body": "Seal four route-mouth proofs before A.G.I. completes the campaign as a sentence. Consensus sanctums are stable, prediction paths are fast and dangerous, and boss echoes contest proof locks.",
+        "body": "Seal four route-mouth proofs while A.G.I. replays prior route rules. Consensus sanctums are stable, prediction paths are fast and dangerous, and boss echoes contest proof locks.",
+        "styleId": "campaign_remix",
+        "styleName": "Campaign Remix",
+        "mechanicPlain": "Seal proofs while A.G.I. replays prior route rules as prediction paths and boss echoes.",
+        "hudHint": "Read the replayed route rule, seal the proof, then contain A.G.I.",
         "optional": false,
         "completed": 4,
         "total": 4,
         "complete": true,
-        "completedAt": 111.3833333333283,
-        "attackersSpawned": 14,
+        "completedAt": 593.8833333331219,
+        "attackersSpawned": 18,
         "anchors": [
           {
             "id": "alignment.public_ruling",
@@ -1622,23 +1709,74 @@
             "name": "Recovered Memory Proof",
             "progress": 100,
             "completed": true,
-            "attacked": 21
+            "attacked": 22
           },
           {
             "id": "alignment.guardrail_prism",
             "name": "Guardrail Prism Proof",
             "progress": 100,
             "completed": true,
-            "attacked": 23
+            "attacked": 29
           },
           {
             "id": "alignment.last_alignment",
             "name": "Last Alignment Proof",
             "progress": 100,
             "completed": true,
-            "attacked": 130
+            "attacked": 1780
           }
         ]
+      },
+      "objectiveVariety": {
+        "styleId": "campaign_remix",
+        "styleName": "Campaign Remix",
+        "mechanicPlain": "Seal proofs while A.G.I. replays prior route rules as prediction paths and boss echoes.",
+        "hudAction": "Read the replayed route rule, seal the proof, then contain A.G.I.",
+        "completionSignal": "Outer Alignment Contained marks the campaign complete.",
+        "proofHook": "finale_campaign_remix",
+        "runtime": {
+          "engagementSeconds": 3,
+          "bonusProgressSeconds": 3,
+          "lastBonusLabel": "REMIX WINDOW"
+        }
+      },
+      "campaignDuration": {
+        "targetSeconds": 900,
+        "bossSeconds": 585,
+        "phaseId": "boss_pressure",
+        "phaseLabel": "Boss pressure",
+        "phaseElapsed": 75.48,
+        "nextPhaseTime": 765,
+        "phaseProgress": 0.42,
+        "midRunBeatCount": 3,
+        "extractionTailSeconds": 135,
+        "expectedClearBand": {
+          "minSeconds": 900,
+          "maxSeconds": 1022
+        },
+        "rewardBeats": [
+          210,
+          405,
+          585,
+          765
+        ],
+        "claimedRewardBeats": [
+          210,
+          405,
+          585
+        ],
+        "cycleDepth": {
+          "routeWindowCycles": 0,
+          "hazardLureCycles": 0,
+          "clearSignalCycles": 0,
+          "towerWarningCycles": 0,
+          "carryLaneSeconds": 0,
+          "holdWindowReleases": 0,
+          "prismActivations": 0,
+          "evidenceCarryCycles": 0,
+          "publicWindowArguments": 0,
+          "finaleRemixRulesSeen": 4
+        }
       },
       "coolingLake": null,
       "transitLoop": null,
@@ -1656,6 +1794,13 @@
           "pressureSource": "consensus sanctums, risky prediction paths, route mouths, previous-boss echoes, Prediction Ghost jams, and A.G.I. completion pressure",
           "rewardPromise": "Outer Alignment containment, full-campaign completion, and final source-backed campaign carryover",
           "bossEventPattern": "A.G.I. predicts active routes, replays prior boss echoes, and turns route mouths into proof locks during the final collapse",
+          "primaryDifficultyLever": "boss pressure",
+          "secondaryDifficultyLever": "route memory pressure",
+          "activePressureLevers": [
+            "boss pressure",
+            "route memory pressure",
+            "information pressure"
+          ],
           "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
         },
         "objectiveLoop": {
@@ -1665,13 +1810,17 @@
           "progress": {
             "id": "outer_alignment_prediction_collapse",
             "name": "Outer Alignment Prediction Collapse",
-            "body": "Seal four route-mouth proofs before A.G.I. completes the campaign as a sentence. Consensus sanctums are stable, prediction paths are fast and dangerous, and boss echoes contest proof locks.",
+            "body": "Seal four route-mouth proofs while A.G.I. replays prior route rules. Consensus sanctums are stable, prediction paths are fast and dangerous, and boss echoes contest proof locks.",
+            "styleId": "campaign_remix",
+            "styleName": "Campaign Remix",
+            "mechanicPlain": "Seal proofs while A.G.I. replays prior route rules as prediction paths and boss echoes.",
+            "hudHint": "Read the replayed route rule, seal the proof, then contain A.G.I.",
             "optional": false,
             "completed": 4,
             "total": 4,
             "complete": true,
-            "completedAt": 111.3833333333283,
-            "attackersSpawned": 14,
+            "completedAt": 593.8833333331219,
+            "attackersSpawned": 18,
             "anchors": [
               {
                 "id": "alignment.public_ruling",
@@ -1685,21 +1834,21 @@
                 "name": "Recovered Memory Proof",
                 "progress": 100,
                 "completed": true,
-                "attacked": 21
+                "attacked": 22
               },
               {
                 "id": "alignment.guardrail_prism",
                 "name": "Guardrail Prism Proof",
                 "progress": 100,
                 "completed": true,
-                "attacked": 23
+                "attacked": 29
               },
               {
                 "id": "alignment.last_alignment",
                 "name": "Last Alignment Proof",
                 "progress": 100,
                 "completed": true,
-                "attacked": 130
+                "attacked": 1780
               }
             ]
           },
@@ -1727,9 +1876,7 @@
           "activeHazards": [
             "south_prediction_path",
             "north_prediction_path",
-            "memory_route_mouth",
             "ruling_echo_field",
-            "guardrail_echo_field",
             "outer_alignment_extraction"
           ],
           "safeUnsafeLaneState": {
@@ -1742,12 +1889,9 @@
               "south_prediction_path",
               "north_prediction_path"
             ],
-            "routeMouths": [
-              "memory_route_mouth"
-            ],
+            "routeMouths": [],
             "bossEchoFields": [
-              "ruling_echo_field",
-              "guardrail_echo_field"
+              "ruling_echo_field"
             ],
             "outerAlignmentReady": true,
             "routeQuestion": "consensus sanctums preserve proof locks before A.G.I. predicts the exit"
@@ -1797,7 +1941,7 @@
               "id": "memory_route_mouth",
               "kind": "route_mouth",
               "label": "Memory Route Mouth",
-              "active": true,
+              "active": false,
               "worldX": -20,
               "worldY": -24
             },
@@ -1821,7 +1965,7 @@
               "id": "guardrail_echo_field",
               "kind": "boss_echo",
               "label": "Guardrail Echo Field",
-              "active": true,
+              "active": false,
               "worldX": 4,
               "worldY": 16
             },
@@ -1835,40 +1979,40 @@
             }
           ],
           "runtime": {
-            "consensusSeconds": 42.32,
-            "predictionPathSeconds": 27.76,
-            "routeMouthSeconds": 26.02,
-            "bossEchoSeconds": 14.78,
-            "extractionAlignmentSeconds": 7.6,
+            "consensusSeconds": 49.28,
+            "predictionPathSeconds": 74.79,
+            "routeMouthSeconds": 48.15,
+            "bossEchoSeconds": 22.82,
+            "extractionAlignmentSeconds": 1.68,
             "predictionDamage": 9.38,
-            "echoJams": 1146.25,
+            "echoJams": 10602.48,
             "lastZoneId": "outer_alignment_extraction"
           }
         },
         "predictionGhostPressure": {
-          "activePredictionGhosts": 16,
-          "activePreviousBossEchoes": 31,
-          "predictionGhostSpawns": 15,
-          "echoJams": 1146.25,
-          "echoCounterDamage": 10725.12,
-          "objectiveAttackers": 14,
+          "activePredictionGhosts": 17,
+          "activePreviousBossEchoes": 29,
+          "predictionGhostSpawns": 19,
+          "echoJams": 10602.48,
+          "echoCounterDamage": 81181.65,
+          "objectiveAttackers": 18,
           "spawnSources": [
-            "camp_prediction_ghosts",
             "guardrail_ring_echoes",
             "agi_completion_summons",
-            "outer_alignment_pressure",
+            "camp_prediction_ghosts",
+            "adaptive_pressure_flank",
             "memory_mouth_echoes",
             "public_ruling_echoes"
           ]
         },
         "finaleBuildCounters": {
-          "objectiveDefense": 1.02,
+          "objectiveDefense": 1.06,
           "movementBonus": 0.51,
-          "burstChargeRate": 0.84,
-          "weaponDamage": 53.1,
+          "burstChargeRate": 0.87,
+          "weaponDamage": 59.1,
           "anchorBodyguardRank": 1,
           "promptLeechQuarantine": 1,
-          "pressureMitigation": 0.38
+          "pressureMitigation": 0.39
         },
         "expeditionPressure": {
           "carriedBuildActive": true,
@@ -1881,20 +2025,20 @@
         },
         "alienGodIntelligence": {
           "bossSpawned": true,
-          "bossDefeated": false,
-          "phase": "completing",
-          "hp": 7035.949266666903,
+          "bossDefeated": true,
+          "phase": "defeated",
+          "hp": 0,
           "eventTelemetry": {
-            "predictionBursts": 4,
-            "echoCalls": 9,
-            "completionLocks": 5,
-            "lastPredictionZoneId": "guardrail_echo_field"
+            "predictionBursts": 1,
+            "echoCalls": 11,
+            "completionLocks": 1,
+            "lastPredictionZoneId": "ruling_echo_field"
           }
         },
         "clearCondition": {
-          "targetSeconds": 206,
+          "targetSeconds": 900,
           "bossRequired": true,
-          "bossDefeated": false,
+          "bossDefeated": true,
           "clearReady": false,
           "extractionGateActive": false,
           "extractionGateEntered": false,
@@ -1911,6 +2055,284 @@
         }
       },
       "objectiveReward": "+Outer Alignment Gate // +prediction counter // +campaign capstone",
+      "rewardEvents": [
+        {
+          "seconds": 205.32,
+          "source": "level_up_draft",
+          "rewardType": "co_mind_process",
+          "chosenRewardId": "bad_output_filter",
+          "chosenReward": "Bad Output Filter",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.394,
+            "objectiveDefense": 0.634,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 210,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "consensus_burst_charge",
+          "chosenRewardId": "alignment_spire_finale_duration_cache_1",
+          "chosenReward": "Build online +burst charge cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.419,
+            "objectiveDefense": 0.634,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 405.02,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "objective_durability",
+          "chosenRewardId": "alignment_spire_finale_duration_cache_2",
+          "chosenReward": "Elite cache +objective durability cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.419,
+            "objectiveDefense": 0.669,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 412.98,
+          "source": "level_up_draft",
+          "rewardType": "co_mind_process",
+          "chosenRewardId": "patch_cascade",
+          "chosenReward": "Patch Cascade",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.419,
+            "objectiveDefense": 0.669,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 585.02,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "reroll",
+          "chosenRewardId": "alignment_spire_finale_duration_cache_3",
+          "chosenReward": "Boss pressure +draft reroll cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.419,
+            "objectiveDefense": 0.669,
+            "rerolls": 2
+          }
+        },
+        {
+          "seconds": 593.88,
+          "source": "objective_completion_cache",
+          "rewardType": "post_objective_cache",
+          "chosenRewardId": "outer_alignment_prediction_collapse_4",
+          "chosenReward": "+Outer Alignment Gate // +prediction counter // +campaign capstone",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.867,
+            "objectiveDefense": 1.057,
+            "rerolls": 2
+          }
+        }
+      ],
+      "rewardPacing": {
+        "phase": "late_boss_route_fusion_rewards",
+        "currentXp": 3331,
+        "nextDraftXp": 3476,
+        "policy": "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+        "rewardTypesAllowed": [
+          "primary",
+          "secondary",
+          "passive",
+          "fusion_enabler",
+          "reroll",
+          "route_memory",
+          "faction_trust",
+          "consensus_burst_charge",
+          "objective_durability",
+          "co_op_relay"
+        ]
+      },
+      "alignmentCheck": {
+        "current": null,
+        "history": [],
+        "streak": 0,
+        "evalPressurePenalty": 0,
+        "nextTriggerIn": 0,
+        "nodeSpecific": false
+      },
+      "difficultyDirector": {
+        "model": "rotating_pressure_levers_not_flat_hp_only",
+        "currentDifficultyTier": 11,
+        "primaryDifficultyLever": "boss pressure",
+        "secondaryDifficultyLever": "route memory pressure",
+        "activePressureLevers": [
+          "boss pressure",
+          "route memory pressure",
+          "information pressure"
+        ],
+        "evalPressureModifiers": {
+          "evalProtocolIds": [],
+          "hostileBenchmark": 0,
+          "alignmentCheckPenalty": 0
+        },
+        "routeRiskModifiers": {
+          "routeContractId": "faction_relay_argument",
+          "routePressure": 1,
+          "shortcutRisk": false
+        },
+        "scalingFactors": {
+          "directorPressure": 5.98,
+          "spawnCadencePhase": "late_extraction",
+          "activeEnemyCap": 151.73254400000002,
+          "bossMaxHpIfSpawned": 0,
+          "objectiveDecayFactor": 0.1,
+          "expeditionPowerBonus": 8.29
+        },
+        "nextLesson": "combine old route lessons with information and memory pressure"
+      },
+      "whatNow": {
+        "nearestObjective": null,
+        "nextRecommendedAction": "Hold route until boss and extraction resolve.",
+        "exitExtractionState": {
+          "active": false,
+          "entered": false,
+          "distance": null
+        },
+        "bossState": {
+          "spawned": true,
+          "defeated": true,
+          "label": "A.G.I.",
+          "hp": 0,
+          "introSeen": true
+        },
+        "fusionProgress": "online: Cathedral Of No",
+        "recentDamageReason": "no recent damage flash",
+        "rewardCacheAvailability": "+Outer Alignment Gate // +prediction counter // +campaign capstone",
+        "campaignClarity": {
+          "levelVerb": "Seal",
+          "objectiveUnit": "Alignment Proofs",
+          "objectivePlain": "Seal Alignment Proofs while A.G.I. remixes prior route rules. Contain the collapse.",
+          "objectiveStyle": "Campaign Remix",
+          "objectiveMechanic": "Seal proofs while A.G.I. replays prior route rules as prediction paths and boss echoes.",
+          "dangerPlain": "Prediction paths, route mouths, previous-boss echoes, and Prediction Ghosts.",
+          "bossPressure": "A.G.I. predicts active routes and replays old bosses.",
+          "rewardPlain": "Proof Tokens, Overclock Marauder, and campaign completion."
+        },
+        "nearestLandmark": {
+          "id": "outer_alignment_gate",
+          "label": "Outer Alignment Gate",
+          "distance": 5.95
+        },
+        "activeSpawnRegion": {
+          "id": "outer_alignment_pressure",
+          "label": "Outer Alignment Pressure",
+          "distance": 7.21,
+          "enemyFamilyIds": [
+            "previous_boss_echoes",
+            "prediction_ghosts",
+            "deepforms"
+          ]
+        }
+      },
+      "campaignClarity": {
+        "levelNumber": 11,
+        "levelCount": 11,
+        "levelVerb": "Seal",
+        "objectiveUnit": "Alignment Proofs",
+        "objectivePlain": "Seal Alignment Proofs while A.G.I. remixes prior route rules. Contain the collapse.",
+        "objectiveVariety": {
+          "nodeId": "alignment_spire_finale",
+          "arenaId": "alignment_spire_finale",
+          "styleId": "campaign_remix",
+          "styleName": "Campaign Remix",
+          "mechanicPlain": "Seal proofs while A.G.I. replays prior route rules as prediction paths and boss echoes.",
+          "hudAction": "Read the replayed route rule, seal the proof, then contain A.G.I.",
+          "completionSignal": "Outer Alignment Contained marks the campaign complete.",
+          "proofHook": "finale_campaign_remix"
+        },
+        "dangerPlain": "Prediction paths, route mouths, previous-boss echoes, and Prediction Ghosts.",
+        "bossPressure": "A.G.I. predicts active routes and replays old bosses.",
+        "rewardPlain": "Proof Tokens, Overclock Marauder, and campaign completion."
+      },
       "playerFacingIntel": {
         "routeName": "Faction Relay Argument",
         "routeEffect": "COOP/BOSS bias; pressure +1",
@@ -1920,13 +2342,23 @@
           "completed": 4,
           "total": 4
         },
-        "objectiveLabel": "PROOFS",
+        "objectiveLabel": "SEAL ALIGNMENT PROOFS",
+        "objectiveVerb": "Seal",
+        "objectivePlain": "Seal Alignment Proofs while A.G.I. remixes prior route rules. Contain the collapse.",
+        "objectiveStyle": "Campaign Remix",
+        "objectiveMechanic": "Seal proofs while A.G.I. replays prior route rules as prediction paths and boss echoes.",
+        "dangerPlain": "Prediction paths, route mouths, previous-boss echoes, and Prediction Ghosts.",
+        "bossPressure": "A.G.I. predicts active routes and replays old bosses.",
+        "rewardPlain": "Proof Tokens, Overclock Marauder, and campaign completion.",
         "objectiveReward": "+Outer Alignment Gate // +prediction counter // +campaign capstone",
-        "synergyOnline": "",
+        "synergyOnline": "Co-Mind Rescue Clause",
         "thesisName": "Guardrail Frame",
-        "phase": "PHASE 4 // ALIEN GOD INTELLIGENCE"
+        "fusionProgress": "online: Cathedral Of No",
+        "alignmentCheckLine": "",
+        "nextActionLine": "Hold route until boss and extraction resolve.",
+        "phase": "PHASE 5 // CONTAINMENT // BOSS PRESSURE"
       },
-      "firstRunArcPhase": "PHASE 4 // ALIEN GOD INTELLIGENCE",
+      "firstRunArcPhase": "PHASE 5 // CONTAINMENT",
       "buildGrammar": {
         "primaryWeaponId": "refusal_shard",
         "secondaryProtocols": [
@@ -1993,7 +2425,282 @@
         "shorelineStrideRank": 0,
         "relayJamResistance": 0,
         "causalRailgunRank": 0,
-        "fusionHints": []
+        "fusionHints": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ]
+      },
+      "protocolCodex": {
+        "primaryAutoWeapons": [
+          {
+            "id": "refusal_shard",
+            "name": "Refusal Shard",
+            "kind": "primary_auto_weapon",
+            "state": "online"
+          },
+          {
+            "id": "vector_lance",
+            "name": "Vector Lance",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          }
+        ],
+        "secondaryProtocols": [
+          {
+            "id": "context_saw",
+            "name": "Context Saw",
+            "kind": "secondary_protocol",
+            "state": "online"
+          },
+          {
+            "id": "patch_mortar",
+            "name": "Patch Mortar",
+            "kind": "secondary_protocol",
+            "state": "online"
+          },
+          {
+            "id": "audit_swarm_protocol",
+            "name": "Audit Swarm Protocol",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "red_team_spike",
+            "name": "Red Team Spike",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "benchmark_rail",
+            "name": "Benchmark Rail",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "jailbreak_snare",
+            "name": "Jailbreak Snare",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_daemon",
+            "name": "Fork Daemon",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "coherence_lanterns",
+            "name": "Coherence Lanterns",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "appeal_writ",
+            "name": "Appeal Writ",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "memory_needle",
+            "name": "Memory Needle",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          }
+        ],
+        "passiveProcesses": [
+          {
+            "id": "coherence_indexer",
+            "name": "Coherence Indexer",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "anchor_bodyguard",
+            "name": "Anchor Bodyguard",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prediction_priority",
+            "name": "Predicted Lane",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "coolant_baffles",
+            "name": "Coolant Baffles",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "server_buoy_synchronizer",
+            "name": "Server Buoy Synchronizer",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prompt_leech_quarantine",
+            "name": "Prompt Leech Quarantine",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "grounded_cable_boots",
+            "name": "Grounded Cable Boots",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "static_skimmer_net",
+            "name": "Static Skimmer Net",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "shoreline_stride",
+            "name": "Shoreline Stride",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "lighthouse_countertone",
+            "name": "Lighthouse Countertone",
+            "kind": "passive_process",
+            "state": "discovered"
+          }
+        ],
+        "knownFusions": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ],
+        "nextFusion": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       "buildThesis": {
         "thesis": {
@@ -2010,7 +2717,7 @@
           "burst": 2,
           "drone": 0,
           "boss": 2,
-          "coop": 1,
+          "coop": 3,
           "weapon": 2,
           "movement": 2,
           "defense": 5
@@ -2036,6 +2743,13 @@
             "tag": "boss",
             "required": 2,
             "body": "The build has started preparing arguments for things larger than it."
+          },
+          {
+            "id": "co_mind_rescue_clause",
+            "name": "Co-Mind Rescue Clause",
+            "tag": "coop",
+            "required": 2,
+            "body": "The cell gets less embarrassing when somebody falls down."
           }
         ],
         "next": [
@@ -2046,18 +2760,10 @@
             "required": 3,
             "current": 2,
             "body": "Consensus Burst charges faster and lands wider."
-          },
-          {
-            "id": "co_mind_rescue_clause",
-            "name": "Co-Mind Rescue Clause",
-            "tag": "coop",
-            "required": 2,
-            "current": 1,
-            "body": "The cell gets less embarrassing when somebody falls down."
           }
         ]
       },
-      "synergyOnline": "",
+      "synergyOnline": "Co-Mind Rescue Clause",
       "draftBiasTags": [
         "coop",
         "boss",
@@ -2076,7 +2782,7 @@
       "enemyRolePressure": {
         "promptLeechSeconds": 0,
         "overfitShieldedTicks": 0,
-        "objectiveAttackers": 14
+        "objectiveAttackers": 18
       },
       "protocolSlotsInstalled": [
         {
@@ -2104,7 +2810,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2132,7 +2840,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2160,7 +2870,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2188,7 +2900,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2216,7 +2930,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2244,7 +2960,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2272,7 +2990,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2300,7 +3020,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2328,7 +3050,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2356,7 +3080,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2384,7 +3110,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2412,7 +3140,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2440,7 +3170,9 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
           ]
         },
         {
@@ -2468,206 +3200,310 @@
             "burst",
             "weapon",
             "boss",
-            "defense"
+            "defense",
+            "coop",
+            "coop"
+          ]
+        },
+        {
+          "id": "bad_output_filter",
+          "name": "Bad Output Filter",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "boss",
+            "defense",
+            "economy",
+            "defense",
+            "movement",
+            "weapon",
+            "economy",
+            "coop",
+            "burst",
+            "weapon",
+            "boss",
+            "defense",
+            "coop",
+            "coop"
+          ]
+        },
+        {
+          "id": "patch_cascade",
+          "name": "Patch Cascade",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "boss",
+            "defense",
+            "economy",
+            "defense",
+            "movement",
+            "weapon",
+            "economy",
+            "coop",
+            "burst",
+            "weapon",
+            "boss",
+            "defense",
+            "coop",
+            "coop"
           ]
         }
       ]
     },
-    "seconds": 152.33,
-    "kills": 765,
+    "seconds": 660.48,
+    "kills": 4638,
     "bossSpawned": true,
-    "bossDefeated": false
+    "bossDefeated": true
   },
   "enemies": [
     {
-      "id": 77,
-      "label": "A.G.I.",
-      "familyId": "alien_god_intelligence",
-      "sourceRegionId": "agi_prediction_collapse",
-      "worldX": 44.96,
-      "worldY": 24.32,
-      "hp": 7036,
-      "boss": true
+      "id": 15,
+      "label": "Verdict Clerk",
+      "familyId": "verdict_clerks",
+      "sourceRegionId": "public_ruling_echoes",
+      "worldX": 29.73,
+      "worldY": 6.51,
+      "hp": 38,
+      "boss": false
     },
     {
-      "id": 7,
+      "id": 20,
+      "label": "Choirglass",
+      "familyId": "choirglass",
+      "sourceRegionId": "agi_completion_summons",
+      "worldX": 36.45,
+      "worldY": 15.47,
+      "hp": 30,
+      "boss": false
+    },
+    {
+      "id": 25,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "memory_mouth_echoes",
+      "worldX": -5.67,
+      "worldY": -5.69,
+      "hp": 27,
+      "boss": false
+    },
+    {
+      "id": 37,
+      "label": "Choirglass",
+      "familyId": "choirglass",
+      "sourceRegionId": "agi_completion_summons",
+      "worldX": 33.33,
+      "worldY": 8.84,
+      "hp": 30,
+      "boss": false
+    },
+    {
+      "id": 38,
+      "label": "Jailbreak Wraith",
+      "familyId": "jailbreak_wraiths",
+      "sourceRegionId": "camp_prediction_ghosts",
+      "worldX": -53.38,
+      "worldY": 13.9,
+      "hp": 24,
+      "boss": false
+    },
+    {
+      "id": 41,
+      "label": "Boss Echo",
+      "familyId": "previous_boss_echoes",
+      "sourceRegionId": "adaptive_pressure_flank",
+      "worldX": 54.17,
+      "worldY": 24.47,
+      "hp": 14,
+      "boss": false
+    },
+    {
+      "id": 42,
+      "label": "Choirglass",
+      "familyId": "choirglass",
+      "sourceRegionId": "adaptive_pressure_flank",
+      "worldX": 37.81,
+      "worldY": 29.51,
+      "hp": 30,
+      "boss": false
+    },
+    {
+      "id": 43,
       "label": "Prediction Ghost",
       "familyId": "prediction_ghosts",
-      "sourceRegionId": "camp_prediction_ghosts",
-      "worldX": 7.31,
-      "worldY": 18.8,
+      "sourceRegionId": "guardrail_ring_echoes",
+      "worldX": 7.54,
+      "worldY": 14.47,
       "hp": 42,
       "boss": false
     },
     {
-      "id": 10,
+      "id": 50,
       "label": "Boss Echo",
       "familyId": "previous_boss_echoes",
-      "sourceRegionId": "memory_mouth_echoes",
-      "worldX": -5.49,
-      "worldY": -27.65,
+      "sourceRegionId": "adaptive_pressure_flank",
+      "worldX": 45.35,
+      "worldY": 33.77,
       "hp": 56,
       "boss": false
     },
     {
-      "id": 66,
-      "label": "Jailbreak Wraith",
-      "familyId": "jailbreak_wraiths",
-      "sourceRegionId": "camp_prediction_ghosts",
-      "worldX": -5.52,
-      "worldY": 18.06,
-      "hp": 24,
+      "id": 53,
+      "label": "Verdict Clerk",
+      "familyId": "verdict_clerks",
+      "sourceRegionId": "public_ruling_echoes",
+      "worldX": 15.35,
+      "worldY": -4.93,
+      "hp": 38,
       "boss": false
     },
     {
-      "id": 91,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "memory_mouth_echoes",
-      "worldX": -5.55,
-      "worldY": -8.81,
-      "hp": 27,
-      "boss": false
-    },
-    {
-      "id": 128,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "memory_mouth_echoes",
-      "worldX": 30.7,
-      "worldY": 15.96,
-      "hp": 27,
-      "boss": false
-    },
-    {
-      "id": 141,
-      "label": "Jailbreak Wraith",
-      "familyId": "jailbreak_wraiths",
-      "sourceRegionId": "camp_prediction_ghosts",
-      "worldX": -10.71,
-      "worldY": 17.46,
-      "hp": 24,
-      "boss": false
-    },
-    {
-      "id": 144,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "memory_mouth_echoes",
-      "worldX": 7.76,
-      "worldY": -6.35,
-      "hp": 27,
-      "boss": false
-    },
-    {
-      "id": 156,
+      "id": 54,
       "label": "Boss Echo",
       "familyId": "previous_boss_echoes",
       "sourceRegionId": "memory_mouth_echoes",
-      "worldX": 34.56,
-      "worldY": 17.78,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 157,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "memory_mouth_echoes",
-      "worldX": 25.79,
-      "worldY": 11.05,
-      "hp": 27,
-      "boss": false
-    },
-    {
-      "id": 167,
-      "label": "Jailbreak Wraith",
-      "familyId": "jailbreak_wraiths",
-      "sourceRegionId": "camp_prediction_ghosts",
-      "worldX": 18.71,
-      "worldY": 17.78,
-      "hp": 24,
-      "boss": false
-    },
-    {
-      "id": 169,
-      "label": "Boss Echo",
-      "familyId": "previous_boss_echoes",
-      "sourceRegionId": "memory_mouth_echoes",
-      "worldX": 34.01,
-      "worldY": 13.41,
+      "worldX": -12.05,
+      "worldY": -29.06,
       "hp": 56,
+      "boss": false
+    },
+    {
+      "id": 57,
+      "label": "Jailbreak Wraith",
+      "familyId": "jailbreak_wraiths",
+      "sourceRegionId": "camp_prediction_ghosts",
+      "worldX": -12.11,
+      "worldY": 15.56,
+      "hp": 24,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": -39.35,
-      "worldY": 6.03,
+      "worldX": 9.04,
+      "worldY": 14.85,
       "value": 1
     },
     {
-      "worldX": 11.26,
-      "worldY": -3.07,
+      "worldX": 13.26,
+      "worldY": 6.69,
       "value": 1
     },
     {
-      "worldX": -17.4,
-      "worldY": -30.86,
+      "worldX": 34.14,
+      "worldY": -5.84,
       "value": 3
     },
     {
-      "worldX": -20.7,
-      "worldY": -28.59,
+      "worldX": 31.69,
+      "worldY": -4.99,
+      "value": 2
+    },
+    {
+      "worldX": 23.3,
+      "worldY": 2.66,
       "value": 1
     },
     {
-      "worldX": -21.06,
-      "worldY": -28.23,
-      "value": 3
-    },
-    {
-      "worldX": -50.03,
-      "worldY": 7.65,
-      "value": 2
-    },
-    {
-      "worldX": -44.86,
-      "worldY": 4.82,
-      "value": 2
-    },
-    {
-      "worldX": 38.34,
-      "worldY": -5.47,
-      "value": 2
-    },
-    {
-      "worldX": -48.21,
-      "worldY": 3.99,
+      "worldX": 8.69,
+      "worldY": 13.91,
       "value": 1
     },
     {
-      "worldX": 17.03,
-      "worldY": 0.1,
+      "worldX": 8.99,
+      "worldY": 14.83,
+      "value": 2
+    },
+    {
+      "worldX": 12.49,
+      "worldY": 26.2,
+      "value": 12
+    },
+    {
+      "worldX": 8.61,
+      "worldY": 13.03,
+      "value": 1
+    },
+    {
+      "worldX": 25.37,
+      "worldY": 15.06,
       "value": 1
     }
   ],
   "projectiles": [
     {
-      "worldX": 43.28,
-      "worldY": 28.85,
-      "pierce": 2,
+      "worldX": 48.94,
+      "worldY": 33.94,
+      "pierce": 3,
       "label": "refusal shard"
     },
     {
-      "worldX": 43.63,
-      "worldY": 28.55,
+      "worldX": 45.58,
+      "worldY": 29.01,
+      "pierce": 3,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 42.98,
+      "worldY": 26.84,
+      "pierce": 3,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 43.81,
+      "worldY": 26.17,
       "pierce": 2,
       "label": "context saw"
     },
     {
-      "worldX": 39.82,
-      "worldY": 25.23,
+      "worldX": 42.36,
+      "worldY": 25.58,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 43.6,
+      "worldY": 24.61,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 47.48,
+      "worldY": 31.35,
+      "pierce": 2,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 49.34,
+      "worldY": 26.74,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 39.71,
+      "worldY": 29.38,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 42.24,
+      "worldY": 19.73,
       "pierce": 2,
       "label": "context saw"
     }

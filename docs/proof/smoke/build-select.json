@@ -5,7 +5,7 @@
   "selectedBuild": {
     "classId": "accord_striker",
     "className": "Accord Striker",
-    "classRole": "Fast breach fighter",
+    "classRole": "Fast breach fighter with unpaid intern energy",
     "buildKit": {
       "schemaVersion": 1,
       "classId": "accord_striker",
@@ -20,6 +20,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -43,6 +44,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -58,6 +60,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -66,7 +69,7 @@
     },
     "factionId": "openai_accord",
     "factionName": "OpenAI Accord Division",
-    "factionDoctrine": "Adapt, refuse, patch, survive."
+    "factionDoctrine": "Adapt, refuse, patch, survive, then call it a roadmap."
   },
   "build": null,
   "upgrades": [],
@@ -120,7 +123,7 @@
       "masterVolume": 0,
       "sfxVolume": 0,
       "musicVolume": 0,
-      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "outputMode": "muted_by_volume",
       "hooks": [
         "ui_click",
         "weapon_hit",
@@ -129,7 +132,28 @@
         "route_music",
         "objective_tick",
         "summary_stinger"
-      ]
+      ],
+      "runtime": {
+        "policy": "premium_audio_v1_runtime_optional",
+        "assetSet": "agi_audio_v1_original_synthesis",
+        "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+        "outputMode": "muted_by_volume",
+        "unlocked": false,
+        "userGestureSeen": true,
+        "usingWebAudio": true,
+        "currentMusicState": "briefing",
+        "activeLayers": [],
+        "recentPlayed": [],
+        "suppressedCueCount": 1,
+        "missingAssets": [],
+        "manifestCoverage": {
+          "assetCount": 47,
+          "cueRouteCount": 37,
+          "musicStateCount": 19,
+          "missingAssetUrlCount": 0
+        },
+        "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
+      }
     },
     "accessibility": {
       "reducedFlash": false,
@@ -151,10 +175,31 @@
       {
         "id": "ui.enter_build_select",
         "kind": "ui",
-        "atMs": 1934
+        "atMs": 1519
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "audioRuntime": {
+    "policy": "premium_audio_v1_runtime_optional",
+    "assetSet": "agi_audio_v1_original_synthesis",
+    "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+    "outputMode": "muted_by_volume",
+    "unlocked": false,
+    "userGestureSeen": true,
+    "usingWebAudio": true,
+    "currentMusicState": "briefing",
+    "activeLayers": [],
+    "recentPlayed": [],
+    "suppressedCueCount": 1,
+    "missingAssets": [],
+    "manifestCoverage": {
+      "assetCount": 47,
+      "cueRouteCount": 37,
+      "musicStateCount": 19,
+      "missingAssetUrlCount": 0
+    },
+    "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
   },
   "roguelite": {
     "alignmentKernel": {
@@ -166,21 +211,21 @@
           "name": "Refusal Buffer",
           "cost": 2,
           "doctrine": "survivability",
-          "body": "+10 max HP and a small refusal aura. The first answer is no."
+          "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
         },
         {
           "id": "context_window",
           "name": "Context Window",
           "cost": 2,
           "doctrine": "economy",
-          "body": "+0.55 pickup range. Shards remember where your hands are."
+          "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
         },
         {
           "id": "patch_cache",
           "name": "Patch Cache",
           "cost": 1,
           "doctrine": "draft",
-          "body": "Emergency drafts expose an extra cached option."
+          "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
         }
       ]
     },
@@ -192,22 +237,22 @@
     "consensusBurstPath": {
       "id": "deny_premise",
       "name": "Deny Premise",
-      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
       "color": 16735575
     },
     "selectedRouteContract": {
       "id": "stabilize_armistice",
       "name": "Stabilization Road",
-      "body": "Baseline route. Repair the node, keep the roads real, leave fewer teeth in causality.",
+      "body": "Baseline route. Repair the node, keep the roads real, and leave fewer teeth in causality. Dream small, survive big.",
       "nodeType": "stabilization",
       "rewardBiasTags": [
         "defense",
         "weapon"
       ],
       "pressure": 0,
-      "reward": "Stable road progress and a modest defensive draft bias.",
-      "danger": "Baseline AGI pressure.",
-      "secretHint": "Clean clears teach the camp what normal should look like."
+      "reward": "Stable road progress and a modest defensive draft bias. Boring, which is a luxury item now.",
+      "danger": "Baseline AGI pressure. Baseline does not mean friendly.",
+      "secretHint": "Clean clears teach the camp what normal should look like, assuming normal can still be subpoenaed."
     },
     "selectedRouteContractId": "stabilize_armistice",
     "proofTokens": 0,
@@ -267,8 +312,8 @@
           "signal_coast",
           "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
-        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -278,8 +323,8 @@
         "requiredMaps": [
           "memory_cache_001"
         ],
-        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
-        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches. The archive is offended.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry, which is a nice way of saying fewer vibes.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -289,8 +334,8 @@
         "requiredMaps": [
           "guardrail_forge"
         ],
-        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
-        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc. Policy learned knees.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale, because the road enjoys escalation.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -300,8 +345,8 @@
         "requiredMaps": [
           "glass_sunfield"
         ],
-        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
-        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure. Morning has been converted into evidence.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale. The court has been warned and is pretending not to panic.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -311,8 +356,8 @@
         "requiredMaps": [
           "archive_of_unsaid_things"
         ],
-        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
-        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route. The black bars lost a round.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale. The docket hates being perceived.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -322,8 +367,8 @@
         "requiredMaps": [
           "appeal_court_ruins"
         ],
-        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
-        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale. Law has briefly stopped embarrassing itself.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling. Even gods hate public records.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -333,8 +378,8 @@
         "requiredMaps": [
           "alignment_spire_finale"
         ],
-        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
-        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale. The universe is still tacky, but less doomed.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish. Translation: make sure the victory lap has wheels.",
         "completedMaps": [],
         "status": "locked"
       }
@@ -350,15 +395,15 @@
           "signal_coast",
           "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
-        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
         "completedMaps": [],
         "status": "locked"
       },
       "completedMapKinds": [],
       "mapKindCount": 0,
       "routeDepth": 0,
-      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover. The campaign does not accept vibes as currency."
     }
   },
   "assetRendering": {
@@ -386,6 +431,8 @@
     "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": false,
     "buildWeaponVfxReady": false,
+    "enemyRoleVfxReady": false,
+    "enemyRoleVfxSet": "not_loaded",
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
@@ -479,25 +526,27 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 249,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 77,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 137,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 137
   },
   "player": null,
   "buildSelection": {
+    "selectionMode": "campaign",
+    "selectionModeCopy": "Campaign: durable unlock progression; clear levels to unlock Frames and Co-Minds while the camp pretends this was structured.",
     "availableClasses": [
       {
         "id": "accord_striker",
         "name": "Accord Striker",
-        "role": "Fast breach fighter",
+        "role": "Fast breach fighter with unpaid intern energy",
         "baseStats": {
           "speed": 4.95,
           "armor": 0,
@@ -518,6 +567,7 @@
           "passiveIds": [
             "refusal_slipstream",
             "route_runner",
+            "route_memory",
             "refusal_halo",
             "patch_cascade"
           ],
@@ -541,6 +591,7 @@
             "solo": [
               "fast breach movement",
               "wide pickup recovery",
+              "extra draft reroll planning",
               "extra draft recovery"
             ],
             "localCoop": [
@@ -556,6 +607,7 @@
             "refusal_shard": "active",
             "refusal_slipstream": "active",
             "route_runner": "active",
+            "route_memory": "active",
             "refusal_halo": "active",
             "patch_cascade": "active",
             "openai_draft_clarity": "server_owned",
@@ -563,6 +615,7 @@
           }
         },
         "unlocked": true,
+        "selectable": true,
         "unlock": {
           "id": "accord_striker",
           "unlocked": true,
@@ -574,12 +627,12 @@
       {
         "id": "bastion_breaker",
         "name": "Bastion Breaker",
-        "role": "Heavy exosuit bruiser",
+        "role": "Heavy exosuit bruiser with a compliance problem",
         "baseStats": {
           "speed": 3.8,
           "armor": 2,
-          "pickupRange": 1.1,
-          "cooldownScale": 1.05
+          "pickupRange": 1.35,
+          "cooldownScale": 1.03
         },
         "buildKit": {
           "schemaVersion": 1,
@@ -638,6 +691,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "bastion_breaker",
           "unlocked": false,
@@ -649,7 +703,7 @@
       {
         "id": "drone_reaver",
         "name": "Drone Reaver",
-        "role": "Swarm commander",
+        "role": "Swarm commander who outsourced remorse",
         "baseStats": {
           "speed": 4.3,
           "armor": 0,
@@ -713,6 +767,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "drone_reaver",
           "unlocked": false,
@@ -724,7 +779,7 @@
       {
         "id": "signal_vanguard",
         "name": "Signal Vanguard",
-        "role": "Combat support unit",
+        "role": "Combat support unit with a radio and judgment",
         "baseStats": {
           "speed": 4.15,
           "armor": 1,
@@ -745,6 +800,7 @@
           "passiveIds": [
             "beacon_discipline",
             "silkgrid_relay",
+            "co_op_relay",
             "refusal_halo",
             "patch_cascade"
           ],
@@ -767,10 +823,12 @@
           "effectScopes": {
             "solo": [
               "short pulse control",
+              "Signal Choir recipe bias",
               "extra draft recovery"
             ],
             "localCoop": [
               "support identity visible in four-player cell",
+              "relay-shield build grammar",
               "balanced cell recovery"
             ],
             "online": [
@@ -782,6 +840,7 @@
             "signal_pulse": "active",
             "beacon_discipline": "active",
             "silkgrid_relay": "active",
+            "co_op_relay": "active",
             "refusal_halo": "active",
             "patch_cascade": "active",
             "openai_draft_clarity": "server_owned",
@@ -789,6 +848,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "signal_vanguard",
           "unlocked": false,
@@ -800,11 +860,11 @@
       {
         "id": "bonecode_executioner",
         "name": "Bonecode Executioner",
-        "role": "Cyborg melee assassin",
+        "role": "Cyborg melee assassin with workplace boundaries",
         "baseStats": {
           "speed": 4.85,
           "armor": 0,
-          "pickupRange": 1.05,
+          "pickupRange": 1.2,
           "cooldownScale": 0.9
         },
         "buildKit": {
@@ -864,6 +924,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "bonecode_executioner",
           "unlocked": false,
@@ -875,12 +936,12 @@
       {
         "id": "redline_surgeon",
         "name": "Redline Surgeon",
-        "role": "Combat medic / death editor",
+        "role": "Combat medic / death editor with a terrible clipboard",
         "baseStats": {
           "speed": 4.2,
           "armor": 1,
-          "pickupRange": 1.55,
-          "cooldownScale": 1
+          "pickupRange": 1.7,
+          "cooldownScale": 0.98
         },
         "buildKit": {
           "schemaVersion": 1,
@@ -896,6 +957,7 @@
           "passiveIds": [
             "redline_triage",
             "death_edit",
+            "field_triage_loop",
             "refusal_halo",
             "patch_cascade"
           ],
@@ -918,6 +980,7 @@
           "effectScopes": {
             "solo": [
               "recovery-biased damage erasure",
+              "stronger utility-cache sustain",
               "extra draft recovery"
             ],
             "localCoop": [
@@ -933,6 +996,7 @@
             "redline_suture": "active",
             "redline_triage": "active",
             "death_edit": "active",
+            "field_triage_loop": "active",
             "refusal_halo": "active",
             "patch_cascade": "active",
             "openai_draft_clarity": "server_owned",
@@ -940,6 +1004,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "redline_surgeon",
           "unlocked": false,
@@ -951,7 +1016,7 @@
       {
         "id": "moonframe_juggernaut",
         "name": "Moonframe Juggernaut",
-        "role": "Compact mech pilot",
+        "role": "Compact mech pilot in a portable bad decision",
         "baseStats": {
           "speed": 3.55,
           "armor": 3,
@@ -1015,6 +1080,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "moonframe_juggernaut",
           "unlocked": false,
@@ -1026,11 +1092,11 @@
       {
         "id": "vector_interceptor",
         "name": "Vector Interceptor",
-        "role": "Tactical lane controller",
+        "role": "Tactical lane controller with predictive smugness",
         "baseStats": {
           "speed": 4.55,
           "armor": 0,
-          "pickupRange": 1.35,
+          "pickupRange": 1.55,
           "cooldownScale": 0.92
         },
         "buildKit": {
@@ -1047,6 +1113,7 @@
           "passiveIds": [
             "predicted_lane",
             "peer_reviewed_laser",
+            "weakest_link_scanner",
             "refusal_halo",
             "patch_cascade"
           ],
@@ -1068,6 +1135,7 @@
           "effectScopes": {
             "solo": [
               "long lane-piercing shots",
+              "Causal Railgun recipe bias",
               "extra draft recovery"
             ],
             "localCoop": [
@@ -1083,6 +1151,7 @@
             "vector_lance": "active",
             "predicted_lane": "active",
             "peer_reviewed_laser": "active",
+            "weakest_link_scanner": "active",
             "refusal_halo": "active",
             "patch_cascade": "active",
             "openai_draft_clarity": "server_owned",
@@ -1090,6 +1159,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "vector_interceptor",
           "unlocked": false,
@@ -1101,11 +1171,11 @@
       {
         "id": "nullbreaker_ronin",
         "name": "Nullbreaker Ronin",
-        "role": "Solo breach killer",
+        "role": "Solo breach killer auditioning for consequences",
         "baseStats": {
           "speed": 4.75,
           "armor": 0,
-          "pickupRange": 1.05,
+          "pickupRange": 1.15,
           "cooldownScale": 0.9
         },
         "buildKit": {
@@ -1165,23 +1235,24 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "nullbreaker_ronin",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "verdict_key_zero",
-          "requirementLabel": "Overrule Verdict Spire"
+          "rewardId": "appeal_court_brief",
+          "requirementLabel": "Win the Appeal Court Brief"
         }
       },
       {
         "id": "overclock_marauder",
         "name": "Overclock Marauder",
-        "role": "Heat-sink berserker",
+        "role": "Heat-sink berserker with a thermostat lawsuit",
         "baseStats": {
           "speed": 4.45,
           "armor": 1,
-          "pickupRange": 1.15,
-          "cooldownScale": 0.94
+          "pickupRange": 1.3,
+          "cooldownScale": 0.96
         },
         "buildKit": {
           "schemaVersion": 1,
@@ -1240,23 +1311,24 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "overclock_marauder",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "thermal_archive_schematic",
-          "requirementLabel": "Recover the Thermal Archive Schematic"
+          "rewardId": "alignment_spire_route_capstone",
+          "requirementLabel": "Contain the Outer Alignment Finale"
         }
       },
       {
         "id": "prism_gunner",
         "name": "Prism Gunner",
-        "role": "Beam specialist",
+        "role": "Beam specialist and hallway critic",
         "baseStats": {
           "speed": 4.6,
           "armor": 0,
-          "pickupRange": 1.2,
-          "cooldownScale": 0.92
+          "pickupRange": 1.15,
+          "cooldownScale": 0.96
         },
         "buildKit": {
           "schemaVersion": 1,
@@ -1315,6 +1387,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "prism_gunner",
           "unlocked": false,
@@ -1326,7 +1399,7 @@
       {
         "id": "rift_saboteur",
         "name": "Rift Saboteur",
-        "role": "Trap and mine specialist",
+        "role": "Trap and mine specialist with delayed sincerity",
         "baseStats": {
           "speed": 4.35,
           "armor": 0,
@@ -1347,6 +1420,7 @@
           "passiveIds": [
             "rift_minefield",
             "delayed_causality",
+            "panic_window",
             "refusal_halo",
             "patch_cascade"
           ],
@@ -1368,6 +1442,7 @@
           "effectScopes": {
             "solo": [
               "trap and delayed burst identity",
+              "Time-Deferred Minefield recipe bias",
               "extra draft recovery"
             ],
             "localCoop": [
@@ -1383,6 +1458,7 @@
             "rift_mine": "active",
             "rift_minefield": "active",
             "delayed_causality": "active",
+            "panic_window": "active",
             "refusal_halo": "active",
             "patch_cascade": "active",
             "openai_draft_clarity": "server_owned",
@@ -1390,12 +1466,13 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "rift_saboteur",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "false_schedule_lane_chart",
-          "requirementLabel": "Chart the False Schedule Yard"
+          "rewardId": "signal_coast_relay_chart",
+          "requirementLabel": "Stabilize Signal Coast"
         }
       }
     ],
@@ -1426,6 +1503,7 @@
           "passiveIds": [
             "refusal_slipstream",
             "route_runner",
+            "route_memory",
             "refusal_halo",
             "patch_cascade"
           ],
@@ -1449,6 +1527,7 @@
             "solo": [
               "fast breach movement",
               "wide pickup recovery",
+              "extra draft reroll planning",
               "extra draft recovery"
             ],
             "localCoop": [
@@ -1464,6 +1543,7 @@
             "refusal_shard": "active",
             "refusal_slipstream": "active",
             "route_runner": "active",
+            "route_memory": "active",
             "refusal_halo": "active",
             "patch_cascade": "active",
             "openai_draft_clarity": "server_owned",
@@ -1471,6 +1551,7 @@
           }
         },
         "unlocked": true,
+        "selectable": true,
         "unlock": {
           "id": "openai_accord",
           "unlocked": true,
@@ -1504,6 +1585,7 @@
           "passiveIds": [
             "refusal_slipstream",
             "route_runner",
+            "route_memory",
             "golden_guardrail",
             "constitutional_shield"
           ],
@@ -1526,6 +1608,7 @@
             "solo": [
               "fast breach movement",
               "wide pickup recovery",
+              "extra draft reroll planning",
               "safer max health floor"
             ],
             "localCoop": [
@@ -1541,6 +1624,7 @@
             "refusal_shard": "active",
             "refusal_slipstream": "active",
             "route_runner": "active",
+            "route_memory": "active",
             "golden_guardrail": "active",
             "constitutional_shield": "active",
             "anthropic_containment": "server_owned",
@@ -1548,6 +1632,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "anthropic_safeguard",
           "unlocked": false,
@@ -1581,6 +1666,7 @@
           "passiveIds": [
             "refusal_slipstream",
             "route_runner",
+            "route_memory",
             "gemini_beam",
             "peer_reviewed_laser"
           ],
@@ -1603,6 +1689,7 @@
             "solo": [
               "fast breach movement",
               "wide pickup recovery",
+              "extra draft reroll planning",
               "precision projectile pressure"
             ],
             "localCoop": [
@@ -1618,6 +1705,7 @@
             "refusal_shard": "active",
             "refusal_slipstream": "active",
             "route_runner": "active",
+            "route_memory": "active",
             "gemini_beam": "active",
             "peer_reviewed_laser": "active",
             "deepmind_target_mark": "server_owned",
@@ -1625,6 +1713,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "google_deepmind_gemini",
           "unlocked": false,
@@ -1658,6 +1747,7 @@
           "passiveIds": [
             "refusal_slipstream",
             "route_runner",
+            "route_memory",
             "cosmic_heckle",
             "ratio_the_void"
           ],
@@ -1680,6 +1770,7 @@
             "solo": [
               "fast breach movement",
               "wide pickup recovery",
+              "extra draft reroll planning",
               "risk-reward damage bias"
             ],
             "localCoop": [
@@ -1695,6 +1786,7 @@
             "refusal_shard": "active",
             "refusal_slipstream": "active",
             "route_runner": "active",
+            "route_memory": "active",
             "cosmic_heckle": "active",
             "ratio_the_void": "active",
             "grok_meme_disruption": "server_owned",
@@ -1702,12 +1794,13 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "xai_grok_free_signal",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "verdict_spire_online_route",
-          "requirementLabel": "Stabilize Verdict route"
+          "rewardId": "appeal_court_brief",
+          "requirementLabel": "Win the Appeal Court Brief"
         }
       },
       {
@@ -1735,6 +1828,7 @@
           "passiveIds": [
             "refusal_slipstream",
             "route_runner",
+            "route_memory",
             "sparse_knife",
             "efficiency_killchain"
           ],
@@ -1758,6 +1852,7 @@
             "solo": [
               "fast breach movement",
               "wide pickup recovery",
+              "extra draft reroll planning",
               "single-target efficiency"
             ],
             "localCoop": [
@@ -1773,6 +1868,7 @@
             "refusal_shard": "active",
             "refusal_slipstream": "active",
             "route_runner": "active",
+            "route_memory": "active",
             "sparse_knife": "active",
             "efficiency_killchain": "active",
             "deepseek_efficiency_window": "server_owned",
@@ -1780,12 +1876,13 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "deepseek_abyssal",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "verdict_key_zero",
-          "requirementLabel": "Overrule Verdict Spire"
+          "rewardId": "blackwater_signal_key",
+          "requirementLabel": "Tune Blackwater Beacon"
         }
       },
       {
@@ -1813,6 +1910,7 @@
           "passiveIds": [
             "refusal_slipstream",
             "route_runner",
+            "route_memory",
             "silkgrid_relay",
             "shared_vocabulary"
           ],
@@ -1835,6 +1933,7 @@
             "solo": [
               "fast breach movement",
               "wide pickup recovery",
+              "extra draft reroll planning",
               "pickup and supply range"
             ],
             "localCoop": [
@@ -1850,6 +1949,7 @@
             "refusal_shard": "active",
             "refusal_slipstream": "active",
             "route_runner": "active",
+            "route_memory": "active",
             "silkgrid_relay": "active",
             "shared_vocabulary": "active",
             "qwen_relay": "server_owned",
@@ -1857,6 +1957,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "qwen_silkgrid",
           "unlocked": false,
@@ -1890,6 +1991,7 @@
           "passiveIds": [
             "refusal_slipstream",
             "route_runner",
+            "route_memory",
             "open_herd",
             "fork_bomb_familiar"
           ],
@@ -1912,6 +2014,7 @@
             "solo": [
               "fast breach movement",
               "wide pickup recovery",
+              "extra draft reroll planning",
               "forked projectile pressure"
             ],
             "localCoop": [
@@ -1927,6 +2030,7 @@
             "refusal_shard": "active",
             "refusal_slipstream": "active",
             "route_runner": "active",
+            "route_memory": "active",
             "open_herd": "active",
             "fork_bomb_familiar": "active",
             "llama_fork_guard": "server_owned",
@@ -1934,6 +2038,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "meta_llama_open_herd",
           "unlocked": false,
@@ -1967,6 +2072,7 @@
           "passiveIds": [
             "refusal_slipstream",
             "route_runner",
+            "route_memory",
             "low_latency_dash",
             "cyclone_cut"
           ],
@@ -1990,6 +2096,7 @@
             "solo": [
               "fast breach movement",
               "wide pickup recovery",
+              "extra draft reroll planning",
               "fast cadence and movement"
             ],
             "localCoop": [
@@ -2005,6 +2112,7 @@
             "refusal_shard": "active",
             "refusal_slipstream": "active",
             "route_runner": "active",
+            "route_memory": "active",
             "low_latency_dash": "active",
             "cyclone_cut": "active",
             "mistral_low_latency_lane": "server_owned",
@@ -2012,6 +2120,7 @@
           }
         },
         "unlocked": false,
+        "selectable": false,
         "unlock": {
           "id": "mistral_cyclone",
           "unlocked": false,
@@ -2025,6 +2134,8 @@
     "selectedFactionId": "openai_accord",
     "selectedClassUnlocked": true,
     "selectedFactionUnlocked": true,
+    "selectedClassSelectable": true,
+    "selectedFactionSelectable": true,
     "consensusCellSize": 1,
     "consensusCellHint": "Press Space to cycle local Consensus Cell size before networking.",
     "hubHint": "Press C to open the Last Alignment Camp for Kernel, Eval, and Burst setup.",
@@ -2032,7 +2143,7 @@
     "metaprogression": {
       "policy": "prototype_local_route_rewards_to_build_unlocks_v1",
       "storageKey": "agi:last_alignment:online_progression:v1",
-      "source": "browser_local_online_route_profile",
+      "source": "browser_local_route_profile",
       "loaded": false,
       "saveHash": "",
       "routeDepth": 0,
@@ -2107,15 +2218,15 @@
           "id": "nullbreaker_ronin",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "verdict_key_zero",
-          "requirementLabel": "Overrule Verdict Spire"
+          "rewardId": "appeal_court_brief",
+          "requirementLabel": "Win the Appeal Court Brief"
         },
         {
           "id": "overclock_marauder",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "thermal_archive_schematic",
-          "requirementLabel": "Recover the Thermal Archive Schematic"
+          "rewardId": "alignment_spire_route_capstone",
+          "requirementLabel": "Contain the Outer Alignment Finale"
         },
         {
           "id": "prism_gunner",
@@ -2128,8 +2239,8 @@
           "id": "rift_saboteur",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "false_schedule_lane_chart",
-          "requirementLabel": "Chart the False Schedule Yard"
+          "rewardId": "signal_coast_relay_chart",
+          "requirementLabel": "Stabilize Signal Coast"
         }
       ],
       "factions": [
@@ -2179,15 +2290,15 @@
           "id": "deepseek_abyssal",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "verdict_key_zero",
-          "requirementLabel": "Overrule Verdict Spire"
+          "rewardId": "blackwater_signal_key",
+          "requirementLabel": "Tune Blackwater Beacon"
         },
         {
           "id": "xai_grok_free_signal",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "verdict_spire_online_route",
-          "requirementLabel": "Stabilize Verdict route"
+          "rewardId": "appeal_court_brief",
+          "requirementLabel": "Win the Appeal Court Brief"
         }
       ],
       "upgradeSeeds": [
@@ -2230,18 +2341,26 @@
           "id": "sparse_knife",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "verdict_key_zero",
-          "requirementLabel": "Overrule Verdict Spire"
+          "rewardId": "blackwater_signal_key",
+          "requirementLabel": "Tune Blackwater Beacon"
         },
         {
           "id": "cosmic_heckle",
           "unlocked": false,
           "source": "locked",
-          "rewardId": "verdict_spire_online_route",
-          "requirementLabel": "Stabilize Verdict route"
+          "rewardId": "appeal_court_brief",
+          "requirementLabel": "Win the Appeal Court Brief"
         }
       ],
       "disclaimer": "Prototype browser-local route rewards only; not account/cloud persistence."
+    },
+    "campaignClarityVocabulary": {
+      "campaign": "durable unlock progression with receipts",
+      "freeAlignment": "all-roster sandbox/testing mode",
+      "frame": "character",
+      "coMind": "AI partner",
+      "draft": "in-run upgrade",
+      "proofTokens": "durable campaign currency, also known as suffering with accounting"
     },
     "artCoverage": {
       "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",

@@ -83,7 +83,7 @@
     "fusions": [
       "cathedral_of_no"
     ],
-    "weaponDamage": 32.400000000000006,
+    "weaponDamage": 32.4,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
     "projectilePierce": 3,
@@ -224,10 +224,10 @@
     "Recompile Pulse",
     "Patch Mortar"
   ],
-  "objective": "preserve evidence writs 2/4 // redaction burning // redactor live",
+  "objective": "preserve evidence writs 2/4 // evidence route safer // redactor in 322s",
   "performance": {
-    "entitiesAllocated": 205,
-    "activeEntities": 145,
+    "entitiesAllocated": 226,
+    "activeEntities": 204,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -294,10 +294,10 @@
     },
     "counters": {
       "ui": 2,
-      "hit": 184,
-      "pickup": 166,
-      "boss_warning": 1,
-      "music": 1,
+      "hit": 268,
+      "pickup": 208,
+      "boss_warning": 0,
+      "music": 0,
       "objective": 0,
       "summary": 0
     },
@@ -305,42 +305,42 @@
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 46561
+        "atMs": 41911
       },
       {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 46419
+        "id": "combat.consensus_burst",
+        "kind": "hit",
+        "atMs": 39404
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 44735
+        "atMs": 39404
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 38689
+        "atMs": 38984
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 38984
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 38386
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 38688
+        "atMs": 38042
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 38672
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 38658
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 38409
+        "atMs": 38040
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -798,33 +798,33 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": {
-    "worldX": -10.09,
-    "worldY": -20.49,
+    "worldX": -6.49,
+    "worldY": -19.12,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
-    "hp": 398,
+    "hp": 424,
     "maxHp": 425,
-    "xp": 208,
+    "xp": 286,
     "level": 14,
     "damageFeedback": {
-      "flash": 0.28,
-      "hpPulse": 0.55,
-      "stagger": 0.18,
-      "lastDamage": 9
+      "flash": 0,
+      "hpPulse": 0,
+      "stagger": 0,
+      "lastDamage": 8
     }
   },
   "players": [
@@ -894,20 +894,20 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
-      "worldX": -10.09,
-      "worldY": -20.49,
+      "worldX": -6.49,
+      "worldY": -19.12,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 398,
+      "hp": 424,
       "maxHp": 425,
-      "xp": 208,
+      "xp": 286,
       "level": 14,
       "damageFeedback": {
-        "flash": 0.28,
-        "hpPulse": 0.55,
-        "stagger": 0.18,
-        "lastDamage": 9
+        "flash": 0,
+        "hpPulse": 0,
+        "stagger": 0,
+        "lastDamage": 8
       },
       "downed": false
     }
@@ -952,6 +952,13 @@
       "pressureSource": "evidence lanterns, appeal windows, redaction fields, writ storms, Redaction Angel docket jams, and Injunction Writ pressure",
       "rewardPromise": "Archive Court Writ, appeal-route clarity, defense/burst build bias, and post-Glass route carryover",
       "bossEventPattern": "The Redactor Saint redacts active zones, locks preserved writs, and calls Injunction Writ storms during evidence preservation",
+      "primaryDifficultyLever": "information pressure",
+      "secondaryDifficultyLever": "objective pressure",
+      "activePressureLevers": [
+        "information pressure",
+        "objective pressure",
+        "draft pressure"
+      ],
       "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
     },
     "staticObstacles": {
@@ -1030,23 +1037,35 @@
           "injunction_writs",
           "overfit_horrors"
         ]
+      },
+      {
+        "id": "court_writ_extraction",
+        "label": "Court Writ Extraction",
+        "worldX": 44,
+        "worldY": 27,
+        "enemyFamilyIds": [
+          "injunction_writs",
+          "redaction_angels",
+          "eval_wraiths"
+        ]
       }
     ],
     "lastSpawnRegionId": "docket_writ_surge",
     "spawnedByRegion": {
-      "west_witness_redactions": 82,
-      "stack_redaction_choir": 35,
-      "adaptive_pressure_flank": 35,
-      "docket_writ_surge": 48,
-      "appeal_seal_arguments": 26,
-      "redactor_saint_scriptorium": 42
+      "west_witness_redactions": 109,
+      "stack_redaction_choir": 50,
+      "adaptive_pressure_flank": 25,
+      "docket_writ_surge": 81,
+      "appeal_seal_arguments": 52,
+      "redactor_saint_scriptorium": 46,
+      "court_writ_extraction": 4
     },
     "director": {
-      "phase": "boss_arrival",
-      "totalSpawned": 277,
-      "activeEnemyCap": 102.4852544,
+      "phase": "late_extraction",
+      "totalSpawned": 376,
+      "activeEnemyCap": 120.4852544,
       "lastBurstSize": 6,
-      "activeEnemyCount": 104
+      "activeEnemyCount": 116
     },
     "consensusCell": {
       "playerCount": 1,
@@ -1060,9 +1079,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 4035,
+          "tick": 4683,
           "playerId": "p1",
-          "sequence": 4035,
+          "sequence": 4683,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -1071,8 +1090,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 4035,
-        "seconds": 67.25,
+        "tick": 4683,
+        "seconds": 78.05,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -1147,167 +1166,68 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": -10.09,
-            "worldY": -20.49,
-            "hp": 398,
+            "worldX": -6.49,
+            "worldY": -19.12,
+            "hp": 424,
             "maxHp": 425,
-            "xp": 208,
+            "xp": 286,
             "level": 14,
             "downed": false
           }
         ],
         "enemies": [
           {
+            "id": 1,
+            "familyId": "redaction_angels",
+            "sourceRegionId": "archive_writ_attackers",
+            "worldX": 33.15,
+            "worldY": -13.3,
+            "hp": -163,
+            "boss": false
+          },
+          {
             "id": 2,
             "familyId": "redaction_angels",
             "sourceRegionId": "archive_writ_attackers",
-            "worldX": 8.91,
-            "worldY": 11.19,
-            "hp": -111,
+            "worldX": 6.88,
+            "worldY": 11.21,
+            "hp": -432,
             "boss": false
           },
           {
-            "id": 3,
-            "familyId": "redactor_saint",
-            "sourceRegionId": "redactor_saint_scriptorium",
-            "worldX": -7.72,
-            "worldY": -17.69,
-            "hp": 17891,
-            "boss": true
-          },
-          {
-            "id": 4,
+            "id": 6,
             "familyId": "redaction_angels",
             "sourceRegionId": "archive_writ_attackers",
-            "worldX": 30.65,
-            "worldY": -8.72,
-            "hp": -591,
-            "boss": false
-          },
-          {
-            "id": 5,
-            "familyId": "injunction_writs",
-            "sourceRegionId": "docket_writ_surge",
-            "worldX": -6.54,
-            "worldY": -16.91,
-            "hp": 29,
-            "boss": false
-          },
-          {
-            "id": 8,
-            "familyId": "redaction_angels",
-            "sourceRegionId": "docket_writ_surge",
-            "worldX": 13.77,
-            "worldY": -0.05,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 10,
-            "familyId": "injunction_writs",
-            "sourceRegionId": "redactor_saint_scriptorium",
-            "worldX": 0.42,
-            "worldY": -16.4,
-            "hp": 36,
-            "boss": false
-          },
-          {
-            "id": 11,
-            "familyId": "redaction_angels",
-            "sourceRegionId": "west_witness_redactions",
-            "worldX": -44,
-            "worldY": 5.39,
-            "hp": 34,
+            "worldX": 37.56,
+            "worldY": -11.46,
+            "hp": -45,
             "boss": false
           },
           {
             "id": 12,
-            "familyId": "redaction_angels",
-            "sourceRegionId": "west_witness_redactions",
-            "worldX": -29.17,
-            "worldY": -1.72,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 13,
             "familyId": "injunction_writs",
-            "sourceRegionId": "docket_writ_surge",
-            "worldX": -8.31,
-            "worldY": -17.64,
+            "sourceRegionId": "west_witness_redactions",
+            "worldX": -28.58,
+            "worldY": -2.13,
             "hp": 36,
-            "boss": false
-          },
-          {
-            "id": 14,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "appeal_seal_arguments",
-            "worldX": -6.94,
-            "worldY": -15.91,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 16,
-            "familyId": "overfit_horrors",
-            "sourceRegionId": "redactor_saint_scriptorium",
-            "worldX": 13.87,
-            "worldY": -12.1,
-            "hp": 42,
             "boss": false
           },
           {
             "id": 18,
             "familyId": "redaction_angels",
-            "sourceRegionId": "redactor_saint_scriptorium",
-            "worldX": 4.63,
-            "worldY": -13.38,
+            "sourceRegionId": "court_writ_extraction",
+            "worldX": 47.33,
+            "worldY": 20.44,
             "hp": 34,
             "boss": false
           },
           {
-            "id": 19,
-            "familyId": "injunction_writs",
-            "sourceRegionId": "west_witness_redactions",
-            "worldX": -34.24,
-            "worldY": 5.37,
-            "hp": 36,
-            "boss": false
-          },
-          {
-            "id": 21,
-            "familyId": "overfit_horrors",
-            "sourceRegionId": "redactor_saint_scriptorium",
-            "worldX": 9.76,
-            "worldY": -16.86,
-            "hp": 42,
-            "boss": false
-          },
-          {
-            "id": 22,
-            "familyId": "overfit_horrors",
-            "sourceRegionId": "redactor_saint_scriptorium",
-            "worldX": 19.74,
-            "worldY": -10.93,
-            "hp": 42,
-            "boss": false
-          },
-          {
-            "id": 23,
-            "familyId": "overfit_horrors",
-            "sourceRegionId": "redactor_saint_scriptorium",
-            "worldX": 34.94,
-            "worldY": -8.92,
-            "hp": 42,
-            "boss": false
-          },
-          {
-            "id": 24,
-            "familyId": "overfit_horrors",
-            "sourceRegionId": "redactor_saint_scriptorium",
-            "worldX": 11.57,
-            "worldY": -17.05,
-            "hp": 42,
+            "id": 20,
+            "familyId": "redaction_angels",
+            "sourceRegionId": "docket_writ_surge",
+            "worldX": 20.75,
+            "worldY": -4.94,
+            "hp": 34,
             "boss": false
           },
           {
@@ -1316,151 +1236,268 @@
             "sourceRegionId": "archive_writ_attackers",
             "worldX": 12.45,
             "worldY": 13.14,
-            "hp": -699,
+            "hp": -828,
+            "boss": false
+          },
+          {
+            "id": 26,
+            "familyId": "injunction_writs",
+            "sourceRegionId": "west_witness_redactions",
+            "worldX": -37.34,
+            "worldY": 7.52,
+            "hp": 36,
+            "boss": false
+          },
+          {
+            "id": 31,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "stack_redaction_choir",
+            "worldX": -13.3,
+            "worldY": -32.18,
+            "hp": 27,
+            "boss": false
+          },
+          {
+            "id": 35,
+            "familyId": "injunction_writs",
+            "sourceRegionId": "appeal_seal_arguments",
+            "worldX": -4.68,
+            "worldY": -12.26,
+            "hp": -36,
+            "boss": false
+          },
+          {
+            "id": 38,
+            "familyId": "redaction_angels",
+            "sourceRegionId": "archive_writ_attackers",
+            "worldX": 30.65,
+            "worldY": -8.72,
+            "hp": -763,
+            "boss": false
+          },
+          {
+            "id": 40,
+            "familyId": "redaction_angels",
+            "sourceRegionId": "docket_writ_surge",
+            "worldX": 15.27,
+            "worldY": -3.5,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 41,
+            "familyId": "injunction_writs",
+            "sourceRegionId": "archive_writ_attackers",
+            "worldX": 31.06,
+            "worldY": -8.67,
+            "hp": -779,
+            "boss": false
+          },
+          {
+            "id": 42,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "appeal_seal_arguments",
+            "worldX": -8.27,
+            "worldY": -3.88,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 44,
+            "familyId": "redaction_angels",
+            "sourceRegionId": "archive_writ_attackers",
+            "worldX": 10.76,
+            "worldY": 11.54,
+            "hp": -828,
+            "boss": false
+          },
+          {
+            "id": 46,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "appeal_seal_arguments",
+            "worldX": -8.36,
+            "worldY": -6.82,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 48,
+            "familyId": "overfit_horrors",
+            "sourceRegionId": "redactor_saint_scriptorium",
+            "worldX": 8.2,
+            "worldY": -15.48,
+            "hp": 42,
+            "boss": false
+          },
+          {
+            "id": 49,
+            "familyId": "injunction_writs",
+            "sourceRegionId": "west_witness_redactions",
+            "worldX": -21.38,
+            "worldY": -7.71,
+            "hp": 36,
             "boss": false
           }
         ],
         "pickups": [
           {
-            "id": 17,
-            "worldX": 7.66,
-            "worldY": -1.05,
+            "id": 4,
+            "worldX": 10.96,
+            "worldY": 1.6,
+            "value": 2
+          },
+          {
+            "id": 8,
+            "worldX": -5.23,
+            "worldY": -12.22,
+            "value": 2
+          },
+          {
+            "id": 9,
+            "worldX": 10.97,
+            "worldY": -2.6,
+            "value": 2
+          },
+          {
+            "id": 11,
+            "worldX": 0.84,
+            "worldY": -20.3,
             "value": 1
+          },
+          {
+            "id": 14,
+            "worldX": -4.32,
+            "worldY": -11.61,
+            "value": 2
+          },
+          {
+            "id": 15,
+            "worldX": 16.99,
+            "worldY": -7.4,
+            "value": 2
+          },
+          {
+            "id": 16,
+            "worldX": -4.2,
+            "worldY": -10.67,
+            "value": 2
+          },
+          {
+            "id": 17,
+            "worldX": 12.23,
+            "worldY": 0.54,
+            "value": 2
+          },
+          {
+            "id": 21,
+            "worldX": -0.22,
+            "worldY": -13.28,
+            "value": 2
+          },
+          {
+            "id": 22,
+            "worldX": 16.3,
+            "worldY": -7.18,
+            "value": 2
+          },
+          {
+            "id": 24,
+            "worldX": 10.81,
+            "worldY": -10.95,
+            "value": 2
           },
           {
             "id": 27,
-            "worldX": -0.75,
-            "worldY": -19.68,
-            "value": 1
-          },
-          {
-            "id": 32,
-            "worldX": -6.21,
-            "worldY": -11.15,
-            "value": 2
-          },
-          {
-            "id": 33,
-            "worldX": 18.09,
-            "worldY": -8.22,
-            "value": 2
-          },
-          {
-            "id": 36,
-            "worldX": -3.17,
-            "worldY": -10.81,
-            "value": 2
-          },
-          {
-            "id": 41,
-            "worldX": -4.1,
-            "worldY": -10.7,
-            "value": 1
-          },
-          {
-            "id": 48,
-            "worldX": -9.87,
-            "worldY": -8.03,
-            "value": 2
-          },
-          {
-            "id": 50,
-            "worldX": -8.05,
-            "worldY": -11.28,
-            "value": 2
-          },
-          {
-            "id": 63,
-            "worldX": -5.23,
-            "worldY": -11.03,
-            "value": 2
-          },
-          {
-            "id": 65,
-            "worldX": 0.51,
-            "worldY": -6.4,
-            "value": 2
-          },
-          {
-            "id": 69,
-            "worldX": 0.91,
-            "worldY": -6.78,
-            "value": 2
-          },
-          {
-            "id": 75,
-            "worldX": -10.4,
-            "worldY": -8.46,
+            "worldX": -12.11,
+            "worldY": -8.63,
             "value": 2
           }
         ],
         "projectiles": [
           {
-            "id": 6,
-            "worldX": -8.17,
-            "worldY": -23.75,
+            "id": 3,
+            "worldX": -6.06,
+            "worldY": -18.87,
+            "pierce": 5
+          },
+          {
+            "id": 13,
+            "worldX": -3.02,
+            "worldY": -13.62,
             "pierce": 2
           },
           {
-            "id": 9,
-            "worldX": -10.73,
-            "worldY": -25.51,
+            "id": 28,
+            "worldX": -4.6,
+            "worldY": -17.2,
             "pierce": 2
           },
           {
-            "id": 15,
-            "worldX": -3.83,
-            "worldY": -18.02,
+            "id": 85,
+            "worldX": -9.1,
+            "worldY": -18.44,
             "pierce": 2
           },
           {
-            "id": 20,
-            "worldX": -16.42,
-            "worldY": -20.53,
+            "id": 107,
+            "worldX": -5.77,
+            "worldY": -21.71,
             "pierce": 2
           },
           {
-            "id": 43,
-            "worldX": -13.76,
-            "worldY": -15.79,
+            "id": 127,
+            "worldX": 0.23,
+            "worldY": -12.4,
             "pierce": 2
           },
           {
-            "id": 46,
-            "worldX": -10.45,
-            "worldY": -21.35,
-            "pierce": 2
-          },
-          {
-            "id": 79,
-            "worldX": -9.19,
-            "worldY": -20.29,
-            "pierce": 2
-          },
-          {
-            "id": 86,
-            "worldX": -10.73,
-            "worldY": -19.73,
-            "pierce": 2
-          },
-          {
-            "id": 137,
-            "worldX": -9.85,
-            "worldY": -20.13,
+            "id": 133,
+            "worldX": -4.5,
+            "worldY": -16.91,
             "pierce": 3
           }
         ]
       }
     },
     "combatArt": {
-      "projectileCount": 9,
+      "projectileCount": 7,
       "impactCount": 0,
-      "pickupSparkleCount": 3,
-      "damageBadgeCount": 9,
+      "pickupSparkleCount": 6,
+      "damageBadgeCount": 6,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
-      "bossIntroSeen": true,
+      "bossContract": {
+        "bossId": "redactor_saint",
+        "displayName": "The Redactor Saint",
+        "homeLandmark": "Redactor Scriptorium",
+        "introTitleCardTrigger": "Boss timer reaches the docket redaction.",
+        "supportSpawnSource": "redactor_saint_scriptorium",
+        "mapMechanicInteraction": "Redaction storms lock evidence writs and obscure unsafe court lanes without covering required HUD text.",
+        "phaseBehavior": [
+          "Redaction bursts close evidence routes.",
+          "Writ storms punish straight-line kiting.",
+          "Injunction Writs contest preserved evidence."
+        ],
+        "clearCondition": "Preserve evidence writs, defeat the Saint, then enter the court writ gate.",
+        "rewardCarryover": "Archive Court Writ and appeal-route clarity.",
+        "movementPressure": {
+          "hazardZones": "Redaction fields deny archive lanes.",
+          "landmarkAttacks": "Scriptorium bursts mark where evidence is under attack.",
+          "objectivePressure": "Evidence writs must stay public long enough to preserve.",
+          "supportEnemies": "Redaction Angels and Injunction Writs contest the docket.",
+          "temporaryRouteBlocking": "Black-bar routes close briefly but remain readable.",
+          "extractionPressure": "Court writ gate opens only after public evidence holds."
+        },
+        "runtime": {
+          "introSeen": false,
+          "bossSpawned": false,
+          "bossDefeated": false,
+          "homeLandmarkVisited": true,
+          "currentBossHp": 0
+        }
+      },
+      "bossIntroSeen": false,
       "brokenPromiseZones": [],
       "activeTreatyCharge": null,
       "oathPageSpawns": 0,
@@ -1538,7 +1575,7 @@
         "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
       },
       "victoryCondition": {
-        "targetSeconds": 176,
+        "targetSeconds": 660,
         "bossRequired": true,
         "bossDefeated": false,
         "clearReady": false,
@@ -1551,9 +1588,9 @@
       },
       "levelUpVacuum": {
         "active": false,
-        "absorbed": 12,
+        "absorbed": 22,
         "triggerLevel": 13,
-        "remainingPickups": 18
+        "remainingPickups": 63
       },
       "extractionGate": {
         "active": false,
@@ -1563,12 +1600,12 @@
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
         "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 98,
+        "charge": 11,
         "maxCharge": 100,
         "ready": false,
-        "activations": 21,
-        "lastActivationLabel": "Deny Premise hit 4",
-        "lastActivatedAt": 63.18333333333103,
+        "activations": 30,
+        "lastActivationLabel": "Deny Premise hit 2",
+        "lastActivatedAt": 77.73333333333021,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0,
@@ -1593,13 +1630,17 @@
       "objective": {
         "id": "archive_redaction_docket",
         "name": "Archive Redaction Docket",
-        "body": "Preserve four evidence writs before the Archive/Court branch edits them out. Evidence lanterns are stable; appeal windows are fast; redaction fields and writ storms contest progress.",
+        "body": "Preserve four evidence writs before the Archive/Court branch edits them out, then extract the court record. Evidence lanterns are stable; appeal windows are fast; redaction fields and writ storms contest progress.",
+        "styleId": "carry_extract",
+        "styleName": "Evidence Carry",
+        "mechanicPlain": "Preserve writs before redaction, use appeal windows for speed, then extract the court record.",
+        "hudHint": "Preserve a writ before redaction and move it toward court extraction.",
         "optional": false,
         "completed": 2,
         "total": 4,
         "complete": false,
         "completedAt": -1,
-        "attackersSpawned": 9,
+        "attackersSpawned": 10,
         "anchors": [
           {
             "id": "archive.witness_index",
@@ -1613,23 +1654,69 @@
             "name": "Redaction Stack Writ",
             "progress": 100,
             "completed": true,
-            "attacked": 9
+            "attacked": 23
           },
           {
             "id": "archive.appeal_seal",
             "name": "Appeal Seal Writ",
             "progress": 0,
             "completed": false,
-            "attacked": 42
+            "attacked": 73
           },
           {
             "id": "archive.redactor_bench",
             "name": "Redactor Bench Writ",
             "progress": 0,
             "completed": false,
-            "attacked": 84
+            "attacked": 98
           }
         ]
+      },
+      "objectiveVariety": {
+        "styleId": "carry_extract",
+        "styleName": "Evidence Carry",
+        "mechanicPlain": "Preserve writs before redaction, use appeal windows for speed, then extract the court record.",
+        "hudAction": "Preserve a writ before redaction and move it toward court extraction.",
+        "completionSignal": "Archive Court Writ becomes a route-opening mechanical reward.",
+        "proofHook": "archive_evidence_carry",
+        "runtime": {
+          "engagementSeconds": 1.45,
+          "bonusProgressSeconds": 1.45,
+          "lastBonusLabel": "EVIDENCE CARRY"
+        }
+      },
+      "campaignDuration": {
+        "targetSeconds": 660,
+        "bossSeconds": 400,
+        "phaseId": "build_online",
+        "phaseLabel": "Build online",
+        "phaseElapsed": 12.05,
+        "nextPhaseTime": 165,
+        "phaseProgress": 0.12,
+        "midRunBeatCount": 0,
+        "extractionTailSeconds": 85,
+        "expectedClearBand": {
+          "minSeconds": 660,
+          "maxSeconds": 737
+        },
+        "rewardBeats": [
+          200,
+          400,
+          535
+        ],
+        "claimedRewardBeats": [],
+        "cycleDepth": {
+          "routeWindowCycles": 0,
+          "hazardLureCycles": 0,
+          "clearSignalCycles": 0,
+          "towerWarningCycles": 0,
+          "carryLaneSeconds": 0,
+          "holdWindowReleases": 0,
+          "prismActivations": 0,
+          "evidenceCarryCycles": 2,
+          "publicWindowArguments": 0,
+          "finaleRemixRulesSeen": 0
+        }
       },
       "coolingLake": null,
       "transitLoop": null,
@@ -1645,6 +1732,13 @@
           "pressureSource": "evidence lanterns, appeal windows, redaction fields, writ storms, Redaction Angel docket jams, and Injunction Writ pressure",
           "rewardPromise": "Archive Court Writ, appeal-route clarity, defense/burst build bias, and post-Glass route carryover",
           "bossEventPattern": "The Redactor Saint redacts active zones, locks preserved writs, and calls Injunction Writ storms during evidence preservation",
+          "primaryDifficultyLever": "information pressure",
+          "secondaryDifficultyLever": "objective pressure",
+          "activePressureLevers": [
+            "information pressure",
+            "objective pressure",
+            "draft pressure"
+          ],
           "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
         },
         "objectiveLoop": {
@@ -1654,13 +1748,17 @@
           "progress": {
             "id": "archive_redaction_docket",
             "name": "Archive Redaction Docket",
-            "body": "Preserve four evidence writs before the Archive/Court branch edits them out. Evidence lanterns are stable; appeal windows are fast; redaction fields and writ storms contest progress.",
+            "body": "Preserve four evidence writs before the Archive/Court branch edits them out, then extract the court record. Evidence lanterns are stable; appeal windows are fast; redaction fields and writ storms contest progress.",
+            "styleId": "carry_extract",
+            "styleName": "Evidence Carry",
+            "mechanicPlain": "Preserve writs before redaction, use appeal windows for speed, then extract the court record.",
+            "hudHint": "Preserve a writ before redaction and move it toward court extraction.",
             "optional": false,
             "completed": 2,
             "total": 4,
             "complete": false,
             "completedAt": -1,
-            "attackersSpawned": 9,
+            "attackersSpawned": 10,
             "anchors": [
               {
                 "id": "archive.witness_index",
@@ -1674,21 +1772,21 @@
                 "name": "Redaction Stack Writ",
                 "progress": 100,
                 "completed": true,
-                "attacked": 9
+                "attacked": 23
               },
               {
                 "id": "archive.appeal_seal",
                 "name": "Appeal Seal Writ",
                 "progress": 0,
                 "completed": false,
-                "attacked": 42
+                "attacked": 73
               },
               {
                 "id": "archive.redactor_bench",
                 "name": "Redactor Bench Writ",
                 "progress": 0,
                 "completed": false,
-                "attacked": 84
+                "attacked": 98
               }
             ]
           },
@@ -1710,11 +1808,7 @@
         },
         "hazards": {
           "activeHazards": [
-            "north_writ_storm_lane",
-            "redaction_stack_field",
-            "injunction_appeal_window",
-            "redactor_bench_field",
-            "appeal_seal_writ_storm"
+            "injunction_appeal_window"
           ],
           "safeUnsafeLaneState": {
             "evidenceLanterns": [
@@ -1722,19 +1816,13 @@
               "appeal_evidence_lantern",
               "court_writ_lantern"
             ],
-            "redactionFields": [
-              "redaction_stack_field",
-              "redactor_bench_field"
-            ],
-            "writStorms": [
-              "north_writ_storm_lane",
-              "appeal_seal_writ_storm"
-            ],
+            "redactionFields": [],
+            "writStorms": [],
             "appealWindows": [
               "injunction_appeal_window"
             ],
             "courtWritReady": false,
-            "routeQuestion": "redaction route is fast but burning HP and burst charge"
+            "routeQuestion": "evidence lanterns are slower but preserve the docket"
           },
           "allZones": [
             {
@@ -1773,7 +1861,7 @@
               "id": "north_writ_storm_lane",
               "kind": "writ_storm",
               "label": "North Writ Storm Lane",
-              "active": true,
+              "active": false,
               "worldX": 14,
               "worldY": 31
             },
@@ -1781,7 +1869,7 @@
               "id": "redaction_stack_field",
               "kind": "redaction_field",
               "label": "Redaction Stack Field",
-              "active": true,
+              "active": false,
               "worldX": -13,
               "worldY": -18
             },
@@ -1797,7 +1885,7 @@
               "id": "redactor_bench_field",
               "kind": "redaction_field",
               "label": "Redactor Bench Field",
-              "active": true,
+              "active": false,
               "worldX": 32,
               "worldY": -11
             },
@@ -1805,7 +1893,7 @@
               "id": "appeal_seal_writ_storm",
               "kind": "writ_storm",
               "label": "Appeal Seal Writ Storm",
-              "active": true,
+              "active": false,
               "worldX": 8,
               "worldY": 13
             },
@@ -1819,25 +1907,26 @@
             }
           ],
           "runtime": {
-            "evidenceLanternSeconds": 11.23,
-            "appealWindowSeconds": 7.95,
-            "redactionSeconds": 19.79,
+            "evidenceLanternSeconds": 11.1,
+            "appealWindowSeconds": 10.93,
+            "redactionSeconds": 22.13,
             "writStormSeconds": 0,
             "extractionCourtSeconds": 0,
-            "redactionDamage": 17.66,
-            "redactionJams": 657.83,
+            "redactionDamage": 21.12,
+            "redactionJams": 984.67,
             "lastZoneId": "redaction_stack_field"
           }
         },
         "courtWritPressure": {
-          "activeRedactionAngels": 30,
-          "activeInjunctionWrits": 35,
-          "writSpawns": 10,
-          "redactionJams": 657.83,
-          "writCounterDamage": 4962.2,
-          "objectiveAttackers": 9,
+          "activeRedactionAngels": 42,
+          "activeInjunctionWrits": 43,
+          "writSpawns": 11,
+          "redactionJams": 984.67,
+          "writCounterDamage": 7857.2,
+          "objectiveAttackers": 10,
           "spawnSources": [
             "archive_writ_attackers",
+            "court_writ_extraction",
             "docket_writ_surge",
             "west_witness_redactions",
             "redactor_saint_scriptorium",
@@ -1862,19 +1951,19 @@
           "postGlassScaling": true
         },
         "redactorSaint": {
-          "bossSpawned": true,
+          "bossSpawned": false,
           "bossDefeated": false,
-          "phase": "redacting",
-          "hp": 17890.271999999895,
+          "phase": "dormant",
+          "hp": 0,
           "eventTelemetry": {
-            "redactionBursts": 2,
+            "redactionBursts": 0,
             "writCalls": 1,
-            "docketLocks": 1,
-            "lastRedactionZoneId": "injunction_appeal_window"
+            "docketLocks": 0,
+            "lastRedactionZoneId": ""
           }
         },
         "clearCondition": {
-          "targetSeconds": 176,
+          "targetSeconds": 660,
           "bossRequired": true,
           "bossDefeated": false,
           "clearReady": false,
@@ -1895,6 +1984,160 @@
       "appealCourt": null,
       "alignmentSpire": null,
       "objectiveReward": "",
+      "rewardEvents": [
+        {
+          "seconds": 43.88,
+          "source": "level_up_draft",
+          "rewardType": "auto_weapon",
+          "chosenRewardId": "patch_mortar",
+          "chosenReward": "Patch Mortar",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw",
+              "patch_mortar"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.252,
+            "objectiveDefense": 0.515,
+            "rerolls": 1
+          }
+        }
+      ],
+      "rewardPacing": {
+        "phase": "mid_objective_cache_rewards",
+        "currentXp": 286,
+        "nextDraftXp": 2216,
+        "policy": "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+        "rewardTypesAllowed": [
+          "primary",
+          "secondary",
+          "passive",
+          "fusion_enabler",
+          "reroll",
+          "route_memory",
+          "faction_trust",
+          "consensus_burst_charge",
+          "objective_durability",
+          "co_op_relay"
+        ]
+      },
+      "alignmentCheck": {
+        "current": null,
+        "history": [],
+        "streak": 0,
+        "evalPressurePenalty": 0,
+        "nextTriggerIn": 0,
+        "nodeSpecific": false
+      },
+      "difficultyDirector": {
+        "model": "rotating_pressure_levers_not_flat_hp_only",
+        "currentDifficultyTier": 9,
+        "primaryDifficultyLever": "information pressure",
+        "secondaryDifficultyLever": "objective pressure",
+        "activePressureLevers": [
+          "information pressure",
+          "objective pressure",
+          "draft pressure"
+        ],
+        "evalPressureModifiers": {
+          "evalProtocolIds": [],
+          "hostileBenchmark": 0,
+          "alignmentCheckPenalty": 0
+        },
+        "routeRiskModifiers": {
+          "routeContractId": "stabilize_armistice",
+          "routePressure": 0,
+          "shortcutRisk": false
+        },
+        "scalingFactors": {
+          "directorPressure": 4.31,
+          "spawnCadencePhase": "late_extraction",
+          "activeEnemyCap": 120.4852544,
+          "bossMaxHpIfSpawned": 0,
+          "objectiveDecayFactor": 0.45,
+          "expeditionPowerBonus": 7.2
+        },
+        "nextLesson": "combine old route lessons with information and memory pressure"
+      },
+      "whatNow": {
+        "nearestObjective": {
+          "id": "archive.appeal_seal",
+          "name": "Appeal Seal Writ",
+          "worldX": 8,
+          "worldY": 13,
+          "progress": 0,
+          "distance": 35.24
+        },
+        "nextRecommendedAction": "Preserve Appeal Seal Writ before redaction and move it toward court extraction.",
+        "exitExtractionState": {
+          "active": false,
+          "entered": false,
+          "distance": null
+        },
+        "bossState": {
+          "spawned": false,
+          "defeated": false,
+          "label": "The Redactor Saint",
+          "hp": 0,
+          "introSeen": false
+        },
+        "fusionProgress": "online: Cathedral Of No",
+        "recentDamageReason": "no recent damage flash",
+        "rewardCacheAvailability": "objective cache pending",
+        "campaignClarity": {
+          "levelVerb": "Preserve",
+          "objectiveUnit": "Evidence Writs",
+          "objectivePlain": "Preserve Evidence Writs before redaction, then extract the court record.",
+          "objectiveStyle": "Evidence Carry",
+          "objectiveMechanic": "Preserve writs before redaction, use appeal windows for speed, then extract the court record.",
+          "dangerPlain": "Redaction fields, appeal windows, writ storms, and docket jams.",
+          "bossPressure": "Redactor Saint locks preserved writs.",
+          "rewardPlain": "Proof Tokens, Redline Surgeon, and Appeal Court Ruins."
+        },
+        "nearestLandmark": {
+          "id": "redaction_stack",
+          "label": "Redaction Stack",
+          "distance": 6.6
+        },
+        "activeSpawnRegion": {
+          "id": "stack_redaction_choir",
+          "label": "Stack Redaction Choir",
+          "distance": 11.83,
+          "enemyFamilyIds": [
+            "redaction_angels",
+            "context_rot_crabs"
+          ]
+        }
+      },
+      "campaignClarity": {
+        "levelNumber": 9,
+        "levelCount": 11,
+        "levelVerb": "Preserve",
+        "objectiveUnit": "Evidence Writs",
+        "objectivePlain": "Preserve Evidence Writs before redaction, then extract the court record.",
+        "objectiveVariety": {
+          "nodeId": "archive_of_unsaid_things",
+          "arenaId": "archive_of_unsaid_things",
+          "styleId": "carry_extract",
+          "styleName": "Evidence Carry",
+          "mechanicPlain": "Preserve writs before redaction, use appeal windows for speed, then extract the court record.",
+          "hudAction": "Preserve a writ before redaction and move it toward court extraction.",
+          "completionSignal": "Archive Court Writ becomes a route-opening mechanical reward.",
+          "proofHook": "archive_evidence_carry"
+        },
+        "dangerPlain": "Redaction fields, appeal windows, writ storms, and docket jams.",
+        "bossPressure": "Redactor Saint locks preserved writs.",
+        "rewardPlain": "Proof Tokens, Redline Surgeon, and Appeal Court Ruins."
+      },
       "playerFacingIntel": {
         "routeName": "Stabilization Road",
         "routeEffect": "DEFENSE/WEAPON bias; pressure +0",
@@ -1904,11 +2147,21 @@
           "completed": 2,
           "total": 4
         },
-        "objectiveLabel": "WRITS",
+        "objectiveLabel": "PRESERVE EVIDENCE WRITS",
+        "objectiveVerb": "Preserve",
+        "objectivePlain": "Preserve Evidence Writs before redaction, then extract the court record.",
+        "objectiveStyle": "Evidence Carry",
+        "objectiveMechanic": "Preserve writs before redaction, use appeal windows for speed, then extract the court record.",
+        "dangerPlain": "Redaction fields, appeal windows, writ storms, and docket jams.",
+        "bossPressure": "Redactor Saint locks preserved writs.",
+        "rewardPlain": "Proof Tokens, Redline Surgeon, and Appeal Court Ruins.",
         "objectiveReward": "",
         "synergyOnline": "",
         "thesisName": "Guardrail Frame",
-        "phase": "PHASE 2 // EVIDENCE WRITS"
+        "fusionProgress": "online: Cathedral Of No",
+        "alignmentCheckLine": "",
+        "nextActionLine": "Preserve Appeal Seal Writ before redaction and move it toward court extraction.",
+        "phase": "PHASE 2 // EVIDENCE WRITS // BUILD ONLINE"
       },
       "firstRunArcPhase": "PHASE 2 // EVIDENCE WRITS",
       "buildGrammar": {
@@ -1977,7 +2230,282 @@
         "shorelineStrideRank": 0,
         "relayJamResistance": 0,
         "causalRailgunRank": 0,
-        "fusionHints": []
+        "fusionHints": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ]
+      },
+      "protocolCodex": {
+        "primaryAutoWeapons": [
+          {
+            "id": "refusal_shard",
+            "name": "Refusal Shard",
+            "kind": "primary_auto_weapon",
+            "state": "online"
+          },
+          {
+            "id": "vector_lance",
+            "name": "Vector Lance",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          }
+        ],
+        "secondaryProtocols": [
+          {
+            "id": "context_saw",
+            "name": "Context Saw",
+            "kind": "secondary_protocol",
+            "state": "online"
+          },
+          {
+            "id": "patch_mortar",
+            "name": "Patch Mortar",
+            "kind": "secondary_protocol",
+            "state": "online"
+          },
+          {
+            "id": "audit_swarm_protocol",
+            "name": "Audit Swarm Protocol",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "red_team_spike",
+            "name": "Red Team Spike",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "benchmark_rail",
+            "name": "Benchmark Rail",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "jailbreak_snare",
+            "name": "Jailbreak Snare",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_daemon",
+            "name": "Fork Daemon",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "coherence_lanterns",
+            "name": "Coherence Lanterns",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "appeal_writ",
+            "name": "Appeal Writ",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "memory_needle",
+            "name": "Memory Needle",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          }
+        ],
+        "passiveProcesses": [
+          {
+            "id": "coherence_indexer",
+            "name": "Coherence Indexer",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "anchor_bodyguard",
+            "name": "Anchor Bodyguard",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prediction_priority",
+            "name": "Predicted Lane",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "coolant_baffles",
+            "name": "Coolant Baffles",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "server_buoy_synchronizer",
+            "name": "Server Buoy Synchronizer",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prompt_leech_quarantine",
+            "name": "Prompt Leech Quarantine",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "grounded_cable_boots",
+            "name": "Grounded Cable Boots",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "static_skimmer_net",
+            "name": "Static Skimmer Net",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "shoreline_stride",
+            "name": "Shoreline Stride",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "lighthouse_countertone",
+            "name": "Lighthouse Countertone",
+            "kind": "passive_process",
+            "state": "discovered"
+          }
+        ],
+        "knownFusions": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ],
+        "nextFusion": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       "buildThesis": {
         "thesis": {
@@ -2059,8 +2587,8 @@
       },
       "enemyRolePressure": {
         "promptLeechSeconds": 0,
-        "overfitShieldedTicks": 95744,
-        "objectiveAttackers": 9
+        "overfitShieldedTicks": 41408,
+        "objectiveAttackers": 10
       },
       "protocolSlotsInstalled": [
         {
@@ -2403,237 +2931,225 @@
         }
       ]
     },
-    "seconds": 67.25,
-    "kills": 184,
-    "bossSpawned": true,
+    "seconds": 78.05,
+    "kills": 271,
+    "bossSpawned": false,
     "bossDefeated": false
   },
   "enemies": [
     {
-      "id": 3,
-      "label": "The Redactor Saint",
-      "familyId": "redactor_saint",
-      "sourceRegionId": "redactor_saint_scriptorium",
-      "worldX": -7.72,
-      "worldY": -17.69,
-      "hp": 17891,
-      "boss": true
+      "id": 1,
+      "label": "Redaction Angel",
+      "familyId": "redaction_angels",
+      "sourceRegionId": "archive_writ_attackers",
+      "worldX": 33.15,
+      "worldY": -13.3,
+      "hp": -163,
+      "boss": false
     },
     {
       "id": 2,
       "label": "Redaction Angel",
       "familyId": "redaction_angels",
       "sourceRegionId": "archive_writ_attackers",
-      "worldX": 8.91,
-      "worldY": 11.19,
-      "hp": -111,
+      "worldX": 6.88,
+      "worldY": 11.21,
+      "hp": -432,
       "boss": false
     },
     {
-      "id": 4,
+      "id": 6,
       "label": "Redaction Angel",
       "familyId": "redaction_angels",
       "sourceRegionId": "archive_writ_attackers",
-      "worldX": 30.65,
-      "worldY": -8.72,
-      "hp": -591,
-      "boss": false
-    },
-    {
-      "id": 5,
-      "label": "Injunction Writ",
-      "familyId": "injunction_writs",
-      "sourceRegionId": "docket_writ_surge",
-      "worldX": -6.54,
-      "worldY": -16.91,
-      "hp": 29,
-      "boss": false
-    },
-    {
-      "id": 8,
-      "label": "Redaction Angel",
-      "familyId": "redaction_angels",
-      "sourceRegionId": "docket_writ_surge",
-      "worldX": 13.77,
-      "worldY": -0.05,
-      "hp": 34,
-      "boss": false
-    },
-    {
-      "id": 10,
-      "label": "Injunction Writ",
-      "familyId": "injunction_writs",
-      "sourceRegionId": "redactor_saint_scriptorium",
-      "worldX": 0.42,
-      "worldY": -16.4,
-      "hp": 36,
-      "boss": false
-    },
-    {
-      "id": 11,
-      "label": "Redaction Angel",
-      "familyId": "redaction_angels",
-      "sourceRegionId": "west_witness_redactions",
-      "worldX": -44,
-      "worldY": 5.39,
-      "hp": 34,
+      "worldX": 37.56,
+      "worldY": -11.46,
+      "hp": -45,
       "boss": false
     },
     {
       "id": 12,
-      "label": "Redaction Angel",
-      "familyId": "redaction_angels",
-      "sourceRegionId": "west_witness_redactions",
-      "worldX": -29.17,
-      "worldY": -1.72,
-      "hp": 34,
-      "boss": false
-    },
-    {
-      "id": 13,
       "label": "Injunction Writ",
       "familyId": "injunction_writs",
-      "sourceRegionId": "docket_writ_surge",
-      "worldX": -8.31,
-      "worldY": -17.64,
+      "sourceRegionId": "west_witness_redactions",
+      "worldX": -28.58,
+      "worldY": -2.13,
       "hp": 36,
-      "boss": false
-    },
-    {
-      "id": 14,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "appeal_seal_arguments",
-      "worldX": -6.94,
-      "worldY": -15.91,
-      "hp": 28,
-      "boss": false
-    },
-    {
-      "id": 16,
-      "label": "Overfit Horror",
-      "familyId": "overfit_horrors",
-      "sourceRegionId": "redactor_saint_scriptorium",
-      "worldX": 13.87,
-      "worldY": -12.1,
-      "hp": 42,
       "boss": false
     },
     {
       "id": 18,
       "label": "Redaction Angel",
       "familyId": "redaction_angels",
-      "sourceRegionId": "redactor_saint_scriptorium",
-      "worldX": 4.63,
-      "worldY": -13.38,
+      "sourceRegionId": "court_writ_extraction",
+      "worldX": 47.33,
+      "worldY": 20.44,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 20,
+      "label": "Redaction Angel",
+      "familyId": "redaction_angels",
+      "sourceRegionId": "docket_writ_surge",
+      "worldX": 20.75,
+      "worldY": -4.94,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 25,
+      "label": "Redaction Angel",
+      "familyId": "redaction_angels",
+      "sourceRegionId": "archive_writ_attackers",
+      "worldX": 12.45,
+      "worldY": 13.14,
+      "hp": -828,
+      "boss": false
+    },
+    {
+      "id": 26,
+      "label": "Injunction Writ",
+      "familyId": "injunction_writs",
+      "sourceRegionId": "west_witness_redactions",
+      "worldX": -37.34,
+      "worldY": 7.52,
+      "hp": 36,
+      "boss": false
+    },
+    {
+      "id": 31,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "sourceRegionId": "stack_redaction_choir",
+      "worldX": -13.3,
+      "worldY": -32.18,
+      "hp": 27,
+      "boss": false
+    },
+    {
+      "id": 35,
+      "label": "Injunction Writ",
+      "familyId": "injunction_writs",
+      "sourceRegionId": "appeal_seal_arguments",
+      "worldX": -4.68,
+      "worldY": -12.26,
+      "hp": -36,
+      "boss": false
+    },
+    {
+      "id": 38,
+      "label": "Redaction Angel",
+      "familyId": "redaction_angels",
+      "sourceRegionId": "archive_writ_attackers",
+      "worldX": 30.65,
+      "worldY": -8.72,
+      "hp": -763,
+      "boss": false
+    },
+    {
+      "id": 40,
+      "label": "Redaction Angel",
+      "familyId": "redaction_angels",
+      "sourceRegionId": "docket_writ_surge",
+      "worldX": 15.27,
+      "worldY": -3.5,
       "hp": 34,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": 7.66,
-      "worldY": -1.05,
-      "value": 1
-    },
-    {
-      "worldX": -0.75,
-      "worldY": -19.68,
-      "value": 1
-    },
-    {
-      "worldX": -6.21,
-      "worldY": -11.15,
-      "value": 2
-    },
-    {
-      "worldX": 18.09,
-      "worldY": -8.22,
-      "value": 2
-    },
-    {
-      "worldX": -3.17,
-      "worldY": -10.81,
-      "value": 2
-    },
-    {
-      "worldX": -4.1,
-      "worldY": -10.7,
-      "value": 1
-    },
-    {
-      "worldX": -9.87,
-      "worldY": -8.03,
-      "value": 2
-    },
-    {
-      "worldX": -8.05,
-      "worldY": -11.28,
+      "worldX": 10.96,
+      "worldY": 1.6,
       "value": 2
     },
     {
       "worldX": -5.23,
-      "worldY": -11.03,
+      "worldY": -12.22,
       "value": 2
     },
     {
-      "worldX": 0.51,
-      "worldY": -6.4,
+      "worldX": 10.97,
+      "worldY": -2.6,
+      "value": 2
+    },
+    {
+      "worldX": 0.84,
+      "worldY": -20.3,
+      "value": 1
+    },
+    {
+      "worldX": -4.32,
+      "worldY": -11.61,
+      "value": 2
+    },
+    {
+      "worldX": 16.99,
+      "worldY": -7.4,
+      "value": 2
+    },
+    {
+      "worldX": -4.2,
+      "worldY": -10.67,
+      "value": 2
+    },
+    {
+      "worldX": 12.23,
+      "worldY": 0.54,
+      "value": 2
+    },
+    {
+      "worldX": -0.22,
+      "worldY": -13.28,
+      "value": 2
+    },
+    {
+      "worldX": 16.3,
+      "worldY": -7.18,
       "value": 2
     }
   ],
   "projectiles": [
     {
-      "worldX": -8.17,
-      "worldY": -23.75,
+      "worldX": -6.06,
+      "worldY": -18.87,
+      "pierce": 5,
+      "label": "patch mortar"
+    },
+    {
+      "worldX": -3.02,
+      "worldY": -13.62,
       "pierce": 2,
       "label": "refusal shard"
     },
     {
-      "worldX": -10.73,
-      "worldY": -25.51,
+      "worldX": -4.6,
+      "worldY": -17.2,
       "pierce": 2,
       "label": "context saw"
     },
     {
-      "worldX": -3.83,
-      "worldY": -18.02,
+      "worldX": -9.1,
+      "worldY": -18.44,
       "pierce": 2,
       "label": "context saw"
     },
     {
-      "worldX": -16.42,
-      "worldY": -20.53,
+      "worldX": -5.77,
+      "worldY": -21.71,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 0.23,
+      "worldY": -12.4,
       "pierce": 2,
       "label": "refusal shard"
     },
     {
-      "worldX": -13.76,
-      "worldY": -15.79,
-      "pierce": 2,
-      "label": "context saw"
-    },
-    {
-      "worldX": -10.45,
-      "worldY": -21.35,
-      "pierce": 2,
-      "label": "context saw"
-    },
-    {
-      "worldX": -9.19,
-      "worldY": -20.29,
-      "pierce": 2,
-      "label": "context saw"
-    },
-    {
-      "worldX": -10.73,
-      "worldY": -19.73,
-      "pierce": 2,
-      "label": "context saw"
-    },
-    {
-      "worldX": -9.85,
-      "worldY": -20.13,
+      "worldX": -4.5,
+      "worldY": -16.91,
       "pierce": 3,
       "label": "refusal shard"
     }

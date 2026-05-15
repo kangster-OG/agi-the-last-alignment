@@ -22,19 +22,19 @@ export const CONSENSUS_BURST_PATHS: ConsensusBurstPath[] = [
   {
     id: "deny_premise",
     name: "Deny Premise",
-    body: "A refusal wave damages nearby enemies and strips boss pressure.",
+    body: "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
     color: 0xff5d57
   },
   {
     id: "mass_recompile",
     name: "Mass Recompile",
-    body: "A stabilizing pulse heals the cell and converts pressure into space.",
+    body: "A stabilizing pulse heals the cell and converts pressure into space. Emergency therapy, but concussive.",
     color: 0x64e0b4
   },
   {
     id: "fork_bomb_halo",
     name: "Fork Bomb Halo",
-    body: "Duplicate shards spiral from every standing player.",
+    body: "Duplicate shards spiral from every standing player. Consensus has chosen quantity and plausible chaos.",
     color: 0xc96cff
   }
 ];

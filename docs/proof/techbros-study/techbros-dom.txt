@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="en"><head>
+    <!-- Google tag (gtag.js) -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XM24BL7KZ7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XM24BL7KZ7');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Bros: Save the World</title>
+    <meta name="description" content="A chaotic pixel-art survival game where Silicon Valley fights to shut down rogue AI.">
+    <link rel="canonical" href="https://tech-bros-c98f2.web.app">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+
+    <!-- Social preview cards -->
+    <meta property="og:title" content="Tech Bros: Save the World">
+    <meta property="og:description" content="A chaotic pixel-art survival game where Silicon Valley fights to shut down rogue AI.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tech-bros-c98f2.web.app">
+    <meta property="og:image" content="https://tech-bros-c98f2.web.app/assets/tech_bros_cover_art.png">
+    <meta property="og:image:width" content="1672">
+    <meta property="og:image:height" content="941">
+    <meta property="og:image:alt" content="Tech Bros: Save the World cover art">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tech Bros: Save the World">
+    <meta name="twitter:description" content="A chaotic pixel-art survival game where Silicon Valley fights to shut down rogue AI.">
+    <meta name="twitter:image" content="https://tech-bros-c98f2.web.app/assets/tech_bros_cover_art.png">
+    <meta name="twitter:image:alt" content="Tech Bros: Save the World cover art">
+
+    <!-- Pixel font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap" rel="stylesheet">
+
+    <!-- Vibe Jam 2026 widget -->
+    <script async="" src="https://jam.pieter.com/2026/widget.js"></script>
+
+    <style>
+        @font-face {
+            font-family: '8Bit Wonder';
+            src: url('assets/fonts/8-BIT WONDER.TTF') format('truetype');
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            overscroll-behavior: none;
+            touch-action: none;
+            background: #000;
+            font-family: 'Press Start 2P', monospace;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        canvas {
+            display: block;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        #boot-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: grid;
+            place-items: center;
+            background: #000;
+            opacity: 1;
+            transition: opacity 250ms ease;
+            pointer-events: none;
+        }
+
+        #boot-overlay.is-hidden {
+            opacity: 0;
+        }
+
+        .boot-loading-text {
+            color: #ffdd55;
+            font-family: '8Bit Wonder', 'Press Start 2P', monospace;
+            font-size: 30px;
+            letter-spacing: 0;
+            text-shadow:
+                3px 3px 0 #440000,
+                0 0 10px rgba(0, 0, 0, 0.9);
+            animation: boot-loading-pulse 1.1s ease-in-out infinite alternate;
+        }
+
+        @media (max-width: 520px) {
+            .boot-loading-text {
+                font-size: 18px;
+            }
+        }
+
+        @keyframes boot-loading-pulse {
+            from {
+                transform: translateY(-7px) scale(0.97);
+            }
+
+            to {
+                transform: translateY(7px) scale(1.03);
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        (() => {
+            const overlay = document.getElementById('boot-overlay');
+            const text = document.getElementById('boot-loading-text');
+            let frame = 0;
+            const timer = window.setInterval(() => {
+                if (!text) return;
+                frame = (frame + 1) % 3;
+                text.textContent = `LOADING${'.'.repeat(frame + 1)}`;
+            }, 500);
+
+            window.__vibeBootLoader = {
+                hide() {
+                    window.clearInterval(timer);
+                    if (!overlay) return;
+                    overlay.classList.add('is-hidden');
+                    window.setTimeout(() => overlay.remove(), 300);
+                },
+                showError() {
+                    window.clearInterval(timer);
+                    if (text) text.textContent = 'LOAD ERROR';
+                },
+            };
+        })();
+    </script>
+
+    <!-- PixiJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.3.3/pixi.min.js"></script>
+
+    <!-- GSAP (tweens) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
+
+    <!-- PeerJS (co-op networking) - parked until post-jam co-op work resumes. -->
+    <!-- <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script> -->
+
+    <script type="module" src="src/main.js"></script>
+
+
+<a target="_blank" href="https://vibej.am/" data-vibe-check-jam-widget="true" style="font-family: &quot;system-ui&quot;, sans-serif; position: fixed; bottom: -1px; right: -1px; padding: 7px 14px; font-size: 14px; font-weight: bold; background: rgb(0, 0, 0); color: rgb(255, 255, 255); text-decoration: none; z-index: 10000; border-top-left-radius: 12px; border: 1px solid rgb(0, 0, 0);" data-vibe-check-original-display="">🕹️ Vibe Jam 2026</a><canvas width="1280" height="720" style="touch-action: none; width: 1280px; height: 720px; position: absolute; left: 0px; top: 0px; cursor: inherit;"></canvas></body></html>

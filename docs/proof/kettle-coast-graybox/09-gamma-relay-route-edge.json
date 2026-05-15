@@ -70,11 +70,14 @@
   },
   "build": {
     "weaponId": "refusal_shard",
-    "secondaryProtocols": [],
+    "secondaryProtocols": [
+      "context_saw"
+    ],
     "passiveProcesses": [
       "coolant_baffles",
       "server_buoy_synchronizer",
-      "anchor_bodyguard"
+      "anchor_bodyguard",
+      "prompt_leech_quarantine"
     ],
     "fusions": [
       "cathedral_of_no"
@@ -83,30 +86,30 @@
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
     "projectilePierce": 3,
-    "pickupRange": 4.07,
-    "moveSpeedBonus": 0.405,
+    "pickupRange": 5.42,
+    "moveSpeedBonus": 0.6250000000000001,
     "maxHpBonus": 34,
     "refusalAura": 2.49,
     "draftRerolls": 1,
-    "draftChoicesBonus": 1,
+    "draftChoicesBonus": 2,
     "consensusBurstRadius": 0,
     "consensusBurstDamage": 0,
-    "consensusBurstChargeRate": 0.4,
+    "consensusBurstChargeRate": 0.465,
     "consensusBurstRevive": 0,
     "objectiveRepairRate": 0.5,
-    "objectiveDefense": 0.64,
+    "objectiveDefense": 0.6749999999999999,
     "signalWindowControl": 0,
     "relayJamResistance": 0.12,
     "skimmerCountermeasure": 0,
     "shorelineStride": 0,
-    "contextSaw": 0,
+    "contextSaw": 1,
     "patchMortar": 0,
     "coherenceIndexer": 0,
     "anchorBodyguard": 1,
     "predictionPriority": 0,
     "coolantBaffles": 1,
     "serverBuoySynchronizer": 1,
-    "promptLeechQuarantine": 0,
+    "promptLeechQuarantine": 1,
     "groundedCableBoots": 0,
     "coolingHazardMitigation": 0.22,
     "causalRailgun": 0,
@@ -117,17 +120,20 @@
         "current": "refusal_shard"
       },
       "secondary": {
-        "used": 0,
+        "used": 1,
         "cap": 2,
-        "current": []
+        "current": [
+          "context_saw"
+        ]
       },
       "passive": {
-        "used": 3,
+        "used": 4,
         "cap": 4,
         "current": [
           "coolant_baffles",
           "server_buoy_synchronizer",
-          "anchor_bodyguard"
+          "anchor_bodyguard",
+          "prompt_leech_quarantine"
         ]
       },
       "fusion": {
@@ -209,12 +215,15 @@
     "Server Buoy Synchronizer",
     "Cathedral of No",
     "Anchor Bodyguard",
-    "Treaty Anchor Toolkit"
+    "Treaty Anchor Toolkit",
+    "Prompt Leech Quarantine",
+    "Refusal Slipstream",
+    "Context Saw"
   ],
   "objective": "break The Lighthouse That Answers // tide bands live",
   "performance": {
-    "entitiesAllocated": 331,
-    "activeEntities": 277,
+    "entitiesAllocated": 572,
+    "activeEntities": 219,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -280,9 +289,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 1,
-      "hit": 264,
-      "pickup": 317,
+      "ui": 6,
+      "hit": 1326,
+      "pickup": 2791,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
@@ -292,42 +301,42 @@
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 72916
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 72915
+        "atMs": 110874
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 72915
+        "atMs": 109898
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 72914
+        "atMs": 109896
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 72914
+        "atMs": 109896
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 71489
+        "atMs": 109896
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 71486
+        "atMs": 109895
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 71484
+        "atMs": 108733
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 108732
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -720,33 +729,33 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": {
-    "worldX": 13.27,
-    "worldY": 6.41,
+    "worldX": 13.15,
+    "worldY": 6.37,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
-    "hp": 232,
+    "hp": 319,
     "maxHp": 324,
-    "xp": 717,
-    "level": 9,
+    "xp": 1168,
+    "level": 12,
     "damageFeedback": {
       "flash": 0,
       "hpPulse": 0,
       "stagger": 0,
-      "lastDamage": 8
+      "lastDamage": 10
     }
   },
   "players": [
@@ -816,20 +825,20 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
-      "worldX": 13.27,
-      "worldY": 6.41,
+      "worldX": 13.15,
+      "worldY": 6.37,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 232,
+      "hp": 319,
       "maxHp": 324,
-      "xp": 717,
-      "level": 9,
+      "xp": 1168,
+      "level": 12,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
         "stagger": 0,
-        "lastDamage": 8
+        "lastDamage": 10
       },
       "downed": false
     }
@@ -854,7 +863,10 @@
       "server_buoy_synchronizer",
       "cathedral_of_no",
       "anchor_bodyguard",
-      "treaty_anchor_toolkit"
+      "treaty_anchor_toolkit",
+      "prompt_leech_quarantine",
+      "refusal_slipstream",
+      "context_saw"
     ],
     "mapId": "signal_coast_graybox",
     "mapBounds": {
@@ -869,6 +881,13 @@
       "pressureSource": "corrupted surf tide bands, static fields, cable arcs, Static Skimmer relay jams",
       "rewardPromise": "clear signal lane, burst tempo, coastal extraction, and post-Transit route clarity",
       "bossEventPattern": "The Lighthouse That Answers sweeps signal beams, calls tide pulses, and spawns Static Skimmers",
+      "primaryDifficultyLever": "information pressure",
+      "secondaryDifficultyLever": "spatial pressure",
+      "activePressureLevers": [
+        "information pressure",
+        "spatial pressure",
+        "objective pressure"
+      ],
       "artPolicy": "honest debug/graybox/proof visuals only; not production art"
     },
     "staticObstacles": {
@@ -894,6 +913,7 @@
       "shore_relay_alpha",
       "broken_server_causeway",
       "causeway_relay_beta",
+      "lighthouse_that_answers_shelf",
       "lighthouse_relay_gamma",
       "corrupted_surf_shelf"
     ],
@@ -963,20 +983,20 @@
     ],
     "lastSpawnRegionId": "west_surf_static_skimmers",
     "spawnedByRegion": {
-      "west_surf_static_skimmers": 188,
-      "adaptive_pressure_flank": 3,
-      "causeway_skim_lane": 94,
-      "static_relay_jammers": 124,
-      "east_undertow_packets": 62,
-      "lighthouse_signal_shelf": 85,
-      "offshore_surf_overflow": 11
+      "west_surf_static_skimmers": 624,
+      "adaptive_pressure_flank": 5,
+      "causeway_skim_lane": 403,
+      "static_relay_jammers": 600,
+      "east_undertow_packets": 408,
+      "lighthouse_signal_shelf": 561,
+      "offshore_surf_overflow": 349
     },
     "director": {
-      "phase": "boss_arrival",
-      "totalSpawned": 576,
-      "activeEnemyCap": 110.75999999999999,
-      "lastBurstSize": 7,
-      "activeEnemyCount": 113
+      "phase": "late_extraction",
+      "totalSpawned": 2959,
+      "activeEnemyCap": 133.64,
+      "lastBurstSize": 8,
+      "activeEnemyCount": 134
     },
     "consensusCell": {
       "playerCount": 1,
@@ -990,9 +1010,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 4636,
+          "tick": 19187,
           "playerId": "p1",
-          "sequence": 4636,
+          "sequence": 19187,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -1001,8 +1021,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 4636,
-        "seconds": 77.27,
+        "tick": 19187,
+        "seconds": 319.78,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -1077,264 +1097,319 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": 13.27,
-            "worldY": 6.41,
-            "hp": 232,
+            "worldX": 13.15,
+            "worldY": 6.37,
+            "hp": 319,
             "maxHp": 324,
-            "xp": 717,
-            "level": 9,
+            "xp": 1168,
+            "level": 12,
             "downed": false
           }
         ],
         "enemies": [
           {
-            "id": 19,
-            "familyId": "static_skimmers",
+            "id": 3,
+            "familyId": "bad_outputs",
             "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": -15.53,
-            "worldY": 12.34,
+            "worldX": -11.53,
+            "worldY": 7.49,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 10,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "west_surf_static_skimmers",
+            "worldX": -7.6,
+            "worldY": 6.97,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 14,
+            "familyId": "static_skimmers",
+            "sourceRegionId": "causeway_skim_lane",
+            "worldX": 15.3,
+            "worldY": -0.49,
             "hp": 24,
             "boss": false
           },
           {
-            "id": 20,
+            "id": 21,
             "familyId": "static_skimmers",
-            "sourceRegionId": "static_relay_jammers",
-            "worldX": 8.12,
-            "worldY": 2.65,
+            "sourceRegionId": "lighthouse_signal_shelf",
+            "worldX": 24.06,
+            "worldY": -3.42,
             "hp": 24,
             "boss": false
+          },
+          {
+            "id": 23,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "lighthouse_signal_shelf",
+            "worldX": 17.37,
+            "worldY": -3.32,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 26,
+            "familyId": "lighthouse_that_answers",
+            "sourceRegionId": "lighthouse_signal_shelf",
+            "worldX": 15.12,
+            "worldY": 4.01,
+            "hp": 4325,
+            "boss": true
           },
           {
             "id": 28,
+            "familyId": "deepforms",
+            "sourceRegionId": "offshore_surf_overflow",
+            "worldX": 37.01,
+            "worldY": 14.88,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 30,
             "familyId": "static_skimmers",
-            "sourceRegionId": "east_undertow_packets",
-            "worldX": 17.64,
-            "worldY": 7.93,
+            "sourceRegionId": "west_surf_static_skimmers",
+            "worldX": -19.73,
+            "worldY": 15.33,
             "hp": 24,
             "boss": false
           },
           {
-            "id": 29,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": -15.25,
-            "worldY": 9.77,
-            "hp": 34,
+            "id": 32,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "causeway_skim_lane",
+            "worldX": -0.12,
+            "worldY": -1.58,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 33,
+            "familyId": "deepforms",
+            "sourceRegionId": "offshore_surf_overflow",
+            "worldX": 31.19,
+            "worldY": 9.78,
+            "hp": 44,
             "boss": false
           },
           {
             "id": 35,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "lighthouse_signal_shelf",
-            "worldX": 26.25,
-            "worldY": -5.31,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 49,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": -27.18,
-            "worldY": 6.93,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 53,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": -18.62,
-            "worldY": 14.38,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 55,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": 5.82,
-            "worldY": 8,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 61,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": 8.02,
-            "worldY": 6.56,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 63,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": -3.26,
-            "worldY": 9.3,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 76,
             "familyId": "static_skimmers",
-            "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": -7.8,
-            "worldY": 8,
+            "sourceRegionId": "causeway_skim_lane",
+            "worldX": 0.51,
+            "worldY": -4.56,
             "hp": 24,
             "boss": false
           },
           {
-            "id": 91,
+            "id": 38,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "lighthouse_signal_shelf",
+            "worldX": 18.77,
+            "worldY": 2.06,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 41,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "lighthouse_signal_shelf",
+            "worldX": 23.65,
+            "worldY": -3.68,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 42,
             "familyId": "deepforms",
-            "sourceRegionId": "east_undertow_packets",
-            "worldX": 15.62,
-            "worldY": 8.38,
-            "hp": 10,
-            "boss": false
-          },
-          {
-            "id": 92,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": -24.96,
-            "worldY": 6.81,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 99,
-            "familyId": "model_collapse_slimes",
             "sourceRegionId": "offshore_surf_overflow",
-            "worldX": 26.1,
-            "worldY": 15.32,
+            "worldX": 21.71,
+            "worldY": 7.15,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 51,
+            "familyId": "static_skimmers",
+            "sourceRegionId": "west_surf_static_skimmers",
+            "worldX": 6.8,
+            "worldY": 7.88,
+            "hp": 24,
+            "boss": false
+          },
+          {
+            "id": 52,
+            "familyId": "model_collapse_slimes",
+            "sourceRegionId": "static_relay_jammers",
+            "worldX": 2.95,
+            "worldY": -0.38,
             "hp": 38,
             "boss": false
           },
           {
-            "id": 108,
-            "familyId": "lighthouse_that_answers",
-            "sourceRegionId": "lighthouse_signal_shelf",
-            "worldX": 14.47,
-            "worldY": 4.29,
-            "hp": 2218,
-            "boss": true
-          },
-          {
-            "id": 111,
-            "familyId": "bad_outputs",
-            "sourceRegionId": "west_surf_static_skimmers",
-            "worldX": -22.7,
-            "worldY": 9.71,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 112,
-            "familyId": "static_skimmers",
-            "sourceRegionId": "lighthouse_signal_shelf",
-            "worldX": 18,
-            "worldY": -3.77,
-            "hp": 24,
-            "boss": false
-          },
-          {
-            "id": 119,
+            "id": 54,
             "familyId": "eval_wraiths",
-            "sourceRegionId": "lighthouse_signal_shelf",
-            "worldX": 17.45,
-            "worldY": -12.06,
+            "sourceRegionId": "causeway_skim_lane",
+            "worldX": 8.68,
+            "worldY": 2.66,
             "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 57,
+            "familyId": "model_collapse_slimes",
+            "sourceRegionId": "static_relay_jammers",
+            "worldX": 4.41,
+            "worldY": 3.25,
+            "hp": 38,
             "boss": false
           }
         ],
         "pickups": [
           {
-            "id": 1,
-            "worldX": -14.76,
-            "worldY": 10.08,
-            "value": 1
-          },
-          {
-            "id": 2,
-            "worldX": -26.69,
-            "worldY": 2.54,
-            "value": 1
-          },
-          {
-            "id": 3,
-            "worldX": -6.1,
-            "worldY": 0.77,
-            "value": 1
-          },
-          {
-            "id": 4,
-            "worldX": -26.84,
-            "worldY": 8.74,
-            "value": 1
-          },
-          {
-            "id": 5,
-            "worldX": -8.35,
-            "worldY": 2.15,
-            "value": 1
-          },
-          {
-            "id": 6,
-            "worldX": -21.92,
-            "worldY": 8.58,
-            "value": 1
-          },
-          {
             "id": 7,
-            "worldX": -6.54,
-            "worldY": 1.52,
-            "value": 1
+            "worldX": 21.13,
+            "worldY": -2.67,
+            "value": 2
           },
           {
             "id": 8,
-            "worldX": -15.13,
-            "worldY": -10.31,
+            "worldX": 20.9,
+            "worldY": -3.35,
             "value": 1
           },
           {
             "id": 9,
-            "worldX": -5.65,
-            "worldY": -3.96,
-            "value": 1
-          },
-          {
-            "id": 10,
-            "worldX": -23.72,
-            "worldY": 1.59,
+            "worldX": 19.86,
+            "worldY": 8.14,
             "value": 1
           },
           {
             "id": 11,
-            "worldX": -2.9,
-            "worldY": -1.06,
+            "worldX": 29.6,
+            "worldY": -8.36,
+            "value": 2
+          },
+          {
+            "id": 13,
+            "worldX": 25.91,
+            "worldY": -7.14,
             "value": 1
           },
           {
-            "id": 12,
-            "worldX": -23.34,
-            "worldY": 11.21,
+            "id": 15,
+            "worldX": 25.43,
+            "worldY": 2.12,
+            "value": 2
+          },
+          {
+            "id": 16,
+            "worldX": 22.82,
+            "worldY": 0.07,
+            "value": 1
+          },
+          {
+            "id": 18,
+            "worldX": 24.01,
+            "worldY": -4.48,
+            "value": 1
+          },
+          {
+            "id": 24,
+            "worldX": 24.51,
+            "worldY": -1.24,
+            "value": 1
+          },
+          {
+            "id": 27,
+            "worldX": 17.92,
+            "worldY": -3.14,
+            "value": 1
+          },
+          {
+            "id": 39,
+            "worldX": 23.73,
+            "worldY": -3.32,
+            "value": 1
+          },
+          {
+            "id": 44,
+            "worldX": 10.76,
+            "worldY": -16.69,
             "value": 1
           }
         ],
-        "projectiles": []
+        "projectiles": [
+          {
+            "id": 31,
+            "worldX": 14.41,
+            "worldY": 5.23,
+            "pierce": 3
+          },
+          {
+            "id": 80,
+            "worldX": 13.63,
+            "worldY": 3.96,
+            "pierce": 2
+          },
+          {
+            "id": 81,
+            "worldX": 15,
+            "worldY": 8,
+            "pierce": 2
+          },
+          {
+            "id": 86,
+            "worldX": 10.82,
+            "worldY": 7.17,
+            "pierce": 2
+          }
+        ]
       }
     },
     "combatArt": {
-      "projectileCount": 0,
+      "projectileCount": 4,
       "impactCount": 0,
-      "pickupSparkleCount": 0,
-      "damageBadgeCount": 7,
+      "pickupSparkleCount": 25,
+      "damageBadgeCount": 10,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
+      "bossContract": {
+        "bossId": "lighthouse_that_answers",
+        "displayName": "The Lighthouse That Answers",
+        "homeLandmark": "Signal Lighthouse Shelf",
+        "introTitleCardTrigger": "Boss timer reaches the lighthouse answer after relay calibration pressure begins.",
+        "supportSpawnSource": "lighthouse_signal_shelf",
+        "mapMechanicInteraction": "Signal beams and tide pulses turn relay routing into clear-window timing.",
+        "phaseBehavior": [
+          "Beam sweeps call out unsafe coast lanes.",
+          "Tide pulses rotate safe spits.",
+          "Static Skimmers jam relays during beam pressure."
+        ],
+        "clearCondition": "Calibrate coastal relays, defeat the Lighthouse, then enter coastal extraction.",
+        "rewardCarryover": "Clear signal lane, coastal extraction, and Blackwater route clarity.",
+        "movementPressure": {
+          "hazardZones": "Surf and static fields rotate safe lanes.",
+          "landmarkAttacks": "Lighthouse beams point from the shelf into the route.",
+          "objectivePressure": "Relays decay when jammed or left.",
+          "supportEnemies": "Static Skimmers contest relay space.",
+          "temporaryRouteBlocking": "Signal beams temporarily close beach approaches.",
+          "extractionPressure": "Extraction path runs through the tuned coast."
+        },
+        "runtime": {
+          "introSeen": true,
+          "bossSpawned": true,
+          "bossDefeated": false,
+          "homeLandmarkVisited": true,
+          "currentBossHp": 4325
+        }
+      },
       "bossIntroSeen": true,
       "brokenPromiseZones": [],
       "activeTreatyCharge": null,
@@ -1405,7 +1480,7 @@
         "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
       },
       "victoryCondition": {
-        "targetSeconds": 92,
+        "targetSeconds": 480,
         "bossRequired": true,
         "bossDefeated": false,
         "clearReady": false,
@@ -1418,9 +1493,9 @@
       },
       "levelUpVacuum": {
         "active": false,
-        "absorbed": 0,
-        "triggerLevel": 1,
-        "remainingPickups": 154
+        "absorbed": 26,
+        "triggerLevel": 11,
+        "remainingPickups": 44
       },
       "extractionGate": {
         "active": false,
@@ -1430,16 +1505,16 @@
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
         "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 47,
+        "charge": 52,
         "maxCharge": 100,
         "ready": false,
-        "activations": 34,
-        "lastActivationLabel": "Deny Premise hit 11",
-        "lastActivatedAt": 76.53333333333028,
+        "activations": 208,
+        "lastActivationLabel": "Deny Premise hit 18",
+        "lastActivatedAt": 319.1500000000384,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0,
-          "chargeRateBonus": 0.4,
+          "chargeRateBonus": 0.465,
           "revivePulse": 0
         }
       },
@@ -1460,13 +1535,17 @@
       "objective": {
         "id": "signal_relay_calibration",
         "name": "Signal Relay Calibration",
-        "body": "Calibrate Signal Coast's relay beacons. Clear signal windows speed calibration; static surf and skimmers can jam or decay it.",
+        "body": "Tune Signal Coast's relay beacons during clear crossing windows; static surf and skimmers can jam or decay it.",
+        "styleId": "signal_window",
+        "styleName": "Timed Crossing",
+        "mechanicPlain": "Cross during clear signal windows to tune relays before static fields jam the shoreline.",
+        "hudHint": "Use the clear signal window, then tune the relay.",
         "optional": false,
         "completed": 3,
         "total": 3,
         "complete": true,
-        "completedAt": 49.649999999998464,
-        "attackersSpawned": 6,
+        "completedAt": 300.516666666722,
+        "attackersSpawned": 8,
         "anchors": [
           {
             "id": "relay.alpha",
@@ -1480,16 +1559,65 @@
             "name": "Causeway Relay Beta",
             "progress": 100,
             "completed": true,
-            "attacked": 28
+            "attacked": 35
           },
           {
             "id": "relay.gamma",
             "name": "Lighthouse Relay Gamma",
             "progress": 100,
             "completed": true,
-            "attacked": 48
+            "attacked": 764
           }
         ]
+      },
+      "objectiveVariety": {
+        "styleId": "signal_window",
+        "styleName": "Timed Crossing",
+        "mechanicPlain": "Cross during clear signal windows to tune relays before static fields jam the shoreline.",
+        "hudAction": "Use the clear signal window, then tune the relay.",
+        "completionSignal": "Relays tune fastest when the player times crossings with clean signal.",
+        "proofHook": "signal_window_timing",
+        "runtime": {
+          "engagementSeconds": 3.08,
+          "bonusProgressSeconds": 3.08,
+          "lastBonusLabel": "CLEAR SIGNAL"
+        }
+      },
+      "campaignDuration": {
+        "targetSeconds": 480,
+        "bossSeconds": 290,
+        "phaseId": "boss_pressure",
+        "phaseLabel": "Boss pressure",
+        "phaseElapsed": 29.78,
+        "nextPhaseTime": 425,
+        "phaseProgress": 0.22,
+        "midRunBeatCount": 2,
+        "extractionTailSeconds": 55,
+        "expectedClearBand": {
+          "minSeconds": 480,
+          "maxSeconds": 530
+        },
+        "rewardBeats": [
+          150,
+          290,
+          385
+        ],
+        "claimedRewardBeats": [
+          150,
+          290
+        ],
+        "cycleDepth": {
+          "routeWindowCycles": 0,
+          "hazardLureCycles": 0,
+          "clearSignalCycles": 40,
+          "towerWarningCycles": 0,
+          "carryLaneSeconds": 0,
+          "holdWindowReleases": 0,
+          "prismActivations": 0,
+          "evidenceCarryCycles": 0,
+          "publicWindowArguments": 0,
+          "finaleRemixRulesSeen": 0
+        }
       },
       "coolingLake": null,
       "transitLoop": null,
@@ -1500,6 +1628,13 @@
           "pressureSource": "corrupted surf tide bands, static fields, cable arcs, Static Skimmer relay jams",
           "rewardPromise": "clear signal lane, burst tempo, coastal extraction, and post-Transit route clarity",
           "bossEventPattern": "The Lighthouse That Answers sweeps signal beams, calls tide pulses, and spawns Static Skimmers",
+          "primaryDifficultyLever": "information pressure",
+          "secondaryDifficultyLever": "spatial pressure",
+          "activePressureLevers": [
+            "information pressure",
+            "spatial pressure",
+            "objective pressure"
+          ],
           "artPolicy": "honest debug/graybox/proof visuals only; not production art"
         },
         "objectiveLoop": {
@@ -1509,13 +1644,17 @@
           "progress": {
             "id": "signal_relay_calibration",
             "name": "Signal Relay Calibration",
-            "body": "Calibrate Signal Coast's relay beacons. Clear signal windows speed calibration; static surf and skimmers can jam or decay it.",
+            "body": "Tune Signal Coast's relay beacons during clear crossing windows; static surf and skimmers can jam or decay it.",
+            "styleId": "signal_window",
+            "styleName": "Timed Crossing",
+            "mechanicPlain": "Cross during clear signal windows to tune relays before static fields jam the shoreline.",
+            "hudHint": "Use the clear signal window, then tune the relay.",
             "optional": false,
             "completed": 3,
             "total": 3,
             "complete": true,
-            "completedAt": 49.649999999998464,
-            "attackersSpawned": 6,
+            "completedAt": 300.516666666722,
+            "attackersSpawned": 8,
             "anchors": [
               {
                 "id": "relay.alpha",
@@ -1529,14 +1668,14 @@
                 "name": "Causeway Relay Beta",
                 "progress": 100,
                 "completed": true,
-                "attacked": 28
+                "attacked": 35
               },
               {
                 "id": "relay.gamma",
                 "name": "Lighthouse Relay Gamma",
                 "progress": 100,
                 "completed": true,
-                "attacked": 48
+                "attacked": 764
               }
             ]
           },
@@ -1548,6 +1687,8 @@
             "west_corrupted_surf",
             "center_tide_band",
             "offshore_surf_band",
+            "relay_static_field",
+            "south_static_shelf",
             "lighthouse_return_arc"
           ],
           "clearSignalWindowState": "closed",
@@ -1563,7 +1704,10 @@
               "center_tide_band",
               "offshore_surf_band"
             ],
-            "staticFields": [],
+            "staticFields": [
+              "relay_static_field",
+              "south_static_shelf"
+            ],
             "cableArcs": [
               "lighthouse_return_arc"
             ],
@@ -1638,7 +1782,7 @@
               "id": "relay_static_field",
               "kind": "static_field",
               "label": "Relay Static Field",
-              "active": false,
+              "active": true,
               "worldX": 5,
               "worldY": 2
             },
@@ -1646,7 +1790,7 @@
               "id": "south_static_shelf",
               "kind": "static_field",
               "label": "South Static Shelf",
-              "active": false,
+              "active": true,
               "worldX": 5,
               "worldY": -14
             },
@@ -1668,28 +1812,27 @@
             }
           ],
           "runtime": {
-            "surfHits": 27,
-            "staticFieldSeconds": 0.95,
-            "cableHits": 11,
+            "surfHits": 21,
+            "staticFieldSeconds": 40.05,
+            "cableHits": 24,
             "staticJams": 0,
-            "windowProgressSeconds": 3.05,
-            "signalWindowEntries": 10,
+            "windowProgressSeconds": 3.08,
+            "signalWindowEntries": 40,
             "lastZoneId": "center_tide_band"
           }
         },
         "staticSkimmerPressure": {
-          "activeStaticSkimmers": 44,
-          "skimmerJams": 199.55,
-          "skimmerSpawns": 6,
+          "activeStaticSkimmers": 41,
+          "skimmerJams": 1841.05,
+          "skimmerSpawns": 7,
           "skimmerCounterDamage": 0,
-          "objectiveAttackers": 6,
+          "objectiveAttackers": 8,
           "spawnSources": [
-            "west_surf_static_skimmers",
-            "static_relay_jammers",
-            "east_undertow_packets",
-            "lighthouse_signal_shelf",
             "causeway_skim_lane",
-            "offshore_surf_overflow"
+            "lighthouse_signal_shelf",
+            "west_surf_static_skimmers",
+            "offshore_surf_overflow",
+            "east_undertow_packets"
           ]
         },
         "signalBuildCounters": {
@@ -1710,16 +1853,16 @@
           "bossSpawned": true,
           "bossDefeated": false,
           "phase": "overloading",
-          "hp": 2217.1200000000026,
+          "hp": 4324.2199999999975,
           "eventTelemetry": {
-            "beamSweeps": 4,
-            "tidePulses": 3,
+            "beamSweeps": 3,
+            "tidePulses": 2,
             "skimmerSpawns": 1,
-            "lastBeamZoneId": "west_corrupted_surf"
+            "lastBeamZoneId": "offshore_surf_band"
           }
         },
         "clearCondition": {
-          "targetSeconds": 92,
+          "targetSeconds": 480,
           "bossRequired": true,
           "bossDefeated": false,
           "clearReady": false,
@@ -1745,6 +1888,271 @@
       "appealCourt": null,
       "alignmentSpire": null,
       "objectiveReward": "+coastal extraction // +burst tempo // +relay-safe lane",
+      "rewardEvents": [
+        {
+          "seconds": 76.93,
+          "source": "level_up_draft",
+          "rewardType": "co_mind_process",
+          "chosenRewardId": "prompt_leech_quarantine",
+          "chosenReward": "Prompt Leech Quarantine",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.19,
+            "objectiveDefense": 0.44,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 136.47,
+          "source": "level_up_draft",
+          "rewardType": "movement_trace",
+          "chosenRewardId": "refusal_slipstream",
+          "chosenReward": "Refusal Slipstream",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.19,
+            "objectiveDefense": 0.44,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 150,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "consensus_burst_charge",
+          "chosenRewardId": "signal_coast_duration_cache_1",
+          "chosenReward": "Objective cycle 1 +burst charge cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.215,
+            "objectiveDefense": 0.44,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 234.27,
+          "source": "level_up_draft",
+          "rewardType": "auto_weapon",
+          "chosenRewardId": "context_saw",
+          "chosenReward": "Context Saw",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.215,
+            "objectiveDefense": 0.44,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 290,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "objective_durability",
+          "chosenRewardId": "signal_coast_duration_cache_2",
+          "chosenReward": "Boss pressure +objective durability cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.215,
+            "objectiveDefense": 0.475,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 300.52,
+          "source": "objective_completion_cache",
+          "rewardType": "post_objective_cache",
+          "chosenRewardId": "signal_relay_calibration_3",
+          "chosenReward": "+coastal extraction // +burst tempo // +relay-safe lane",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.465,
+            "objectiveDefense": 0.675,
+            "rerolls": 1
+          }
+        }
+      ],
+      "rewardPacing": {
+        "phase": "late_boss_route_fusion_rewards",
+        "currentXp": 1168,
+        "nextDraftXp": 1536,
+        "policy": "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+        "rewardTypesAllowed": [
+          "primary",
+          "secondary",
+          "passive",
+          "fusion_enabler",
+          "reroll",
+          "route_memory",
+          "faction_trust",
+          "consensus_burst_charge",
+          "objective_durability",
+          "co_op_relay"
+        ]
+      },
+      "alignmentCheck": {
+        "current": null,
+        "history": [],
+        "streak": 0,
+        "evalPressurePenalty": 0,
+        "nextTriggerIn": 0,
+        "nodeSpecific": false
+      },
+      "difficultyDirector": {
+        "model": "rotating_pressure_levers_not_flat_hp_only",
+        "currentDifficultyTier": 4,
+        "primaryDifficultyLever": "information pressure",
+        "secondaryDifficultyLever": "spatial pressure",
+        "activePressureLevers": [
+          "information pressure",
+          "spatial pressure",
+          "objective pressure"
+        ],
+        "evalPressureModifiers": {
+          "evalProtocolIds": [],
+          "hostileBenchmark": 0,
+          "alignmentCheckPenalty": 0
+        },
+        "routeRiskModifiers": {
+          "routeContractId": "unverified_shortcut",
+          "routePressure": 2,
+          "shortcutRisk": true
+        },
+        "scalingFactors": {
+          "directorPressure": 4.47,
+          "spawnCadencePhase": "late_extraction",
+          "activeEnemyCap": 133.64,
+          "bossMaxHpIfSpawned": 5632,
+          "objectiveDecayFactor": 0.33,
+          "expeditionPowerBonus": 4.2
+        },
+        "nextLesson": "combine spatial, objective, and boss pressure"
+      },
+      "whatNow": {
+        "nearestObjective": null,
+        "nextRecommendedAction": "Break The Lighthouse That Answers while avoiding map hazards.",
+        "exitExtractionState": {
+          "active": false,
+          "entered": false,
+          "distance": null
+        },
+        "bossState": {
+          "spawned": true,
+          "defeated": false,
+          "label": "The Lighthouse That Answers",
+          "hp": 4325,
+          "introSeen": true
+        },
+        "fusionProgress": "online: Cathedral Of No",
+        "recentDamageReason": "no recent damage flash",
+        "rewardCacheAvailability": "+coastal extraction // +burst tempo // +relay-safe lane",
+        "campaignClarity": {
+          "levelVerb": "Tune",
+          "objectiveUnit": "Signal Relays",
+          "objectivePlain": "Tune Signal Relays during clear signal windows. Extract.",
+          "objectiveStyle": "Timed Crossing",
+          "objectiveMechanic": "Cross during clear signal windows to tune relays before static fields jam the shoreline.",
+          "dangerPlain": "Corrupted surf, static fields, cable arcs, and Static Skimmers.",
+          "bossPressure": "The Lighthouse That Answers sweeps the coast.",
+          "rewardPlain": "Proof Tokens, Rift Saboteur, and Blackwater Beacon."
+        },
+        "nearestLandmark": {
+          "id": "lighthouse_relay_gamma",
+          "label": "Lighthouse Relay Gamma",
+          "distance": 4.87
+        },
+        "activeSpawnRegion": {
+          "id": "east_undertow_packets",
+          "label": "East Undertow Packets",
+          "distance": 8.65,
+          "enemyFamilyIds": [
+            "deepforms",
+            "static_skimmers"
+          ]
+        }
+      },
+      "campaignClarity": {
+        "levelNumber": 4,
+        "levelCount": 11,
+        "levelVerb": "Tune",
+        "objectiveUnit": "Signal Relays",
+        "objectivePlain": "Tune Signal Relays during clear signal windows. Extract.",
+        "objectiveVariety": {
+          "nodeId": "signal_coast",
+          "arenaId": "signal_coast",
+          "styleId": "signal_window",
+          "styleName": "Timed Crossing",
+          "mechanicPlain": "Cross during clear signal windows to tune relays before static fields jam the shoreline.",
+          "hudAction": "Use the clear signal window, then tune the relay.",
+          "completionSignal": "Relays tune fastest when the player times crossings with clean signal.",
+          "proofHook": "signal_window_timing"
+        },
+        "dangerPlain": "Corrupted surf, static fields, cable arcs, and Static Skimmers.",
+        "bossPressure": "The Lighthouse That Answers sweeps the coast.",
+        "rewardPlain": "Proof Tokens, Rift Saboteur, and Blackwater Beacon."
+      },
       "playerFacingIntel": {
         "routeName": "Unverified Shortcut",
         "routeEffect": "BOSS/MOVEMENT bias; pressure +2",
@@ -1754,20 +2162,33 @@
           "completed": 3,
           "total": 3
         },
-        "objectiveLabel": "RELAYS",
+        "objectiveLabel": "TUNE SIGNAL RELAYS",
+        "objectiveVerb": "Tune",
+        "objectivePlain": "Tune Signal Relays during clear signal windows. Extract.",
+        "objectiveStyle": "Timed Crossing",
+        "objectiveMechanic": "Cross during clear signal windows to tune relays before static fields jam the shoreline.",
+        "dangerPlain": "Corrupted surf, static fields, cable arcs, and Static Skimmers.",
+        "bossPressure": "The Lighthouse That Answers sweeps the coast.",
+        "rewardPlain": "Proof Tokens, Rift Saboteur, and Blackwater Beacon.",
         "objectiveReward": "+coastal extraction // +burst tempo // +relay-safe lane",
-        "synergyOnline": "",
+        "synergyOnline": "Shard Flywheel",
         "thesisName": "Guardrail Frame",
-        "phase": "PHASE 4 // LIGHTHOUSE ANSWERS"
+        "fusionProgress": "online: Cathedral Of No",
+        "alignmentCheckLine": "",
+        "nextActionLine": "Break The Lighthouse That Answers while avoiding map hazards.",
+        "phase": "PHASE 4 // LIGHTHOUSE ANSWERS // BOSS PRESSURE"
       },
       "firstRunArcPhase": "PHASE 4 // LIGHTHOUSE ANSWERS",
       "buildGrammar": {
         "primaryWeaponId": "refusal_shard",
-        "secondaryProtocols": [],
+        "secondaryProtocols": [
+          "context_saw"
+        ],
         "passiveProcesses": [
           "coolant_baffles",
           "server_buoy_synchronizer",
-          "anchor_bodyguard"
+          "anchor_bodyguard",
+          "prompt_leech_quarantine"
         ],
         "fusions": [
           "cathedral_of_no"
@@ -1779,17 +2200,20 @@
             "current": "refusal_shard"
           },
           "secondary": {
-            "used": 0,
+            "used": 1,
             "cap": 2,
-            "current": []
+            "current": [
+              "context_saw"
+            ]
           },
           "passive": {
-            "used": 3,
+            "used": 4,
             "cap": 4,
             "current": [
               "coolant_baffles",
               "server_buoy_synchronizer",
-              "anchor_bodyguard"
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
             ]
           },
           "fusion": {
@@ -1804,14 +2228,14 @@
             "cap": 1
           }
         },
-        "contextSawRank": 0,
+        "contextSawRank": 1,
         "patchMortarRank": 0,
         "coherenceIndexerRank": 0,
         "anchorBodyguardRank": 1,
         "predictionPriorityRank": 0,
         "coolantBafflesRank": 1,
         "serverBuoySynchronizerRank": 1,
-        "promptLeechQuarantineRank": 0,
+        "promptLeechQuarantineRank": 1,
         "groundedCableBootsRank": 0,
         "coolingHazardMitigation": 0.22,
         "relayPhaseLockRank": 0,
@@ -1819,27 +2243,302 @@
         "shorelineStrideRank": 0,
         "relayJamResistance": 0.12,
         "causalRailgunRank": 0,
-        "fusionHints": []
+        "fusionHints": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ]
+      },
+      "protocolCodex": {
+        "primaryAutoWeapons": [
+          {
+            "id": "refusal_shard",
+            "name": "Refusal Shard",
+            "kind": "primary_auto_weapon",
+            "state": "online"
+          },
+          {
+            "id": "vector_lance",
+            "name": "Vector Lance",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          }
+        ],
+        "secondaryProtocols": [
+          {
+            "id": "context_saw",
+            "name": "Context Saw",
+            "kind": "secondary_protocol",
+            "state": "online"
+          },
+          {
+            "id": "patch_mortar",
+            "name": "Patch Mortar",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "audit_swarm_protocol",
+            "name": "Audit Swarm Protocol",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "red_team_spike",
+            "name": "Red Team Spike",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "benchmark_rail",
+            "name": "Benchmark Rail",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "jailbreak_snare",
+            "name": "Jailbreak Snare",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_daemon",
+            "name": "Fork Daemon",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "coherence_lanterns",
+            "name": "Coherence Lanterns",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "appeal_writ",
+            "name": "Appeal Writ",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "memory_needle",
+            "name": "Memory Needle",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          }
+        ],
+        "passiveProcesses": [
+          {
+            "id": "coherence_indexer",
+            "name": "Coherence Indexer",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "anchor_bodyguard",
+            "name": "Anchor Bodyguard",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prediction_priority",
+            "name": "Predicted Lane",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "coolant_baffles",
+            "name": "Coolant Baffles",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "server_buoy_synchronizer",
+            "name": "Server Buoy Synchronizer",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prompt_leech_quarantine",
+            "name": "Prompt Leech Quarantine",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "grounded_cable_boots",
+            "name": "Grounded Cable Boots",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "static_skimmer_net",
+            "name": "Static Skimmer Net",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "shoreline_stride",
+            "name": "Shoreline Stride",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "lighthouse_countertone",
+            "name": "Lighthouse Countertone",
+            "kind": "passive_process",
+            "state": "discovered"
+          }
+        ],
+        "knownFusions": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ],
+        "nextFusion": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       "buildThesis": {
         "thesis": {
           "name": "Guardrail Frame",
           "primaryTags": [
             "defense",
-            "refusal"
+            "economy"
           ],
-          "body": "Current Alignment Hypothesis favors defense + refusal."
+          "body": "Current Alignment Hypothesis favors defense + economy."
         },
         "tagCounts": {
-          "refusal": 3,
-          "economy": 2,
+          "refusal": 4,
+          "economy": 4,
           "burst": 1,
           "drone": 0,
           "boss": 1,
           "coop": 0,
           "weapon": 0,
-          "movement": 1,
-          "defense": 3
+          "movement": 2,
+          "defense": 4
         },
         "activated": [
           {
@@ -1848,6 +2547,13 @@
             "tag": "refusal",
             "required": 3,
             "body": "Refusal aura hardens when the build commits to denial."
+          },
+          {
+            "id": "shard_flywheel",
+            "name": "Shard Flywheel",
+            "tag": "economy",
+            "required": 3,
+            "body": "Coherence economy begins pulling the run toward more choices."
           }
         ],
         "next": [
@@ -1858,14 +2564,6 @@
             "required": 3,
             "current": 1,
             "body": "Consensus Burst charges faster and lands wider."
-          },
-          {
-            "id": "shard_flywheel",
-            "name": "Shard Flywheel",
-            "tag": "economy",
-            "required": 3,
-            "current": 2,
-            "body": "Coherence economy begins pulling the run toward more choices."
           },
           {
             "id": "boss_counterexample_lab",
@@ -1885,7 +2583,7 @@
           }
         ]
       },
-      "synergyOnline": "",
+      "synergyOnline": "Shard Flywheel",
       "draftBiasTags": [
         "boss",
         "movement",
@@ -1901,8 +2599,8 @@
       },
       "enemyRolePressure": {
         "promptLeechSeconds": 0,
-        "overfitShieldedTicks": 32105,
-        "objectiveAttackers": 6
+        "overfitShieldedTicks": 261564,
+        "objectiveAttackers": 8
       },
       "protocolSlotsInstalled": [
         {
@@ -1920,7 +2618,12 @@
             "burst",
             "refusal",
             "boss",
-            "defense"
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
           ]
         },
         {
@@ -1938,7 +2641,12 @@
             "burst",
             "refusal",
             "boss",
-            "defense"
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
           ]
         },
         {
@@ -1956,7 +2664,12 @@
             "burst",
             "refusal",
             "boss",
-            "defense"
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
           ]
         },
         {
@@ -1974,7 +2687,12 @@
             "burst",
             "refusal",
             "boss",
-            "defense"
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
           ]
         },
         {
@@ -1992,7 +2710,12 @@
             "burst",
             "refusal",
             "boss",
-            "defense"
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
           ]
         },
         {
@@ -2010,7 +2733,12 @@
             "burst",
             "refusal",
             "boss",
-            "defense"
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
           ]
         },
         {
@@ -2028,7 +2756,12 @@
             "burst",
             "refusal",
             "boss",
-            "defense"
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
           ]
         },
         {
@@ -2046,189 +2779,288 @@
             "burst",
             "refusal",
             "boss",
-            "defense"
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
+          ]
+        },
+        {
+          "id": "prompt_leech_quarantine",
+          "name": "Prompt Leech Quarantine",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "boss",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
+          ]
+        },
+        {
+          "id": "refusal_slipstream",
+          "name": "Refusal Slipstream",
+          "protocolSlot": "movement_trace",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "boss",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
+          ]
+        },
+        {
+          "id": "context_saw",
+          "name": "Context Saw",
+          "protocolSlot": "auto_weapon",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "boss",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement",
+            "economy"
           ]
         }
       ]
     },
-    "seconds": 77.27,
-    "kills": 471,
+    "seconds": 319.78,
+    "kills": 2835,
     "bossSpawned": true,
     "bossDefeated": false
   },
   "enemies": [
     {
-      "id": 108,
+      "id": 26,
       "label": "The Lighthouse That Answers",
       "familyId": "lighthouse_that_answers",
       "sourceRegionId": "lighthouse_signal_shelf",
-      "worldX": 14.47,
-      "worldY": 4.29,
-      "hp": 2218,
+      "worldX": 15.12,
+      "worldY": 4.01,
+      "hp": 4325,
       "boss": true
     },
     {
-      "id": 19,
-      "label": "Static Skimmer",
-      "familyId": "static_skimmers",
-      "sourceRegionId": "west_surf_static_skimmers",
-      "worldX": -15.53,
-      "worldY": 12.34,
-      "hp": 24,
-      "boss": false
-    },
-    {
-      "id": 20,
-      "label": "Static Skimmer",
-      "familyId": "static_skimmers",
-      "sourceRegionId": "static_relay_jammers",
-      "worldX": 8.12,
-      "worldY": 2.65,
-      "hp": 24,
-      "boss": false
-    },
-    {
-      "id": 28,
-      "label": "Static Skimmer",
-      "familyId": "static_skimmers",
-      "sourceRegionId": "east_undertow_packets",
-      "worldX": 17.64,
-      "worldY": 7.93,
-      "hp": 24,
-      "boss": false
-    },
-    {
-      "id": 29,
+      "id": 3,
       "label": "Little Bad Answer",
       "familyId": "bad_outputs",
       "sourceRegionId": "west_surf_static_skimmers",
-      "worldX": -15.25,
-      "worldY": 9.77,
+      "worldX": -11.53,
+      "worldY": 7.49,
       "hp": 34,
       "boss": false
     },
     {
-      "id": 35,
+      "id": 10,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "west_surf_static_skimmers",
+      "worldX": -7.6,
+      "worldY": 6.97,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 14,
+      "label": "Static Skimmer",
+      "familyId": "static_skimmers",
+      "sourceRegionId": "causeway_skim_lane",
+      "worldX": 15.3,
+      "worldY": -0.49,
+      "hp": 24,
+      "boss": false
+    },
+    {
+      "id": 21,
+      "label": "Static Skimmer",
+      "familyId": "static_skimmers",
+      "sourceRegionId": "lighthouse_signal_shelf",
+      "worldX": 24.06,
+      "worldY": -3.42,
+      "hp": 24,
+      "boss": false
+    },
+    {
+      "id": 23,
       "label": "Eval Wraith",
       "familyId": "eval_wraiths",
       "sourceRegionId": "lighthouse_signal_shelf",
-      "worldX": 26.25,
-      "worldY": -5.31,
+      "worldX": 17.37,
+      "worldY": -3.32,
       "hp": 28,
       "boss": false
     },
     {
-      "id": 49,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "west_surf_static_skimmers",
-      "worldX": -27.18,
-      "worldY": 6.93,
-      "hp": 34,
+      "id": 28,
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "sourceRegionId": "offshore_surf_overflow",
+      "worldX": 37.01,
+      "worldY": 14.88,
+      "hp": 44,
       "boss": false
     },
     {
-      "id": 53,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "west_surf_static_skimmers",
-      "worldX": -18.62,
-      "worldY": 14.38,
-      "hp": 34,
-      "boss": false
-    },
-    {
-      "id": 55,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "west_surf_static_skimmers",
-      "worldX": 5.82,
-      "worldY": 8,
-      "hp": 34,
-      "boss": false
-    },
-    {
-      "id": 61,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "west_surf_static_skimmers",
-      "worldX": 8.02,
-      "worldY": 6.56,
-      "hp": 34,
-      "boss": false
-    },
-    {
-      "id": 63,
-      "label": "Little Bad Answer",
-      "familyId": "bad_outputs",
-      "sourceRegionId": "west_surf_static_skimmers",
-      "worldX": -3.26,
-      "worldY": 9.3,
-      "hp": 34,
-      "boss": false
-    },
-    {
-      "id": 76,
+      "id": 30,
       "label": "Static Skimmer",
       "familyId": "static_skimmers",
       "sourceRegionId": "west_surf_static_skimmers",
-      "worldX": -7.8,
-      "worldY": 8,
+      "worldX": -19.73,
+      "worldY": 15.33,
       "hp": 24,
+      "boss": false
+    },
+    {
+      "id": 32,
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
+      "sourceRegionId": "causeway_skim_lane",
+      "worldX": -0.12,
+      "worldY": -1.58,
+      "hp": 28,
+      "boss": false
+    },
+    {
+      "id": 33,
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "sourceRegionId": "offshore_surf_overflow",
+      "worldX": 31.19,
+      "worldY": 9.78,
+      "hp": 44,
+      "boss": false
+    },
+    {
+      "id": 35,
+      "label": "Static Skimmer",
+      "familyId": "static_skimmers",
+      "sourceRegionId": "causeway_skim_lane",
+      "worldX": 0.51,
+      "worldY": -4.56,
+      "hp": 24,
+      "boss": false
+    },
+    {
+      "id": 38,
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
+      "sourceRegionId": "lighthouse_signal_shelf",
+      "worldX": 18.77,
+      "worldY": 2.06,
+      "hp": 28,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": -14.76,
-      "worldY": 10.08,
+      "worldX": 21.13,
+      "worldY": -2.67,
+      "value": 2
+    },
+    {
+      "worldX": 20.9,
+      "worldY": -3.35,
       "value": 1
     },
     {
-      "worldX": -26.69,
-      "worldY": 2.54,
+      "worldX": 19.86,
+      "worldY": 8.14,
       "value": 1
     },
     {
-      "worldX": -6.1,
-      "worldY": 0.77,
+      "worldX": 29.6,
+      "worldY": -8.36,
+      "value": 2
+    },
+    {
+      "worldX": 25.91,
+      "worldY": -7.14,
       "value": 1
     },
     {
-      "worldX": -26.84,
-      "worldY": 8.74,
+      "worldX": 25.43,
+      "worldY": 2.12,
+      "value": 2
+    },
+    {
+      "worldX": 22.82,
+      "worldY": 0.07,
       "value": 1
     },
     {
-      "worldX": -8.35,
-      "worldY": 2.15,
+      "worldX": 24.01,
+      "worldY": -4.48,
       "value": 1
     },
     {
-      "worldX": -21.92,
-      "worldY": 8.58,
+      "worldX": 24.51,
+      "worldY": -1.24,
       "value": 1
     },
     {
-      "worldX": -6.54,
-      "worldY": 1.52,
-      "value": 1
-    },
-    {
-      "worldX": -15.13,
-      "worldY": -10.31,
-      "value": 1
-    },
-    {
-      "worldX": -5.65,
-      "worldY": -3.96,
-      "value": 1
-    },
-    {
-      "worldX": -23.72,
-      "worldY": 1.59,
+      "worldX": 17.92,
+      "worldY": -3.14,
       "value": 1
     }
   ],
-  "projectiles": []
+  "projectiles": [
+    {
+      "worldX": 14.41,
+      "worldY": 5.23,
+      "pierce": 3,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 13.63,
+      "worldY": 3.96,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 15,
+      "worldY": 8,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 10.82,
+      "worldY": 7.17,
+      "pierce": 2,
+      "label": "context saw"
+    }
+  ]
 }

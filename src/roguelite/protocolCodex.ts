@@ -33,7 +33,10 @@ export interface ProtocolCodexSummary {
 const PRIMARY_AUTO_WEAPONS = [
   { id: "refusal_shard", name: "Refusal Shard" },
   { id: "vector_lance", name: "Vector Lance" },
-  { id: "signal_pulse", name: "Signal Pulse" }
+  { id: "signal_pulse", name: "Signal Pulse" },
+  { id: "rift_mine", name: "Rift Mine" },
+  { id: "fork_drone", name: "Fork Drone" },
+  { id: "redline_suture", name: "Redline Suture" }
 ] as const;
 
 const SECONDARY_PROTOCOLS = [
@@ -60,7 +63,14 @@ const PASSIVE_PROCESSES = [
   { id: "relay_phase_lock", name: "Relay Phase Lock" },
   { id: "static_skimmer_net", name: "Static Skimmer Net" },
   { id: "shoreline_stride", name: "Shoreline Stride" },
-  { id: "lighthouse_countertone", name: "Lighthouse Countertone" }
+  { id: "lighthouse_countertone", name: "Lighthouse Countertone" },
+  { id: "field_triage_loop", name: "Field Triage Loop" },
+  { id: "reroll_reserve", name: "Reroll Reserve" },
+  { id: "route_memory", name: "Route Memory" },
+  { id: "weakest_link_scanner", name: "Weakest Link Scanner" },
+  { id: "panic_window", name: "Panic Window" },
+  { id: "low_hp_adversary", name: "Low-HP Adversary" },
+  { id: "co_op_relay", name: "Co-op Relay" }
 ] as const;
 
 const FUSION_RECIPES = [
@@ -80,6 +90,24 @@ const FUSION_RECIPES = [
     requirements: [
       { id: "vector_lance", name: "Vector Lance" },
       { id: "predicted_lane", name: "Predicted Lane" }
+    ]
+  },
+  {
+    id: "recipe_signal_choir",
+    outputId: "signal_choir",
+    outputName: "Signal Choir",
+    requirements: [
+      { id: "signal_pulse", name: "Signal Pulse" },
+      { id: "relay_phase_lock", name: "Relay Phase Lock" }
+    ]
+  },
+  {
+    id: "recipe_time_deferred_minefield",
+    outputId: "time_deferred_minefield",
+    outputName: "Time-Deferred Minefield",
+    requirements: [
+      { id: "rift_minefield", name: "Rift Minefield" },
+      { id: "delayed_causality", name: "Delayed Causality" }
     ]
   }
 ] as const;

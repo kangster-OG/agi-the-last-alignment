@@ -14,6 +14,7 @@ Before meaningful work, read these in order:
 - this file
 - `docs/FRESH_THREAD_NEXT_STEPS.md`
 - `docs/CODEX_CONTINUITY_LEDGER.md`
+- `docs/COPY_VOICE_DIRECTION.md`
 - `progress.md` tail
 - `docs/CAMPAIGN_CLARITY_REFACTOR_CHECKLIST.md`
 - `docs/AUTOBATTLE_OBJECTIVE_VARIETY_GOAL.md`
@@ -35,6 +36,8 @@ Before meaningful work, read these in order:
 Then inspect the actual current game or current proof screenshots. Do not rely on memory from a previous thread.
 
 The continuity ledger is the compact "do not lose this in a fresh context" file. It records the current working law for PixelLab, production art, proof discipline, iCloud workspace workarounds, and the next likely gameplay-feel pass.
+
+`docs/COPY_VOICE_DIRECTION.md` is the compact copy law. It supersedes the older earnest systems-flavor default for future player-facing text. Keep campaign clarity, but make the voice original sardonic AGI dungeon-crawl parody: mechanically clear, funny, sarcastic, and constantly roasting the institutions that got reality into this state.
 
 ## Current Project Shape
 
@@ -509,9 +512,8 @@ Vite currently emits a known large chunk warning because of the authored Armisti
 
 - A central enemy role profile source now exists at `src/content/enemyRoleProfiles.ts`, and every current `ENEMY_FAMILIES` entry is mapped to a role, counterplay hint, intro arena, objective/on-hit/on-death effects, elite affix eligibility, and proof counters.
 - V1 runtime support is in `src/level/LevelRunState.ts`: hostile projectiles, windup telegraphs, trails, explosions, support auras, objective jams, elite markers, sparse projectile caps, player collision/damage sources, and public `render_game_to_text()` telemetry.
-- Online co-op now has a matching server-authoritative V1 path in `server/consensusCellServer.mjs`: enemies carry role IDs, hostile telegraphs/projectiles/trails/support/volatile pressure are emitted by the Colyseus room, `OnlineCoopState` renders enemy-role VFX, and `render_game_to_text()` exposes online `enemyRoles`, `enemyTelegraphs`, and hostile projectile metadata.
 - Shooter mobs are now a campaign pillar: `eval_wraiths`, `static_skimmers`, `tidecall_static`, `solar_reflections`, `injunction_writs`, `verdict_clerks`, `prediction_ghosts`, and related families escalate from slow aimed shots to leading, line, mortar/status, and objective pressure.
 - Volatile, trail, support, objective-jammer, splitter/summoner, and elite-affix pressure all have runtime hooks and proof-visible counters.
 - New source-backed enemy-role VFX is preserved under `assets/concepts/chatgpt_refs/enemy_role_vfx_v1/` and `assets/concepts/pixellab_refs/enemy_role_vfx_v1/`, packed into `assets/sprites/effects/enemy_role_vfx_v1.png`, and documented in `docs/ENEMY_MOB_DIFFERENTIATION_PLAN.md`.
-- Verification passed for `npm run proof:enemy-roles`, `npm run proof:objective-variety`, `npm run proof:assets`, `node --check scripts/proof/run-proof.mjs`, `node --check scripts/proof/enemy-role-static.mjs`, `python3 -m py_compile scripts/assets/pack-enemy-role-vfx-v1.py`, and targeted TypeScript transpile checks for touched TS files.
-- Full verification was completed from the hydrated temp checkout `/tmp/agi-enemy-role-proof-clone`: TypeScript, enemy-role static proof, objective/assets/campaign-duration/campaign-clarity/overworld/solo-unlocks/smoke/reference-run, all 11 route proofs, `proof:campaign-full`, and the focused online co-op combat proof passed. The normal iCloud workspace can still hang on Git/Vite/tsc filesystem reads, so use a non-iCloud hydrated checkout for release-gate proof runs.
+- Verification passed from `/tmp/agi-enemy-role-proof-clone` after clearing stale `.playwright-mcp` git-add jobs and avoiding iCloud dataless source/assets: full `tsc --noEmit`, `proof:enemy-roles`, `proof:objective-variety`, `proof:campaign-duration`, `proof:campaign-clarity`, `proof:assets`, `proof:overworld`, `proof:solo-campaign-unlocks`, `proof:smoke`, `proof:reference-run`, every route proof from Cooling through Finale, and `proof:campaign-full`.
+- Final tuning during verification kept V1 readable rather than lethal: lead shooters now kite/hold distance, Static Skimmers have lower contact damage, hostile projectile caps/cadence/damage are sparse, and support aura healing is light enough to create target-priority pressure without making long-route hordes immortal. Screenshot inspection covered Signal, Blackwater, Memory, Archive, Appeal, Finale, smoke/reference HUD, and the campaign-full finale artifact.

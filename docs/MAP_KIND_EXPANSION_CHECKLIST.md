@@ -10,6 +10,7 @@ Every playable map should declare:
 
 - map kind;
 - objective type;
+- objective variety family from `src/content/campaignObjectiveVariety.ts`;
 - pressure source;
 - reward promise;
 - boss/event pattern;
@@ -28,7 +29,10 @@ Shared runtime expectations:
 - preserve emergency patch drafts;
 - preserve route contracts and camp carryover;
 - expose map identity through `render_game_to_text()`;
+- expose objective style/mechanic through briefing, HUD guidance, summary, and `render_game_to_text()`;
 - prove the map with screenshots and state JSON.
+
+The current objective-variety target is documented in `docs/AUTOBATTLE_OBJECTIVE_VARIETY_GOAL.md`: only Armistice should feel like baseline static capture; later maps should rotate through hazard lure, route/timing windows, boss-gate hunt, carry/extract, risk holdout, environmental weapon, and campaign-remix patterns.
 
 ## Cooling Lake Nine
 

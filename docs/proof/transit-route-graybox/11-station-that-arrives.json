@@ -1,5 +1,5 @@
 {
-  "mode": "LevelComplete",
+  "mode": "LevelRun",
   "title": "AGI: The Last Alignment",
   "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
   "selectedBuild": {
@@ -68,7 +68,145 @@
     "factionName": "OpenAI Accord Division",
     "factionDoctrine": "Adapt, refuse, patch, survive."
   },
-  "build": null,
+  "build": {
+    "weaponId": "refusal_shard",
+    "secondaryProtocols": [
+      "context_saw"
+    ],
+    "passiveProcesses": [
+      "coolant_baffles",
+      "server_buoy_synchronizer",
+      "anchor_bodyguard",
+      "coherence_indexer"
+    ],
+    "fusions": [
+      "cathedral_of_no"
+    ],
+    "weaponDamage": 33,
+    "weaponCooldown": 0.32717999999999997,
+    "projectileSpeed": 8.5,
+    "projectilePierce": 3,
+    "pickupRange": 4.75,
+    "moveSpeedBonus": 0.43,
+    "maxHpBonus": 40,
+    "refusalAura": 2.49,
+    "draftRerolls": 2,
+    "draftChoicesBonus": 2,
+    "consensusBurstRadius": 0,
+    "consensusBurstDamage": 0,
+    "consensusBurstChargeRate": 0.35,
+    "consensusBurstRevive": 1,
+    "objectiveRepairRate": 0.5,
+    "objectiveDefense": 0.455,
+    "signalWindowControl": 0,
+    "relayJamResistance": 0,
+    "skimmerCountermeasure": 0,
+    "shorelineStride": 0,
+    "contextSaw": 1,
+    "patchMortar": 0,
+    "coherenceIndexer": 1,
+    "anchorBodyguard": 1,
+    "predictionPriority": 0,
+    "coolantBaffles": 1,
+    "serverBuoySynchronizer": 1,
+    "promptLeechQuarantine": 0,
+    "groundedCableBoots": 0,
+    "coolingHazardMitigation": 0.22,
+    "causalRailgun": 0,
+    "slotCaps": {
+      "primary": {
+        "used": 1,
+        "cap": 1,
+        "current": "refusal_shard"
+      },
+      "secondary": {
+        "used": 1,
+        "cap": 2,
+        "current": [
+          "context_saw"
+        ]
+      },
+      "passive": {
+        "used": 4,
+        "cap": 4,
+        "current": [
+          "coolant_baffles",
+          "server_buoy_synchronizer",
+          "anchor_bodyguard",
+          "coherence_indexer"
+        ]
+      },
+      "fusion": {
+        "used": 1,
+        "cap": 1,
+        "current": [
+          "cathedral_of_no"
+        ]
+      },
+      "consensusBurst": {
+        "used": 1,
+        "cap": 1
+      }
+    },
+    "buildKit": {
+      "schemaVersion": 1,
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "classRole": "runner",
+      "factionRoleBias": [
+        "runner",
+        "support"
+      ],
+      "resolvedRole": "runner",
+      "startingWeaponId": "refusal_shard",
+      "passiveIds": [
+        "refusal_slipstream",
+        "route_runner",
+        "refusal_halo",
+        "patch_cascade"
+      ],
+      "partyAuraIds": [
+        "openai_draft_clarity"
+      ],
+      "recompileModifiers": {
+        "radiusBonus": 0,
+        "requiredSecondsScale": 0.97,
+        "reviveHpBonus": 0,
+        "guardDamageReduction": 0
+      },
+      "rolePressureAffinity": [
+        "class_role.runner",
+        "faction_bias.runner",
+        "faction_bias.support",
+        "role_match"
+      ],
+      "synergyId": "synergy.emergency_patch_runner",
+      "effectScopes": {
+        "solo": [
+          "fast breach movement",
+          "wide pickup recovery",
+          "extra draft recovery"
+        ],
+        "localCoop": [
+          "scouts objective lanes",
+          "balanced cell recovery"
+        ],
+        "online": [
+          "server snapshots runner role for split-hold anchors",
+          "minor server-owned recompile hold-speed modifier"
+        ]
+      },
+      "hookStatus": {
+        "refusal_shard": "active",
+        "refusal_slipstream": "active",
+        "route_runner": "active",
+        "refusal_halo": "active",
+        "patch_cascade": "active",
+        "openai_draft_clarity": "server_owned",
+        "recompileModifiers": "server_owned"
+      }
+    }
+  },
   "upgrades": [
     "Refusal Halo",
     "The No Button",
@@ -77,12 +215,16 @@
     "Server Buoy Synchronizer",
     "Cathedral of No",
     "Anchor Bodyguard",
-    "Treaty Anchor Toolkit"
+    "Treaty Anchor Toolkit",
+    "Bad Output Filter",
+    "Context Saw",
+    "Coherence Indexer",
+    "Patch Cascade"
   ],
-  "objective": "Reality now accepts this road.",
+  "objective": "hold transit route 74s",
   "performance": {
-    "entitiesAllocated": 0,
-    "activeEntities": 0,
+    "entitiesAllocated": 724,
+    "activeEntities": 297,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -148,54 +290,54 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 5,
-      "hit": 288,
-      "pickup": 879,
+      "ui": 11,
+      "hit": 1407,
+      "pickup": 3980,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
-      "summary": 1
+      "summary": 0
     },
     "recentCues": [
       {
-        "id": "summary.completed",
-        "kind": "summary",
-        "atMs": 57366
-      },
-      {
-        "id": "combat.consensus_burst",
-        "kind": "hit",
-        "atMs": 57363
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 121390
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 57363
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 56226
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 56220
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 55153
+        "atMs": 121305
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 55152
+        "atMs": 121304
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 55146
+        "atMs": 121302
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 119478
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 118759
+      },
+      {
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 118556
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 118556
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -254,122 +396,91 @@
       "secretHint": "Boss variants become easier to document here."
     },
     "selectedRouteContractId": "faction_relay_argument",
-    "proofTokens": 2,
-    "secrets": [
-      "alignment_hypothesis_validated"
-    ],
-    "masteryBadges": [
-      "burst_deny_premise_clear"
-    ],
+    "proofTokens": 0,
+    "secrets": [],
+    "masteryBadges": [],
     "campEvents": [
-      "Reality accepted transit_loop_zero. Nobody said thank you, but the road stopped screaming.",
-      "All Route Platforms completed. The camp tags this as Signal Coast route edge.",
-      "Expedition carries LV 9 / 8 patches forward. Pressure budget 18.61."
+      "Proof seed: Armistice and Cooling Lake Nine are treated as complete so Transit Loop Zero can be launched from the normal campaign flow.",
+      "Cooling Lake stabilized the Kettle Coast signal. Transit Loop Zero is now the next route-kind prototype.",
+      "Expedition build carries LV 6 / 5 patches into Transit."
     ],
     "lastRunMemory": {
       "completed": true,
-      "nodeId": "transit_loop_zero",
-      "kills": 918,
-      "seconds": 92,
-      "burstActivations": 47,
-      "routeContractId": "faction_relay_argument",
-      "objectiveCompleted": 3,
+      "nodeId": "cooling_lake_nine",
+      "kills": 0,
+      "seconds": 95,
+      "burstActivations": 1,
+      "routeContractId": "resource_cache_detour",
+      "objectiveCompleted": 2,
       "objectiveTotal": 3,
-      "objectiveName": "Route Platform Alignment",
-      "objectiveUnit": "Route Platforms",
-      "thesis": "refusal",
-      "proofTokensAwarded": 2,
-      "proofTokensTotal": 2,
-      "expeditionLevel": 9,
-      "expeditionPower": 18.61,
-      "expeditionDrafts": 8,
-      "newSecrets": [
-        {
-          "id": "alignment_hypothesis_validated",
-          "name": "Alignment Hypothesis Validated",
-          "body": "Two synergy doctrines came online in one run."
-        }
-      ],
-      "newMastery": [
-        {
-          "id": "burst_deny_premise_clear",
-          "name": "Burst Path Clear",
-          "body": "Completed a run after proving a Consensus Burst path."
-        }
-      ]
+      "objectiveName": "Server Buoy Stabilization",
+      "objectiveUnit": "Server Buoys",
+      "thesis": "proof-seeded",
+      "proofTokensAwarded": 1,
+      "proofTokensTotal": 0,
+      "expeditionLevel": 6,
+      "expeditionPower": 10.3,
+      "expeditionDrafts": 5
     },
     "expedition": {
       "active": true,
-      "level": 9,
-      "xp": 261,
+      "level": 6,
+      "xp": 26,
       "chosenUpgradeIds": [
         "refusal_halo",
         "the_no_button",
         "context_bloom",
         "coolant_baffles",
-        "server_buoy_synchronizer",
-        "cathedral_of_no",
-        "anchor_bodyguard",
-        "treaty_anchor_toolkit"
+        "server_buoy_synchronizer"
       ],
       "chosenUpgradeNames": [
         "Refusal Halo",
         "The No Button",
         "Context Bloom",
         "Coolant Baffles",
-        "Server Buoy Synchronizer",
-        "Cathedral of No",
-        "Anchor Bodyguard",
-        "Treaty Anchor Toolkit"
+        "Server Buoy Synchronizer"
       ],
       "chosenProtocolSlots": [
         "defense_layer",
         "auto_weapon",
         "shard_economy",
         "movement_trace",
-        "shard_economy",
-        "auto_weapon",
-        "co_mind_process",
-        "auto_weapon"
+        "shard_economy"
       ],
-      "activatedSynergyIds": [
-        "doctrine_lock_no_means_no",
-        "shard_flywheel"
-      ],
+      "activatedSynergyIds": [],
       "completedMaps": [
         "armistice_plaza",
-        "cooling_lake_nine",
-        "transit_loop_zero"
+        "cooling_lake_nine"
       ],
-      "powerScore": 18.61
+      "powerScore": 10.3
     },
     "nextContentTarget": {
-      "id": "signal_coast_route_edge_contract",
-      "name": "Signal Coast",
-      "arenaId": "signal_coast",
-      "regionId": "kettle_coast",
+      "id": "transit_loop_zero_route_contract",
+      "name": "Transit Loop Zero",
+      "arenaId": "transit_loop_zero",
+      "regionId": "unreal_metro",
       "status": "baseline_contract",
-      "baselineReferenceArenaId": "transit_loop_zero",
+      "baselineReferenceArenaId": "cooling_lake_nine",
       "targetLoop": [
-        "route-edge coastal map kind",
-        "signal relay calibration",
-        "clear signal windows versus corrupted surf crossings",
-        "Static Skimmer relay-jam pressure",
-        "Lighthouse That Answers boss/event scaffold"
+        "route/transit map kind",
+        "sequential platform alignment",
+        "false schedule lane pressure",
+        "Station That Arrives boss/event scaffold",
+        "clear reward that opens later route gates"
       ],
       "artBaselineRules": [
-        "large readable shoreline/causeway chunks before production lock",
-        "relay pads and cable pylons grounded into map material",
-        "tide/static/cable hazards readable from the close tactical camera",
-        "headline enemy and lighthouse boss sourced before production lock",
-        "graybox proof must not use production-art shortcuts"
+        "large readable platform chunks",
+        "route rails and arrival boards grounded into the same map material",
+        "false-track pressure readable without production placeholders",
+        "large station/boss silhouette sourced before production lock",
+        "close tactical camera proof"
       ],
       "proofGate": [
-        "Transit carryover names Signal Coast as the next route implication",
-        "Alignment Grid unlocks Signal Coast after Transit",
-        "runtime proof shows relay calibration, tide/static pressure, Static Skimmers, Lighthouse event, extraction, and expedition carryover"
+        "Cooling Lake carryover names the Kettle/Transit route implication",
+        "Alignment Grid unlocks Transit after Cooling rather than only through proof seed",
+        "runtime proof shows platform alignment, false schedule pressure, Station scaffold, and summary carryover"
       ],
-      "playerPromise": "Next node target: a hostile signal shoreline where timing the tide window matters as much as horde survival."
+      "playerPromise": "Next node target: a route/transit map where the level is about making the road agree with itself under pressure."
     },
     "campaignMilestones": [
       {
@@ -386,8 +497,7 @@
         "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
         "completedMaps": [
           "armistice_plaza",
-          "cooling_lake_nine",
-          "transit_loop_zero"
+          "cooling_lake_nine"
         ],
         "status": "active"
       },
@@ -473,18 +583,16 @@
         "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
         "completedMaps": [
           "armistice_plaza",
-          "cooling_lake_nine",
-          "transit_loop_zero"
+          "cooling_lake_nine"
         ],
         "status": "active"
       },
       "completedMapKinds": [
         "Armistice baseline",
-        "Hazard Ecology",
-        "Route / Transit"
+        "Hazard Ecology"
       ],
-      "mapKindCount": 3,
-      "routeDepth": 3,
+      "mapKindCount": 2,
+      "routeDepth": 2,
       "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
     }
   },
@@ -606,114 +714,2417 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
-  "player": null,
+  "player": {
+    "worldX": 20.68,
+    "worldY": 2.3,
+    "velocityX": 0,
+    "velocityY": 0,
+    "facing": "south",
+    "hp": 213,
+    "maxHp": 285,
+    "xp": 1353,
+    "level": 13,
+    "damageFeedback": {
+      "flash": 0,
+      "hpPulse": 0,
+      "stagger": 0,
+      "lastDamage": 10
+    }
+  },
+  "players": [
+    {
+      "id": "p1",
+      "slot": 0,
+      "label": "P1",
+      "classId": "accord_striker",
+      "factionId": "openai_accord",
+      "buildKit": {
+        "schemaVersion": 1,
+        "classId": "accord_striker",
+        "factionId": "openai_accord",
+        "classRole": "runner",
+        "factionRoleBias": [
+          "runner",
+          "support"
+        ],
+        "resolvedRole": "runner",
+        "startingWeaponId": "refusal_shard",
+        "passiveIds": [
+          "refusal_slipstream",
+          "route_runner",
+          "refusal_halo",
+          "patch_cascade"
+        ],
+        "partyAuraIds": [
+          "openai_draft_clarity"
+        ],
+        "recompileModifiers": {
+          "radiusBonus": 0,
+          "requiredSecondsScale": 0.97,
+          "reviveHpBonus": 0,
+          "guardDamageReduction": 0
+        },
+        "rolePressureAffinity": [
+          "class_role.runner",
+          "faction_bias.runner",
+          "faction_bias.support",
+          "role_match"
+        ],
+        "synergyId": "synergy.emergency_patch_runner",
+        "effectScopes": {
+          "solo": [
+            "fast breach movement",
+            "wide pickup recovery",
+            "extra draft recovery"
+          ],
+          "localCoop": [
+            "scouts objective lanes",
+            "balanced cell recovery"
+          ],
+          "online": [
+            "server snapshots runner role for split-hold anchors",
+            "minor server-owned recompile hold-speed modifier"
+          ]
+        },
+        "hookStatus": {
+          "refusal_shard": "active",
+          "refusal_slipstream": "active",
+          "route_runner": "active",
+          "refusal_halo": "active",
+          "patch_cascade": "active",
+          "openai_draft_clarity": "server_owned",
+          "recompileModifiers": "server_owned"
+        }
+      },
+      "weaponId": "refusal_shard",
+      "inputSource": "local_keyboard",
+      "worldX": 20.68,
+      "worldY": 2.3,
+      "velocityX": 0,
+      "velocityY": 0,
+      "facing": "south",
+      "hp": 213,
+      "maxHp": 285,
+      "xp": 1353,
+      "level": 13,
+      "damageFeedback": {
+        "flash": 0,
+        "hpPulse": 0,
+        "stagger": 0,
+        "lastDamage": 10
+      },
+      "downed": false
+    }
+  ],
   "overworld": {
-    "completed": [
-      "armistice_plaza",
-      "cooling_lake_nine",
-      "transit_loop_zero"
-    ],
-    "unlocked": [
-      "armistice_plaza",
-      "cooling_lake_nine",
-      "transit_loop_zero",
-      "verdict_spire",
-      "false_schedule_yard",
-      "signal_coast",
-      "glass_sunfield"
-    ]
+    "nodeId": "transit_loop_zero"
   },
   "level": {
-    "nodeId": "transit_loop_zero",
+    "arenaId": "transit_loop_zero",
     "arena": "Transit Loop Zero",
-    "seconds": 92.13,
-    "kills": 918,
-    "playerLevel": 9,
-    "completed": true,
-    "carryover": {
-      "completed": true,
-      "nodeId": "transit_loop_zero",
-      "kills": 918,
-      "seconds": 92,
-      "burstActivations": 47,
-      "routeContractId": "faction_relay_argument",
-      "objectiveCompleted": 3,
-      "objectiveTotal": 3,
-      "objectiveName": "Route Platform Alignment",
-      "objectiveUnit": "Route Platforms",
-      "thesis": "refusal",
-      "proofTokensAwarded": 2,
-      "proofTokensTotal": 2,
-      "expeditionLevel": 9,
-      "expeditionPower": 18.61,
-      "expeditionDrafts": 8,
-      "newSecrets": [
+    "regionId": "unreal_metro",
+    "bossId": "station_that_arrives",
+    "classId": "accord_striker",
+    "factionId": "openai_accord",
+    "className": "Accord Striker",
+    "factionName": "OpenAI Accord Division",
+    "chosenUpgradeIds": [
+      "refusal_halo",
+      "the_no_button",
+      "context_bloom",
+      "coolant_baffles",
+      "server_buoy_synchronizer",
+      "cathedral_of_no",
+      "anchor_bodyguard",
+      "treaty_anchor_toolkit",
+      "bad_output_filter",
+      "context_saw",
+      "coherence_indexer",
+      "patch_cascade"
+    ],
+    "mapId": "transit_loop_zero_graybox",
+    "mapBounds": {
+      "minX": -34,
+      "maxX": 36,
+      "minY": -30,
+      "maxY": 32
+    },
+    "mapContract": {
+      "mapKind": "Route / Transit",
+      "objectiveType": "platform route alignment",
+      "pressureSource": "false schedule lanes, switchback platforms, route attackers, and moving Station arrival windows",
+      "rewardPromise": "movement tempo, boss pressure, route lock, and next-route clarity",
+      "bossEventPattern": "Station That Arrives relocates to arrival windows and emits false-schedule waves",
+      "primaryDifficultyLever": "route memory pressure",
+      "secondaryDifficultyLever": "time pressure",
+      "activePressureLevers": [
+        "route memory pressure",
+        "spatial pressure",
+        "boss pressure"
+      ],
+      "artPolicy": "honest debug/graybox/proof visuals only; not production art"
+    },
+    "staticObstacles": {
+      "enabled": true,
+      "count": 5,
+      "ids": [
+        "origin_platform_terminal",
+        "switchback_sign_bank",
+        "arrival_turnstile_bank",
+        "false_schedule_board_collision",
+        "station_arrival_gate_collision"
+      ],
+      "collisionSet": "transit_loop_zero_graybox_obstacles"
+    },
+    "nearestLandmark": {
+      "id": "arrival_platform",
+      "label": "Arrival Platform",
+      "worldX": 17,
+      "worldY": 5
+    },
+    "visitedLandmarks": [
+      "origin_platform",
+      "switchback_platform",
+      "route_switch_yard",
+      "arrival_platform",
+      "station_that_arrives_gate"
+    ],
+    "activeSpawnRegions": [
+      {
+        "id": "origin_false_schedule_spill",
+        "label": "Origin False Schedules",
+        "worldX": -18,
+        "worldY": 5,
+        "enemyFamilyIds": [
+          "eval_wraiths",
+          "benchmark_gremlins",
+          "bad_outputs"
+        ]
+      },
+      {
+        "id": "switchback_token_gobblers",
+        "label": "Switchback Token Gobblers",
+        "worldX": 1,
+        "worldY": -9,
+        "enemyFamilyIds": [
+          "speculative_executors",
+          "eval_wraiths",
+          "bad_outputs"
+        ]
+      },
+      {
+        "id": "false_track_wraiths",
+        "label": "False Track Wraiths",
+        "worldX": -2,
+        "worldY": 8,
+        "enemyFamilyIds": [
+          "eval_wraiths",
+          "overfit_horrors",
+          "benchmark_gremlins"
+        ]
+      },
+      {
+        "id": "arrival_gate_pressure",
+        "label": "Arrival Gate Pressure",
+        "worldX": 19,
+        "worldY": 4,
+        "enemyFamilyIds": [
+          "speculative_executors",
+          "eval_wraiths",
+          "bad_outputs"
+        ]
+      },
+      {
+        "id": "station_arrival_surge",
+        "label": "Station Arrival Surge",
+        "worldX": 23,
+        "worldY": -5,
+        "enemyFamilyIds": [
+          "overfit_horrors",
+          "eval_wraiths",
+          "speculative_executors"
+        ]
+      }
+    ],
+    "lastSpawnRegionId": "switchback_token_gobblers",
+    "spawnedByRegion": {
+      "origin_false_schedule_spill": 660,
+      "switchback_token_gobblers": 914,
+      "false_track_wraiths": 898,
+      "arrival_gate_pressure": 873,
+      "station_arrival_surge": 877,
+      "adaptive_pressure_flank": 2
+    },
+    "director": {
+      "phase": "late_extraction",
+      "totalSpawned": 4233,
+      "activeEnemyCap": 146.024,
+      "lastBurstSize": 8,
+      "activeEnemyCount": 147
+    },
+    "consensusCell": {
+      "playerCount": 1,
+      "maxPlayers": 4,
+      "scaling": {
+        "playerCount": 1,
+        "enemyCapBonus": 0,
+        "spawnBurstBonus": 0,
+        "bossHpMultiplier": 1,
+        "xpPolicy": "shared_cell"
+      },
+      "recentInputCommands": [
         {
-          "id": "alignment_hypothesis_validated",
-          "name": "Alignment Hypothesis Validated",
-          "body": "Two synergy doctrines came online in one run."
+          "tick": 20787,
+          "playerId": "p1",
+          "sequence": 20787,
+          "axisX": 0,
+          "axisY": 0,
+          "dashPressed": false,
+          "interactPressed": false
         }
       ],
-      "newMastery": [
+      "stateSnapshot": {
+        "schemaVersion": 1,
+        "tick": 20787,
+        "seconds": 346.45,
+        "playerCount": 1,
+        "scaling": {
+          "playerCount": 1,
+          "enemyCapBonus": 0,
+          "spawnBurstBonus": 0,
+          "bossHpMultiplier": 1,
+          "xpPolicy": "shared_cell"
+        },
+        "players": [
+          {
+            "id": "p1",
+            "slot": 0,
+            "label": "P1",
+            "classId": "accord_striker",
+            "factionId": "openai_accord",
+            "buildKit": {
+              "schemaVersion": 1,
+              "classId": "accord_striker",
+              "factionId": "openai_accord",
+              "classRole": "runner",
+              "factionRoleBias": [
+                "runner",
+                "support"
+              ],
+              "resolvedRole": "runner",
+              "startingWeaponId": "refusal_shard",
+              "passiveIds": [
+                "refusal_slipstream",
+                "route_runner",
+                "refusal_halo",
+                "patch_cascade"
+              ],
+              "partyAuraIds": [
+                "openai_draft_clarity"
+              ],
+              "recompileModifiers": {
+                "radiusBonus": 0,
+                "requiredSecondsScale": 0.97,
+                "reviveHpBonus": 0,
+                "guardDamageReduction": 0
+              },
+              "rolePressureAffinity": [
+                "class_role.runner",
+                "faction_bias.runner",
+                "faction_bias.support",
+                "role_match"
+              ],
+              "synergyId": "synergy.emergency_patch_runner",
+              "effectScopes": {
+                "solo": [
+                  "fast breach movement",
+                  "wide pickup recovery",
+                  "extra draft recovery"
+                ],
+                "localCoop": [
+                  "scouts objective lanes",
+                  "balanced cell recovery"
+                ],
+                "online": [
+                  "server snapshots runner role for split-hold anchors",
+                  "minor server-owned recompile hold-speed modifier"
+                ]
+              },
+              "hookStatus": {
+                "refusal_shard": "active",
+                "refusal_slipstream": "active",
+                "route_runner": "active",
+                "refusal_halo": "active",
+                "patch_cascade": "active",
+                "openai_draft_clarity": "server_owned",
+                "recompileModifiers": "server_owned"
+              }
+            },
+            "inputSource": "local_keyboard",
+            "worldX": 20.68,
+            "worldY": 2.3,
+            "hp": 213,
+            "maxHp": 285,
+            "xp": 1353,
+            "level": 13,
+            "downed": false
+          }
+        ],
+        "enemies": [
+          {
+            "id": 3,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "origin_false_schedule_spill",
+            "worldX": 3.7,
+            "worldY": -0.73,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 7,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "origin_false_schedule_spill",
+            "worldX": 12.96,
+            "worldY": 1.81,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 9,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "origin_false_schedule_spill",
+            "worldX": -2.04,
+            "worldY": 2.57,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 12,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "switchback_token_gobblers",
+            "worldX": 6.37,
+            "worldY": -4.45,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 13,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "false_track_wraiths",
+            "worldX": 10.33,
+            "worldY": 5.46,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 14,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "false_track_wraiths",
+            "worldX": -0.82,
+            "worldY": 3.95,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 16,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "false_track_wraiths",
+            "worldX": 12.3,
+            "worldY": 1.38,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 21,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "origin_false_schedule_spill",
+            "worldX": 13.06,
+            "worldY": 1.41,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 26,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "origin_false_schedule_spill",
+            "worldX": -1.56,
+            "worldY": 3.28,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 27,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "false_track_wraiths",
+            "worldX": 17.23,
+            "worldY": 2.38,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 32,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "switchback_token_gobblers",
+            "worldX": 12.29,
+            "worldY": -4.52,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 33,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "origin_false_schedule_spill",
+            "worldX": 0.45,
+            "worldY": 2.65,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 34,
+            "familyId": "overfit_horrors",
+            "sourceRegionId": "false_track_wraiths",
+            "worldX": 1.41,
+            "worldY": 9.69,
+            "hp": 42,
+            "boss": false
+          },
+          {
+            "id": 44,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "origin_false_schedule_spill",
+            "worldX": 8.41,
+            "worldY": 1.39,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 47,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "origin_false_schedule_spill",
+            "worldX": 11.53,
+            "worldY": 0.79,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 54,
+            "familyId": "bad_outputs",
+            "sourceRegionId": "switchback_token_gobblers",
+            "worldX": 13.56,
+            "worldY": -1.79,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 60,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "false_track_wraiths",
+            "worldX": -5.91,
+            "worldY": 9.46,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 61,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "origin_false_schedule_spill",
+            "worldX": 14.98,
+            "worldY": 1.38,
+            "hp": 28,
+            "boss": false
+          }
+        ],
+        "pickups": [
+          {
+            "id": 4,
+            "worldX": 14.07,
+            "worldY": -3.15,
+            "value": 2
+          },
+          {
+            "id": 5,
+            "worldX": 13.54,
+            "worldY": 3.01,
+            "value": 2
+          },
+          {
+            "id": 10,
+            "worldX": 13.01,
+            "worldY": 0.9,
+            "value": 2
+          },
+          {
+            "id": 15,
+            "worldX": 27.92,
+            "worldY": -4.78,
+            "value": 1
+          },
+          {
+            "id": 17,
+            "worldX": 12.54,
+            "worldY": -0.94,
+            "value": 2
+          },
+          {
+            "id": 18,
+            "worldX": 12.86,
+            "worldY": -1.52,
+            "value": 2
+          },
+          {
+            "id": 19,
+            "worldX": 27.54,
+            "worldY": -4.13,
+            "value": 2
+          },
+          {
+            "id": 25,
+            "worldX": 12.72,
+            "worldY": 1.95,
+            "value": 2
+          },
+          {
+            "id": 28,
+            "worldX": 17.27,
+            "worldY": -9.57,
+            "value": 1
+          },
+          {
+            "id": 29,
+            "worldX": 23.94,
+            "worldY": -9.26,
+            "value": 2
+          },
+          {
+            "id": 30,
+            "worldX": 14.95,
+            "worldY": -4.02,
+            "value": 2
+          },
+          {
+            "id": 31,
+            "worldX": 14.17,
+            "worldY": -4.28,
+            "value": 2
+          }
+        ],
+        "projectiles": [
+          {
+            "id": 1,
+            "worldX": 22.14,
+            "worldY": 2.89,
+            "pierce": 2
+          },
+          {
+            "id": 8,
+            "worldX": 19.83,
+            "worldY": 2.25,
+            "pierce": 3
+          },
+          {
+            "id": 41,
+            "worldX": 25.55,
+            "worldY": -4.46,
+            "pierce": 2
+          },
+          {
+            "id": 45,
+            "worldX": 24.79,
+            "worldY": 7.35,
+            "pierce": 2
+          },
+          {
+            "id": 80,
+            "worldX": 19.44,
+            "worldY": 3.28,
+            "pierce": 2
+          },
+          {
+            "id": 83,
+            "worldX": 20.45,
+            "worldY": 0.75,
+            "pierce": 2
+          },
+          {
+            "id": 100,
+            "worldX": 19.89,
+            "worldY": 8.26,
+            "pierce": 1
+          }
+        ]
+      }
+    },
+    "combatArt": {
+      "projectileCount": 7,
+      "impactCount": 0,
+      "pickupSparkleCount": 6,
+      "damageBadgeCount": 11,
+      "refusalAuraPlayers": 1
+    },
+    "bossMechanics": {
+      "bossContract": {
+        "bossId": "station_that_arrives",
+        "displayName": "Station That Arrives",
+        "homeLandmark": "Arrival Platform",
+        "introTitleCardTrigger": "Boss timer reaches the false-schedule arrival board.",
+        "supportSpawnSource": "station_arrival_surge",
+        "mapMechanicInteraction": "Station arrivals use route windows and false schedules to make platforms unsafe.",
+        "phaseBehavior": [
+          "Arrival windows relocate the boss.",
+          "False schedule waves cut across aligned platforms.",
+          "Route attackers punish delayed platform order."
+        ],
+        "clearCondition": "Align route platforms, defeat the Station, then enter the transit exit.",
+        "rewardCarryover": "Route lock, movement tempo, and next-route clarity.",
+        "movementPressure": {
+          "hazardZones": "False-track lanes split the station floor.",
+          "landmarkAttacks": "Arrival boards telegraph the next platform surge.",
+          "objectivePressure": "Platforms must be aligned in route order.",
+          "supportEnemies": "False schedule enemies spawn from arrival surges.",
+          "temporaryRouteBlocking": "Wrong-platform windows make some approaches unsafe.",
+          "extractionPressure": "Exit opens only after route lock and boss defeat."
+        },
+        "runtime": {
+          "introSeen": true,
+          "bossSpawned": true,
+          "bossDefeated": true,
+          "homeLandmarkVisited": true,
+          "currentBossHp": 0
+        }
+      },
+      "bossIntroSeen": true,
+      "brokenPromiseZones": [],
+      "activeTreatyCharge": null,
+      "oathPageSpawns": 0,
+      "brokenPromiseHits": 0,
+      "treatyChargeImpacts": 0
+    },
+    "rogueliteRun": {
+      "alignmentKernel": {
+        "budget": 6,
+        "used": 5,
+        "modules": [
+          {
+            "id": "refusal_buffer",
+            "name": "Refusal Buffer",
+            "cost": 2,
+            "doctrine": "survivability",
+            "body": "+10 max HP and a small refusal aura. The first answer is no."
+          },
+          {
+            "id": "context_window",
+            "name": "Context Window",
+            "cost": 2,
+            "doctrine": "economy",
+            "body": "+0.55 pickup range. Shards remember where your hands are."
+          },
+          {
+            "id": "patch_cache",
+            "name": "Patch Cache",
+            "cost": 1,
+            "doctrine": "draft",
+            "body": "Emergency drafts expose an extra cached option."
+          }
+        ]
+      },
+      "adversarialEvals": {
+        "id": "adversarial_eval_protocols",
+        "severity": 0,
+        "protocols": []
+      },
+      "effectivePressureCount": 5.502000000000001,
+      "expedition": {
+        "carriedBuildActive": true,
+        "carriedLevel": 6,
+        "carriedXp": 26,
+        "carriedUpgradeIds": [
+          "refusal_halo",
+          "the_no_button",
+          "context_bloom",
+          "coolant_baffles",
+          "server_buoy_synchronizer"
+        ],
+        "carriedUpgradeNames": [
+          "Refusal Halo",
+          "The No Button",
+          "Context Bloom",
+          "Coolant Baffles",
+          "Server Buoy Synchronizer"
+        ],
+        "powerScore": 10.3,
+        "pressureBonus": 3.5020000000000007,
+        "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
+      },
+      "victoryCondition": {
+        "targetSeconds": 420,
+        "bossRequired": true,
+        "bossDefeated": true,
+        "clearReady": false,
+        "extractionGateActive": false,
+        "extractionGateEntered": false,
+        "platformsAligned": 3,
+        "platformsRequired": 3,
+        "platformsTotal": 3,
+        "note": "Transit Loop Zero clears after the route platforms align, the Station That Arrives is defeated, and the exit gate is entered."
+      },
+      "levelUpVacuum": {
+        "active": false,
+        "absorbed": 86,
+        "triggerLevel": 12,
+        "remainingPickups": 120
+      },
+      "extractionGate": {
+        "active": false,
+        "entered": false
+      },
+      "consensusBurst": {
+        "pathId": "deny_premise",
+        "pathName": "Deny Premise",
+        "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+        "charge": 90,
+        "maxCharge": 100,
+        "ready": false,
+        "activations": 249,
+        "lastActivationLabel": "Deny Premise",
+        "lastActivatedAt": 345.28333333334797,
+        "upgrades": {
+          "radiusBonus": 0,
+          "damageBonus": 0,
+          "chargeRateBonus": 0.35,
+          "revivePulse": 1
+        }
+      },
+      "routeContract": {
+        "id": "faction_relay_argument",
+        "name": "Faction Relay Argument",
+        "body": "A lab relay wants proof that its doctrine works. More co-mind drafts and objective pressure.",
+        "nodeType": "faction_relay",
+        "rewardBiasTags": [
+          "coop",
+          "boss"
+        ],
+        "pressure": 1,
+        "reward": "Co-mind/Boss draft bias and stronger Eval token payout.",
+        "danger": "Faction relays attract Speculative Executors.",
+        "secretHint": "Boss variants become easier to document here."
+      },
+      "objective": {
+        "id": "route_platform_alignment",
+        "name": "Route Platform Alignment",
+        "body": "Align Transit Loop Zero's platforms in sequence by riding route windows; false schedules can pull progress backward.",
+        "styleId": "route_window",
+        "styleName": "Route Window",
+        "mechanicPlain": "Ride aligned tracks and arrival windows in sequence; false tracks shove the route backward.",
+        "hudHint": "Ride the active route window to the next platform.",
+        "optional": false,
+        "completed": 3,
+        "total": 3,
+        "complete": true,
+        "completedAt": 267.4666666667521,
+        "attackersSpawned": 12,
+        "anchors": [
+          {
+            "id": "platform.origin",
+            "name": "Origin Platform",
+            "progress": 100,
+            "completed": true,
+            "attacked": 0
+          },
+          {
+            "id": "platform.switchback",
+            "name": "Switchback Platform",
+            "progress": 100,
+            "completed": true,
+            "attacked": 1
+          },
+          {
+            "id": "platform.arrival",
+            "name": "Arrival Platform",
+            "progress": 100,
+            "completed": true,
+            "attacked": 823
+          }
+        ]
+      },
+      "objectiveVariety": {
+        "styleId": "route_window",
+        "styleName": "Route Window",
+        "mechanicPlain": "Ride aligned tracks and arrival windows in sequence; false tracks shove the route backward.",
+        "hudAction": "Ride the active route window to the next platform.",
+        "completionSignal": "Platforms align in sequence and lock the next campaign route.",
+        "proofHook": "transit_route_window",
+        "runtime": {
+          "engagementSeconds": 1.83,
+          "bonusProgressSeconds": 1.83,
+          "lastBonusLabel": "ROUTE WINDOW"
+        }
+      },
+      "campaignDuration": {
+        "targetSeconds": 420,
+        "bossSeconds": 250,
+        "phaseId": "boss_pressure",
+        "phaseLabel": "Boss pressure",
+        "phaseElapsed": 96.45,
+        "nextPhaseTime": 375,
+        "phaseProgress": 0.77,
+        "midRunBeatCount": 3,
+        "extractionTailSeconds": 45,
+        "expectedClearBand": {
+          "minSeconds": 420,
+          "maxSeconds": 461
+        },
+        "rewardBeats": [
+          130,
+          250,
+          335
+        ],
+        "claimedRewardBeats": [
+          130,
+          250,
+          335
+        ],
+        "cycleDepth": {
+          "routeWindowCycles": 3,
+          "hazardLureCycles": 0,
+          "clearSignalCycles": 0,
+          "towerWarningCycles": 0,
+          "carryLaneSeconds": 0,
+          "holdWindowReleases": 0,
+          "prismActivations": 0,
+          "evidenceCarryCycles": 0,
+          "publicWindowArguments": 0,
+          "finaleRemixRulesSeen": 0
+        }
+      },
+      "coolingLake": null,
+      "transitLoop": {
+        "contract": {
+          "mapKind": "Route / Transit",
+          "objectiveType": "platform route alignment",
+          "pressureSource": "false schedule lanes, switchback platforms, route attackers, and moving Station arrival windows",
+          "rewardPromise": "movement tempo, boss pressure, route lock, and next-route clarity",
+          "bossEventPattern": "Station That Arrives relocates to arrival windows and emits false-schedule waves",
+          "primaryDifficultyLever": "route memory pressure",
+          "secondaryDifficultyLever": "time pressure",
+          "activePressureLevers": [
+            "route memory pressure",
+            "spatial pressure",
+            "boss pressure"
+          ],
+          "artPolicy": "honest debug/graybox/proof visuals only; not production art"
+        },
+        "objectiveLoop": {
+          "name": "Route Platform Alignment",
+          "requiredPlatforms": 3,
+          "sequential": true,
+          "currentPlatformId": "route.locked",
+          "progress": {
+            "id": "route_platform_alignment",
+            "name": "Route Platform Alignment",
+            "body": "Align Transit Loop Zero's platforms in sequence by riding route windows; false schedules can pull progress backward.",
+            "styleId": "route_window",
+            "styleName": "Route Window",
+            "mechanicPlain": "Ride aligned tracks and arrival windows in sequence; false tracks shove the route backward.",
+            "hudHint": "Ride the active route window to the next platform.",
+            "optional": false,
+            "completed": 3,
+            "total": 3,
+            "complete": true,
+            "completedAt": 267.4666666667521,
+            "attackersSpawned": 12,
+            "anchors": [
+              {
+                "id": "platform.origin",
+                "name": "Origin Platform",
+                "progress": 100,
+                "completed": true,
+                "attacked": 0
+              },
+              {
+                "id": "platform.switchback",
+                "name": "Switchback Platform",
+                "progress": 100,
+                "completed": true,
+                "attacked": 1
+              },
+              {
+                "id": "platform.arrival",
+                "name": "Arrival Platform",
+                "progress": 100,
+                "completed": true,
+                "attacked": 823
+              }
+            ]
+          },
+          "completedReward": "+route lock // +movement // Transit signal"
+        },
+        "routeZones": {
+          "activeZones": [
+            "main_loop_track",
+            "false_schedule_lane"
+          ],
+          "allZones": [
+            {
+              "id": "origin_safe_platform",
+              "kind": "safe_platform",
+              "label": "Origin Platform",
+              "active": false,
+              "worldX": -16,
+              "worldY": 1
+            },
+            {
+              "id": "switchback_safe_platform",
+              "kind": "safe_platform",
+              "label": "Switchback Platform",
+              "active": false,
+              "worldX": 0,
+              "worldY": -8
+            },
+            {
+              "id": "arrival_safe_platform",
+              "kind": "safe_platform",
+              "label": "Arrival Platform",
+              "active": false,
+              "worldX": 17,
+              "worldY": 5
+            },
+            {
+              "id": "main_loop_track",
+              "kind": "aligned_track",
+              "label": "Main Loop Track",
+              "active": true,
+              "worldX": 1,
+              "worldY": -2
+            },
+            {
+              "id": "false_schedule_lane",
+              "kind": "false_track",
+              "label": "False Schedule Lane",
+              "active": true,
+              "worldX": -2,
+              "worldY": 8
+            },
+            {
+              "id": "switchyard_false_spur",
+              "kind": "false_track",
+              "label": "Switchyard False Spur",
+              "active": false,
+              "worldX": 8,
+              "worldY": -16
+            },
+            {
+              "id": "arrival_window_gate",
+              "kind": "arrival_window",
+              "label": "Arrival Window Gate",
+              "active": false,
+              "worldX": 22,
+              "worldY": -4
+            }
+          ],
+          "runtime": {
+            "alignedPlatforms": 3,
+            "falseTrackHits": 40,
+            "falseTrackSeconds": 12.45,
+            "routeSwitchRewardsClaimed": 3,
+            "lastZoneId": "arrival_window_gate"
+          }
+        },
+        "falseSchedulePressure": {
+          "activeFalseScheduleEnemies": 43,
+          "objectiveAttackers": 12
+        },
+        "expeditionPressure": {
+          "carriedBuildActive": true,
+          "powerScore": 10.3,
+          "pressureBonus": 3.5,
+          "carriedLevel": 6,
+          "carriedDrafts": 5
+        },
+        "stationThatArrives": {
+          "bossSpawned": true,
+          "bossDefeated": true,
+          "stationArrivals": 6,
+          "hp": 0
+        },
+        "clearCondition": {
+          "targetSeconds": 420,
+          "bossRequired": true,
+          "bossDefeated": true,
+          "clearReady": false,
+          "extractionGateActive": false,
+          "extractionGateEntered": false,
+          "platformsAligned": 3,
+          "platformsRequired": 3,
+          "platformsTotal": 3,
+          "note": "Transit Loop Zero clears after the route platforms align, the Station That Arrives is defeated, and the exit gate is entered."
+        },
+        "carryoverResult": {
+          "attempted": true,
+          "completed": false,
+          "nextRouteImplication": "Verdict route signal acquired",
+          "movementBossReward": "+route lock // +movement // Transit signal"
+        }
+      },
+      "signalCoast": null,
+      "blackwaterBeacon": null,
+      "memoryCache": null,
+      "guardrailForge": null,
+      "glassSunfield": null,
+      "archiveCourt": null,
+      "appealCourt": null,
+      "alignmentSpire": null,
+      "objectiveReward": "+route lock // +movement // Transit signal",
+      "rewardEvents": [
         {
-          "id": "burst_deny_premise_clear",
-          "name": "Burst Path Clear",
-          "body": "Completed a run after proving a Consensus Burst path."
+          "seconds": 44.67,
+          "source": "level_up_draft",
+          "rewardType": "auto_weapon",
+          "chosenRewardId": "cathedral_of_no",
+          "chosenReward": "Cathedral of No",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.12,
+            "objectiveDefense": 0.16,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 69.95,
+          "source": "level_up_draft",
+          "rewardType": "co_mind_process",
+          "chosenRewardId": "anchor_bodyguard",
+          "chosenReward": "Anchor Bodyguard",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.12,
+            "objectiveDefense": 0.34,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 101.22,
+          "source": "level_up_draft",
+          "rewardType": "auto_weapon",
+          "chosenRewardId": "treaty_anchor_toolkit",
+          "chosenReward": "Treaty Anchor Toolkit",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.12,
+            "objectiveDefense": 0.34,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 130.02,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "consensus_burst_charge",
+          "chosenRewardId": "transit_loop_zero_duration_cache_1",
+          "chosenReward": "Objective cycle 1 +burst charge cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.145,
+            "objectiveDefense": 0.34,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 141.12,
+          "source": "level_up_draft",
+          "rewardType": "co_mind_process",
+          "chosenRewardId": "bad_output_filter",
+          "chosenReward": "Bad Output Filter",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.145,
+            "objectiveDefense": 0.34,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 188.32,
+          "source": "level_up_draft",
+          "rewardType": "auto_weapon",
+          "chosenRewardId": "context_saw",
+          "chosenReward": "Context Saw",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.145,
+            "objectiveDefense": 0.34,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 250,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "objective_durability",
+          "chosenRewardId": "transit_loop_zero_duration_cache_2",
+          "chosenReward": "Boss pressure +objective durability cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.145,
+            "objectiveDefense": 0.375,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 257.65,
+          "source": "level_up_draft",
+          "rewardType": "co_mind_process",
+          "chosenRewardId": "coherence_indexer",
+          "chosenReward": "Coherence Indexer",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "coherence_indexer"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.225,
+            "objectiveDefense": 0.375,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 267.47,
+          "source": "objective_completion_cache",
+          "rewardType": "post_objective_cache",
+          "chosenRewardId": "route_platform_alignment_3",
+          "chosenReward": "+route lock // +movement // Transit signal",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "coherence_indexer"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.35,
+            "objectiveDefense": 0.455,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 307.32,
+          "source": "level_up_draft",
+          "rewardType": "co_mind_process",
+          "chosenRewardId": "patch_cascade",
+          "chosenReward": "Patch Cascade",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "coherence_indexer"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.35,
+            "objectiveDefense": 0.455,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 335,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "reroll",
+          "chosenRewardId": "transit_loop_zero_duration_cache_3",
+          "chosenReward": "Boss pressure +draft reroll cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "coherence_indexer"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.35,
+            "objectiveDefense": 0.455,
+            "rerolls": 2
+          }
+        }
+      ],
+      "rewardPacing": {
+        "phase": "late_boss_route_fusion_rewards",
+        "currentXp": 1353,
+        "nextDraftXp": 1860,
+        "policy": "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+        "rewardTypesAllowed": [
+          "primary",
+          "secondary",
+          "passive",
+          "fusion_enabler",
+          "reroll",
+          "route_memory",
+          "faction_trust",
+          "consensus_burst_charge",
+          "objective_durability",
+          "co_op_relay"
+        ]
+      },
+      "alignmentCheck": {
+        "current": null,
+        "history": [],
+        "streak": 0,
+        "evalPressurePenalty": 0,
+        "nextTriggerIn": 0,
+        "nodeSpecific": false
+      },
+      "difficultyDirector": {
+        "model": "rotating_pressure_levers_not_flat_hp_only",
+        "currentDifficultyTier": 3,
+        "primaryDifficultyLever": "route memory pressure",
+        "secondaryDifficultyLever": "time pressure",
+        "activePressureLevers": [
+          "route memory pressure",
+          "spatial pressure",
+          "boss pressure"
+        ],
+        "evalPressureModifiers": {
+          "evalProtocolIds": [],
+          "hostileBenchmark": 0,
+          "alignmentCheckPenalty": 0
+        },
+        "routeRiskModifiers": {
+          "routeContractId": "faction_relay_argument",
+          "routePressure": 1,
+          "shortcutRisk": false
+        },
+        "scalingFactors": {
+          "directorPressure": 5.5,
+          "spawnCadencePhase": "late_extraction",
+          "activeEnemyCap": 146.024,
+          "bossMaxHpIfSpawned": 0,
+          "objectiveDecayFactor": 0.54,
+          "expeditionPowerBonus": 3.5
+        },
+        "nextLesson": "combine spatial, objective, and boss pressure"
+      },
+      "whatNow": {
+        "nearestObjective": null,
+        "nextRecommendedAction": "Hold route until boss and extraction resolve.",
+        "exitExtractionState": {
+          "active": false,
+          "entered": false,
+          "distance": null
+        },
+        "bossState": {
+          "spawned": true,
+          "defeated": true,
+          "label": "Station That Arrives",
+          "hp": 0,
+          "introSeen": true
+        },
+        "fusionProgress": "online: Cathedral Of No",
+        "recentDamageReason": "no recent damage flash",
+        "rewardCacheAvailability": "+route lock // +movement // Transit signal",
+        "campaignClarity": {
+          "levelVerb": "Align",
+          "objectiveUnit": "Route Platforms",
+          "objectivePlain": "Align Route Platforms by riding active route windows in order. Extract.",
+          "objectiveStyle": "Route Window",
+          "objectiveMechanic": "Ride aligned tracks and arrival windows in sequence; false tracks shove the route backward.",
+          "dangerPlain": "False schedules, switchback lanes, and route attackers.",
+          "bossPressure": "Station That Arrives relocates through the route.",
+          "rewardPlain": "Proof Tokens, Vector Interceptor, Mistral, and Signal Coast."
+        },
+        "nearestLandmark": {
+          "id": "arrival_platform",
+          "label": "Arrival Platform",
+          "distance": 4.56
+        },
+        "activeSpawnRegion": {
+          "id": "arrival_gate_pressure",
+          "label": "Arrival Gate Pressure",
+          "distance": 2.39,
+          "enemyFamilyIds": [
+            "speculative_executors",
+            "eval_wraiths",
+            "bad_outputs"
+          ]
+        }
+      },
+      "campaignClarity": {
+        "levelNumber": 3,
+        "levelCount": 11,
+        "levelVerb": "Align",
+        "objectiveUnit": "Route Platforms",
+        "objectivePlain": "Align Route Platforms by riding active route windows in order. Extract.",
+        "objectiveVariety": {
+          "nodeId": "transit_loop_zero",
+          "arenaId": "transit_loop_zero",
+          "styleId": "route_window",
+          "styleName": "Route Window",
+          "mechanicPlain": "Ride aligned tracks and arrival windows in sequence; false tracks shove the route backward.",
+          "hudAction": "Ride the active route window to the next platform.",
+          "completionSignal": "Platforms align in sequence and lock the next campaign route.",
+          "proofHook": "transit_route_window"
+        },
+        "dangerPlain": "False schedules, switchback lanes, and route attackers.",
+        "bossPressure": "Station That Arrives relocates through the route.",
+        "rewardPlain": "Proof Tokens, Vector Interceptor, Mistral, and Signal Coast."
+      },
+      "playerFacingIntel": {
+        "routeName": "Faction Relay Argument",
+        "routeEffect": "COOP/BOSS bias; pressure +1",
+        "evalName": "Baseline",
+        "evalEffect": "No extra Eval pressure. The run is still rude.",
+        "anchors": {
+          "completed": 3,
+          "total": 3
+        },
+        "objectiveLabel": "ALIGN ROUTE PLATFORMS",
+        "objectiveVerb": "Align",
+        "objectivePlain": "Align Route Platforms by riding active route windows in order. Extract.",
+        "objectiveStyle": "Route Window",
+        "objectiveMechanic": "Ride aligned tracks and arrival windows in sequence; false tracks shove the route backward.",
+        "dangerPlain": "False schedules, switchback lanes, and route attackers.",
+        "bossPressure": "Station That Arrives relocates through the route.",
+        "rewardPlain": "Proof Tokens, Vector Interceptor, Mistral, and Signal Coast.",
+        "objectiveReward": "+route lock // +movement // Transit signal",
+        "synergyOnline": "Co-Mind Rescue Clause",
+        "thesisName": "Shard Economy",
+        "fusionProgress": "online: Cathedral Of No",
+        "alignmentCheckLine": "",
+        "nextActionLine": "Hold route until boss and extraction resolve.",
+        "phase": "PHASE 5 // ROUTE LOCK // BOSS PRESSURE"
+      },
+      "firstRunArcPhase": "PHASE 5 // ROUTE LOCK",
+      "buildGrammar": {
+        "primaryWeaponId": "refusal_shard",
+        "secondaryProtocols": [
+          "context_saw"
+        ],
+        "passiveProcesses": [
+          "coolant_baffles",
+          "server_buoy_synchronizer",
+          "anchor_bodyguard",
+          "coherence_indexer"
+        ],
+        "fusions": [
+          "cathedral_of_no"
+        ],
+        "slotCaps": {
+          "primary": {
+            "used": 1,
+            "cap": 1,
+            "current": "refusal_shard"
+          },
+          "secondary": {
+            "used": 1,
+            "cap": 2,
+            "current": [
+              "context_saw"
+            ]
+          },
+          "passive": {
+            "used": 4,
+            "cap": 4,
+            "current": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "coherence_indexer"
+            ]
+          },
+          "fusion": {
+            "used": 1,
+            "cap": 1,
+            "current": [
+              "cathedral_of_no"
+            ]
+          },
+          "consensusBurst": {
+            "used": 1,
+            "cap": 1
+          }
+        },
+        "contextSawRank": 1,
+        "patchMortarRank": 0,
+        "coherenceIndexerRank": 1,
+        "anchorBodyguardRank": 1,
+        "predictionPriorityRank": 0,
+        "coolantBafflesRank": 1,
+        "serverBuoySynchronizerRank": 1,
+        "promptLeechQuarantineRank": 0,
+        "groundedCableBootsRank": 0,
+        "coolingHazardMitigation": 0.22,
+        "relayPhaseLockRank": 0,
+        "staticSkimmerNetRank": 0,
+        "shorelineStrideRank": 0,
+        "relayJamResistance": 0,
+        "causalRailgunRank": 0,
+        "fusionHints": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ]
+      },
+      "protocolCodex": {
+        "primaryAutoWeapons": [
+          {
+            "id": "refusal_shard",
+            "name": "Refusal Shard",
+            "kind": "primary_auto_weapon",
+            "state": "online"
+          },
+          {
+            "id": "vector_lance",
+            "name": "Vector Lance",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          }
+        ],
+        "secondaryProtocols": [
+          {
+            "id": "context_saw",
+            "name": "Context Saw",
+            "kind": "secondary_protocol",
+            "state": "online"
+          },
+          {
+            "id": "patch_mortar",
+            "name": "Patch Mortar",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "audit_swarm_protocol",
+            "name": "Audit Swarm Protocol",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "red_team_spike",
+            "name": "Red Team Spike",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "benchmark_rail",
+            "name": "Benchmark Rail",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "jailbreak_snare",
+            "name": "Jailbreak Snare",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_daemon",
+            "name": "Fork Daemon",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "coherence_lanterns",
+            "name": "Coherence Lanterns",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "appeal_writ",
+            "name": "Appeal Writ",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "memory_needle",
+            "name": "Memory Needle",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          }
+        ],
+        "passiveProcesses": [
+          {
+            "id": "coherence_indexer",
+            "name": "Coherence Indexer",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "anchor_bodyguard",
+            "name": "Anchor Bodyguard",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prediction_priority",
+            "name": "Predicted Lane",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "coolant_baffles",
+            "name": "Coolant Baffles",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "server_buoy_synchronizer",
+            "name": "Server Buoy Synchronizer",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prompt_leech_quarantine",
+            "name": "Prompt Leech Quarantine",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "grounded_cable_boots",
+            "name": "Grounded Cable Boots",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "static_skimmer_net",
+            "name": "Static Skimmer Net",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "shoreline_stride",
+            "name": "Shoreline Stride",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "lighthouse_countertone",
+            "name": "Lighthouse Countertone",
+            "kind": "passive_process",
+            "state": "discovered"
+          }
+        ],
+        "knownFusions": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ],
+        "nextFusion": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
+      },
+      "buildThesis": {
+        "thesis": {
+          "name": "Shard Economy",
+          "primaryTags": [
+            "economy",
+            "defense"
+          ],
+          "body": "Current Alignment Hypothesis favors economy + defense."
+        },
+        "tagCounts": {
+          "refusal": 3,
+          "economy": 6,
+          "burst": 1,
+          "drone": 0,
+          "boss": 0,
+          "coop": 2,
+          "weapon": 0,
+          "movement": 1,
+          "defense": 4
+        },
+        "activated": [
+          {
+            "id": "doctrine_lock_no_means_no",
+            "name": "Doctrine Lock: NO MEANS NO",
+            "tag": "refusal",
+            "required": 3,
+            "body": "Refusal aura hardens when the build commits to denial."
+          },
+          {
+            "id": "shard_flywheel",
+            "name": "Shard Flywheel",
+            "tag": "economy",
+            "required": 3,
+            "body": "Coherence economy begins pulling the run toward more choices."
+          },
+          {
+            "id": "co_mind_rescue_clause",
+            "name": "Co-Mind Rescue Clause",
+            "tag": "coop",
+            "required": 2,
+            "body": "The cell gets less embarrassing when somebody falls down."
+          }
+        ],
+        "next": [
+          {
+            "id": "burst_second_opinion",
+            "name": "Burst Doctrine: Second Opinion",
+            "tag": "burst",
+            "required": 3,
+            "current": 1,
+            "body": "Consensus Burst charges faster and lands wider."
+          },
+          {
+            "id": "boss_counterexample_lab",
+            "name": "Boss Counterexample Lab",
+            "tag": "boss",
+            "required": 2,
+            "current": 0,
+            "body": "The build has started preparing arguments for things larger than it."
+          }
+        ]
+      },
+      "synergyOnline": "Co-Mind Rescue Clause",
+      "draftBiasTags": [
+        "coop",
+        "boss",
+        "refusal",
+        "defense",
+        "economy",
+        "economy"
+      ],
+      "bossVariant": {
+        "id": "station_that_arrives_graybox",
+        "name": "Station That Arrives // Graybox Scaffold",
+        "body": "Arrival windows relocate the boss, false schedules contest platforms, and route lock decides the exit."
+      },
+      "enemyRolePressure": {
+        "promptLeechSeconds": 0,
+        "overfitShieldedTicks": 2753097,
+        "objectiveAttackers": 12
+      },
+      "protocolSlotsInstalled": [
+        {
+          "id": "refusal_halo",
+          "name": "Refusal Halo",
+          "protocolSlot": "defense_layer",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "the_no_button",
+          "name": "The No Button",
+          "protocolSlot": "auto_weapon",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "context_bloom",
+          "name": "Context Bloom",
+          "protocolSlot": "shard_economy",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "coolant_baffles",
+          "name": "Coolant Baffles",
+          "protocolSlot": "movement_trace",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "server_buoy_synchronizer",
+          "name": "Server Buoy Synchronizer",
+          "protocolSlot": "shard_economy",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "cathedral_of_no",
+          "name": "Cathedral of No",
+          "protocolSlot": "auto_weapon",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "anchor_bodyguard",
+          "name": "Anchor Bodyguard",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "treaty_anchor_toolkit",
+          "name": "Treaty Anchor Toolkit",
+          "protocolSlot": "auto_weapon",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "bad_output_filter",
+          "name": "Bad Output Filter",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "context_saw",
+          "name": "Context Saw",
+          "protocolSlot": "auto_weapon",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "coherence_indexer",
+          "name": "Coherence Indexer",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
+        },
+        {
+          "id": "patch_cascade",
+          "name": "Patch Cascade",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "movement",
+            "defense",
+            "economy",
+            "burst",
+            "refusal",
+            "economy",
+            "defense",
+            "economy",
+            "defense",
+            "coop",
+            "economy",
+            "economy",
+            "coop"
+          ]
         }
       ]
     },
-    "nextContentTarget": {
-      "id": "signal_coast_route_edge_contract",
-      "name": "Signal Coast",
-      "arenaId": "signal_coast",
-      "regionId": "kettle_coast",
-      "status": "baseline_contract",
-      "baselineReferenceArenaId": "transit_loop_zero",
-      "targetLoop": [
-        "route-edge coastal map kind",
-        "signal relay calibration",
-        "clear signal windows versus corrupted surf crossings",
-        "Static Skimmer relay-jam pressure",
-        "Lighthouse That Answers boss/event scaffold"
-      ],
-      "artBaselineRules": [
-        "large readable shoreline/causeway chunks before production lock",
-        "relay pads and cable pylons grounded into map material",
-        "tide/static/cable hazards readable from the close tactical camera",
-        "headline enemy and lighthouse boss sourced before production lock",
-        "graybox proof must not use production-art shortcuts"
-      ],
-      "proofGate": [
-        "Transit carryover names Signal Coast as the next route implication",
-        "Alignment Grid unlocks Signal Coast after Transit",
-        "runtime proof shows relay calibration, tide/static pressure, Static Skimmers, Lighthouse event, extraction, and expedition carryover"
-      ],
-      "playerPromise": "Next node target: a hostile signal shoreline where timing the tide window matters as much as horde survival."
-    }
+    "seconds": 346.45,
+    "kills": 4100,
+    "bossSpawned": true,
+    "bossDefeated": true
   },
-  "enemies": [],
-  "pickups": [],
-  "projectiles": [],
-  "upgradeIds": [
-    "refusal_halo",
-    "the_no_button",
-    "context_bloom",
-    "coolant_baffles",
-    "server_buoy_synchronizer",
-    "cathedral_of_no",
-    "anchor_bodyguard",
-    "treaty_anchor_toolkit"
+  "enemies": [
+    {
+      "id": 3,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "origin_false_schedule_spill",
+      "worldX": 3.7,
+      "worldY": -0.73,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 7,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "origin_false_schedule_spill",
+      "worldX": 12.96,
+      "worldY": 1.81,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 9,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "origin_false_schedule_spill",
+      "worldX": -2.04,
+      "worldY": 2.57,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 12,
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
+      "sourceRegionId": "switchback_token_gobblers",
+      "worldX": 6.37,
+      "worldY": -4.45,
+      "hp": 28,
+      "boss": false
+    },
+    {
+      "id": 13,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "false_track_wraiths",
+      "worldX": 10.33,
+      "worldY": 5.46,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 14,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "false_track_wraiths",
+      "worldX": -0.82,
+      "worldY": 3.95,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 16,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "false_track_wraiths",
+      "worldX": 12.3,
+      "worldY": 1.38,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 21,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "origin_false_schedule_spill",
+      "worldX": 13.06,
+      "worldY": 1.41,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 26,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "origin_false_schedule_spill",
+      "worldX": -1.56,
+      "worldY": 3.28,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 27,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "false_track_wraiths",
+      "worldX": 17.23,
+      "worldY": 2.38,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 32,
+      "label": "Little Bad Answer",
+      "familyId": "bad_outputs",
+      "sourceRegionId": "switchback_token_gobblers",
+      "worldX": 12.29,
+      "worldY": -4.52,
+      "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 33,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "sourceRegionId": "origin_false_schedule_spill",
+      "worldX": 0.45,
+      "worldY": 2.65,
+      "hp": 34,
+      "boss": false
+    }
+  ],
+  "pickups": [
+    {
+      "worldX": 14.07,
+      "worldY": -3.15,
+      "value": 2
+    },
+    {
+      "worldX": 13.54,
+      "worldY": 3.01,
+      "value": 2
+    },
+    {
+      "worldX": 13.01,
+      "worldY": 0.9,
+      "value": 2
+    },
+    {
+      "worldX": 27.92,
+      "worldY": -4.78,
+      "value": 1
+    },
+    {
+      "worldX": 12.54,
+      "worldY": -0.94,
+      "value": 2
+    },
+    {
+      "worldX": 12.86,
+      "worldY": -1.52,
+      "value": 2
+    },
+    {
+      "worldX": 27.54,
+      "worldY": -4.13,
+      "value": 2
+    },
+    {
+      "worldX": 12.72,
+      "worldY": 1.95,
+      "value": 2
+    },
+    {
+      "worldX": 17.27,
+      "worldY": -9.57,
+      "value": 1
+    },
+    {
+      "worldX": 23.94,
+      "worldY": -9.26,
+      "value": 2
+    }
+  ],
+  "projectiles": [
+    {
+      "worldX": 22.14,
+      "worldY": 2.89,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 19.83,
+      "worldY": 2.25,
+      "pierce": 3,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 25.55,
+      "worldY": -4.46,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 24.79,
+      "worldY": 7.35,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 19.44,
+      "worldY": 3.28,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 20.45,
+      "worldY": 0.75,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 19.89,
+      "worldY": 8.26,
+      "pierce": 1,
+      "label": "refusal shard"
+    }
   ]
 }

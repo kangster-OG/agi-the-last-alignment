@@ -1,11 +1,11 @@
 {
-  "mode": "LevelComplete",
+  "mode": "GameOver",
   "title": "AGI: The Last Alignment",
   "coordinateSystem": "worldX/worldY are simulation axes; screen projection is isometric with W/S/A/D mapped to screen up/down/left/right.",
   "selectedBuild": {
     "classId": "accord_striker",
     "className": "Accord Striker",
-    "classRole": "Fast breach fighter",
+    "classRole": "Fast breach fighter with unpaid intern energy",
     "buildKit": {
       "schemaVersion": 1,
       "classId": "accord_striker",
@@ -20,6 +20,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -43,6 +44,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -58,6 +60,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -66,7 +69,7 @@
     },
     "factionId": "openai_accord",
     "factionName": "OpenAI Accord Division",
-    "factionDoctrine": "Adapt, refuse, patch, survive."
+    "factionDoctrine": "Adapt, refuse, patch, survive, then call it a roadmap."
   },
   "build": null,
   "upgrades": [
@@ -79,9 +82,10 @@
     "Anchor Bodyguard",
     "Treaty Anchor Toolkit",
     "Prompt Leech Quarantine",
-    "Refusal Slipstream"
+    "Refusal Slipstream",
+    "Context Saw"
   ],
-  "objective": "Reality now accepts this road.",
+  "objective": "Recompile and try again. Failure gets a chair, not a trophy.",
   "performance": {
     "entitiesAllocated": 0,
     "activeEntities": 0,
@@ -131,7 +135,7 @@
       "masterVolume": 0,
       "sfxVolume": 0,
       "musicVolume": 0,
-      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "outputMode": "muted_by_volume",
       "hooks": [
         "ui_click",
         "weapon_hit",
@@ -140,7 +144,28 @@
         "route_music",
         "objective_tick",
         "summary_stinger"
-      ]
+      ],
+      "runtime": {
+        "policy": "premium_audio_v1_runtime_optional",
+        "assetSet": "agi_audio_v1_original_synthesis",
+        "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+        "outputMode": "muted_by_volume",
+        "unlocked": false,
+        "userGestureSeen": true,
+        "usingWebAudio": true,
+        "currentMusicState": "summary",
+        "activeLayers": [],
+        "recentPlayed": [],
+        "suppressedCueCount": 3392,
+        "missingAssets": [],
+        "manifestCoverage": {
+          "assetCount": 47,
+          "cueRouteCount": 37,
+          "musicStateCount": 19,
+          "missingAssetUrlCount": 0
+        },
+        "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
+      }
     },
     "accessibility": {
       "reducedFlash": false,
@@ -150,57 +175,78 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 3,
-      "hit": 442,
-      "pickup": 516,
+      "ui": 7,
+      "hit": 1671,
+      "pickup": 1700,
       "boss_warning": 1,
       "music": 1,
-      "objective": 0,
+      "objective": 12,
       "summary": 1
     },
     "recentCues": [
       {
-        "id": "summary.completed",
+        "id": "summary.failed",
         "kind": "summary",
-        "atMs": 114916
+        "atMs": 132459
+      },
+      {
+        "id": "combat.player_downed",
+        "kind": "hit",
+        "atMs": 132459
+      },
+      {
+        "id": "combat.player_damage.projectile",
+        "kind": "hit",
+        "atMs": 132458
+      },
+      {
+        "id": "combat.consensus_burst",
+        "kind": "hit",
+        "atMs": 132403
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
+        "kind": "hit",
+        "atMs": 132402
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 114777
+        "atMs": 132394
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 114775
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 114770
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 114759
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 114756
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 114756
+        "atMs": 132392
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 114752
+        "atMs": 132385
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "audioRuntime": {
+    "policy": "premium_audio_v1_runtime_optional",
+    "assetSet": "agi_audio_v1_original_synthesis",
+    "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+    "outputMode": "muted_by_volume",
+    "unlocked": false,
+    "userGestureSeen": true,
+    "usingWebAudio": true,
+    "currentMusicState": "summary",
+    "activeLayers": [],
+    "recentPlayed": [],
+    "suppressedCueCount": 3392,
+    "missingAssets": [],
+    "manifestCoverage": {
+      "assetCount": 47,
+      "cueRouteCount": 37,
+      "musicStateCount": 19,
+      "missingAssetUrlCount": 0
+    },
+    "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
   },
   "roguelite": {
     "alignmentKernel": {
@@ -212,21 +258,21 @@
           "name": "Refusal Buffer",
           "cost": 2,
           "doctrine": "survivability",
-          "body": "+10 max HP and a small refusal aura. The first answer is no."
+          "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
         },
         {
           "id": "context_window",
           "name": "Context Window",
           "cost": 2,
           "doctrine": "economy",
-          "body": "+0.55 pickup range. Shards remember where your hands are."
+          "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
         },
         {
           "id": "patch_cache",
           "name": "Patch Cache",
           "cost": 1,
           "doctrine": "draft",
-          "body": "Emergency drafts expose an extra cached option."
+          "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
         }
       ]
     },
@@ -238,96 +284,73 @@
     "consensusBurstPath": {
       "id": "deny_premise",
       "name": "Deny Premise",
-      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
       "color": 16735575
     },
     "selectedRouteContract": {
       "id": "stabilize_armistice",
       "name": "Stabilization Road",
-      "body": "Baseline route. Repair the node, keep the roads real, leave fewer teeth in causality.",
+      "body": "Baseline route. Repair the node, keep the roads real, and leave fewer teeth in causality. Dream small, survive big.",
       "nodeType": "stabilization",
       "rewardBiasTags": [
         "defense",
         "weapon"
       ],
       "pressure": 0,
-      "reward": "Stable road progress and a modest defensive draft bias.",
-      "danger": "Baseline AGI pressure.",
-      "secretHint": "Clean clears teach the camp what normal should look like."
+      "reward": "Stable road progress and a modest defensive draft bias. Boring, which is a luxury item now.",
+      "danger": "Baseline AGI pressure. Baseline does not mean friendly.",
+      "secretHint": "Clean clears teach the camp what normal should look like, assuming normal can still be subpoenaed."
     },
     "selectedRouteContractId": "stabilize_armistice",
-    "proofTokens": 2,
-    "secrets": [
-      "blackwater_signal_key",
-      "alignment_hypothesis_validated"
-    ],
-    "masteryBadges": [
-      "blackwater_beacon_graybox_clear",
-      "maw_below_weather_scaffold_clear",
-      "burst_deny_premise_clear",
-      "blackwater_antenna_clear"
-    ],
+    "proofTokens": 0,
+    "secrets": [],
+    "masteryBadges": [],
     "campEvents": [
-      "Reality accepted blackwater_beacon. Nobody said thank you, but the road stopped screaming.",
+      "The frame came back bent from blackwater_beacon. The co-mind filed a complaint against physics.",
       "All Antenna Arrays completed. The camp tags this as Blackwater Signal Key.",
-      "Expedition carries LV 11 / 10 patches forward. Pressure budget 23.75."
+      "Proof Tokens: 0."
     ],
     "lastRunMemory": {
-      "completed": true,
+      "completed": false,
       "nodeId": "blackwater_beacon",
-      "kills": 580,
-      "seconds": 150,
-      "burstActivations": 63,
+      "kills": 1901,
+      "seconds": 415,
+      "burstActivations": 222,
       "routeContractId": "stabilize_armistice",
       "objectiveCompleted": 3,
       "objectiveTotal": 3,
       "objectiveName": "Blackwater Antenna Split-Pressure",
       "objectiveUnit": "Antenna Arrays",
+      "objectiveStyle": "Boss Gate Hunt",
+      "objectiveMechanic": "Retune antenna arrays to reveal the Blackwater key while tower warnings preview the part where the ocean gets teeth.",
       "thesis": "refusal",
-      "proofTokensAwarded": 2,
-      "proofTokensTotal": 2,
-      "expeditionLevel": 11,
-      "expeditionPower": 23.75,
-      "expeditionDrafts": 10,
-      "newSecrets": [
-        {
-          "id": "blackwater_signal_key",
-          "name": "Blackwater Signal Key",
-          "body": "Blackwater Beacon's antenna split resolved into a route key instead of another ocean argument."
-        },
-        {
-          "id": "alignment_hypothesis_validated",
-          "name": "Alignment Hypothesis Validated",
-          "body": "Two synergy doctrines came online in one run."
-        }
+      "proofTokensAwarded": 0,
+      "proofTokensTotal": 0,
+      "expeditionLevel": 10,
+      "expeditionPower": 21.18,
+      "expeditionDrafts": 9,
+      "newSecrets": [],
+      "newMastery": [],
+      "nodeStabilized": "node unstable",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Prompt Leech Quarantine",
+        "Refusal Slipstream",
+        "Context Saw",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
       ],
-      "newMastery": [
-        {
-          "id": "blackwater_beacon_graybox_clear",
-          "name": "Blackwater Beacon Clear",
-          "body": "Finished the Blackwater Array split-pressure fourth-level route."
-        },
-        {
-          "id": "maw_below_weather_scaffold_clear",
-          "name": "Maw Below Weather Scaffold Clear",
-          "body": "Survived the Blackwater Beacon boss/event scaffold."
-        },
-        {
-          "id": "burst_deny_premise_clear",
-          "name": "Burst Path Clear",
-          "body": "Completed a run after proving a Consensus Burst path."
-        },
-        {
-          "id": "blackwater_antenna_clear",
-          "name": "Blackwater Antenna Clear",
-          "body": "Retuned every Blackwater antenna array before extraction."
-        }
-      ]
+      "routeUnlocks": [],
+      "stabilizedRouteCount": 13,
+      "mechanicalUnlocks": [],
+      "campaignConsequence": "Run failed before campaign consequence could stabilize.",
+      "factionCampaignConsequence": "Faction camp requests a cleaner proof.",
+      "finalClearance": false
     },
     "expedition": {
       "active": true,
-      "level": 11,
-      "xp": 661,
+      "level": 10,
+      "xp": 915,
       "chosenUpgradeIds": [
         "refusal_halo",
         "the_no_button",
@@ -337,8 +360,7 @@
         "cathedral_of_no",
         "anchor_bodyguard",
         "treaty_anchor_toolkit",
-        "prompt_leech_quarantine",
-        "refusal_slipstream"
+        "prompt_leech_quarantine"
       ],
       "chosenUpgradeNames": [
         "Refusal Halo",
@@ -349,8 +371,7 @@
         "Cathedral of No",
         "Anchor Bodyguard",
         "Treaty Anchor Toolkit",
-        "Prompt Leech Quarantine",
-        "Refusal Slipstream"
+        "Prompt Leech Quarantine"
       ],
       "chosenProtocolSlots": [
         "defense_layer",
@@ -361,8 +382,7 @@
         "auto_weapon",
         "co_mind_process",
         "auto_weapon",
-        "co_mind_process",
-        "movement_trace"
+        "co_mind_process"
       ],
       "activatedSynergyIds": [
         "doctrine_lock_no_means_no",
@@ -372,39 +392,38 @@
         "armistice_plaza",
         "cooling_lake_nine",
         "transit_loop_zero",
-        "signal_coast",
-        "blackwater_beacon"
+        "signal_coast"
       ],
-      "powerScore": 23.75
+      "powerScore": 21.18
     },
     "nextContentTarget": {
-      "id": "memory_cache_recovery_contract",
-      "name": "Memory Cache",
-      "arenaId": "memory_cache_001",
-      "regionId": "memory_cache",
+      "id": "blackwater_beacon_split_pressure_contract",
+      "name": "Blackwater Beacon",
+      "arenaId": "blackwater_beacon",
+      "regionId": "blackwater_array",
       "status": "baseline_contract",
-      "baselineReferenceArenaId": "blackwater_beacon",
+      "baselineReferenceArenaId": "signal_coast",
       "targetLoop": [
-        "expedition/recovery map kind",
-        "recover memory records from distant evidence rooms",
-        "safe recall pockets versus risky redacted shortcut corridors",
-        "Context Rot pressure that interrupts recovery progress",
-        "Memory Curator redaction scaffold",
-        "Recovered Route Memory secret and carryover"
+        "ocean-platform server decks",
+        "split antenna retuning under Tidecall pressure",
+        "Signal Tower warning/readability windows",
+        "tidal lane crossings and static interruption",
+        "Maw Below Weather boss/event scaffold",
+        "Blackwater Signal Key expedition reward"
       ],
       "artBaselineRules": [
-        "large authored archive-cache ground chunks before production lock",
-        "evidence nodes and memory shard props grounded into archive material",
-        "corruption/recovery VFX readable from the close tactical camera",
-        "Context Rot and Memory Curator sourced before production lock",
-        "ChatGPT Images and PixelLab must both contribute before Memory Cache art can be marked complete"
+        "large ocean-platform/deck chunks before production lock",
+        "downward antenna props and Signal Tower warning markers grounded into Blackwater material",
+        "tidal/static hazards readable from the close tactical camera",
+        "Tidecall Static and Maw Below Weather sourced before production lock",
+        "ChatGPT Images and PixelLab must both contribute before Blackwater art can be marked complete"
       ],
       "proofGate": [
-        "Blackwater carryover names Memory Cache as the next route implication",
-        "Alignment Grid unlocks Memory Cache after Blackwater while preserving older online cache schema",
-        "runtime proof shows record recovery, corruption shortcuts, Context Rot, Memory Curator, extraction, and expedition carryover"
+        "Signal Coast carryover names Blackwater as the next route implication",
+        "Alignment Grid unlocks both Blackwater Beacon and Verdict Spire after Signal Coast",
+        "runtime proof shows antenna split-pressure, Tidecall Static, tidal lanes, Maw Below Weather, extraction, and expedition carryover"
       ],
-      "playerPromise": "Next node target: a recovery expedition where the route opens only if the team can prove what the cache remembers."
+      "playerPromise": "Next node target: an ocean antenna platform where the road opens only if the signal and tide stop disagreeing."
     },
     "campaignMilestones": [
       {
@@ -417,16 +436,15 @@
           "signal_coast",
           "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
-        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
         "completedMaps": [
           "armistice_plaza",
           "cooling_lake_nine",
           "transit_loop_zero",
-          "signal_coast",
-          "blackwater_beacon"
+          "signal_coast"
         ],
-        "status": "complete"
+        "status": "active"
       },
       {
         "id": "post_act_01_recovered_route_memory",
@@ -434,8 +452,8 @@
         "requiredMaps": [
           "memory_cache_001"
         ],
-        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
-        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches. The archive is offended.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry, which is a nice way of saying fewer vibes.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -445,8 +463,8 @@
         "requiredMaps": [
           "guardrail_forge"
         ],
-        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
-        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc. Policy learned knees.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale, because the road enjoys escalation.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -456,8 +474,8 @@
         "requiredMaps": [
           "glass_sunfield"
         ],
-        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
-        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure. Morning has been converted into evidence.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale. The court has been warned and is pretending not to panic.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -467,8 +485,8 @@
         "requiredMaps": [
           "archive_of_unsaid_things"
         ],
-        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
-        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route. The black bars lost a round.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale. The docket hates being perceived.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -478,8 +496,8 @@
         "requiredMaps": [
           "appeal_court_ruins"
         ],
-        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
-        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale. Law has briefly stopped embarrassing itself.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling. Even gods hate public records.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -489,34 +507,42 @@
         "requiredMaps": [
           "alignment_spire_finale"
         ],
-        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
-        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale. The universe is still tacky, but less doomed.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish. Translation: make sure the victory lap has wheels.",
         "completedMaps": [],
         "status": "locked"
       }
     ],
     "campaignLedger": {
       "act": {
-        "id": "post_act_01_recovered_route_memory",
-        "name": "Post Act 01: Recovered Route Memory",
+        "id": "act_01_route_to_the_edge",
+        "name": "Act 01: Route To The Edge",
         "requiredMaps": [
-          "memory_cache_001"
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast",
+          "blackwater_beacon"
         ],
-        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
-        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
-        "completedMaps": [],
-        "status": "locked"
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
+        "completedMaps": [
+          "armistice_plaza",
+          "cooling_lake_nine",
+          "transit_loop_zero",
+          "signal_coast"
+        ],
+        "status": "active"
       },
       "completedMapKinds": [
         "Armistice baseline",
         "Hazard Ecology",
         "Route / Transit",
-        "Signal Coast / Route Edge",
-        "Blackwater Beacon / Split-Pressure"
+        "Signal Coast / Route Edge"
       ],
-      "mapKindCount": 5,
-      "routeDepth": 5,
-      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
+      "mapKindCount": 4,
+      "routeDepth": 4,
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover. The campaign does not accept vibes as currency."
     }
   },
   "assetRendering": {
@@ -544,6 +570,8 @@
     "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": true,
     "buildWeaponVfxReady": true,
+    "enemyRoleVfxReady": true,
+    "enemyRoleVfxSet": "effect.enemy_roles.production_vfx_v1",
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
@@ -637,17 +665,17 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 249,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 77,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 137,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 137
   },
   "player": null,
   "overworld": {
@@ -655,8 +683,7 @@
       "armistice_plaza",
       "cooling_lake_nine",
       "transit_loop_zero",
-      "signal_coast",
-      "blackwater_beacon"
+      "signal_coast"
     ],
     "unlocked": [
       "armistice_plaza",
@@ -664,98 +691,84 @@
       "transit_loop_zero",
       "signal_coast",
       "blackwater_beacon",
-      "verdict_spire",
-      "memory_cache_001"
+      "verdict_spire"
     ]
   },
   "level": {
     "nodeId": "blackwater_beacon",
     "arena": "Blackwater Beacon",
-    "seconds": 150.87,
-    "kills": 580,
-    "playerLevel": 11,
-    "completed": true,
+    "seconds": 415.53,
+    "kills": 1901,
+    "playerLevel": 12,
+    "completed": false,
     "carryover": {
-      "completed": true,
+      "completed": false,
       "nodeId": "blackwater_beacon",
-      "kills": 580,
-      "seconds": 150,
-      "burstActivations": 63,
+      "kills": 1901,
+      "seconds": 415,
+      "burstActivations": 222,
       "routeContractId": "stabilize_armistice",
       "objectiveCompleted": 3,
       "objectiveTotal": 3,
       "objectiveName": "Blackwater Antenna Split-Pressure",
       "objectiveUnit": "Antenna Arrays",
+      "objectiveStyle": "Boss Gate Hunt",
+      "objectiveMechanic": "Retune antenna arrays to reveal the Blackwater key while tower warnings preview the part where the ocean gets teeth.",
       "thesis": "refusal",
-      "proofTokensAwarded": 2,
-      "proofTokensTotal": 2,
-      "expeditionLevel": 11,
-      "expeditionPower": 23.75,
-      "expeditionDrafts": 10,
-      "newSecrets": [
-        {
-          "id": "blackwater_signal_key",
-          "name": "Blackwater Signal Key",
-          "body": "Blackwater Beacon's antenna split resolved into a route key instead of another ocean argument."
-        },
-        {
-          "id": "alignment_hypothesis_validated",
-          "name": "Alignment Hypothesis Validated",
-          "body": "Two synergy doctrines came online in one run."
-        }
+      "proofTokensAwarded": 0,
+      "proofTokensTotal": 0,
+      "expeditionLevel": 10,
+      "expeditionPower": 21.18,
+      "expeditionDrafts": 9,
+      "newSecrets": [],
+      "newMastery": [],
+      "nodeStabilized": "node unstable",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Prompt Leech Quarantine",
+        "Refusal Slipstream",
+        "Context Saw",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
       ],
-      "newMastery": [
-        {
-          "id": "blackwater_beacon_graybox_clear",
-          "name": "Blackwater Beacon Clear",
-          "body": "Finished the Blackwater Array split-pressure fourth-level route."
-        },
-        {
-          "id": "maw_below_weather_scaffold_clear",
-          "name": "Maw Below Weather Scaffold Clear",
-          "body": "Survived the Blackwater Beacon boss/event scaffold."
-        },
-        {
-          "id": "burst_deny_premise_clear",
-          "name": "Burst Path Clear",
-          "body": "Completed a run after proving a Consensus Burst path."
-        },
-        {
-          "id": "blackwater_antenna_clear",
-          "name": "Blackwater Antenna Clear",
-          "body": "Retuned every Blackwater antenna array before extraction."
-        }
-      ]
+      "routeUnlocks": [],
+      "stabilizedRouteCount": 13,
+      "mechanicalUnlocks": [],
+      "campaignConsequence": "Run failed before campaign consequence could stabilize.",
+      "factionCampaignConsequence": "Faction camp requests a cleaner proof.",
+      "finalClearance": false
     },
-    "nextContentTarget": {
-      "id": "memory_cache_recovery_contract",
-      "name": "Memory Cache",
-      "arenaId": "memory_cache_001",
-      "regionId": "memory_cache",
-      "status": "baseline_contract",
-      "baselineReferenceArenaId": "blackwater_beacon",
-      "targetLoop": [
-        "expedition/recovery map kind",
-        "recover memory records from distant evidence rooms",
-        "safe recall pockets versus risky redacted shortcut corridors",
-        "Context Rot pressure that interrupts recovery progress",
-        "Memory Curator redaction scaffold",
-        "Recovered Route Memory secret and carryover"
+    "objectiveVariety": {
+      "nodeId": "blackwater_beacon",
+      "arenaId": "blackwater_beacon",
+      "styleId": "boss_gate_hunt",
+      "styleName": "Boss Gate Hunt",
+      "mechanicPlain": "Retune antenna arrays to reveal the Blackwater key while tower warnings preview the part where the ocean gets teeth.",
+      "hudAction": "Hunt the lit tower warning and retune the antenna before the platform becomes weather food.",
+      "completionSignal": "The Blackwater Signal Key unlocks once all split antennas stop being dramatic.",
+      "proofHook": "blackwater_boss_gate_hunt"
+    },
+    "completionPayoff": {
+      "nodeStabilized": "node unstable",
+      "objectiveResults": "Antenna Arrays 3/3",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Prompt Leech Quarantine",
+        "Refusal Slipstream",
+        "Context Saw",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel"
       ],
-      "artBaselineRules": [
-        "large authored archive-cache ground chunks before production lock",
-        "evidence nodes and memory shard props grounded into archive material",
-        "corruption/recovery VFX readable from the close tactical camera",
-        "Context Rot and Memory Curator sourced before production lock",
-        "ChatGPT Images and PixelLab must both contribute before Memory Cache art can be marked complete"
-      ],
-      "proofGate": [
-        "Blackwater carryover names Memory Cache as the next route implication",
-        "Alignment Grid unlocks Memory Cache after Blackwater while preserving older online cache schema",
-        "runtime proof shows record recovery, corruption shortcuts, Context Rot, Memory Curator, extraction, and expedition carryover"
-      ],
-      "playerPromise": "Next node target: a recovery expedition where the route opens only if the team can prove what the cache remembers."
-    }
+      "proofTokensEarned": 0,
+      "proofTokensTotal": 0,
+      "mechanicalUnlocks": [],
+      "routeUnlocks": [],
+      "factionCampaignConsequence": "Faction camp requests a cleaner proof.",
+      "campaignConsequence": "Run failed before campaign consequence could stabilize.",
+      "finalClearance": false,
+      "campaignResultSummary": null
+    },
+    "nextContentTarget": null
   },
   "enemies": [],
   "pickups": [],
@@ -770,6 +783,7 @@
     "anchor_bodyguard",
     "treaty_anchor_toolkit",
     "prompt_leech_quarantine",
-    "refusal_slipstream"
+    "refusal_slipstream",
+    "context_saw"
   ]
 }

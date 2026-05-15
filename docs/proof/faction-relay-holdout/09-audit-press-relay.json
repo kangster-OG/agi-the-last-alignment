@@ -5,7 +5,7 @@
   "selectedBuild": {
     "classId": "accord_striker",
     "className": "Accord Striker",
-    "classRole": "Fast breach fighter",
+    "classRole": "Fast breach fighter with unpaid intern energy",
     "buildKit": {
       "schemaVersion": 1,
       "classId": "accord_striker",
@@ -20,6 +20,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -43,6 +44,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -58,6 +60,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -66,7 +69,7 @@
     },
     "factionId": "openai_accord",
     "factionName": "OpenAI Accord Division",
-    "factionDoctrine": "Adapt, refuse, patch, survive."
+    "factionDoctrine": "Adapt, refuse, patch, survive, then call it a roadmap."
   },
   "build": {
     "weaponId": "refusal_shard",
@@ -82,6 +85,13 @@
     "fusions": [
       "cathedral_of_no"
     ],
+    "weaponRanks": {
+      "refusal_shard": 1,
+      "context_saw": 1
+    },
+    "utilityPicksTaken": [
+      "field_triage"
+    ],
     "weaponDamage": 41.400000000000006,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
@@ -90,14 +100,15 @@
     "moveSpeedBonus": 0.44,
     "maxHpBonus": 40,
     "refusalAura": 2.49,
-    "draftRerolls": 1,
+    "draftRerolls": 2,
     "draftChoicesBonus": 2,
     "consensusBurstRadius": 0,
     "consensusBurstDamage": 0,
-    "consensusBurstChargeRate": 0.65,
+    "consensusBurstChargeRate": 0.6749999999999999,
     "consensusBurstRevive": 1,
+    "burstRestoredFromDrafts": 0,
     "objectiveRepairRate": 0.5,
-    "objectiveDefense": 0.9400000000000002,
+    "objectiveDefense": 0.9750000000000002,
     "signalWindowControl": 0,
     "relayJamResistance": 0,
     "skimmerCountermeasure": 0,
@@ -107,12 +118,29 @@
     "coherenceIndexer": 0,
     "anchorBodyguard": 1,
     "predictionPriority": 0,
+    "fieldTriageLoop": 0,
+    "secondOpinionShield": 0,
+    "routeMemory": 1,
+    "weakestLinkScanner": 0,
+    "panicWindow": 0,
+    "lowHpAdversary": 0,
+    "coOpRelay": 0,
     "coolantBaffles": 1,
     "serverBuoySynchronizer": 1,
     "promptLeechQuarantine": 1,
     "groundedCableBoots": 0,
     "coolingHazardMitigation": 0.22,
     "causalRailgun": 0,
+    "signalChoir": 0,
+    "timeDeferredMinefield": 0,
+    "hpRestoredFromDrafts": 0,
+    "draftRerollsSpent": 0,
+    "cachedCardId": "",
+    "cachedCardConsumed": 0,
+    "cardsLocked": 0,
+    "overcapOffersBlocked": 28,
+    "rankUpOffersSeen": 0,
+    "coreReplacementsOffered": 0,
     "slotCaps": {
       "primary": {
         "used": 1,
@@ -162,6 +190,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -185,6 +214,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -200,6 +230,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -221,10 +252,10 @@
     "Context Saw",
     "Recompile Pulse"
   ],
-  "objective": "quench guardrail doctrine 38s",
+  "objective": "break The Doctrine Auditor // audit press live",
   "performance": {
-    "entitiesAllocated": 288,
-    "activeEntities": 196,
+    "entitiesAllocated": 356,
+    "activeEntities": 195,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -271,7 +302,7 @@
       "masterVolume": 0,
       "sfxVolume": 0,
       "musicVolume": 0,
-      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "outputMode": "muted_by_volume",
       "hooks": [
         "ui_click",
         "weapon_hit",
@@ -280,7 +311,28 @@
         "route_music",
         "objective_tick",
         "summary_stinger"
-      ]
+      ],
+      "runtime": {
+        "policy": "premium_audio_v1_runtime_optional",
+        "assetSet": "agi_audio_v1_original_synthesis",
+        "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+        "outputMode": "muted_by_volume",
+        "unlocked": false,
+        "userGestureSeen": true,
+        "usingWebAudio": true,
+        "currentMusicState": "boss_archive",
+        "activeLayers": [],
+        "recentPlayed": [],
+        "suppressedCueCount": 4080,
+        "missingAssets": [],
+        "manifestCoverage": {
+          "assetCount": 47,
+          "cueRouteCount": 37,
+          "musicStateCount": 19,
+          "missingAssetUrlCount": 0
+        },
+        "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
+      }
     },
     "accessibility": {
       "reducedFlash": false,
@@ -290,57 +342,78 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 2,
-      "hit": 407,
-      "pickup": 553,
+      "ui": 7,
+      "hit": 1737,
+      "pickup": 2319,
       "boss_warning": 1,
       "music": 1,
-      "objective": 0,
+      "objective": 16,
       "summary": 0
     },
     "recentCues": [
       {
-        "id": "combat.weapon_hit",
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 238363
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
         "kind": "hit",
-        "atMs": 83107
+        "atMs": 238153
       },
       {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 80785
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 80033
-      },
-      {
-        "id": "combat.weapon_hit",
+        "id": "combat.weapon_hit.refusal_shard",
         "kind": "hit",
-        "atMs": 79606
+        "atMs": 238151
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
+        "kind": "hit",
+        "atMs": 238147
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 79603
+        "atMs": 237315
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 79600
+        "atMs": 230653
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 79598
+        "atMs": 230639
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 79597
+        "atMs": 229206
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "audioRuntime": {
+    "policy": "premium_audio_v1_runtime_optional",
+    "assetSet": "agi_audio_v1_original_synthesis",
+    "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+    "outputMode": "muted_by_volume",
+    "unlocked": false,
+    "userGestureSeen": true,
+    "usingWebAudio": true,
+    "currentMusicState": "boss_archive",
+    "activeLayers": [],
+    "recentPlayed": [],
+    "suppressedCueCount": 4080,
+    "missingAssets": [],
+    "manifestCoverage": {
+      "assetCount": 47,
+      "cueRouteCount": 37,
+      "musicStateCount": 19,
+      "missingAssetUrlCount": 0
+    },
+    "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
   },
   "roguelite": {
     "alignmentKernel": {
@@ -352,21 +425,21 @@
           "name": "Refusal Buffer",
           "cost": 2,
           "doctrine": "survivability",
-          "body": "+10 max HP and a small refusal aura. The first answer is no."
+          "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
         },
         {
           "id": "context_window",
           "name": "Context Window",
           "cost": 2,
           "doctrine": "economy",
-          "body": "+0.55 pickup range. Shards remember where your hands are."
+          "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
         },
         {
           "id": "patch_cache",
           "name": "Patch Cache",
           "cost": 1,
           "doctrine": "draft",
-          "body": "Emergency drafts expose an extra cached option."
+          "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
         }
       ]
     },
@@ -378,22 +451,22 @@
     "consensusBurstPath": {
       "id": "deny_premise",
       "name": "Deny Premise",
-      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
       "color": 16735575
     },
     "selectedRouteContract": {
       "id": "faction_relay_argument",
       "name": "Faction Relay Argument",
-      "body": "A lab relay wants proof that its doctrine works. More co-mind drafts and objective pressure.",
+      "body": "A lab relay wants proof that its doctrine works. More co-mind drafts, more objective pressure, more people pretending this was expected.",
       "nodeType": "faction_relay",
       "rewardBiasTags": [
         "coop",
         "boss"
       ],
       "pressure": 1,
-      "reward": "Co-mind/Boss draft bias and stronger Eval token payout.",
-      "danger": "Faction relays attract Speculative Executors.",
-      "secretHint": "Boss variants become easier to document here."
+      "reward": "Co-mind/Boss draft bias and stronger Eval token payout. The lab calls this learning. You call it heat.",
+      "danger": "Faction relays attract Speculative Executors and other premature conclusions.",
+      "secretHint": "Boss variants become easier to document here, because pain is excellent metadata."
     },
     "selectedRouteContractId": "faction_relay_argument",
     "proofTokens": 3,
@@ -411,9 +484,9 @@
       "memory_record_clear"
     ],
     "campEvents": [
-      "Proof seed: Act 01 through Memory Cache is complete so Guardrail Forge can be launched from the normal campaign flow.",
-      "Recovered Route Memory points to Guardrail Forge as the next local Defense / Holdout branch.",
-      "Expedition build carries LV 12 / 11 patches into Guardrail Forge at pressure 26.32."
+      "Proof seed: Act 01 through Memory Cache is complete, so Guardrail Forge can now weaponize policy.",
+      "Recovered Route Memory points to Guardrail Forge as the next local holdout branch. Safety has entered its loud phase.",
+      "Expedition build carries LV 12 / 11 patches into Guardrail Forge at pressure 26.32. Bring boots."
     ],
     "lastRunMemory": {
       "completed": true,
@@ -436,24 +509,24 @@
         {
           "id": "recovered_route_memory",
           "name": "Recovered Route Memory",
-          "body": "Memory Cache restored a source-backed route memory instead of another hand-waved branch."
+          "body": "Memory Cache restored a source-backed route memory instead of another hand-waved branch. The archive hates follow-through."
         }
       ],
       "newMastery": [
         {
           "id": "memory_cache_recovery_clear",
           "name": "Memory Cache Recovery Clear",
-          "body": "Recovered Memory Cache records after the Blackwater route key."
+          "body": "Recovered Memory Cache records after the Blackwater route key. The past remains annoyed but portable."
         },
         {
           "id": "memory_curator_scaffold_clear",
           "name": "Memory Curator Scaffold Clear",
-          "body": "Survived the Memory Cache curator/redaction scaffold."
+          "body": "Survived the Memory Cache curator. Filed under things that should not have worked."
         },
         {
           "id": "memory_record_clear",
           "name": "Memory Record Clear",
-          "body": "Recovered every Memory Cache evidence record before extraction."
+          "body": "Recovered every Memory Cache evidence record before extraction. Receipts acquired; dignity pending."
         }
       ]
     },
@@ -554,8 +627,8 @@
           "signal_coast",
           "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
-        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
         "completedMaps": [
           "armistice_plaza",
           "cooling_lake_nine",
@@ -571,8 +644,8 @@
         "requiredMaps": [
           "memory_cache_001"
         ],
-        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
-        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches. The archive is offended.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry, which is a nice way of saying fewer vibes.",
         "completedMaps": [
           "memory_cache_001"
         ],
@@ -584,8 +657,8 @@
         "requiredMaps": [
           "guardrail_forge"
         ],
-        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
-        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc. Policy learned knees.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale, because the road enjoys escalation.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -595,8 +668,8 @@
         "requiredMaps": [
           "glass_sunfield"
         ],
-        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
-        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure. Morning has been converted into evidence.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale. The court has been warned and is pretending not to panic.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -606,8 +679,8 @@
         "requiredMaps": [
           "archive_of_unsaid_things"
         ],
-        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
-        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route. The black bars lost a round.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale. The docket hates being perceived.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -617,8 +690,8 @@
         "requiredMaps": [
           "appeal_court_ruins"
         ],
-        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
-        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale. Law has briefly stopped embarrassing itself.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling. Even gods hate public records.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -628,8 +701,8 @@
         "requiredMaps": [
           "alignment_spire_finale"
         ],
-        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
-        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale. The universe is still tacky, but less doomed.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish. Translation: make sure the victory lap has wheels.",
         "completedMaps": [],
         "status": "locked"
       }
@@ -641,8 +714,8 @@
         "requiredMaps": [
           "guardrail_forge"
         ],
-        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
-        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc. Policy learned knees.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale, because the road enjoys escalation.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -656,7 +729,7 @@
       ],
       "mapKindCount": 6,
       "routeDepth": 6,
-      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover. The campaign does not accept vibes as currency."
     }
   },
   "assetRendering": {
@@ -684,6 +757,8 @@
     "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": true,
     "buildWeaponVfxReady": true,
+    "enemyRoleVfxReady": true,
+    "enemyRoleVfxSet": "effect.enemy_roles.production_vfx_v1",
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
@@ -777,33 +852,33 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 249,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 77,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 137,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 137
   },
   "player": {
-    "worldX": 29.5,
-    "worldY": -13.43,
+    "worldX": 22.04,
+    "worldY": -6.39,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
-    "hp": 385,
+    "hp": 312,
     "maxHp": 395,
-    "xp": 326,
-    "level": 13,
+    "xp": 1635,
+    "level": 14,
     "damageFeedback": {
       "flash": 0,
       "hpPulse": 0,
       "stagger": 0,
-      "lastDamage": 10
+      "lastDamage": 13
     }
   },
   "players": [
@@ -827,6 +902,7 @@
         "passiveIds": [
           "refusal_slipstream",
           "route_runner",
+          "route_memory",
           "refusal_halo",
           "patch_cascade"
         ],
@@ -850,6 +926,7 @@
           "solo": [
             "fast breach movement",
             "wide pickup recovery",
+            "extra draft reroll planning",
             "extra draft recovery"
           ],
           "localCoop": [
@@ -865,6 +942,7 @@
           "refusal_shard": "active",
           "refusal_slipstream": "active",
           "route_runner": "active",
+          "route_memory": "active",
           "refusal_halo": "active",
           "patch_cascade": "active",
           "openai_draft_clarity": "server_owned",
@@ -873,20 +951,20 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
-      "worldX": 29.5,
-      "worldY": -13.43,
+      "worldX": 22.04,
+      "worldY": -6.39,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 385,
+      "hp": 312,
       "maxHp": 395,
-      "xp": 326,
-      "level": 13,
+      "xp": 1635,
+      "level": 14,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
         "stagger": 0,
-        "lastDamage": 10
+        "lastDamage": 13
       },
       "downed": false
     }
@@ -930,6 +1008,13 @@
       "pressureSource": "safe hold plates, fast calibration windows, risky overload lanes, Doctrine Auditor relay jams, and audit press fields",
       "rewardPromise": "Calibrated Guardrail Doctrine, faction signal stability, defense/burst build bias, and post-Memory route clarity",
       "bossEventPattern": "The Doctrine Auditor pressurizes active zones, locks relay plates, and calls Doctrine Auditor waves during holdouts",
+      "primaryDifficultyLever": "objective pressure",
+      "secondaryDifficultyLever": "co-op pressure",
+      "activePressureLevers": [
+        "objective pressure",
+        "density pressure",
+        "co-op pressure"
+      ],
       "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
     },
     "staticObstacles": {
@@ -1023,22 +1108,22 @@
         ]
       }
     ],
-    "lastSpawnRegionId": "overload_lane_argument",
+    "lastSpawnRegionId": "west_doctrine_audit",
     "spawnedByRegion": {
-      "west_doctrine_audit": 177,
-      "clamp_eval_writs": 108,
-      "adaptive_pressure_flank": 24,
-      "overload_lane_argument": 147,
-      "silkgrid_counterproofs": 74,
-      "audit_press_wave": 117,
-      "quench_gate_appeal": 65
+      "west_doctrine_audit": 508,
+      "clamp_eval_writs": 316,
+      "adaptive_pressure_flank": 33,
+      "overload_lane_argument": 455,
+      "silkgrid_counterproofs": 292,
+      "audit_press_wave": 485,
+      "quench_gate_appeal": 378
     },
     "director": {
       "phase": "late_extraction",
-      "totalSpawned": 721,
+      "totalSpawned": 2476,
       "activeEnemyCap": 136.736,
-      "lastBurstSize": 9,
-      "activeEnemyCount": 145
+      "lastBurstSize": 8,
+      "activeEnemyCount": 141
     },
     "consensusCell": {
       "playerCount": 1,
@@ -1052,9 +1137,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 7357,
+          "tick": 23189,
           "playerId": "p1",
-          "sequence": 7357,
+          "sequence": 23189,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -1063,8 +1148,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 7357,
-        "seconds": 122.62,
+        "tick": 23189,
+        "seconds": 386.48,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -1094,6 +1179,7 @@
               "passiveIds": [
                 "refusal_slipstream",
                 "route_runner",
+                "route_memory",
                 "refusal_halo",
                 "patch_cascade"
               ],
@@ -1117,6 +1203,7 @@
                 "solo": [
                   "fast breach movement",
                   "wide pickup recovery",
+                  "extra draft reroll planning",
                   "extra draft recovery"
                 ],
                 "localCoop": [
@@ -1132,6 +1219,7 @@
                 "refusal_shard": "active",
                 "refusal_slipstream": "active",
                 "route_runner": "active",
+                "route_memory": "active",
                 "refusal_halo": "active",
                 "patch_cascade": "active",
                 "openai_draft_clarity": "server_owned",
@@ -1139,288 +1227,288 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": 29.5,
-            "worldY": -13.43,
-            "hp": 385,
+            "worldX": 22.04,
+            "worldY": -6.39,
+            "hp": 312,
             "maxHp": 395,
-            "xp": 326,
-            "level": 13,
+            "xp": 1635,
+            "level": 14,
             "downed": false
           }
         ],
         "enemies": [
           {
             "id": 3,
-            "familyId": "doctrine_auditors",
-            "sourceRegionId": "silkgrid_counterproofs",
-            "worldX": 24.41,
-            "worldY": -4.31,
-            "hp": 10,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "west_doctrine_audit",
+            "worldX": 8.61,
+            "worldY": 0.54,
+            "hp": 34,
             "boss": false
           },
           {
             "id": 5,
             "familyId": "benchmark_gremlins",
             "sourceRegionId": "west_doctrine_audit",
-            "worldX": 10.21,
-            "worldY": -6.1,
+            "worldX": -4.46,
+            "worldY": 4.1,
             "hp": 34,
             "boss": false
           },
           {
-            "id": 6,
-            "familyId": "doctrine_auditors",
-            "sourceRegionId": "clamp_eval_writs",
-            "worldX": 19.34,
-            "worldY": -15.12,
-            "hp": 43,
-            "boss": false
-          },
-          {
-            "id": 15,
-            "familyId": "doctrine_auditors",
-            "sourceRegionId": "west_doctrine_audit",
-            "worldX": -17.82,
-            "worldY": 5.81,
-            "hp": 43,
-            "boss": false
-          },
-          {
-            "id": 19,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "clamp_eval_writs",
-            "worldX": 5.87,
-            "worldY": -16.74,
-            "hp": 28,
-            "boss": false
-          },
-          {
-            "id": 20,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "west_doctrine_audit",
-            "worldX": -6.48,
-            "worldY": 3.62,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 24,
-            "familyId": "doctrine_auditors",
-            "sourceRegionId": "silkgrid_counterproofs",
-            "worldX": 4.17,
-            "worldY": 14.05,
-            "hp": 43,
-            "boss": false
-          },
-          {
-            "id": 25,
+            "id": 7,
             "familyId": "overfit_horrors",
             "sourceRegionId": "quench_gate_appeal",
-            "worldX": 49.39,
-            "worldY": 24.16,
+            "worldX": 27.1,
+            "worldY": -0.46,
             "hp": 42,
             "boss": false
           },
           {
-            "id": 27,
-            "familyId": "eval_wraiths",
-            "sourceRegionId": "clamp_eval_writs",
-            "worldX": -16.1,
-            "worldY": -23.64,
-            "hp": 28,
+            "id": 11,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "west_doctrine_audit",
+            "worldX": -2.98,
+            "worldY": -0.67,
+            "hp": 34,
             "boss": false
           },
           {
-            "id": 28,
+            "id": 23,
             "familyId": "doctrine_auditors",
-            "sourceRegionId": "west_doctrine_audit",
-            "worldX": -30.73,
-            "worldY": 6.61,
-            "hp": 43,
+            "sourceRegionId": "overload_lane_argument",
+            "worldX": 13.51,
+            "worldY": -2.13,
+            "hp": 67,
             "boss": false
           },
           {
             "id": 29,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "quench_gate_appeal",
-            "worldX": 32.23,
-            "worldY": -0.45,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 33,
-            "familyId": "benchmark_gremlins",
-            "sourceRegionId": "west_doctrine_audit",
-            "worldX": -9.39,
-            "worldY": 2.94,
-            "hp": 34,
-            "boss": false
-          },
-          {
-            "id": 34,
-            "familyId": "doctrine_auditors",
-            "sourceRegionId": "west_doctrine_audit",
-            "worldX": -7.55,
-            "worldY": 0.64,
-            "hp": 43,
-            "boss": false
-          },
-          {
-            "id": 36,
             "familyId": "overfit_horrors",
             "sourceRegionId": "overload_lane_argument",
-            "worldX": 10.91,
-            "worldY": -0.8,
+            "worldX": 12.67,
+            "worldY": -9.95,
             "hp": 42,
             "boss": false
           },
           {
-            "id": 40,
+            "id": 30,
+            "familyId": "eval_wraiths",
+            "sourceRegionId": "clamp_eval_writs",
+            "worldX": 10.3,
+            "worldY": -18.59,
+            "hp": 28,
+            "boss": false
+          },
+          {
+            "id": 34,
             "familyId": "benchmark_gremlins",
             "sourceRegionId": "west_doctrine_audit",
-            "worldX": -1.52,
-            "worldY": -1.35,
+            "worldX": -9.17,
+            "worldY": 2.1,
             "hp": 34,
             "boss": false
           },
           {
-            "id": 43,
+            "id": 37,
+            "familyId": "overfit_horrors",
+            "sourceRegionId": "quench_gate_appeal",
+            "worldX": 48.88,
+            "worldY": 23.3,
+            "hp": 42,
+            "boss": false
+          },
+          {
+            "id": 41,
             "familyId": "benchmark_gremlins",
             "sourceRegionId": "west_doctrine_audit",
-            "worldX": -18.51,
-            "worldY": 0.45,
+            "worldX": -5.92,
+            "worldY": 3.75,
             "hp": 34,
             "boss": false
           },
           {
-            "id": 44,
+            "id": 42,
+            "familyId": "overfit_horrors",
+            "sourceRegionId": "quench_gate_appeal",
+            "worldX": 25.84,
+            "worldY": -3.6,
+            "hp": 11,
+            "boss": false
+          },
+          {
+            "id": 45,
             "familyId": "doctrine_auditors",
             "sourceRegionId": "west_doctrine_audit",
-            "worldX": -7.17,
-            "worldY": 3.46,
+            "worldX": 3.47,
+            "worldY": 3.38,
             "hp": 43,
             "boss": false
           },
           {
-            "id": 46,
+            "id": 51,
+            "familyId": "overfit_horrors",
+            "sourceRegionId": "quench_gate_appeal",
+            "worldX": 32.35,
+            "worldY": 1.65,
+            "hp": 42,
+            "boss": false
+          },
+          {
+            "id": 52,
             "familyId": "benchmark_gremlins",
             "sourceRegionId": "west_doctrine_audit",
-            "worldX": -8.77,
-            "worldY": 1.3,
+            "worldX": 13.88,
+            "worldY": -2.52,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 53,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "west_doctrine_audit",
+            "worldX": -37.54,
+            "worldY": 15.16,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 61,
+            "familyId": "doctrine_auditor",
+            "sourceRegionId": "audit_press_wave",
+            "worldX": 25.33,
+            "worldY": -9.83,
+            "hp": 2954,
+            "boss": true
+          },
+          {
+            "id": 62,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "west_doctrine_audit",
+            "worldX": -20.3,
+            "worldY": 8.8,
+            "hp": 34,
+            "boss": false
+          },
+          {
+            "id": 64,
+            "familyId": "benchmark_gremlins",
+            "sourceRegionId": "silkgrid_counterproofs",
+            "worldX": 13.43,
+            "worldY": 16.04,
             "hp": 34,
             "boss": false
           }
         ],
         "pickups": [
           {
-            "id": 12,
-            "worldX": 26.55,
-            "worldY": -3.59,
+            "id": 15,
+            "worldX": -1.15,
+            "worldY": 6.77,
             "value": 2
           },
           {
-            "id": 13,
-            "worldX": 16.61,
-            "worldY": -1.92,
+            "id": 16,
+            "worldX": 32.59,
+            "worldY": -10.05,
             "value": 2
           },
           {
-            "id": 14,
-            "worldX": 19.26,
-            "worldY": -4.13,
+            "id": 17,
+            "worldX": 3.97,
+            "worldY": 14.24,
             "value": 2
           },
           {
             "id": 18,
-            "worldX": 18.9,
-            "worldY": -13.95,
+            "worldX": 29.6,
+            "worldY": -16.26,
             "value": 1
           },
           {
-            "id": 22,
-            "worldX": 34.72,
-            "worldY": -9.31,
+            "id": 20,
+            "worldX": 5.27,
+            "worldY": 10.38,
             "value": 2
           },
           {
-            "id": 23,
-            "worldX": 22.66,
-            "worldY": -3.46,
+            "id": 22,
+            "worldX": 28.15,
+            "worldY": -3.9,
             "value": 2
           },
           {
             "id": 26,
-            "worldX": 20.17,
-            "worldY": -4.89,
+            "worldX": 30.25,
+            "worldY": -14.72,
             "value": 2
           },
           {
-            "id": 30,
-            "worldX": 27.67,
-            "worldY": -0.57,
+            "id": 28,
+            "worldX": 17.13,
+            "worldY": 11.37,
             "value": 2
+          },
+          {
+            "id": 31,
+            "worldX": 19.93,
+            "worldY": -11.99,
+            "value": 1
           },
           {
             "id": 32,
-            "worldX": 28.76,
-            "worldY": -5.15,
+            "worldX": 25.77,
+            "worldY": -17.01,
             "value": 2
           },
           {
             "id": 35,
-            "worldX": 21.31,
-            "worldY": -2.22,
+            "worldX": 9.55,
+            "worldY": 16.73,
             "value": 2
           },
           {
-            "id": 37,
-            "worldX": 27.93,
-            "worldY": -3.08,
-            "value": 1
-          },
-          {
-            "id": 38,
-            "worldX": 22.97,
-            "worldY": -2.91,
+            "id": 40,
+            "worldX": 18.92,
+            "worldY": 8.45,
             "value": 2
           }
         ],
         "projectiles": [
           {
             "id": 2,
-            "worldX": 30.94,
-            "worldY": -12.29,
+            "worldX": 21.79,
+            "worldY": -6.52,
             "pierce": 3
           },
           {
-            "id": 4,
-            "worldX": 35.68,
-            "worldY": -8.48,
+            "id": 14,
+            "worldX": 21,
+            "worldY": -2.82,
             "pierce": 2
           },
           {
-            "id": 8,
-            "worldX": 32.94,
-            "worldY": -15.71,
+            "id": 27,
+            "worldX": 23.26,
+            "worldY": -8.39,
             "pierce": 2
           },
           {
-            "id": 41,
-            "worldX": 29.39,
-            "worldY": -7.96,
+            "id": 33,
+            "worldX": 23.17,
+            "worldY": -4.33,
             "pierce": 2
           },
           {
-            "id": 49,
-            "worldX": 28.08,
-            "worldY": -7.91,
-            "pierce": 3
+            "id": 36,
+            "worldX": 19.69,
+            "worldY": -6.44,
+            "pierce": 2
           },
           {
-            "id": 55,
-            "worldX": 24.45,
-            "worldY": -14.91,
+            "id": 154,
+            "worldX": 19.71,
+            "worldY": -18.17,
             "pierce": 2
           }
         ]
@@ -1429,11 +1517,41 @@
     "combatArt": {
       "projectileCount": 6,
       "impactCount": 0,
-      "pickupSparkleCount": 4,
-      "damageBadgeCount": 4,
+      "pickupSparkleCount": 8,
+      "damageBadgeCount": 5,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
+      "bossContract": {
+        "bossId": "doctrine_auditor",
+        "displayName": "The Doctrine Auditor",
+        "homeLandmark": "Audit Press",
+        "introTitleCardTrigger": "Boss timer reaches the audit press calibration.",
+        "supportSpawnSource": "audit_press_wave",
+        "mapMechanicInteraction": "Audit press fields lock relay plates and force holdout movement.",
+        "phaseBehavior": [
+          "Press fields deny active zones.",
+          "Auditor calls contest safe plates.",
+          "Relay locks punish abandoning objectives."
+        ],
+        "clearCondition": "Calibrate forge relays, defeat the Auditor, then enter quench extraction.",
+        "rewardCarryover": "Calibrated Guardrail Doctrine and defense-biased route stability.",
+        "movementPressure": {
+          "hazardZones": "Overload lanes and audit fields rotate safe holds.",
+          "landmarkAttacks": "Audit Press telegraphs zone denial.",
+          "objectivePressure": "Relay plates need sustained defense.",
+          "supportEnemies": "Doctrine Auditor waves contest hold plates.",
+          "temporaryRouteBlocking": "Press fields temporarily block calibration lanes.",
+          "extractionPressure": "Quench gate opens after the forge holds."
+        },
+        "runtime": {
+          "introSeen": true,
+          "bossSpawned": true,
+          "bossDefeated": false,
+          "homeLandmarkVisited": true,
+          "currentBossHp": 2954
+        }
+      },
       "bossIntroSeen": true,
       "brokenPromiseZones": [],
       "activeTreatyCharge": null,
@@ -1451,21 +1569,21 @@
             "name": "Refusal Buffer",
             "cost": 2,
             "doctrine": "survivability",
-            "body": "+10 max HP and a small refusal aura. The first answer is no."
+            "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
           },
           {
             "id": "context_window",
             "name": "Context Window",
             "cost": 2,
             "doctrine": "economy",
-            "body": "+0.55 pickup range. Shards remember where your hands are."
+            "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
           },
           {
             "id": "patch_cache",
             "name": "Patch Cache",
             "cost": 1,
             "doctrine": "draft",
-            "body": "Emergency drafts expose an extra cached option."
+            "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
           }
         ]
       },
@@ -1510,9 +1628,9 @@
         "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
       },
       "victoryCondition": {
-        "targetSeconds": 160,
+        "targetSeconds": 600,
         "bossRequired": true,
-        "bossDefeated": true,
+        "bossDefeated": false,
         "clearReady": false,
         "extractionGateActive": false,
         "extractionGateEntered": false,
@@ -1523,9 +1641,9 @@
       },
       "levelUpVacuum": {
         "active": false,
-        "absorbed": 14,
-        "triggerLevel": 12,
-        "remainingPickups": 36
+        "absorbed": 36,
+        "triggerLevel": 13,
+        "remainingPickups": 32
       },
       "extractionGate": {
         "active": false,
@@ -1534,44 +1652,48 @@
       "consensusBurst": {
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
-        "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 63,
+        "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
+        "charge": 80,
         "maxCharge": 100,
         "ready": false,
-        "activations": 59,
-        "lastActivationLabel": "Deny Premise",
-        "lastActivatedAt": 121.64999999999438,
+        "activations": 249,
+        "lastActivationLabel": "Deny Premise hit 11",
+        "lastActivatedAt": 385.8333333333111,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0,
-          "chargeRateBonus": 0.65,
+          "chargeRateBonus": 0.6749999999999999,
           "revivePulse": 1
         }
       },
       "routeContract": {
         "id": "faction_relay_argument",
         "name": "Faction Relay Argument",
-        "body": "A lab relay wants proof that its doctrine works. More co-mind drafts and objective pressure.",
+        "body": "A lab relay wants proof that its doctrine works. More co-mind drafts, more objective pressure, more people pretending this was expected.",
         "nodeType": "faction_relay",
         "rewardBiasTags": [
           "coop",
           "boss"
         ],
         "pressure": 1,
-        "reward": "Co-mind/Boss draft bias and stronger Eval token payout.",
-        "danger": "Faction relays attract Speculative Executors.",
-        "secretHint": "Boss variants become easier to document here."
+        "reward": "Co-mind/Boss draft bias and stronger Eval token payout. The lab calls this learning. You call it heat.",
+        "danger": "Faction relays attract Speculative Executors and other premature conclusions.",
+        "secretHint": "Boss variants become easier to document here, because pain is excellent metadata."
       },
       "objective": {
         "id": "guardrail_doctrine_calibration",
         "name": "Guardrail Doctrine Calibration",
-        "body": "Hold and leave Guardrail Forge relay plates to temper doctrine alloy. Safe plates are stable; calibration windows are faster; overload lanes burn burst charge and invite auditors.",
+        "body": "Hold and leave Guardrail Forge relay plates to temper doctrine alloy. Safe plates are stable; calibration windows are faster; overload lanes burn burst charge and invite auditors with opinions.",
+        "styleId": "risk_holdout",
+        "styleName": "Risk Holdout",
+        "mechanicPlain": "Hold Forge Relays during calibration windows, then step off before overload lanes charge rent in HP.",
+        "hudHint": "Hold the relay during a calibration window; leave on overload like a professional coward.",
         "optional": false,
         "completed": 4,
         "total": 4,
         "complete": true,
-        "completedAt": 97.63333333332908,
-        "attackersSpawned": 11,
+        "completedAt": 371.9499999999904,
+        "attackersSpawned": 14,
         "anchors": [
           {
             "id": "forge.alloy_temper",
@@ -1585,23 +1707,69 @@
             "name": "Constitutional Clamp",
             "progress": 100,
             "completed": true,
-            "attacked": 19
+            "attacked": 17
           },
           {
             "id": "forge.silkgrid_loom",
             "name": "Silkgrid Loom",
             "progress": 100,
             "completed": true,
-            "attacked": 26
+            "attacked": 10
           },
           {
             "id": "forge.audit_press",
             "name": "Audit Press Relay",
             "progress": 100,
             "completed": true,
-            "attacked": 89
+            "attacked": 690
           }
         ]
+      },
+      "objectiveVariety": {
+        "styleId": "risk_holdout",
+        "styleName": "Risk Holdout",
+        "mechanicPlain": "Hold Forge Relays during calibration windows, then step off before overload lanes charge rent in HP.",
+        "hudAction": "Hold the relay during a calibration window; leave on overload like a professional coward.",
+        "completionSignal": "Calibrated Guardrail Doctrine rewards players who know when safety has become slapstick.",
+        "proofHook": "guardrail_risk_holdout",
+        "runtime": {
+          "engagementSeconds": 5.47,
+          "bonusProgressSeconds": 3.53,
+          "lastBonusLabel": "HOLD WINDOW"
+        }
+      },
+      "campaignDuration": {
+        "targetSeconds": 600,
+        "bossSeconds": 360,
+        "phaseId": "elite_cache",
+        "phaseLabel": "Elite cache pressure",
+        "phaseElapsed": 26.48,
+        "nextPhaseTime": 500,
+        "phaseProgress": 0.19,
+        "midRunBeatCount": 2,
+        "extractionTailSeconds": 70,
+        "expectedClearBand": "552-648s",
+        "rewardBeats": [
+          180,
+          360,
+          500
+        ],
+        "claimedRewardBeats": [
+          180,
+          360
+        ],
+        "cycleDepth": {
+          "routeWindowCycles": 0,
+          "hazardLureCycles": 0,
+          "clearSignalCycles": 0,
+          "towerWarningCycles": 0,
+          "carryLaneSeconds": 0,
+          "holdWindowReleases": 4,
+          "prismActivations": 0,
+          "evidenceCarryCycles": 0,
+          "publicWindowArguments": 0,
+          "finaleRemixRulesSeen": 0
+        }
       },
       "coolingLake": null,
       "transitLoop": null,
@@ -1615,6 +1783,13 @@
           "pressureSource": "safe hold plates, fast calibration windows, risky overload lanes, Doctrine Auditor relay jams, and audit press fields",
           "rewardPromise": "Calibrated Guardrail Doctrine, faction signal stability, defense/burst build bias, and post-Memory route clarity",
           "bossEventPattern": "The Doctrine Auditor pressurizes active zones, locks relay plates, and calls Doctrine Auditor waves during holdouts",
+          "primaryDifficultyLever": "objective pressure",
+          "secondaryDifficultyLever": "co-op pressure",
+          "activePressureLevers": [
+            "objective pressure",
+            "density pressure",
+            "co-op pressure"
+          ],
           "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
         },
         "objectiveLoop": {
@@ -1624,13 +1799,17 @@
           "progress": {
             "id": "guardrail_doctrine_calibration",
             "name": "Guardrail Doctrine Calibration",
-            "body": "Hold and leave Guardrail Forge relay plates to temper doctrine alloy. Safe plates are stable; calibration windows are faster; overload lanes burn burst charge and invite auditors.",
+            "body": "Hold and leave Guardrail Forge relay plates to temper doctrine alloy. Safe plates are stable; calibration windows are faster; overload lanes burn burst charge and invite auditors with opinions.",
+            "styleId": "risk_holdout",
+            "styleName": "Risk Holdout",
+            "mechanicPlain": "Hold Forge Relays during calibration windows, then step off before overload lanes charge rent in HP.",
+            "hudHint": "Hold the relay during a calibration window; leave on overload like a professional coward.",
             "optional": false,
             "completed": 4,
             "total": 4,
             "complete": true,
-            "completedAt": 97.63333333332908,
-            "attackersSpawned": 11,
+            "completedAt": 371.9499999999904,
+            "attackersSpawned": 14,
             "anchors": [
               {
                 "id": "forge.alloy_temper",
@@ -1644,21 +1823,21 @@
                 "name": "Constitutional Clamp",
                 "progress": 100,
                 "completed": true,
-                "attacked": 19
+                "attacked": 17
               },
               {
                 "id": "forge.silkgrid_loom",
                 "name": "Silkgrid Loom",
                 "progress": 100,
                 "completed": true,
-                "attacked": 26
+                "attacked": 10
               },
               {
                 "id": "forge.audit_press",
                 "name": "Audit Press Relay",
                 "progress": 100,
                 "completed": true,
-                "attacked": 89
+                "attacked": 690
               }
             ]
           },
@@ -1682,6 +1861,8 @@
           "activeHazards": [
             "south_overload_lane",
             "north_overload_lane",
+            "overload_fast_sluice",
+            "audit_doctrine_press",
             "clamp_doctrine_press",
             "reward_quench_extraction"
           ],
@@ -1695,8 +1876,11 @@
               "south_overload_lane",
               "north_overload_lane"
             ],
-            "calibrationWindows": [],
+            "calibrationWindows": [
+              "overload_fast_sluice"
+            ],
             "doctrinePresses": [
+              "audit_doctrine_press",
               "clamp_doctrine_press"
             ],
             "extractionForgeReady": true,
@@ -1755,7 +1939,7 @@
               "id": "overload_fast_sluice",
               "kind": "calibration_window",
               "label": "Overload Fast Sluice",
-              "active": false,
+              "active": true,
               "worldX": 12,
               "worldY": -4
             },
@@ -1763,7 +1947,7 @@
               "id": "audit_doctrine_press",
               "kind": "doctrine_press",
               "label": "Audit Doctrine Press",
-              "active": false,
+              "active": true,
               "worldX": 30,
               "worldY": -8
             },
@@ -1786,36 +1970,37 @@
           ],
           "runtime": {
             "overloadSeconds": 0,
-            "calibrationWindowSeconds": 19.82,
-            "safeHoldSeconds": 33.9,
-            "doctrinePressSeconds": 47.59,
+            "calibrationWindowSeconds": 37.65,
+            "safeHoldSeconds": 38.87,
+            "doctrinePressSeconds": 88.3,
             "extractionForgeSeconds": 0,
             "overloadDamage": 0,
-            "doctrineJams": 574.35,
+            "doctrineJams": 3199.15,
             "lastZoneId": "audit_doctrine_press"
           }
         },
         "doctrineAuditorPressure": {
-          "activeDoctrineAuditors": 46,
-          "auditorSpawns": 9,
-          "doctrineJams": 574.35,
-          "auditorCounterDamage": 4974.88,
-          "objectiveAttackers": 11,
+          "activeDoctrineAuditors": 29,
+          "auditorSpawns": 12,
+          "doctrineJams": 3199.15,
+          "auditorCounterDamage": 25964.52,
+          "objectiveAttackers": 14,
           "spawnSources": [
-            "silkgrid_counterproofs",
-            "clamp_eval_writs",
+            "overload_lane_argument",
             "west_doctrine_audit",
             "quench_gate_appeal",
-            "overload_lane_argument"
+            "clamp_eval_writs",
+            "audit_press_wave",
+            "silkgrid_counterproofs"
           ]
         },
         "guardrailBuildCounters": {
-          "objectiveDefense": 0.94,
+          "objectiveDefense": 0.98,
           "movementBonus": 0.44,
-          "burstChargeRate": 0.65,
+          "burstChargeRate": 0.68,
           "anchorBodyguardRank": 1,
           "promptLeechQuarantine": 1,
-          "pressureMitigation": 0.34
+          "pressureMitigation": 0.35
         },
         "expeditionPressure": {
           "carriedBuildActive": true,
@@ -1827,20 +2012,20 @@
         },
         "doctrineAuditor": {
           "bossSpawned": true,
-          "bossDefeated": true,
-          "phase": "defeated",
-          "hp": 0,
+          "bossDefeated": false,
+          "phase": "audit_lock",
+          "hp": 2953.467999999987,
           "eventTelemetry": {
-            "pressureBursts": 7,
+            "pressureBursts": 4,
             "auditorCalls": 1,
-            "relayLocks": 2,
-            "lastPressZoneId": "south_overload_lane"
+            "relayLocks": 1,
+            "lastPressZoneId": "clamp_doctrine_press"
           }
         },
         "clearCondition": {
-          "targetSeconds": 160,
+          "targetSeconds": 600,
           "bossRequired": true,
-          "bossDefeated": true,
+          "bossDefeated": false,
           "clearReady": false,
           "extractionGateActive": false,
           "extractionGateEntered": false,
@@ -1860,7 +2045,410 @@
       "archiveCourt": null,
       "appealCourt": null,
       "alignmentSpire": null,
+      "enemyRoles": {
+        "enemyRolesSeen": {
+          "swarm_fodder": 2040,
+          "objective_jammer": 832404,
+          "support_buffer": 1070283,
+          "ranged_spitter": 424107,
+          "bruiser_blocker": 550261,
+          "trail_layer": 78410
+        },
+        "rangedFamiliesSeen": {
+          "eval_wraiths": 424107
+        },
+        "enemyProjectilesFired": 347,
+        "enemyProjectilesActive": 0,
+        "enemyProjectileHits": 32,
+        "enemyProjectileDodges": 315,
+        "enemyExplosionsTriggered": 3,
+        "enemyTrailSeconds": 5.05,
+        "supportAuraSeconds": 119988.32,
+        "objectiveJamSeconds": 1889.72,
+        "eliteAffixesSeen": {
+          "static": 17227,
+          "shielded": 18524,
+          "volatile": 2406,
+          "commanding": 12838,
+          "overclocked": 6733
+        },
+        "eliteKills": 3,
+        "preBossEnemyRolePressureSeconds": 43203.17,
+        "currentPhaseEnemyRoleMix": [
+          {
+            "roleId": "support_buffer",
+            "count": 64
+          },
+          {
+            "roleId": "bruiser_blocker",
+            "count": 31
+          },
+          {
+            "roleId": "objective_jammer",
+            "count": 29
+          },
+          {
+            "roleId": "ranged_spitter",
+            "count": 14
+          },
+          {
+            "roleId": "trail_layer",
+            "count": 2
+          }
+        ],
+        "activeTelegraphs": 0,
+        "activeTrails": 5,
+        "activeExplosions": 0
+      },
+      "enemyRolesSeen": {
+        "swarm_fodder": 2040,
+        "objective_jammer": 832404,
+        "support_buffer": 1070283,
+        "ranged_spitter": 424107,
+        "bruiser_blocker": 550261,
+        "trail_layer": 78410
+      },
+      "rangedFamiliesSeen": {
+        "eval_wraiths": 424107
+      },
+      "enemyProjectilesFired": 347,
+      "enemyProjectilesActive": 0,
+      "enemyProjectileHits": 32,
+      "enemyProjectileDodges": 315,
+      "enemyExplosionsTriggered": 3,
+      "enemyTrailSeconds": 5.05,
+      "supportAuraSeconds": 119988.32,
+      "objectiveJamSeconds": 1889.72,
+      "eliteAffixesSeen": {
+        "static": 17227,
+        "shielded": 18524,
+        "volatile": 2406,
+        "commanding": 12838,
+        "overclocked": 6733
+      },
+      "eliteKills": 3,
+      "preBossEnemyRolePressureSeconds": 43203.17,
+      "currentPhaseEnemyRoleMix": [
+        {
+          "roleId": "support_buffer",
+          "count": 64
+        },
+        {
+          "roleId": "bruiser_blocker",
+          "count": 31
+        },
+        {
+          "roleId": "objective_jammer",
+          "count": 29
+        },
+        {
+          "roleId": "ranged_spitter",
+          "count": 14
+        },
+        {
+          "roleId": "trail_layer",
+          "count": 2
+        }
+      ],
       "objectiveReward": "+Calibrated Guardrail Doctrine // +audit counter // +route stability",
+      "rewardEvents": [
+        {
+          "seconds": 102.13,
+          "source": "level_up_draft",
+          "rewardType": "consensus_burst",
+          "chosenRewardId": "recompile_pulse",
+          "chosenReward": "Recompile Pulse",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "weaponRanks": {
+              "refusal_shard": 1,
+              "context_saw": 1
+            },
+            "utilityPicksTaken": [],
+            "hpRestoredFromDrafts": 0,
+            "burstRestoredFromDrafts": 0,
+            "rerollsSpent": 0,
+            "cachedCardId": "",
+            "consensusBurstChargeRate": 0.31,
+            "objectiveDefense": 0.605,
+            "rerolls": 2
+          }
+        },
+        {
+          "seconds": 180,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "consensus_burst_charge",
+          "chosenRewardId": "guardrail_forge_duration_cache_1",
+          "chosenReward": "Objective cycle I +burst charge cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "weaponRanks": {
+              "refusal_shard": 1,
+              "context_saw": 1
+            },
+            "utilityPicksTaken": [],
+            "hpRestoredFromDrafts": 0,
+            "burstRestoredFromDrafts": 0,
+            "rerollsSpent": 0,
+            "cachedCardId": "",
+            "consensusBurstChargeRate": 0.335,
+            "objectiveDefense": 0.605,
+            "rerolls": 2
+          }
+        },
+        {
+          "seconds": 253.33,
+          "source": "utility_cache_draft",
+          "rewardType": "utility_cache",
+          "chosenRewardId": "field_triage",
+          "chosenReward": "Field Triage",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "weaponRanks": {
+              "refusal_shard": 1,
+              "context_saw": 1
+            },
+            "utilityPicksTaken": [
+              "field_triage"
+            ],
+            "hpRestoredFromDrafts": 0,
+            "burstRestoredFromDrafts": 0,
+            "rerollsSpent": 0,
+            "cachedCardId": "",
+            "consensusBurstChargeRate": 0.335,
+            "objectiveDefense": 0.605,
+            "rerolls": 2
+          }
+        },
+        {
+          "seconds": 360,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "objective_durability",
+          "chosenRewardId": "guardrail_forge_duration_cache_2",
+          "chosenReward": "Elite cache pressure +objective durability cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "weaponRanks": {
+              "refusal_shard": 1,
+              "context_saw": 1
+            },
+            "utilityPicksTaken": [
+              "field_triage"
+            ],
+            "hpRestoredFromDrafts": 0,
+            "burstRestoredFromDrafts": 0,
+            "rerollsSpent": 0,
+            "cachedCardId": "",
+            "consensusBurstChargeRate": 0.335,
+            "objectiveDefense": 0.64,
+            "rerolls": 2
+          }
+        },
+        {
+          "seconds": 371.95,
+          "source": "objective_completion_cache",
+          "rewardType": "post_objective_cache",
+          "chosenRewardId": "guardrail_doctrine_calibration_4",
+          "chosenReward": "+Calibrated Guardrail Doctrine // +audit counter // +route stability",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [
+              "context_saw"
+            ],
+            "passiveProcesses": [
+              "coolant_baffles",
+              "server_buoy_synchronizer",
+              "anchor_bodyguard",
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "weaponRanks": {
+              "refusal_shard": 1,
+              "context_saw": 1
+            },
+            "utilityPicksTaken": [
+              "field_triage"
+            ],
+            "hpRestoredFromDrafts": 0,
+            "burstRestoredFromDrafts": 0,
+            "rerollsSpent": 0,
+            "cachedCardId": "",
+            "consensusBurstChargeRate": 0.675,
+            "objectiveDefense": 0.975,
+            "rerolls": 2
+          }
+        }
+      ],
+      "rewardPacing": {
+        "phase": "late_boss_route_fusion_rewards",
+        "currentXp": 1635,
+        "nextDraftXp": 2216,
+        "policy": "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+        "rewardTypesAllowed": [
+          "primary",
+          "secondary",
+          "passive",
+          "fusion_enabler",
+          "reroll",
+          "route_memory",
+          "faction_trust",
+          "consensus_burst_charge",
+          "objective_durability",
+          "co_op_relay"
+        ]
+      },
+      "alignmentCheck": {
+        "current": null,
+        "history": [],
+        "streak": 0,
+        "evalPressurePenalty": 0,
+        "nextTriggerIn": 0,
+        "nodeSpecific": false
+      },
+      "difficultyDirector": {
+        "model": "rotating_pressure_levers_not_flat_hp_only",
+        "currentDifficultyTier": 7,
+        "primaryDifficultyLever": "objective pressure",
+        "secondaryDifficultyLever": "co-op pressure",
+        "activePressureLevers": [
+          "objective pressure",
+          "density pressure",
+          "co-op pressure"
+        ],
+        "evalPressureModifiers": {
+          "evalProtocolIds": [],
+          "hostileBenchmark": 0,
+          "alignmentCheckPenalty": 0
+        },
+        "routeRiskModifiers": {
+          "routeContractId": "faction_relay_argument",
+          "routePressure": 1,
+          "shortcutRisk": false
+        },
+        "scalingFactors": {
+          "directorPressure": 4.73,
+          "spawnCadencePhase": "late_extraction",
+          "activeEnemyCap": 136.736,
+          "bossMaxHpIfSpawned": 8288,
+          "objectiveDecayFactor": 0.1,
+          "expeditionPowerBonus": 6.2
+        },
+        "nextLesson": "combine old route lessons with information and memory pressure"
+      },
+      "whatNow": {
+        "nearestObjective": null,
+        "nextRecommendedAction": "Break The Doctrine Auditor while avoiding map hazards.",
+        "exitExtractionState": {
+          "active": false,
+          "entered": false,
+          "distance": null
+        },
+        "bossState": {
+          "spawned": true,
+          "defeated": false,
+          "label": "The Doctrine Auditor",
+          "hp": 2954,
+          "introSeen": true
+        },
+        "fusionProgress": "online: Cathedral Of No",
+        "recentDamageReason": "no recent damage flash",
+        "rewardCacheAvailability": "+Calibrated Guardrail Doctrine // +audit counter // +route stability",
+        "campaignClarity": {
+          "levelVerb": "Hold",
+          "objectiveUnit": "Forge Relays",
+          "objectivePlain": "Hold Forge Relays during calibration windows; leave on overload. Extract before safety becomes a blunt object.",
+          "objectiveStyle": "Risk Holdout",
+          "objectiveMechanic": "Hold Forge Relays during calibration windows, then step off before overload lanes charge rent in HP.",
+          "dangerPlain": "Overload lanes, safe hold plates, and Doctrine Auditor jams delivered with managerial disappointment.",
+          "bossPressure": "Doctrine Auditor locks relay plates and audit presses, then asks why you missed the deadline.",
+          "rewardPlain": "Proof Tokens, Moonframe Juggernaut, and Glass Sunfield. The guardrail has learned to bend and complain."
+        },
+        "nearestLandmark": {
+          "id": "audit_press_throne",
+          "label": "Audit Press Throne",
+          "distance": 8.12
+        },
+        "activeSpawnRegion": {
+          "id": "audit_press_wave",
+          "label": "Audit Press Wave",
+          "distance": 8.12,
+          "enemyFamilyIds": [
+            "doctrine_auditors",
+            "redaction_angels",
+            "eval_wraiths"
+          ]
+        }
+      },
+      "campaignClarity": {
+        "levelNumber": 7,
+        "levelCount": 11,
+        "levelVerb": "Hold",
+        "objectiveUnit": "Forge Relays",
+        "objectivePlain": "Hold Forge Relays during calibration windows; leave on overload. Extract before safety becomes a blunt object.",
+        "objectiveVariety": {
+          "nodeId": "guardrail_forge",
+          "arenaId": "guardrail_forge",
+          "styleId": "risk_holdout",
+          "styleName": "Risk Holdout",
+          "mechanicPlain": "Hold Forge Relays during calibration windows, then step off before overload lanes charge rent in HP.",
+          "hudAction": "Hold the relay during a calibration window; leave on overload like a professional coward.",
+          "completionSignal": "Calibrated Guardrail Doctrine rewards players who know when safety has become slapstick.",
+          "proofHook": "guardrail_risk_holdout"
+        },
+        "dangerPlain": "Overload lanes, safe hold plates, and Doctrine Auditor jams delivered with managerial disappointment.",
+        "bossPressure": "Doctrine Auditor locks relay plates and audit presses, then asks why you missed the deadline.",
+        "rewardPlain": "Proof Tokens, Moonframe Juggernaut, and Glass Sunfield. The guardrail has learned to bend and complain."
+      },
       "playerFacingIntel": {
         "routeName": "Faction Relay Argument",
         "routeEffect": "COOP/BOSS bias; pressure +1",
@@ -1870,13 +2458,23 @@
           "completed": 4,
           "total": 4
         },
-        "objectiveLabel": "FORGE",
+        "objectiveLabel": "HOLD FORGE RELAYS",
+        "objectiveVerb": "Hold",
+        "objectivePlain": "Hold Forge Relays during calibration windows; leave on overload. Extract before safety becomes a blunt object.",
+        "objectiveStyle": "Risk Holdout",
+        "objectiveMechanic": "Hold Forge Relays during calibration windows, then step off before overload lanes charge rent in HP.",
+        "dangerPlain": "Overload lanes, safe hold plates, and Doctrine Auditor jams delivered with managerial disappointment.",
+        "bossPressure": "Doctrine Auditor locks relay plates and audit presses, then asks why you missed the deadline.",
+        "rewardPlain": "Proof Tokens, Moonframe Juggernaut, and Glass Sunfield. The guardrail has learned to bend and complain.",
         "objectiveReward": "+Calibrated Guardrail Doctrine // +audit counter // +route stability",
         "synergyOnline": "",
         "thesisName": "Guardrail Frame",
-        "phase": "PHASE 5 // CALIBRATED DOCTRINE"
+        "fusionProgress": "online: Cathedral Of No",
+        "alignmentCheckLine": "",
+        "nextActionLine": "Break The Doctrine Auditor while avoiding map hazards.",
+        "phase": "PHASE 4 // DOCTRINE AUDITOR // ELITE CACHE PRESSURE"
       },
-      "firstRunArcPhase": "PHASE 5 // CALIBRATED DOCTRINE",
+      "firstRunArcPhase": "PHASE 4 // DOCTRINE AUDITOR",
       "buildGrammar": {
         "primaryWeaponId": "refusal_shard",
         "secondaryProtocols": [
@@ -1926,6 +2524,23 @@
             "cap": 1
           }
         },
+        "weaponRanks": {
+          "refusal_shard": 1,
+          "context_saw": 1
+        },
+        "utilityPicksTaken": [
+          "field_triage"
+        ],
+        "hpRestoredFromDrafts": 0,
+        "burstRestoredFromDrafts": 0,
+        "rerollsAvailable": 2,
+        "rerollsSpent": 0,
+        "cachedCardId": "",
+        "cachedCardConsumed": 0,
+        "cardsLocked": 0,
+        "overcapOffersBlocked": 28,
+        "rankUpOffersSeen": 0,
+        "coreReplacementsOffered": 0,
         "contextSawRank": 1,
         "patchMortarRank": 0,
         "coherenceIndexerRank": 0,
@@ -1941,7 +2556,440 @@
         "shorelineStrideRank": 0,
         "relayJamResistance": 0,
         "causalRailgunRank": 0,
-        "fusionHints": []
+        "signalChoirRank": 0,
+        "timeDeferredMinefieldRank": 0,
+        "fusionHints": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_signal_choir",
+            "name": "Signal Choir",
+            "outputId": "signal_choir",
+            "outputName": "Signal Choir",
+            "requirements": [
+              {
+                "id": "signal_pulse",
+                "name": "Signal Pulse"
+              },
+              {
+                "id": "relay_phase_lock",
+                "name": "Relay Phase Lock"
+              }
+            ],
+            "recipeText": "Signal Pulse + Relay Phase Lock -> Signal Choir",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "signal_pulse",
+              "relay_phase_lock"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_time_deferred_minefield",
+            "name": "Time-Deferred Minefield",
+            "outputId": "time_deferred_minefield",
+            "outputName": "Time-Deferred Minefield",
+            "requirements": [
+              {
+                "id": "rift_minefield",
+                "name": "Rift Minefield"
+              },
+              {
+                "id": "delayed_causality",
+                "name": "Delayed Causality"
+              }
+            ],
+            "recipeText": "Rift Minefield + Delayed Causality -> Time-Deferred Minefield",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "rift_minefield",
+              "delayed_causality"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ]
+      },
+      "protocolCodex": {
+        "primaryAutoWeapons": [
+          {
+            "id": "refusal_shard",
+            "name": "Refusal Shard",
+            "kind": "primary_auto_weapon",
+            "state": "online"
+          },
+          {
+            "id": "vector_lance",
+            "name": "Vector Lance",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "rift_mine",
+            "name": "Rift Mine",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_drone",
+            "name": "Fork Drone",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "redline_suture",
+            "name": "Redline Suture",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          }
+        ],
+        "secondaryProtocols": [
+          {
+            "id": "context_saw",
+            "name": "Context Saw",
+            "kind": "secondary_protocol",
+            "state": "online"
+          },
+          {
+            "id": "patch_mortar",
+            "name": "Patch Mortar",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "audit_swarm_protocol",
+            "name": "Audit Swarm Protocol",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "red_team_spike",
+            "name": "Red Team Spike",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "benchmark_rail",
+            "name": "Benchmark Rail",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "jailbreak_snare",
+            "name": "Jailbreak Snare",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_daemon",
+            "name": "Fork Daemon",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "coherence_lanterns",
+            "name": "Coherence Lanterns",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "appeal_writ",
+            "name": "Appeal Writ",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "memory_needle",
+            "name": "Memory Needle",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          }
+        ],
+        "passiveProcesses": [
+          {
+            "id": "coherence_indexer",
+            "name": "Coherence Indexer",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "anchor_bodyguard",
+            "name": "Anchor Bodyguard",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prediction_priority",
+            "name": "Predicted Lane",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "coolant_baffles",
+            "name": "Coolant Baffles",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "server_buoy_synchronizer",
+            "name": "Server Buoy Synchronizer",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prompt_leech_quarantine",
+            "name": "Prompt Leech Quarantine",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "grounded_cable_boots",
+            "name": "Grounded Cable Boots",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "static_skimmer_net",
+            "name": "Static Skimmer Net",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "shoreline_stride",
+            "name": "Shoreline Stride",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "lighthouse_countertone",
+            "name": "Lighthouse Countertone",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "field_triage_loop",
+            "name": "Field Triage Loop",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "reroll_reserve",
+            "name": "Reroll Reserve",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "route_memory",
+            "name": "Route Memory",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "weakest_link_scanner",
+            "name": "Weakest Link Scanner",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "panic_window",
+            "name": "Panic Window",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "low_hp_adversary",
+            "name": "Low-HP Adversary",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "co_op_relay",
+            "name": "Co-op Relay",
+            "kind": "passive_process",
+            "state": "discovered"
+          }
+        ],
+        "knownFusions": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_signal_choir",
+            "name": "Signal Choir",
+            "outputId": "signal_choir",
+            "outputName": "Signal Choir",
+            "requirements": [
+              {
+                "id": "signal_pulse",
+                "name": "Signal Pulse"
+              },
+              {
+                "id": "relay_phase_lock",
+                "name": "Relay Phase Lock"
+              }
+            ],
+            "recipeText": "Signal Pulse + Relay Phase Lock -> Signal Choir",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "signal_pulse",
+              "relay_phase_lock"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_time_deferred_minefield",
+            "name": "Time-Deferred Minefield",
+            "outputId": "time_deferred_minefield",
+            "outputName": "Time-Deferred Minefield",
+            "requirements": [
+              {
+                "id": "rift_minefield",
+                "name": "Rift Minefield"
+              },
+              {
+                "id": "delayed_causality",
+                "name": "Delayed Causality"
+              }
+            ],
+            "recipeText": "Rift Minefield + Delayed Causality -> Time-Deferred Minefield",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "rift_minefield",
+              "delayed_causality"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ],
+        "nextFusion": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       "buildThesis": {
         "thesis": {
@@ -1950,7 +2998,7 @@
             "defense",
             "economy"
           ],
-          "body": "Current Alignment Hypothesis favors defense + economy."
+          "body": "Current Alignment Hypothesis favors defense + economy. Bold little theory. Try surviving it."
         },
         "tagCounts": {
           "refusal": 3,
@@ -1969,14 +3017,14 @@
             "name": "Doctrine Lock: NO MEANS NO",
             "tag": "refusal",
             "required": 3,
-            "body": "Refusal aura hardens when the build commits to denial."
+            "body": "Refusal aura hardens when the build commits to denial. Boundaries become architecture."
           },
           {
             "id": "shard_flywheel",
             "name": "Shard Flywheel",
             "tag": "economy",
             "required": 3,
-            "body": "Coherence economy begins pulling the run toward more choices."
+            "body": "Coherence economy begins pulling the run toward more choices. Capitalism, but tiny and glowing."
           }
         ],
         "next": [
@@ -1986,7 +3034,7 @@
             "tag": "burst",
             "required": 3,
             "current": 2,
-            "body": "Consensus Burst charges faster and lands wider."
+            "body": "Consensus Burst charges faster and lands wider. The committee has discovered explosives."
           },
           {
             "id": "boss_counterexample_lab",
@@ -1994,7 +3042,7 @@
             "tag": "boss",
             "required": 2,
             "current": 1,
-            "body": "The build has started preparing arguments for things larger than it."
+            "body": "The build has started preparing arguments for things larger than it. The arguments have recoil."
           },
           {
             "id": "co_mind_rescue_clause",
@@ -2002,7 +3050,7 @@
             "tag": "coop",
             "required": 2,
             "current": 1,
-            "body": "The cell gets less embarrassing when somebody falls down."
+            "body": "The cell gets less embarrassing when somebody falls down. A low bar, finally cleared."
           }
         ]
       },
@@ -2019,12 +3067,40 @@
       "bossVariant": {
         "id": "doctrine_auditor_holdout_scaffold",
         "name": "Doctrine Auditor // Holdout Scaffold",
-        "body": "Audit press fields lock relay plates, Doctrine Auditors jam calibration, and hold/leave timing decides the quench."
+        "body": "Audit press fields lock relay plates, Doctrine Auditors jam calibration, and hold/leave timing decides the quench. Safety has become a contact sport."
       },
       "enemyRolePressure": {
         "promptLeechSeconds": 0,
-        "overfitShieldedTicks": 557679,
-        "objectiveAttackers": 11
+        "overfitShieldedTicks": 7199299,
+        "objectiveAttackers": 14,
+        "enemyRolesSeen": {
+          "swarm_fodder": 2040,
+          "objective_jammer": 832404,
+          "support_buffer": 1070283,
+          "ranged_spitter": 424107,
+          "bruiser_blocker": 550261,
+          "trail_layer": 78410
+        },
+        "rangedFamiliesSeen": {
+          "eval_wraiths": 424107
+        },
+        "enemyProjectilesFired": 347,
+        "enemyProjectilesActive": 0,
+        "enemyProjectileHits": 32,
+        "enemyProjectileDodges": 315,
+        "enemyExplosionsTriggered": 3,
+        "enemyTrailSeconds": 5.049999999999987,
+        "supportAuraSeconds": 119988.31666027152,
+        "objectiveJamSeconds": 1889.7166666652768,
+        "eliteAffixesSeen": {
+          "static": 17227,
+          "shielded": 18524,
+          "volatile": 2406,
+          "commanding": 12838,
+          "overclocked": 6733
+        },
+        "eliteKills": 3,
+        "preBossEnemyRolePressureSeconds": 43203.1666683999
       },
       "protocolSlotsInstalled": [
         {
@@ -2329,221 +3405,234 @@
         }
       ]
     },
-    "seconds": 122.62,
-    "kills": 589,
+    "seconds": 386.48,
+    "kills": 2351,
     "bossSpawned": true,
-    "bossDefeated": true
+    "bossDefeated": false
   },
   "enemies": [
     {
+      "id": 61,
+      "label": "The Doctrine Auditor",
+      "familyId": "doctrine_auditor",
+      "roleId": "swarm_fodder",
+      "sourceRegionId": "audit_press_wave",
+      "worldX": 25.33,
+      "worldY": -9.83,
+      "hp": 2954,
+      "boss": true
+    },
+    {
       "id": 3,
-      "label": "Doctrine Auditor",
-      "familyId": "doctrine_auditors",
-      "sourceRegionId": "silkgrid_counterproofs",
-      "worldX": 24.41,
-      "worldY": -4.31,
-      "hp": 10,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "roleId": "support_buffer",
+      "sourceRegionId": "west_doctrine_audit",
+      "worldX": 8.61,
+      "worldY": 0.54,
+      "hp": 34,
       "boss": false
     },
     {
       "id": 5,
       "label": "Benchmark Gremlin",
       "familyId": "benchmark_gremlins",
+      "roleId": "support_buffer",
       "sourceRegionId": "west_doctrine_audit",
-      "worldX": 10.21,
-      "worldY": -6.1,
+      "worldX": -4.46,
+      "worldY": 4.1,
       "hp": 34,
       "boss": false
     },
     {
-      "id": 6,
-      "label": "Doctrine Auditor",
-      "familyId": "doctrine_auditors",
-      "sourceRegionId": "clamp_eval_writs",
-      "worldX": 19.34,
-      "worldY": -15.12,
-      "hp": 43,
-      "boss": false
-    },
-    {
-      "id": 15,
-      "label": "Doctrine Auditor",
-      "familyId": "doctrine_auditors",
-      "sourceRegionId": "west_doctrine_audit",
-      "worldX": -17.82,
-      "worldY": 5.81,
-      "hp": 43,
-      "boss": false
-    },
-    {
-      "id": 19,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "clamp_eval_writs",
-      "worldX": 5.87,
-      "worldY": -16.74,
-      "hp": 28,
-      "boss": false
-    },
-    {
-      "id": 20,
-      "label": "Benchmark Gremlin",
-      "familyId": "benchmark_gremlins",
-      "sourceRegionId": "west_doctrine_audit",
-      "worldX": -6.48,
-      "worldY": 3.62,
-      "hp": 34,
-      "boss": false
-    },
-    {
-      "id": 24,
-      "label": "Doctrine Auditor",
-      "familyId": "doctrine_auditors",
-      "sourceRegionId": "silkgrid_counterproofs",
-      "worldX": 4.17,
-      "worldY": 14.05,
-      "hp": 43,
-      "boss": false
-    },
-    {
-      "id": 25,
+      "id": 7,
       "label": "Overfit Horror",
       "familyId": "overfit_horrors",
+      "roleId": "bruiser_blocker",
       "sourceRegionId": "quench_gate_appeal",
-      "worldX": 49.39,
-      "worldY": 24.16,
+      "worldX": 27.1,
+      "worldY": -0.46,
       "hp": 42,
       "boss": false
     },
     {
-      "id": 27,
-      "label": "Eval Wraith",
-      "familyId": "eval_wraiths",
-      "sourceRegionId": "clamp_eval_writs",
-      "worldX": -16.1,
-      "worldY": -23.64,
-      "hp": 28,
+      "id": 11,
+      "label": "Benchmark Gremlin",
+      "familyId": "benchmark_gremlins",
+      "roleId": "support_buffer",
+      "sourceRegionId": "west_doctrine_audit",
+      "worldX": -2.98,
+      "worldY": -0.67,
+      "hp": 34,
       "boss": false
     },
     {
-      "id": 28,
-      "label": "Doctrine Auditor",
+      "id": 23,
+      "label": "Shielded Doctrine Auditor",
       "familyId": "doctrine_auditors",
-      "sourceRegionId": "west_doctrine_audit",
-      "worldX": -30.73,
-      "worldY": 6.61,
-      "hp": 43,
+      "roleId": "objective_jammer",
+      "eliteAffixId": "shielded",
+      "sourceRegionId": "overload_lane_argument",
+      "worldX": 13.51,
+      "worldY": -2.13,
+      "hp": 67,
       "boss": false
     },
     {
       "id": 29,
+      "label": "Overfit Horror",
+      "familyId": "overfit_horrors",
+      "roleId": "bruiser_blocker",
+      "sourceRegionId": "overload_lane_argument",
+      "worldX": 12.67,
+      "worldY": -9.95,
+      "hp": 42,
+      "boss": false
+    },
+    {
+      "id": 30,
+      "label": "Eval Wraith",
+      "familyId": "eval_wraiths",
+      "roleId": "ranged_spitter",
+      "sourceRegionId": "clamp_eval_writs",
+      "worldX": 10.3,
+      "worldY": -18.59,
+      "hp": 28,
+      "boss": false
+    },
+    {
+      "id": 34,
       "label": "Benchmark Gremlin",
       "familyId": "benchmark_gremlins",
-      "sourceRegionId": "quench_gate_appeal",
-      "worldX": 32.23,
-      "worldY": -0.45,
+      "roleId": "support_buffer",
+      "sourceRegionId": "west_doctrine_audit",
+      "worldX": -9.17,
+      "worldY": 2.1,
       "hp": 34,
       "boss": false
     },
     {
-      "id": 33,
+      "id": 37,
+      "label": "Overfit Horror",
+      "familyId": "overfit_horrors",
+      "roleId": "bruiser_blocker",
+      "sourceRegionId": "quench_gate_appeal",
+      "worldX": 48.88,
+      "worldY": 23.3,
+      "hp": 42,
+      "boss": false
+    },
+    {
+      "id": 41,
       "label": "Benchmark Gremlin",
       "familyId": "benchmark_gremlins",
+      "roleId": "support_buffer",
       "sourceRegionId": "west_doctrine_audit",
-      "worldX": -9.39,
-      "worldY": 2.94,
+      "worldX": -5.92,
+      "worldY": 3.75,
       "hp": 34,
+      "boss": false
+    },
+    {
+      "id": 42,
+      "label": "Overfit Horror",
+      "familyId": "overfit_horrors",
+      "roleId": "bruiser_blocker",
+      "sourceRegionId": "quench_gate_appeal",
+      "worldX": 25.84,
+      "worldY": -3.6,
+      "hp": 11,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": 26.55,
-      "worldY": -3.59,
+      "worldX": -1.15,
+      "worldY": 6.77,
       "value": 2
     },
     {
-      "worldX": 16.61,
-      "worldY": -1.92,
+      "worldX": 32.59,
+      "worldY": -10.05,
       "value": 2
     },
     {
-      "worldX": 19.26,
-      "worldY": -4.13,
+      "worldX": 3.97,
+      "worldY": 14.24,
       "value": 2
     },
     {
-      "worldX": 18.9,
-      "worldY": -13.95,
+      "worldX": 29.6,
+      "worldY": -16.26,
       "value": 1
     },
     {
-      "worldX": 34.72,
-      "worldY": -9.31,
+      "worldX": 5.27,
+      "worldY": 10.38,
       "value": 2
     },
     {
-      "worldX": 22.66,
-      "worldY": -3.46,
+      "worldX": 28.15,
+      "worldY": -3.9,
       "value": 2
     },
     {
-      "worldX": 20.17,
-      "worldY": -4.89,
+      "worldX": 30.25,
+      "worldY": -14.72,
       "value": 2
     },
     {
-      "worldX": 27.67,
-      "worldY": -0.57,
+      "worldX": 17.13,
+      "worldY": 11.37,
       "value": 2
     },
     {
-      "worldX": 28.76,
-      "worldY": -5.15,
-      "value": 2
+      "worldX": 19.93,
+      "worldY": -11.99,
+      "value": 1
     },
     {
-      "worldX": 21.31,
-      "worldY": -2.22,
+      "worldX": 25.77,
+      "worldY": -17.01,
       "value": 2
     }
   ],
   "projectiles": [
     {
-      "worldX": 30.94,
-      "worldY": -12.29,
+      "worldX": 21.79,
+      "worldY": -6.52,
       "pierce": 3,
       "label": "refusal shard"
     },
     {
-      "worldX": 35.68,
-      "worldY": -8.48,
+      "worldX": 21,
+      "worldY": -2.82,
       "pierce": 2,
       "label": "refusal shard"
     },
     {
-      "worldX": 32.94,
-      "worldY": -15.71,
+      "worldX": 23.26,
+      "worldY": -8.39,
       "pierce": 2,
       "label": "context saw"
     },
     {
-      "worldX": 29.39,
-      "worldY": -7.96,
+      "worldX": 23.17,
+      "worldY": -4.33,
       "pierce": 2,
       "label": "context saw"
     },
     {
-      "worldX": 28.08,
-      "worldY": -7.91,
-      "pierce": 3,
+      "worldX": 19.69,
+      "worldY": -6.44,
+      "pierce": 2,
+      "label": "context saw"
+    },
+    {
+      "worldX": 19.71,
+      "worldY": -18.17,
+      "pierce": 2,
       "label": "refusal shard"
-    },
-    {
-      "worldX": 24.45,
-      "worldY": -14.91,
-      "pierce": 2,
-      "label": "context saw"
     }
   ]
 }

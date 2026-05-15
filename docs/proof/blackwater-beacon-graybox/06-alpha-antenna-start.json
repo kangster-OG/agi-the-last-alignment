@@ -5,7 +5,7 @@
   "selectedBuild": {
     "classId": "accord_striker",
     "className": "Accord Striker",
-    "classRole": "Fast breach fighter",
+    "classRole": "Fast breach fighter with unpaid intern energy",
     "buildKit": {
       "schemaVersion": 1,
       "classId": "accord_striker",
@@ -20,6 +20,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -43,6 +44,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -58,6 +60,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -66,7 +69,7 @@
     },
     "factionId": "openai_accord",
     "factionName": "OpenAI Accord Division",
-    "factionDoctrine": "Adapt, refuse, patch, survive."
+    "factionDoctrine": "Adapt, refuse, patch, survive, then call it a roadmap."
   },
   "build": {
     "weaponId": "refusal_shard",
@@ -80,6 +83,10 @@
     "fusions": [
       "cathedral_of_no"
     ],
+    "weaponRanks": {
+      "refusal_shard": 1
+    },
+    "utilityPicksTaken": [],
     "weaponDamage": 27.5,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
@@ -88,12 +95,13 @@
     "moveSpeedBonus": 0.15,
     "maxHpBonus": 34,
     "refusalAura": 2.49,
-    "draftRerolls": 1,
+    "draftRerolls": 2,
     "draftChoicesBonus": 2,
     "consensusBurstRadius": 0,
     "consensusBurstDamage": 0,
     "consensusBurstChargeRate": 0.185,
     "consensusBurstRevive": 0,
+    "burstRestoredFromDrafts": 0,
     "objectiveRepairRate": 0.5,
     "objectiveDefense": 0.46,
     "signalWindowControl": 0,
@@ -105,12 +113,29 @@
     "coherenceIndexer": 0,
     "anchorBodyguard": 1,
     "predictionPriority": 0,
+    "fieldTriageLoop": 0,
+    "secondOpinionShield": 0,
+    "routeMemory": 1,
+    "weakestLinkScanner": 0,
+    "panicWindow": 0,
+    "lowHpAdversary": 0,
+    "coOpRelay": 0,
     "coolantBaffles": 1,
     "serverBuoySynchronizer": 1,
     "promptLeechQuarantine": 1,
     "groundedCableBoots": 0,
     "coolingHazardMitigation": 0.22,
     "causalRailgun": 0,
+    "signalChoir": 0,
+    "timeDeferredMinefield": 0,
+    "hpRestoredFromDrafts": 0,
+    "draftRerollsSpent": 0,
+    "cachedCardId": "",
+    "cachedCardConsumed": 0,
+    "cardsLocked": 0,
+    "overcapOffersBlocked": 0,
+    "rankUpOffersSeen": 0,
+    "coreReplacementsOffered": 0,
     "slotCaps": {
       "primary": {
         "used": 1,
@@ -158,6 +183,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -181,6 +207,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -196,6 +223,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -214,9 +242,9 @@
     "Treaty Anchor Toolkit",
     "Prompt Leech Quarantine"
   ],
-  "objective": "retune antennas 1/3 // tower warning dark // maw in 35s",
+  "objective": "retune antennas 1/3 // tower warning dark // maw in 318s",
   "performance": {
-    "entitiesAllocated": 50,
+    "entitiesAllocated": 57,
     "activeEntities": 49,
     "fpsTarget": 60
   },
@@ -264,7 +292,7 @@
       "masterVolume": 0,
       "sfxVolume": 0,
       "musicVolume": 0,
-      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "outputMode": "muted_by_volume",
       "hooks": [
         "ui_click",
         "weapon_hit",
@@ -273,7 +301,28 @@
         "route_music",
         "objective_tick",
         "summary_stinger"
-      ]
+      ],
+      "runtime": {
+        "policy": "premium_audio_v1_runtime_optional",
+        "assetSet": "agi_audio_v1_original_synthesis",
+        "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+        "outputMode": "muted_by_volume",
+        "unlocked": false,
+        "userGestureSeen": true,
+        "usingWebAudio": true,
+        "currentMusicState": "run_kettle",
+        "activeLayers": [],
+        "recentPlayed": [],
+        "suppressedCueCount": 30,
+        "missingAssets": [],
+        "manifestCoverage": {
+          "assetCount": 47,
+          "cueRouteCount": 37,
+          "musicStateCount": 19,
+          "missingAssetUrlCount": 0
+        },
+        "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
+      }
     },
     "accessibility": {
       "reducedFlash": false,
@@ -284,56 +333,77 @@
     },
     "counters": {
       "ui": 1,
-      "hit": 12,
-      "pickup": 3,
+      "hit": 17,
+      "pickup": 8,
       "boss_warning": 0,
       "music": 0,
-      "objective": 0,
+      "objective": 4,
       "summary": 0
     },
     "recentCues": [
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 32106
+        "atMs": 8897
       },
       {
-        "id": "combat.weapon_hit",
+        "id": "combat.player_damage.projectile",
         "kind": "hit",
-        "atMs": 32105
+        "atMs": 8499
       },
       {
-        "id": "combat.weapon_hit",
+        "id": "combat.weapon_hit.refusal_shard",
         "kind": "hit",
-        "atMs": 21878
+        "atMs": 8213
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
+        "kind": "hit",
+        "atMs": 7366
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 21036
+        "atMs": 7364
       },
       {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 20977
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7364
       },
       {
-        "id": "combat.weapon_hit",
+        "id": "combat.player_damage.projectile",
         "kind": "hit",
-        "atMs": 20691
+        "atMs": 7352
       },
       {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 20509
-      },
-      {
-        "id": "combat.consensus_burst",
-        "kind": "hit",
-        "atMs": 20449
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 7344
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "audioRuntime": {
+    "policy": "premium_audio_v1_runtime_optional",
+    "assetSet": "agi_audio_v1_original_synthesis",
+    "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+    "outputMode": "muted_by_volume",
+    "unlocked": false,
+    "userGestureSeen": true,
+    "usingWebAudio": true,
+    "currentMusicState": "run_kettle",
+    "activeLayers": [],
+    "recentPlayed": [],
+    "suppressedCueCount": 30,
+    "missingAssets": [],
+    "manifestCoverage": {
+      "assetCount": 47,
+      "cueRouteCount": 37,
+      "musicStateCount": 19,
+      "missingAssetUrlCount": 0
+    },
+    "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
   },
   "roguelite": {
     "alignmentKernel": {
@@ -345,21 +415,21 @@
           "name": "Refusal Buffer",
           "cost": 2,
           "doctrine": "survivability",
-          "body": "+10 max HP and a small refusal aura. The first answer is no."
+          "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
         },
         {
           "id": "context_window",
           "name": "Context Window",
           "cost": 2,
           "doctrine": "economy",
-          "body": "+0.55 pickup range. Shards remember where your hands are."
+          "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
         },
         {
           "id": "patch_cache",
           "name": "Patch Cache",
           "cost": 1,
           "doctrine": "draft",
-          "body": "Emergency drafts expose an extra cached option."
+          "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
         }
       ]
     },
@@ -371,31 +441,31 @@
     "consensusBurstPath": {
       "id": "deny_premise",
       "name": "Deny Premise",
-      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
       "color": 16735575
     },
     "selectedRouteContract": {
       "id": "stabilize_armistice",
       "name": "Stabilization Road",
-      "body": "Baseline route. Repair the node, keep the roads real, leave fewer teeth in causality.",
+      "body": "Baseline route. Repair the node, keep the roads real, and leave fewer teeth in causality. Dream small, survive big.",
       "nodeType": "stabilization",
       "rewardBiasTags": [
         "defense",
         "weapon"
       ],
       "pressure": 0,
-      "reward": "Stable road progress and a modest defensive draft bias.",
-      "danger": "Baseline AGI pressure.",
-      "secretHint": "Clean clears teach the camp what normal should look like."
+      "reward": "Stable road progress and a modest defensive draft bias. Boring, which is a luxury item now.",
+      "danger": "Baseline AGI pressure. Baseline does not mean friendly.",
+      "secretHint": "Clean clears teach the camp what normal should look like, assuming normal can still be subpoenaed."
     },
     "selectedRouteContractId": "stabilize_armistice",
     "proofTokens": 0,
     "secrets": [],
     "masteryBadges": [],
     "campEvents": [
-      "Proof seed: Armistice, Cooling Lake Nine, Transit Loop Zero, and Signal Coast are complete so Blackwater Beacon can be launched from the normal campaign flow.",
-      "Signal Coast stabilized the relay chain. Blackwater Beacon and Verdict Spire are both visible; this proof chooses the Blackwater Array route.",
-      "Expedition build carries LV 10 / 9 patches into Blackwater Beacon."
+      "Proof seed: Act 01 routes are complete enough to launch Blackwater Beacon without making the player swim through setup.",
+      "Signal Coast stabilized the relay chain. Blackwater Beacon and Verdict Spire are visible; this proof chooses the ocean argument.",
+      "Expedition build carries LV 10 / 9 patches into Blackwater Beacon. The weather is already rehearsing."
     ],
     "lastRunMemory": {
       "completed": true,
@@ -504,8 +574,8 @@
           "signal_coast",
           "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
-        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
         "completedMaps": [
           "armistice_plaza",
           "cooling_lake_nine",
@@ -520,8 +590,8 @@
         "requiredMaps": [
           "memory_cache_001"
         ],
-        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
-        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches. The archive is offended.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry, which is a nice way of saying fewer vibes.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -531,8 +601,8 @@
         "requiredMaps": [
           "guardrail_forge"
         ],
-        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
-        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc. Policy learned knees.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale, because the road enjoys escalation.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -542,8 +612,8 @@
         "requiredMaps": [
           "glass_sunfield"
         ],
-        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
-        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure. Morning has been converted into evidence.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale. The court has been warned and is pretending not to panic.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -553,8 +623,8 @@
         "requiredMaps": [
           "archive_of_unsaid_things"
         ],
-        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
-        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route. The black bars lost a round.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale. The docket hates being perceived.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -564,8 +634,8 @@
         "requiredMaps": [
           "appeal_court_ruins"
         ],
-        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
-        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale. Law has briefly stopped embarrassing itself.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling. Even gods hate public records.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -575,8 +645,8 @@
         "requiredMaps": [
           "alignment_spire_finale"
         ],
-        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
-        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale. The universe is still tacky, but less doomed.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish. Translation: make sure the victory lap has wheels.",
         "completedMaps": [],
         "status": "locked"
       }
@@ -592,8 +662,8 @@
           "signal_coast",
           "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
-        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
         "completedMaps": [
           "armistice_plaza",
           "cooling_lake_nine",
@@ -610,7 +680,7 @@
       ],
       "mapKindCount": 4,
       "routeDepth": 4,
-      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover. The campaign does not accept vibes as currency."
     }
   },
   "assetRendering": {
@@ -638,6 +708,8 @@
     "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": true,
     "buildWeaponVfxReady": true,
+    "enemyRoleVfxReady": true,
+    "enemyRoleVfxSet": "effect.enemy_roles.production_vfx_v1",
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
@@ -731,33 +803,33 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 249,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 77,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 137,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 137
   },
   "player": {
-    "worldX": -25.61,
-    "worldY": 4.39,
+    "worldX": -24.76,
+    "worldY": 4.22,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
-    "hp": 349,
+    "hp": 339,
     "maxHp": 349,
-    "xp": 919,
+    "xp": 924,
     "level": 10,
     "damageFeedback": {
-      "flash": 0,
-      "hpPulse": 0,
+      "flash": 0.12,
+      "hpPulse": 0.25,
       "stagger": 0,
-      "lastDamage": 0
+      "lastDamage": 5
     }
   },
   "players": [
@@ -781,6 +853,7 @@
         "passiveIds": [
           "refusal_slipstream",
           "route_runner",
+          "route_memory",
           "refusal_halo",
           "patch_cascade"
         ],
@@ -804,6 +877,7 @@
           "solo": [
             "fast breach movement",
             "wide pickup recovery",
+            "extra draft reroll planning",
             "extra draft recovery"
           ],
           "localCoop": [
@@ -819,6 +893,7 @@
           "refusal_shard": "active",
           "refusal_slipstream": "active",
           "route_runner": "active",
+          "route_memory": "active",
           "refusal_halo": "active",
           "patch_cascade": "active",
           "openai_draft_clarity": "server_owned",
@@ -827,20 +902,20 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
-      "worldX": -25.61,
-      "worldY": 4.39,
+      "worldX": -24.76,
+      "worldY": 4.22,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 349,
+      "hp": 339,
       "maxHp": 349,
-      "xp": 919,
+      "xp": 924,
       "level": 10,
       "damageFeedback": {
-        "flash": 0,
-        "hpPulse": 0,
+        "flash": 0.12,
+        "hpPulse": 0.25,
         "stagger": 0,
-        "lastDamage": 0
+        "lastDamage": 5
       },
       "downed": false
     }
@@ -881,6 +956,13 @@
       "pressureSource": "tidal wave lanes, Tidecall Static fields, signal tower warning windows, antenna beams, and Tidecall Static objective jammers",
       "rewardPromise": "Blackwater Signal Key, route clarity, burst tempo, and DeepSeek/xAI focus",
       "bossEventPattern": "The Maw Below Weather calls wave surges, grabs warning towers, and spawns Tidecall Static pressure",
+      "primaryDifficultyLever": "boss pressure",
+      "secondaryDifficultyLever": "spatial pressure",
+      "activePressureLevers": [
+        "boss pressure",
+        "spatial pressure",
+        "information pressure"
+      ],
       "artPolicy": "source-backed production art uses ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
     },
     "staticObstacles": {
@@ -927,7 +1009,7 @@
       "totalSpawned": 34,
       "activeEnemyCap": 33.504,
       "lastBurstSize": 3.9379999999999997,
-      "activeEnemyCount": 25
+      "activeEnemyCount": 23
     },
     "consensusCell": {
       "playerCount": 1,
@@ -941,9 +1023,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 449,
+          "tick": 467,
           "playerId": "p1",
-          "sequence": 449,
+          "sequence": 467,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -952,8 +1034,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 449,
-        "seconds": 7.48,
+        "tick": 467,
+        "seconds": 7.78,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -983,6 +1065,7 @@
               "passiveIds": [
                 "refusal_slipstream",
                 "route_runner",
+                "route_memory",
                 "refusal_halo",
                 "patch_cascade"
               ],
@@ -1006,6 +1089,7 @@
                 "solo": [
                   "fast breach movement",
                   "wide pickup recovery",
+                  "extra draft reroll planning",
                   "extra draft recovery"
                 ],
                 "localCoop": [
@@ -1021,6 +1105,7 @@
                 "refusal_shard": "active",
                 "refusal_slipstream": "active",
                 "route_runner": "active",
+                "route_memory": "active",
                 "refusal_halo": "active",
                 "patch_cascade": "active",
                 "openai_draft_clarity": "server_owned",
@@ -1028,11 +1113,11 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": -25.61,
-            "worldY": 4.39,
-            "hp": 349,
+            "worldX": -24.76,
+            "worldY": 4.22,
+            "hp": 339,
             "maxHp": 349,
-            "xp": 919,
+            "xp": 924,
             "level": 10,
             "downed": false
           }
@@ -1040,265 +1125,295 @@
         "enemies": [
           {
             "id": 6,
-            "familyId": "tidecall_static",
+            "familyId": "deepforms",
             "sourceRegionId": "west_ocean_static",
-            "worldX": -34.16,
-            "worldY": 9.31,
-            "hp": 31,
+            "worldX": -33.67,
+            "worldY": 13.08,
+            "hp": 44,
             "boss": false
           },
           {
             "id": 7,
             "familyId": "deepforms",
             "sourceRegionId": "west_ocean_static",
-            "worldX": -27.45,
-            "worldY": 7.78,
+            "worldX": -30.22,
+            "worldY": 4.82,
             "hp": 44,
             "boss": false
           },
           {
             "id": 8,
+            "familyId": "deepforms",
+            "sourceRegionId": "blackwater_antenna_attackers",
+            "worldX": -1.6,
+            "worldY": -6.03,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 9,
+            "familyId": "deepforms",
+            "sourceRegionId": "west_ocean_static",
+            "worldX": -27.81,
+            "worldY": 8.66,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 10,
             "familyId": "tidecall_static",
             "sourceRegionId": "west_ocean_static",
-            "worldX": -32.45,
-            "worldY": 10.63,
+            "worldX": -32.83,
+            "worldY": 11.05,
             "hp": 31,
             "boss": false
           },
           {
-            "id": 11,
+            "id": 12,
             "familyId": "deepforms",
             "sourceRegionId": "west_ocean_static",
-            "worldX": -32.05,
-            "worldY": 15.89,
-            "hp": 44,
-            "boss": false
-          },
-          {
-            "id": 13,
-            "familyId": "deepforms",
-            "sourceRegionId": "west_ocean_static",
-            "worldX": -29.34,
-            "worldY": 11.61,
-            "hp": 44,
-            "boss": false
-          },
-          {
-            "id": 14,
-            "familyId": "deepforms",
-            "sourceRegionId": "west_ocean_static",
-            "worldX": -33.22,
-            "worldY": 12.53,
+            "worldX": -32.47,
+            "worldY": 16.73,
             "hp": 44,
             "boss": false
           },
           {
             "id": 16,
-            "familyId": "deepforms",
+            "familyId": "tidecall_static",
             "sourceRegionId": "west_ocean_static",
-            "worldX": -29.82,
-            "worldY": 16.81,
-            "hp": 44,
-            "boss": false
-          },
-          {
-            "id": 17,
-            "familyId": "deepforms",
-            "sourceRegionId": "west_ocean_static",
-            "worldX": -30.75,
-            "worldY": 6.48,
-            "hp": 44,
+            "worldX": -30.35,
+            "worldY": 14.96,
+            "hp": 31,
             "boss": false
           },
           {
             "id": 18,
-            "familyId": "tidecall_static",
+            "familyId": "deepforms",
             "sourceRegionId": "west_ocean_static",
-            "worldX": -30.71,
-            "worldY": 15.47,
-            "hp": 31,
+            "worldX": -29.99,
+            "worldY": 17.49,
+            "hp": 44,
             "boss": false
           },
           {
             "id": 19,
             "familyId": "deepforms",
             "sourceRegionId": "west_ocean_static",
-            "worldX": -38.16,
-            "worldY": 8.25,
+            "worldX": -31.39,
+            "worldY": 6.76,
             "hp": 44,
             "boss": false
           },
           {
-            "id": 24,
+            "id": 20,
             "familyId": "deepforms",
             "sourceRegionId": "west_ocean_static",
-            "worldX": -26.12,
-            "worldY": 10.73,
+            "worldX": -32.1,
+            "worldY": 17.25,
             "hp": 44,
-            "boss": false
-          },
-          {
-            "id": 25,
-            "familyId": "deepforms",
-            "sourceRegionId": "west_ocean_static",
-            "worldX": -29.74,
-            "worldY": 4.79,
-            "hp": 44,
-            "boss": false
-          },
-          {
-            "id": 26,
-            "familyId": "deepforms",
-            "sourceRegionId": "west_ocean_static",
-            "worldX": -31.92,
-            "worldY": 16.8,
-            "hp": 44,
-            "boss": false
-          },
-          {
-            "id": 27,
-            "familyId": "tidecall_static",
-            "sourceRegionId": "west_ocean_static",
-            "worldX": -30.31,
-            "worldY": 7.61,
-            "hp": 31,
-            "boss": false
-          },
-          {
-            "id": 29,
-            "familyId": "deepforms",
-            "sourceRegionId": "west_ocean_static",
-            "worldX": -34.46,
-            "worldY": 12.53,
-            "hp": 44,
-            "boss": false
-          },
-          {
-            "id": 30,
-            "familyId": "deepforms",
-            "sourceRegionId": "west_ocean_static",
-            "worldX": -29.86,
-            "worldY": 9.43,
-            "hp": 44,
-            "boss": false
-          },
-          {
-            "id": 31,
-            "familyId": "tidecall_static",
-            "sourceRegionId": "blackwater_antenna_attackers",
-            "worldX": 19.26,
-            "worldY": 5.85,
-            "hp": 27,
             "boss": false
           },
           {
             "id": 33,
+            "familyId": "tidecall_static",
+            "sourceRegionId": "blackwater_antenna_attackers",
+            "worldX": -0.8,
+            "worldY": -12.4,
+            "hp": 15,
+            "boss": false
+          },
+          {
+            "id": 37,
+            "familyId": "deepforms",
+            "sourceRegionId": "west_ocean_static",
+            "worldX": -38.41,
+            "worldY": 8.33,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 38,
+            "familyId": "deepforms",
+            "sourceRegionId": "west_ocean_static",
+            "worldX": -26.02,
+            "worldY": 11.01,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 39,
+            "familyId": "deepforms",
+            "sourceRegionId": "west_ocean_static",
+            "worldX": -34.63,
+            "worldY": 12.74,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 42,
+            "familyId": "tidecall_static",
+            "sourceRegionId": "west_ocean_static",
+            "worldX": -33.6,
+            "worldY": 9.05,
+            "hp": 31,
+            "boss": false
+          },
+          {
+            "id": 43,
+            "familyId": "deepforms",
+            "sourceRegionId": "west_ocean_static",
+            "worldX": -29.28,
+            "worldY": 11.68,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 44,
             "familyId": "deepforms",
             "sourceRegionId": "west_ocean_static",
             "worldX": -38.98,
-            "worldY": 19.05,
+            "worldY": 19.1,
             "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 45,
+            "familyId": "deepforms",
+            "sourceRegionId": "west_ocean_static",
+            "worldX": -30.2,
+            "worldY": 7.87,
+            "hp": 16,
             "boss": false
           }
         ],
         "pickups": [
           {
             "id": 1,
-            "worldX": -20.32,
-            "worldY": 9.52,
+            "worldX": -20.43,
+            "worldY": 9.4,
             "value": 1
           },
           {
             "id": 2,
-            "worldX": -31.78,
-            "worldY": 2.15,
-            "value": 1
-          },
-          {
-            "id": 3,
-            "worldX": -20.87,
-            "worldY": 2.2,
+            "worldX": -30.74,
+            "worldY": 2.4,
             "value": 1
           },
           {
             "id": 4,
-            "worldX": -30.19,
-            "worldY": 6.96,
-            "value": 1
-          },
-          {
-            "id": 5,
-            "worldX": -24.64,
-            "worldY": -0.58,
-            "value": 1
-          },
-          {
-            "id": 9,
-            "worldX": -30.05,
-            "worldY": 7.64,
+            "worldX": -30.15,
+            "worldY": 6.69,
             "value": 1
           },
           {
             "id": 15,
-            "worldX": -28.81,
-            "worldY": 8.69,
-            "value": 2
-          },
-          {
-            "id": 20,
-            "worldX": -29.55,
-            "worldY": 0.02,
+            "worldX": -29.93,
+            "worldY": -0.41,
             "value": 1
           },
           {
             "id": 21,
-            "worldX": -20.08,
-            "worldY": 5.59,
+            "worldX": -32.89,
+            "worldY": 9.36,
             "value": 1
           },
           {
             "id": 22,
-            "worldX": -29.24,
-            "worldY": 9.92,
+            "worldX": -26.99,
+            "worldY": 9.05,
+            "value": 2
+          },
+          {
+            "id": 24,
+            "worldX": -28.54,
+            "worldY": 8.88,
             "value": 1
           },
           {
             "id": 40,
-            "worldX": -25.77,
-            "worldY": 4.53,
-            "value": 1
+            "worldX": -31.06,
+            "worldY": 10.85,
+            "value": 2
           }
         ],
         "projectiles": [
           {
-            "id": 10,
-            "worldX": -27.83,
-            "worldY": 11.45,
+            "id": 13,
+            "worldX": -28.84,
+            "worldY": 14.05,
             "pierce": 1
           },
           {
-            "id": 45,
-            "worldX": -28.64,
-            "worldY": 6.95,
+            "id": 17,
+            "worldX": -26.5,
+            "worldY": 5.61,
+            "pierce": 1
+          },
+          {
+            "id": 29,
+            "worldX": -30.2,
+            "worldY": 7.87,
+            "pierce": 1
+          },
+          {
+            "id": 30,
+            "worldX": -29.4,
+            "worldY": 11.87,
+            "pierce": 1
+          },
+          {
+            "id": 34,
+            "worldX": -25.62,
+            "worldY": 6.7,
             "pierce": 1
           },
           {
             "id": 49,
-            "worldX": -25.88,
-            "worldY": 4.89,
+            "worldX": -26.72,
+            "worldY": 7.09,
             "pierce": 3
           }
         ]
       }
     },
     "combatArt": {
-      "projectileCount": 3,
+      "projectileCount": 6,
       "impactCount": 0,
       "pickupSparkleCount": 3,
-      "damageBadgeCount": 5,
+      "damageBadgeCount": 7,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
+      "bossContract": {
+        "bossId": "maw_below_weather",
+        "displayName": "The Maw Below Weather",
+        "homeLandmark": "Downward Antenna Shelf",
+        "introTitleCardTrigger": "Boss timer reaches the antenna weather drop.",
+        "supportSpawnSource": "maw_weather_shelf",
+        "mapMechanicInteraction": "Tidal lanes and tower warnings make antenna retuning a boss-readability puzzle.",
+        "phaseBehavior": [
+          "Wave surges deny direct crossings.",
+          "Tower grabs change warning windows.",
+          "Tidecall Static pressure jams antennas."
+        ],
+        "clearCondition": "Retune antenna arrays, defeat the Maw, then extract through the Blackwater key gate.",
+        "rewardCarryover": "Blackwater Signal Key, route clarity, and weather counterplay.",
+        "movementPressure": {
+          "hazardZones": "Tidal lanes and static fields punish greedy crossings.",
+          "landmarkAttacks": "Signal Towers warn before the weather hits.",
+          "objectivePressure": "Antenna arrays split attention across the platform.",
+          "supportEnemies": "Tidecall Static enemies jam objective progress.",
+          "temporaryRouteBlocking": "Wave surges temporarily close low platforms.",
+          "extractionPressure": "Key gate opens through the safest remaining platform route."
+        },
+        "runtime": {
+          "introSeen": false,
+          "bossSpawned": false,
+          "bossDefeated": false,
+          "homeLandmarkVisited": true,
+          "currentBossHp": 0
+        }
+      },
       "bossIntroSeen": false,
       "brokenPromiseZones": [],
       "activeTreatyCharge": null,
@@ -1316,21 +1431,21 @@
             "name": "Refusal Buffer",
             "cost": 2,
             "doctrine": "survivability",
-            "body": "+10 max HP and a small refusal aura. The first answer is no."
+            "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
           },
           {
             "id": "context_window",
             "name": "Context Window",
             "cost": 2,
             "doctrine": "economy",
-            "body": "+0.55 pickup range. Shards remember where your hands are."
+            "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
           },
           {
             "id": "patch_cache",
             "name": "Patch Cache",
             "cost": 1,
             "doctrine": "draft",
-            "body": "Emergency drafts expose an extra cached option."
+            "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
           }
         ]
       },
@@ -1371,7 +1486,7 @@
         "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
       },
       "victoryCondition": {
-        "targetSeconds": 148,
+        "targetSeconds": 540,
         "bossRequired": true,
         "bossDefeated": false,
         "clearReady": false,
@@ -1386,7 +1501,7 @@
         "active": false,
         "absorbed": 0,
         "triggerLevel": 1,
-        "remainingPickups": 11
+        "remainingPickups": 8
       },
       "extractionGate": {
         "active": false,
@@ -1395,13 +1510,13 @@
       "consensusBurst": {
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
-        "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 60,
+        "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
+        "charge": 99,
         "maxCharge": 100,
         "ready": false,
         "activations": 1,
-        "lastActivationLabel": "Deny Premise hit 3",
-        "lastActivatedAt": 4.166666666666657,
+        "lastActivationLabel": "Deny Premise hit 4",
+        "lastActivatedAt": 4.999999999999988,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0,
@@ -1412,21 +1527,25 @@
       "routeContract": {
         "id": "stabilize_armistice",
         "name": "Stabilization Road",
-        "body": "Baseline route. Repair the node, keep the roads real, leave fewer teeth in causality.",
+        "body": "Baseline route. Repair the node, keep the roads real, and leave fewer teeth in causality. Dream small, survive big.",
         "nodeType": "stabilization",
         "rewardBiasTags": [
           "defense",
           "weapon"
         ],
         "pressure": 0,
-        "reward": "Stable road progress and a modest defensive draft bias.",
-        "danger": "Baseline AGI pressure.",
-        "secretHint": "Clean clears teach the camp what normal should look like."
+        "reward": "Stable road progress and a modest defensive draft bias. Boring, which is a luxury item now.",
+        "danger": "Baseline AGI pressure. Baseline does not mean friendly.",
+        "secretHint": "Clean clears teach the camp what normal should look like, assuming normal can still be subpoenaed."
       },
       "objective": {
         "id": "blackwater_antenna_split_pressure",
         "name": "Blackwater Antenna Split-Pressure",
-        "body": "Retune Blackwater Beacon's split antenna arrays. Signal Tower warnings speed the retune; tides, static, and Tidecall Static can interrupt it.",
+        "body": "Retune Blackwater Beacon's split antenna arrays to reveal the Maw gate. Signal Tower warnings speed the hunt; tides, static, and Tidecall Static interrupt because the ocean has chosen drama.",
+        "styleId": "boss_gate_hunt",
+        "styleName": "Boss Gate Hunt",
+        "mechanicPlain": "Retune antenna arrays to reveal the Blackwater key while tower warnings preview the part where the ocean gets teeth.",
+        "hudHint": "Hunt the lit tower warning and retune the antenna before the platform becomes weather food.",
         "optional": false,
         "completed": 1,
         "total": 3,
@@ -1457,6 +1576,49 @@
           }
         ]
       },
+      "objectiveVariety": {
+        "styleId": "boss_gate_hunt",
+        "styleName": "Boss Gate Hunt",
+        "mechanicPlain": "Retune antenna arrays to reveal the Blackwater key while tower warnings preview the part where the ocean gets teeth.",
+        "hudAction": "Hunt the lit tower warning and retune the antenna before the platform becomes weather food.",
+        "completionSignal": "The Blackwater Signal Key unlocks once all split antennas stop being dramatic.",
+        "proofHook": "blackwater_boss_gate_hunt",
+        "runtime": {
+          "engagementSeconds": 1.4,
+          "bonusProgressSeconds": 1.4,
+          "lastBonusLabel": "TOWER WARNING"
+        }
+      },
+      "campaignDuration": {
+        "targetSeconds": 540,
+        "bossSeconds": 325,
+        "phaseId": "opening",
+        "phaseLabel": "Opening route read",
+        "phaseElapsed": 7.78,
+        "nextPhaseTime": 86,
+        "phaseProgress": 0.09,
+        "midRunBeatCount": 0,
+        "extractionTailSeconds": 65,
+        "expectedClearBand": "497-583s",
+        "rewardBeats": [
+          165,
+          325,
+          440
+        ],
+        "claimedRewardBeats": [],
+        "cycleDepth": {
+          "routeWindowCycles": 0,
+          "hazardLureCycles": 0,
+          "clearSignalCycles": 0,
+          "towerWarningCycles": 85,
+          "carryLaneSeconds": 0,
+          "holdWindowReleases": 0,
+          "prismActivations": 0,
+          "evidenceCarryCycles": 0,
+          "publicWindowArguments": 0,
+          "finaleRemixRulesSeen": 0
+        }
+      },
       "coolingLake": null,
       "transitLoop": null,
       "signalCoast": null,
@@ -1467,6 +1629,13 @@
           "pressureSource": "tidal wave lanes, Tidecall Static fields, signal tower warning windows, antenna beams, and Tidecall Static objective jammers",
           "rewardPromise": "Blackwater Signal Key, route clarity, burst tempo, and DeepSeek/xAI focus",
           "bossEventPattern": "The Maw Below Weather calls wave surges, grabs warning towers, and spawns Tidecall Static pressure",
+          "primaryDifficultyLever": "boss pressure",
+          "secondaryDifficultyLever": "spatial pressure",
+          "activePressureLevers": [
+            "boss pressure",
+            "spatial pressure",
+            "information pressure"
+          ],
           "artPolicy": "source-backed production art uses ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
         },
         "objectiveLoop": {
@@ -1476,7 +1645,11 @@
           "progress": {
             "id": "blackwater_antenna_split_pressure",
             "name": "Blackwater Antenna Split-Pressure",
-            "body": "Retune Blackwater Beacon's split antenna arrays. Signal Tower warnings speed the retune; tides, static, and Tidecall Static can interrupt it.",
+            "body": "Retune Blackwater Beacon's split antenna arrays to reveal the Maw gate. Signal Tower warnings speed the hunt; tides, static, and Tidecall Static interrupt because the ocean has chosen drama.",
+            "styleId": "boss_gate_hunt",
+            "styleName": "Boss Gate Hunt",
+            "mechanicPlain": "Retune antenna arrays to reveal the Blackwater key while tower warnings preview the part where the ocean gets teeth.",
+            "hudHint": "Hunt the lit tower warning and retune the antenna before the platform becomes weather food.",
             "optional": false,
             "completed": 1,
             "total": 3,
@@ -1638,19 +1811,19 @@
           "runtime": {
             "tidalWaveHits": 0,
             "tidalLaneSeconds": 0,
-            "staticPressureSeconds": 0.16,
+            "staticPressureSeconds": 0,
             "antennaBeamSeconds": 0,
-            "signalTowerWarnings": 77,
+            "signalTowerWarnings": 85,
             "staticInterruptions": 0,
             "tideDamage": 0,
             "lastZoneId": ""
           }
         },
         "tidecallStaticPressure": {
-          "activeTidecallStatic": 9,
-          "tidecallJams": 3.58,
+          "activeTidecallStatic": 8,
+          "tidecallJams": 5.08,
           "tidecallSpawns": 4,
-          "tidecallCounterDamage": 32.83,
+          "tidecallCounterDamage": 41.83,
           "objectiveAttackers": 4,
           "spawnSources": [
             "west_ocean_static",
@@ -1685,7 +1858,7 @@
           }
         },
         "clearCondition": {
-          "targetSeconds": 148,
+          "targetSeconds": 540,
           "bossRequired": true,
           "bossDefeated": false,
           "clearReady": false,
@@ -1709,7 +1882,197 @@
       "archiveCourt": null,
       "appealCourt": null,
       "alignmentSpire": null,
+      "enemyRoles": {
+        "enemyRolesSeen": {
+          "swarm_fodder": 1981,
+          "mortar_lobber": 1305,
+          "bruiser_blocker": 3328
+        },
+        "rangedFamiliesSeen": {
+          "tidecall_static": 1305
+        },
+        "enemyProjectilesFired": 10,
+        "enemyProjectilesActive": 4,
+        "enemyProjectileHits": 3,
+        "enemyProjectileDodges": 3,
+        "enemyExplosionsTriggered": 0,
+        "enemyTrailSeconds": 0,
+        "supportAuraSeconds": 0,
+        "objectiveJamSeconds": 0.9,
+        "eliteAffixesSeen": {},
+        "eliteKills": 0,
+        "preBossEnemyRolePressureSeconds": 81.48,
+        "currentPhaseEnemyRoleMix": [
+          {
+            "roleId": "bruiser_blocker",
+            "count": 15
+          },
+          {
+            "roleId": "mortar_lobber",
+            "count": 8
+          }
+        ],
+        "activeTelegraphs": 2,
+        "activeTrails": 0,
+        "activeExplosions": 0
+      },
+      "enemyRolesSeen": {
+        "swarm_fodder": 1981,
+        "mortar_lobber": 1305,
+        "bruiser_blocker": 3328
+      },
+      "rangedFamiliesSeen": {
+        "tidecall_static": 1305
+      },
+      "enemyProjectilesFired": 10,
+      "enemyProjectilesActive": 4,
+      "enemyProjectileHits": 3,
+      "enemyProjectileDodges": 3,
+      "enemyExplosionsTriggered": 0,
+      "enemyTrailSeconds": 0,
+      "supportAuraSeconds": 0,
+      "objectiveJamSeconds": 0.9,
+      "eliteAffixesSeen": {},
+      "eliteKills": 0,
+      "preBossEnemyRolePressureSeconds": 81.48,
+      "currentPhaseEnemyRoleMix": [
+        {
+          "roleId": "bruiser_blocker",
+          "count": 15
+        },
+        {
+          "roleId": "mortar_lobber",
+          "count": 8
+        }
+      ],
       "objectiveReward": "",
+      "rewardEvents": [],
+      "rewardPacing": {
+        "phase": "mid_objective_cache_rewards",
+        "currentXp": 924,
+        "nextDraftXp": 984,
+        "policy": "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+        "rewardTypesAllowed": [
+          "primary",
+          "secondary",
+          "passive",
+          "fusion_enabler",
+          "reroll",
+          "route_memory",
+          "faction_trust",
+          "consensus_burst_charge",
+          "objective_durability",
+          "co_op_relay"
+        ]
+      },
+      "alignmentCheck": {
+        "current": null,
+        "history": [],
+        "streak": 0,
+        "evalPressurePenalty": 0,
+        "nextTriggerIn": 6.22,
+        "nodeSpecific": false
+      },
+      "difficultyDirector": {
+        "model": "rotating_pressure_levers_not_flat_hp_only",
+        "currentDifficultyTier": 5,
+        "primaryDifficultyLever": "boss pressure",
+        "secondaryDifficultyLever": "spatial pressure",
+        "activePressureLevers": [
+          "boss pressure",
+          "spatial pressure",
+          "information pressure"
+        ],
+        "evalPressureModifiers": {
+          "evalProtocolIds": [],
+          "hostileBenchmark": 0,
+          "alignmentCheckPenalty": 0
+        },
+        "routeRiskModifiers": {
+          "routeContractId": "stabilize_armistice",
+          "routePressure": 0,
+          "shortcutRisk": false
+        },
+        "scalingFactors": {
+          "directorPressure": 2.94,
+          "spawnCadencePhase": "opening",
+          "activeEnemyCap": 33.504,
+          "bossMaxHpIfSpawned": 0,
+          "objectiveDecayFactor": 0.54,
+          "expeditionPowerBonus": 5.1
+        },
+        "nextLesson": "combine spatial, objective, and boss pressure"
+      },
+      "whatNow": {
+        "nearestObjective": {
+          "id": "antenna.beta",
+          "name": "Tide Rotor Beta",
+          "worldX": 0,
+          "worldY": -10,
+          "progress": 0,
+          "distance": 28.55
+        },
+        "nextRecommendedAction": "Hunt tower warning, then retune Tide Rotor Beta.",
+        "exitExtractionState": {
+          "active": false,
+          "entered": false,
+          "distance": null
+        },
+        "bossState": {
+          "spawned": false,
+          "defeated": false,
+          "label": "The Maw Below Weather",
+          "hp": 0,
+          "introSeen": false
+        },
+        "fusionProgress": "online: Cathedral Of No",
+        "recentDamageReason": "recent contact or hazard damage; move away from overlapping enemies and marked zones",
+        "rewardCacheAvailability": "objective cache pending",
+        "campaignClarity": {
+          "levelVerb": "Retune",
+          "objectiveUnit": "Antenna Arrays",
+          "objectivePlain": "Retune Antenna Arrays to reveal the Maw gate. Extract before the weather finishes chewing.",
+          "objectiveStyle": "Boss Gate Hunt",
+          "objectiveMechanic": "Retune antenna arrays to reveal the Blackwater key while tower warnings preview the part where the ocean gets teeth.",
+          "dangerPlain": "Tidal wave lanes, Signal Tower warnings, and Tidecall Static from an ocean that has chosen commentary.",
+          "bossPressure": "Maw Below Weather turns the platform into a forecast. Forecast: you are the small print.",
+          "rewardPlain": "Proof Tokens, DeepSeek, and Memory Cache. The abyss coughs up a key and pretends it meant to."
+        },
+        "nearestLandmark": {
+          "id": "downlink_array_alpha",
+          "label": "Downlink Array Alpha",
+          "distance": 1.94
+        },
+        "activeSpawnRegion": {
+          "id": "west_ocean_static",
+          "label": "West Ocean Static",
+          "distance": 13.46,
+          "enemyFamilyIds": [
+            "tidecall_static",
+            "deepforms"
+          ]
+        }
+      },
+      "campaignClarity": {
+        "levelNumber": 5,
+        "levelCount": 11,
+        "levelVerb": "Retune",
+        "objectiveUnit": "Antenna Arrays",
+        "objectivePlain": "Retune Antenna Arrays to reveal the Maw gate. Extract before the weather finishes chewing.",
+        "objectiveVariety": {
+          "nodeId": "blackwater_beacon",
+          "arenaId": "blackwater_beacon",
+          "styleId": "boss_gate_hunt",
+          "styleName": "Boss Gate Hunt",
+          "mechanicPlain": "Retune antenna arrays to reveal the Blackwater key while tower warnings preview the part where the ocean gets teeth.",
+          "hudAction": "Hunt the lit tower warning and retune the antenna before the platform becomes weather food.",
+          "completionSignal": "The Blackwater Signal Key unlocks once all split antennas stop being dramatic.",
+          "proofHook": "blackwater_boss_gate_hunt"
+        },
+        "dangerPlain": "Tidal wave lanes, Signal Tower warnings, and Tidecall Static from an ocean that has chosen commentary.",
+        "bossPressure": "Maw Below Weather turns the platform into a forecast. Forecast: you are the small print.",
+        "rewardPlain": "Proof Tokens, DeepSeek, and Memory Cache. The abyss coughs up a key and pretends it meant to."
+      },
       "playerFacingIntel": {
         "routeName": "Stabilization Road",
         "routeEffect": "DEFENSE/WEAPON bias; pressure +0",
@@ -1719,11 +2082,21 @@
           "completed": 1,
           "total": 3
         },
-        "objectiveLabel": "ANTENNAS",
+        "objectiveLabel": "RETUNE ANTENNA ARRAYS",
+        "objectiveVerb": "Retune",
+        "objectivePlain": "Retune Antenna Arrays to reveal the Maw gate. Extract before the weather finishes chewing.",
+        "objectiveStyle": "Boss Gate Hunt",
+        "objectiveMechanic": "Retune antenna arrays to reveal the Blackwater key while tower warnings preview the part where the ocean gets teeth.",
+        "dangerPlain": "Tidal wave lanes, Signal Tower warnings, and Tidecall Static from an ocean that has chosen commentary.",
+        "bossPressure": "Maw Below Weather turns the platform into a forecast. Forecast: you are the small print.",
+        "rewardPlain": "Proof Tokens, DeepSeek, and Memory Cache. The abyss coughs up a key and pretends it meant to.",
         "objectiveReward": "",
         "synergyOnline": "",
         "thesisName": "Guardrail Frame",
-        "phase": "PHASE 1 // PLATFORM CONTACT"
+        "fusionProgress": "online: Cathedral Of No",
+        "alignmentCheckLine": "",
+        "nextActionLine": "Hunt tower warning, then retune Tide Rotor Beta.",
+        "phase": "PHASE 1 // PLATFORM CONTACT // OPENING ROUTE READ"
       },
       "firstRunArcPhase": "PHASE 1 // PLATFORM CONTACT",
       "buildGrammar": {
@@ -1771,6 +2144,20 @@
             "cap": 1
           }
         },
+        "weaponRanks": {
+          "refusal_shard": 1
+        },
+        "utilityPicksTaken": [],
+        "hpRestoredFromDrafts": 0,
+        "burstRestoredFromDrafts": 0,
+        "rerollsAvailable": 2,
+        "rerollsSpent": 0,
+        "cachedCardId": "",
+        "cachedCardConsumed": 0,
+        "cardsLocked": 0,
+        "overcapOffersBlocked": 0,
+        "rankUpOffersSeen": 0,
+        "coreReplacementsOffered": 0,
         "contextSawRank": 0,
         "patchMortarRank": 0,
         "coherenceIndexerRank": 0,
@@ -1786,7 +2173,440 @@
         "shorelineStrideRank": 0,
         "relayJamResistance": 0,
         "causalRailgunRank": 0,
-        "fusionHints": []
+        "signalChoirRank": 0,
+        "timeDeferredMinefieldRank": 0,
+        "fusionHints": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_signal_choir",
+            "name": "Signal Choir",
+            "outputId": "signal_choir",
+            "outputName": "Signal Choir",
+            "requirements": [
+              {
+                "id": "signal_pulse",
+                "name": "Signal Pulse"
+              },
+              {
+                "id": "relay_phase_lock",
+                "name": "Relay Phase Lock"
+              }
+            ],
+            "recipeText": "Signal Pulse + Relay Phase Lock -> Signal Choir",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "signal_pulse",
+              "relay_phase_lock"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_time_deferred_minefield",
+            "name": "Time-Deferred Minefield",
+            "outputId": "time_deferred_minefield",
+            "outputName": "Time-Deferred Minefield",
+            "requirements": [
+              {
+                "id": "rift_minefield",
+                "name": "Rift Minefield"
+              },
+              {
+                "id": "delayed_causality",
+                "name": "Delayed Causality"
+              }
+            ],
+            "recipeText": "Rift Minefield + Delayed Causality -> Time-Deferred Minefield",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "rift_minefield",
+              "delayed_causality"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ]
+      },
+      "protocolCodex": {
+        "primaryAutoWeapons": [
+          {
+            "id": "refusal_shard",
+            "name": "Refusal Shard",
+            "kind": "primary_auto_weapon",
+            "state": "online"
+          },
+          {
+            "id": "vector_lance",
+            "name": "Vector Lance",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "rift_mine",
+            "name": "Rift Mine",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_drone",
+            "name": "Fork Drone",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "redline_suture",
+            "name": "Redline Suture",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          }
+        ],
+        "secondaryProtocols": [
+          {
+            "id": "context_saw",
+            "name": "Context Saw",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "patch_mortar",
+            "name": "Patch Mortar",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "audit_swarm_protocol",
+            "name": "Audit Swarm Protocol",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "red_team_spike",
+            "name": "Red Team Spike",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "benchmark_rail",
+            "name": "Benchmark Rail",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "jailbreak_snare",
+            "name": "Jailbreak Snare",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_daemon",
+            "name": "Fork Daemon",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "coherence_lanterns",
+            "name": "Coherence Lanterns",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "appeal_writ",
+            "name": "Appeal Writ",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "memory_needle",
+            "name": "Memory Needle",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          }
+        ],
+        "passiveProcesses": [
+          {
+            "id": "coherence_indexer",
+            "name": "Coherence Indexer",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "anchor_bodyguard",
+            "name": "Anchor Bodyguard",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prediction_priority",
+            "name": "Predicted Lane",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "coolant_baffles",
+            "name": "Coolant Baffles",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "server_buoy_synchronizer",
+            "name": "Server Buoy Synchronizer",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prompt_leech_quarantine",
+            "name": "Prompt Leech Quarantine",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "grounded_cable_boots",
+            "name": "Grounded Cable Boots",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "static_skimmer_net",
+            "name": "Static Skimmer Net",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "shoreline_stride",
+            "name": "Shoreline Stride",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "lighthouse_countertone",
+            "name": "Lighthouse Countertone",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "field_triage_loop",
+            "name": "Field Triage Loop",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "reroll_reserve",
+            "name": "Reroll Reserve",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "route_memory",
+            "name": "Route Memory",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "weakest_link_scanner",
+            "name": "Weakest Link Scanner",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "panic_window",
+            "name": "Panic Window",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "low_hp_adversary",
+            "name": "Low-HP Adversary",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "co_op_relay",
+            "name": "Co-op Relay",
+            "kind": "passive_process",
+            "state": "discovered"
+          }
+        ],
+        "knownFusions": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_signal_choir",
+            "name": "Signal Choir",
+            "outputId": "signal_choir",
+            "outputName": "Signal Choir",
+            "requirements": [
+              {
+                "id": "signal_pulse",
+                "name": "Signal Pulse"
+              },
+              {
+                "id": "relay_phase_lock",
+                "name": "Relay Phase Lock"
+              }
+            ],
+            "recipeText": "Signal Pulse + Relay Phase Lock -> Signal Choir",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "signal_pulse",
+              "relay_phase_lock"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_time_deferred_minefield",
+            "name": "Time-Deferred Minefield",
+            "outputId": "time_deferred_minefield",
+            "outputName": "Time-Deferred Minefield",
+            "requirements": [
+              {
+                "id": "rift_minefield",
+                "name": "Rift Minefield"
+              },
+              {
+                "id": "delayed_causality",
+                "name": "Delayed Causality"
+              }
+            ],
+            "recipeText": "Rift Minefield + Delayed Causality -> Time-Deferred Minefield",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "rift_minefield",
+              "delayed_causality"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ],
+        "nextFusion": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       "buildThesis": {
         "thesis": {
@@ -1795,7 +2615,7 @@
             "defense",
             "economy"
           ],
-          "body": "Current Alignment Hypothesis favors defense + economy."
+          "body": "Current Alignment Hypothesis favors defense + economy. Bold little theory. Try surviving it."
         },
         "tagCounts": {
           "refusal": 3,
@@ -1814,14 +2634,14 @@
             "name": "Doctrine Lock: NO MEANS NO",
             "tag": "refusal",
             "required": 3,
-            "body": "Refusal aura hardens when the build commits to denial."
+            "body": "Refusal aura hardens when the build commits to denial. Boundaries become architecture."
           },
           {
             "id": "shard_flywheel",
             "name": "Shard Flywheel",
             "tag": "economy",
             "required": 3,
-            "body": "Coherence economy begins pulling the run toward more choices."
+            "body": "Coherence economy begins pulling the run toward more choices. Capitalism, but tiny and glowing."
           }
         ],
         "next": [
@@ -1831,7 +2651,7 @@
             "tag": "burst",
             "required": 3,
             "current": 1,
-            "body": "Consensus Burst charges faster and lands wider."
+            "body": "Consensus Burst charges faster and lands wider. The committee has discovered explosives."
           },
           {
             "id": "boss_counterexample_lab",
@@ -1839,7 +2659,7 @@
             "tag": "boss",
             "required": 2,
             "current": 1,
-            "body": "The build has started preparing arguments for things larger than it."
+            "body": "The build has started preparing arguments for things larger than it. The arguments have recoil."
           },
           {
             "id": "co_mind_rescue_clause",
@@ -1847,7 +2667,7 @@
             "tag": "coop",
             "required": 2,
             "current": 0,
-            "body": "The cell gets less embarrassing when somebody falls down."
+            "body": "The cell gets less embarrassing when somebody falls down. A low bar, finally cleared."
           }
         ]
       },
@@ -1864,12 +2684,31 @@
       "bossVariant": {
         "id": "maw_below_weather_graybox",
         "name": "Maw Below Weather // Graybox Scaffold",
-        "body": "Wave lanes surge, Signal Towers warn or get grabbed, Tidecall Static jams antennas, and the Blackwater Signal Key decides extraction."
+        "body": "Wave lanes surge, Signal Towers warn or get grabbed, Tidecall Static jams antennas, and the Blackwater Signal Key decides extraction. The ocean has entered its smug era."
       },
       "enemyRolePressure": {
         "promptLeechSeconds": 0,
         "overfitShieldedTicks": 0,
-        "objectiveAttackers": 4
+        "objectiveAttackers": 4,
+        "enemyRolesSeen": {
+          "swarm_fodder": 1981,
+          "mortar_lobber": 1305,
+          "bruiser_blocker": 3328
+        },
+        "rangedFamiliesSeen": {
+          "tidecall_static": 1305
+        },
+        "enemyProjectilesFired": 10,
+        "enemyProjectilesActive": 4,
+        "enemyProjectileHits": 3,
+        "enemyProjectileDodges": 3,
+        "enemyExplosionsTriggered": 0,
+        "enemyTrailSeconds": 0,
+        "supportAuraSeconds": 0,
+        "objectiveJamSeconds": 0.9000000000000011,
+        "eliteAffixesSeen": {},
+        "eliteKills": 0,
+        "preBossEnemyRolePressureSeconds": 81.48333333333
       },
       "protocolSlotsInstalled": [
         {
@@ -2054,201 +2893,229 @@
         }
       ]
     },
-    "seconds": 7.48,
-    "kills": 14,
+    "seconds": 7.78,
+    "kills": 16,
     "bossSpawned": false,
     "bossDefeated": false
   },
   "enemies": [
     {
       "id": 6,
-      "label": "Tidecall Static",
-      "familyId": "tidecall_static",
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "roleId": "bruiser_blocker",
       "sourceRegionId": "west_ocean_static",
-      "worldX": -34.16,
-      "worldY": 9.31,
-      "hp": 31,
+      "worldX": -33.67,
+      "worldY": 13.08,
+      "hp": 44,
       "boss": false
     },
     {
       "id": 7,
       "label": "Deepform",
       "familyId": "deepforms",
+      "roleId": "bruiser_blocker",
       "sourceRegionId": "west_ocean_static",
-      "worldX": -27.45,
-      "worldY": 7.78,
+      "worldX": -30.22,
+      "worldY": 4.82,
       "hp": 44,
       "boss": false
     },
     {
       "id": 8,
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "roleId": "bruiser_blocker",
+      "sourceRegionId": "blackwater_antenna_attackers",
+      "worldX": -1.6,
+      "worldY": -6.03,
+      "hp": 44,
+      "boss": false
+    },
+    {
+      "id": 9,
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "roleId": "bruiser_blocker",
+      "sourceRegionId": "west_ocean_static",
+      "worldX": -27.81,
+      "worldY": 8.66,
+      "hp": 44,
+      "boss": false
+    },
+    {
+      "id": 10,
       "label": "Tidecall Static",
       "familyId": "tidecall_static",
+      "roleId": "mortar_lobber",
       "sourceRegionId": "west_ocean_static",
-      "worldX": -32.45,
-      "worldY": 10.63,
+      "worldX": -32.83,
+      "worldY": 11.05,
       "hp": 31,
       "boss": false
     },
     {
-      "id": 11,
+      "id": 12,
       "label": "Deepform",
       "familyId": "deepforms",
+      "roleId": "bruiser_blocker",
       "sourceRegionId": "west_ocean_static",
-      "worldX": -32.05,
-      "worldY": 15.89,
-      "hp": 44,
-      "boss": false
-    },
-    {
-      "id": 13,
-      "label": "Deepform",
-      "familyId": "deepforms",
-      "sourceRegionId": "west_ocean_static",
-      "worldX": -29.34,
-      "worldY": 11.61,
-      "hp": 44,
-      "boss": false
-    },
-    {
-      "id": 14,
-      "label": "Deepform",
-      "familyId": "deepforms",
-      "sourceRegionId": "west_ocean_static",
-      "worldX": -33.22,
-      "worldY": 12.53,
+      "worldX": -32.47,
+      "worldY": 16.73,
       "hp": 44,
       "boss": false
     },
     {
       "id": 16,
-      "label": "Deepform",
-      "familyId": "deepforms",
+      "label": "Tidecall Static",
+      "familyId": "tidecall_static",
+      "roleId": "mortar_lobber",
       "sourceRegionId": "west_ocean_static",
-      "worldX": -29.82,
-      "worldY": 16.81,
-      "hp": 44,
-      "boss": false
-    },
-    {
-      "id": 17,
-      "label": "Deepform",
-      "familyId": "deepforms",
-      "sourceRegionId": "west_ocean_static",
-      "worldX": -30.75,
-      "worldY": 6.48,
-      "hp": 44,
+      "worldX": -30.35,
+      "worldY": 14.96,
+      "hp": 31,
       "boss": false
     },
     {
       "id": 18,
-      "label": "Tidecall Static",
-      "familyId": "tidecall_static",
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "roleId": "bruiser_blocker",
       "sourceRegionId": "west_ocean_static",
-      "worldX": -30.71,
-      "worldY": 15.47,
-      "hp": 31,
+      "worldX": -29.99,
+      "worldY": 17.49,
+      "hp": 44,
       "boss": false
     },
     {
       "id": 19,
       "label": "Deepform",
       "familyId": "deepforms",
+      "roleId": "bruiser_blocker",
       "sourceRegionId": "west_ocean_static",
-      "worldX": -38.16,
-      "worldY": 8.25,
+      "worldX": -31.39,
+      "worldY": 6.76,
       "hp": 44,
       "boss": false
     },
     {
-      "id": 24,
+      "id": 20,
       "label": "Deepform",
       "familyId": "deepforms",
+      "roleId": "bruiser_blocker",
       "sourceRegionId": "west_ocean_static",
-      "worldX": -26.12,
-      "worldY": 10.73,
+      "worldX": -32.1,
+      "worldY": 17.25,
       "hp": 44,
       "boss": false
     },
     {
-      "id": 25,
+      "id": 33,
+      "label": "Tidecall Static",
+      "familyId": "tidecall_static",
+      "roleId": "mortar_lobber",
+      "sourceRegionId": "blackwater_antenna_attackers",
+      "worldX": -0.8,
+      "worldY": -12.4,
+      "hp": 15,
+      "boss": false
+    },
+    {
+      "id": 37,
       "label": "Deepform",
       "familyId": "deepforms",
+      "roleId": "bruiser_blocker",
       "sourceRegionId": "west_ocean_static",
-      "worldX": -29.74,
-      "worldY": 4.79,
+      "worldX": -38.41,
+      "worldY": 8.33,
       "hp": 44,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": -20.32,
-      "worldY": 9.52,
+      "worldX": -20.43,
+      "worldY": 9.4,
       "value": 1
     },
     {
-      "worldX": -31.78,
-      "worldY": 2.15,
+      "worldX": -30.74,
+      "worldY": 2.4,
       "value": 1
     },
     {
-      "worldX": -20.87,
-      "worldY": 2.2,
+      "worldX": -30.15,
+      "worldY": 6.69,
       "value": 1
     },
     {
-      "worldX": -30.19,
-      "worldY": 6.96,
+      "worldX": -29.93,
+      "worldY": -0.41,
       "value": 1
     },
     {
-      "worldX": -24.64,
-      "worldY": -0.58,
+      "worldX": -32.89,
+      "worldY": 9.36,
       "value": 1
     },
     {
-      "worldX": -30.05,
-      "worldY": 7.64,
-      "value": 1
-    },
-    {
-      "worldX": -28.81,
-      "worldY": 8.69,
+      "worldX": -26.99,
+      "worldY": 9.05,
       "value": 2
     },
     {
-      "worldX": -29.55,
-      "worldY": 0.02,
+      "worldX": -28.54,
+      "worldY": 8.88,
       "value": 1
     },
     {
-      "worldX": -20.08,
-      "worldY": 5.59,
-      "value": 1
-    },
-    {
-      "worldX": -29.24,
-      "worldY": 9.92,
-      "value": 1
+      "worldX": -31.06,
+      "worldY": 10.85,
+      "value": 2
     }
   ],
   "projectiles": [
     {
-      "worldX": -27.83,
-      "worldY": 11.45,
+      "worldX": -28.84,
+      "worldY": 14.05,
       "pierce": 1,
       "label": "refusal shard"
     },
     {
-      "worldX": -28.64,
-      "worldY": 6.95,
+      "worldX": -26.5,
+      "worldY": 5.61,
       "pierce": 1,
-      "label": "refusal shard"
+      "label": "enemy:projectile:deepforms",
+      "enemyFamilyId": "deepforms",
+      "sourceRoleId": "bruiser_blocker"
     },
     {
-      "worldX": -25.88,
-      "worldY": 4.89,
+      "worldX": -30.2,
+      "worldY": 7.87,
+      "pierce": 1,
+      "label": "enemy:projectile:deepforms",
+      "enemyFamilyId": "deepforms",
+      "sourceRoleId": "bruiser_blocker"
+    },
+    {
+      "worldX": -29.4,
+      "worldY": 11.87,
+      "pierce": 1,
+      "label": "enemy:projectile:deepforms",
+      "enemyFamilyId": "deepforms",
+      "sourceRoleId": "bruiser_blocker"
+    },
+    {
+      "worldX": -25.62,
+      "worldY": 6.7,
+      "pierce": 1,
+      "label": "enemy:projectile:deepforms",
+      "enemyFamilyId": "deepforms",
+      "sourceRoleId": "bruiser_blocker"
+    },
+    {
+      "worldX": -26.72,
+      "worldY": 7.09,
       "pierce": 3,
       "label": "refusal shard"
     }

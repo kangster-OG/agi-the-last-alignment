@@ -18,6 +18,11 @@ This remains prototype/browser-local metaprogression. It is not account persiste
   - route rewards unlock additional combat frames and co-minds;
   - navigation skips locked entries;
   - selected class/faction is clamped to unlocked choices.
+- Free Alignment mode now sits beside Campaign mode:
+  - Campaign keeps the durable unlock progression;
+  - Free Alignment lets players select every frame and co-mind immediately for testing and player generosity;
+  - Free Alignment does not mark locked rewards as earned in the durable profile.
+- Solo campaign clears now write the same durable route reward profile that the build screen already reads.
 - Added three new selectable combat classes:
   - Signal Vanguard;
   - Vector Interceptor;
@@ -41,8 +46,10 @@ Combat frames:
 - Bastion Breaker: `plaza_stabilized`.
 - Drone Reaver: `lake_coolant_rig`.
 - Signal Vanguard: `ceasefire_cache_persistence_seed`.
+- Rift Saboteur: `signal_coast_relay_chart`.
 - Vector Interceptor: `transit_permit_zero`.
-- Nullbreaker Ronin: `verdict_key_zero`.
+- Nullbreaker Ronin: `appeal_court_brief`.
+- Overclock Marauder: `alignment_spire_route_capstone`.
 
 Co-minds:
 
@@ -52,14 +59,29 @@ Co-minds:
 - Meta Llama Open Herd: `prototype_persistence_boundary`.
 - Alibaba Qwen Silkgrid Command: `ceasefire_cache_persistence_seed`.
 - Mistral Cyclone Guard: `transit_permit_zero`.
-- DeepSeek Abyssal Unit: `verdict_key_zero`.
-- xAI Grok Free-Signal Corps: `verdict_spire_online_route`.
+- DeepSeek Abyssal Unit: `blackwater_signal_key`.
+- xAI Grok Free-Signal Corps: `appeal_court_brief`.
+
+Solo campaign spine reward write:
+
+- Armistice Plaza: `plaza_stabilized`.
+- Cooling Lake Nine: `lake_coolant_rig`.
+- Transit Loop Zero: `transit_permit_zero`, `transit_loop_online_route`.
+- Signal Coast: `signal_coast_relay_chart`.
+- Blackwater Beacon: `blackwater_signal_key`.
+- Memory Cache 001: `ceasefire_cache_persistence_seed`, `prototype_persistence_boundary`.
+- Guardrail Forge: `guardrail_forge_alloy`.
+- Glass Sunfield: `glass_sunfield_prism`.
+- Archive Of Unsaid Things: `archive_unsaid_index`.
+- Appeal Court Ruins: `appeal_court_brief`, `verdict_spire_online_route`.
+- Alignment Spire Finale: `alignment_spire_route_capstone`.
 
 ## Proof Expectations
 
 Milestone 27 adds:
 
 - `npm run proof:milestone27-metaprogression-unlocks`
+- `npm run proof:solo-campaign-unlocks`
 
 The proof verifies:
 

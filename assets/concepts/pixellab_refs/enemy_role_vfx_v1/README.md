@@ -17,3 +17,4 @@ npm run assets:enemy-role-vfx-v1
 ```
 
 Production art rule: the packer only selects and repacks source-backed cells. It does not draw, recolor, filter, or procedurally create expressive VFX.
+

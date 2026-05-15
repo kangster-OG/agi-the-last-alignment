@@ -3,7 +3,7 @@
 **Project type:** Free browser-playable 2D isometric pixel-art horde-survival roguelite  
 **License target:** MIT  
 **Core inspirations:** Auto-combat horde survival, isometric pixel-art action, Super Mario-style overworld node map, fast replayable chaos  
-**Core tone:** Epic sci-fi apocalypse + frontier AI lab parody + deadpan meme horror
+**Core tone:** Sardonic AGI dungeon-crawl parody + epic sci-fi apocalypse + frontier AI lab roast
 
 ---
 
@@ -61,13 +61,20 @@ The irony is the heart of the game:
 
 ## 2. Tone Target
 
+The durable player-facing copy direction now lives in `docs/COPY_VOICE_DIRECTION.md`.
+
 The target tone is:
 
-- **60% epic sci-fi apocalypse**
-- **25% frontier AI lab parody**
-- **15% absurd deadpan chaos**
+- **45% sardonic dungeon-crawl announcer**
+- **30% frontier AI lab / safety-theater parody**
+- **15% epic sci-fi apocalypse**
+- **10% absurd deadpan chaos**
 
-The monsters are dangerous. The world is really ending. The player should feel heroic pressure. But the writing should constantly undercut the seriousness with AI-flavored jokes, lab rivalry, model memes, benchmark humor, and dry co-mind banter.
+The monsters are dangerous. The world is really ending. The player should feel heroic pressure. But the writing should no longer drift into solemn lore-first apocalypse. It should sound like the apocalypse hired a sarcastic field announcer who understands tutorial UX and hates every institution involved.
+
+Copy should be clear first, then funny. Every major surface should tell the player what to do, why it matters mechanically, and then take a swing at A.G.I., a frontier lab, a boss, a fake safety process, a reward, or the player's terrible assignment.
+
+Do not copy protected prose, jokes, characters, UI, names, or distinctive phrasing from any existing book, game, or other IP. The goal is an original AGI parody voice with broad traits the user wants: sarcastic, funny, hostile to corporate nonsense, and framed like a dungeon crawl through the world's worst AI governance incident.
 
 ### Tone examples
 

@@ -1,9 +1,51 @@
 export type FeedbackCueKind = "ui" | "hit" | "pickup" | "boss_warning" | "music" | "objective" | "summary";
 
+export interface FeedbackCueOptions {
+  intensity?: number;
+  priority?: number;
+  worldX?: number;
+  worldY?: number;
+  cooldownKey?: string;
+  musicState?: string;
+}
+
 export interface FeedbackCue {
   id: string;
   kind: FeedbackCueKind;
   atMs: number;
+  intensity?: number;
+  priority?: number;
+  worldX?: number;
+  worldY?: number;
+  cooldownKey?: string;
+  musicState?: string;
+}
+
+export type FeedbackCueListener = (cue: FeedbackCue) => void;
+
+export type FeedbackAudioOutputMode =
+  | "dry_hooks_until_user_audio_unlock"
+  | "howler_waiting_for_user_unlock"
+  | "howler_runtime_unlocked"
+  | "audio_disabled_by_query"
+  | "muted_by_volume";
+
+export interface FeedbackAudioRuntimeSnapshot {
+  outputMode: FeedbackAudioOutputMode;
+  unlocked: boolean;
+  userGestureSeen: boolean;
+  usingWebAudio: boolean;
+  currentMusicState: string;
+  activeLayers: string[];
+  recentPlayed: string[];
+  suppressedCueCount: number;
+  missingAssets: string[];
+  manifestCoverage: {
+    assetCount: number;
+    cueRouteCount: number;
+    musicStateCount: number;
+    missingAssetUrlCount: number;
+  };
 }
 
 export interface FeedbackSnapshot {
@@ -14,8 +56,9 @@ export interface FeedbackSnapshot {
     masterVolume: number;
     sfxVolume: number;
     musicVolume: number;
-    outputMode: "dry_hooks_until_user_audio_unlock";
+    outputMode: FeedbackAudioOutputMode;
     hooks: string[];
+    runtime: FeedbackAudioRuntimeSnapshot | null;
   };
   accessibility: {
     reducedFlash: boolean;
@@ -48,6 +91,8 @@ export class FeedbackSystem {
     summary: 0
   };
   private readonly recentCues: FeedbackCue[] = [];
+  private readonly listeners = new Set<FeedbackCueListener>();
+  private audioRuntime: FeedbackAudioRuntimeSnapshot | null = null;
 
   constructor(params: URLSearchParams) {
     this.audioEnabled = !isDisabledQueryFlag(params, "audio");
@@ -58,10 +103,40 @@ export class FeedbackSystem {
     this.screenShake = !isDisabledQueryFlag(params, "screenShake") && !this.reducedFlash;
   }
 
-  cue(id: string, kind: FeedbackCueKind): void {
+  cue(id: string, kind: FeedbackCueKind, options: FeedbackCueOptions = {}): void {
     this.counters[kind] += 1;
-    this.recentCues.unshift({ id, kind, atMs: Math.floor(performance.now()) });
+    const cue = {
+      id,
+      kind,
+      atMs: Math.floor(performance.now()),
+      intensity: options.intensity,
+      priority: options.priority,
+      worldX: options.worldX,
+      worldY: options.worldY,
+      cooldownKey: options.cooldownKey,
+      musicState: options.musicState
+    };
+    this.recentCues.unshift(cue);
     this.recentCues.splice(8);
+    for (const listener of this.listeners) listener(cue);
+  }
+
+  onCue(listener: FeedbackCueListener): () => void {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+
+  setAudioRuntimeSnapshot(snapshot: FeedbackAudioRuntimeSnapshot): void {
+    this.audioRuntime = snapshot;
+  }
+
+  audioSettings(): { enabled: boolean; masterVolume: number; sfxVolume: number; musicVolume: number } {
+    return {
+      enabled: this.audioEnabled && this.masterVolume > 0,
+      masterVolume: this.masterVolume,
+      sfxVolume: this.sfxVolume,
+      musicVolume: this.musicVolume
+    };
   }
 
   cycleMasterVolume(): void {
@@ -95,8 +170,9 @@ export class FeedbackSystem {
         masterVolume: round(this.masterVolume),
         sfxVolume: round(this.sfxVolume),
         musicVolume: round(this.musicVolume),
-        outputMode: "dry_hooks_until_user_audio_unlock",
-        hooks: ["ui_click", "weapon_hit", "pickup_chime", "boss_warning", "route_music", "objective_tick", "summary_stinger"]
+        outputMode: this.audioRuntime?.outputMode ?? "dry_hooks_until_user_audio_unlock",
+        hooks: ["ui_click", "weapon_hit", "pickup_chime", "boss_warning", "route_music", "objective_tick", "summary_stinger"],
+        runtime: this.audioRuntime
       },
       accessibility: {
         reducedFlash: this.reducedFlash,

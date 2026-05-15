@@ -77,7 +77,12 @@
     "Server Buoy Synchronizer",
     "Cathedral of No",
     "Anchor Bodyguard",
-    "Treaty Anchor Toolkit"
+    "Treaty Anchor Toolkit",
+    "Bad Output Filter",
+    "Context Saw",
+    "Coherence Indexer",
+    "Patch Cascade",
+    "Alignment Breaker"
   ],
   "objective": "Reality now accepts this road.",
   "performance": {
@@ -148,9 +153,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 5,
-      "hit": 288,
-      "pickup": 879,
+      "ui": 13,
+      "hit": 1811,
+      "pickup": 4970,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
@@ -160,42 +165,42 @@
       {
         "id": "summary.completed",
         "kind": "summary",
-        "atMs": 57366
+        "atMs": 125870
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 125867
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 125860
       },
       {
         "id": "combat.consensus_burst",
         "kind": "hit",
-        "atMs": 57363
+        "atMs": 125845
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 57363
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 56226
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 56220
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 55153
+        "atMs": 125842
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 55152
+        "atMs": 125638
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 55146
+        "atMs": 125636
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 125635
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -264,25 +269,27 @@
     "campEvents": [
       "Reality accepted transit_loop_zero. Nobody said thank you, but the road stopped screaming.",
       "All Route Platforms completed. The camp tags this as Signal Coast route edge.",
-      "Expedition carries LV 9 / 8 patches forward. Pressure budget 18.61."
+      "Expedition carries LV 14 / 13 patches forward. Pressure budget 28.36."
     ],
     "lastRunMemory": {
       "completed": true,
       "nodeId": "transit_loop_zero",
-      "kills": 918,
-      "seconds": 92,
-      "burstActivations": 47,
+      "kills": 5078,
+      "seconds": 421,
+      "burstActivations": 324,
       "routeContractId": "faction_relay_argument",
       "objectiveCompleted": 3,
       "objectiveTotal": 3,
       "objectiveName": "Route Platform Alignment",
       "objectiveUnit": "Route Platforms",
+      "objectiveStyle": "Route Window",
+      "objectiveMechanic": "Ride aligned tracks and arrival windows in sequence; false tracks shove the route backward.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 2,
-      "expeditionLevel": 9,
-      "expeditionPower": 18.61,
-      "expeditionDrafts": 8,
+      "expeditionLevel": 14,
+      "expeditionPower": 28.36,
+      "expeditionDrafts": 13,
       "newSecrets": [
         {
           "id": "alignment_hypothesis_validated",
@@ -296,12 +303,35 @@
           "name": "Burst Path Clear",
           "body": "Completed a run after proving a Consensus Burst path."
         }
-      ]
+      ],
+      "nodeStabilized": "Signal Coast route edge",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Patch Cascade",
+        "Alignment Breaker",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel",
+        "Synergy: co_mind_rescue_clause"
+      ],
+      "routeUnlocks": [
+        "verdict_spire",
+        "false_schedule_yard",
+        "signal_coast",
+        "glass_sunfield"
+      ],
+      "stabilizedRouteCount": 11,
+      "mechanicalUnlocks": [
+        "Frame: Vector Interceptor",
+        "Co-Mind: Mistral"
+      ],
+      "campaignConsequence": "Next route consequence: Signal Coast route edge.",
+      "factionCampaignConsequence": "Alignment Hypothesis Validated",
+      "finalClearance": false
     },
     "expedition": {
       "active": true,
-      "level": 9,
-      "xp": 261,
+      "level": 14,
+      "xp": 1259,
       "chosenUpgradeIds": [
         "refusal_halo",
         "the_no_button",
@@ -310,7 +340,12 @@
         "server_buoy_synchronizer",
         "cathedral_of_no",
         "anchor_bodyguard",
-        "treaty_anchor_toolkit"
+        "treaty_anchor_toolkit",
+        "bad_output_filter",
+        "context_saw",
+        "coherence_indexer",
+        "patch_cascade",
+        "alignment_breaker"
       ],
       "chosenUpgradeNames": [
         "Refusal Halo",
@@ -320,7 +355,12 @@
         "Server Buoy Synchronizer",
         "Cathedral of No",
         "Anchor Bodyguard",
-        "Treaty Anchor Toolkit"
+        "Treaty Anchor Toolkit",
+        "Bad Output Filter",
+        "Context Saw",
+        "Coherence Indexer",
+        "Patch Cascade",
+        "Alignment Breaker"
       ],
       "chosenProtocolSlots": [
         "defense_layer",
@@ -330,18 +370,24 @@
         "shard_economy",
         "auto_weapon",
         "co_mind_process",
-        "auto_weapon"
+        "auto_weapon",
+        "co_mind_process",
+        "auto_weapon",
+        "co_mind_process",
+        "co_mind_process",
+        "co_mind_process"
       ],
       "activatedSynergyIds": [
         "doctrine_lock_no_means_no",
-        "shard_flywheel"
+        "shard_flywheel",
+        "co_mind_rescue_clause"
       ],
       "completedMaps": [
         "armistice_plaza",
         "cooling_lake_nine",
         "transit_loop_zero"
       ],
-      "powerScore": 18.61
+      "powerScore": 28.36
     },
     "nextContentTarget": {
       "id": "signal_coast_route_edge_contract",
@@ -606,17 +652,17 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": null,
   "overworld": {
@@ -638,27 +684,29 @@
   "level": {
     "nodeId": "transit_loop_zero",
     "arena": "Transit Loop Zero",
-    "seconds": 92.13,
-    "kills": 918,
-    "playerLevel": 9,
+    "seconds": 421.82,
+    "kills": 5078,
+    "playerLevel": 14,
     "completed": true,
     "carryover": {
       "completed": true,
       "nodeId": "transit_loop_zero",
-      "kills": 918,
-      "seconds": 92,
-      "burstActivations": 47,
+      "kills": 5078,
+      "seconds": 421,
+      "burstActivations": 324,
       "routeContractId": "faction_relay_argument",
       "objectiveCompleted": 3,
       "objectiveTotal": 3,
       "objectiveName": "Route Platform Alignment",
       "objectiveUnit": "Route Platforms",
+      "objectiveStyle": "Route Window",
+      "objectiveMechanic": "Ride aligned tracks and arrival windows in sequence; false tracks shove the route backward.",
       "thesis": "refusal",
       "proofTokensAwarded": 2,
       "proofTokensTotal": 2,
-      "expeditionLevel": 9,
-      "expeditionPower": 18.61,
-      "expeditionDrafts": 8,
+      "expeditionLevel": 14,
+      "expeditionPower": 28.36,
+      "expeditionDrafts": 13,
       "newSecrets": [
         {
           "id": "alignment_hypothesis_validated",
@@ -672,7 +720,68 @@
           "name": "Burst Path Clear",
           "body": "Completed a run after proving a Consensus Burst path."
         }
-      ]
+      ],
+      "nodeStabilized": "Signal Coast route edge",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Patch Cascade",
+        "Alignment Breaker",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel",
+        "Synergy: co_mind_rescue_clause"
+      ],
+      "routeUnlocks": [
+        "verdict_spire",
+        "false_schedule_yard",
+        "signal_coast",
+        "glass_sunfield"
+      ],
+      "stabilizedRouteCount": 11,
+      "mechanicalUnlocks": [
+        "Frame: Vector Interceptor",
+        "Co-Mind: Mistral"
+      ],
+      "campaignConsequence": "Next route consequence: Signal Coast route edge.",
+      "factionCampaignConsequence": "Alignment Hypothesis Validated",
+      "finalClearance": false
+    },
+    "objectiveVariety": {
+      "nodeId": "transit_loop_zero",
+      "arenaId": "transit_loop_zero",
+      "styleId": "route_window",
+      "styleName": "Route Window",
+      "mechanicPlain": "Ride aligned tracks and arrival windows in sequence; false tracks shove the route backward.",
+      "hudAction": "Ride the active route window to the next platform.",
+      "completionSignal": "Platforms align in sequence and lock the next campaign route.",
+      "proofHook": "transit_route_window"
+    },
+    "completionPayoff": {
+      "nodeStabilized": "Signal Coast route edge",
+      "objectiveResults": "Route Platforms 3/3",
+      "bossDefeated": true,
+      "buildHighlights": [
+        "Patch Cascade",
+        "Alignment Breaker",
+        "Synergy: doctrine_lock_no_means_no",
+        "Synergy: shard_flywheel",
+        "Synergy: co_mind_rescue_clause"
+      ],
+      "proofTokensEarned": 2,
+      "proofTokensTotal": 2,
+      "mechanicalUnlocks": [
+        "Frame: Vector Interceptor",
+        "Co-Mind: Mistral"
+      ],
+      "routeUnlocks": [
+        "verdict_spire",
+        "false_schedule_yard",
+        "signal_coast",
+        "glass_sunfield"
+      ],
+      "factionCampaignConsequence": "Alignment Hypothesis Validated",
+      "campaignConsequence": "Next route consequence: Signal Coast route edge.",
+      "finalClearance": false,
+      "campaignResultSummary": null
     },
     "nextContentTarget": {
       "id": "signal_coast_route_edge_contract",
@@ -714,6 +823,11 @@
     "server_buoy_synchronizer",
     "cathedral_of_no",
     "anchor_bodyguard",
-    "treaty_anchor_toolkit"
+    "treaty_anchor_toolkit",
+    "bad_output_filter",
+    "context_saw",
+    "coherence_indexer",
+    "patch_cascade",
+    "alignment_breaker"
   ]
 }

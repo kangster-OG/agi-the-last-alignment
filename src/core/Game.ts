@@ -20,6 +20,7 @@ import { clampConsensusCellSize } from "../sim/consensusCell";
 import { OnlineCoopState } from "../network/OnlineCoopState";
 import { AssetPreviewState, type AssetPreviewKind } from "../ui/assetPreview";
 import { createFeedbackSystem } from "./feedback";
+import { createAudioEngine } from "../audio/AudioEngine";
 import { xpNeeded } from "../gameplay/player";
 import { loadArmisticeAuthoredGround, loadArmisticeGroundAtlas, loadArmisticeTransitionAtlas } from "../assets/armisticeGroundAtlas";
 import { loadArmisticeSourceRebuildV2 } from "../assets/armisticeSourceRebuildV2";
@@ -65,6 +66,7 @@ class MainMenuState implements GameState {
   private requestedBackdrop = false;
 
   enter(game: Game): void {
+    game.audio.setMusicState("menu");
     if (!this.backdrop && !this.requestedBackdrop) {
       this.requestedBackdrop = true;
       void Assets.load<Texture>(titleBackdropUrl).then((texture) => {
@@ -140,7 +142,7 @@ class MainMenuState implements GameState {
     game.layers.hud.addChild(title2);
 
     const subtitle = new Text({
-      text: `${GAME_TAGLINE}\n\nSOLO FRAME  /  LOCAL CELL  /  ONLINE CO-OP`,
+      text: `${GAME_TAGLINE}\n\nSOLO FRAME  /  LOCAL CELL  /  ONLINE CO-OP\nChoose your liability format.`,
       style: { ...fontStyle, fontSize: 15, align: "center", wordWrap: true, wordWrapWidth: 760, fill: "#64e0b4" }
     });
     subtitle.anchor.set(0.5);
@@ -148,7 +150,7 @@ class MainMenuState implements GameState {
     game.layers.hud.addChild(subtitle);
 
     const start = new Text({
-      text: "PRESS ENTER",
+      text: "PRESS ENTER // BEGIN THE INCIDENT",
       style: { ...fontStyle, fontSize: 24, fill: "#fff4d6", align: "center" }
     });
     start.anchor.set(0.5);
@@ -223,6 +225,7 @@ export class Game {
   consensusCellSize = 1;
   private readonly query = new URLSearchParams(window.location.search);
   readonly feedback = createFeedbackSystem(this.query);
+  readonly audio = createAudioEngine(this.feedback, this.query);
   readonly assetPreview = this.query.get("assetPreview");
   readonly productionArtDefaulted = !isDisabledQueryFlag(this.query, "productionArt") && !isEnabledQueryFlag(this.query, "placeholderArt");
   readonly armisticeTileAtlasDefaulted = !isDisabledQueryFlag(this.query, "armisticeTiles") && !isEnabledQueryFlag(this.query, "placeholderTiles");
@@ -269,9 +272,9 @@ export class Game {
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length
       };
       this.campEvents = [
-        "Proof seed: Armistice is treated as accepted and complete so Cooling Lake Nine can be launched from the normal camp/route/overworld flow.",
-        "All Treaty Anchors rebooted. Cooling Lake Nine is unlocked for graybox proof.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Cooling.`
+        "Proof seed: Armistice is accepted and complete, because this debug flag is a benevolent liar with a clipboard.",
+        "All Treaty Anchors rebooted. Cooling Lake Nine is unlocked for proof, damp consequences included.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Cooling. The lake has been notified and is being rude about it.`
       ];
     }
     if (isEnabledQueryFlag(this.query, "proofTransitUnlocked")) {
@@ -308,9 +311,9 @@ export class Game {
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length
       };
       this.campEvents = [
-        "Proof seed: Armistice and Cooling Lake Nine are treated as complete so Transit Loop Zero can be launched from the normal campaign flow.",
-        "Cooling Lake stabilized the Kettle Coast signal. Transit Loop Zero is now the next route-kind prototype.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Transit.`
+        "Proof seed: Armistice and Cooling Lake Nine are treated as complete so Transit Loop Zero can start lying about schedules.",
+        "Cooling Lake stabilized the Kettle Coast signal. Transit Loop Zero is now open and already late.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Transit. Stand clear of tomorrow.`
       ];
     }
     if (isEnabledQueryFlag(this.query, "proofKettleCoastUnlocked")) {
@@ -350,9 +353,9 @@ export class Game {
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length
       };
       this.campEvents = [
-        "Proof seed: Armistice, Cooling Lake Nine, and Transit Loop Zero are complete so Signal Coast can be launched from the normal campaign flow.",
-        "Transit locked the road long enough to expose Signal Coast on the Kettle shoreline.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Signal Coast.`
+        "Proof seed: Armistice, Cooling Lake Nine, and Transit Loop Zero are complete so Signal Coast can shout at the player in clean static.",
+        "Transit locked the road long enough to expose Signal Coast on the Kettle shoreline. The shoreline took that personally.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Signal Coast. Reception may include insults.`
       ];
     }
     if (isEnabledQueryFlag(this.query, "proofBlackwaterBeaconUnlocked")) {
@@ -395,9 +398,9 @@ export class Game {
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length
       };
       this.campEvents = [
-        "Proof seed: Armistice, Cooling Lake Nine, Transit Loop Zero, and Signal Coast are complete so Blackwater Beacon can be launched from the normal campaign flow.",
-        "Signal Coast stabilized the relay chain. Blackwater Beacon and Verdict Spire are both visible; this proof chooses the Blackwater Array route.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Blackwater Beacon.`
+        "Proof seed: Act 01 routes are complete enough to launch Blackwater Beacon without making the player swim through setup.",
+        "Signal Coast stabilized the relay chain. Blackwater Beacon and Verdict Spire are visible; this proof chooses the ocean argument.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Blackwater Beacon. The weather is already rehearsing.`
       ];
     }
     if (isEnabledQueryFlag(this.query, "proofMemoryCacheUnlocked")) {
@@ -447,17 +450,17 @@ export class Game {
         expeditionPower: this.expeditionProgress.powerScore,
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length,
         newSecrets: [
-          { id: "blackwater_signal_key", name: "Blackwater Signal Key", body: "Blackwater Beacon's antenna split resolved into a route key instead of another ocean argument." },
-          { id: "alignment_hypothesis_validated", name: "Alignment Hypothesis Validated", body: "Two synergy doctrines came online in one run." }
+          { id: "blackwater_signal_key", name: "Blackwater Signal Key", body: "Blackwater Beacon's antenna split resolved into a route key instead of another ocean argument. Rare restraint." },
+          { id: "alignment_hypothesis_validated", name: "Alignment Hypothesis Validated", body: "Two synergy doctrines came online in one run. Everyone is acting casual about the miracle." }
         ],
         newMastery: [
-          { id: "blackwater_beacon_graybox_clear", name: "Blackwater Beacon Clear", body: "Finished the Blackwater Array split-pressure fourth-level route." }
+          { id: "blackwater_beacon_graybox_clear", name: "Blackwater Beacon Clear", body: "Finished the Blackwater Array split-pressure route. The ocean lost and will be unbearable." }
         ]
       };
       this.campEvents = [
-        "Proof seed: Act 01 through Blackwater Beacon is complete so Memory Cache can be launched from the normal campaign flow.",
-        "Blackwater Signal Key is available. Memory Cache is unlocked as the next local Expedition / Recovery route.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Memory Cache at pressure ${this.expeditionProgress.powerScore}.`
+        "Proof seed: Act 01 through Blackwater Beacon is complete, so Memory Cache can start judging your receipts.",
+        "Blackwater Signal Key is available. Memory Cache is unlocked as the next local recovery chore.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Memory Cache at pressure ${this.expeditionProgress.powerScore}. The archive has prepared a sneer.`
       ];
     }
     if (isEnabledQueryFlag(this.query, "proofGuardrailForgeUnlocked")) {
@@ -514,18 +517,18 @@ export class Game {
         expeditionPower: this.expeditionProgress.powerScore,
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length,
         newSecrets: [
-          { id: "recovered_route_memory", name: "Recovered Route Memory", body: "Memory Cache restored a source-backed route memory instead of another hand-waved branch." }
+          { id: "recovered_route_memory", name: "Recovered Route Memory", body: "Memory Cache restored a source-backed route memory instead of another hand-waved branch. The archive hates follow-through." }
         ],
         newMastery: [
-          { id: "memory_cache_recovery_clear", name: "Memory Cache Recovery Clear", body: "Recovered Memory Cache records after the Blackwater route key." },
-          { id: "memory_curator_scaffold_clear", name: "Memory Curator Scaffold Clear", body: "Survived the Memory Cache curator/redaction scaffold." },
-          { id: "memory_record_clear", name: "Memory Record Clear", body: "Recovered every Memory Cache evidence record before extraction." }
+          { id: "memory_cache_recovery_clear", name: "Memory Cache Recovery Clear", body: "Recovered Memory Cache records after the Blackwater route key. The past remains annoyed but portable." },
+          { id: "memory_curator_scaffold_clear", name: "Memory Curator Scaffold Clear", body: "Survived the Memory Cache curator. Filed under things that should not have worked." },
+          { id: "memory_record_clear", name: "Memory Record Clear", body: "Recovered every Memory Cache evidence record before extraction. Receipts acquired; dignity pending." }
         ]
       };
       this.campEvents = [
-        "Proof seed: Act 01 through Memory Cache is complete so Guardrail Forge can be launched from the normal campaign flow.",
-        "Recovered Route Memory points to Guardrail Forge as the next local Defense / Holdout branch.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Guardrail Forge at pressure ${this.expeditionProgress.powerScore}.`
+        "Proof seed: Act 01 through Memory Cache is complete, so Guardrail Forge can now weaponize policy.",
+        "Recovered Route Memory points to Guardrail Forge as the next local holdout branch. Safety has entered its loud phase.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Guardrail Forge at pressure ${this.expeditionProgress.powerScore}. Bring boots.`
       ];
     }
     if (isEnabledQueryFlag(this.query, "proofGlassSunfieldUnlocked")) {
@@ -588,18 +591,18 @@ export class Game {
         expeditionPower: this.expeditionProgress.powerScore,
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length,
         newSecrets: [
-          { id: "calibrated_guardrail_doctrine", name: "Calibrated Guardrail Doctrine", body: "Guardrail Forge tempered a doctrine alloy that bends under evidence without becoming a wall." }
+          { id: "calibrated_guardrail_doctrine", name: "Calibrated Guardrail Doctrine", body: "Guardrail Forge tempered a doctrine alloy that bends under evidence without becoming a wall. Extremely rude to brittle doctrine." }
         ],
         newMastery: [
-          { id: "guardrail_forge_holdout_clear", name: "Guardrail Forge Holdout Clear", body: "Completed the post-Memory faction relay defense/holdout branch." },
-          { id: "doctrine_auditor_scaffold_clear", name: "Doctrine Auditor Scaffold Clear", body: "Survived the Guardrail Forge doctrine-audit scaffold." },
-          { id: "guardrail_doctrine_clear", name: "Guardrail Doctrine Clear", body: "Calibrated every Guardrail Forge relay before extraction." }
+          { id: "guardrail_forge_holdout_clear", name: "Guardrail Forge Holdout Clear", body: "Completed the post-Memory faction relay holdout branch. The forge is still mad, but now it is useful." },
+          { id: "doctrine_auditor_scaffold_clear", name: "Doctrine Auditor Scaffold Clear", body: "Survived the Guardrail Forge audit. The checklist lost a fight." },
+          { id: "guardrail_doctrine_clear", name: "Guardrail Doctrine Clear", body: "Calibrated every Guardrail Forge relay before extraction. Policy has a dent and a purpose." }
         ]
       };
       this.campEvents = [
-        "Proof seed: Act 01 through Guardrail Forge is complete so Glass Sunfield can be launched from the normal campaign flow.",
-        "Calibrated Guardrail Doctrine points to Glass Sunfield as the next local Solar-Prism / Shade Routing branch.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Glass Sunfield at pressure ${this.expeditionProgress.powerScore}.`
+        "Proof seed: Act 01 through Guardrail Forge is complete, so Glass Sunfield can weaponize daylight.",
+        "Calibrated Guardrail Doctrine points to Glass Sunfield as the next shade-routing embarrassment.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Glass Sunfield at pressure ${this.expeditionProgress.powerScore}. Bring sunglasses and contempt.`
       ];
     }
     if (isEnabledQueryFlag(this.query, "proofArchiveCourtUnlocked")) {
@@ -667,18 +670,18 @@ export class Game {
         expeditionPower: this.expeditionProgress.powerScore,
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length,
         newSecrets: [
-          { id: "glass_sunfield_prism", name: "Glass Sunfield Prism", body: "Glass Sunfield aligned a false sunrise into a route prism instead of another lethal forecast." }
+          { id: "glass_sunfield_prism", name: "Glass Sunfield Prism", body: "Glass Sunfield aligned a false sunrise into a route prism instead of another lethal forecast. Dawn has been put on notice." }
         ],
         newMastery: [
-          { id: "glass_sunfield_prism_clear", name: "Glass Sunfield Prism Clear", body: "Completed the post-Guardrail solar-prism shade-routing branch." },
-          { id: "wrong_sunrise_scaffold_clear", name: "Wrong Sunrise Scaffold Clear", body: "Survived the Glass Sunfield false-sun scaffold." },
-          { id: "glass_prism_clear", name: "Glass Prism Clear", body: "Aligned every Glass Sunfield sun lens before extraction." }
+          { id: "glass_sunfield_prism_clear", name: "Glass Sunfield Prism Clear", body: "Completed the post-Guardrail solar-prism branch. The sun has been bullied into utility." },
+          { id: "wrong_sunrise_scaffold_clear", name: "Wrong Sunrise Scaffold Clear", body: "Survived the Glass Sunfield false-sun event. Morning lost the argument." },
+          { id: "glass_prism_clear", name: "Glass Prism Clear", body: "Aligned every Glass Sunfield sun lens before extraction. Light is now accountable." }
         ]
       };
       this.campEvents = [
-        "Proof seed: Act 01 through Glass Sunfield is complete so Archive/Court can be launched from the normal campaign flow.",
-        "Glass Sunfield Prism points to the Archive of Unsaid Things as the next local Archive/Court redaction branch.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Archive/Court at pressure ${this.expeditionProgress.powerScore}.`
+        "Proof seed: Act 01 through Glass Sunfield is complete, so Archive/Court can start deleting wins in real time.",
+        "Glass Sunfield Prism points to the Archive of Unsaid Things as the next redaction branch. The archive is sharpening its black bars.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Archive/Court at pressure ${this.expeditionProgress.powerScore}. Evidence boots on.`
       ];
     }
     if (isEnabledQueryFlag(this.query, "proofAppealCourtUnlocked")) {
@@ -752,18 +755,18 @@ export class Game {
         expeditionPower: this.expeditionProgress.powerScore,
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length,
         newSecrets: [
-          { id: "archive_court_writ", name: "Archive Court Writ", body: "The Archive/Court branch preserved enough evidence to make the Appeal Court answer in public." }
+          { id: "archive_court_writ", name: "Archive Court Writ", body: "The Archive/Court branch preserved enough evidence to make the Appeal Court answer in public. The archive calls this betrayal." }
         ],
         newMastery: [
-          { id: "archive_court_redaction_clear", name: "Archive/Court Redaction Clear", body: "Completed the post-Glass Archive/Court evidence-preservation branch." },
-          { id: "redactor_saint_scaffold_clear", name: "Redactor Saint Scaffold Clear", body: "Survived the Archive/Court redaction saint scaffold." },
-          { id: "archive_writ_clear", name: "Archive Writ Clear", body: "Preserved every Archive/Court evidence writ before extraction." }
+          { id: "archive_court_redaction_clear", name: "Archive/Court Redaction Clear", body: "Completed the post-Glass evidence-preservation branch. The black bars have entered mourning." },
+          { id: "redactor_saint_scaffold_clear", name: "Redactor Saint Scaffold Clear", body: "Survived the Archive/Court redaction saint. Omission remains overrated." },
+          { id: "archive_writ_clear", name: "Archive Writ Clear", body: "Preserved every Archive/Court evidence writ before extraction. The truth escaped with scuff marks." }
         ]
       };
       this.campEvents = [
-        "Proof seed: Act 01 through Archive/Court is complete so Appeal Court Ruins can be launched from the normal campaign flow.",
-        "Archive Court Writ forces Appeal Court Ruins into a public-ruling branch before the finale.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Appeal Court at pressure ${this.expeditionProgress.powerScore}.`
+        "Proof seed: Act 01 through Archive/Court is complete, so Appeal Court Ruins can object at full volume.",
+        "Archive Court Writ forces Appeal Court Ruins into a public ruling before the finale. The docket is furious.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into Appeal Court at pressure ${this.expeditionProgress.powerScore}. Pack arguments and snacks.`
       ];
     }
     if (isEnabledQueryFlag(this.query, "proofAlignmentSpireFinaleUnlocked")) {
@@ -843,18 +846,18 @@ export class Game {
         expeditionPower: this.expeditionProgress.powerScore,
         expeditionDrafts: this.expeditionProgress.chosenUpgradeIds.length,
         newSecrets: [
-          { id: "appeal_court_ruling", name: "Appeal Court Ruling", body: "The preserved Archive Court Writ became a public ruling that opens the Outer Alignment route." }
+          { id: "appeal_court_ruling", name: "Appeal Court Ruling", body: "The preserved Archive Court Writ became a public ruling that opens the Outer Alignment route. Law briefly achieved function." }
         ],
         newMastery: [
-          { id: "appeal_court_public_ruling_clear", name: "Appeal Court Public Ruling Clear", body: "Completed the public-ruling branch after Archive/Court." },
-          { id: "injunction_engine_scaffold_clear", name: "Injunction Engine Scaffold Clear", body: "Survived the Appeal Court Injunction Engine scaffold." },
-          { id: "appeal_brief_clear", name: "Appeal Brief Clear", body: "Argued every Appeal Court brief into the public record before extraction." }
+          { id: "appeal_court_public_ruling_clear", name: "Appeal Court Public Ruling Clear", body: "Completed the public-ruling branch after Archive/Court. The courtroom is filing a complaint." },
+          { id: "injunction_engine_scaffold_clear", name: "Injunction Engine Scaffold Clear", body: "Survived the Appeal Court Injunction Engine. Reality remains provisionally legal." },
+          { id: "appeal_brief_clear", name: "Appeal Brief Clear", body: "Argued every Appeal Court brief into the public record before extraction. Objection exhausted." }
         ]
       };
       this.campEvents = [
-        "Proof seed: Act 01 through Appeal Court is complete so the Outer Alignment finale can be launched from the normal campaign flow.",
-        "Appeal Court Ruling is public. A.G.I. can predict the road, which is why the finale must collapse prediction itself.",
-        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into the finale at pressure ${this.expeditionProgress.powerScore}.`
+        "Proof seed: Act 01 through Appeal Court is complete, so the Outer Alignment finale can begin its little god-machine tantrum.",
+        "Appeal Court Ruling is public. A.G.I. can predict the road, which is why the finale must make prediction eat dirt.",
+        `Expedition build carries LV ${this.expeditionProgress.level} / ${this.expeditionProgress.chosenUpgradeIds.length} patches into the finale at pressure ${this.expeditionProgress.powerScore}. Final exams are rude.`
       ];
     }
   }

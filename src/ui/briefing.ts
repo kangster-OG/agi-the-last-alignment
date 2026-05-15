@@ -16,6 +16,7 @@ export class ArenaBriefingState implements GameState {
   constructor(private readonly nodeId: string, private readonly arenaId: string) {}
 
   enter(game: Game): void {
+    game.audio.setMusicState("briefing", { arenaId: this.arenaId });
     this.render(game);
   }
 
@@ -38,7 +39,7 @@ export class ArenaBriefingState implements GameState {
     const clarity = campaignClarityForArena(this.arenaId);
     const variety = campaignObjectiveVarietyForArena(this.arenaId);
 
-    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // DEPLOYMENT TERMINAL");
+    drawFieldBackdrop(game.layers.hud, game.width, game.height, "LAST ALIGNMENT // DEPLOYMENT TERMINAL // BAD IDEA AUTHORIZED");
     drawFieldPanel(game.layers.hud, game.width / 2 - 380, game.height / 2 - 226, 760, 452, {
       title: "ALIGNMENT NODE BRIEFING",
       kicker: factions,
@@ -67,8 +68,8 @@ export class ArenaBriefingState implements GameState {
     game.layers.hud.addChild(meta);
 
     const briefingText = clarity
-      ? `VERB: ${clarity.verb.toUpperCase()}\nOBJECTIVE: ${clarity.objectivePlain}\nMECHANIC: ${variety?.styleName ?? "Objective"} - ${variety?.mechanicPlain ?? "Complete the map objective under horde pressure."}\nDANGER: ${clarity.dangerPlain}\nBOSS/EVENT: ${clarity.bossPressure}\nREWARD: ${clarity.rewardPlain}`
-      : `${arena.briefingLines.join("\n")}\n\nObjective: survive, build power, finish the map objective, beat or escape boss pressure, then extract.`;
+      ? `VERB: ${clarity.verb.toUpperCase()}\nOBJECTIVE: ${clarity.objectivePlain}\nMECHANIC: ${variety?.styleName ?? "Objective"} - ${variety?.mechanicPlain ?? "Complete the map objective under horde pressure while the map acts offended."}\nDANGER: ${clarity.dangerPlain}\nBOSS/EVENT: ${clarity.bossPressure}\nREWARD: ${clarity.rewardPlain}`
+      : `${arena.briefingLines.join("\n")}\n\nObjective: survive, build power, finish the map objective, beat or escape boss pressure, then extract. Easy to say. Hilarious to attempt.`;
     const body = fieldText(
       briefingText,
       game.width / 2 - 300,
@@ -78,7 +79,7 @@ export class ArenaBriefingState implements GameState {
     game.layers.hud.addChild(body);
 
     const hint = new Text({
-      text: "Enter: deploy Alignment Frame",
+      text: "Enter: deploy Alignment Frame // yes, this counts as consent",
       style: { ...fontStyle, fontSize: 16, fill: "#ffd37a", stroke: { color: "#030609", width: 3 } }
     });
     hint.anchor.set(0.5);

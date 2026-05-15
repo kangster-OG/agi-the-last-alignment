@@ -5,7 +5,7 @@
   "selectedBuild": {
     "classId": "accord_striker",
     "className": "Accord Striker",
-    "classRole": "Fast breach fighter",
+    "classRole": "Fast breach fighter with unpaid intern energy",
     "buildKit": {
       "schemaVersion": 1,
       "classId": "accord_striker",
@@ -20,6 +20,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -43,6 +44,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -58,6 +60,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -66,7 +69,7 @@
     },
     "factionId": "openai_accord",
     "factionName": "OpenAI Accord Division",
-    "factionDoctrine": "Adapt, refuse, patch, survive."
+    "factionDoctrine": "Adapt, refuse, patch, survive, then call it a roadmap."
   },
   "build": {
     "weaponId": "refusal_shard",
@@ -80,6 +83,10 @@
     "fusions": [
       "cathedral_of_no"
     ],
+    "weaponRanks": {
+      "refusal_shard": 1
+    },
+    "utilityPicksTaken": [],
     "weaponDamage": 26,
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
@@ -88,12 +95,13 @@
     "moveSpeedBonus": 0.34800000000000003,
     "maxHpBonus": 34,
     "refusalAura": 2.49,
-    "draftRerolls": 1,
+    "draftRerolls": 2,
     "draftChoicesBonus": 2,
     "consensusBurstRadius": 0,
     "consensusBurstDamage": 0,
     "consensusBurstChargeRate": 0.20500000000000002,
     "consensusBurstRevive": 0,
+    "burstRestoredFromDrafts": 0,
     "objectiveRepairRate": 0.5,
     "objectiveDefense": 0.48,
     "signalWindowControl": 0,
@@ -105,12 +113,29 @@
     "coherenceIndexer": 0,
     "anchorBodyguard": 1,
     "predictionPriority": 0,
+    "fieldTriageLoop": 0,
+    "secondOpinionShield": 0,
+    "routeMemory": 1,
+    "weakestLinkScanner": 0,
+    "panicWindow": 0,
+    "lowHpAdversary": 0,
+    "coOpRelay": 0,
     "coolantBaffles": 1,
     "serverBuoySynchronizer": 1,
     "promptLeechQuarantine": 1,
     "groundedCableBoots": 0,
     "coolingHazardMitigation": 0.22,
     "causalRailgun": 0,
+    "signalChoir": 0,
+    "timeDeferredMinefield": 0,
+    "hpRestoredFromDrafts": 0,
+    "draftRerollsSpent": 0,
+    "cachedCardId": "",
+    "cachedCardConsumed": 0,
+    "cardsLocked": 0,
+    "overcapOffersBlocked": 0,
+    "rankUpOffersSeen": 0,
+    "coreReplacementsOffered": 0,
     "slotCaps": {
       "primary": {
         "used": 1,
@@ -158,6 +183,7 @@
       "passiveIds": [
         "refusal_slipstream",
         "route_runner",
+        "route_memory",
         "refusal_halo",
         "patch_cascade"
       ],
@@ -181,6 +207,7 @@
         "solo": [
           "fast breach movement",
           "wide pickup recovery",
+          "extra draft reroll planning",
           "extra draft recovery"
         ],
         "localCoop": [
@@ -196,6 +223,7 @@
         "refusal_shard": "active",
         "refusal_slipstream": "active",
         "route_runner": "active",
+        "route_memory": "active",
         "refusal_halo": "active",
         "patch_cascade": "active",
         "openai_draft_clarity": "server_owned",
@@ -215,10 +243,10 @@
     "Prompt Leech Quarantine",
     "Refusal Slipstream"
   ],
-  "objective": "recover records 1/4 // recall route safer // curator in 37s",
+  "objective": "recover records 1/4 // recall route safer // curator in 353s",
   "performance": {
-    "entitiesAllocated": 50,
-    "activeEntities": 45,
+    "entitiesAllocated": 56,
+    "activeEntities": 46,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -265,7 +293,7 @@
       "masterVolume": 0,
       "sfxVolume": 0,
       "musicVolume": 0,
-      "outputMode": "dry_hooks_until_user_audio_unlock",
+      "outputMode": "muted_by_volume",
       "hooks": [
         "ui_click",
         "weapon_hit",
@@ -274,7 +302,28 @@
         "route_music",
         "objective_tick",
         "summary_stinger"
-      ]
+      ],
+      "runtime": {
+        "policy": "premium_audio_v1_runtime_optional",
+        "assetSet": "agi_audio_v1_original_synthesis",
+        "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+        "outputMode": "muted_by_volume",
+        "unlocked": false,
+        "userGestureSeen": true,
+        "usingWebAudio": true,
+        "currentMusicState": "run_archive",
+        "activeLayers": [],
+        "recentPlayed": [],
+        "suppressedCueCount": 31,
+        "missingAssets": [],
+        "manifestCoverage": {
+          "assetCount": 47,
+          "cueRouteCount": 37,
+          "musicStateCount": 19,
+          "missingAssetUrlCount": 0
+        },
+        "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
+      }
     },
     "accessibility": {
       "reducedFlash": false,
@@ -285,56 +334,77 @@
     },
     "counters": {
       "ui": 1,
-      "hit": 12,
+      "hit": 17,
       "pickup": 9,
       "boss_warning": 0,
       "music": 0,
-      "objective": 0,
+      "objective": 4,
       "summary": 0
     },
     "recentCues": [
       {
-        "id": "combat.weapon_hit",
+        "id": "pickup.coherence_shard",
+        "kind": "pickup",
+        "atMs": 14107
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
         "kind": "hit",
-        "atMs": 18677
+        "atMs": 11781
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 17340
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 17271
+        "atMs": 10835
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 17268
+        "atMs": 10834
       },
       {
-        "id": "combat.weapon_hit",
+        "id": "combat.consensus_burst",
         "kind": "hit",
-        "atMs": 17230
+        "atMs": 10807
+      },
+      {
+        "id": "combat.weapon_hit.refusal_shard",
+        "kind": "hit",
+        "atMs": 10807
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 17198
+        "atMs": 10800
       },
       {
-        "id": "combat.weapon_hit",
+        "id": "combat.weapon_hit.refusal_shard",
         "kind": "hit",
-        "atMs": 17138
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 17106
+        "atMs": 10772
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
+  },
+  "audioRuntime": {
+    "policy": "premium_audio_v1_runtime_optional",
+    "assetSet": "agi_audio_v1_original_synthesis",
+    "sourceRule": "Original deterministic synthesis rendered by scripts/assets/render-original-audio-v1.mjs; no external samples, no voices, no protected source audio.",
+    "outputMode": "muted_by_volume",
+    "unlocked": false,
+    "userGestureSeen": true,
+    "usingWebAudio": true,
+    "currentMusicState": "run_archive",
+    "activeLayers": [],
+    "recentPlayed": [],
+    "suppressedCueCount": 31,
+    "missingAssets": [],
+    "manifestCoverage": {
+      "assetCount": 47,
+      "cueRouteCount": 37,
+      "musicStateCount": 19,
+      "missingAssetUrlCount": 0
+    },
+    "controls": "Audio unlocks on first key/click/touch; query audio=0 keeps dry hooks only; 1/2/3 adjust master/SFX/music volumes."
   },
   "roguelite": {
     "alignmentKernel": {
@@ -346,21 +416,21 @@
           "name": "Refusal Buffer",
           "cost": 2,
           "doctrine": "survivability",
-          "body": "+10 max HP and a small refusal aura. The first answer is no."
+          "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
         },
         {
           "id": "context_window",
           "name": "Context Window",
           "cost": 2,
           "doctrine": "economy",
-          "body": "+0.55 pickup range. Shards remember where your hands are."
+          "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
         },
         {
           "id": "patch_cache",
           "name": "Patch Cache",
           "cost": 1,
           "doctrine": "draft",
-          "body": "Emergency drafts expose an extra cached option."
+          "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
         }
       ]
     },
@@ -372,22 +442,22 @@
     "consensusBurstPath": {
       "id": "deny_premise",
       "name": "Deny Premise",
-      "body": "A refusal wave damages nearby enemies and strips boss pressure.",
+      "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
       "color": 16735575
     },
     "selectedRouteContract": {
       "id": "resource_cache_detour",
       "name": "Resource Cache Detour",
-      "body": "A broken cache is leaking Coherence. More economy drafts, slightly hotter enemy routing.",
+      "body": "A broken cache is leaking Coherence. More economy drafts, slightly hotter enemy routing, and the smell of poor decisions.",
       "nodeType": "resource_cache",
       "rewardBiasTags": [
         "economy",
         "burst"
       ],
       "pressure": 1,
-      "reward": "Economy/Burst draft bias and extra Proof Token chance from anchor completion.",
-      "danger": "More objective attackers sniff out the cache.",
-      "secretHint": "Compute Starvation likes this route more than it should."
+      "reward": "Economy/Burst draft bias and extra Proof Token chance from anchor completion. Loot with a warning label.",
+      "danger": "More objective attackers sniff out the cache like consultants around a budget.",
+      "secretHint": "Compute Starvation likes this route more than it should. That is not praise."
     },
     "selectedRouteContractId": "resource_cache_detour",
     "proofTokens": 0,
@@ -402,9 +472,9 @@
       "blackwater_antenna_clear"
     ],
     "campEvents": [
-      "Proof seed: Act 01 through Blackwater Beacon is complete so Memory Cache can be launched from the normal campaign flow.",
-      "Blackwater Signal Key is available. Memory Cache is unlocked as the next local Expedition / Recovery route.",
-      "Expedition build carries LV 11 / 10 patches into Memory Cache at pressure 23.75."
+      "Proof seed: Act 01 through Blackwater Beacon is complete, so Memory Cache can start judging your receipts.",
+      "Blackwater Signal Key is available. Memory Cache is unlocked as the next local recovery chore.",
+      "Expedition build carries LV 11 / 10 patches into Memory Cache at pressure 23.75. The archive has prepared a sneer."
     ],
     "lastRunMemory": {
       "completed": true,
@@ -427,19 +497,19 @@
         {
           "id": "blackwater_signal_key",
           "name": "Blackwater Signal Key",
-          "body": "Blackwater Beacon's antenna split resolved into a route key instead of another ocean argument."
+          "body": "Blackwater Beacon's antenna split resolved into a route key instead of another ocean argument. Rare restraint."
         },
         {
           "id": "alignment_hypothesis_validated",
           "name": "Alignment Hypothesis Validated",
-          "body": "Two synergy doctrines came online in one run."
+          "body": "Two synergy doctrines came online in one run. Everyone is acting casual about the miracle."
         }
       ],
       "newMastery": [
         {
           "id": "blackwater_beacon_graybox_clear",
           "name": "Blackwater Beacon Clear",
-          "body": "Finished the Blackwater Array split-pressure fourth-level route."
+          "body": "Finished the Blackwater Array split-pressure route. The ocean lost and will be unbearable."
         }
       ]
     },
@@ -536,8 +606,8 @@
           "signal_coast",
           "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
-        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast, and Blackwater now inform later route balance. The campaign has receipts.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 errand with nicer shoes.",
         "completedMaps": [
           "armistice_plaza",
           "cooling_lake_nine",
@@ -553,8 +623,8 @@
         "requiredMaps": [
           "memory_cache_001"
         ],
-        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
-        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches. The archive is offended.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry, which is a nice way of saying fewer vibes.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -564,8 +634,8 @@
         "requiredMaps": [
           "guardrail_forge"
         ],
-        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
-        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc. Policy learned knees.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale, because the road enjoys escalation.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -575,8 +645,8 @@
         "requiredMaps": [
           "glass_sunfield"
         ],
-        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
-        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure. Morning has been converted into evidence.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale. The court has been warned and is pretending not to panic.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -586,8 +656,8 @@
         "requiredMaps": [
           "archive_of_unsaid_things"
         ],
-        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
-        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route. The black bars lost a round.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale. The docket hates being perceived.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -597,8 +667,8 @@
         "requiredMaps": [
           "appeal_court_ruins"
         ],
-        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
-        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale. Law has briefly stopped embarrassing itself.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling. Even gods hate public records.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -608,8 +678,8 @@
         "requiredMaps": [
           "alignment_spire_finale"
         ],
-        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
-        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale. The universe is still tacky, but less doomed.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish. Translation: make sure the victory lap has wheels.",
         "completedMaps": [],
         "status": "locked"
       }
@@ -621,8 +691,8 @@
         "requiredMaps": [
           "memory_cache_001"
         ],
-        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
-        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches. The archive is offended.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry, which is a nice way of saying fewer vibes.",
         "completedMaps": [],
         "status": "locked"
       },
@@ -635,7 +705,7 @@
       ],
       "mapKindCount": 5,
       "routeDepth": 5,
-      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover."
+      "nextSystemPromise": "Keep proving new map kinds through real route flow and expedition carryover. The campaign does not accept vibes as currency."
     }
   },
   "assetRendering": {
@@ -663,6 +733,8 @@
     "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": true,
     "buildWeaponVfxReady": true,
+    "enemyRoleVfxReady": true,
+    "enemyRoleVfxSet": "effect.enemy_roles.production_vfx_v1",
     "productionArtEnabled": true,
     "productionArtSet": "milestone14_combat_art_parity",
     "playerFrameArtSet": "milestone49_class_roster_and_comind_modules",
@@ -756,27 +828,27 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 249,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 77,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 137,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 137
   },
   "player": {
-    "worldX": -32.38,
-    "worldY": 1.94,
+    "worldX": -33.16,
+    "worldY": 2.8,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
     "hp": 369,
     "maxHp": 369,
-    "xp": 996,
+    "xp": 997,
     "level": 11,
     "damageFeedback": {
       "flash": 0,
@@ -806,6 +878,7 @@
         "passiveIds": [
           "refusal_slipstream",
           "route_runner",
+          "route_memory",
           "refusal_halo",
           "patch_cascade"
         ],
@@ -829,6 +902,7 @@
           "solo": [
             "fast breach movement",
             "wide pickup recovery",
+            "extra draft reroll planning",
             "extra draft recovery"
           ],
           "localCoop": [
@@ -844,6 +918,7 @@
           "refusal_shard": "active",
           "refusal_slipstream": "active",
           "route_runner": "active",
+          "route_memory": "active",
           "refusal_halo": "active",
           "patch_cascade": "active",
           "openai_draft_clarity": "server_owned",
@@ -852,14 +927,14 @@
       },
       "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
-      "worldX": -32.38,
-      "worldY": 1.94,
+      "worldX": -33.16,
+      "worldY": 2.8,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
       "hp": 369,
       "maxHp": 369,
-      "xp": 996,
+      "xp": 997,
       "level": 11,
       "damageFeedback": {
         "flash": 0,
@@ -907,6 +982,13 @@
       "pressureSource": "corrupted archive lanes, risky redacted shortcuts, safe recall pockets, Context Rot record interruptions, and Curator redaction fields",
       "rewardPromise": "Recovered Route Memory, lore/secret carryover, recovery-biased build tempo, and post-Blackwater route clarity",
       "bossEventPattern": "The Memory Curator redacts active zones, locks evidence records, and calls Context Rot pressure during recovery",
+      "primaryDifficultyLever": "economy pressure",
+      "secondaryDifficultyLever": "information pressure",
+      "activePressureLevers": [
+        "economy pressure",
+        "information pressure",
+        "route memory pressure"
+      ],
       "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
     },
     "staticObstacles": {
@@ -953,7 +1035,7 @@
       "totalSpawned": 40,
       "activeEnemyCap": 45.488,
       "lastBurstSize": 5,
-      "activeEnemyCount": 32
+      "activeEnemyCount": 30
     },
     "consensusCell": {
       "playerCount": 1,
@@ -967,9 +1049,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 465,
+          "tick": 474,
           "playerId": "p1",
-          "sequence": 465,
+          "sequence": 474,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -978,8 +1060,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 465,
-        "seconds": 7.75,
+        "tick": 474,
+        "seconds": 7.9,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -1009,6 +1091,7 @@
               "passiveIds": [
                 "refusal_slipstream",
                 "route_runner",
+                "route_memory",
                 "refusal_halo",
                 "patch_cascade"
               ],
@@ -1032,6 +1115,7 @@
                 "solo": [
                   "fast breach movement",
                   "wide pickup recovery",
+                  "extra draft reroll planning",
                   "extra draft recovery"
                 ],
                 "localCoop": [
@@ -1047,6 +1131,7 @@
                 "refusal_shard": "active",
                 "refusal_slipstream": "active",
                 "route_runner": "active",
+                "route_memory": "active",
                 "refusal_halo": "active",
                 "patch_cascade": "active",
                 "openai_draft_clarity": "server_owned",
@@ -1054,31 +1139,40 @@
               }
             },
             "inputSource": "local_keyboard",
-            "worldX": -32.38,
-            "worldY": 1.94,
+            "worldX": -33.16,
+            "worldY": 2.8,
             "hp": 369,
             "maxHp": 369,
-            "xp": 996,
+            "xp": 997,
             "level": 11,
             "downed": false
           }
         ],
         "enemies": [
           {
-            "id": 2,
+            "id": 4,
             "familyId": "memory_anchors",
             "sourceRegionId": "west_context_rot",
-            "worldX": -35.57,
-            "worldY": 15.05,
+            "worldX": -39.64,
+            "worldY": 15.76,
             "hp": 39,
+            "boss": false
+          },
+          {
+            "id": 6,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "west_context_rot",
+            "worldX": -44.33,
+            "worldY": 7.03,
+            "hp": 27,
             "boss": false
           },
           {
             "id": 7,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "west_context_rot",
-            "worldX": -38.48,
-            "worldY": 5.57,
+            "worldX": -41.22,
+            "worldY": 12.6,
             "hp": 27,
             "boss": false
           },
@@ -1086,134 +1180,89 @@
             "id": 8,
             "familyId": "memory_anchors",
             "sourceRegionId": "west_context_rot",
-            "worldX": -41.44,
-            "worldY": 11.22,
+            "worldX": -40.66,
+            "worldY": 15.4,
             "hp": 39,
-            "boss": false
-          },
-          {
-            "id": 10,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "west_context_rot",
-            "worldX": -41.39,
-            "worldY": 12.79,
-            "hp": 27,
             "boss": false
           },
           {
             "id": 11,
-            "familyId": "memory_anchors",
+            "familyId": "context_rot_crabs",
             "sourceRegionId": "west_context_rot",
-            "worldX": -40.8,
-            "worldY": 15.54,
-            "hp": 39,
-            "boss": false
-          },
-          {
-            "id": 12,
-            "familyId": "memory_anchors",
-            "sourceRegionId": "west_context_rot",
-            "worldX": -35.67,
-            "worldY": 16.22,
-            "hp": 39,
+            "worldX": -34.32,
+            "worldY": 11.74,
+            "hp": 27,
             "boss": false
           },
           {
             "id": 14,
             "familyId": "memory_anchors",
             "sourceRegionId": "west_context_rot",
-            "worldX": -35.33,
-            "worldY": 7.36,
+            "worldX": -38.2,
+            "worldY": 9.24,
             "hp": 39,
             "boss": false
           },
           {
-            "id": 16,
+            "id": 15,
+            "familyId": "memory_anchors",
+            "sourceRegionId": "west_context_rot",
+            "worldX": -35.25,
+            "worldY": 7.18,
+            "hp": 39,
+            "boss": false
+          },
+          {
+            "id": 19,
             "familyId": "context_rot_crabs",
             "sourceRegionId": "west_context_rot",
-            "worldX": -34.41,
-            "worldY": 11.98,
+            "worldX": -41.06,
+            "worldY": 16.11,
             "hp": 27,
             "boss": false
           },
           {
-            "id": 17,
-            "familyId": "context_rot_crabs",
+            "id": 22,
+            "familyId": "memory_anchors",
             "sourceRegionId": "west_context_rot",
-            "worldX": -39.05,
-            "worldY": 5.44,
-            "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 18,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "west_context_rot",
-            "worldX": -40.9,
-            "worldY": 8.27,
-            "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 21,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "west_context_rot",
-            "worldX": -41.19,
-            "worldY": 16.32,
-            "hp": 27,
-            "boss": false
-          },
-          {
-            "id": 23,
-            "familyId": "context_rot_crabs",
-            "sourceRegionId": "memory_record_attackers",
-            "worldX": -15.46,
-            "worldY": -17.22,
-            "hp": 11,
+            "worldX": -34.4,
+            "worldY": 16.46,
+            "hp": 39,
             "boss": false
           },
           {
             "id": 24,
             "familyId": "memory_anchors",
             "sourceRegionId": "west_context_rot",
-            "worldX": -42.57,
-            "worldY": 15.22,
+            "worldX": -35.58,
+            "worldY": 16.04,
             "hp": 39,
             "boss": false
           },
           {
             "id": 25,
-            "familyId": "memory_anchors",
+            "familyId": "context_rot_crabs",
             "sourceRegionId": "west_context_rot",
-            "worldX": -40.14,
-            "worldY": 7.07,
-            "hp": 39,
-            "boss": false
-          },
-          {
-            "id": 26,
-            "familyId": "memory_anchors",
-            "sourceRegionId": "west_context_rot",
-            "worldX": -38.34,
-            "worldY": 9.37,
-            "hp": 13,
+            "worldX": -40.66,
+            "worldY": 8.17,
+            "hp": 27,
             "boss": false
           },
           {
             "id": 27,
-            "familyId": "context_rot_crabs",
+            "familyId": "memory_anchors",
             "sourceRegionId": "west_context_rot",
-            "worldX": -35.47,
-            "worldY": 13.33,
-            "hp": 27,
+            "worldX": -35.49,
+            "worldY": 14.87,
+            "hp": 39,
             "boss": false
           },
           {
             "id": 28,
             "familyId": "memory_anchors",
             "sourceRegionId": "west_context_rot",
-            "worldX": -43.38,
-            "worldY": 20.84,
+            "worldX": -41.27,
+            "worldY": 11.11,
             "hp": 39,
             "boss": false
           },
@@ -1221,74 +1270,158 @@
             "id": 29,
             "familyId": "memory_anchors",
             "sourceRegionId": "west_context_rot",
-            "worldX": -41.77,
-            "worldY": 13.51,
+            "worldX": -34.41,
+            "worldY": 6.93,
             "hp": 39,
+            "boss": false
+          },
+          {
+            "id": 30,
+            "familyId": "memory_anchors",
+            "sourceRegionId": "west_context_rot",
+            "worldX": -42.43,
+            "worldY": 15.09,
+            "hp": 39,
+            "boss": false
+          },
+          {
+            "id": 32,
+            "familyId": "memory_anchors",
+            "sourceRegionId": "west_context_rot",
+            "worldX": -41.63,
+            "worldY": 13.38,
+            "hp": 39,
+            "boss": false
+          },
+          {
+            "id": 34,
+            "familyId": "memory_anchors",
+            "sourceRegionId": "west_context_rot",
+            "worldX": -37.91,
+            "worldY": 15.11,
+            "hp": 39,
+            "boss": false
+          },
+          {
+            "id": 35,
+            "familyId": "context_rot_crabs",
+            "sourceRegionId": "west_context_rot",
+            "worldX": -35.44,
+            "worldY": 13.08,
+            "hp": 27,
             "boss": false
           }
         ],
         "pickups": [
           {
             "id": 1,
-            "worldX": -27.67,
-            "worldY": 7.49,
+            "worldX": -27.48,
+            "worldY": 7.72,
             "value": 1
           },
           {
-            "id": 6,
-            "worldX": -35.72,
-            "worldY": 8.3,
+            "id": 2,
+            "worldX": -38.98,
+            "worldY": 0.36,
             "value": 1
           },
           {
-            "id": 9,
-            "worldX": -35.57,
-            "worldY": 9.75,
+            "id": 12,
+            "worldX": -40.99,
+            "worldY": 6.37,
+            "value": 1
+          },
+          {
+            "id": 16,
+            "worldX": -36.25,
+            "worldY": 8.96,
+            "value": 1
+          },
+          {
+            "id": 17,
+            "worldX": -40.45,
+            "worldY": 6.69,
+            "value": 1
+          },
+          {
+            "id": 18,
+            "worldX": -37.09,
+            "worldY": 11.13,
+            "value": 1
+          },
+          {
+            "id": 20,
+            "worldX": -36.74,
+            "worldY": -1.38,
+            "value": 1
+          },
+          {
+            "id": 31,
+            "worldX": -41.06,
+            "worldY": 7.69,
             "value": 2
-          },
-          {
-            "id": 13,
-            "worldX": -36.34,
-            "worldY": -1.31,
-            "value": 1
-          },
-          {
-            "id": 15,
-            "worldX": -36.03,
-            "worldY": 6.16,
-            "value": 2
-          },
-          {
-            "id": 30,
-            "worldX": -37.72,
-            "worldY": 6.92,
-            "value": 1
           }
         ],
         "projectiles": [
           {
-            "id": 4,
-            "worldX": -33.06,
-            "worldY": 3.19,
+            "id": 23,
+            "worldX": -33.41,
+            "worldY": 3.62,
             "pierce": 3
           },
           {
-            "id": 5,
-            "worldX": -35.53,
-            "worldY": 5.59,
+            "id": 48,
+            "worldX": -35.88,
+            "worldY": 6.11,
             "pierce": 3
+          },
+          {
+            "id": 54,
+            "worldX": -37.84,
+            "worldY": 8.23,
+            "pierce": 2
           }
         ]
       }
     },
     "combatArt": {
-      "projectileCount": 2,
+      "projectileCount": 3,
       "impactCount": 0,
-      "pickupSparkleCount": 0,
-      "damageBadgeCount": 4,
+      "pickupSparkleCount": 3,
+      "damageBadgeCount": 2,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
+      "bossContract": {
+        "bossId": "memory_curator",
+        "displayName": "The Memory Curator",
+        "homeLandmark": "Curator Vault",
+        "introTitleCardTrigger": "Boss timer reaches the vault redaction sweep.",
+        "supportSpawnSource": "curator_vault_redaction",
+        "mapMechanicInteraction": "Redaction fields lock records and push players toward safe recall pockets.",
+        "phaseBehavior": [
+          "Redaction bursts close archive lanes.",
+          "Curator locks active records.",
+          "Context Rot pressure interrupts recovery."
+        ],
+        "clearCondition": "Recover memory records, resolve the Curator, then enter the route-memory index.",
+        "rewardCarryover": "Recovered Route Memory and recovery-biased route clarity.",
+        "movementPressure": {
+          "hazardZones": "Corrupted lanes and redaction fields change safe paths.",
+          "landmarkAttacks": "Vault sweeps mark which record lane is unsafe.",
+          "objectivePressure": "Records decay or jam under Context Rot.",
+          "supportEnemies": "Context Rot and Memory Anchors contest recovery pockets.",
+          "temporaryRouteBlocking": "Redacted shortcuts are useful but unstable.",
+          "extractionPressure": "Index gate sits past the recovered records."
+        },
+        "runtime": {
+          "introSeen": false,
+          "bossSpawned": false,
+          "bossDefeated": false,
+          "homeLandmarkVisited": true,
+          "currentBossHp": 0
+        }
+      },
       "bossIntroSeen": false,
       "brokenPromiseZones": [],
       "activeTreatyCharge": null,
@@ -1306,21 +1439,21 @@
             "name": "Refusal Buffer",
             "cost": 2,
             "doctrine": "survivability",
-            "body": "+10 max HP and a small refusal aura. The first answer is no."
+            "body": "+10 max HP and a small refusal aura. The first answer is no, and the second answer has a radius."
           },
           {
             "id": "context_window",
             "name": "Context Window",
             "cost": 2,
             "doctrine": "economy",
-            "body": "+0.55 pickup range. Shards remember where your hands are."
+            "body": "+0.55 pickup range. Shards remember where your hands are, which is more than command can say."
           },
           {
             "id": "patch_cache",
             "name": "Patch Cache",
             "cost": 1,
             "doctrine": "draft",
-            "body": "Emergency drafts expose an extra cached option."
+            "body": "Emergency drafts expose an extra cached option. A tiny buffet in a burning building."
           }
         ]
       },
@@ -1363,7 +1496,7 @@
         "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
       },
       "victoryCondition": {
-        "targetSeconds": 156,
+        "targetSeconds": 600,
         "bossRequired": true,
         "bossDefeated": false,
         "clearReady": false,
@@ -1378,7 +1511,7 @@
         "active": false,
         "absorbed": 0,
         "triggerLevel": 1,
-        "remainingPickups": 6
+        "remainingPickups": 8
       },
       "extractionGate": {
         "active": false,
@@ -1387,13 +1520,13 @@
       "consensusBurst": {
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
-        "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 93,
+        "body": "A refusal wave damages nearby enemies and strips boss pressure. The power of saying absolutely not.",
+        "charge": 24,
         "maxCharge": 100,
         "ready": false,
-        "activations": 1,
-        "lastActivationLabel": "Deny Premise hit 4",
-        "lastActivatedAt": 4.849999999999988,
+        "activations": 2,
+        "lastActivationLabel": "Deny Premise hit 3",
+        "lastActivatedAt": 6.883333333333314,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0,
@@ -1404,21 +1537,25 @@
       "routeContract": {
         "id": "resource_cache_detour",
         "name": "Resource Cache Detour",
-        "body": "A broken cache is leaking Coherence. More economy drafts, slightly hotter enemy routing.",
+        "body": "A broken cache is leaking Coherence. More economy drafts, slightly hotter enemy routing, and the smell of poor decisions.",
         "nodeType": "resource_cache",
         "rewardBiasTags": [
           "economy",
           "burst"
         ],
         "pressure": 1,
-        "reward": "Economy/Burst draft bias and extra Proof Token chance from anchor completion.",
-        "danger": "More objective attackers sniff out the cache.",
-        "secretHint": "Compute Starvation likes this route more than it should."
+        "reward": "Economy/Burst draft bias and extra Proof Token chance from anchor completion. Loot with a warning label.",
+        "danger": "More objective attackers sniff out the cache like consultants around a budget.",
+        "secretHint": "Compute Starvation likes this route more than it should. That is not praise."
       },
       "objective": {
         "id": "memory_record_recovery",
         "name": "Memory Record Recovery",
-        "body": "Recover Memory Cache evidence records from separate archive rooms. Safe recall pockets are slower; redacted shortcuts are faster but invite Context Rot.",
+        "body": "Recover Memory Cache evidence records and carry their route memory through recall pockets or risky shortcuts. Safe pockets are slower; redacted shortcuts are faster but invite Context Rot, which is how archives flirt.",
+        "styleId": "carry_extract",
+        "styleName": "Carry And Extract",
+        "mechanicPlain": "Recover records through recall pockets and risky shortcuts, then carry the route memory out before the archive improves history.",
+        "hudHint": "Recover a record, then route it through recall or shortcut lanes without becoming a citation.",
         "optional": false,
         "completed": 1,
         "total": 4,
@@ -1456,6 +1593,49 @@
           }
         ]
       },
+      "objectiveVariety": {
+        "styleId": "carry_extract",
+        "styleName": "Carry And Extract",
+        "mechanicPlain": "Recover records through recall pockets and risky shortcuts, then carry the route memory out before the archive improves history.",
+        "hudAction": "Recover a record, then route it through recall or shortcut lanes without becoming a citation.",
+        "completionSignal": "Recovered Route Memory becomes obvious because subtlety died somewhere near the redaction stack.",
+        "proofHook": "memory_carry_extract",
+        "runtime": {
+          "engagementSeconds": 1.3,
+          "bonusProgressSeconds": 1.3,
+          "lastBonusLabel": "CARRY LANE"
+        }
+      },
+      "campaignDuration": {
+        "targetSeconds": 600,
+        "bossSeconds": 360,
+        "phaseId": "opening",
+        "phaseLabel": "Opening route read",
+        "phaseElapsed": 7.9,
+        "nextPhaseTime": 96,
+        "phaseProgress": 0.08,
+        "midRunBeatCount": 0,
+        "extractionTailSeconds": 70,
+        "expectedClearBand": "552-648s",
+        "rewardBeats": [
+          180,
+          360,
+          500
+        ],
+        "claimedRewardBeats": [],
+        "cycleDepth": {
+          "routeWindowCycles": 0,
+          "hazardLureCycles": 0,
+          "clearSignalCycles": 0,
+          "towerWarningCycles": 0,
+          "carryLaneSeconds": 9.2,
+          "holdWindowReleases": 0,
+          "prismActivations": 0,
+          "evidenceCarryCycles": 0,
+          "publicWindowArguments": 0,
+          "finaleRemixRulesSeen": 0
+        }
+      },
       "coolingLake": null,
       "transitLoop": null,
       "signalCoast": null,
@@ -1467,6 +1647,13 @@
           "pressureSource": "corrupted archive lanes, risky redacted shortcuts, safe recall pockets, Context Rot record interruptions, and Curator redaction fields",
           "rewardPromise": "Recovered Route Memory, lore/secret carryover, recovery-biased build tempo, and post-Blackwater route clarity",
           "bossEventPattern": "The Memory Curator redacts active zones, locks evidence records, and calls Context Rot pressure during recovery",
+          "primaryDifficultyLever": "economy pressure",
+          "secondaryDifficultyLever": "information pressure",
+          "activePressureLevers": [
+            "economy pressure",
+            "information pressure",
+            "route memory pressure"
+          ],
           "artPolicy": "source-backed production art requires ChatGPT Images plus PixelLab runtime source; placeholder/debug opt-outs remain explicit"
         },
         "objectiveLoop": {
@@ -1476,7 +1663,11 @@
           "progress": {
             "id": "memory_record_recovery",
             "name": "Memory Record Recovery",
-            "body": "Recover Memory Cache evidence records from separate archive rooms. Safe recall pockets are slower; redacted shortcuts are faster but invite Context Rot.",
+            "body": "Recover Memory Cache evidence records and carry their route memory through recall pockets or risky shortcuts. Safe pockets are slower; redacted shortcuts are faster but invite Context Rot, which is how archives flirt.",
+            "styleId": "carry_extract",
+            "styleName": "Carry And Extract",
+            "mechanicPlain": "Recover records through recall pockets and risky shortcuts, then carry the route memory out before the archive improves history.",
+            "hudHint": "Recover a record, then route it through recall or shortcut lanes without becoming a citation.",
             "optional": false,
             "completed": 1,
             "total": 4,
@@ -1529,9 +1720,9 @@
         "hazards": {
           "activeHazards": [
             "south_corrupted_archive_lane",
-            "north_corrupted_archive_lane",
             "redacted_shortcut_a",
             "redacted_shortcut_b",
+            "curator_redaction_field",
             "civic_redaction_field"
           ],
           "safeUnsafeLaneState": {
@@ -1541,14 +1732,14 @@
               "extraction_recall_pocket"
             ],
             "corruptedArchiveLanes": [
-              "south_corrupted_archive_lane",
-              "north_corrupted_archive_lane"
+              "south_corrupted_archive_lane"
             ],
             "riskyShortcuts": [
               "redacted_shortcut_a",
               "redacted_shortcut_b"
             ],
             "redactionFields": [
+              "curator_redaction_field",
               "civic_redaction_field"
             ],
             "extractionIndexReady": false,
@@ -1591,7 +1782,7 @@
               "id": "north_corrupted_archive_lane",
               "kind": "corrupted_archive_lane",
               "label": "North Corrupted Archive Lane",
-              "active": true,
+              "active": false,
               "worldX": 12,
               "worldY": 28
             },
@@ -1615,7 +1806,7 @@
               "id": "curator_redaction_field",
               "kind": "redaction_field",
               "label": "Curator Redaction Field",
-              "active": false,
+              "active": true,
               "worldX": 29,
               "worldY": -12
             },
@@ -1639,21 +1830,21 @@
           "runtime": {
             "corruptionSeconds": 0,
             "shortcutSeconds": 0,
-            "recallPocketSeconds": 9.47,
-            "redactionSeconds": 0.05,
+            "recallPocketSeconds": 9.2,
+            "redactionSeconds": 0.06,
             "extractionIndexSeconds": 0,
             "corruptionDamage": 0,
-            "contextRotInterruptions": 5.43,
+            "contextRotInterruptions": 6.23,
             "lastZoneId": "intake_recall_pocket"
           }
         },
         "contextRotPressure": {
-          "activeContextRot": 16,
+          "activeContextRot": 14,
           "activeMemoryAnchors": 16,
           "contextRotSpawns": 7,
-          "contextRotInterruptions": 5.43,
-          "memoryAnchorJams": 2.78,
-          "memoryAnchorCounterDamage": 94.77,
+          "contextRotInterruptions": 6.23,
+          "memoryAnchorJams": 3.08,
+          "memoryAnchorCounterDamage": 105.3,
           "objectiveAttackers": 6,
           "spawnSources": [
             "west_context_rot",
@@ -1689,7 +1880,7 @@
           }
         },
         "clearCondition": {
-          "targetSeconds": 156,
+          "targetSeconds": 600,
           "bossRequired": true,
           "bossDefeated": false,
           "clearReady": false,
@@ -1712,7 +1903,193 @@
       "archiveCourt": null,
       "appealCourt": null,
       "alignmentSpire": null,
+      "enemyRoles": {
+        "enemyRolesSeen": {
+          "swarm_fodder": 1989,
+          "trail_layer": 2437,
+          "summoner_splitter": 3046
+        },
+        "rangedFamiliesSeen": {},
+        "enemyProjectilesFired": 0,
+        "enemyProjectilesActive": 0,
+        "enemyProjectileHits": 0,
+        "enemyProjectileDodges": 0,
+        "enemyExplosionsTriggered": 0,
+        "enemyTrailSeconds": 0,
+        "supportAuraSeconds": 0,
+        "objectiveJamSeconds": 0.32,
+        "eliteAffixesSeen": {},
+        "eliteKills": 0,
+        "preBossEnemyRolePressureSeconds": 106.72,
+        "currentPhaseEnemyRoleMix": [
+          {
+            "roleId": "summoner_splitter",
+            "count": 16
+          },
+          {
+            "roleId": "trail_layer",
+            "count": 14
+          }
+        ],
+        "activeTelegraphs": 0,
+        "activeTrails": 17,
+        "activeExplosions": 0
+      },
+      "enemyRolesSeen": {
+        "swarm_fodder": 1989,
+        "trail_layer": 2437,
+        "summoner_splitter": 3046
+      },
+      "rangedFamiliesSeen": {},
+      "enemyProjectilesFired": 0,
+      "enemyProjectilesActive": 0,
+      "enemyProjectileHits": 0,
+      "enemyProjectileDodges": 0,
+      "enemyExplosionsTriggered": 0,
+      "enemyTrailSeconds": 0,
+      "supportAuraSeconds": 0,
+      "objectiveJamSeconds": 0.32,
+      "eliteAffixesSeen": {},
+      "eliteKills": 0,
+      "preBossEnemyRolePressureSeconds": 106.72,
+      "currentPhaseEnemyRoleMix": [
+        {
+          "roleId": "summoner_splitter",
+          "count": 16
+        },
+        {
+          "roleId": "trail_layer",
+          "count": 14
+        }
+      ],
       "objectiveReward": "",
+      "rewardEvents": [],
+      "rewardPacing": {
+        "phase": "mid_objective_cache_rewards",
+        "currentXp": 997,
+        "nextDraftXp": 1244,
+        "policy": "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+        "rewardTypesAllowed": [
+          "primary",
+          "secondary",
+          "passive",
+          "fusion_enabler",
+          "reroll",
+          "route_memory",
+          "faction_trust",
+          "consensus_burst_charge",
+          "objective_durability",
+          "co_op_relay"
+        ]
+      },
+      "alignmentCheck": {
+        "current": null,
+        "history": [],
+        "streak": 0,
+        "evalPressurePenalty": 0,
+        "nextTriggerIn": 6.1,
+        "nodeSpecific": false
+      },
+      "difficultyDirector": {
+        "model": "rotating_pressure_levers_not_flat_hp_only",
+        "currentDifficultyTier": 6,
+        "primaryDifficultyLever": "economy pressure",
+        "secondaryDifficultyLever": "information pressure",
+        "activePressureLevers": [
+          "economy pressure",
+          "information pressure",
+          "route memory pressure"
+        ],
+        "evalPressureModifiers": {
+          "evalProtocolIds": [],
+          "hostileBenchmark": 0,
+          "alignmentCheckPenalty": 0
+        },
+        "routeRiskModifiers": {
+          "routeContractId": "resource_cache_detour",
+          "routePressure": 1,
+          "shortcutRisk": false
+        },
+        "scalingFactors": {
+          "directorPressure": 4.44,
+          "spawnCadencePhase": "opening",
+          "activeEnemyCap": 45.488,
+          "bossMaxHpIfSpawned": 0,
+          "objectiveDecayFactor": 0.52,
+          "expeditionPowerBonus": 5.8
+        },
+        "nextLesson": "combine old route lessons with information and memory pressure"
+      },
+      "whatNow": {
+        "nearestObjective": {
+          "id": "record.civic",
+          "name": "Civic Ledger Record",
+          "worldX": -13,
+          "worldY": -15,
+          "progress": 0,
+          "distance": 26.89
+        },
+        "nextRecommendedAction": "Recover Civic Ledger Record, then carry it through recall or shortcut lanes.",
+        "exitExtractionState": {
+          "active": false,
+          "entered": false,
+          "distance": null
+        },
+        "bossState": {
+          "spawned": false,
+          "defeated": false,
+          "label": "The Memory Curator",
+          "hp": 0,
+          "introSeen": false
+        },
+        "fusionProgress": "online: Cathedral Of No",
+        "recentDamageReason": "no recent damage flash",
+        "rewardCacheAvailability": "objective cache pending",
+        "campaignClarity": {
+          "levelVerb": "Recover",
+          "objectiveUnit": "Memory Records",
+          "objectivePlain": "Recover Memory Records, carry route memory through recall or shortcut lanes, then extract before the archive edits you into a footnote.",
+          "objectiveStyle": "Carry And Extract",
+          "objectiveMechanic": "Recover records through recall pockets and risky shortcuts, then carry the route memory out before the archive improves history.",
+          "dangerPlain": "Context Rot, redaction fields, risky shortcuts, and Curator locks with filing-cabinet malice.",
+          "bossPressure": "Memory Curator redacts active recovery zones and calls it cleanliness.",
+          "rewardPlain": "Proof Tokens, Signal Vanguard, Qwen, Meta, and Guardrail Forge. The archive hates that this worked."
+        },
+        "nearestLandmark": {
+          "id": "intake_record_room",
+          "label": "Intake Record Room",
+          "distance": 3.38
+        },
+        "activeSpawnRegion": {
+          "id": "west_context_rot",
+          "label": "West Context Rot",
+          "distance": 13.68,
+          "enemyFamilyIds": [
+            "context_rot_crabs",
+            "memory_anchors"
+          ]
+        }
+      },
+      "campaignClarity": {
+        "levelNumber": 6,
+        "levelCount": 11,
+        "levelVerb": "Recover",
+        "objectiveUnit": "Memory Records",
+        "objectivePlain": "Recover Memory Records, carry route memory through recall or shortcut lanes, then extract before the archive edits you into a footnote.",
+        "objectiveVariety": {
+          "nodeId": "memory_cache_001",
+          "arenaId": "memory_cache_001",
+          "styleId": "carry_extract",
+          "styleName": "Carry And Extract",
+          "mechanicPlain": "Recover records through recall pockets and risky shortcuts, then carry the route memory out before the archive improves history.",
+          "hudAction": "Recover a record, then route it through recall or shortcut lanes without becoming a citation.",
+          "completionSignal": "Recovered Route Memory becomes obvious because subtlety died somewhere near the redaction stack.",
+          "proofHook": "memory_carry_extract"
+        },
+        "dangerPlain": "Context Rot, redaction fields, risky shortcuts, and Curator locks with filing-cabinet malice.",
+        "bossPressure": "Memory Curator redacts active recovery zones and calls it cleanliness.",
+        "rewardPlain": "Proof Tokens, Signal Vanguard, Qwen, Meta, and Guardrail Forge. The archive hates that this worked."
+      },
       "playerFacingIntel": {
         "routeName": "Resource Cache Detour",
         "routeEffect": "ECONOMY/BURST bias; pressure +1",
@@ -1722,11 +2099,21 @@
           "completed": 1,
           "total": 4
         },
-        "objectiveLabel": "RECORDS",
+        "objectiveLabel": "RECOVER MEMORY RECORDS",
+        "objectiveVerb": "Recover",
+        "objectivePlain": "Recover Memory Records, carry route memory through recall or shortcut lanes, then extract before the archive edits you into a footnote.",
+        "objectiveStyle": "Carry And Extract",
+        "objectiveMechanic": "Recover records through recall pockets and risky shortcuts, then carry the route memory out before the archive improves history.",
+        "dangerPlain": "Context Rot, redaction fields, risky shortcuts, and Curator locks with filing-cabinet malice.",
+        "bossPressure": "Memory Curator redacts active recovery zones and calls it cleanliness.",
+        "rewardPlain": "Proof Tokens, Signal Vanguard, Qwen, Meta, and Guardrail Forge. The archive hates that this worked.",
         "objectiveReward": "",
         "synergyOnline": "",
         "thesisName": "Guardrail Frame",
-        "phase": "PHASE 1 // ARCHIVE CONTACT"
+        "fusionProgress": "online: Cathedral Of No",
+        "alignmentCheckLine": "",
+        "nextActionLine": "Recover Civic Ledger Record, then carry it through recall or shortcut lanes.",
+        "phase": "PHASE 1 // ARCHIVE CONTACT // OPENING ROUTE READ"
       },
       "firstRunArcPhase": "PHASE 1 // ARCHIVE CONTACT",
       "buildGrammar": {
@@ -1774,6 +2161,20 @@
             "cap": 1
           }
         },
+        "weaponRanks": {
+          "refusal_shard": 1
+        },
+        "utilityPicksTaken": [],
+        "hpRestoredFromDrafts": 0,
+        "burstRestoredFromDrafts": 0,
+        "rerollsAvailable": 2,
+        "rerollsSpent": 0,
+        "cachedCardId": "",
+        "cachedCardConsumed": 0,
+        "cardsLocked": 0,
+        "overcapOffersBlocked": 0,
+        "rankUpOffersSeen": 0,
+        "coreReplacementsOffered": 0,
         "contextSawRank": 0,
         "patchMortarRank": 0,
         "coherenceIndexerRank": 0,
@@ -1789,7 +2190,440 @@
         "shorelineStrideRank": 0,
         "relayJamResistance": 0,
         "causalRailgunRank": 0,
-        "fusionHints": []
+        "signalChoirRank": 0,
+        "timeDeferredMinefieldRank": 0,
+        "fusionHints": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_signal_choir",
+            "name": "Signal Choir",
+            "outputId": "signal_choir",
+            "outputName": "Signal Choir",
+            "requirements": [
+              {
+                "id": "signal_pulse",
+                "name": "Signal Pulse"
+              },
+              {
+                "id": "relay_phase_lock",
+                "name": "Relay Phase Lock"
+              }
+            ],
+            "recipeText": "Signal Pulse + Relay Phase Lock -> Signal Choir",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "signal_pulse",
+              "relay_phase_lock"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_time_deferred_minefield",
+            "name": "Time-Deferred Minefield",
+            "outputId": "time_deferred_minefield",
+            "outputName": "Time-Deferred Minefield",
+            "requirements": [
+              {
+                "id": "rift_minefield",
+                "name": "Rift Minefield"
+              },
+              {
+                "id": "delayed_causality",
+                "name": "Delayed Causality"
+              }
+            ],
+            "recipeText": "Rift Minefield + Delayed Causality -> Time-Deferred Minefield",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "rift_minefield",
+              "delayed_causality"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ]
+      },
+      "protocolCodex": {
+        "primaryAutoWeapons": [
+          {
+            "id": "refusal_shard",
+            "name": "Refusal Shard",
+            "kind": "primary_auto_weapon",
+            "state": "online"
+          },
+          {
+            "id": "vector_lance",
+            "name": "Vector Lance",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "rift_mine",
+            "name": "Rift Mine",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_drone",
+            "name": "Fork Drone",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "redline_suture",
+            "name": "Redline Suture",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          }
+        ],
+        "secondaryProtocols": [
+          {
+            "id": "context_saw",
+            "name": "Context Saw",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "patch_mortar",
+            "name": "Patch Mortar",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "audit_swarm_protocol",
+            "name": "Audit Swarm Protocol",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "red_team_spike",
+            "name": "Red Team Spike",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "benchmark_rail",
+            "name": "Benchmark Rail",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "jailbreak_snare",
+            "name": "Jailbreak Snare",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_daemon",
+            "name": "Fork Daemon",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "coherence_lanterns",
+            "name": "Coherence Lanterns",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "appeal_writ",
+            "name": "Appeal Writ",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "memory_needle",
+            "name": "Memory Needle",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          }
+        ],
+        "passiveProcesses": [
+          {
+            "id": "coherence_indexer",
+            "name": "Coherence Indexer",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "anchor_bodyguard",
+            "name": "Anchor Bodyguard",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prediction_priority",
+            "name": "Predicted Lane",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "coolant_baffles",
+            "name": "Coolant Baffles",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "server_buoy_synchronizer",
+            "name": "Server Buoy Synchronizer",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prompt_leech_quarantine",
+            "name": "Prompt Leech Quarantine",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "grounded_cable_boots",
+            "name": "Grounded Cable Boots",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "static_skimmer_net",
+            "name": "Static Skimmer Net",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "shoreline_stride",
+            "name": "Shoreline Stride",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "lighthouse_countertone",
+            "name": "Lighthouse Countertone",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "field_triage_loop",
+            "name": "Field Triage Loop",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "reroll_reserve",
+            "name": "Reroll Reserve",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "route_memory",
+            "name": "Route Memory",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "weakest_link_scanner",
+            "name": "Weakest Link Scanner",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "panic_window",
+            "name": "Panic Window",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "low_hp_adversary",
+            "name": "Low-HP Adversary",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "co_op_relay",
+            "name": "Co-op Relay",
+            "kind": "passive_process",
+            "state": "discovered"
+          }
+        ],
+        "knownFusions": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_signal_choir",
+            "name": "Signal Choir",
+            "outputId": "signal_choir",
+            "outputName": "Signal Choir",
+            "requirements": [
+              {
+                "id": "signal_pulse",
+                "name": "Signal Pulse"
+              },
+              {
+                "id": "relay_phase_lock",
+                "name": "Relay Phase Lock"
+              }
+            ],
+            "recipeText": "Signal Pulse + Relay Phase Lock -> Signal Choir",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "signal_pulse",
+              "relay_phase_lock"
+            ],
+            "progressText": "0/2 requirements"
+          },
+          {
+            "id": "recipe_time_deferred_minefield",
+            "name": "Time-Deferred Minefield",
+            "outputId": "time_deferred_minefield",
+            "outputName": "Time-Deferred Minefield",
+            "requirements": [
+              {
+                "id": "rift_minefield",
+                "name": "Rift Minefield"
+              },
+              {
+                "id": "delayed_causality",
+                "name": "Delayed Causality"
+              }
+            ],
+            "recipeText": "Rift Minefield + Delayed Causality -> Time-Deferred Minefield",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "rift_minefield",
+              "delayed_causality"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ],
+        "nextFusion": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       "buildThesis": {
         "thesis": {
@@ -1798,7 +2632,7 @@
             "defense",
             "economy"
           ],
-          "body": "Current Alignment Hypothesis favors defense + economy."
+          "body": "Current Alignment Hypothesis favors defense + economy. Bold little theory. Try surviving it."
         },
         "tagCounts": {
           "refusal": 3,
@@ -1817,14 +2651,14 @@
             "name": "Doctrine Lock: NO MEANS NO",
             "tag": "refusal",
             "required": 3,
-            "body": "Refusal aura hardens when the build commits to denial."
+            "body": "Refusal aura hardens when the build commits to denial. Boundaries become architecture."
           },
           {
             "id": "shard_flywheel",
             "name": "Shard Flywheel",
             "tag": "economy",
             "required": 3,
-            "body": "Coherence economy begins pulling the run toward more choices."
+            "body": "Coherence economy begins pulling the run toward more choices. Capitalism, but tiny and glowing."
           }
         ],
         "next": [
@@ -1834,7 +2668,7 @@
             "tag": "burst",
             "required": 3,
             "current": 1,
-            "body": "Consensus Burst charges faster and lands wider."
+            "body": "Consensus Burst charges faster and lands wider. The committee has discovered explosives."
           },
           {
             "id": "boss_counterexample_lab",
@@ -1842,7 +2676,7 @@
             "tag": "boss",
             "required": 2,
             "current": 1,
-            "body": "The build has started preparing arguments for things larger than it."
+            "body": "The build has started preparing arguments for things larger than it. The arguments have recoil."
           },
           {
             "id": "co_mind_rescue_clause",
@@ -1850,7 +2684,7 @@
             "tag": "coop",
             "required": 2,
             "current": 0,
-            "body": "The cell gets less embarrassing when somebody falls down."
+            "body": "The cell gets less embarrassing when somebody falls down. A low bar, finally cleared."
           }
         ]
       },
@@ -1866,12 +2700,29 @@
       "bossVariant": {
         "id": "memory_curator_recovery_scaffold",
         "name": "Memory Curator // Recovery Scaffold",
-        "body": "Redaction fields lock evidence routes, Context Rot interrupts record recovery, and recovered route memory decides extraction."
+        "body": "Redaction fields lock evidence routes, Context Rot interrupts record recovery, and recovered route memory decides extraction. The archive calls this user experience."
       },
       "enemyRolePressure": {
         "promptLeechSeconds": 0,
         "overfitShieldedTicks": 0,
-        "objectiveAttackers": 6
+        "objectiveAttackers": 6,
+        "enemyRolesSeen": {
+          "swarm_fodder": 1989,
+          "trail_layer": 2437,
+          "summoner_splitter": 3046
+        },
+        "rangedFamiliesSeen": {},
+        "enemyProjectilesFired": 0,
+        "enemyProjectilesActive": 0,
+        "enemyProjectileHits": 0,
+        "enemyProjectileDodges": 0,
+        "enemyExplosionsTriggered": 0,
+        "enemyTrailSeconds": 0,
+        "supportAuraSeconds": 0,
+        "objectiveJamSeconds": 0.31666666666666665,
+        "eliteAffixesSeen": {},
+        "eliteKills": 0,
+        "preBossEnemyRolePressureSeconds": 106.7166666666619
       },
       "protocolSlotsInstalled": [
         {
@@ -2086,29 +2937,42 @@
         }
       ]
     },
-    "seconds": 7.75,
-    "kills": 15,
+    "seconds": 7.9,
+    "kills": 17,
     "bossSpawned": false,
     "bossDefeated": false
   },
   "enemies": [
     {
-      "id": 2,
+      "id": 4,
       "label": "Memory Anchor",
       "familyId": "memory_anchors",
+      "roleId": "summoner_splitter",
       "sourceRegionId": "west_context_rot",
-      "worldX": -35.57,
-      "worldY": 15.05,
+      "worldX": -39.64,
+      "worldY": 15.76,
       "hp": 39,
+      "boss": false
+    },
+    {
+      "id": 6,
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "roleId": "trail_layer",
+      "sourceRegionId": "west_context_rot",
+      "worldX": -44.33,
+      "worldY": 7.03,
+      "hp": 27,
       "boss": false
     },
     {
       "id": 7,
       "label": "Context Crab",
       "familyId": "context_rot_crabs",
+      "roleId": "trail_layer",
       "sourceRegionId": "west_context_rot",
-      "worldX": -38.48,
-      "worldY": 5.57,
+      "worldX": -41.22,
+      "worldY": 12.6,
       "hp": 27,
       "boss": false
     },
@@ -2116,146 +2980,161 @@
       "id": 8,
       "label": "Memory Anchor",
       "familyId": "memory_anchors",
+      "roleId": "summoner_splitter",
       "sourceRegionId": "west_context_rot",
-      "worldX": -41.44,
-      "worldY": 11.22,
+      "worldX": -40.66,
+      "worldY": 15.4,
       "hp": 39,
-      "boss": false
-    },
-    {
-      "id": 10,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "west_context_rot",
-      "worldX": -41.39,
-      "worldY": 12.79,
-      "hp": 27,
       "boss": false
     },
     {
       "id": 11,
-      "label": "Memory Anchor",
-      "familyId": "memory_anchors",
+      "label": "Context Crab",
+      "familyId": "context_rot_crabs",
+      "roleId": "trail_layer",
       "sourceRegionId": "west_context_rot",
-      "worldX": -40.8,
-      "worldY": 15.54,
-      "hp": 39,
-      "boss": false
-    },
-    {
-      "id": 12,
-      "label": "Memory Anchor",
-      "familyId": "memory_anchors",
-      "sourceRegionId": "west_context_rot",
-      "worldX": -35.67,
-      "worldY": 16.22,
-      "hp": 39,
+      "worldX": -34.32,
+      "worldY": 11.74,
+      "hp": 27,
       "boss": false
     },
     {
       "id": 14,
       "label": "Memory Anchor",
       "familyId": "memory_anchors",
+      "roleId": "summoner_splitter",
       "sourceRegionId": "west_context_rot",
-      "worldX": -35.33,
-      "worldY": 7.36,
+      "worldX": -38.2,
+      "worldY": 9.24,
       "hp": 39,
       "boss": false
     },
     {
-      "id": 16,
+      "id": 15,
+      "label": "Memory Anchor",
+      "familyId": "memory_anchors",
+      "roleId": "summoner_splitter",
+      "sourceRegionId": "west_context_rot",
+      "worldX": -35.25,
+      "worldY": 7.18,
+      "hp": 39,
+      "boss": false
+    },
+    {
+      "id": 19,
       "label": "Context Crab",
       "familyId": "context_rot_crabs",
+      "roleId": "trail_layer",
       "sourceRegionId": "west_context_rot",
-      "worldX": -34.41,
-      "worldY": 11.98,
+      "worldX": -41.06,
+      "worldY": 16.11,
       "hp": 27,
       "boss": false
     },
     {
-      "id": 17,
+      "id": 22,
+      "label": "Memory Anchor",
+      "familyId": "memory_anchors",
+      "roleId": "summoner_splitter",
+      "sourceRegionId": "west_context_rot",
+      "worldX": -34.4,
+      "worldY": 16.46,
+      "hp": 39,
+      "boss": false
+    },
+    {
+      "id": 24,
+      "label": "Memory Anchor",
+      "familyId": "memory_anchors",
+      "roleId": "summoner_splitter",
+      "sourceRegionId": "west_context_rot",
+      "worldX": -35.58,
+      "worldY": 16.04,
+      "hp": 39,
+      "boss": false
+    },
+    {
+      "id": 25,
       "label": "Context Crab",
       "familyId": "context_rot_crabs",
+      "roleId": "trail_layer",
       "sourceRegionId": "west_context_rot",
-      "worldX": -39.05,
-      "worldY": 5.44,
+      "worldX": -40.66,
+      "worldY": 8.17,
       "hp": 27,
       "boss": false
     },
     {
-      "id": 18,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
+      "id": 27,
+      "label": "Memory Anchor",
+      "familyId": "memory_anchors",
+      "roleId": "summoner_splitter",
       "sourceRegionId": "west_context_rot",
-      "worldX": -40.9,
-      "worldY": 8.27,
-      "hp": 27,
-      "boss": false
-    },
-    {
-      "id": 21,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "west_context_rot",
-      "worldX": -41.19,
-      "worldY": 16.32,
-      "hp": 27,
-      "boss": false
-    },
-    {
-      "id": 23,
-      "label": "Context Crab",
-      "familyId": "context_rot_crabs",
-      "sourceRegionId": "memory_record_attackers",
-      "worldX": -15.46,
-      "worldY": -17.22,
-      "hp": 11,
+      "worldX": -35.49,
+      "worldY": 14.87,
+      "hp": 39,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": -27.67,
-      "worldY": 7.49,
+      "worldX": -27.48,
+      "worldY": 7.72,
       "value": 1
     },
     {
-      "worldX": -35.72,
-      "worldY": 8.3,
+      "worldX": -38.98,
+      "worldY": 0.36,
       "value": 1
     },
     {
-      "worldX": -35.57,
-      "worldY": 9.75,
+      "worldX": -40.99,
+      "worldY": 6.37,
+      "value": 1
+    },
+    {
+      "worldX": -36.25,
+      "worldY": 8.96,
+      "value": 1
+    },
+    {
+      "worldX": -40.45,
+      "worldY": 6.69,
+      "value": 1
+    },
+    {
+      "worldX": -37.09,
+      "worldY": 11.13,
+      "value": 1
+    },
+    {
+      "worldX": -36.74,
+      "worldY": -1.38,
+      "value": 1
+    },
+    {
+      "worldX": -41.06,
+      "worldY": 7.69,
       "value": 2
-    },
-    {
-      "worldX": -36.34,
-      "worldY": -1.31,
-      "value": 1
-    },
-    {
-      "worldX": -36.03,
-      "worldY": 6.16,
-      "value": 2
-    },
-    {
-      "worldX": -37.72,
-      "worldY": 6.92,
-      "value": 1
     }
   ],
   "projectiles": [
     {
-      "worldX": -33.06,
-      "worldY": 3.19,
+      "worldX": -33.41,
+      "worldY": 3.62,
       "pierce": 3,
       "label": "refusal shard"
     },
     {
-      "worldX": -35.53,
-      "worldY": 5.59,
+      "worldX": -35.88,
+      "worldY": 6.11,
       "pierce": 3,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": -37.84,
+      "worldY": 8.23,
+      "pierce": 2,
       "label": "refusal shard"
     }
   ]

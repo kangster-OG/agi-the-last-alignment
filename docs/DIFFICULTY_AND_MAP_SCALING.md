@@ -6,7 +6,7 @@ This document locks the post-Armistice difficulty direction. Armistice Plaza is 
 
 Armistice Plaza is the reference difficulty baseline for future full levels:
 
-- the run has a meaningful minimum duration, currently 120 seconds;
+- the run has a meaningful minimum duration, currently 300 seconds in the V1 duration profile;
 - the boss arrives during the run, not only after everything else is over;
 - victory requires the contract timer and the boss clear;
 - kills alone cannot bypass the boss;
@@ -16,6 +16,26 @@ Armistice Plaza is the reference difficulty baseline for future full levels:
 - route contracts and Eval Protocols can make the same map meaningfully harder without changing autocombat.
 
 Future levels should not be balanced as "survive until timer expires." They should be balanced as contracts with a finish condition, a pressure curve, and a proof of mastery.
+
+## Campaign Duration Profile V1
+
+As of May 13, 2026, `src/content/campaignDurationProfile.ts` owns the campaign timing contract. The existing 11-level campaign now targets 105 minutes of combat, with human full-campaign play expected to land around 115-125 minutes after drafts, summaries, overworld movement, and reading.
+
+| Level | Target Clear | Boss Arrival | Extraction Tail |
+|---|---:|---:|---:|
+| Armistice Plaza | 5:00 | 3:10 | 0:35 |
+| Cooling Lake Nine | 7:00 | 4:15 | 0:45 |
+| Transit Loop Zero | 7:00 | 4:10 | 0:45 |
+| Signal Coast | 8:00 | 4:50 | 0:55 |
+| Blackwater Beacon | 9:00 | 5:25 | 1:05 |
+| Memory Cache | 10:00 | 6:00 | 1:10 |
+| Guardrail Forge | 10:00 | 6:00 | 1:10 |
+| Glass Sunfield | 11:00 | 6:40 | 1:25 |
+| Archive of Unsaid Things | 11:00 | 6:40 | 1:25 |
+| Appeal Court Ruins | 12:00 | 7:15 | 1:40 |
+| Outer Alignment Finale | 15:00 | 9:45 | 2:15 |
+
+Runtime and proof telemetry expose the active duration phase (`opening`, `build_online`, `objective_cycle_1`, `elite_cache`, `objective_cycle_2`, `boss_pressure`, `extraction_panic`), target/boss/tail seconds, mid-run cache count, expected clear band, and objective cycle-depth counters. The contract is verified by `npm run proof:campaign-duration`, and proof-summary timing can be audited with `npm run proof:campaign-duration-audit`.
 
 ## Difficulty Layers
 

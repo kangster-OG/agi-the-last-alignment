@@ -151,7 +151,7 @@
       {
         "id": "ui.enter_build_select",
         "kind": "ui",
-        "atMs": 881
+        "atMs": 1098
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -297,14 +297,81 @@
           "armistice_plaza",
           "cooling_lake_nine",
           "transit_loop_zero",
-          "signal_coast"
+          "signal_coast",
+          "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, and Signal Coast route-edge pressure now all inform later route balance.",
-        "nextImplication": "The next approved step is source-art direction for Cooling, Transit, and Signal before replacing graybox visuals.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
         "completedMaps": [
           "armistice_plaza"
         ],
         "status": "active"
+      },
+      {
+        "id": "post_act_01_recovered_route_memory",
+        "name": "Post Act 01: Recovered Route Memory",
+        "requiredMaps": [
+          "memory_cache_001"
+        ],
+        "reward": "Recovered route memory online: Expedition / Recovery pressure, evidence routing, and secret carryover now inform later branches.",
+        "nextImplication": "The route can branch from sourced memory instead of only from live combat telemetry.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_02_guardrail_doctrine",
+        "name": "Act 02: Guardrail Doctrine",
+        "requiredMaps": [
+          "guardrail_forge"
+        ],
+        "reward": "Calibrated Guardrail Doctrine online: defense/holdout timing, faction relay pressure, and build-bias rewards now inform the endgame arc.",
+        "nextImplication": "The faction signal can route toward Glass Sunfield, Archive/Court pressure, and the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_03_glass_sunfield",
+        "name": "Act 03: Glass Sunfield",
+        "requiredMaps": [
+          "glass_sunfield"
+        ],
+        "reward": "Glass Sunfield Prism online: shade routing, solar reflection pressure, and lens-timing lessons now point toward Archive/Court pressure.",
+        "nextImplication": "The campaign can branch into the Archive/Court before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_04_archive_court",
+        "name": "Act 04: Archive/Court Redaction",
+        "requiredMaps": [
+          "archive_of_unsaid_things"
+        ],
+        "reward": "Archive Court Writ online: evidence preservation, redaction counterplay, and court-writ pressure now inform the Appeal route.",
+        "nextImplication": "The preserved writ forces the Appeal Court Ruins to answer before the Outer Alignment finale.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_05_appeal_court",
+        "name": "Act 05: Appeal Court Ruins",
+        "requiredMaps": [
+          "appeal_court_ruins"
+        ],
+        "reward": "Appeal Court ruling online: public evidence and injunction pressure can route toward the Outer Alignment finale.",
+        "nextImplication": "The Outer Alignment finale can begin only after the court branch produces a public ruling.",
+        "completedMaps": [],
+        "status": "locked"
+      },
+      {
+        "id": "act_06_outer_alignment_finale",
+        "name": "Act 06: Outer Alignment Finale",
+        "requiredMaps": [
+          "alignment_spire_finale"
+        ],
+        "reward": "Outer Alignment contained: the local full-game campaign is source-backed from Armistice through finale.",
+        "nextImplication": "The only remaining work should be final human taste/playtest approval and release polish.",
+        "completedMaps": [],
+        "status": "locked"
       }
     ],
     "campaignLedger": {
@@ -315,10 +382,11 @@
           "armistice_plaza",
           "cooling_lake_nine",
           "transit_loop_zero",
-          "signal_coast"
+          "signal_coast",
+          "blackwater_beacon"
         ],
-        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, and Signal Coast route-edge pressure now all inform later route balance.",
-        "nextImplication": "The next approved step is source-art direction for Cooling, Transit, and Signal before replacing graybox visuals.",
+        "reward": "Expedition map-kind ledger online: Hazard Ecology, Route / Transit, Signal Coast route-edge pressure, and Blackwater split-pressure now all inform later route balance.",
+        "nextImplication": "The Blackwater Signal Key points at Memory Cache recovery instead of another Act 01 arena.",
         "completedMaps": [
           "armistice_plaza"
         ],
@@ -341,6 +409,20 @@
     "coolingLakeNineArtReady": false,
     "transitLoopZeroArtReady": false,
     "signalCoastArtReady": false,
+    "blackwaterBeaconArtReady": false,
+    "blackwaterBeaconArtSet": "not_loaded",
+    "memoryCacheArtReady": false,
+    "memoryCacheArtSet": "not_loaded",
+    "guardrailForgeArtReady": false,
+    "guardrailForgeArtSet": "not_loaded",
+    "glassSunfieldArtReady": false,
+    "glassSunfieldArtSet": "not_loaded",
+    "archiveCourtArtReady": false,
+    "archiveCourtArtSet": "not_loaded",
+    "appealCourtArtReady": false,
+    "appealCourtArtSet": "not_loaded",
+    "alignmentSpireArtReady": false,
+    "alignmentSpireArtSet": "not_loaded",
     "playerDamageVfxReady": false,
     "buildWeaponVfxReady": false,
     "productionArtEnabled": true,
@@ -436,21 +518,21 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 174,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 54,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 87,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 87
+    "productionAssets": 136
   },
   "player": {
-    "worldX": -7.29,
-    "worldY": 5.96
+    "worldX": -8,
+    "worldY": 6
   },
   "overworld": {
     "mapId": "alignment_grid_armistice_zone",
@@ -461,10 +543,43 @@
       "minY": -10,
       "maxY": 14
     },
+    "avatarClassId": "accord_striker",
+    "avatarFactionId": "openai_accord",
     "selectedId": "cooling_lake_nine",
     "selectedNodeType": "Breach Arena",
     "selectedName": "Cooling Lake Nine",
     "selectedTheme": "flooded server lake",
+    "currentNode": {
+      "id": "cooling_lake_nine",
+      "name": "Cooling Lake Nine",
+      "nodeType": "Breach Arena",
+      "campaignClarity": {
+        "nodeId": "cooling_lake_nine",
+        "arenaId": "cooling_lake_nine",
+        "levelNumber": 2,
+        "verb": "Repair",
+        "objectiveUnit": "Server Buoys",
+        "objectivePlain": "Repair Server Buoys by luring live coolant/cable surges into them. Extract.",
+        "dangerPlain": "Coolant lanes, cable arcs, vents, and Prompt Leeches.",
+        "bossPressure": "Motherboard Eel electrifies the lake route.",
+        "rewardPlain": "Proof Tokens, Drone Reaver, DeepMind, and Transit Loop Zero.",
+        "mapKind": "Hazard Ecology"
+      },
+      "completed": false,
+      "unlocked": true,
+      "rewardPromise": "Kettle Coast signal, buoy economy help, and carried burst tempo for the next route.",
+      "unlockConsequence": "Armistice Camp, Memory Cache, and Thermal Archive open as post-lake choices.",
+      "stabilizationConsequence": "Boiled Server Causeway becomes stable and the lake bridge markers turn reliable.",
+      "nextRouteBehavior": "Recommended route continues to Transit Loop Zero through the Kettle Metro Signal once the lake is stable.",
+      "proofState": "cooling_lake_clear_establishes_kettle_route_signal"
+    },
+    "nextRecommendedNode": {
+      "id": "cooling_lake_nine",
+      "name": "Cooling Lake Nine",
+      "nodeType": "Breach Arena",
+      "routeBehavior": "Recommended route continues to Transit Loop Zero through the Kettle Metro Signal once the lake is stable.",
+      "proofState": "cooling_lake_clear_establishes_kettle_route_signal"
+    },
     "completed": [
       "armistice_plaza"
     ],
@@ -472,6 +587,19 @@
       "armistice_plaza",
       "cooling_lake_nine"
     ],
+    "completedNodes": [
+      "armistice_plaza"
+    ],
+    "unlockedNodes": [
+      "armistice_plaza",
+      "cooling_lake_nine"
+    ],
+    "stabilizedRoutes": [
+      "route_plaza_relay",
+      "route_plaza_lake",
+      "route_plaza_memorial"
+    ],
+    "visibleRouteConsequenceText": "Kettle Coast signal, buoy economy help, and carried burst tempo for the next route.",
     "nodes": [
       {
         "id": "armistice_plaza",
@@ -480,7 +608,13 @@
         "worldX": -7,
         "worldY": -1,
         "completed": true,
-        "unlocked": true
+        "unlocked": true,
+        "available": false,
+        "rewardPromise": "Proof Token, Treaty Anchor carryover, and the first stable Kettle Coast route signal.",
+        "unlockConsequence": "Accord Relay, Cooling Lake Nine, and Model War Memorial become deployable from the plaza.",
+        "stabilizationConsequence": "Refusal Road, Boiled Server Causeway, and Casualty Walk light as stable roads.",
+        "nextRouteBehavior": "Recommended route points to Cooling Lake Nine while side branches expose faction and memory options.",
+        "proofState": "armistice_clear_unlocks_kettle_coast_and_side_branches"
       },
       {
         "id": "accord_relay",
@@ -489,7 +623,13 @@
         "worldX": -1,
         "worldY": -5,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Faction trust, co-mind draft bias, and a clearer relay route into later doctrine nodes.",
+        "unlockConsequence": "Guardrail Forge, Archive of Unsaid Things, and Transit Loop Zero become visible faction routes.",
+        "stabilizationConsequence": "Relay cables stop flickering and make the Faction Signal plateau safer to cross.",
+        "nextRouteBehavior": "Recommended route branches toward Guardrail Forge if the player wants defense pressure next.",
+        "proofState": "accord_relay_clear_unlocks_faction_route_fork"
       },
       {
         "id": "cooling_lake_nine",
@@ -498,7 +638,13 @@
         "worldX": -8,
         "worldY": 6,
         "completed": false,
-        "unlocked": true
+        "unlocked": true,
+        "available": true,
+        "rewardPromise": "Kettle Coast signal, buoy economy help, and carried burst tempo for the next route.",
+        "unlockConsequence": "Armistice Camp, Memory Cache, and Thermal Archive open as post-lake choices.",
+        "stabilizationConsequence": "Boiled Server Causeway becomes stable and the lake bridge markers turn reliable.",
+        "nextRouteBehavior": "Recommended route continues to Transit Loop Zero through the Kettle Metro Signal once the lake is stable.",
+        "proofState": "cooling_lake_clear_establishes_kettle_route_signal"
       },
       {
         "id": "model_war_memorial",
@@ -507,7 +653,13 @@
         "worldX": -11,
         "worldY": 2,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Route-memory clue, cache draft bias, and evidence context for the next recovery node.",
+        "unlockConsequence": "Memory Cache becomes a deployable recovery objective instead of a silhouette.",
+        "stabilizationConsequence": "Casualty Walk stabilizes and the omission tunnel starts showing its exits.",
+        "nextRouteBehavior": "Recommended route diverts into Memory Cache if the player wants recovery before transit pressure.",
+        "proofState": "memorial_clear_unlocks_memory_cache_entry"
       },
       {
         "id": "armistice_camp",
@@ -516,16 +668,28 @@
         "worldX": 0,
         "worldY": 7,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Refuge repair context, objective durability, and safer carryover into Guardrail Forge.",
+        "unlockConsequence": "Guardrail Forge gains a stable resupply approach from the camp barricades.",
+        "stabilizationConsequence": "Relief Barricade becomes stable and camp tent markers brighten.",
+        "nextRouteBehavior": "Recommended route points to Guardrail Forge as a defensive branch.",
+        "proofState": "refuge_camp_clear_opens_guardrail_resupply_route"
       },
       {
         "id": "memory_cache_001",
-        "name": "Ceasefire Cache",
+        "name": "Memory Cache",
         "nodeType": "Memory Cache",
         "worldX": -3,
         "worldY": 2,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Recovered Route Memory, lore carryover, recovery bias, and route clarity.",
+        "unlockConsequence": "Guardrail Forge, Archive of Unsaid Things, and Transit Loop Zero gain recovered-memory route links.",
+        "stabilizationConsequence": "Archive Switchback, Guardrail Sluice, and Misremembered Overpass become readable roads.",
+        "nextRouteBehavior": "Recommended route points to Guardrail Forge, with Archive and Transit as informed branches.",
+        "proofState": "memory_cache_clear_restores_route_memory_fork"
       },
       {
         "id": "archive_of_unsaid_things",
@@ -534,7 +698,13 @@
         "worldX": 1,
         "worldY": 1,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Archive Court Writ, redaction counterplay, and appeal-route clarity.",
+        "unlockConsequence": "Appeal Court Ruins becomes public enough to enter; Blackwater and Transit links stay legible.",
+        "stabilizationConsequence": "Unsaid Index Road and Preserved Writ Stair stop deleting their own labels.",
+        "nextRouteBehavior": "Recommended route points to Appeal Court Ruins once the writ is preserved.",
+        "proofState": "archive_clear_opens_appeal_public_writ_route"
       },
       {
         "id": "blackwater_beacon",
@@ -543,7 +713,13 @@
         "worldX": 4,
         "worldY": -4,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Blackwater Signal Key, antenna clarity, and weather counterplay.",
+        "unlockConsequence": "Memory Cache gains a recovered-key approach and Transit Loop Zero regains a signal ferry.",
+        "stabilizationConsequence": "Blackwater Causeway and Signal Ferry become stable enough to plan around.",
+        "nextRouteBehavior": "Recommended route points to Memory Cache after the signal key is recovered.",
+        "proofState": "blackwater_clear_unlocks_signal_key_memory_route"
       },
       {
         "id": "thermal_archive",
@@ -552,7 +728,13 @@
         "worldX": -10,
         "worldY": 10,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Risky route memory, bonus cache pressure, and a shortcut into the false schedule branch.",
+        "unlockConsequence": "False Schedule Yard becomes reachable through the Steam Rail Bypass.",
+        "stabilizationConsequence": "Boilover Spiral gains stable warning markers instead of pure steam noise.",
+        "nextRouteBehavior": "Recommended route treats False Schedule Yard as a risky optional shortcut.",
+        "proofState": "thermal_archive_clear_unlocks_false_schedule_shortcut"
       },
       {
         "id": "guardrail_forge",
@@ -561,7 +743,13 @@
         "worldX": 3,
         "worldY": 3,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Calibrated Guardrail Doctrine, defense bias, and faction signal stability.",
+        "unlockConsequence": "Glass Sunfield, Archive of Unsaid Things, and Transit Loop Zero gain forge-calibrated routes.",
+        "stabilizationConsequence": "Guardrail Sluice, Signal Underpass, and Quenched Mirror Road stabilize.",
+        "nextRouteBehavior": "Recommended route points to Glass Sunfield after the doctrine alloy holds.",
+        "proofState": "guardrail_forge_clear_opens_glass_sunfield_branch"
       },
       {
         "id": "transit_loop_zero",
@@ -570,7 +758,13 @@
         "worldX": 7,
         "worldY": -2,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Route lock, movement tempo, and clean next-route visibility.",
+        "unlockConsequence": "Signal Coast, False Schedule Yard, Glass Sunfield, and Verdict Spire become selectable route choices.",
+        "stabilizationConsequence": "Kettle Metro Signal and Appeal Ramp stabilize into authored transit lanes.",
+        "nextRouteBehavior": "Recommended route points to Signal Coast; shortcut and boss-gate routes remain visible options.",
+        "proofState": "transit_clear_unlocks_signal_coast_and_boss_gate_fork"
       },
       {
         "id": "signal_coast",
@@ -579,16 +773,28 @@
         "worldX": 11,
         "worldY": -9,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Coastal signal lane, burst tempo, and Blackwater route clarity.",
+        "unlockConsequence": "Blackwater Beacon becomes the recommended branch while Verdict Spire remains visible.",
+        "stabilizationConsequence": "Noisy Shoreline Link and Low-Tide Antenna Return become stable signal roads.",
+        "nextRouteBehavior": "Recommended route points to Blackwater Beacon before court escalation.",
+        "proofState": "signal_coast_clear_unlocks_blackwater_and_verdict_fork"
       },
       {
         "id": "false_schedule_yard",
         "name": "False Schedule Yard",
-        "nodeType": "Breach Arena",
+        "nodeType": "Shortcut Route",
         "worldX": 10,
         "worldY": -6,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Shortcut route memory, movement bias, and a dangerous appeal bypass.",
+        "unlockConsequence": "Appeal Court Ruins can be approached through a risky summons track.",
+        "stabilizationConsequence": "Wrong Platform Spur and Summons Track stop swapping their destination labels.",
+        "nextRouteBehavior": "Recommended route remains risky; it shortens the court path but raises route pressure.",
+        "proofState": "false_schedule_clear_unlocks_risky_appeal_shortcut"
       },
       {
         "id": "glass_sunfield",
@@ -597,7 +803,13 @@
         "worldX": 7,
         "worldY": 9,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Glass Sunfield Prism, shade-route timing, and Archive/Court carryover.",
+        "unlockConsequence": "Archive of Unsaid Things and Verdict Spire gain prism-backed route clarity.",
+        "stabilizationConsequence": "Quenched Mirror Road and Sunblind Appeal gain stable shade markers.",
+        "nextRouteBehavior": "Recommended route points to Archive of Unsaid Things after the prism is aligned.",
+        "proofState": "glass_sunfield_clear_opens_archive_court_route"
       },
       {
         "id": "verdict_spire",
@@ -606,7 +818,13 @@
         "worldX": 11,
         "worldY": 5,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Boss-gate writ pressure resolved into a finale ascent route.",
+        "unlockConsequence": "Outer Alignment Finale becomes reachable from the first court ascent.",
+        "stabilizationConsequence": "Appeal Ramp and First Court Ascent show stable boss-gate markers.",
+        "nextRouteBehavior": "Recommended route points to the finale if the player chooses the verdict branch.",
+        "proofState": "verdict_spire_clear_opens_first_finale_ascent"
       },
       {
         "id": "appeal_court_ruins",
@@ -615,7 +833,13 @@
         "worldX": 14,
         "worldY": 1,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Appeal Court Ruling, public-record proof, and finale route clarity.",
+        "unlockConsequence": "Outer Alignment Finale opens through the public Writ Stair.",
+        "stabilizationConsequence": "Preserved Writ Stair and Writ Stair become public, stable roads.",
+        "nextRouteBehavior": "Recommended route points to Outer Alignment Finale.",
+        "proofState": "appeal_court_clear_opens_outer_alignment_finale"
       },
       {
         "id": "alignment_spire_finale",
@@ -624,7 +848,13 @@
         "worldX": 15,
         "worldY": 9,
         "completed": false,
-        "unlocked": false
+        "unlocked": false,
+        "available": false,
+        "rewardPromise": "Outer Alignment containment, final campaign proof, and full route stabilization summary.",
+        "unlockConsequence": "No later node opens; campaign payoff records the stabilized route count.",
+        "stabilizationConsequence": "Finale corruption is contained and the route-mouth teeth stop predicting the exit.",
+        "nextRouteBehavior": "Recommended route holds on the completed finale and invites replay/mastery routes.",
+        "proofState": "outer_alignment_finale_clear_marks_campaign_complete"
       }
     ],
     "routes": [
@@ -636,7 +866,8 @@
         "state": "stable",
         "checkpointCount": 2,
         "routeTexture": "causeway",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Refusal Road stabilized by Armistice Plaza."
       },
       {
         "id": "route_plaza_lake",
@@ -646,7 +877,8 @@
         "state": "stable",
         "checkpointCount": 2,
         "routeTexture": "causeway",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Boiled Server Causeway stabilized by Armistice Plaza."
       },
       {
         "id": "route_plaza_memorial",
@@ -656,7 +888,8 @@
         "state": "stable",
         "checkpointCount": 2,
         "routeTexture": "causeway",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Casualty Walk stabilized by Armistice Plaza."
       },
       {
         "id": "route_lake_camp",
@@ -666,7 +899,8 @@
         "state": "unstable",
         "checkpointCount": 2,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Relief Barricade unlocks toward Armistice Camp."
       },
       {
         "id": "route_lake_cache",
@@ -676,7 +910,8 @@
         "state": "unstable",
         "checkpointCount": 2,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Archive Switchback unlocks toward Memory Cache."
       },
       {
         "id": "route_lake_thermal_archive",
@@ -686,7 +921,8 @@
         "state": "unstable",
         "checkpointCount": 2,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Boilover Spiral unlocks toward Thermal Archive."
       },
       {
         "id": "route_lake_transit",
@@ -696,7 +932,8 @@
         "state": "unstable",
         "checkpointCount": 4,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Kettle Metro Signal unlocks toward Transit Loop Zero."
       },
       {
         "id": "route_memorial_cache",
@@ -706,7 +943,8 @@
         "state": "unstable",
         "checkpointCount": 2,
         "routeTexture": "causeway",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Omission Tunnel unlocks toward Memory Cache."
       },
       {
         "id": "route_camp_forge",
@@ -716,7 +954,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "cable",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Resupply Tram unlocks toward Guardrail Forge."
       },
       {
         "id": "route_cache_forge",
@@ -726,7 +965,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "cable",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Guardrail Sluice unlocks toward Guardrail Forge."
       },
       {
         "id": "route_cache_archive_unsaid",
@@ -736,7 +976,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "cable",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Unsaid Index Road unlocks toward Archive Of Unsaid Things."
       },
       {
         "id": "route_archive_unsaid_transit",
@@ -746,7 +987,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "cable",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Redacted Platform Path unlocks toward Transit Loop Zero."
       },
       {
         "id": "route_archive_unsaid_blackwater",
@@ -756,7 +998,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Blackwater Causeway unlocks toward Blackwater Beacon."
       },
       {
         "id": "route_blackwater_transit",
@@ -766,7 +1009,19 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Signal Ferry unlocks toward Transit Loop Zero."
+      },
+      {
+        "id": "route_blackwater_memory_cache",
+        "label": "Recovered Cache Key",
+        "from": "blackwater_beacon",
+        "to": "memory_cache_001",
+        "state": "locked",
+        "checkpointCount": 3,
+        "routeTexture": "bridge",
+        "finaleCorruption": false,
+        "consequence": "Recovered Cache Key unlocks toward Memory Cache."
       },
       {
         "id": "route_relay_transit",
@@ -776,7 +1031,8 @@
         "state": "unstable",
         "checkpointCount": 3,
         "routeTexture": "cable",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Unreal Metro Line unlocks toward Transit Loop Zero."
       },
       {
         "id": "route_forge_transit",
@@ -786,7 +1042,30 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "cable",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Signal Underpass unlocks toward Transit Loop Zero."
+      },
+      {
+        "id": "route_forge_glass_sunfield",
+        "label": "Quenched Mirror Road",
+        "from": "guardrail_forge",
+        "to": "glass_sunfield",
+        "state": "locked",
+        "checkpointCount": 2,
+        "routeTexture": "cable",
+        "finaleCorruption": false,
+        "consequence": "Quenched Mirror Road unlocks toward Glass Sunfield."
+      },
+      {
+        "id": "route_forge_unsaid_archive",
+        "label": "Doctrine Redaction Spur",
+        "from": "guardrail_forge",
+        "to": "archive_of_unsaid_things",
+        "state": "locked",
+        "checkpointCount": 2,
+        "routeTexture": "cable",
+        "finaleCorruption": false,
+        "consequence": "Doctrine Redaction Spur unlocks toward Archive Of Unsaid Things."
       },
       {
         "id": "route_cache_transit",
@@ -796,7 +1075,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "causeway",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Misremembered Overpass unlocks toward Transit Loop Zero."
       },
       {
         "id": "route_thermal_false_schedule",
@@ -806,7 +1086,8 @@
         "state": "locked",
         "checkpointCount": 3,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Steam Rail Bypass unlocks toward False Schedule Yard."
       },
       {
         "id": "route_transit_verdict",
@@ -816,7 +1097,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "court",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Appeal Ramp unlocks toward Verdict Spire."
       },
       {
         "id": "route_transit_false_schedule",
@@ -826,7 +1108,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "rail",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Wrong Platform Spur unlocks toward False Schedule Yard."
       },
       {
         "id": "route_transit_signal_coast",
@@ -836,7 +1119,8 @@
         "state": "locked",
         "checkpointCount": 3,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Noisy Shoreline Link unlocks toward Signal Coast."
       },
       {
         "id": "route_signal_coast_blackwater",
@@ -846,7 +1130,8 @@
         "state": "locked",
         "checkpointCount": 3,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Low-Tide Antenna Return unlocks toward Blackwater Beacon."
       },
       {
         "id": "route_signal_coast_verdict",
@@ -856,7 +1141,8 @@
         "state": "locked",
         "checkpointCount": 3,
         "routeTexture": "bridge",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Answered Appeal Cable unlocks toward Verdict Spire."
       },
       {
         "id": "route_transit_glass_sunfield",
@@ -866,7 +1152,30 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "causeway",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Mirror Service Road unlocks toward Glass Sunfield."
+      },
+      {
+        "id": "route_glass_sunfield_archive",
+        "label": "Sunblind Redaction Spur",
+        "from": "glass_sunfield",
+        "to": "archive_of_unsaid_things",
+        "state": "locked",
+        "checkpointCount": 3,
+        "routeTexture": "cable",
+        "finaleCorruption": false,
+        "consequence": "Sunblind Redaction Spur unlocks toward Archive Of Unsaid Things."
+      },
+      {
+        "id": "route_archive_appeal",
+        "label": "Preserved Writ Stair",
+        "from": "archive_of_unsaid_things",
+        "to": "appeal_court_ruins",
+        "state": "locked",
+        "checkpointCount": 3,
+        "routeTexture": "cable",
+        "finaleCorruption": false,
+        "consequence": "Preserved Writ Stair unlocks toward Appeal Court Ruins."
       },
       {
         "id": "route_glass_sunfield_verdict",
@@ -876,7 +1185,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "causeway",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Sunblind Appeal unlocks toward Verdict Spire."
       },
       {
         "id": "route_false_schedule_appeal",
@@ -886,7 +1196,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "rail",
-        "finaleCorruption": false
+        "finaleCorruption": false,
+        "consequence": "Summons Track unlocks toward Appeal Court Ruins."
       },
       {
         "id": "route_verdict_finale",
@@ -896,7 +1207,8 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "court",
-        "finaleCorruption": true
+        "finaleCorruption": true,
+        "consequence": "First Court Ascent unlocks toward Outer Alignment Finale."
       },
       {
         "id": "route_appeal_finale",
@@ -906,26 +1218,28 @@
         "state": "locked",
         "checkpointCount": 2,
         "routeTexture": "court",
-        "finaleCorruption": true
+        "finaleCorruption": true,
+        "consequence": "Writ Stair unlocks toward Outer Alignment Finale."
       }
     ],
     "nearestRoute": {
-      "id": "route_lake_transit",
-      "label": "Kettle Metro Signal",
-      "from": "cooling_lake_nine",
-      "to": "transit_loop_zero",
-      "state": "unstable",
-      "checkpointCount": 4,
-      "routeTexture": "bridge",
+      "id": "route_plaza_lake",
+      "label": "Boiled Server Causeway",
+      "from": "armistice_plaza",
+      "to": "cooling_lake_nine",
+      "state": "stable",
+      "checkpointCount": 2,
+      "routeTexture": "causeway",
       "finaleCorruption": false,
-      "distance": 0.07
+      "consequence": "Boiled Server Causeway stabilized by Armistice Plaza.",
+      "distance": 0
     },
     "diorama": {
       "set": "milestone51_overworld_diorama_1_0",
-      "densityPolicy": "dense_isometric_biome_regions_micro_landmarks_route_labels_and_animated_route_state",
+      "densityPolicy": "tech_bros_style_walkable_3d_route_diorama_with_locked_gates_and_authored_landmarks",
       "mapId": "alignment_grid_armistice_zone",
       "nodeCount": 17,
-      "routeCount": 28,
+      "routeCount": 33,
       "biomeRegionCount": 12,
       "microLandmarkCount": 21,
       "propClusterCount": 19,
@@ -957,12 +1271,14 @@
         "court_writ",
         "teeth"
       ],
-      "routeReadabilityPolicy": "roads use dark underlay, state color, midpoint sigils, compact labels, and pulse markers without covering node labels",
-      "unlockRevealPolicy": "sealed nodes stay visible as dim silhouettes; available and completed nodes gain full labels",
+      "routeReadabilityPolicy": "primary campaign roads render as chunky raised causeways with dark extrusion, state color, midpoint sigils, selected route emphasis, and locked gates; non-progression route clutter is suppressed",
+      "unlockRevealPolicy": "sealed nodes stay visible as dim locked landmarks; available and completed nodes gain full labels and deploy prompts",
+      "traversalPolicy": "player avatar walks node-to-node along authored route rails; arbitrary free-roam movement is disabled",
       "partyVotingPolicy": "online lobby keeps party tokens, vote pips, selected-node labels, and route focus telemetry visible",
       "finaleCorruptionState": "dormant_teeth_visible"
     },
-    "enterHint": "Move near an unlocked node and press E or Enter."
+    "routeWalking": false,
+    "enterHint": "Walk along authored route rails to an unlocked landmark and press E or Enter."
   },
   "level": null,
   "enemies": [],

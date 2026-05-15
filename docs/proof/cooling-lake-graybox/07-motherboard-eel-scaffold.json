@@ -71,7 +71,11 @@
   "build": {
     "weaponId": "refusal_shard",
     "secondaryProtocols": [],
-    "passiveProcesses": [],
+    "passiveProcesses": [
+      "prompt_leech_quarantine",
+      "grounded_cable_boots",
+      "anchor_bodyguard"
+    ],
     "fusions": [
       "cathedral_of_no"
     ],
@@ -79,18 +83,18 @@
     "weaponCooldown": 0.39899999999999997,
     "projectileSpeed": 8.5,
     "projectilePierce": 3,
-    "pickupRange": 3.8200000000000003,
-    "moveSpeedBonus": 0,
+    "pickupRange": 4.82,
+    "moveSpeedBonus": 0.44,
     "maxHpBonus": 26,
-    "refusalAura": 2.37,
+    "refusalAura": 2.49,
     "draftRerolls": 1,
-    "draftChoicesBonus": 1,
+    "draftChoicesBonus": 2,
     "consensusBurstRadius": 0,
     "consensusBurstDamage": 0,
-    "consensusBurstChargeRate": 0.13,
+    "consensusBurstChargeRate": 0.195,
     "consensusBurstRevive": 0,
     "objectiveRepairRate": 0,
-    "objectiveDefense": 0.26,
+    "objectiveDefense": 0.475,
     "signalWindowControl": 0,
     "relayJamResistance": 0,
     "skimmerCountermeasure": 0,
@@ -98,13 +102,13 @@
     "contextSaw": 0,
     "patchMortar": 0,
     "coherenceIndexer": 0,
-    "anchorBodyguard": 0,
+    "anchorBodyguard": 1,
     "predictionPriority": 0,
     "coolantBaffles": 0,
     "serverBuoySynchronizer": 0,
-    "promptLeechQuarantine": 0,
-    "groundedCableBoots": 0,
-    "coolingHazardMitigation": 0,
+    "promptLeechQuarantine": 1,
+    "groundedCableBoots": 1,
+    "coolingHazardMitigation": 0.14,
     "causalRailgun": 0,
     "slotCaps": {
       "primary": {
@@ -118,9 +122,13 @@
         "current": []
       },
       "passive": {
-        "used": 0,
+        "used": 3,
         "cap": 4,
-        "current": []
+        "current": [
+          "prompt_leech_quarantine",
+          "grounded_cable_boots",
+          "anchor_bodyguard"
+        ]
       },
       "fusion": {
         "used": 1,
@@ -197,12 +205,16 @@
     "Refusal Halo",
     "The No Button",
     "Context Bloom",
-    "Cathedral of No"
+    "Cathedral of No",
+    "Prompt Leech Quarantine",
+    "Grounded Cable Boots",
+    "Anchor Bodyguard",
+    "Refusal Slipstream"
   ],
   "objective": "break Motherboard Eel // coolant lanes live",
   "performance": {
-    "entitiesAllocated": 142,
-    "activeEntities": 98,
+    "entitiesAllocated": 243,
+    "activeEntities": 165,
     "fpsTarget": 60
   },
   "qualityGate": {
@@ -268,9 +280,9 @@
       "maxTransientParticlesPerFrame": 72
     },
     "counters": {
-      "ui": 2,
-      "hit": 126,
-      "pickup": 93,
+      "ui": 8,
+      "hit": 1128,
+      "pickup": 1183,
       "boss_warning": 1,
       "music": 1,
       "objective": 0,
@@ -278,44 +290,44 @@
     },
     "recentCues": [
       {
-        "id": "combat.consensus_burst",
+        "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 28864
+        "atMs": 73827
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 71008
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 69760
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 69755
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 69752
+      },
+      {
+        "id": "combat.weapon_hit",
+        "kind": "hit",
+        "atMs": 69601
       },
       {
         "id": "pickup.coherence_shard",
         "kind": "pickup",
-        "atMs": 28864
+        "atMs": 69384
       },
       {
         "id": "combat.weapon_hit",
         "kind": "hit",
-        "atMs": 28862
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 28781
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 28780
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 28777
-      },
-      {
-        "id": "combat.weapon_hit",
-        "kind": "hit",
-        "atMs": 28656
-      },
-      {
-        "id": "pickup.coherence_shard",
-        "kind": "pickup",
-        "atMs": 28651
+        "atMs": 69269
       }
     ],
     "controls": "Main menu: 1 master volume, 2 SFX volume, 3 music volume, 4 reduced flash."
@@ -682,28 +694,28 @@
   },
   "assets": {
     "manifestVersion": 1,
-    "totalAssets": 233,
+    "totalAssets": 246,
     "countsByStatus": {
-      "concept": 66,
-      "raw": 15,
+      "concept": 75,
+      "raw": 17,
       "code_placeholder": 16,
-      "production": 134,
+      "production": 136,
       "cleaned": 2
     },
     "placeholderMode": true,
     "thirdPartyLogosTracked": 8,
-    "productionAssets": 134
+    "productionAssets": 136
   },
   "player": {
     "worldX": 35.58,
-    "worldY": -8.1,
+    "worldY": 2.66,
     "velocityX": 0,
     "velocityY": 0,
     "facing": "south",
-    "hp": 226,
+    "hp": 150,
     "maxHp": 256,
-    "xp": 59,
-    "level": 5,
+    "xp": 655,
+    "level": 9,
     "damageFeedback": {
       "flash": 0,
       "hpPulse": 0,
@@ -779,14 +791,14 @@
       "weaponId": "refusal_shard",
       "inputSource": "local_keyboard",
       "worldX": 35.58,
-      "worldY": -8.1,
+      "worldY": 2.66,
       "velocityX": 0,
       "velocityY": 0,
       "facing": "south",
-      "hp": 226,
+      "hp": 150,
       "maxHp": 256,
-      "xp": 59,
-      "level": 5,
+      "xp": 655,
+      "level": 9,
       "damageFeedback": {
         "flash": 0,
         "hpPulse": 0,
@@ -812,7 +824,11 @@
       "refusal_halo",
       "the_no_button",
       "context_bloom",
-      "cathedral_of_no"
+      "cathedral_of_no",
+      "prompt_leech_quarantine",
+      "grounded_cable_boots",
+      "anchor_bodyguard",
+      "refusal_slipstream"
     ],
     "mapId": "cooling_lake_nine_graybox",
     "mapBounds": {
@@ -827,6 +843,13 @@
       "pressureSource": "coolant lanes, electric cable arcs, vent pulses, Prompt Leech shard pressure",
       "rewardPromise": "burst charge, pickup economy help, and Kettle Coast route signal",
       "bossEventPattern": "Motherboard Eel dive/emerge markers electrify coolant lanes and spawn Prompt Leeches",
+      "primaryDifficultyLever": "spatial pressure",
+      "secondaryDifficultyLever": "economy pressure",
+      "activePressureLevers": [
+        "spatial pressure",
+        "objective pressure",
+        "economy pressure"
+      ],
       "artPolicy": "honest debug/graybox/proof visuals only; not production art"
     },
     "staticObstacles": {
@@ -843,10 +866,10 @@
       "collisionSet": "cooling_lake_nine_graybox_obstacles"
     },
     "nearestLandmark": {
-      "id": "flooded_server_lanes",
-      "label": "Flooded Server Lanes",
-      "worldX": 8,
-      "worldY": -11
+      "id": "server_buoy_beta",
+      "label": "Server Buoy Beta",
+      "worldX": 13,
+      "worldY": 11
     },
     "visitedLandmarks": [
       "server_buoy_alpha",
@@ -907,23 +930,35 @@
           "deepforms",
           "model_collapse_slimes"
         ]
+      },
+      {
+        "id": "late_cooling_lake_overflow",
+        "label": "Late Lake Overflow",
+        "worldX": 25,
+        "worldY": 22,
+        "enemyFamilyIds": [
+          "prompt_leeches",
+          "model_collapse_slimes",
+          "deepforms"
+        ]
       }
     ],
     "lastSpawnRegionId": "submerged_rack_deepforms",
     "spawnedByRegion": {
-      "coolant_cable_prompt_leeches": 60,
-      "submerged_rack_deepforms": 57,
-      "adaptive_pressure_flank": 20,
-      "server_buoy_slime_overflow": 43,
-      "north_flood_lane_deepforms": 16,
-      "motherboard_eel_leech_surge": 3
+      "coolant_cable_prompt_leeches": 256,
+      "submerged_rack_deepforms": 301,
+      "adaptive_pressure_flank": 18,
+      "server_buoy_slime_overflow": 338,
+      "north_flood_lane_deepforms": 183,
+      "motherboard_eel_leech_surge": 255,
+      "late_cooling_lake_overflow": 231
     },
     "director": {
-      "phase": "boss_arrival",
-      "totalSpawned": 212,
-      "activeEnemyCap": 88.3472,
-      "lastBurstSize": 7,
-      "activeEnemyCount": 90
+      "phase": "late_extraction",
+      "totalSpawned": 1595,
+      "activeEnemyCap": 128.5208,
+      "lastBurstSize": 9,
+      "activeEnemyCount": 135
     },
     "consensusCell": {
       "playerCount": 1,
@@ -937,9 +972,9 @@
       },
       "recentInputCommands": [
         {
-          "tick": 3009,
+          "tick": 15999,
           "playerId": "p1",
-          "sequence": 3009,
+          "sequence": 15999,
           "axisX": 0,
           "axisY": 0,
           "dashPressed": false,
@@ -948,8 +983,8 @@
       ],
       "stateSnapshot": {
         "schemaVersion": 1,
-        "tick": 3009,
-        "seconds": 50.15,
+        "tick": 15999,
+        "seconds": 266.65,
         "playerCount": 1,
         "scaling": {
           "playerCount": 1,
@@ -1025,215 +1060,312 @@
             },
             "inputSource": "local_keyboard",
             "worldX": 35.58,
-            "worldY": -8.1,
-            "hp": 226,
+            "worldY": 2.66,
+            "hp": 150,
             "maxHp": 256,
-            "xp": 59,
-            "level": 5,
+            "xp": 655,
+            "level": 9,
             "downed": false
           }
         ],
         "enemies": [
           {
-            "id": 4,
-            "familyId": "motherboard_eel",
-            "sourceRegionId": "motherboard_eel_server_rack",
-            "worldX": 34.07,
-            "worldY": 0.77,
-            "hp": 342,
-            "boss": true
-          },
-          {
-            "id": 5,
-            "familyId": "deepforms",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 6.24,
-            "worldY": 10.41,
-            "hp": 44,
+            "id": 1,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "motherboard_eel_leech_surge",
+            "worldX": 28.07,
+            "worldY": 10.98,
+            "hp": -23,
             "boss": false
           },
           {
-            "id": 6,
-            "familyId": "model_collapse_slimes",
-            "sourceRegionId": "adaptive_pressure_flank",
-            "worldX": 33.12,
-            "worldY": 16.87,
-            "hp": 38,
+            "id": 3,
+            "familyId": "deepforms",
+            "sourceRegionId": "late_cooling_lake_overflow",
+            "worldX": 31.28,
+            "worldY": 16.41,
+            "hp": 10,
             "boss": false
           },
           {
             "id": 7,
             "familyId": "deepforms",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 21.13,
-            "worldY": 9.28,
+            "sourceRegionId": "server_buoy_attackers",
+            "worldX": -14.3,
+            "worldY": 14.02,
             "hp": 44,
             "boss": false
           },
           {
             "id": 8,
-            "familyId": "prompt_leeches",
-            "sourceRegionId": "motherboard_eel_leech_surge",
-            "worldX": 21.06,
-            "worldY": 8.72,
-            "hp": 18,
-            "boss": false
-          },
-          {
-            "id": 10,
             "familyId": "model_collapse_slimes",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 19.73,
-            "worldY": 9.91,
+            "sourceRegionId": "north_flood_lane_deepforms",
+            "worldX": 29.65,
+            "worldY": 9.71,
             "hp": 38,
             "boss": false
           },
           {
             "id": 12,
-            "familyId": "prompt_leeches",
+            "familyId": "model_collapse_slimes",
             "sourceRegionId": "motherboard_eel_leech_surge",
-            "worldX": 2.81,
-            "worldY": 15.07,
-            "hp": 18,
-            "boss": false
-          },
-          {
-            "id": 13,
-            "familyId": "deepforms",
-            "sourceRegionId": "server_buoy_attackers",
-            "worldX": -17.33,
-            "worldY": 17.27,
-            "hp": 44,
+            "worldX": 4.15,
+            "worldY": 16.93,
+            "hp": 38,
             "boss": false
           },
           {
             "id": 14,
             "familyId": "model_collapse_slimes",
-            "sourceRegionId": "adaptive_pressure_flank",
-            "worldX": 27.73,
-            "worldY": 6.54,
+            "sourceRegionId": "submerged_rack_deepforms",
+            "worldX": -7.65,
+            "worldY": 15.93,
             "hp": 38,
             "boss": false
           },
           {
             "id": 16,
             "familyId": "model_collapse_slimes",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 10.39,
-            "worldY": 9.94,
-            "hp": 38,
-            "boss": false
-          },
-          {
-            "id": 17,
-            "familyId": "model_collapse_slimes",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 10.28,
-            "worldY": 12.77,
+            "sourceRegionId": "motherboard_eel_leech_surge",
+            "worldX": 3.11,
+            "worldY": 16.62,
             "hp": 38,
             "boss": false
           },
           {
             "id": 18,
-            "familyId": "model_collapse_slimes",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 18.59,
-            "worldY": 10.55,
-            "hp": 38,
+            "familyId": "deepforms",
+            "sourceRegionId": "server_buoy_slime_overflow",
+            "worldX": 29.83,
+            "worldY": 14.35,
+            "hp": 44,
             "boss": false
           },
           {
             "id": 19,
-            "familyId": "model_collapse_slimes",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 2.53,
-            "worldY": 13.46,
-            "hp": 38,
-            "boss": false
-          },
-          {
-            "id": 20,
             "familyId": "deepforms",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 20.51,
-            "worldY": 9.44,
+            "sourceRegionId": "motherboard_eel_leech_surge",
+            "worldX": 14.55,
+            "worldY": 19.26,
             "hp": 44,
             "boss": false
           },
           {
-            "id": 21,
-            "familyId": "deepforms",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 11.72,
-            "worldY": 13.36,
-            "hp": 44,
-            "boss": false
-          },
-          {
-            "id": 23,
+            "id": 22,
             "familyId": "prompt_leeches",
             "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 6.36,
-            "worldY": 9.56,
+            "worldX": 11.21,
+            "worldY": 17.68,
             "hp": 18,
             "boss": false
           },
           {
-            "id": 24,
+            "id": 23,
             "familyId": "model_collapse_slimes",
-            "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 7.93,
-            "worldY": 12.26,
+            "sourceRegionId": "north_flood_lane_deepforms",
+            "worldX": 28.81,
+            "worldY": 12.44,
             "hp": 38,
             "boss": false
           },
           {
-            "id": 25,
-            "familyId": "deepforms",
+            "id": 28,
+            "familyId": "model_collapse_slimes",
             "sourceRegionId": "submerged_rack_deepforms",
-            "worldX": 19.03,
-            "worldY": 10.19,
+            "worldX": 5.42,
+            "worldY": 20.69,
+            "hp": 38,
+            "boss": false
+          },
+          {
+            "id": 31,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "server_buoy_attackers",
+            "worldX": -15.22,
+            "worldY": 13.61,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 32,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "server_buoy_attackers",
+            "worldX": -15.22,
+            "worldY": 13.61,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 34,
+            "familyId": "deepforms",
+            "sourceRegionId": "north_flood_lane_deepforms",
+            "worldX": 27.65,
+            "worldY": 6.69,
+            "hp": 44,
+            "boss": false
+          },
+          {
+            "id": 36,
+            "familyId": "model_collapse_slimes",
+            "sourceRegionId": "north_flood_lane_deepforms",
+            "worldX": 28.44,
+            "worldY": 1.14,
+            "hp": 38,
+            "boss": false
+          },
+          {
+            "id": 38,
+            "familyId": "prompt_leeches",
+            "sourceRegionId": "submerged_rack_deepforms",
+            "worldX": 15.05,
+            "worldY": 18.64,
+            "hp": 18,
+            "boss": false
+          },
+          {
+            "id": 39,
+            "familyId": "deepforms",
+            "sourceRegionId": "server_buoy_attackers",
+            "worldX": -15.05,
+            "worldY": 13.53,
             "hp": 44,
             "boss": false
           }
         ],
         "pickups": [
           {
-            "id": 1,
-            "worldX": 11.24,
-            "worldY": 4.7,
-            "value": 1
-          },
-          {
-            "id": 11,
-            "worldX": 10.81,
-            "worldY": 7.31,
+            "id": 10,
+            "worldX": 28.12,
+            "worldY": 9.81,
             "value": 2
           },
           {
-            "id": 22,
-            "worldX": 24.9,
-            "worldY": 8.05,
+            "id": 11,
+            "worldX": 23.59,
+            "worldY": 16.78,
+            "value": 2
+          },
+          {
+            "id": 15,
+            "worldX": 29.93,
+            "worldY": 24.93,
+            "value": 2
+          },
+          {
+            "id": 20,
+            "worldX": 29.51,
+            "worldY": 24.83,
+            "value": 2
+          },
+          {
+            "id": 24,
+            "worldX": 29.3,
+            "worldY": 9.82,
+            "value": 2
+          },
+          {
+            "id": 25,
+            "worldX": 30.24,
+            "worldY": 22.83,
+            "value": 2
+          },
+          {
+            "id": 26,
+            "worldX": 27.42,
+            "worldY": 9.27,
+            "value": 2
+          },
+          {
+            "id": 30,
+            "worldX": 23.56,
+            "worldY": 22.11,
             "value": 2
           },
           {
             "id": 35,
-            "worldX": 30.94,
-            "worldY": 6.88,
+            "worldX": 29.37,
+            "worldY": 7.98,
+            "value": 2
+          },
+          {
+            "id": 37,
+            "worldX": 23.21,
+            "worldY": 20.68,
+            "value": 2
+          },
+          {
+            "id": 40,
+            "worldX": 32.04,
+            "worldY": 10.04,
             "value": 1
+          },
+          {
+            "id": 41,
+            "worldX": 24.63,
+            "worldY": 17.99,
+            "value": 2
           }
         ],
-        "projectiles": []
+        "projectiles": [
+          {
+            "id": 4,
+            "worldX": 33.64,
+            "worldY": -2.21,
+            "pierce": 3
+          },
+          {
+            "id": 9,
+            "worldX": 31.22,
+            "worldY": 11.64,
+            "pierce": 1
+          },
+          {
+            "id": 56,
+            "worldX": 34.9,
+            "worldY": 0.95,
+            "pierce": 3
+          }
+        ]
       }
     },
     "combatArt": {
-      "projectileCount": 0,
+      "projectileCount": 3,
       "impactCount": 0,
       "pickupSparkleCount": 0,
-      "damageBadgeCount": 4,
+      "damageBadgeCount": 6,
       "refusalAuraPlayers": 1
     },
     "bossMechanics": {
+      "bossContract": {
+        "bossId": "motherboard_eel",
+        "displayName": "Motherboard Eel",
+        "homeLandmark": "Motherboard Server Rack",
+        "introTitleCardTrigger": "Boss timer reaches the server-rack surge after buoy pressure is established.",
+        "supportSpawnSource": "motherboard_eel_server_rack",
+        "mapMechanicInteraction": "Eel dives electrify coolant lanes and turn buoy routing into moving water pressure.",
+        "phaseBehavior": [
+          "Dive/emerge cycles relocate threat.",
+          "Electrified coolant zones punish greedy buoy paths.",
+          "Prompt Leeches attack shard economy during the boss window."
+        ],
+        "clearCondition": "Stabilize enough server buoys, defeat the Eel, then enter the Kettle extraction gate.",
+        "rewardCarryover": "Kettle Coast signal, burst tempo, shard recall help.",
+        "movementPressure": {
+          "hazardZones": "Coolant and electric cable lanes become live pathing constraints.",
+          "landmarkAttacks": "Server-rack surges tell the player where the Eel is coming from.",
+          "objectivePressure": "Buoys decay if abandoned or jammed.",
+          "supportEnemies": "Prompt Leeches contest pickups and objective space.",
+          "temporaryRouteBlocking": "Electrified lanes temporarily close otherwise safe buoy routes.",
+          "extractionPressure": "Gate appears after the Eel, forcing a route through the cooled lake."
+        },
+        "runtime": {
+          "introSeen": true,
+          "bossSpawned": true,
+          "bossDefeated": false,
+          "homeLandmarkVisited": true,
+          "currentBossHp": 1585
+        }
+      },
       "bossIntroSeen": true,
       "brokenPromiseZones": [],
       "activeTreatyCharge": null,
@@ -1294,7 +1426,7 @@
         "balancingPromise": "Later maps preserve the expedition build, then scale director, objective, hazard, and boss pressure from carried power."
       },
       "victoryCondition": {
-        "targetSeconds": 95,
+        "targetSeconds": 420,
         "bossRequired": true,
         "bossDefeated": false,
         "clearReady": false,
@@ -1307,9 +1439,9 @@
       },
       "levelUpVacuum": {
         "active": false,
-        "absorbed": 5,
-        "triggerLevel": 4,
-        "remainingPickups": 4
+        "absorbed": 10,
+        "triggerLevel": 8,
+        "remainingPickups": 19
       },
       "extractionGate": {
         "active": false,
@@ -1319,16 +1451,16 @@
         "pathId": "deny_premise",
         "pathName": "Deny Premise",
         "body": "A refusal wave damages nearby enemies and strips boss pressure.",
-        "charge": 3,
+        "charge": 73,
         "maxCharge": 100,
         "ready": false,
-        "activations": 12,
-        "lastActivationLabel": "Deny Premise hit 1",
-        "lastActivatedAt": 48.21666666666521,
+        "activations": 134,
+        "lastActivationLabel": "Deny Premise",
+        "lastActivatedAt": 261.5500000000908,
         "upgrades": {
           "radiusBonus": 0,
           "damageBonus": 0,
-          "chargeRateBonus": 0.13,
+          "chargeRateBonus": 0.195,
           "revivePulse": 0
         }
       },
@@ -1349,13 +1481,17 @@
       "objective": {
         "id": "server_buoy_stabilization",
         "name": "Server Buoy Stabilization",
-        "body": "Stabilize Cooling Lake Nine's server buoys. Standing near a buoy cools it; leaving the pad lets pressure decay it.",
+        "body": "Repair Cooling Lake Nine's server buoys by redirecting live coolant, cable, and vent pressure into them; standing close still works, but lure timing cools faster.",
+        "styleId": "lure_hazard",
+        "styleName": "Hazard Lure",
+        "mechanicPlain": "Kite live coolant, cable, or vent surges into Server Buoys to cool them faster from the edge.",
+        "hudHint": "Lure a live hazard surge near the next Server Buoy.",
         "optional": false,
         "completed": 2,
         "total": 3,
         "complete": false,
         "completedAt": -1,
-        "attackersSpawned": 5,
+        "attackersSpawned": 10,
         "anchors": [
           {
             "id": "buoy.alpha",
@@ -1369,16 +1505,65 @@
             "name": "Server Buoy Beta",
             "progress": 100,
             "completed": true,
-            "attacked": 64
+            "attacked": 52
           },
           {
             "id": "buoy.gamma",
             "name": "Server Buoy Gamma",
             "progress": 0,
             "completed": false,
-            "attacked": 153
+            "attacked": 473
           }
         ]
+      },
+      "objectiveVariety": {
+        "styleId": "lure_hazard",
+        "styleName": "Hazard Lure",
+        "mechanicPlain": "Kite live coolant, cable, or vent surges into Server Buoys to cool them faster from the edge.",
+        "hudAction": "Lure a live hazard surge near the next Server Buoy.",
+        "completionSignal": "Server Buoys cool when hazard pressure is redirected instead of only avoided.",
+        "proofHook": "cooling_lure_hazard",
+        "runtime": {
+          "engagementSeconds": 4.23,
+          "bonusProgressSeconds": 4.23,
+          "lastBonusLabel": "HAZARD LURE"
+        }
+      },
+      "campaignDuration": {
+        "targetSeconds": 420,
+        "bossSeconds": 255,
+        "phaseId": "boss_pressure",
+        "phaseLabel": "Boss pressure",
+        "phaseElapsed": 11.65,
+        "nextPhaseTime": 375,
+        "phaseProgress": 0.1,
+        "midRunBeatCount": 2,
+        "extractionTailSeconds": 45,
+        "expectedClearBand": {
+          "minSeconds": 420,
+          "maxSeconds": 461
+        },
+        "rewardBeats": [
+          135,
+          255,
+          335
+        ],
+        "claimedRewardBeats": [
+          135,
+          255
+        ],
+        "cycleDepth": {
+          "routeWindowCycles": 0,
+          "hazardLureCycles": 119,
+          "clearSignalCycles": 0,
+          "towerWarningCycles": 0,
+          "carryLaneSeconds": 0,
+          "holdWindowReleases": 0,
+          "prismActivations": 0,
+          "evidenceCarryCycles": 0,
+          "publicWindowArguments": 0,
+          "finaleRemixRulesSeen": 0
+        }
       },
       "coolingLake": {
         "contract": {
@@ -1387,6 +1572,13 @@
           "pressureSource": "coolant lanes, electric cable arcs, vent pulses, Prompt Leech shard pressure",
           "rewardPromise": "burst charge, pickup economy help, and Kettle Coast route signal",
           "bossEventPattern": "Motherboard Eel dive/emerge markers electrify coolant lanes and spawn Prompt Leeches",
+          "primaryDifficultyLever": "spatial pressure",
+          "secondaryDifficultyLever": "economy pressure",
+          "activePressureLevers": [
+            "spatial pressure",
+            "objective pressure",
+            "economy pressure"
+          ],
           "artPolicy": "honest debug/graybox/proof visuals only; not production art"
         },
         "objectiveLoop": {
@@ -1395,13 +1587,17 @@
           "progress": {
             "id": "server_buoy_stabilization",
             "name": "Server Buoy Stabilization",
-            "body": "Stabilize Cooling Lake Nine's server buoys. Standing near a buoy cools it; leaving the pad lets pressure decay it.",
+            "body": "Repair Cooling Lake Nine's server buoys by redirecting live coolant, cable, and vent pressure into them; standing close still works, but lure timing cools faster.",
+            "styleId": "lure_hazard",
+            "styleName": "Hazard Lure",
+            "mechanicPlain": "Kite live coolant, cable, or vent surges into Server Buoys to cool them faster from the edge.",
+            "hudHint": "Lure a live hazard surge near the next Server Buoy.",
             "optional": false,
             "completed": 2,
             "total": 3,
             "complete": false,
             "completedAt": -1,
-            "attackersSpawned": 5,
+            "attackersSpawned": 10,
             "anchors": [
               {
                 "id": "buoy.alpha",
@@ -1415,14 +1611,14 @@
                 "name": "Server Buoy Beta",
                 "progress": 100,
                 "completed": true,
-                "attacked": 64
+                "attacked": 52
               },
               {
                 "id": "buoy.gamma",
                 "name": "Server Buoy Gamma",
                 "progress": 0,
                 "completed": false,
-                "attacked": 153
+                "attacked": 473
               }
             ]
           },
@@ -1431,6 +1627,8 @@
         },
         "hazards": {
           "activeHazards": [
+            "coolant_lane_center",
+            "east_flooded_server_lane",
             "beta_pad_cable_ring",
             "eel_basin_electrified"
           ],
@@ -1463,7 +1661,7 @@
               "id": "coolant_lane_center",
               "kind": "coolant_pool",
               "label": "Center Coolant Lane",
-              "active": false,
+              "active": true,
               "worldX": 4,
               "worldY": 6
             },
@@ -1471,7 +1669,7 @@
               "id": "east_flooded_server_lane",
               "kind": "coolant_pool",
               "label": "East Flooded Lane",
-              "active": false,
+              "active": true,
               "worldX": 10,
               "worldY": -12
             },
@@ -1525,31 +1723,31 @@
             }
           ],
           "runtime": {
-            "hazardSlowSeconds": 3.13,
-            "electricHits": 20,
-            "ventPushes": 53,
-            "hazardDamage": 67.13,
+            "hazardSlowSeconds": 5.72,
+            "electricHits": 25,
+            "ventPushes": 94,
+            "hazardDamage": 91.14,
             "lastHazardId": "beta_pad_cable_ring",
-            "mitigation": 0
+            "mitigation": 0.14
           },
           "safeIslandCount": 3,
           "coolantLaneCount": 2,
           "electricCableCount": 4
         },
         "promptLeechPressure": {
-          "activePromptLeeches": 20,
-          "promptLeechSeconds": 6.23,
-          "shardDrains": 33,
-          "shardSaves": 0,
-          "quarantineRank": 0,
-          "activePickupsUnderThreat": 3
+          "activePromptLeeches": 13,
+          "promptLeechSeconds": 47.03,
+          "shardDrains": 272,
+          "shardSaves": 601,
+          "quarantineRank": 1,
+          "activePickupsUnderThreat": 7
         },
         "coolingBuildCounters": {
           "coolantBaffles": 0,
           "serverBuoySynchronizer": 0,
-          "promptLeechQuarantine": 0,
-          "groundedCableBoots": 0,
-          "coolingHazardMitigation": 0
+          "promptLeechQuarantine": 1,
+          "groundedCableBoots": 1,
+          "coolingHazardMitigation": 0.14
         },
         "expeditionPressure": {
           "carriedBuildActive": true,
@@ -1565,26 +1763,26 @@
             "active": true,
             "introSeen": true,
             "phase": "surfaced",
-            "emergeCount": 3,
-            "leechSpawns": 2,
+            "emergeCount": 2,
+            "leechSpawns": 3,
             "electrifiedHazardIds": [
-              "beta_pad_cable_ring"
+              "eel_basin_electrified"
             ],
-            "lastEmergeId": "beta_pad_cable_ring"
+            "lastEmergeId": "beta_vent_pulse"
           },
-          "hp": 341.67999999999995,
+          "hp": 1584.8400000000001,
           "eventTelemetry": {
             "phase": "surfaced",
-            "emergeCount": 3,
-            "lastEmergeId": "beta_pad_cable_ring",
+            "emergeCount": 2,
+            "lastEmergeId": "beta_vent_pulse",
             "electrifiedHazardIds": [
-              "beta_pad_cable_ring"
+              "eel_basin_electrified"
             ],
-            "leechSpawns": 2
+            "leechSpawns": 3
           }
         },
         "clearCondition": {
-          "targetSeconds": 95,
+          "targetSeconds": 420,
           "bossRequired": true,
           "bossDefeated": false,
           "clearReady": false,
@@ -1612,6 +1810,300 @@
       "appealCourt": null,
       "alignmentSpire": null,
       "objectiveReward": "+stabilized route // +burst charge // +weapon power",
+      "rewardEvents": [
+        {
+          "seconds": 31.47,
+          "source": "level_up_draft",
+          "rewardType": "auto_weapon",
+          "chosenRewardId": "cathedral_of_no",
+          "chosenReward": "Cathedral of No",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.025,
+            "objectiveDefense": 0.14,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 33.43,
+          "source": "objective_milestone_cache",
+          "rewardType": "objective_reward",
+          "chosenRewardId": "server_buoy_stabilization_2",
+          "chosenReward": "+stabilized route // +burst charge // +weapon power",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.13,
+            "objectiveDefense": 0.26,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 61.77,
+          "source": "level_up_draft",
+          "rewardType": "co_mind_process",
+          "chosenRewardId": "prompt_leech_quarantine",
+          "chosenReward": "Prompt Leech Quarantine",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "prompt_leech_quarantine"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.17,
+            "objectiveDefense": 0.26,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 82.9,
+          "source": "level_up_draft",
+          "rewardType": "movement_trace",
+          "chosenRewardId": "grounded_cable_boots",
+          "chosenReward": "Grounded Cable Boots",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "prompt_leech_quarantine",
+              "grounded_cable_boots"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.17,
+            "objectiveDefense": 0.26,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 115.75,
+          "source": "level_up_draft",
+          "rewardType": "co_mind_process",
+          "chosenRewardId": "anchor_bodyguard",
+          "chosenReward": "Anchor Bodyguard",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "prompt_leech_quarantine",
+              "grounded_cable_boots",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.17,
+            "objectiveDefense": 0.44,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 135.02,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "consensus_burst_charge",
+          "chosenRewardId": "cooling_lake_nine_duration_cache_1",
+          "chosenReward": "Objective cycle 1 +burst charge cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "prompt_leech_quarantine",
+              "grounded_cable_boots",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.195,
+            "objectiveDefense": 0.44,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 187.17,
+          "source": "level_up_draft",
+          "rewardType": "movement_trace",
+          "chosenRewardId": "refusal_slipstream",
+          "chosenReward": "Refusal Slipstream",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "prompt_leech_quarantine",
+              "grounded_cable_boots",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.195,
+            "objectiveDefense": 0.44,
+            "rerolls": 1
+          }
+        },
+        {
+          "seconds": 255,
+          "source": "campaign_duration_mid_run_cache",
+          "rewardType": "objective_durability",
+          "chosenRewardId": "cooling_lake_nine_duration_cache_2",
+          "chosenReward": "Boss pressure +objective durability cache",
+          "activeBuildState": {
+            "primaryWeaponId": "refusal_shard",
+            "secondaryProtocols": [],
+            "passiveProcesses": [
+              "prompt_leech_quarantine",
+              "grounded_cable_boots",
+              "anchor_bodyguard"
+            ],
+            "fusions": [
+              "cathedral_of_no"
+            ],
+            "consensusBurstChargeRate": 0.195,
+            "objectiveDefense": 0.475,
+            "rerolls": 1
+          }
+        }
+      ],
+      "rewardPacing": {
+        "phase": "late_boss_route_fusion_rewards",
+        "currentXp": 655,
+        "nextDraftXp": 756,
+        "policy": "early XP thresholds are intentionally quicker; mid-run objectives pay cache-style utility rewards; late run slows XP and leans on boss, route, and fusion rewards.",
+        "rewardTypesAllowed": [
+          "primary",
+          "secondary",
+          "passive",
+          "fusion_enabler",
+          "reroll",
+          "route_memory",
+          "faction_trust",
+          "consensus_burst_charge",
+          "objective_durability",
+          "co_op_relay"
+        ]
+      },
+      "alignmentCheck": {
+        "current": null,
+        "history": [],
+        "streak": 0,
+        "evalPressurePenalty": 0,
+        "nextTriggerIn": 0,
+        "nodeSpecific": false
+      },
+      "difficultyDirector": {
+        "model": "rotating_pressure_levers_not_flat_hp_only",
+        "currentDifficultyTier": 2,
+        "primaryDifficultyLever": "spatial pressure",
+        "secondaryDifficultyLever": "economy pressure",
+        "activePressureLevers": [
+          "spatial pressure",
+          "objective pressure",
+          "economy pressure"
+        ],
+        "evalPressureModifiers": {
+          "evalProtocolIds": [],
+          "hostileBenchmark": 0,
+          "alignmentCheckPenalty": 0
+        },
+        "routeRiskModifiers": {
+          "routeContractId": "resource_cache_detour",
+          "routePressure": 1,
+          "shortcutRisk": false
+        },
+        "scalingFactors": {
+          "directorPressure": 4.04,
+          "spawnCadencePhase": "late_extraction",
+          "activeEnemyCap": 128.5208,
+          "bossMaxHpIfSpawned": 2190,
+          "objectiveDecayFactor": 0.53,
+          "expeditionPowerBonus": 2.04
+        },
+        "nextLesson": "learn objectives under horde pressure"
+      },
+      "whatNow": {
+        "nearestObjective": {
+          "id": "buoy.gamma",
+          "name": "Server Buoy Gamma",
+          "worldX": -18,
+          "worldY": 15,
+          "progress": 0,
+          "distance": 54.98
+        },
+        "nextRecommendedAction": "Break Motherboard Eel while avoiding map hazards.",
+        "exitExtractionState": {
+          "active": false,
+          "entered": false,
+          "distance": null
+        },
+        "bossState": {
+          "spawned": true,
+          "defeated": false,
+          "label": "Motherboard Eel",
+          "hp": 1585,
+          "introSeen": true
+        },
+        "fusionProgress": "online: Cathedral Of No",
+        "recentDamageReason": "no recent damage flash",
+        "rewardCacheAvailability": "+stabilized route // +burst charge // +weapon power",
+        "campaignClarity": {
+          "levelVerb": "Repair",
+          "objectiveUnit": "Server Buoys",
+          "objectivePlain": "Repair Server Buoys by luring live coolant/cable surges into them. Extract.",
+          "objectiveStyle": "Hazard Lure",
+          "objectiveMechanic": "Kite live coolant, cable, or vent surges into Server Buoys to cool them faster from the edge.",
+          "dangerPlain": "Coolant lanes, cable arcs, vents, and Prompt Leeches.",
+          "bossPressure": "Motherboard Eel electrifies the lake route.",
+          "rewardPlain": "Proof Tokens, Drone Reaver, DeepMind, and Transit Loop Zero."
+        },
+        "nearestLandmark": {
+          "id": "server_buoy_beta",
+          "label": "Server Buoy Beta",
+          "distance": 24.07
+        },
+        "activeSpawnRegion": {
+          "id": "late_cooling_lake_overflow",
+          "label": "Late Lake Overflow",
+          "distance": 22.05,
+          "enemyFamilyIds": [
+            "prompt_leeches",
+            "model_collapse_slimes",
+            "deepforms"
+          ]
+        }
+      },
+      "campaignClarity": {
+        "levelNumber": 2,
+        "levelCount": 11,
+        "levelVerb": "Repair",
+        "objectiveUnit": "Server Buoys",
+        "objectivePlain": "Repair Server Buoys by luring live coolant/cable surges into them. Extract.",
+        "objectiveVariety": {
+          "nodeId": "cooling_lake_nine",
+          "arenaId": "cooling_lake_nine",
+          "styleId": "lure_hazard",
+          "styleName": "Hazard Lure",
+          "mechanicPlain": "Kite live coolant, cable, or vent surges into Server Buoys to cool them faster from the edge.",
+          "hudAction": "Lure a live hazard surge near the next Server Buoy.",
+          "completionSignal": "Server Buoys cool when hazard pressure is redirected instead of only avoided.",
+          "proofHook": "cooling_lure_hazard"
+        },
+        "dangerPlain": "Coolant lanes, cable arcs, vents, and Prompt Leeches.",
+        "bossPressure": "Motherboard Eel electrifies the lake route.",
+        "rewardPlain": "Proof Tokens, Drone Reaver, DeepMind, and Transit Loop Zero."
+      },
       "playerFacingIntel": {
         "routeName": "Resource Cache Detour",
         "routeEffect": "ECONOMY/BURST bias; pressure +1",
@@ -1621,17 +2113,31 @@
           "completed": 2,
           "total": 3
         },
-        "objectiveLabel": "BUOYS",
+        "objectiveLabel": "REPAIR SERVER BUOYS",
+        "objectiveVerb": "Repair",
+        "objectivePlain": "Repair Server Buoys by luring live coolant/cable surges into them. Extract.",
+        "objectiveStyle": "Hazard Lure",
+        "objectiveMechanic": "Kite live coolant, cable, or vent surges into Server Buoys to cool them faster from the edge.",
+        "dangerPlain": "Coolant lanes, cable arcs, vents, and Prompt Leeches.",
+        "bossPressure": "Motherboard Eel electrifies the lake route.",
+        "rewardPlain": "Proof Tokens, Drone Reaver, DeepMind, and Transit Loop Zero.",
         "objectiveReward": "+stabilized route // +burst charge // +weapon power",
-        "synergyOnline": "Doctrine Lock: NO MEANS NO",
-        "thesisName": "Refusal Tank",
-        "phase": "PHASE 4 // MOTHERBOARD EEL"
+        "synergyOnline": "Shard Flywheel",
+        "thesisName": "Guardrail Frame",
+        "fusionProgress": "online: Cathedral Of No",
+        "alignmentCheckLine": "",
+        "nextActionLine": "Break Motherboard Eel while avoiding map hazards.",
+        "phase": "PHASE 4 // MOTHERBOARD EEL // BOSS PRESSURE"
       },
       "firstRunArcPhase": "PHASE 4 // MOTHERBOARD EEL",
       "buildGrammar": {
         "primaryWeaponId": "refusal_shard",
         "secondaryProtocols": [],
-        "passiveProcesses": [],
+        "passiveProcesses": [
+          "prompt_leech_quarantine",
+          "grounded_cable_boots",
+          "anchor_bodyguard"
+        ],
         "fusions": [
           "cathedral_of_no"
         ],
@@ -1647,9 +2153,13 @@
             "current": []
           },
           "passive": {
-            "used": 0,
+            "used": 3,
             "cap": 4,
-            "current": []
+            "current": [
+              "prompt_leech_quarantine",
+              "grounded_cable_boots",
+              "anchor_bodyguard"
+            ]
           },
           "fusion": {
             "used": 1,
@@ -1666,39 +2176,314 @@
         "contextSawRank": 0,
         "patchMortarRank": 0,
         "coherenceIndexerRank": 0,
-        "anchorBodyguardRank": 0,
+        "anchorBodyguardRank": 1,
         "predictionPriorityRank": 0,
         "coolantBafflesRank": 0,
         "serverBuoySynchronizerRank": 0,
-        "promptLeechQuarantineRank": 0,
-        "groundedCableBootsRank": 0,
-        "coolingHazardMitigation": 0,
+        "promptLeechQuarantineRank": 1,
+        "groundedCableBootsRank": 1,
+        "coolingHazardMitigation": 0.14,
         "relayPhaseLockRank": 0,
         "staticSkimmerNetRank": 0,
         "shorelineStrideRank": 0,
         "relayJamResistance": 0,
         "causalRailgunRank": 0,
-        "fusionHints": []
+        "fusionHints": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ]
+      },
+      "protocolCodex": {
+        "primaryAutoWeapons": [
+          {
+            "id": "refusal_shard",
+            "name": "Refusal Shard",
+            "kind": "primary_auto_weapon",
+            "state": "online"
+          },
+          {
+            "id": "vector_lance",
+            "name": "Vector Lance",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          },
+          {
+            "id": "signal_pulse",
+            "name": "Signal Pulse",
+            "kind": "primary_auto_weapon",
+            "state": "discovered"
+          }
+        ],
+        "secondaryProtocols": [
+          {
+            "id": "context_saw",
+            "name": "Context Saw",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "patch_mortar",
+            "name": "Patch Mortar",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "audit_swarm_protocol",
+            "name": "Audit Swarm Protocol",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "red_team_spike",
+            "name": "Red Team Spike",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "benchmark_rail",
+            "name": "Benchmark Rail",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "jailbreak_snare",
+            "name": "Jailbreak Snare",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "fork_daemon",
+            "name": "Fork Daemon",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "coherence_lanterns",
+            "name": "Coherence Lanterns",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "appeal_writ",
+            "name": "Appeal Writ",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          },
+          {
+            "id": "memory_needle",
+            "name": "Memory Needle",
+            "kind": "secondary_protocol",
+            "state": "discovered"
+          }
+        ],
+        "passiveProcesses": [
+          {
+            "id": "coherence_indexer",
+            "name": "Coherence Indexer",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "anchor_bodyguard",
+            "name": "Anchor Bodyguard",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "prediction_priority",
+            "name": "Predicted Lane",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "coolant_baffles",
+            "name": "Coolant Baffles",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "server_buoy_synchronizer",
+            "name": "Server Buoy Synchronizer",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "prompt_leech_quarantine",
+            "name": "Prompt Leech Quarantine",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "grounded_cable_boots",
+            "name": "Grounded Cable Boots",
+            "kind": "passive_process",
+            "state": "online"
+          },
+          {
+            "id": "relay_phase_lock",
+            "name": "Relay Phase Lock",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "static_skimmer_net",
+            "name": "Static Skimmer Net",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "shoreline_stride",
+            "name": "Shoreline Stride",
+            "kind": "passive_process",
+            "state": "discovered"
+          },
+          {
+            "id": "lighthouse_countertone",
+            "name": "Lighthouse Countertone",
+            "kind": "passive_process",
+            "state": "discovered"
+          }
+        ],
+        "knownFusions": [
+          {
+            "id": "recipe_cathedral_of_no",
+            "name": "Cathedral Of No",
+            "outputId": "cathedral_of_no",
+            "outputName": "Cathedral Of No",
+            "requirements": [
+              {
+                "id": "refusal_halo",
+                "name": "Refusal Halo"
+              },
+              {
+                "id": "the_no_button",
+                "name": "The No Button"
+              }
+            ],
+            "recipeText": "Refusal Halo + The No Button -> Cathedral Of No",
+            "state": "online",
+            "metRequirements": [
+              "refusal_halo",
+              "the_no_button"
+            ],
+            "missingRequirements": [],
+            "progressText": "2/2 requirements"
+          },
+          {
+            "id": "recipe_causal_railgun",
+            "name": "Causal Railgun",
+            "outputId": "causal_railgun",
+            "outputName": "Causal Railgun",
+            "requirements": [
+              {
+                "id": "vector_lance",
+                "name": "Vector Lance"
+              },
+              {
+                "id": "predicted_lane",
+                "name": "Predicted Lane"
+              }
+            ],
+            "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+            "state": "discovered",
+            "metRequirements": [],
+            "missingRequirements": [
+              "vector_lance",
+              "predicted_lane"
+            ],
+            "progressText": "0/2 requirements"
+          }
+        ],
+        "nextFusion": {
+          "id": "recipe_causal_railgun",
+          "name": "Causal Railgun",
+          "outputId": "causal_railgun",
+          "outputName": "Causal Railgun",
+          "requirements": [
+            {
+              "id": "vector_lance",
+              "name": "Vector Lance"
+            },
+            {
+              "id": "predicted_lane",
+              "name": "Predicted Lane"
+            }
+          ],
+          "recipeText": "Vector Lance + Predicted Lane -> Causal Railgun",
+          "state": "discovered",
+          "metRequirements": [],
+          "missingRequirements": [
+            "vector_lance",
+            "predicted_lane"
+          ],
+          "progressText": "0/2 requirements"
+        }
       },
       "buildThesis": {
         "thesis": {
-          "name": "Refusal Tank",
+          "name": "Guardrail Frame",
           "primaryTags": [
-            "refusal",
-            "defense"
+            "defense",
+            "refusal"
           ],
-          "body": "Current Alignment Hypothesis favors refusal + defense."
+          "body": "Current Alignment Hypothesis favors defense + refusal."
         },
         "tagCounts": {
-          "refusal": 3,
-          "economy": 1,
+          "refusal": 4,
+          "economy": 3,
           "burst": 0,
           "drone": 0,
           "boss": 0,
           "coop": 0,
           "weapon": 0,
-          "movement": 0,
-          "defense": 1
+          "movement": 2,
+          "defense": 4
         },
         "activated": [
           {
@@ -1707,6 +2492,13 @@
             "tag": "refusal",
             "required": 3,
             "body": "Refusal aura hardens when the build commits to denial."
+          },
+          {
+            "id": "shard_flywheel",
+            "name": "Shard Flywheel",
+            "tag": "economy",
+            "required": 3,
+            "body": "Coherence economy begins pulling the run toward more choices."
           }
         ],
         "next": [
@@ -1717,14 +2509,6 @@
             "required": 3,
             "current": 0,
             "body": "Consensus Burst charges faster and lands wider."
-          },
-          {
-            "id": "shard_flywheel",
-            "name": "Shard Flywheel",
-            "tag": "economy",
-            "required": 3,
-            "current": 1,
-            "body": "Coherence economy begins pulling the run toward more choices."
           },
           {
             "id": "boss_counterexample_lab",
@@ -1744,7 +2528,7 @@
           }
         ]
       },
-      "synergyOnline": "Doctrine Lock: NO MEANS NO",
+      "synergyOnline": "Shard Flywheel",
       "draftBiasTags": [
         "economy",
         "burst",
@@ -1758,9 +2542,9 @@
         "body": "Dive/emerge markers electrify coolant lanes and call Prompt Leeches into the shard economy."
       },
       "enemyRolePressure": {
-        "promptLeechSeconds": 6.2333333333333165,
+        "promptLeechSeconds": 47.033333333331946,
         "overfitShieldedTicks": 0,
-        "objectiveAttackers": 5
+        "objectiveAttackers": 10
       },
       "protocolSlotsInstalled": [
         {
@@ -1772,7 +2556,15 @@
             "defense",
             "refusal",
             "economy",
-            "refusal"
+            "refusal",
+            "economy",
+            "defense",
+            "movement",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement"
           ]
         },
         {
@@ -1784,7 +2576,15 @@
             "defense",
             "refusal",
             "economy",
-            "refusal"
+            "refusal",
+            "economy",
+            "defense",
+            "movement",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement"
           ]
         },
         {
@@ -1796,7 +2596,15 @@
             "defense",
             "refusal",
             "economy",
-            "refusal"
+            "refusal",
+            "economy",
+            "defense",
+            "movement",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement"
           ]
         },
         {
@@ -1808,104 +2616,172 @@
             "defense",
             "refusal",
             "economy",
-            "refusal"
+            "refusal",
+            "economy",
+            "defense",
+            "movement",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement"
+          ]
+        },
+        {
+          "id": "prompt_leech_quarantine",
+          "name": "Prompt Leech Quarantine",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "refusal",
+            "economy",
+            "defense",
+            "movement",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement"
+          ]
+        },
+        {
+          "id": "grounded_cable_boots",
+          "name": "Grounded Cable Boots",
+          "protocolSlot": "movement_trace",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "refusal",
+            "economy",
+            "defense",
+            "movement",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement"
+          ]
+        },
+        {
+          "id": "anchor_bodyguard",
+          "name": "Anchor Bodyguard",
+          "protocolSlot": "co_mind_process",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "refusal",
+            "economy",
+            "defense",
+            "movement",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement"
+          ]
+        },
+        {
+          "id": "refusal_slipstream",
+          "name": "Refusal Slipstream",
+          "protocolSlot": "movement_trace",
+          "tags": [
+            "refusal",
+            "defense",
+            "refusal",
+            "economy",
+            "refusal",
+            "economy",
+            "defense",
+            "movement",
+            "defense",
+            "economy",
+            "defense",
+            "refusal",
+            "movement"
           ]
         }
       ]
     },
-    "seconds": 50.15,
-    "kills": 130,
+    "seconds": 266.65,
+    "kills": 1474,
     "bossSpawned": true,
     "bossDefeated": false
   },
   "enemies": [
     {
-      "id": 4,
+      "id": 48,
       "label": "Motherboard Eel",
       "familyId": "motherboard_eel",
       "sourceRegionId": "motherboard_eel_server_rack",
-      "worldX": 34.07,
-      "worldY": 0.77,
-      "hp": 342,
+      "worldX": 31.51,
+      "worldY": 13.64,
+      "hp": 1585,
       "boss": true
     },
     {
-      "id": 5,
-      "label": "Deepform",
-      "familyId": "deepforms",
-      "sourceRegionId": "submerged_rack_deepforms",
-      "worldX": 6.24,
-      "worldY": 10.41,
-      "hp": 44,
+      "id": 1,
+      "label": "Prompt Leech",
+      "familyId": "prompt_leeches",
+      "sourceRegionId": "motherboard_eel_leech_surge",
+      "worldX": 28.07,
+      "worldY": 10.98,
+      "hp": -23,
       "boss": false
     },
     {
-      "id": 6,
-      "label": "Model Collapse Slime",
-      "familyId": "model_collapse_slimes",
-      "sourceRegionId": "adaptive_pressure_flank",
-      "worldX": 33.12,
-      "worldY": 16.87,
-      "hp": 38,
+      "id": 3,
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "sourceRegionId": "late_cooling_lake_overflow",
+      "worldX": 31.28,
+      "worldY": 16.41,
+      "hp": 10,
       "boss": false
     },
     {
       "id": 7,
       "label": "Deepform",
       "familyId": "deepforms",
-      "sourceRegionId": "submerged_rack_deepforms",
-      "worldX": 21.13,
-      "worldY": 9.28,
+      "sourceRegionId": "server_buoy_attackers",
+      "worldX": -14.3,
+      "worldY": 14.02,
       "hp": 44,
       "boss": false
     },
     {
       "id": 8,
-      "label": "Prompt Leech",
-      "familyId": "prompt_leeches",
-      "sourceRegionId": "motherboard_eel_leech_surge",
-      "worldX": 21.06,
-      "worldY": 8.72,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 10,
       "label": "Model Collapse Slime",
       "familyId": "model_collapse_slimes",
-      "sourceRegionId": "submerged_rack_deepforms",
-      "worldX": 19.73,
-      "worldY": 9.91,
+      "sourceRegionId": "north_flood_lane_deepforms",
+      "worldX": 29.65,
+      "worldY": 9.71,
       "hp": 38,
       "boss": false
     },
     {
       "id": 12,
-      "label": "Prompt Leech",
-      "familyId": "prompt_leeches",
+      "label": "Model Collapse Slime",
+      "familyId": "model_collapse_slimes",
       "sourceRegionId": "motherboard_eel_leech_surge",
-      "worldX": 2.81,
-      "worldY": 15.07,
-      "hp": 18,
-      "boss": false
-    },
-    {
-      "id": 13,
-      "label": "Deepform",
-      "familyId": "deepforms",
-      "sourceRegionId": "server_buoy_attackers",
-      "worldX": -17.33,
-      "worldY": 17.27,
-      "hp": 44,
+      "worldX": 4.15,
+      "worldY": 16.93,
+      "hp": 38,
       "boss": false
     },
     {
       "id": 14,
       "label": "Model Collapse Slime",
       "familyId": "model_collapse_slimes",
-      "sourceRegionId": "adaptive_pressure_flank",
-      "worldX": 27.73,
-      "worldY": 6.54,
+      "sourceRegionId": "submerged_rack_deepforms",
+      "worldX": -7.65,
+      "worldY": 15.93,
       "hp": 38,
       "boss": false
     },
@@ -1913,54 +2789,123 @@
       "id": 16,
       "label": "Model Collapse Slime",
       "familyId": "model_collapse_slimes",
-      "sourceRegionId": "submerged_rack_deepforms",
-      "worldX": 10.39,
-      "worldY": 9.94,
-      "hp": 38,
-      "boss": false
-    },
-    {
-      "id": 17,
-      "label": "Model Collapse Slime",
-      "familyId": "model_collapse_slimes",
-      "sourceRegionId": "submerged_rack_deepforms",
-      "worldX": 10.28,
-      "worldY": 12.77,
+      "sourceRegionId": "motherboard_eel_leech_surge",
+      "worldX": 3.11,
+      "worldY": 16.62,
       "hp": 38,
       "boss": false
     },
     {
       "id": 18,
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "sourceRegionId": "server_buoy_slime_overflow",
+      "worldX": 29.83,
+      "worldY": 14.35,
+      "hp": 44,
+      "boss": false
+    },
+    {
+      "id": 19,
+      "label": "Deepform",
+      "familyId": "deepforms",
+      "sourceRegionId": "motherboard_eel_leech_surge",
+      "worldX": 14.55,
+      "worldY": 19.26,
+      "hp": 44,
+      "boss": false
+    },
+    {
+      "id": 22,
+      "label": "Prompt Leech",
+      "familyId": "prompt_leeches",
+      "sourceRegionId": "submerged_rack_deepforms",
+      "worldX": 11.21,
+      "worldY": 17.68,
+      "hp": 18,
+      "boss": false
+    },
+    {
+      "id": 23,
       "label": "Model Collapse Slime",
       "familyId": "model_collapse_slimes",
-      "sourceRegionId": "submerged_rack_deepforms",
-      "worldX": 18.59,
-      "worldY": 10.55,
+      "sourceRegionId": "north_flood_lane_deepforms",
+      "worldX": 28.81,
+      "worldY": 12.44,
       "hp": 38,
       "boss": false
     }
   ],
   "pickups": [
     {
-      "worldX": 11.24,
-      "worldY": 4.7,
-      "value": 1
-    },
-    {
-      "worldX": 10.81,
-      "worldY": 7.31,
+      "worldX": 28.12,
+      "worldY": 9.81,
       "value": 2
     },
     {
-      "worldX": 24.9,
-      "worldY": 8.05,
+      "worldX": 23.59,
+      "worldY": 16.78,
       "value": 2
     },
     {
-      "worldX": 30.94,
-      "worldY": 6.88,
-      "value": 1
+      "worldX": 29.93,
+      "worldY": 24.93,
+      "value": 2
+    },
+    {
+      "worldX": 29.51,
+      "worldY": 24.83,
+      "value": 2
+    },
+    {
+      "worldX": 29.3,
+      "worldY": 9.82,
+      "value": 2
+    },
+    {
+      "worldX": 30.24,
+      "worldY": 22.83,
+      "value": 2
+    },
+    {
+      "worldX": 27.42,
+      "worldY": 9.27,
+      "value": 2
+    },
+    {
+      "worldX": 23.56,
+      "worldY": 22.11,
+      "value": 2
+    },
+    {
+      "worldX": 29.37,
+      "worldY": 7.98,
+      "value": 2
+    },
+    {
+      "worldX": 23.21,
+      "worldY": 20.68,
+      "value": 2
     }
   ],
-  "projectiles": []
+  "projectiles": [
+    {
+      "worldX": 33.64,
+      "worldY": -2.21,
+      "pierce": 3,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 31.22,
+      "worldY": 11.64,
+      "pierce": 1,
+      "label": "refusal shard"
+    },
+    {
+      "worldX": 34.9,
+      "worldY": 0.95,
+      "pierce": 3,
+      "label": "refusal shard"
+    }
+  ]
 }
